@@ -14,6 +14,15 @@ class FakeLearningDatabase extends AppDatabase {
   List<LearnedPattern> patterns = const [];
   final feedbackKinds = <String>[];
   final suppressions = <String>{};
+  final settings = <String, String>{};
+
+  @override
+  Future<String?> getSetting(String key) async => settings[key];
+
+  @override
+  Future<void> setSetting(String key, String value) async {
+    settings[key] = value;
+  }
 
   @override
   Future<void> recordPatternFeedback(

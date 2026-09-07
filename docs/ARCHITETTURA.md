@@ -56,6 +56,8 @@ Smart Finance ─┘             │
 
 `TransactionDraft` può contenere tipo, importo in centesimi, conti, categoria, data, nota, tag, sorgente e indicazione di avvio vocale.
 
+Descrizioni e tag rapidi non introducono un nuovo ledger né una seconda forma di apprendimento: `TransactionMetadataSuggestions` costruisce un indice in memoria dallo storico già caricato in `AppState` per frequenza, recenza, canonicalizzazione e autocomplete. I soli preferiti vengono salvati nelle `settings` locali, quindi sono inclusi nel backup completo senza modificare il formato CSV interoperabile o lo schema delle transazioni.
+
 ### Precedenza dei dati
 
 Per l'inserimento vocale:
