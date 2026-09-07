@@ -817,24 +817,42 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
   List<DashboardWidgetConfig>? items;
 
   void _load(AppState state) {
-    items ??= [...state.dashboardWidgets]
-      ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
+    items ??=
+        state.dashboardWidgets
+            .where((item) => !_fixedSummaryTypes.contains(item.type))
+            .toList()
+          ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
   }
 
   Future<void> _save(AppState state) async {
-    final normalized = <DashboardWidgetConfig>[];
+    final fixed =
+        state.dashboardWidgets
+            .where((item) => _fixedSummaryTypes.contains(item.type))
+            .toList()
+          ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
+    final normalizedItems = <DashboardWidgetConfig>[];
     for (var index = 0; index < items!.length; index++) {
       final item = items![index];
-      normalized.add(
+      normalizedItems.add(
         DashboardWidgetConfig(
           type: item.type,
           enabled: item.enabled,
-          orderIndex: index,
+          orderIndex: fixed.length + index,
           size: item.size,
         ),
       );
     }
-    items = normalized;
+    items = normalizedItems;
+    final normalized = <DashboardWidgetConfig>[
+      for (var index = 0; index < fixed.length; index++)
+        DashboardWidgetConfig(
+          type: fixed[index].type,
+          enabled: true,
+          orderIndex: index,
+          size: fixed[index].size,
+        ),
+      ...normalizedItems,
+    ];
     await state.saveDashboard(normalized);
   }
 
@@ -856,6 +874,12 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
         ],
       ),
       body: ReorderableListView.builder(
+        header: const Padding(
+          padding: EdgeInsets.fromLTRB(8, 8, 8, 20),
+          child: Text(
+            'Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.',
+          ),
+        ),
         padding: const EdgeInsets.fromLTRB(12, 8, 12, 80),
         itemCount: items!.length,
         onReorderItem: (oldIndex, newIndex) async {

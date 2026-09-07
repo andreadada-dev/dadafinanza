@@ -41,6 +41,12 @@ class AccountContextHomeScreen extends StatelessWidget {
     DashboardWidgetType.unassignedTransactions,
   ];
 
+  static const _fixedSummaryTypes = <DashboardWidgetType>{
+    DashboardWidgetType.totalBalance,
+    DashboardWidgetType.monthlyCashFlow,
+    DashboardWidgetType.safeToSpend,
+  };
+
   final int? accountId;
   final ValueChanged<int?> onAccountChanged;
 
@@ -78,6 +84,9 @@ class AccountContextHomeScreen extends StatelessWidget {
     final dashboardWidgets = isTotal
         ? _visibleDashboardWidgets(state)
         : const <DashboardWidgetConfig>[];
+    final secondaryDashboardWidgets = dashboardWidgets
+        .where((config) => !_fixedSummaryTypes.contains(config.type))
+        .toList(growable: false);
 
     return CustomScrollView(
       slivers: [
@@ -142,6 +151,15 @@ class AccountContextHomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 32),
+              ],
+              if (isTotal) ...[
+                _TotalOverviewSummary(
+                  balance: balance,
+                  income: income,
+                  expense: expense,
+                  available: state.safeToSpend,
+                ),
+                const SizedBox(height: 20),
               ],
               _QuickActions(
                 onOpen: (type) => _openQuick(context, type, effectiveAccountId),
