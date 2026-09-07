@@ -1,0 +1,312 @@
+name: Temporary restore Home summary
+
+on:
+  push:
+    branches:
+      - 'build/restore-home-summary'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: build/restore-home-summary
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Restore original Home summary and keep personalization
+        shell: python
+        run: |
+          from pathlib import Path
+
+          home = Path('lib/screens/account_context_home_screen.dart')
+          source = home.read_text()
+
+          fallback = '''  static const _fallbackTypes = <DashboardWidgetType>[
+            DashboardWidgetType.totalBalance,
+            DashboardWidgetType.monthlyCashFlow,
+            DashboardWidgetType.safeToSpend,
+            DashboardWidgetType.accounts,
+            DashboardWidgetType.monthlyBudget,
+            DashboardWidgetType.recentTransactions,
+            DashboardWidgetType.upcomingRecurring,
+            DashboardWidgetType.goals,
+            DashboardWidgetType.topCategories,
+            DashboardWidgetType.endMonthForecast,
+            DashboardWidgetType.unassignedTransactions,
+          ];
+          '''
+          fixed = fallback + '''
+            static const _fixedSummaryTypes = <DashboardWidgetType>{
+              DashboardWidgetType.totalBalance,
+              DashboardWidgetType.monthlyCashFlow,
+              DashboardWidgetType.safeToSpend,
+            };
+          '''
+          if '_fixedSummaryTypes' not in source:
+              source = source.replace(fallback, fixed)
+
+          dashboard = '''    final dashboardWidgets = isTotal
+                ? _visibleDashboardWidgets(state)
+                : const <DashboardWidgetConfig>[];
+          '''
+          dashboard_replacement = dashboard + '''    final secondaryDashboardWidgets = dashboardWidgets
+                .where((config) => !_fixedSummaryTypes.contains(config.type))
+                .toList(growable: false);
+          '''
+          if 'final secondaryDashboardWidgets' not in source:
+              source = source.replace(dashboard, dashboard_replacement)
+
+          quick = '''              _QuickActions(
+                onOpen: (type) => _openQuick(context, type, effectiveAccountId),
+              ),
+          '''
+          quick_replacement = '''              if (isTotal) ...[
+                _TotalOverviewSummary(
+                  balance: balance,
+                  income: income,
+                  expense: expense,
+                  available: state.safeToSpend,
+                ),
+                const SizedBox(height: 20),
+              ],
+          ''' + quick
+          if '_TotalOverviewSummary(' not in source:
+              source = source.replace(quick, quick_replacement, 1)
+
+          source = source.replace('if (dashboardWidgets.isEmpty)', 'if (secondaryDashboardWidgets.isEmpty)')
+          source = source.replace('...dashboardWidgets.map(', '...secondaryDashboardWidgets.map(')
+          source = source.replace("title: 'Home vuota',", "title: 'Nessuna sezione aggiuntiva',")
+          source = source.replace(
+              "'Hai nascosto tutti i widget. Riattivane almeno uno da Personalizza Home.'",
+              "'Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.'",
+          )
+
+          marker = 'class _QuickActions extends StatelessWidget {'
+          summary_class = '''class _TotalOverviewSummary extends StatelessWidget {
+            const _TotalOverviewSummary({
+              required this.balance,
+              required this.income,
+              required this.expense,
+              required this.available,
+            });
+
+            final double balance;
+            final double income;
+            final double expense;
+            final double available;
+
+            @override
+            Widget build(BuildContext context) {
+              final state = AppScope.of(context);
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('PATRIMONIO', style: Theme.of(context).textTheme.labelMedium),
+                  const SizedBox(height: 6),
+                  Text(
+                    state.hideBalance ? '••••••' : moneyFor(state, balance),
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: _Metric(
+                          label: 'Entrate',
+                          value: state.hideBalance ? '••••' : moneyFor(state, income),
+                          color: context.financeColors.positive,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _Metric(
+                          label: 'Spese',
+                          value: state.hideBalance ? '••••' : moneyFor(state, expense),
+                          color: context.financeColors.negative,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _Metric(
+                          label: 'Disponibile',
+                          value: state.hideBalance ? '••••' : moneyFor(state, available),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            }
+          }
+
+          '''
+          if 'class _TotalOverviewSummary extends StatelessWidget' not in source:
+              source = source.replace(marker, summary_class + marker)
+
+          home.write_text(source)
+
+          settings = Path('lib/screens/settings_screen.dart')
+          s = settings.read_text()
+          state_decl = '''class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
+            List<DashboardWidgetConfig>? items;
+          '''
+          state_decl_replacement = '''class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
+            static const _fixedSummaryTypes = <DashboardWidgetType>{
+              DashboardWidgetType.totalBalance,
+              DashboardWidgetType.monthlyCashFlow,
+              DashboardWidgetType.safeToSpend,
+            };
+
+            List<DashboardWidgetConfig>? items;
+          '''
+          if 'class _DashboardCustomizerScreenState' in s and 'static const _fixedSummaryTypes' not in s[s.index('class _DashboardCustomizerScreenState'):]:
+              s = s.replace(state_decl, state_decl_replacement)
+
+          old_load = '''  void _load(AppState state) {
+            items ??= [...state.dashboardWidgets]
+              ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
+          }
+          '''
+          new_load = '''  void _load(AppState state) {
+            items ??= state.dashboardWidgets
+                .where((item) => !_fixedSummaryTypes.contains(item.type))
+                .toList()
+              ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
+          }
+          '''
+          s = s.replace(old_load, new_load)
+
+          old_save = '''  Future<void> _save(AppState state) async {
+            final normalized = <DashboardWidgetConfig>[];
+            for (var index = 0; index < items!.length; index++) {
+              final item = items![index];
+              normalized.add(
+                DashboardWidgetConfig(
+                  type: item.type,
+                  enabled: item.enabled,
+                  orderIndex: index,
+                  size: item.size,
+                ),
+              );
+            }
+            items = normalized;
+            await state.saveDashboard(normalized);
+          }
+          '''
+          new_save = '''  Future<void> _save(AppState state) async {
+            final fixed = state.dashboardWidgets
+                .where((item) => _fixedSummaryTypes.contains(item.type))
+                .toList()
+              ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
+            final normalizedItems = <DashboardWidgetConfig>[];
+            for (var index = 0; index < items!.length; index++) {
+              final item = items![index];
+              normalizedItems.add(
+                DashboardWidgetConfig(
+                  type: item.type,
+                  enabled: item.enabled,
+                  orderIndex: fixed.length + index,
+                  size: item.size,
+                ),
+              );
+            }
+            items = normalizedItems;
+            final normalized = <DashboardWidgetConfig>[
+              for (var index = 0; index < fixed.length; index++)
+                DashboardWidgetConfig(
+                  type: fixed[index].type,
+                  enabled: true,
+                  orderIndex: index,
+                  size: fixed[index].size,
+                ),
+              ...normalizedItems,
+            ];
+            await state.saveDashboard(normalized);
+          }
+          '''
+          s = s.replace(old_save, new_save)
+          s = s.replace("title: const Text('Personalizza dashboard'),", "title: const Text('Personalizza Home'),")
+
+          reorder = '''      body: ReorderableListView.builder(
+            padding: const EdgeInsets.fromLTRB(12, 8, 12, 80),
+          '''
+          reorder_replacement = '''      body: ReorderableListView.builder(
+            header: const Padding(
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 20),
+              child: Text(
+                'Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.',
+              ),
+            ),
+            padding: const EdgeInsets.fromLTRB(12, 8, 12, 80),
+          '''
+          if "Patrimonio, Entrate, Spese e Disponibile restano fissi" not in s:
+              s = s.replace(reorder, reorder_replacement)
+          settings.write_text(s)
+
+          pubspec = Path('pubspec.yaml')
+          p = pubspec.read_text().replace('version: 0.4.3+7', 'version: 0.4.4+8')
+          pubspec.write_text(p)
+
+          test = Path('test/home_summary_layout_test.dart')
+          if not test.exists():
+              test.write_text('''import 'dart:io';
+
+          import 'package:flutter_test/flutter_test.dart';
+
+          void main() {
+            test('total Home keeps the original summary above quick actions', () {
+              final source = File(
+                'lib/screens/account_context_home_screen.dart',
+              ).readAsStringSync();
+
+              final summary = source.indexOf('_TotalOverviewSummary(');
+              final quickActions = source.indexOf('_QuickActions(', summary + 1);
+              expect(summary, greaterThanOrEqualTo(0));
+              expect(quickActions, greaterThan(summary));
+              expect(source, contains("Text('PATRIMONIO'"));
+              expect(source, contains("label: 'Entrate'"));
+              expect(source, contains("label: 'Spese'"));
+              expect(source, contains("label: 'Disponibile'"));
+            });
+
+            test('fixed summary metrics are not duplicated by personalized sections', () {
+              final source = File(
+                'lib/screens/account_context_home_screen.dart',
+              ).readAsStringSync();
+
+              expect(source, contains('secondaryDashboardWidgets'));
+              expect(source, contains('_fixedSummaryTypes.contains(config.type)'));
+            });
+
+            test('Personalizza Home keeps secondary widgets configurable', () {
+              final source = File('lib/screens/settings_screen.dart').readAsStringSync();
+
+              expect(source, contains("title: const Text('Personalizza Home')"));
+              expect(source, contains('ReorderableListView.builder'));
+              expect(source, contains('_fixedSummaryTypes.contains(item.type)'));
+              expect(source, contains('await state.saveDashboard(normalized)'));
+            });
+          }
+          ''')
+      - name: Format changed Dart files
+        run: dart format lib/screens/account_context_home_screen.dart lib/screens/settings_screen.dart test/home_summary_layout_test.dart
+      - name: Commit restoration
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "Already applied"
+            exit 0
+          fi
+          git config user.name "Dada"
+          git config user.email "63845798+andreadada@users.noreply.github.com"
+          git add lib/screens/account_context_home_screen.dart lib/screens/settings_screen.dart test/home_summary_layout_test.dart pubspec.yaml
+          git commit -m "fix: restore Home financial summary"
+          git push origin HEAD:build/restore-home-summary
