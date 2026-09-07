@@ -20,6 +20,18 @@ class _SmokeDatabase extends AppDatabase {
   }
 }
 
+Finder _noteField() => find.byWidgetPredicate(
+  (widget) =>
+      widget is TextField &&
+      widget.decoration?.labelText == 'Descrizione opzionale',
+);
+
+Finder _tagField() => find.byWidgetPredicate(
+  (widget) =>
+      widget is TextField &&
+      widget.decoration?.labelText == 'Cerca o aggiungi tag',
+);
+
 void main() {
   for (final size in const [
     Size(320, 700),
@@ -36,11 +48,11 @@ void main() {
       addTearDown(tester.view.resetDevicePixelRatio);
 
       await _pumpQuickAdd(tester, dark: false);
-      await _revealMetadata(tester);
+      await _revealTagMetadata(tester);
 
       expect(find.text('TAG'), findsOneWidget);
-      expect(find.text('Monster'), findsWidgets);
       expect(find.text('#Università'), findsWidgets);
+      expect(_tagField(), findsOneWidget);
       expect(tester.takeException(), isNull);
     });
   }
@@ -54,10 +66,10 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
 
     await _pumpQuickAdd(tester, dark: true, textScale: 1.6);
-    await _revealMetadata(tester);
+    await _revealTagMetadata(tester);
 
     expect(find.text('TAG'), findsOneWidget);
-    expect(find.text('Mostra tutte'), findsWidgets);
+    expect(_tagField(), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
@@ -68,10 +80,14 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
 
     await _pumpQuickAdd(tester, dark: true);
-    await _revealMetadata(tester);
+    await _revealNoteMetadata(tester);
 
-    await tester.tap(find.text('Mostra tutte').first);
+    final showAll = find.text('Mostra tutte').first;
+    await tester.ensureVisible(showAll);
     await tester.pumpAndSettle();
+    await tester.tap(showAll);
+    await tester.pumpAndSettle();
+
     expect(find.text('Descrizioni'), findsOneWidget);
     expect(tester.takeException(), isNull);
 
@@ -105,15 +121,20 @@ Future<void> _pumpQuickAdd(
   await tester.pumpAndSettle();
 }
 
-Future<void> _revealMetadata(WidgetTester tester) async {
-  final noteField = find.byWidgetPredicate(
-    (widget) =>
-        widget is TextField &&
-        widget.decoration?.labelText == 'Descrizione opzionale',
-  );
+Future<void> _revealNoteMetadata(WidgetTester tester) async {
   await tester.scrollUntilVisible(
-    noteField,
+    _noteField(),
     300,
+    scrollable: find.byType(Scrollable).first,
+  );
+  await tester.pumpAndSettle();
+}
+
+Future<void> _revealTagMetadata(WidgetTester tester) async {
+  await _revealNoteMetadata(tester);
+  await tester.scrollUntilVisible(
+    _tagField(),
+    220,
     scrollable: find.byType(Scrollable).first,
   );
   await tester.pumpAndSettle();
