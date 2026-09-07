@@ -178,12 +178,12 @@ class AccountContextHomeScreen extends StatelessWidget {
                     _InsightRow(insight: insight),
                 ],
                 const SizedBox(height: 30),
-                if (dashboardWidgets.isEmpty)
+                if (secondaryDashboardWidgets.isEmpty)
                   EmptyState(
                     icon: Icons.dashboard_customize_outlined,
-                    title: 'Home vuota',
+                    title: 'Nessuna sezione aggiuntiva',
                     subtitle:
-                        'Hai nascosto tutti i widget. Riattivane almeno uno da Personalizza Home.',
+                        'Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.',
                     action: TextButton.icon(
                       onPressed: () => Navigator.push(
                         context,
@@ -196,7 +196,7 @@ class AccountContextHomeScreen extends StatelessWidget {
                     ),
                   )
                 else
-                  ...dashboardWidgets.map(
+                  ...secondaryDashboardWidgets.map(
                     (config) => Padding(
                       key: ValueKey('context-home-${config.type.name}'),
                       padding: EdgeInsets.only(
@@ -378,6 +378,64 @@ class AccountContextHomeScreen extends StatelessWidget {
           initialToAccountId: destination,
         ),
       ),
+    );
+  }
+}
+
+class _TotalOverviewSummary extends StatelessWidget {
+  const _TotalOverviewSummary({
+    required this.balance,
+    required this.income,
+    required this.expense,
+    required this.available,
+  });
+
+  final double balance;
+  final double income;
+  final double expense;
+  final double available;
+
+  @override
+  Widget build(BuildContext context) {
+    final state = AppScope.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('PATRIMONIO', style: Theme.of(context).textTheme.labelMedium),
+        const SizedBox(height: 6),
+        Text(
+          state.hideBalance ? '••••••' : moneyFor(state, balance),
+          style: Theme.of(context).textTheme.displaySmall,
+        ),
+        const SizedBox(height: 20),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: _Metric(
+                label: 'Entrate',
+                value: state.hideBalance ? '••••' : moneyFor(state, income),
+                color: context.financeColors.positive,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _Metric(
+                label: 'Spese',
+                value: state.hideBalance ? '••••' : moneyFor(state, expense),
+                color: context.financeColors.negative,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _Metric(
+                label: 'Disponibile',
+                value: state.hideBalance ? '••••' : moneyFor(state, available),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

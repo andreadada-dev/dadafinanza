@@ -808,6 +808,12 @@ class DashboardCustomizerScreen extends StatefulWidget {
 }
 
 class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
+  static const _fixedSummaryTypes = <DashboardWidgetType>{
+    DashboardWidgetType.totalBalance,
+    DashboardWidgetType.monthlyCashFlow,
+    DashboardWidgetType.safeToSpend,
+  };
+
   List<DashboardWidgetConfig>? items;
 
   void _load(AppState state) {
@@ -838,7 +844,7 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
     _load(state);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Personalizza dashboard'),
+        title: const Text('Personalizza Home'),
         actions: [
           TextButton(
             onPressed: () async {
