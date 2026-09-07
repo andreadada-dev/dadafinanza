@@ -1,0 +1,236 @@
+name: Temporary Home summary repair
+
+on:
+  push:
+    branches:
+      - 'build/restore-home-summary'
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: build/restore-home-summary
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Repair Home summary patch
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          home = Path('lib/screens/account_context_home_screen.dart')
+          source = home.read_text()
+
+          if 'static const _fixedSummaryTypes = <DashboardWidgetType>{' not in source:
+              match = re.search(
+                  r'(  static const _fallbackTypes = <DashboardWidgetType>\[.*?\n  \];)',
+                  source,
+                  flags=re.S,
+              )
+              if not match:
+                  raise SystemExit('fallback widget list not found')
+              fixed = '''
+
+            static const _fixedSummaryTypes = <DashboardWidgetType>{
+              DashboardWidgetType.totalBalance,
+              DashboardWidgetType.monthlyCashFlow,
+              DashboardWidgetType.safeToSpend,
+            };'''
+              source = source[:match.end()] + fixed + source[match.end():]
+
+          if 'final secondaryDashboardWidgets =' not in source:
+              pattern = re.compile(
+                  r'(    final dashboardWidgets = isTotal\n'
+                  r'        \? _visibleDashboardWidgets\(state\)\n'
+                  r'        : const <DashboardWidgetConfig>\[\];)'
+              )
+              match = pattern.search(source)
+              if not match:
+                  raise SystemExit('dashboardWidgets assignment not found')
+              secondary = '''
+            
+                final secondaryDashboardWidgets = dashboardWidgets
+                    .where((config) => !_fixedSummaryTypes.contains(config.type))
+                    .toList(growable: false);'''
+              source = source[:match.end()] + secondary + source[match.end():]
+
+          if '_TotalOverviewSummary(' not in source:
+              quick = '''              _QuickActions(
+                onOpen: (type) => _openQuick(context, type, effectiveAccountId),
+              ),'''
+              if quick not in source:
+                  raise SystemExit('quick action block not found')
+              summary = '''              if (isTotal) ...[
+                _TotalOverviewSummary(
+                  balance: balance,
+                  income: income,
+                  expense: expense,
+                  available: state.safeToSpend,
+                ),
+                const SizedBox(height: 20),
+              ],
+'''
+              source = source.replace(quick, summary + quick, 1)
+
+          if 'class _TotalOverviewSummary extends StatelessWidget' not in source:
+              marker = 'class _QuickActions extends StatelessWidget {'
+              if marker not in source:
+                  raise SystemExit('QuickActions class not found')
+              summary_class = '''class _TotalOverviewSummary extends StatelessWidget {
+            const _TotalOverviewSummary({
+              required this.balance,
+              required this.income,
+              required this.expense,
+              required this.available,
+            });
+
+            final double balance;
+            final double income;
+            final double expense;
+            final double available;
+
+            @override
+            Widget build(BuildContext context) {
+              final state = AppScope.of(context);
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('PATRIMONIO', style: Theme.of(context).textTheme.labelMedium),
+                  const SizedBox(height: 6),
+                  Text(
+                    state.hideBalance ? '••••••' : moneyFor(state, balance),
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: _Metric(
+                          label: 'Entrate',
+                          value: state.hideBalance ? '••••' : moneyFor(state, income),
+                          color: context.financeColors.positive,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _Metric(
+                          label: 'Spese',
+                          value: state.hideBalance ? '••••' : moneyFor(state, expense),
+                          color: context.financeColors.negative,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _Metric(
+                          label: 'Disponibile',
+                          value: state.hideBalance ? '••••' : moneyFor(state, available),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            }
+          }
+
+          '''
+              source = source.replace(marker, summary_class + marker, 1)
+
+          home.write_text(source)
+
+          settings = Path('lib/screens/settings_screen.dart')
+          s = settings.read_text()
+
+          new_load = '''  void _load(AppState state) {
+            items ??= state.dashboardWidgets
+                .where((item) => !_fixedSummaryTypes.contains(item.type))
+                .toList()
+              ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
+          }'''
+          s, count = re.subn(
+              r'  void _load\(AppState state\) \{.*?\n  \}',
+              new_load,
+              s,
+              count=1,
+              flags=re.S,
+          )
+          if count != 1:
+              raise SystemExit('customizer _load not replaced')
+
+          new_save = '''  Future<void> _save(AppState state) async {
+            final fixed = state.dashboardWidgets
+                .where((item) => _fixedSummaryTypes.contains(item.type))
+                .toList()
+              ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
+            final normalizedItems = <DashboardWidgetConfig>[];
+            for (var index = 0; index < items!.length; index++) {
+              final item = items![index];
+              normalizedItems.add(
+                DashboardWidgetConfig(
+                  type: item.type,
+                  enabled: item.enabled,
+                  orderIndex: fixed.length + index,
+                  size: item.size,
+                ),
+              );
+            }
+            items = normalizedItems;
+            final normalized = <DashboardWidgetConfig>[
+              for (var index = 0; index < fixed.length; index++)
+                DashboardWidgetConfig(
+                  type: fixed[index].type,
+                  enabled: true,
+                  orderIndex: index,
+                  size: fixed[index].size,
+                ),
+              ...normalizedItems,
+            ];
+            await state.saveDashboard(normalized);
+          }'''
+          s, count = re.subn(
+              r'  Future<void> _save\(AppState state\) async \{.*?\n  \}',
+              new_save,
+              s,
+              count=1,
+              flags=re.S,
+          )
+          if count != 1:
+              raise SystemExit('customizer _save not replaced')
+
+          if 'Patrimonio, Entrate, Spese e Disponibile restano fissi' not in s:
+              needle = '      body: ReorderableListView.builder(\n'
+              if needle not in s:
+                  raise SystemExit('ReorderableListView not found')
+              header = '''      body: ReorderableListView.builder(
+                header: const Padding(
+                  padding: EdgeInsets.fromLTRB(8, 8, 8, 20),
+                  child: Text(
+                    'Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.',
+                  ),
+                ),
+'''
+              s = s.replace(needle, header, 1)
+
+          settings.write_text(s)
+      - run: dart format lib/screens/account_context_home_screen.dart lib/screens/settings_screen.dart test/home_summary_layout_test.dart
+      - name: Commit repair
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "Already repaired"
+            exit 0
+          fi
+          git config user.name "Dada"
+          git config user.email "63845798+andreadada@users.noreply.github.com"
+          git add lib/screens/account_context_home_screen.dart lib/screens/settings_screen.dart test/home_summary_layout_test.dart
+          git commit -m "fix: complete Home summary restoration"
+          git push origin HEAD:build/restore-home-summary
