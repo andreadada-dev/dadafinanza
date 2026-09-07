@@ -810,7 +810,8 @@ class DashboardCustomizerScreen extends StatefulWidget {
 class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
   static const _fixedSummaryTypes = <DashboardWidgetType>{
     DashboardWidgetType.totalBalance,
-    DashboardWidgetType.monthlyCashFlow,
+    DashboardWidgetType.monthlyIncome,
+    DashboardWidgetType.monthlyExpense,
     DashboardWidgetType.safeToSpend,
   };
 

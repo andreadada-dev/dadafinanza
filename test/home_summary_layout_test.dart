@@ -25,6 +25,8 @@ void main() {
 
     expect(source, contains('secondaryDashboardWidgets'));
     expect(source, contains('_fixedSummaryTypes.contains(config.type)'));
+    expect(source, contains('DashboardWidgetType.monthlyIncome'));
+    expect(source, contains('DashboardWidgetType.monthlyExpense'));
   });
 
   test('Personalizza Home keeps secondary widgets configurable', () {
