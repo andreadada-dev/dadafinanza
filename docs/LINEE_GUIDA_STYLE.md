@@ -101,7 +101,7 @@ Pattern: leading opzionale, title, subtitle opzionale, trailing, touch target >=
 
 ## 12. Form
 
-Mostrare prima i campi frequenti. Campi avanzati sotto progressive disclosure (`Altre opzioni`, `Aggiungi dettagli`). Nota e tag usano input semplici, senza box decorativi pesanti.
+Mostrare prima i campi frequenti. Campi avanzati sotto progressive disclosure (`Altre opzioni`, `Aggiungi dettagli`). Nota e tag usano input semplici, senza box decorativi pesanti. Nel Quick Add la descrizione precede i tag: i suggerimenti descrizione/tag sono strisce orizzontali compatte, derivate dallo storico locale, con preferiti/recenti/frequenti e ricerca. La creazione di un tag nuovo deve essere esplicita; varianti di maiuscole, `#`, accenti e spazi non devono creare duplicati logici.
 
 ## 13. Empty state
 
@@ -161,6 +161,8 @@ Verificare almeno larghezze 320, 360, 390, 430dp e text scale elevato. Le quick 
 - `FlatMetric` — `lib/widgets/ui_helpers.dart`: metriche piatte; non usare per card decorative.
 - `TransactionListTile` — `lib/screens/transaction_screens.dart`: riga movimento con navigazione al dettaglio.
 - `FinanceQuickAction` — `lib/widgets/finance_quick_action.dart`: azioni rapide senza superficie visiva, ad esempio Spesa/Entrata/Trasferisci/Voce.
+- `QuickSuggestionStrip` — `lib/widgets/quick_suggestion_strip.dart`: striscia orizzontale condivisa per suggerimenti rapidi, senza superfici decorative aggiuntive.
+- `TransactionMetadataFields` — `lib/widgets/transaction_metadata_fields.dart`: descrizione + tag del Quick Add con autocomplete, preferiti e catalogo locale; non possiede logica di salvataggio del movimento.
 - `showIconPicker` — `lib/widgets/ui_helpers.dart`: selezione icone categorizzata.
 - `confirmDestructiveAction` — `lib/widgets/ui_helpers.dart`: conferme distruttive.
 - `TransactionDraft` — modello di acquisizione condiviso da Quick Add, voce, widget, preset e deep link; non è un secondo modello di transazione persistita.

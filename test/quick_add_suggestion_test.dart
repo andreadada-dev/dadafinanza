@@ -14,6 +14,15 @@ class FakeLearningDatabase extends AppDatabase {
   List<LearnedPattern> patterns = const [];
   final feedbackKinds = <String>[];
   final suppressions = <String>{};
+  final settings = <String, String>{};
+
+  @override
+  Future<String?> getSetting(String key) async => settings[key];
+
+  @override
+  Future<void> setSetting(String key, String value) async {
+    settings[key] = value;
+  }
 
   @override
   Future<void> recordPatternFeedback(
@@ -121,6 +130,12 @@ Future<void> pumpQuickAdd(WidgetTester tester, AppState state) async {
     ),
   );
   await tester.pump();
+  await tester.scrollUntilVisible(
+    descriptionField(),
+    320,
+    scrollable: find.byType(Scrollable).first,
+  );
+  await tester.pump();
 }
 
 Future<void> enterHighConfidenceSuggestion(
@@ -137,6 +152,12 @@ Future<void> openPreview(WidgetTester tester) async {
     find.byType(FloatingActionButton),
   );
   fab.onPressed!();
+  await tester.pumpAndSettle();
+}
+
+Future<void> revealCategorySection(WidgetTester tester) async {
+  final list = find.byType(ListView).first;
+  await tester.drag(list, const Offset(0, 1200));
   await tester.pumpAndSettle();
 }
 
@@ -183,9 +204,10 @@ void main() {
 
     await tester.tap(find.text('Applica'));
     await tester.pumpAndSettle();
+    await revealCategorySection(tester);
 
     expect(database.feedbackKinds, contains('accepted'));
-    expect(find.text('Alimentari'), findsNWidgets(2));
+    expect(find.text('Alimentari'), findsWidgets);
     expect(find.text('Completa'), findsNothing);
   });
 

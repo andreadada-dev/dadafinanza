@@ -17,6 +17,59 @@ class VoiceInputStatus {
   final String? message;
 }
 
+/// Keeps the most informative transcript when Android emits a shorter final
+/// result after a more complete partial result. It never synthesizes words:
+/// the returned value is always one of the recognizer results received.
+class VoiceTranscriptAccumulator {
+  String _best = '';
+
+  String get value => _best;
+
+  void reset() => _best = '';
+
+  String update(String text, {required bool finalResult}) {
+    final candidate = text.trim();
+    if (candidate.isEmpty) return _best;
+    if (_best.isEmpty) {
+      _best = candidate;
+      return _best;
+    }
+
+    final bestComparable = _comparable(_best);
+    final candidateComparable = _comparable(candidate);
+    final related =
+        bestComparable.startsWith(candidateComparable) ||
+        candidateComparable.startsWith(bestComparable);
+
+    if (related) {
+      if (_informationScore(candidate) >= _informationScore(_best)) {
+        _best = candidate;
+      }
+      return _best;
+    }
+
+    // An unrelated final result is authoritative. For partial results keep the
+    // newest phrase only when it carries at least as much information.
+    if (finalResult ||
+        _informationScore(candidate) >= _informationScore(_best)) {
+      _best = candidate;
+    }
+    return _best;
+  }
+
+  static String _comparable(String value) => value
+      .toLowerCase()
+      .replaceAll(RegExp(r'[^a-z0-9àèéìòù:.,]+', unicode: true), ' ')
+      .replaceAll(RegExp(r'\s+'), ' ')
+      .trim();
+
+  static int _informationScore(String value) {
+    final meaningful = value.replaceAll(RegExp(r'\s+'), '');
+    final punctuationBonus = RegExp(r'[:.,]').allMatches(value).length;
+    return meaningful.length + punctuationBonus;
+  }
+}
+
 class VoiceInputService {
   VoiceInputService({SpeechToText? speech})
     : _speech = speech ?? SpeechToText();

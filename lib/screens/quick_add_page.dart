@@ -14,8 +14,10 @@ import '../models/quick_capture_models.dart';
 import '../models/smart_models.dart';
 import '../services/attachment_service.dart';
 import '../services/goal_ledger_service.dart';
+import '../services/transaction_metadata_suggestions.dart';
 import '../services/voice_input_service.dart';
 import '../services/voice_transaction_parser.dart';
+import '../widgets/transaction_metadata_fields.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_screens.dart';
 import 'advances_screen.dart';
@@ -57,7 +59,6 @@ class QuickAddPage extends StatefulWidget {
 class _QuickAddPageState extends State<QuickAddPage> {
   final amount = TextEditingController();
   final note = TextEditingController();
-  final tag = TextEditingController();
   final advanceShare = TextEditingController();
   final amountFocus = FocusNode();
   final picker = ImagePicker();
@@ -112,10 +113,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
       date = editing.date;
       includeInAnalytics = editing.includeInAnalytics;
       existingReceiptPath = editing.receiptPath;
-      expanded =
-          editing.tags.isNotEmpty ||
-          editing.receiptPath != null ||
-          !editing.includeInAnalytics;
+      expanded = editing.receiptPath != null || !editing.includeInAnalytics;
     } else {
       if (draft?.amountCents != null) {
         amount.text = Money.fromCents(draft!.amountCents!).toStringAsFixed(2);
@@ -140,6 +138,9 @@ class _QuickAddPageState extends State<QuickAddPage> {
     if (!_defaultsSet) {
       _defaultsSet = true;
       _setDefaults();
+      final initialTags = [...tags];
+      tags.clear();
+      _mergeCanonicalTags(initialTags, AppScope.of(context));
       _scheduleSuggestion();
       final shouldStartVoice =
           widget.startVoice || widget.initialDraft?.startVoice == true;
@@ -160,7 +161,6 @@ class _QuickAddPageState extends State<QuickAddPage> {
     advanceShare.removeListener(_onDraftChanged);
     amount.dispose();
     note.dispose();
-    tag.dispose();
     advanceShare.dispose();
     amountFocus.dispose();
     unawaited(voice.cancel());
@@ -305,6 +305,25 @@ class _QuickAddPageState extends State<QuickAddPage> {
     amountFocus.requestFocus();
   }
 
+  List<String> _knownTags(AppState state) => {
+    for (final transaction in state.transactions) ...transaction.tags,
+    ...tags,
+  }.toList(growable: false);
+
+  void _mergeCanonicalTags(Iterable<String> values, AppState state) {
+    final index = TransactionMetadataSuggestions.buildIndex(state.transactions);
+    for (final raw in values) {
+      final cleaned = TransactionMetadataSuggestions.cleanTag(raw);
+      if (cleaned.isEmpty) continue;
+      final value = index.canonicalTag(cleaned) ?? cleaned;
+      final key = TransactionMetadataSuggestions.normalizeLookup(value);
+      final alreadySelected = tags.any(
+        (item) => TransactionMetadataSuggestions.normalizeLookup(item) == key,
+      );
+      if (!alreadySelected) tags.add(value);
+    }
+  }
+
   void _scheduleSuggestion() {
     if (!mounted || widget.editing != null || !_defaultsSet) return;
     _suggestionDebounce?.cancel();
@@ -386,6 +405,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
       accounts: state.accounts,
       categories: state.categories,
       people: state.people,
+      knownTags: _knownTags(state),
     );
 
     for (final issue in result.issues) {
@@ -468,9 +488,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
           ).toStringAsFixed(2);
         }
       }
-      for (final value in draft.tags) {
-        if (!tags.contains(value)) tags.add(value);
-      }
+      _mergeCanonicalTags(draft.tags, state);
       lastVoiceTranscript = transcript;
       voiceApplied = true;
       suggestion = null;
@@ -739,9 +757,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
           !suggestedDestination.isArchived) {
         toAccountId = suggestedDestination.id;
       }
-      for (final item in current.tags) {
-        if (!tags.contains(item)) tags.add(item);
-      }
+      _mergeCanonicalTags(current.tags, state);
       if (amount.text.trim().isEmpty && current.amount != null) {
         amount.text = current.amount!.toStringAsFixed(2);
       }
@@ -1295,25 +1311,6 @@ class _QuickAddPageState extends State<QuickAddPage> {
                 onSelectionChanged: (value) => _changeType(value.first),
               ),
             ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: note,
-              textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration(
-                labelText: 'Descrizione opzionale',
-                hintText: 'Es. LIDL, Spotify, stipendio…',
-                prefixIcon: Icon(Icons.notes_rounded),
-              ),
-            ),
-            if (lastVoiceTranscript != null) ...[
-              const SizedBox(height: 4),
-              Text(
-                'Hai detto: “$lastVoiceTranscript”',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
             if (type != TransactionType.transfer &&
                 recentCategories.isNotEmpty) ...[
               const SizedBox(height: 16),
@@ -1477,6 +1474,28 @@ class _QuickAddPageState extends State<QuickAddPage> {
                 ),
               ],
             ],
+            const SizedBox(height: 20),
+            TransactionMetadataFields(
+              noteController: note,
+              transactions: state.transactions,
+              tags: List<String>.unmodifiable(tags),
+              database: state.database,
+              onTagsChanged: (values) => setState(() {
+                tags
+                  ..clear()
+                  ..addAll(values);
+              }),
+            ),
+            if (lastVoiceTranscript != null) ...[
+              const SizedBox(height: 4),
+              Text(
+                'Hai detto: “$lastVoiceTranscript”',
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+            const SizedBox(height: 16),
             const Divider(height: 1),
             _PickerRow(
               icon: Icons.calendar_today_outlined,
@@ -1521,43 +1540,6 @@ class _QuickAddPageState extends State<QuickAddPage> {
               child: expanded
                   ? Column(
                       children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextField(
-                                controller: tag,
-                                decoration: const InputDecoration(
-                                  labelText: 'Aggiungi tag',
-                                  hintText: 'Es. VacanzaRoma',
-                                ),
-                                onSubmitted: (_) => _addTag(),
-                              ),
-                            ),
-                            IconButton(
-                              tooltip: 'Aggiungi tag',
-                              onPressed: _addTag,
-                              icon: const Icon(Icons.add_rounded),
-                            ),
-                          ],
-                        ),
-                        if (tags.isNotEmpty)
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Wrap(
-                              spacing: 8,
-                              runSpacing: 8,
-                              children: tags
-                                  .map(
-                                    (value) => InputChip(
-                                      label: Text('#$value'),
-                                      onDeleted: () =>
-                                          setState(() => tags.remove(value)),
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
-                          ),
-                        const SizedBox(height: 8),
                         SwitchListTile(
                           contentPadding: EdgeInsets.zero,
                           title: const Text('Includi nelle statistiche'),
@@ -1625,15 +1607,6 @@ class _QuickAddPageState extends State<QuickAddPage> {
       ),
     );
   }
-
-  void _addTag() {
-    final value = tag.text.trim().replaceFirst('#', '');
-    if (value.isEmpty || tags.contains(value)) return;
-    setState(() {
-      tags.add(value);
-      tag.clear();
-    });
-  }
 }
 
 class _VoiceListeningSheet extends StatefulWidget {
@@ -1659,6 +1632,7 @@ class _VoiceListeningSheetState extends State<_VoiceListeningSheet> {
   Timer? _silenceTimer;
   DateTime _lastWaveUpdate = DateTime.fromMillisecondsSinceEpoch(0);
   final List<double> _levels = List<double>.filled(_waveBarCount, 0);
+  final VoiceTranscriptAccumulator _transcript = VoiceTranscriptAccumulator();
 
   @override
   void initState() {
@@ -1676,6 +1650,7 @@ class _VoiceListeningSheetState extends State<_VoiceListeningSheet> {
   Future<void> _begin({bool clearTranscript = false}) async {
     _silenceTimer?.cancel();
     if (clearTranscript && mounted) {
+      _transcript.reset();
       setState(() {
         partial = '';
         error = null;
@@ -1733,11 +1708,12 @@ class _VoiceListeningSheetState extends State<_VoiceListeningSheet> {
         onSoundLevel: _onSoundLevel,
         onResult: (text, finalResult) {
           if (!mounted || closing) return;
-          final cleaned = text.trim();
+          final best = _transcript.update(text, finalResult: finalResult);
+          final cleaned = best.trim();
           if (cleaned.isEmpty) return;
           final changed = cleaned != partial.trim();
           setState(() {
-            partial = text;
+            partial = best;
             ready = !finalResult;
             settled = finalResult;
             error = null;

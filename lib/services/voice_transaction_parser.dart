@@ -1,6 +1,7 @@
 import '../models/advance_models.dart';
 import '../models/models.dart';
 import '../models/quick_capture_models.dart';
+import 'transaction_metadata_suggestions.dart';
 
 class VoiceTransactionParser {
   const VoiceTransactionParser();
@@ -10,10 +11,12 @@ class VoiceTransactionParser {
     required List<Account> accounts,
     required List<Category> categories,
     List<FinancePerson> people = const [],
+    List<String> knownTags = const [],
     DateTime? now,
   }) {
     final reference = now ?? DateTime.now();
-    final normalized = _normalize(transcript);
+    final explicit = _extractExplicitFields(transcript, knownTags: knownTags);
+    final normalized = _normalize(explicit.remainingText);
     final issues = <VoiceParseIssue>[];
     final sources = <String, VoiceFieldSource>{};
 
@@ -83,8 +86,9 @@ class VoiceTransactionParser {
         accountId = transfer.fromId;
         toAccountId = transfer.toId;
         if (accountId != null) sources['account'] = VoiceFieldSource.explicit;
-        if (toAccountId != null)
+        if (toAccountId != null) {
           sources['toAccount'] = VoiceFieldSource.explicit;
+        }
       }
     } else {
       final accountMatch = _matchEntity<Account>(
@@ -124,14 +128,17 @@ class VoiceTransactionParser {
     final parsedDate = _parseDate(normalized, reference);
     if (parsedDate.explicit) sources['date'] = VoiceFieldSource.explicit;
 
-    final note = _extractNote(
-      transcript,
-      normalized: normalized,
-      accounts: activeAccounts,
-      categories: categories,
-      people: people,
-    );
+    final note =
+        explicit.note ??
+        _extractNote(
+          explicit.remainingText,
+          normalized: normalized,
+          accounts: activeAccounts,
+          categories: categories,
+          people: people,
+        );
     if (note != null) sources['note'] = VoiceFieldSource.explicit;
+    if (explicit.tags.isNotEmpty) sources['tags'] = VoiceFieldSource.explicit;
 
     final canApplyAdvance =
         type == TransactionType.expense && advance.requested;
@@ -151,6 +158,7 @@ class VoiceTransactionParser {
         categoryId: categoryId,
         date: parsedDate.value,
         note: note,
+        tags: explicit.tags,
         advanceShareRequested: canApplyAdvance,
         advanceWholeAmount: canApplyAdvance && advance.wholeAmount,
         advanceAmountCents: advanceAmountCents,
@@ -160,6 +168,135 @@ class VoiceTransactionParser {
       ),
     );
   }
+
+  _ExplicitVoiceFields _extractExplicitFields(
+    String original, {
+    required List<String> knownTags,
+  }) {
+    final noteMarker = RegExp(
+      r'\b(?:scrivi\s+(?:nella|in)\s+nota|descrizione|nota)\b',
+      caseSensitive: false,
+    );
+    final tagMarker = RegExp(
+      r'\b(?:aggiungi\s+(?:il\s+)?tag|metti\s+(?:il\s+)?tag|tag)\b',
+      caseSensitive: false,
+    );
+
+    final markers = <_VoiceFieldMarker>[
+      for (final match in noteMarker.allMatches(original))
+        _VoiceFieldMarker(match.start, match.end, _VoiceFieldKind.note),
+      for (final match in tagMarker.allMatches(original))
+        _VoiceFieldMarker(match.start, match.end, _VoiceFieldKind.tags),
+    ]..sort((left, right) => left.start.compareTo(right.start));
+
+    if (markers.isEmpty) {
+      final leadingSegna = RegExp(
+        r'^\s*segna\s+(.+?)\s*$',
+        caseSensitive: false,
+      ).firstMatch(original);
+      if (leadingSegna != null && _segnaMeansNote(original)) {
+        final note = _cleanVoiceValue(leadingSegna.group(1));
+        return _ExplicitVoiceFields(
+          remainingText: '',
+          note: note.isEmpty ? null : note,
+        );
+      }
+      return _ExplicitVoiceFields(remainingText: original);
+    }
+
+    String? note;
+    final tags = <String>[];
+    final preserved = StringBuffer();
+    var cursor = 0;
+    for (var index = 0; index < markers.length; index++) {
+      final marker = markers[index];
+      if (marker.start > cursor) {
+        preserved.write(original.substring(cursor, marker.start));
+      }
+      final end = index + 1 < markers.length
+          ? markers[index + 1].start
+          : original.length;
+      final content = _cleanVoiceValue(original.substring(marker.end, end));
+      if (marker.kind == _VoiceFieldKind.note) {
+        if (content.isNotEmpty) note = content;
+      } else if (content.isNotEmpty) {
+        tags.addAll(_parseTags(content, knownTags));
+      }
+      cursor = end;
+    }
+    if (cursor < original.length) preserved.write(original.substring(cursor));
+
+    return _ExplicitVoiceFields(
+      remainingText: preserved
+          .toString()
+          .replaceAll(RegExp(r'\s+'), ' ')
+          .trim(),
+      note: note,
+      tags: _dedupeTags(tags),
+    );
+  }
+
+  bool _segnaMeansNote(String original) {
+    final normalized = _normalize(original);
+    if (!normalized.startsWith('segna ')) return false;
+    if (RegExp(
+      r'(?:€|\b(?:euro|eur)\b)',
+      caseSensitive: false,
+    ).hasMatch(original)) {
+      return false;
+    }
+    return !_containsAny(normalized, const [
+      'spesa',
+      'speso',
+      'pagato',
+      'entrata',
+      'ricevuto',
+      'incasso',
+      'accredito',
+      'trasferisci',
+      'trasferimento',
+      'sposta',
+      'giroconto',
+    ]);
+  }
+
+  List<String> _parseTags(String content, List<String> knownTags) {
+    final pieces = content
+        .split(RegExp(r'\s*(?:,|;|\be\b)\s*', caseSensitive: false))
+        .map(_cleanVoiceValue)
+        .where((value) => value.isNotEmpty);
+    final output = <String>[];
+    for (final raw in pieces) {
+      final cleaned = TransactionMetadataSuggestions.cleanTag(raw);
+      if (cleaned.isEmpty) continue;
+      final key = TransactionMetadataSuggestions.normalizeLookup(cleaned);
+      String? canonical;
+      for (final known in knownTags) {
+        if (TransactionMetadataSuggestions.normalizeLookup(known) == key) {
+          canonical = TransactionMetadataSuggestions.cleanTag(known);
+          break;
+        }
+      }
+      output.add(canonical ?? cleaned);
+    }
+    return output;
+  }
+
+  List<String> _dedupeTags(Iterable<String> values) {
+    final seen = <String>{};
+    final output = <String>[];
+    for (final value in values) {
+      final key = TransactionMetadataSuggestions.normalizeLookup(value);
+      if (key.isNotEmpty && seen.add(key)) output.add(value);
+    }
+    return output;
+  }
+
+  String _cleanVoiceValue(String? raw) => (raw ?? '')
+      .trim()
+      .replaceFirst(RegExp(r'^[,:;\-\s]+'), '')
+      .replaceFirst(RegExp(r'[,:;\-\s]+$'), '')
+      .trim();
 
   TransactionType? _explicitType(String input) {
     if (_containsAny(input, const [
@@ -664,6 +801,28 @@ class VoiceTransactionParser {
   }
 }
 
+enum _VoiceFieldKind { note, tags }
+
+class _VoiceFieldMarker {
+  const _VoiceFieldMarker(this.start, this.end, this.kind);
+
+  final int start;
+  final int end;
+  final _VoiceFieldKind kind;
+}
+
+class _ExplicitVoiceFields {
+  const _ExplicitVoiceFields({
+    required this.remainingText,
+    this.note,
+    this.tags = const [],
+  });
+
+  final String remainingText;
+  final String? note;
+  final List<String> tags;
+}
+
 class _AdvanceParse {
   const _AdvanceParse({
     required this.amountScanInput,
@@ -680,6 +839,7 @@ class _AdvanceParse {
 
 class _AmountParse {
   const _AmountParse({this.cents, this.ambiguous = false});
+
   final int? cents;
   final bool ambiguous;
 }
@@ -690,6 +850,7 @@ class _EntityMatch {
     this.ambiguous = false,
     this.candidates = const [],
   });
+
   final int? id;
   final bool ambiguous;
   final List<int> candidates;
@@ -702,6 +863,7 @@ class _TransferMatch {
     this.ambiguous = false,
     this.candidates = const [],
   });
+
   final int? fromId;
   final int? toId;
   final bool ambiguous;
@@ -710,12 +872,14 @@ class _TransferMatch {
 
 class _DateParse {
   const _DateParse(this.value, this.explicit);
+
   final DateTime value;
   final bool explicit;
 }
 
 class _ScoredEntity<T> {
   const _ScoredEntity(this.item, this.name, this.score);
+
   final T item;
   final String name;
   final double score;

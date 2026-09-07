@@ -16,7 +16,7 @@ Ordine di importanza: descrizione normalizzata, storico dominante, conto, fascia
 
 ## Normalizzazione
 
-La descrizione viene lowercased, privata di punteggiatura, numeri transazionali isolati e spazi multipli. I token troppo generici vengono ignorati nel confronto. Exact/prefix/contains e Jaccard sui token alimentano la similarità.
+La descrizione viene lowercased, privata di punteggiatura, numeri transazionali isolati e spazi multipli. I token troppo generici vengono ignorati nel confronto. Exact/prefix/contains e Jaccard sui token alimentano la similarità. L'autocomplete del Quick Add riusa le stesse convenzioni di normalizzazione ma resta un indice UI derivato dallo storico: non crea nuovi `LearnedPattern`, non modifica le soglie di confidence e non salva movimenti automaticamente.
 
 ## Soglie
 
