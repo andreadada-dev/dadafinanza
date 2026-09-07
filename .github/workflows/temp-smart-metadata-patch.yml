@@ -23,31 +23,44 @@ jobs:
           cache: true
       - name: Pub get
         run: flutter pub get
-      - name: Remove stale helper
+      - name: Update Smart suggestion regression test for lazy metadata field
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import re
-          path = Path('lib/widgets/transaction_metadata_fields.dart')
+          path = Path('test/quick_add_suggestion_test.dart')
           text = path.read_text(encoding='utf-8')
-          pattern = r"\n  bool _isFavorite\(String value, Set<String> favorites\) \{.*?\n  \}\n"
-          updated, count = re.subn(pattern, '\n', text, count=1, flags=re.S)
-          if count != 1:
-              raise SystemExit(f'Expected one stale _isFavorite helper, found {count}')
-          path.write_text(updated, encoding='utf-8')
+          old = """  );
+  await tester.pump();
+}
+
+Future<void> enterHighConfidenceSuggestion"""
+          new = """  );
+  await tester.pump();
+  await tester.scrollUntilVisible(
+    descriptionField(),
+    320,
+    scrollable: find.byType(Scrollable).first,
+  );
+  await tester.pump();
+}
+
+Future<void> enterHighConfidenceSuggestion"""
+          if text.count(old) != 1:
+              raise SystemExit(f'Expected one pumpQuickAdd anchor, found {text.count(old)}')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
           PY
       - name: Format sources
         run: dart format lib test
-      - name: Commit source cleanup and formatting
+      - name: Commit regression-test adaptation
         shell: bash
         run: |
           if git diff --quiet; then
-            echo "No source cleanup or formatting changes to commit."
+            echo "No changes to commit."
           else
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add lib test
-            git commit -m "style: format smart metadata implementation"
+            git add test/quick_add_suggestion_test.dart
+            git commit -m "test: adapt Smart suggestion tests to metadata field layout"
             git push origin HEAD:build/smart-notes-tags-voice
           fi
       - name: Analyze
