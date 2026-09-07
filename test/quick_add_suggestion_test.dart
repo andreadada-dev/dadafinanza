@@ -130,6 +130,12 @@ Future<void> pumpQuickAdd(WidgetTester tester, AppState state) async {
     ),
   );
   await tester.pump();
+  await tester.scrollUntilVisible(
+    descriptionField(),
+    320,
+    scrollable: find.byType(Scrollable).first,
+  );
+  await tester.pump();
 }
 
 Future<void> enterHighConfidenceSuggestion(
