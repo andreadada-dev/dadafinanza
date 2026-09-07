@@ -50,7 +50,7 @@ void main() {
       await _pumpQuickAdd(tester, dark: false);
       await _revealTagMetadata(tester);
 
-      expect(find.text('TAG'), findsOneWidget);
+      expect(find.text('Tag'), findsOneWidget);
       expect(find.text('#Università'), findsWidgets);
       expect(_tagField(), findsOneWidget);
       expect(tester.takeException(), isNull);
@@ -68,12 +68,14 @@ void main() {
     await _pumpQuickAdd(tester, dark: true, textScale: 1.6);
     await _revealTagMetadata(tester);
 
-    expect(find.text('TAG'), findsOneWidget);
+    expect(find.text('Tag'), findsOneWidget);
     expect(_tagField(), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('Quick Add metadata bottom sheet closes cleanly', (tester) async {
+  testWidgets('Quick Add metadata bottom sheet closes cleanly with back', (
+    tester,
+  ) async {
     tester.view.physicalSize = const Size(320, 700);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
@@ -89,9 +91,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Descrizioni'), findsOneWidget);
+    expect(find.text('Cerca descrizione'), findsOneWidget);
     expect(tester.takeException(), isNull);
 
-    await tester.tap(find.byTooltip('Chiudi'));
+    await tester.binding.handlePopRoute();
     await tester.pumpAndSettle();
     expect(find.text('Descrizioni'), findsNothing);
     expect(find.text('Nuovo movimento'), findsOneWidget);
