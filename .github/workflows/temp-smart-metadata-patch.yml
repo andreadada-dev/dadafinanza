@@ -23,21 +23,34 @@ jobs:
           cache: true
       - name: Pub get
         run: flutter pub get
+      - name: Remove stale helper
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          path = Path('lib/widgets/transaction_metadata_fields.dart')
+          text = path.read_text(encoding='utf-8')
+          pattern = r"\n  bool _isFavorite\(String value, Set<String> favorites\) \{.*?\n  \}\n"
+          updated, count = re.subn(pattern, '\n', text, count=1, flags=re.S)
+          if count != 1:
+              raise SystemExit(f'Expected one stale _isFavorite helper, found {count}')
+          path.write_text(updated, encoding='utf-8')
+          PY
       - name: Format sources
         run: dart format lib test
+      - name: Commit source cleanup and formatting
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No source cleanup or formatting changes to commit."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add lib test
+            git commit -m "style: format smart metadata implementation"
+            git push origin HEAD:build/smart-notes-tags-voice
+          fi
       - name: Analyze
         run: flutter analyze --no-fatal-infos
       - name: Test
         run: flutter test
-      - name: Commit formatting
-        shell: bash
-        run: |
-          if git diff --quiet; then
-            echo "No formatting changes to commit."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add lib test
-          git commit -m "style: format smart metadata implementation"
-          git push origin HEAD:build/smart-notes-tags-voice
