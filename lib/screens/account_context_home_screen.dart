@@ -29,8 +29,7 @@ class AccountContextHomeScreen extends StatelessWidget {
 
   static const _fallbackTypes = <DashboardWidgetType>[
     DashboardWidgetType.totalBalance,
-    DashboardWidgetType.monthlyIncome,
-    DashboardWidgetType.monthlyExpense,
+    DashboardWidgetType.monthlyCashFlow,
     DashboardWidgetType.safeToSpend,
     DashboardWidgetType.accounts,
     DashboardWidgetType.monthlyBudget,
@@ -44,7 +43,8 @@ class AccountContextHomeScreen extends StatelessWidget {
 
   static const _fixedSummaryTypes = <DashboardWidgetType>{
     DashboardWidgetType.totalBalance,
-    DashboardWidgetType.monthlyCashFlow,
+    DashboardWidgetType.monthlyIncome,
+    DashboardWidgetType.monthlyExpense,
     DashboardWidgetType.safeToSpend,
   };
 
