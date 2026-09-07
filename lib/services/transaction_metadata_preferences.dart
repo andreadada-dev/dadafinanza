@@ -55,7 +55,9 @@ class TransactionMetadataPreferences {
       values.add(value);
     }
     final sorted = values.toList()
-      ..sort((left, right) => left.toLowerCase().compareTo(right.toLowerCase()));
+      ..sort(
+        (left, right) => left.toLowerCase().compareTo(right.toLowerCase()),
+      );
     await database.setSetting(key, jsonEncode(sorted));
     return sorted.toSet();
   }

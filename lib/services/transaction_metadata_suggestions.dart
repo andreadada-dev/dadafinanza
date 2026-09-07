@@ -88,7 +88,9 @@ class TransactionMetadataIndex {
       if (frequency != 0) return frequency;
       final recent = right.$1.lastUsed.compareTo(left.$1.lastUsed);
       if (recent != 0) return recent;
-      return left.$1.value.toLowerCase().compareTo(right.$1.value.toLowerCase());
+      return left.$1.value.toLowerCase().compareTo(
+        right.$1.value.toLowerCase(),
+      );
     });
     return matches.take(limit).map((item) => item.$1).toList(growable: false);
   }

@@ -5,21 +5,24 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   final now = DateTime(2026, 9, 7, 12);
 
-  test('note ranking uses exact, prefix, contains then frequency and recency', () {
-    final index = TransactionMetadataSuggestions.buildIndex([
-      _transaction(1, 'Monster', now.subtract(const Duration(days: 3))),
-      _transaction(2, 'Monster', now.subtract(const Duration(days: 2))),
-      _transaction(3, 'Spesa Monster Energy', now),
-      _transaction(4, 'Monopoli', now.subtract(const Duration(days: 1))),
-    ]);
+  test(
+    'note ranking uses exact, prefix, contains then frequency and recency',
+    () {
+      final index = TransactionMetadataSuggestions.buildIndex([
+        _transaction(1, 'Monster', now.subtract(const Duration(days: 3))),
+        _transaction(2, 'Monster', now.subtract(const Duration(days: 2))),
+        _transaction(3, 'Spesa Monster Energy', now),
+        _transaction(4, 'Monopoli', now.subtract(const Duration(days: 1))),
+      ]);
 
-    expect(index.noteSuggestions('Monster').first.value, 'Monster');
-    expect(index.noteSuggestions('Mon').first.value, 'Monster');
-    expect(
-      index.noteSuggestions('ster').map((item) => item.value),
-      containsAll(['Monster', 'Spesa Monster Energy']),
-    );
-  });
+      expect(index.noteSuggestions('Monster').first.value, 'Monster');
+      expect(index.noteSuggestions('Mon').first.value, 'Monster');
+      expect(
+        index.noteSuggestions('ster').map((item) => item.value),
+        containsAll(['Monster', 'Spesa Monster Energy']),
+      );
+    },
+  );
 
   test('lookup is case and accent insensitive', () {
     final index = TransactionMetadataSuggestions.buildIndex([
@@ -56,19 +59,24 @@ void main() {
     expect(index.canonicalTag('#monster'), isNotNull);
   });
 
-  test('tag search supports prefix and contains and excludes selected tags', () {
-    final index = TransactionMetadataSuggestions.buildIndex([
-      _transaction(1, null, now, tags: const ['Università', 'Vacanza']),
-      _transaction(2, null, now, tags: const ['Roma2026']),
-    ]);
+  test(
+    'tag search supports prefix and contains and excludes selected tags',
+    () {
+      final index = TransactionMetadataSuggestions.buildIndex([
+        _transaction(1, null, now, tags: const ['Università', 'Vacanza']),
+        _transaction(2, null, now, tags: const ['Roma2026']),
+      ]);
 
-    expect(index.tagSuggestions('Uni').first.value, 'Università');
-    expect(index.tagSuggestions('2026').first.value, 'Roma2026');
-    expect(
-      index.tagSuggestions('', excluded: const ['universita']).map((e) => e.value),
-      isNot(contains('Università')),
-    );
-  });
+      expect(index.tagSuggestions('Uni').first.value, 'Università');
+      expect(index.tagSuggestions('2026').first.value, 'Roma2026');
+      expect(
+        index
+            .tagSuggestions('', excluded: const ['universita'])
+            .map((e) => e.value),
+        isNot(contains('Università')),
+      );
+    },
+  );
 }
 
 FinanceTransaction _transaction(

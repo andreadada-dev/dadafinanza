@@ -98,17 +98,8 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
   List<TransactionMetadataEntry> get _noteSuggestions =>
       index.noteSuggestions(widget.noteController.text);
 
-  List<TransactionMetadataEntry> get _tagSuggestions => index.tagSuggestions(
-    tagController.text,
-    excluded: widget.tags,
-  );
-
-  bool _isFavorite(String value, Set<String> favorites) {
-    final key = TransactionMetadataSuggestions.normalizeLookup(value);
-    return favorites.any(
-      (item) => TransactionMetadataSuggestions.normalizeLookup(item) == key,
-    );
-  }
+  List<TransactionMetadataEntry> get _tagSuggestions =>
+      index.tagSuggestions(tagController.text, excluded: widget.tags);
 
   void _completeNote(String value) {
     widget.noteController.value = TextEditingValue(
@@ -433,7 +424,9 @@ class _MetadataPickerSheetState extends State<_MetadataPickerSheet> {
   }
 
   List<TransactionMetadataEntry> _filtered() {
-    final source = widget.entries.where((item) => !_excluded(item.value)).toList();
+    final source = widget.entries
+        .where((item) => !_excluded(item.value))
+        .toList();
     if (search.text.trim().isEmpty) return source;
     final temp = widget.tagMode
         ? TransactionMetadataIndex(notes: const [], tags: source)
@@ -451,17 +444,22 @@ class _MetadataPickerSheetState extends State<_MetadataPickerSheet> {
     final favorite = filtered.where((item) => _favorite(item.value)).toList()
       ..sort((a, b) => b.lastUsed.compareTo(a.lastUsed));
     final favoriteKeys = favorite.map((item) => item.normalized).toSet();
-    final recent = filtered
-        .where((item) => !favoriteKeys.contains(item.normalized))
-        .toList()
-      ..sort((a, b) => b.lastUsed.compareTo(a.lastUsed));
+    final recent =
+        filtered
+            .where((item) => !favoriteKeys.contains(item.normalized))
+            .toList()
+          ..sort((a, b) => b.lastUsed.compareTo(a.lastUsed));
     final recentLimited = recent.take(10).toList();
-    final used = {...favoriteKeys, ...recentLimited.map((item) => item.normalized)};
-    final frequent = filtered.where((item) => !used.contains(item.normalized)).toList()
-      ..sort((a, b) {
-        final count = b.usageCount.compareTo(a.usageCount);
-        return count != 0 ? count : b.lastUsed.compareTo(a.lastUsed);
-      });
+    final used = {
+      ...favoriteKeys,
+      ...recentLimited.map((item) => item.normalized),
+    };
+    final frequent =
+        filtered.where((item) => !used.contains(item.normalized)).toList()
+          ..sort((a, b) {
+            final count = b.usageCount.compareTo(a.usageCount);
+            return count != 0 ? count : b.lastUsed.compareTo(a.lastUsed);
+          });
     return [
       if (favorite.isNotEmpty) _MetadataSection('Preferiti', favorite),
       if (recentLimited.isNotEmpty) _MetadataSection('Recenti', recentLimited),

@@ -50,7 +50,8 @@ class VoiceTranscriptAccumulator {
 
     // An unrelated final result is authoritative. For partial results keep the
     // newest phrase only when it carries at least as much information.
-    if (finalResult || _informationScore(candidate) >= _informationScore(_best)) {
+    if (finalResult ||
+        _informationScore(candidate) >= _informationScore(_best)) {
       _best = candidate;
     }
     return _best;

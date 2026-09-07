@@ -140,7 +140,8 @@ class VoiceTransactionParser {
     if (note != null) sources['note'] = VoiceFieldSource.explicit;
     if (explicit.tags.isNotEmpty) sources['tags'] = VoiceFieldSource.explicit;
 
-    final canApplyAdvance = type == TransactionType.expense && advance.requested;
+    final canApplyAdvance =
+        type == TransactionType.expense && advance.requested;
     final advanceAmountCents = canApplyAdvance
         ? advance.amountCents ?? (advance.wholeAmount ? amount.cents : null)
         : null;
@@ -238,7 +239,10 @@ class VoiceTransactionParser {
   bool _segnaMeansNote(String original) {
     final normalized = _normalize(original);
     if (!normalized.startsWith('segna ')) return false;
-    if (RegExp(r'(?:€|\b(?:euro|eur)\b)', caseSensitive: false).hasMatch(original)) {
+    if (RegExp(
+      r'(?:€|\b(?:euro|eur)\b)',
+      caseSensitive: false,
+    ).hasMatch(original)) {
       return false;
     }
     return !_containsAny(normalized, const [
@@ -353,7 +357,11 @@ class VoiceTransactionParser {
       if (match == null) continue;
       advanceAmountCents = _voiceMoneyTokenToCents(match.group(1));
       if (advanceAmountCents != null) {
-        amountScanInput = input.replaceRange(match.start, match.end, ' anticipo ');
+        amountScanInput = input.replaceRange(
+          match.start,
+          match.end,
+          ' anticipo ',
+        );
         break;
       }
     }
@@ -582,7 +590,8 @@ class VoiceTransactionParser {
     final nameTokens = name.split(' ').where((item) => item.length > 1).toSet();
     if (nameTokens.isEmpty) return 0;
     final inputTokens = input.split(' ').toSet();
-    final overlap = nameTokens.where(inputTokens.contains).length / nameTokens.length;
+    final overlap =
+        nameTokens.where(inputTokens.contains).length / nameTokens.length;
     if (overlap == 1) return nameTokens.length > 1 ? .92 : .88;
     return overlap * .78;
   }
@@ -752,11 +761,14 @@ class VoiceTransactionParser {
     };
     final entities = <String>{
       for (final account in accounts) ..._normalize(account.name).split(' '),
-      for (final category in categories) ..._normalize(category.name).split(' '),
+      for (final category in categories)
+        ..._normalize(category.name).split(' '),
       for (final person in people) ..._normalize(person.name).split(' '),
     };
     final remaining = words.where((word) {
-      if (word.length < 2 || commands.contains(word) || entities.contains(word)) {
+      if (word.length < 2 ||
+          commands.contains(word) ||
+          entities.contains(word)) {
         return false;
       }
       if (RegExp(r'^\d+(?:[\.,]\d+)?€?$').hasMatch(word)) return false;

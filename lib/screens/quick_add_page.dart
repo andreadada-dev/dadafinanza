@@ -113,8 +113,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
       date = editing.date;
       includeInAnalytics = editing.includeInAnalytics;
       existingReceiptPath = editing.receiptPath;
-      expanded =
-          editing.receiptPath != null || !editing.includeInAnalytics;
+      expanded = editing.receiptPath != null || !editing.includeInAnalytics;
     } else {
       if (draft?.amountCents != null) {
         amount.text = Money.fromCents(draft!.amountCents!).toStringAsFixed(2);
@@ -306,7 +305,6 @@ class _QuickAddPageState extends State<QuickAddPage> {
     amountFocus.requestFocus();
   }
 
-
   List<String> _knownTags(AppState state) => {
     for (final transaction in state.transactions) ...transaction.tags,
     ...tags,
@@ -320,8 +318,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
       final value = index.canonicalTag(cleaned) ?? cleaned;
       final key = TransactionMetadataSuggestions.normalizeLookup(value);
       final alreadySelected = tags.any(
-        (item) =>
-            TransactionMetadataSuggestions.normalizeLookup(item) == key,
+        (item) => TransactionMetadataSuggestions.normalizeLookup(item) == key,
       );
       if (!alreadySelected) tags.add(value);
     }

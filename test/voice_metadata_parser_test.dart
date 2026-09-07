@@ -54,7 +54,9 @@ void main() {
     final result = parse('nota 1:46');
     expect(result.draft.note, '1:46');
     expect(
-      result.issues.any((issue) => issue.type == VoiceIssueType.ambiguousAmount),
+      result.issues.any(
+        (issue) => issue.type == VoiceIssueType.ambiguousAmount,
+      ),
       isFalse,
     );
   });
@@ -111,16 +113,19 @@ void main() {
     expect(result.draft.tags, ['Università']);
   });
 
-  test('structured sentence with note and tag preserves transaction fields', () {
-    final result = parse(
-      'Segna una spesa di 12 euro nota pranzo tag lavoro',
-      knownTags: const ['Lavoro'],
-    );
-    expect(result.draft.amountCents, 1200);
-    expect(result.draft.type, TransactionType.expense);
-    expect(result.draft.note, 'pranzo');
-    expect(result.draft.tags, ['Lavoro']);
-  });
+  test(
+    'structured sentence with note and tag preserves transaction fields',
+    () {
+      final result = parse(
+        'Segna una spesa di 12 euro nota pranzo tag lavoro',
+        knownTags: const ['Lavoro'],
+      );
+      expect(result.draft.amountCents, 1200);
+      expect(result.draft.type, TransactionType.expense);
+      expect(result.draft.note, 'pranzo');
+      expect(result.draft.tags, ['Lavoro']);
+    },
+  );
 }
 
 Account _account(int id, String name) => Account(
