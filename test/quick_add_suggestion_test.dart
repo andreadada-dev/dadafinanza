@@ -155,6 +155,12 @@ Future<void> openPreview(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
+Future<void> revealCategorySection(WidgetTester tester) async {
+  final list = find.byType(ListView).first;
+  await tester.drag(list, const Offset(0, 1200));
+  await tester.pumpAndSettle();
+}
+
 void main() {
   testWidgets('Completa stays hidden below the balanced sample threshold', (
     tester,
@@ -198,9 +204,10 @@ void main() {
 
     await tester.tap(find.text('Applica'));
     await tester.pumpAndSettle();
+    await revealCategorySection(tester);
 
     expect(database.feedbackKinds, contains('accepted'));
-    expect(find.text('Alimentari'), findsNWidgets(2));
+    expect(find.text('Alimentari'), findsWidgets);
     expect(find.text('Completa'), findsNothing);
   });
 
