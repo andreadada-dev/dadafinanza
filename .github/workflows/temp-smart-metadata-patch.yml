@@ -1,0 +1,35 @@
+name: Temporary Smart Metadata Integration
+
+on:
+  push:
+    branches:
+      - build/smart-notes-tags-voice
+
+permissions:
+  contents: write
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: build/smart-notes-tags-voice
+          fetch-depth: 0
+      - name: Apply Quick Add integration
+        run: python3 tool/apply_smart_metadata_patch.py
+      - name: Apply documentation and version integration
+        run: python3 tool/apply_smart_metadata_followup.py
+      - name: Commit integrated changes
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No integration changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lib/screens/quick_add_page.dart docs/LINEE_GUIDA_STYLE.md docs/ARCHITETTURA.md docs/SMART_FINANCE_ENGINE.md pubspec.yaml test/quick_add_suggestion_test.dart
+          git commit -m "feat: integrate smart notes tags and voice into Quick Add"
+          git push origin HEAD:build/smart-notes-tags-voice
