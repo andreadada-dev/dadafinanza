@@ -23,6 +23,13 @@ jobs:
         with:
           channel: stable
           cache: true
+      - name: Trust cached Flutter SDK
+        shell: bash
+        run: |
+          if ! git config --global --get-all safe.directory | grep --fixed-strings --line-regexp --quiet "$FLUTTER_ROOT"; then
+            git config --global --add safe.directory "$FLUTTER_ROOT"
+          fi
+
       - name: Pub get
         run: flutter pub get
       - name: Format check
