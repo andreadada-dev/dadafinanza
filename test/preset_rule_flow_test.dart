@@ -44,7 +44,7 @@ void main() {
       balance: 20,
       colorValue: 0xFF8E8E93,
       iconKey: 'wallet',
-      type: AccountType.bank,
+      type: AccountType.checking,
       includeInTotal: true,
       includeInAnalytics: true,
       hideBalance: false,
