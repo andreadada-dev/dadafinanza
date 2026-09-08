@@ -247,7 +247,10 @@ class _DadaAppShellState extends State<DadaAppShell> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 20, 20, 144),
                 child: ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 360, maxHeight: maxHeight),
+                  constraints: BoxConstraints(
+                    maxWidth: 360,
+                    maxHeight: maxHeight,
+                  ),
                   child: _QuickFabMenu(
                     presets: presets,
                     state: state,
