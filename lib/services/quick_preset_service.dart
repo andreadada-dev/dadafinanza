@@ -1,6 +1,7 @@
 import '../core/money.dart';
 import '../data/app_database.dart';
 import '../models/models.dart';
+import '../models/quick_capture_models.dart';
 
 class QuickPreset {
   const QuickPreset({
@@ -28,6 +29,22 @@ class QuickPreset {
   final List<String> tags;
   final int position;
   final bool enabled;
+
+  TransactionDraft toTransactionDraft({
+    int? resolvedAccountId,
+    int? resolvedToAccountId,
+  }) => TransactionDraft(
+    type: type,
+    amountCents: amount == null ? null : Money.toCents(amount!),
+    accountId: resolvedAccountId ?? accountId,
+    toAccountId: type == TransactionType.transfer
+        ? (resolvedToAccountId ?? toAccountId)
+        : null,
+    categoryId: type == TransactionType.transfer ? null : categoryId,
+    note: note,
+    tags: List<String>.unmodifiable(tags),
+    source: QuickCaptureSource.preset,
+  );
 
   factory QuickPreset.fromMap(Map<String, Object?> map) => QuickPreset(
     id: map['id'] as int,
