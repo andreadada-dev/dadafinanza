@@ -7,13 +7,12 @@ import '../models/models.dart';
 import '../models/quick_capture_models.dart';
 import '../services/haptic_service.dart';
 import '../services/quick_preset_service.dart';
-import '../widgets/finance_quick_action.dart';
-import '../widgets/ui_helpers.dart';
 import 'account_context_analytics_screen.dart';
 import 'account_context_home_screen.dart';
 import 'account_context_transactions_screen.dart';
 import 'advances_screen.dart';
 import 'planning_screens.dart';
+import 'preset_management_screen.dart';
 import 'quick_add_page.dart';
 
 /// The single navigation shell exposed by DadaFinanza.
@@ -105,6 +104,11 @@ class _DadaAppShellState extends State<DadaAppShell> {
       const PlanningScreen(),
     ];
 
+    final fabLabel = index == 3 ? 'Nuovo anticipo' : 'Nuovo movimento';
+    final fabHint = index == 3
+        ? 'Tocca per creare un anticipo. Tieni premuto per le scorciatoie.'
+        : 'Tocca per una nuova spesa. Tieni premuto per preset e scorciatoie.';
+
     return PopScope(
       canPop: _allowExit,
       onPopInvoked: _handleBack,
@@ -112,16 +116,19 @@ class _DadaAppShellState extends State<DadaAppShell> {
         body: SafeArea(
           child: IndexedStack(index: index, children: pages),
         ),
-        floatingActionButton: GestureDetector(
-          onLongPress: _showQuickMenu,
-          child: FloatingActionButton(
-            tooltip: index == 3
-                ? 'Nuovo anticipo'
-                : 'Nuovo movimento. Tieni premuto per voce e preset.',
-            onPressed: index == 3
-                ? () => _openAdvance()
-                : () => _open(TransactionType.expense),
-            child: const Icon(Icons.add_rounded),
+        floatingActionButton: Semantics(
+          button: true,
+          label: fabLabel,
+          hint: fabHint,
+          excludeSemantics: true,
+          child: GestureDetector(
+            onLongPress: _showQuickMenu,
+            child: FloatingActionButton(
+              onPressed: index == 3
+                  ? () => _openAdvance()
+                  : () => _open(TransactionType.expense),
+              child: const Icon(Icons.add_rounded),
+            ),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -193,21 +200,21 @@ class _DadaAppShellState extends State<DadaAppShell> {
     }
     if (destinationId == selectedAccount) destinationId = null;
     if (!mounted) return;
-    final draft = TransactionDraft(
-      type: type,
-      amountCents: preset?.amount == null
-          ? null
-          : (preset!.amount! * 100).round(),
-      accountId: selectedAccount,
-      toAccountId: destinationId,
-      categoryId: type == TransactionType.transfer ? null : preset?.categoryId,
-      source: voice
-          ? QuickCaptureSource.voice
-          : preset == null
-          ? QuickCaptureSource.manual
-          : QuickCaptureSource.preset,
-      startVoice: voice,
-    );
+
+    final draft = preset != null
+        ? preset.toTransactionDraft(
+            resolvedAccountId: selectedAccount,
+            resolvedToAccountId: destinationId,
+          )
+        : TransactionDraft(
+            type: type,
+            accountId: selectedAccount,
+            toAccountId: destinationId,
+            source: voice
+                ? QuickCaptureSource.voice
+                : QuickCaptureSource.manual,
+            startVoice: voice,
+          );
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => QuickAddPage(initialDraft: draft)),
@@ -221,103 +228,209 @@ class _DadaAppShellState extends State<DadaAppShell> {
       state.database,
     ).all(enabledOnly: true);
     if (!mounted) return;
-    final choice = await showModalBottomSheet<Object>(
+
+    final choice = await showGeneralDialog<Object>(
       context: context,
-      useSafeArea: true,
-      showDragHandle: true,
-      builder: (sheetContext) => Padding(
-        padding: const EdgeInsets.fromLTRB(20, 4, 20, 20),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Nuovo movimento',
-                style: Theme.of(sheetContext).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: FinanceQuickAction(
-                      icon: Icons.arrow_upward_rounded,
-                      label: 'Spesa',
-                      onTap: () =>
-                          Navigator.pop(sheetContext, TransactionType.expense),
-                    ),
+      barrierDismissible: true,
+      barrierLabel: 'Chiudi scorciatoie',
+      barrierColor: Theme.of(context).colorScheme.scrim.withOpacity(0.32),
+      transitionDuration: const Duration(milliseconds: 180),
+      pageBuilder: (dialogContext, _, __) => SafeArea(
+        child: LayoutBuilder(
+          builder: (dialogContext, constraints) {
+            final maxHeight = (constraints.maxHeight - 180)
+                .clamp(220.0, 460.0)
+                .toDouble();
+            return Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 144),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 360, maxHeight: maxHeight),
+                  child: _QuickFabMenu(
+                    presets: presets,
+                    state: state,
+                    onSelected: (value) => Navigator.pop(dialogContext, value),
                   ),
-                  Expanded(
-                    child: FinanceQuickAction(
-                      icon: Icons.arrow_downward_rounded,
-                      label: 'Entrata',
-                      onTap: () =>
-                          Navigator.pop(sheetContext, TransactionType.income),
-                    ),
-                  ),
-                  Expanded(
-                    child: FinanceQuickAction(
-                      icon: Icons.swap_horiz_rounded,
-                      label: 'Trasferisci',
-                      onTap: () =>
-                          Navigator.pop(sheetContext, TransactionType.transfer),
-                    ),
-                  ),
-                ],
+                ),
               ),
-              const SizedBox(height: 4),
-              FinanceQuickAction(
-                icon: Icons.mic_none_rounded,
-                label: 'Voce',
-                onTap: () => Navigator.pop(sheetContext, const _VoiceChoice()),
-              ),
-              const SizedBox(height: 10),
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: const Icon(Icons.handshake_outlined),
-                title: const Text('Anticipo'),
-                subtitle: const Text('Soldi da ricevere o da restituire'),
-                onTap: () => Navigator.pop(sheetContext, 'advance'),
-              ),
-              if (presets.isNotEmpty) ...[
-                const SizedBox(height: 20),
-                const SectionTitle('Preset'),
-                ...presets
-                    .take(6)
-                    .map(
-                      (preset) => ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        leading: const Icon(Icons.bookmark_outline_rounded),
-                        title: Text(preset.name),
-                        subtitle: Text(
-                          [
-                            preset.type.label,
-                            if (preset.amount != null)
-                              moneyFor(state, preset.amount!),
-                          ].join(' · '),
-                        ),
-                        onTap: () => Navigator.pop(sheetContext, preset),
-                      ),
-                    ),
-              ],
-            ],
-          ),
+            );
+          },
         ),
       ),
+      transitionBuilder: (dialogContext, animation, _, child) {
+        final curved = CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeOutCubic,
+          reverseCurve: Curves.easeInCubic,
+        );
+        return FadeTransition(
+          opacity: curved,
+          child: SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, 0.08),
+              end: Offset.zero,
+            ).animate(curved),
+            child: ScaleTransition(
+              scale: Tween<double>(begin: 0.94, end: 1).animate(curved),
+              alignment: Alignment.bottomCenter,
+              child: child,
+            ),
+          ),
+        );
+      },
     );
+
     if (!mounted || choice == null) return;
-    if (choice == 'advance') {
+    if (choice is _AdvanceChoice) {
       await _openAdvance();
     } else if (choice is QuickPreset) {
       await _open(choice.type, preset: choice);
-    } else if (choice is TransactionType) {
-      await _open(choice);
     } else if (choice is _VoiceChoice) {
       await _open(TransactionType.expense, voice: true);
+    } else if (choice is _ManagePresetsChoice) {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const PresetManagementScreen()),
+      );
     }
   }
 }
 
+class _QuickFabMenu extends StatelessWidget {
+  const _QuickFabMenu({
+    required this.presets,
+    required this.state,
+    required this.onSelected,
+  });
+
+  final List<QuickPreset> presets;
+  final AppState state;
+  final ValueChanged<Object> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Material(
+      color: theme.colorScheme.surface,
+      elevation: 8,
+      shadowColor: theme.colorScheme.shadow.withOpacity(0.18),
+      borderRadius: BorderRadius.circular(28),
+      clipBehavior: Clip.antiAlias,
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Scorciatoie', style: theme.textTheme.titleLarge),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Tocca un preset per aprire il movimento già compilato.',
+                    style: theme.textTheme.bodySmall,
+                  ),
+                ],
+              ),
+            ),
+            if (presets.isNotEmpty) ...[
+              const _QuickFabSectionLabel('Preset'),
+              ...presets.map(
+                (preset) => _QuickFabMenuItem(
+                  icon: Icons.bookmark_outline_rounded,
+                  title: preset.name,
+                  subtitle: [
+                    preset.type.label,
+                    if (preset.amount != null) moneyFor(state, preset.amount!),
+                  ].join(' · '),
+                  onTap: () => onSelected(preset),
+                ),
+              ),
+            ] else ...[
+              const _QuickFabSectionLabel('Preset'),
+              _QuickFabMenuItem(
+                icon: Icons.bookmark_add_outlined,
+                title: 'Crea il primo preset',
+                subtitle: 'Salva un movimento ricorrente come scorciatoia',
+                onTap: () => onSelected(const _ManagePresetsChoice()),
+              ),
+            ],
+            const Divider(height: 1, indent: 20, endIndent: 20),
+            const _QuickFabSectionLabel('Azioni'),
+            _QuickFabMenuItem(
+              icon: Icons.mic_none_rounded,
+              title: 'Voce',
+              subtitle: 'Compila il movimento parlando',
+              onTap: () => onSelected(const _VoiceChoice()),
+            ),
+            _QuickFabMenuItem(
+              icon: Icons.handshake_outlined,
+              title: 'Anticipo',
+              subtitle: 'Soldi da ricevere o da restituire',
+              onTap: () => onSelected(const _AdvanceChoice()),
+            ),
+            _QuickFabMenuItem(
+              icon: Icons.tune_rounded,
+              title: 'Gestisci preset',
+              subtitle: 'Crea, modifica e riordina le scorciatoie',
+              onTap: () => onSelected(const _ManagePresetsChoice()),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _QuickFabSectionLabel extends StatelessWidget {
+  const _QuickFabSectionLabel(this.text);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.fromLTRB(20, 12, 20, 4),
+    child: Text(text, style: Theme.of(context).textTheme.labelLarge),
+  );
+}
+
+class _QuickFabMenuItem extends StatelessWidget {
+  const _QuickFabMenuItem({
+    required this.icon,
+    required this.title,
+    required this.onTap,
+    this.subtitle,
+  });
+
+  final IconData icon;
+  final String title;
+  final String? subtitle;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => ListTile(
+    minVerticalPadding: 10,
+    contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+    leading: Icon(icon),
+    title: Text(title),
+    subtitle: subtitle == null ? null : Text(subtitle!),
+    trailing: const Icon(Icons.chevron_right_rounded),
+    onTap: onTap,
+  );
+}
+
 class _VoiceChoice {
   const _VoiceChoice();
+}
+
+class _AdvanceChoice {
+  const _AdvanceChoice();
+}
+
+class _ManagePresetsChoice {
+  const _ManagePresetsChoice();
 }
