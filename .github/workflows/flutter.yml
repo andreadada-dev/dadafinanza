@@ -18,7 +18,7 @@ jobs:
     runs-on: [self-hosted, linux, x64, coolify]
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.47.2'
@@ -39,7 +39,24 @@ jobs:
         run: flutter analyze --no-fatal-infos
       - name: Test
         run: flutter test
+      - name: Bound Gradle resources for shared runner
+        shell: bash
+        run: |
+          properties=android/gradle.properties
+          if grep -q '^org.gradle.jvmargs=' "$properties"; then
+            sed -i 's/^org\.gradle\.jvmargs=.*/org.gradle.jvmargs=-Xmx2048m -XX:MaxMetaspaceSize=768m -XX:ReservedCodeCacheSize=256m -Dfile.encoding=UTF-8/' "$properties"
+          else
+            echo 'org.gradle.jvmargs=-Xmx2048m -XX:MaxMetaspaceSize=768m -XX:ReservedCodeCacheSize=256m -Dfile.encoding=UTF-8' >> "$properties"
+          fi
+          cat >> "$properties" <<'EOF'
+          org.gradle.daemon=false
+          org.gradle.parallel=false
+          org.gradle.workers.max=2
+          kotlin.daemon.jvmargs=-Xmx512m
+          EOF
       - name: Build debug APK
+        env:
+          GRADLE_OPTS: -Dorg.gradle.daemon=false
         run: flutter build apk --debug
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
