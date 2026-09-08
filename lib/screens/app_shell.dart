@@ -8,6 +8,7 @@ import '../models/models.dart';
 import '../models/quick_capture_models.dart';
 import '../services/haptic_service.dart';
 import '../services/quick_preset_service.dart';
+import '../widgets/ui_helpers.dart';
 import 'account_context_analytics_screen.dart';
 import 'account_context_home_screen.dart';
 import 'account_context_transactions_screen.dart';
