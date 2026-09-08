@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../app_state.dart';
 import '../main.dart';
 import '../models/models.dart';
 import '../models/quick_capture_models.dart';
