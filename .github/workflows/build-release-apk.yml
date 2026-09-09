@@ -16,7 +16,7 @@ concurrency:
 jobs:
   build-apk:
     name: Build release APK
-    runs-on: [self-hosted, linux, x64, coolify]
+    runs-on: [self-hosted, linux, x64, local-pc]
     timeout-minutes: 25
 
     steps:
