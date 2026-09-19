@@ -1347,6 +1347,9 @@ class _QuickAddPageState extends State<QuickAddPage> {
                     : categoryIcon(category.iconKey),
                 label: 'Categoria',
                 value: category?.name ?? 'Scegli categoria',
+                valueColor: category == null
+                    ? null
+                    : Color(category.colorValue),
                 onTap: _chooseCategory,
               ),
               const Divider(height: 1),
@@ -1358,6 +1361,9 @@ class _QuickAddPageState extends State<QuickAddPage> {
                 value: account?.isSystem == true
                     ? 'Non assegnato'
                     : account?.name ?? 'Scegli conto',
+                valueColor: account == null || account.isSystem
+                    ? null
+                    : Color(account.colorValue),
                 onTap: _chooseAccount,
               ),
               if (type == TransactionType.expense &&
@@ -1453,6 +1459,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
                 icon: accountIcon(account?.iconKey ?? 'wallet'),
                 label: 'Da',
                 value: account?.name ?? 'Scegli conto',
+                valueColor: account == null ? null : Color(account.colorValue),
                 onTap: _chooseAccount,
               ),
               const Divider(height: 1),
@@ -1460,6 +1467,9 @@ class _QuickAddPageState extends State<QuickAddPage> {
                 icon: accountIcon(destination?.iconKey ?? 'wallet'),
                 label: 'A',
                 value: destination?.name ?? 'Scegli destinazione',
+                valueColor: destination == null
+                    ? null
+                    : Color(destination.colorValue),
                 onTap: () => _chooseAccount(destination: true),
               ),
               if (linkedGoal != null) ...[
@@ -1936,12 +1946,14 @@ class _PickerRow extends StatelessWidget {
     required this.label,
     required this.value,
     required this.onTap,
+    this.valueColor,
   });
 
   final IconData icon;
   final String label;
   final String value;
   final VoidCallback onTap;
+  final Color? valueColor;
 
   @override
   Widget build(BuildContext context) => ListTile(
@@ -1954,7 +1966,11 @@ class _PickerRow extends StatelessWidget {
       children: [
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 180),
-          child: Text(value, overflow: TextOverflow.ellipsis),
+          child: Text(
+            value,
+            overflow: TextOverflow.ellipsis,
+            style: valueColor == null ? null : TextStyle(color: valueColor),
+          ),
         ),
         const SizedBox(width: 8),
         const Icon(Icons.chevron_right_rounded),
