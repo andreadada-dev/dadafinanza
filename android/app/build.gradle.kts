@@ -1,6 +1,12 @@
 import java.io.FileInputStream
 import java.util.Properties
 
+plugins {
+    id("com.android.application")
+    id("kotlin-android")
+    id("dev.flutter.flutter-gradle-plugin")
+}
+
 val keystoreProperties = Properties()
 val keystorePropertiesFile = rootProject.file("key.properties")
 if (keystorePropertiesFile.exists()) {
@@ -30,12 +36,6 @@ if (requireReleaseSigning && !hasReleaseSigning) {
     throw GradleException(
         "Production release signing is required but the Android signing credentials are missing.",
     )
-}
-
-plugins {
-    id("com.android.application")
-    id("kotlin-android")
-    id("dev.flutter.flutter-gradle-plugin")
 }
 
 android {
