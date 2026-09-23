@@ -1,18 +1,23 @@
-name: Android Production AAB
+name: Android Production APK + AAB
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/build-production-aab.yml"
 
 permissions:
   contents: read
 
 concurrency:
-  group: dadafinanza-production-aab
+  group: dadafinanza-production-release
   cancel-in-progress: true
 
 jobs:
   build:
-    name: Build signed production AAB
+    name: Build signed production APK + AAB
     runs-on: [self-hosted, linux, x64, local-pc, android, release]
     timeout-minutes: 45
     env:
@@ -187,30 +192,64 @@ jobs:
           echo "Google Play versionCode: $build_number"
           flutter build appbundle --release --no-pub --build-number="$build_number"
 
-      - name: Verify signed AAB
+      - name: Build signed production APK
         shell: bash
+        env:
+          GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=1
         run: |
-          source="build/app/outputs/bundle/release/app-release.aab"
-          test -f "$source"
-          jarsigner -verify "$source"
+          set -euo pipefail
+          base_build="$(grep '^version:' pubspec.yaml | sed -E 's/.*\+([0-9]+).*/\1/')"
+          build_number=$((base_build + GITHUB_RUN_NUMBER - 1))
+          echo "APK versionCode: $build_number"
+          flutter build apk --release --no-pub --build-number="$build_number"
 
-      - name: Save signed AAB on local PC
+      - name: Verify signed release files
         shell: bash
         run: |
           set -euo pipefail
-          source="build/app/outputs/bundle/release/app-release.aab"
+
+          aab="build/app/outputs/bundle/release/app-release.aab"
+          apk="build/app/outputs/flutter-apk/app-release.apk"
+
+          test -f "$aab"
+          test -f "$apk"
+
+          jarsigner -verify "$aab"
+
+          apksigner="$(find "${ANDROID_HOME:-/usr/local/lib/android/sdk}/build-tools" -type f -name apksigner | sort -V | tail -n 1)"
+          if [ -z "$apksigner" ]; then
+            echo "::error::apksigner not found in Android SDK build-tools."
+            exit 1
+          fi
+          "$apksigner" verify --verbose "$apk"
+
+      - name: Save signed production files on local PC
+        shell: bash
+        run: |
+          set -euo pipefail
+          aab_source="build/app/outputs/bundle/release/app-release.aab"
+          apk_source="build/app/outputs/flutter-apk/app-release.apk"
           base_build="$(grep '^version:' pubspec.yaml | sed -E 's/.*\+([0-9]+).*/\1/')"
           build_number=$((base_build + GITHUB_RUN_NUMBER - 1))
-          destination="/builds/dadafinanza/DadaFinanza-production-vc${build_number}-run${GITHUB_RUN_NUMBER}.aab"
-          latest="/builds/dadafinanza/DadaFinanza-production-latest.aab"
 
-          cp "$source" "$destination"
-          cp "$source" "$latest"
-          sha256sum "$destination" | tee "$destination.sha256"
+          aab_destination="/builds/dadafinanza/DadaFinanza-production-vc${build_number}-run${GITHUB_RUN_NUMBER}.aab"
+          aab_latest="/builds/dadafinanza/DadaFinanza-production-latest.aab"
+          apk_destination="/builds/dadafinanza/DadaFinanza-production-vc${build_number}-run${GITHUB_RUN_NUMBER}.apk"
+          apk_latest="/builds/dadafinanza/DadaFinanza-production-latest.apk"
 
-          echo "Google Play versionCode: $build_number"
-          echo "AAB saved to: $destination"
-          echo "Latest copy: $latest"
+          cp "$aab_source" "$aab_destination"
+          cp "$aab_source" "$aab_latest"
+          cp "$apk_source" "$apk_destination"
+          cp "$apk_source" "$apk_latest"
+
+          sha256sum "$aab_destination" | tee "$aab_destination.sha256"
+          sha256sum "$apk_destination" | tee "$apk_destination.sha256"
+
+          echo "Production versionCode: $build_number"
+          echo "AAB saved to: $aab_destination"
+          echo "APK saved to: $apk_destination"
+          echo "Latest AAB: $aab_latest"
+          echo "Latest APK: $apk_latest"
           echo "Signing backup: /builds/dadafinanza/signing"
 
       - name: Remove temporary keystore
