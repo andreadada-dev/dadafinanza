@@ -31,7 +31,7 @@ DadaFinanza is local-first and does not require an account. The public privacy p
 
 ## Release
 
-Validation runs on self-hosted runners without consuming GitHub artifact storage. Internal APK builds and signed Google Play AAB builds are exported to the local `/builds/dadafinanza` mount. Production AAB generation requires release-signing secrets and cannot silently fall back to debug signing.
+Validation runs on self-hosted runners without consuming GitHub artifact storage. Internal APK builds and signed Google Play AAB builds are exported to the local `/builds/dadafinanza` mount. Production AAB generation never falls back to debug signing. It prefers GitHub Actions release-signing secrets and, when they are not configured, uses the persistent local signing vault in `/builds/dadafinanza/signing` on the Android release runner.
 
 ## Status
 
