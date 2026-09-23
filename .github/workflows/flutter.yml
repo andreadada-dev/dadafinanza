@@ -41,6 +41,9 @@ jobs:
 
       - name: Pub get
         run: flutter pub get
+      - name: Show dependency lock changes
+        shell: bash
+        run: git diff -- pubspec.lock || true
       - name: Format check
         run: dart format --output=none --set-exit-if-changed lib test
       - name: Analyze
