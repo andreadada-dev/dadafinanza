@@ -2,11 +2,6 @@ name: Android Production AAB
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - ".github/workflows/build-production-aab.yml"
 
 permissions:
   contents: read
