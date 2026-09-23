@@ -122,6 +122,22 @@ jobs:
           source "$local_credentials"
           set +a
 
+          # Java defaults to PKCS12 when -storetype is omitted. PKCS12 uses the
+          # store password for the private key as well, so repair credentials
+          # created by the first bootstrap attempt before the JKS format was pinned.
+          keystore_type="$(keytool -list -v -keystore "$local_keystore" -storepass "$ANDROID_KEYSTORE_PASSWORD" 2>/dev/null | awk -F': ' '/Keystore type:/{print $2; exit}')"
+          if [ "$keystore_type" = "PKCS12" ]; then
+            ANDROID_KEY_PASSWORD="$ANDROID_KEYSTORE_PASSWORD"
+            umask 077
+            cat > "$local_credentials" <<EOF
+          ANDROID_KEYSTORE_PASSWORD=$ANDROID_KEYSTORE_PASSWORD
+          ANDROID_KEY_ALIAS=$ANDROID_KEY_ALIAS
+          ANDROID_KEY_PASSWORD=$ANDROID_KEY_PASSWORD
+          EOF
+            chmod 600 "$local_credentials" || true
+            echo "Repaired local PKCS12 signing credentials."
+          fi
+
           echo "::add-mask::$ANDROID_KEYSTORE_PASSWORD"
           echo "::add-mask::$ANDROID_KEY_PASSWORD"
 
