@@ -2,6 +2,11 @@ name: Android Production AAB
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/build-production-aab.yml"
 
 permissions:
   contents: read
@@ -38,23 +43,96 @@ jobs:
           mkdir -p /builds/dadafinanza
           test -w /builds/dadafinanza
 
-      - name: Verify required signing secrets
-        shell: bash
-        run: |
-          missing=0
-          for name in ANDROID_KEYSTORE_BASE64 ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_ALIAS ANDROID_KEY_PASSWORD; do
-            if [ -z "${!name:-}" ]; then
-              echo "::error::$name is not configured in GitHub Actions secrets."
-              missing=1
-            fi
-          done
-          exit "$missing"
-
       - name: Setup Java 17
         uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "17"
+
+      - name: Resolve production signing
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          temp_keystore="$RUNNER_TEMP/dadafinanza-upload.jks"
+          local_signing_dir="/builds/dadafinanza/signing"
+          local_keystore="$local_signing_dir/dadafinanza-upload.jks"
+          local_credentials="$local_signing_dir/dadafinanza-upload.env"
+
+          github_signing=1
+          for name in ANDROID_KEYSTORE_BASE64 ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_ALIAS ANDROID_KEY_PASSWORD; do
+            if [ -z "${!name:-}" ]; then
+              github_signing=0
+            fi
+          done
+
+          if [ "$github_signing" -eq 1 ]; then
+            echo "Using GitHub Actions release-signing secrets."
+            echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$temp_keystore"
+            chmod 600 "$temp_keystore"
+            echo "::add-mask::$ANDROID_KEYSTORE_PASSWORD"
+            echo "::add-mask::$ANDROID_KEY_PASSWORD"
+            {
+              echo "ANDROID_KEYSTORE_PATH=$temp_keystore"
+              echo "ANDROID_KEYSTORE_PASSWORD=$ANDROID_KEYSTORE_PASSWORD"
+              echo "ANDROID_KEY_ALIAS=$ANDROID_KEY_ALIAS"
+              echo "ANDROID_KEY_PASSWORD=$ANDROID_KEY_PASSWORD"
+            } >> "$GITHUB_ENV"
+            exit 0
+          fi
+
+          echo "GitHub signing secrets are not configured; using the persistent local signing vault."
+          mkdir -p "$local_signing_dir"
+          chmod 700 "$local_signing_dir" || true
+
+          if [ ! -f "$local_keystore" ] || [ ! -f "$local_credentials" ]; then
+            echo "No local upload key found. Generating the initial DadaFinanza upload key."
+
+            store_password="$(openssl rand -hex 24)"
+            key_password="$(openssl rand -hex 24)"
+            key_alias="dadafinanza-upload"
+
+            keytool -genkeypair               -v               -keystore "$local_keystore"               -alias "$key_alias"               -keyalg RSA               -keysize 4096               -validity 10000               -storepass "$store_password"               -keypass "$key_password"               -dname "CN=DadaFinanza, OU=Mobile, O=DDone, C=IT"
+
+            chmod 600 "$local_keystore" || true
+            umask 077
+            cat > "$local_credentials" <<EOF
+          ANDROID_KEYSTORE_PASSWORD=$store_password
+          ANDROID_KEY_ALIAS=$key_alias
+          ANDROID_KEY_PASSWORD=$key_password
+          EOF
+            chmod 600 "$local_credentials" || true
+
+            cat > "$local_signing_dir/README.txt" <<'EOF'
+          DadaFinanza Android upload signing material.
+
+          Keep BOTH dadafinanza-upload.jks and dadafinanza-upload.env backed up in a secure location.
+          Never commit these files to Git.
+          The .env file contains the passwords required to sign future uploads.
+          If Play App Signing is enabled, this is the upload key, not Google's app-signing key.
+          EOF
+
+            echo "Generated signing material in: $local_signing_dir"
+          else
+            echo "Reusing existing local DadaFinanza upload key."
+          fi
+
+          set -a
+          # shellcheck disable=SC1090
+          source "$local_credentials"
+          set +a
+
+          echo "::add-mask::$ANDROID_KEYSTORE_PASSWORD"
+          echo "::add-mask::$ANDROID_KEY_PASSWORD"
+
+          {
+            echo "ANDROID_KEYSTORE_PATH=$local_keystore"
+            echo "ANDROID_KEYSTORE_PASSWORD=$ANDROID_KEYSTORE_PASSWORD"
+            echo "ANDROID_KEY_ALIAS=$ANDROID_KEY_ALIAS"
+            echo "ANDROID_KEY_PASSWORD=$ANDROID_KEY_PASSWORD"
+          } >> "$GITHUB_ENV"
+
+          keytool -list             -keystore "$local_keystore"             -storepass "$ANDROID_KEYSTORE_PASSWORD"             -alias "$ANDROID_KEY_ALIAS"             | sed -E 's/(SHA(1|256): ).*/\1[verified]/'
 
       - name: Repair incomplete Flutter SDK cache
         shell: bash
@@ -87,16 +165,9 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Restore upload keystore
-        shell: bash
-        run: |
-          echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/dadafinanza-upload.jks"
-          chmod 600 "$RUNNER_TEMP/dadafinanza-upload.jks"
-
       - name: Build signed production AAB
         shell: bash
         env:
-          ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/dadafinanza-upload.jks
           GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=1
         run: |
           set -euo pipefail
@@ -126,8 +197,10 @@ jobs:
           cp "$source" "$latest"
           sha256sum "$destination" | tee "$destination.sha256"
 
+          echo "Google Play versionCode: $build_number"
           echo "AAB saved to: $destination"
           echo "Latest copy: $latest"
+          echo "Signing backup: /builds/dadafinanza/signing"
 
       - name: Remove temporary keystore
         if: ${{ always() }}
