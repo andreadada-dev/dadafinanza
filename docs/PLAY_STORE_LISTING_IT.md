@@ -99,4 +99,4 @@ Per Google Play usare esclusivamente l'AAB prodotto dal workflow:
 
 `.github/workflows/build-production-aab.yml`
 
-Il workflow richiede firma di produzione e non accetta un fallback silenzioso alla chiave debug.
+Il workflow richiede sempre una firma di produzione e non accetta un fallback alla chiave debug. Usa i secret GitHub quando presenti; altrimenti usa il signing vault persistente del runner in `/builds/dadafinanza/signing`, che deve essere conservato e sottoposto a backup sicuro.
