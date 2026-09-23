@@ -1,4 +1,4 @@
-name: Build Release APK
+name: Build Internal Release APK
 
 on:
   workflow_dispatch:
@@ -9,21 +9,34 @@ on:
         default: "main"
         type: string
 
+permissions:
+  contents: read
+
 concurrency:
   group: release-apk-${{ github.repository }}-${{ inputs.ref }}
   cancel-in-progress: true
 
 jobs:
   build-apk:
-    name: Build release APK
+    name: Build internal release APK
     runs-on: [self-hosted, linux, x64, local-pc, android, release]
-    timeout-minutes: 25
+    timeout-minutes: 30
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ inputs.ref }}
+
+      - name: Verify local build export
+        shell: bash
+        run: |
+          if [ ! -d /builds ]; then
+            echo "::error::/builds is not mounted on the Android release runner."
+            exit 1
+          fi
+          mkdir -p /builds/dadafinanza
+          test -w /builds/dadafinanza
 
       - name: Show source
         run: |
@@ -32,19 +45,19 @@ jobs:
           git log -1 --oneline
 
       - name: Setup Java 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: "17"
 
       - name: Setup Flutter 3.47.2
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.47.2'
+          flutter-version: "3.47.2"
           channel: stable
-          cache: true
+          cache: false
 
-      - name: Trust cached Flutter SDK
+      - name: Trust Flutter SDK
         shell: bash
         run: |
           if ! git config --global --get-all safe.directory | grep --fixed-strings --line-regexp --quiet "$FLUTTER_ROOT"; then
@@ -57,19 +70,18 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
 
-      - name: Build release APK
+      - name: Build internal release APK
         run: flutter build apk --release
 
-      - name: Verify APK
-        run: test -f build/app/outputs/flutter-apk/app-release.apk
-
-      - name: Rename APK
-        run: cp build/app/outputs/flutter-apk/app-release.apk DadaFinanza-release.apk
-
-      - name: Upload release APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: DadaFinanza-release-apk
-          path: DadaFinanza-release.apk
-          if-no-files-found: error
-          retention-days: 7
+      - name: Save APK on local PC
+        shell: bash
+        run: |
+          set -euo pipefail
+          source="build/app/outputs/flutter-apk/app-release.apk"
+          test -f "$source"
+          destination="/builds/dadafinanza/DadaFinanza-internal-release-run${GITHUB_RUN_NUMBER}.apk"
+          latest="/builds/dadafinanza/DadaFinanza-internal-release-latest.apk"
+          cp "$source" "$destination"
+          cp "$source" "$latest"
+          sha256sum "$destination" | tee "$destination.sha256"
+          echo "APK saved to: $destination"
