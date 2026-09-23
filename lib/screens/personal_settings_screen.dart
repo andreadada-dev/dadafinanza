@@ -14,6 +14,7 @@ import 'data_management_screen.dart';
 import 'local_privacy_screen.dart';
 import 'notification_settings_screen.dart';
 import 'preset_management_screen.dart';
+import 'privacy_policy_screen.dart';
 import 'rules_management_screen.dart';
 import 'settings_screen.dart'
     show DashboardCustomizerScreen, SmartSuggestionsSettingsScreen;
@@ -58,6 +59,12 @@ class PersonalSettingsScreen extends StatelessWidget {
             title: 'Blocco e schermata recenti',
             subtitle: 'Biometria o PIN · timeout · protezione screenshot',
             onTap: () => _open(context, const LocalPrivacyScreen()),
+          ),
+          _Link(
+            icon: Icons.policy_outlined,
+            title: 'Privacy e dati',
+            subtitle: 'Dati locali, permessi, backup e servizi di sistema',
+            onTap: () => _open(context, const PrivacyPolicyScreen()),
           ),
           _Link(
             icon: Icons.notifications_none_rounded,
