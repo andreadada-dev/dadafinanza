@@ -25,6 +25,14 @@ Goal progress uses an explicit local ledger. A transfer prepared from a linked g
 
 The Android widget displays the current total balance and shortcuts for common expense categories. Tapping a category launches the Quick Add screen with that category already selected. Widget data is synchronized through `home_widget`.
 
+## Privacy
+
+DadaFinanza is local-first and does not require an account. The public privacy policy is available in [docs/PRIVACY_POLICY.md](docs/PRIVACY_POLICY.md).
+
+## Release
+
+Validation runs on self-hosted runners without consuming GitHub artifact storage. Internal APK builds and signed Google Play AAB builds are exported to the local `/builds/dadafinanza` mount. Production AAB generation requires release-signing secrets and cannot silently fall back to debug signing.
+
 ## Status
 
-Active Flutter/Android implementation on the validation branch, covered by formatting, analyzer, widget/unit tests and debug APK build in GitHub Actions.
+Active Flutter/Android implementation covered by formatting, analyzer, widget/unit tests and Android build validation in GitHub Actions.

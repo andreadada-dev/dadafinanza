@@ -37,7 +37,7 @@ flutter build apk --release
 - [ ] Nessun errore di format.
 - [ ] Nessun errore di analyze.
 - [ ] Tutti i test verdi.
-- [ ] APK generato realmente e presente nel path atteso.
+- [ ] APK generato realmente e presente nel path atteso. La CI non deve dipendere dagli artifact GitHub quando il limite storage è saturo.
 
 ## 4. Smoke test UI / UX
 
@@ -103,3 +103,19 @@ Testare almeno 320, 360, 390 e 430 dp e testo ingrandito quando la schermata è 
 - [ ] Mergiare su `main` solo quando il branch è verde.
 - [ ] Verificare anche la CI generata dal push/merge su `main`.
 - [ ] Per una release, verificare infine il workflow release e l'artifact APK prodotto.
+
+
+## 11. Google Play / release pubblica
+
+- [ ] `targetSdk` e `compileSdk` rispettano il requisito Google Play corrente; per la release 2026 usare API 36.
+- [ ] La versione in `pubspec.yaml` è stata incrementata e il `versionCode` non è mai stato usato su Play Console.
+- [ ] La release pubblica usa esclusivamente `.github/workflows/build-production-aab.yml`.
+- [ ] Il workflow production verifica la presenza delle credenziali di firma e non può produrre silenziosamente un bundle firmato con la chiave debug.
+- [ ] L'AAB viene verificato con `jarsigner`, copiato in `/builds/dadafinanza` e accompagnato da SHA-256.
+- [ ] Nessuna chiave `.jks`, password o `key.properties` è tracciata da Git.
+- [ ] Informativa privacy in-app e `docs/PRIVACY_POLICY.md` allineate alle funzioni effettive.
+- [ ] Riesaminare permessi Camera, Microfono, Biometria e Notifiche e richiederli solo nel contesto della funzione.
+- [ ] Compilare Data Safety sul bundle realmente prodotto, non su assunzioni del codice sorgente.
+- [ ] Verificare icona 512×512, feature graphic 1024×500 e screenshot Store.
+- [ ] Verificare classificazione contenuti, target audience, contatto sviluppatore e URL privacy pubblico/stabile.
+- [ ] Fare test installazione/aggiornamento su almeno un dispositivo reale prima di passare da test interno/chiuso a produzione.
