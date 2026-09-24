@@ -289,7 +289,11 @@ void main() {
     final receipt = File(p.join(dir.path, 'receipt.jpg'));
     await receipt.writeAsBytes([1, 2, 3]);
 
-    final state = AppState(database, widgetService: _NoopWidgetService(), attachmentService: attachments);
+    final state = AppState(
+      database,
+      widgetService: _NoopWidgetService(),
+      attachmentService: attachments,
+    );
     await state.load();
     await state.deleteTransaction(state.transactions.single);
 
