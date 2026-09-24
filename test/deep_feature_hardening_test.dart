@@ -7,7 +7,6 @@ import 'package:dadafinanza/services/finance_schema_service.dart';
 import 'package:dadafinanza/services/widget_service.dart';
 import 'package:dadafinanza/services/recurring_execution_service.dart';
 import 'package:dadafinanza/services/rule_service.dart';
-import 'package:dadafinanza/services/widget_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
