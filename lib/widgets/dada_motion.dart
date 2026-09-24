@@ -44,7 +44,8 @@ class _DadaRevealState extends State<DadaReveal> {
 
   @override
   Widget build(BuildContext context) {
-    final reduceMotion = MediaQuery.maybeOf(context)?.disableAnimations ?? false;
+    final reduceMotion =
+        MediaQuery.maybeOf(context)?.disableAnimations ?? false;
     if (reduceMotion) return widget.child;
 
     return AnimatedOpacity(
