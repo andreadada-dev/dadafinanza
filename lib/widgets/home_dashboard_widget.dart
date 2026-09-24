@@ -632,8 +632,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
                                     '${_type.name}-${_range.name}-$_selectedIndex',
                                   ),
                                   slice: selected,
-                                  percentage:
-                                      total <= 0
+                                  percentage: total <= 0
                                       ? 0
                                       : selected.amount / total,
                                   amountLabel: state.hideBalance
