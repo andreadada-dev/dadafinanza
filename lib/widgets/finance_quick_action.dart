@@ -54,7 +54,10 @@ class _FinanceQuickActionState extends State<FinanceQuickAction> {
               child: ConstrainedBox(
                 constraints: const BoxConstraints(minHeight: 92, minWidth: 48),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 4,
+                    vertical: 8,
+                  ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -67,7 +70,11 @@ class _FinanceQuickActionState extends State<FinanceQuickAction> {
                           color: circleSurface,
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(widget.icon, size: 29, color: resolvedColor),
+                        child: Icon(
+                          widget.icon,
+                          size: 29,
+                          color: resolvedColor,
+                        ),
                       ),
                       const SizedBox(height: 8),
                       FittedBox(
