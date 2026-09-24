@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../app_state.dart';
 import '../main.dart';
 import '../models/models.dart';
+import '../services/account_context_service.dart';
 import '../screens/account_management_screen.dart';
 import '../screens/account_screens.dart' show showAccountEditor;
 import '../screens/canonical_shell.dart' show CanonicalDashboardWidget;
@@ -233,10 +234,33 @@ class _AccountsBlock extends StatelessWidget {
   }
 }
 
+class AccountCategoryCarousel extends StatelessWidget {
+  const AccountCategoryCarousel({
+    required this.accountId,
+    this.size = DashboardWidgetSize.medium,
+    super.key,
+  });
+
+  final int accountId;
+  final DashboardWidgetSize size;
+
+  @override
+  Widget build(BuildContext context) => _TopCategoriesDonut(
+    config: DashboardWidgetConfig(
+      type: DashboardWidgetType.topCategories,
+      enabled: true,
+      orderIndex: 0,
+      size: size,
+    ),
+    accountId: accountId,
+  );
+}
+
 class _TopCategoriesDonut extends StatefulWidget {
-  const _TopCategoriesDonut({required this.config});
+  const _TopCategoriesDonut({required this.config, this.accountId});
 
   final DashboardWidgetConfig config;
+  final int? accountId;
 
   @override
   State<_TopCategoriesDonut> createState() => _TopCategoriesDonutState();
@@ -410,7 +434,14 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
   ) {
     final totals = <int, double>{};
 
-    for (final transaction in state.analyticTransactions(from: from, to: to)) {
+    final transactions = AccountContextService.analyticTransactionsFor(
+      state,
+      widget.accountId,
+      from: from,
+      to: to,
+    );
+
+    for (final transaction in transactions) {
       if (transaction.type != type) continue;
       if (type == TransactionType.income &&
           transaction.refundOfTransactionId != null) {
@@ -455,7 +486,13 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
     DateTime to,
   ) {
     final top = _topCategories(state, type, limit, from, to);
-    final total = state.periodTotal(type, from, to).abs();
+    final total = AccountContextService.periodTotal(
+      state,
+      widget.accountId,
+      type,
+      from,
+      to,
+    ).abs();
     final isExpense = type == TransactionType.expense;
     final accent = isExpense
         ? context.financeColors.negative
