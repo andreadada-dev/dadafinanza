@@ -873,51 +873,57 @@ class AppDatabase {
         whereArgs: [id],
       );
       if (accountRows.isEmpty) return;
-      final linkedRows = await txn.query(
-        'transactions',
-        where: 'account_id = ? OR to_account_id = ?',
-        whereArgs: [id, id],
-        orderBy: 'date DESC, id DESC',
-      );
-      final hasAdvanceHistory = linkedRows.any((row) {
-        final kind = (row['kind'] as String?) ?? 'normal';
-        return kind == 'advance_origin' ||
-            kind == 'mixed_advance' ||
-            kind == 'advance_settlement' ||
-            kind == 'advance_writeoff' ||
-            kind == 'advance_forgiven_income';
-      });
-      if (hasAdvanceHistory) {
+
+      final movementCount =
+          Sqflite.firstIntValue(
+            await txn.rawQuery(
+              'SELECT COUNT(*) FROM transactions WHERE account_id = ? OR to_account_id = ?',
+              [id, id],
+            ),
+          ) ??
+          0;
+      final recurringCount =
+          Sqflite.firstIntValue(
+            await txn.rawQuery(
+              'SELECT COUNT(*) FROM recurring WHERE account_id = ? OR to_account_id = ?',
+              [id, id],
+            ),
+          ) ??
+          0;
+      if (movementCount > 0 || recurringCount > 0) {
         throw StateError(
-          'Questo conto contiene movimenti collegati ad Anticipi. Archivialo invece di eliminarlo per conservare lo storico.',
+          'Questo conto contiene storico o ricorrenze. Archivialo invece di eliminarlo.',
         );
       }
-      for (final row in linkedRows) {
-        await _applyBalance(
-          txn,
-          FinanceTransaction.fromMap(row),
-          -1,
-          validateAccounts: false,
-        );
-      }
-      await txn.delete(
-        'transaction_splits',
-        where:
-            'transaction_id IN (SELECT id FROM transactions WHERE account_id = ? OR to_account_id = ?)',
-        whereArgs: [id, id],
-      );
-      await txn.delete(
-        'transactions',
-        where: 'account_id = ? OR to_account_id = ?',
-        whereArgs: [id, id],
-      );
-      await txn.delete('recurring', where: 'account_id = ?', whereArgs: [id]);
+
       await txn.update(
         'goals',
         {'linked_account_id': null},
         where: 'linked_account_id = ?',
         whereArgs: [id],
       );
+      if (await _tableExists(db, 'quick_presets')) {
+        await txn.update(
+          'quick_presets',
+          {'account_id': null},
+          where: 'account_id = ?',
+          whereArgs: [id],
+        );
+        await txn.update(
+          'quick_presets',
+          {'to_account_id': null},
+          where: 'to_account_id = ?',
+          whereArgs: [id],
+        );
+      }
+      if (await _tableExists(db, 'advances')) {
+        await txn.update(
+          'advances',
+          {'source_account_id': null},
+          where: 'source_account_id = ?',
+          whereArgs: [id],
+        );
+      }
       await txn.delete('accounts', where: 'id = ?', whereArgs: [id]);
     });
   }
@@ -962,29 +968,42 @@ class AppDatabase {
 
   Future<void> deleteCategory(int id) async {
     await db.transaction((txn) async {
-      await txn.update(
+      final splitCount =
+          Sqflite.firstIntValue(
+            await txn.rawQuery(
+              'SELECT COUNT(*) FROM transaction_splits WHERE category_id = ?',
+              [id],
+            ),
+          ) ??
+          0;
+      if (splitCount > 0) {
+        throw StateError(
+          'Questa categoria è usata in divisioni di spesa. Uniscila in un’altra categoria prima di eliminarla.',
+        );
+      }
+      for (final table in [
         'transactions',
-        {'category_id': null},
-        where: 'category_id = ?',
-        whereArgs: [id],
-      );
-      await txn.update(
         'recurring',
-        {'category_id': null},
-        where: 'category_id = ?',
-        whereArgs: [id],
-      );
-      await txn.update(
         'budgets',
-        {'category_id': null},
-        where: 'category_id = ?',
-        whereArgs: [id],
-      );
-      await txn.delete(
-        'transaction_splits',
-        where: 'category_id = ?',
-        whereArgs: [id],
-      );
+        'automation_rules',
+        'learned_patterns',
+        'detected_recurring_patterns',
+      ]) {
+        await txn.update(
+          table,
+          {'category_id': null},
+          where: 'category_id = ?',
+          whereArgs: [id],
+        );
+      }
+      if (await _tableExists(db, 'quick_presets')) {
+        await txn.update(
+          'quick_presets',
+          {'category_id': null},
+          where: 'category_id = ?',
+          whereArgs: [id],
+        );
+      }
       await txn.delete('categories', where: 'id = ?', whereArgs: [id]);
     });
   }
@@ -1180,10 +1199,27 @@ class AppDatabase {
       if (rule.maxAmount != null && result.amount > rule.maxAmount!) continue;
       final haystack = (result.note ?? '').toLowerCase();
       if (rule.containsText?.isNotEmpty == true &&
-          !haystack.contains(rule.containsText!.toLowerCase()))
+          !haystack.contains(rule.containsText!.toLowerCase())) {
         continue;
+      }
+
+      int? categoryId = result.categoryId;
+      if (rule.categoryId != null && result.type != TransactionType.transfer) {
+        final rows = await db.query(
+          'categories',
+          columns: ['type'],
+          where: 'id = ?',
+          whereArgs: [rule.categoryId],
+          limit: 1,
+        );
+        if (rows.isNotEmpty &&
+            rows.first['type'] == result.type.dbValue) {
+          categoryId = rule.categoryId;
+        }
+      }
+
       result = result.copyWith(
-        categoryId: rule.categoryId ?? result.categoryId,
+        categoryId: categoryId,
         accountId: rule.accountId ?? result.accountId,
         tags: rule.addTag == null || result.tags.contains(rule.addTag)
             ? result.tags
@@ -1193,6 +1229,62 @@ class AppDatabase {
       );
     }
     return result;
+  }
+
+  Future<int> applyRuleToHistory(
+    AutomationRule rule,
+    List<FinanceTransaction> items,
+  ) async {
+    var changed = 0;
+    await db.transaction((txn) async {
+      for (final oldItem in items) {
+        final nextTags =
+            rule.addTag == null || oldItem.tags.contains(rule.addTag)
+            ? oldItem.tags
+            : [...oldItem.tags, rule.addTag!];
+        final next = oldItem.copyWith(
+          categoryId: rule.categoryId ?? oldItem.categoryId,
+          accountId: rule.accountId ?? oldItem.accountId,
+          tags: nextTags,
+          includeInAnalytics:
+              rule.includeInAnalytics ?? oldItem.includeInAnalytics,
+          updatedAt: DateTime.now(),
+        );
+        final tagsChanged =
+            oldItem.tags.length != next.tags.length ||
+            oldItem.tags.asMap().entries.any(
+              (entry) => next.tags[entry.key] != entry.value,
+            );
+        if (next.categoryId == oldItem.categoryId &&
+            next.accountId == oldItem.accountId &&
+            next.includeInAnalytics == oldItem.includeInAnalytics &&
+            !tagsChanged) {
+          continue;
+        }
+
+        await _validateAccount(txn, next.accountId);
+        if (next.type == TransactionType.transfer) {
+          if (next.toAccountId == null || next.toAccountId == next.accountId) {
+            throw StateError('Il trasferimento richiede due conti diversi.');
+          }
+          await _validateAccount(txn, next.toAccountId!);
+        }
+        await _applyBalance(txn, oldItem, -1, validateAccounts: false);
+        await txn.update(
+          'transactions',
+          _transactionMap(
+            next,
+            DateTime.now().millisecondsSinceEpoch,
+            preserveCreatedAt: true,
+          ),
+          where: 'id = ?',
+          whereArgs: [oldItem.id],
+        );
+        await _applyBalance(txn, next, 1);
+        changed++;
+      }
+    });
+    return changed;
   }
 
   Future<void> replaceSplits(
