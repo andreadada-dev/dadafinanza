@@ -43,7 +43,11 @@ jobs:
       - name: Pub get
         run: flutter pub get
       - name: Format check
-        run: dart format --output=none --set-exit-if-changed lib test
+        shell: bash
+        run: |
+          dart format lib test
+          git diff -- lib/data/app_database.dart lib/screens/account_management_screen.dart lib/screens/advances_screen.dart lib/screens/root_screen.dart lib/screens/transaction_screens.dart lib/services/notification_service.dart lib/services/rule_service.dart lib/widgets/home_dashboard_widget.dart test/data_integrity_hardening_test.dart test/deep_feature_hardening_test.dart
+          git diff --quiet -- lib test
       - name: Analyze
         run: flutter analyze --no-fatal-infos
       - name: Test
