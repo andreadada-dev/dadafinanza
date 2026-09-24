@@ -244,7 +244,8 @@ class _TopCategoriesDonut extends StatefulWidget {
 
 enum _CategoryChartRange { thisMonth, thisWeek, last7Days, last30Days, custom }
 
-class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
+class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
+    with SingleTickerProviderStateMixin {
   static const _rangeOrder = <_CategoryChartRange>[
     _CategoryChartRange.thisMonth,
     _CategoryChartRange.thisWeek,
@@ -252,12 +253,38 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
     _CategoryChartRange.last30Days,
     _CategoryChartRange.custom,
   ];
+  static const _initialCarouselPage = 1000;
+
+  late final PageController _typePageController;
+  late final AnimationController _swipeHintController;
+  late final Animation<double> _swipeHintAnimation;
 
   var _selectedIndex = -1;
   var _type = TransactionType.expense;
-  var _typeDirection = 1;
   var _range = _CategoryChartRange.thisMonth;
+  var _carouselDragging = false;
   DateTimeRange? _customRange;
+
+  @override
+  void initState() {
+    super.initState();
+    _typePageController = PageController(initialPage: _initialCarouselPage);
+    _swipeHintController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 850),
+    )..repeat(reverse: true);
+    _swipeHintAnimation = CurvedAnimation(
+      parent: _swipeHintController,
+      curve: Curves.easeInOutSine,
+    );
+  }
+
+  @override
+  void dispose() {
+    _typePageController.dispose();
+    _swipeHintController.dispose();
+    super.dispose();
+  }
 
   (DateTime, DateTime) _bounds() {
     final now = DateTime.now();
@@ -350,21 +377,28 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
     _selectRange(_rangeOrder[nextIndex]);
   }
 
-  void _stepType(int direction) {
-    final next = _type == TransactionType.expense
-        ? TransactionType.income
-        : TransactionType.expense;
+  TransactionType _typeForPage(int page) =>
+      page.isEven ? TransactionType.expense : TransactionType.income;
+
+  void _setDragging(bool value) {
+    if (_carouselDragging == value) return;
     setState(() {
-      _type = next;
-      _selectedIndex = -1;
-      _typeDirection = direction == 0 ? 1 : direction;
+      _carouselDragging = value;
+      if (value) _selectedIndex = -1;
     });
   }
 
-  void _handleTypeSwipe(DragEndDetails details) {
-    final velocity = details.primaryVelocity ?? 0;
-    if (velocity.abs() < 120) return;
-    _stepType(velocity < 0 ? 1 : -1);
+  void _commitCarouselPage() {
+    if (!_typePageController.hasClients) return;
+    final page = _typePageController.page?.round() ?? _initialCarouselPage;
+    final nextType = _typeForPage(page);
+    setState(() {
+      _carouselDragging = false;
+      if (nextType != _type) {
+        _type = nextType;
+        _selectedIndex = -1;
+      }
+    });
   }
 
   List<MapEntry<Category, double>> _topCategories(
@@ -412,24 +446,20 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
     return items.take(limit).toList();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final state = AppScope.of(context);
-    final limit = switch (widget.config.size) {
-      DashboardWidgetSize.small => 3,
-      DashboardWidgetSize.medium => 4,
-      DashboardWidgetSize.large => 5,
-    };
-    final (from, to) = _bounds();
-    final top = _topCategories(state, _type, limit, from, to);
-    final total = state.periodTotal(_type, from, to).abs();
-    final isExpense = _type == TransactionType.expense;
+  _CategoryCarouselData _dataFor(
+    BuildContext context,
+    AppState state,
+    TransactionType type,
+    int limit,
+    DateTime from,
+    DateTime to,
+  ) {
+    final top = _topCategories(state, type, limit, from, to);
+    final total = state.periodTotal(type, from, to).abs();
+    final isExpense = type == TransactionType.expense;
     final accent = isExpense
         ? context.financeColors.negative
         : context.financeColors.positive;
-    final emptyLabel = isExpense
-        ? 'Nessuna spesa da mostrare nel periodo'
-        : 'Nessuna entrata da mostrare nel periodo';
 
     final slices = <_DonutSlice>[
       for (final entry in top)
@@ -455,237 +485,283 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
       );
     }
 
-    if (_selectedIndex >= slices.length) _selectedIndex = -1;
-    final selected = _selectedIndex >= 0 ? slices[_selectedIndex] : null;
+    return _CategoryCarouselData(
+      top: top,
+      total: total,
+      slices: slices,
+      accent: accent,
+      icon: isExpense
+          ? Icons.arrow_upward_rounded
+          : Icons.arrow_downward_rounded,
+      emptyLabel: isExpense
+          ? 'Nessuna spesa da mostrare nel periodo'
+          : 'Nessuna entrata da mostrare nel periodo',
+    );
+  }
+
+  Widget _buildCarouselPage({
+    required BuildContext context,
+    required AppState state,
+    required TransactionType type,
+    required int limit,
+    required DateTime from,
+    required DateTime to,
+    required double chartSize,
+  }) {
+    final data = _dataFor(context, state, type, limit, from, to);
+    final interactive = !_carouselDragging && type == _type;
+    final pageSelectedIndex = interactive ? _selectedIndex : -1;
+    final selected =
+        pageSelectedIndex >= 0 && pageSelectedIndex < data.slices.length
+        ? data.slices[pageSelectedIndex]
+        : null;
+
+    return Center(
+      child: SizedBox(
+        width: double.infinity,
+        height: chartSize,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            if (data.total > 0 && data.slices.isNotEmpty)
+              Center(
+                child: SizedBox.square(
+                  dimension: chartSize,
+                  child: PieChart(
+                    PieChartData(
+                      startDegreeOffset: -90,
+                      sectionsSpace: 4,
+                      centerSpaceRadius: chartSize * .32,
+                      borderData: FlBorderData(show: false),
+                      pieTouchData: PieTouchData(
+                        enabled: interactive,
+                        touchCallback: (event, response) {
+                          if (!interactive ||
+                              event is! FlTapDownEvent ||
+                              response?.touchedSection == null) {
+                            return;
+                          }
+                          final next =
+                              response!.touchedSection!.touchedSectionIndex;
+                          setState(() {
+                            _selectedIndex = _selectedIndex == next ? -1 : next;
+                          });
+                        },
+                      ),
+                      sections: [
+                        for (var index = 0; index < data.slices.length; index++)
+                          PieChartSectionData(
+                            color:
+                                pageSelectedIndex == -1 ||
+                                    pageSelectedIndex == index
+                                ? data.slices[index].color
+                                : data.slices[index].color.withValues(
+                                    alpha: .22,
+                                  ),
+                            value: data.slices[index].amount,
+                            title: '',
+                            radius:
+                                chartSize *
+                                (pageSelectedIndex == index ? .165 : .145),
+                            showTitle: false,
+                          ),
+                      ],
+                    ),
+                    duration: const Duration(milliseconds: 260),
+                    curve: Curves.easeOutCubic,
+                  ),
+                ),
+              ),
+            Center(
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 180),
+                switchInCurve: Curves.easeOutCubic,
+                child: selected == null
+                    ? _DonutPeriodCenter(
+                        key: ValueKey('${type.name}-${_range.name}-period'),
+                        icon: data.icon,
+                        accent: data.accent,
+                        rangeLabel: _rangeLabel,
+                        totalLabel: state.hideBalance
+                            ? '••••'
+                            : moneyFor(state, data.total),
+                        onPreviousRange: () => _stepRange(-1),
+                        onNextRange: () => _stepRange(1),
+                      )
+                    : _SelectedDonutCenter(
+                        key: ValueKey(
+                          '${type.name}-${_range.name}-$pageSelectedIndex',
+                        ),
+                        slice: selected,
+                        percentage: data.total <= 0
+                            ? 0
+                            : selected.amount / data.total,
+                        amountLabel: state.hideBalance
+                            ? '••••'
+                            : moneyFor(state, selected.amount),
+                        onTap: () => setState(() => _selectedIndex = -1),
+                      ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = AppScope.of(context);
+    final limit = switch (widget.config.size) {
+      DashboardWidgetSize.small => 3,
+      DashboardWidgetSize.medium => 4,
+      DashboardWidgetSize.large => 5,
+    };
+    final (from, to) = _bounds();
+    final activeData = _dataFor(context, state, _type, limit, from, to);
+    if (_selectedIndex >= activeData.slices.length) _selectedIndex = -1;
+
     final chartSize = switch (widget.config.size) {
       DashboardWidgetSize.small => 210.0,
       DashboardWidgetSize.medium => 248.0,
       DashboardWidgetSize.large => 288.0,
     };
 
-    final otherTypeLabel = isExpense ? 'Entrate' : 'Spese';
-    final typeIcon = isExpense
-        ? Icons.arrow_upward_rounded
-        : Icons.arrow_downward_rounded;
-
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onHorizontalDragEnd: _handleTypeSwipe,
-      child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 240),
-        switchInCurve: Curves.easeOutCubic,
-        switchOutCurve: Curves.easeInCubic,
-        transitionBuilder: (child, animation) {
-          final slide = Tween<Offset>(
-            begin: Offset(.07 * _typeDirection, 0),
-            end: Offset.zero,
-          ).animate(animation);
-          return FadeTransition(
-            opacity: animation,
-            child: SlideTransition(position: slide, child: child),
-          );
-        },
-        child: Column(
-          key: ValueKey(_type),
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (top.isEmpty || total <= 0) ...[
-              SizedBox(
-                height: chartSize * .72,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: _CarouselTypeArrow(
-                        icon: Icons.chevron_left_rounded,
-                        tooltip: 'Mostra $otherTypeLabel',
-                        onPressed: () => _stepType(-1),
-                      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: chartSize,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Semantics(
+                label:
+                    'Carosello categorie. Scorri a destra o sinistra per passare tra Spese ed Entrate.',
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: (notification) {
+                    if (notification is ScrollStartNotification &&
+                        notification.dragDetails != null) {
+                      _setDragging(true);
+                    } else if (notification is ScrollEndNotification) {
+                      _commitCarouselPage();
+                    }
+                    return false;
+                  },
+                  child: PageView.builder(
+                    controller: _typePageController,
+                    allowImplicitScrolling: true,
+                    physics: const PageScrollPhysics(),
+                    itemBuilder: (context, page) => _buildCarouselPage(
+                      context: context,
+                      state: state,
+                      type: _typeForPage(page),
+                      limit: limit,
+                      from: from,
+                      to: to,
+                      chartSize: chartSize,
                     ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: _CarouselTypeArrow(
-                        icon: Icons.chevron_right_rounded,
-                        tooltip: 'Mostra $otherTypeLabel',
-                        onPressed: () => _stepType(1),
-                      ),
-                    ),
-                    _EmptyDonutCenter(
-                      icon: typeIcon,
-                      accent: accent,
-                      rangeLabel: _rangeLabel,
-                      totalLabel: state.hideBalance
-                          ? '••••'
-                          : moneyFor(state, total),
-                      onPreviousRange: () => _stepRange(-1),
-                      onNextRange: () => _stepRange(1),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-              Center(
-                child: Text(
-                  emptyLabel,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ] else ...[
-              Center(
-                child: SizedBox(
-                  height: chartSize,
-                  width: double.infinity,
-                  child: Stack(
-                    alignment: Alignment.center,
+              IgnorePointer(
+                child: AnimatedOpacity(
+                  opacity: _carouselDragging ? 0 : 1,
+                  duration: const Duration(milliseconds: 160),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Center(
-                        child: SizedBox.square(
-                          dimension: chartSize,
-                          child: PieChart(
-                            PieChartData(
-                              startDegreeOffset: -90,
-                              sectionsSpace: 4,
-                              centerSpaceRadius: chartSize * .32,
-                              borderData: FlBorderData(show: false),
-                              pieTouchData: PieTouchData(
-                                touchCallback: (event, response) {
-                                  if (event is! FlTapDownEvent ||
-                                      response?.touchedSection == null) {
-                                    return;
-                                  }
-                                  final next = response!
-                                      .touchedSection!
-                                      .touchedSectionIndex;
-                                  setState(() {
-                                    _selectedIndex = _selectedIndex == next
-                                        ? -1
-                                        : next;
-                                  });
-                                },
-                              ),
-                              sections: [
-                                for (
-                                  var index = 0;
-                                  index < slices.length;
-                                  index++
-                                )
-                                  PieChartSectionData(
-                                    color:
-                                        _selectedIndex == -1 ||
-                                            _selectedIndex == index
-                                        ? slices[index].color
-                                        : slices[index].color.withValues(
-                                            alpha: .22,
-                                          ),
-                                    value: slices[index].amount,
-                                    title: '',
-                                    radius:
-                                        chartSize *
-                                        (_selectedIndex == index ? .165 : .145),
-                                    showTitle: false,
-                                  ),
-                              ],
-                            ),
-                            duration: const Duration(milliseconds: 420),
-                            curve: Curves.easeOutCubic,
-                          ),
-                        ),
+                      _SwipeHintChevron(
+                        direction: -1,
+                        animation: _swipeHintAnimation,
                       ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: _CarouselTypeArrow(
-                          icon: Icons.chevron_left_rounded,
-                          tooltip: 'Mostra $otherTypeLabel',
-                          onPressed: () => _stepType(-1),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: _CarouselTypeArrow(
-                          icon: Icons.chevron_right_rounded,
-                          tooltip: 'Mostra $otherTypeLabel',
-                          onPressed: () => _stepType(1),
-                        ),
-                      ),
-                      Center(
-                        child: AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 220),
-                          switchInCurve: Curves.easeOutCubic,
-                          child: selected == null
-                              ? _DonutPeriodCenter(
-                                  key: ValueKey(
-                                    '${_type.name}-${_range.name}-period',
-                                  ),
-                                  icon: typeIcon,
-                                  accent: accent,
-                                  rangeLabel: _rangeLabel,
-                                  totalLabel: state.hideBalance
-                                      ? '••••'
-                                      : moneyFor(state, total),
-                                  onPreviousRange: () => _stepRange(-1),
-                                  onNextRange: () => _stepRange(1),
-                                )
-                              : _SelectedDonutCenter(
-                                  key: ValueKey(
-                                    '${_type.name}-${_range.name}-$_selectedIndex',
-                                  ),
-                                  slice: selected,
-                                  percentage: total <= 0
-                                      ? 0
-                                      : selected.amount / total,
-                                  amountLabel: state.hideBalance
-                                      ? '••••'
-                                      : moneyFor(state, selected.amount),
-                                  onTap: () =>
-                                      setState(() => _selectedIndex = -1),
-                                ),
-                        ),
+                      _SwipeHintChevron(
+                        direction: 1,
+                        animation: _swipeHintAnimation,
                       ),
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 12),
-              for (final entry in top)
-                _CategoryDonutRow(
-                  category: entry.key,
-                  amount: entry.value.abs(),
-                  total: total,
-                  state: state,
-                ),
             ],
-          ],
+          ),
         ),
-      ),
+        const SizedBox(height: 12),
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 180),
+          switchInCurve: Curves.easeOutCubic,
+          child: activeData.top.isEmpty || activeData.total <= 0
+              ? Center(
+                  key: ValueKey('${_type.name}-empty-${_range.name}'),
+                  child: Text(
+                    activeData.emptyLabel,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                )
+              : Column(
+                  key: ValueKey('${_type.name}-list-${_range.name}'),
+                  children: [
+                    for (final entry in activeData.top)
+                      _CategoryDonutRow(
+                        category: entry.key,
+                        amount: entry.value.abs(),
+                        total: activeData.total,
+                        state: state,
+                      ),
+                  ],
+                ),
+        ),
+      ],
     );
   }
 }
 
-class _CarouselTypeArrow extends StatelessWidget {
-  const _CarouselTypeArrow({
+class _CategoryCarouselData {
+  const _CategoryCarouselData({
+    required this.top,
+    required this.total,
+    required this.slices,
+    required this.accent,
     required this.icon,
-    required this.tooltip,
-    required this.onPressed,
+    required this.emptyLabel,
   });
 
+  final List<MapEntry<Category, double>> top;
+  final double total;
+  final List<_DonutSlice> slices;
+  final Color accent;
   final IconData icon;
-  final String tooltip;
-  final VoidCallback onPressed;
+  final String emptyLabel;
+}
+
+class _SwipeHintChevron extends StatelessWidget {
+  const _SwipeHintChevron({required this.direction, required this.animation});
+
+  final int direction;
+  final Animation<double> animation;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return IconButton(
-      tooltip: tooltip,
-      onPressed: onPressed,
-      style: IconButton.styleFrom(
-        backgroundColor: theme.colorScheme.surfaceContainer.withValues(
-          alpha: .72,
-        ),
-        foregroundColor: theme.colorScheme.onSurface,
-      ),
-      icon: Icon(icon, size: 26),
+    return AnimatedBuilder(
+      animation: animation,
+      builder: (context, child) {
+        final travel = 4 + animation.value * 5;
+        return Transform.translate(
+          offset: Offset(direction * travel, 0),
+          child: Opacity(
+            opacity: .34 + animation.value * .46,
+            child: Icon(
+              direction < 0
+                  ? Icons.chevron_left_rounded
+                  : Icons.chevron_right_rounded,
+              size: 30,
+              color: theme.colorScheme.onSurface,
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -761,34 +837,6 @@ class _DonutPeriodCenter extends StatelessWidget {
       ),
     );
   }
-}
-
-class _EmptyDonutCenter extends StatelessWidget {
-  const _EmptyDonutCenter({
-    required this.icon,
-    required this.accent,
-    required this.rangeLabel,
-    required this.totalLabel,
-    required this.onPreviousRange,
-    required this.onNextRange,
-  });
-
-  final IconData icon;
-  final Color accent;
-  final String rangeLabel;
-  final String totalLabel;
-  final VoidCallback onPreviousRange;
-  final VoidCallback onNextRange;
-
-  @override
-  Widget build(BuildContext context) => _DonutPeriodCenter(
-    icon: icon,
-    accent: accent,
-    rangeLabel: rangeLabel,
-    totalLabel: totalLabel,
-    onPreviousRange: onPreviousRange,
-    onNextRange: onNextRange,
-  );
 }
 
 class _DonutRangeArrow extends StatelessWidget {
