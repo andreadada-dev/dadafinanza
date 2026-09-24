@@ -122,26 +122,38 @@ class RecurringExecutionService {
       switch (frequency) {
         'Settimanale' => date.add(const Duration(days: 7)),
         'Quindicinale' => date.add(const Duration(days: 14)),
-        'Trimestrale' => DateTime(
-          date.year,
-          date.month + 3,
-          date.day,
-          date.hour,
-          date.minute,
-        ),
-        'Annuale' => DateTime(
-          date.year + 1,
-          date.month,
-          date.day,
-          date.hour,
-          date.minute,
-        ),
-        _ => DateTime(
-          date.year,
-          date.month + 1,
-          date.day,
-          date.hour,
-          date.minute,
-        ),
+        'Trimestrale' => _addMonthsClamped(date, 3),
+        'Annuale' => _addMonthsClamped(date, 12),
+        _ => _addMonthsClamped(date, 1),
       };
+
+  static DateTime _addMonthsClamped(DateTime date, int months) {
+    final zeroBased = date.year * 12 + date.month - 1 + months;
+    final year = zeroBased ~/ 12;
+    final month = zeroBased % 12 + 1;
+    final lastDay = DateTime(year, month + 1, 0).day;
+    final day = date.day <= lastDay ? date.day : lastDay;
+    if (date.isUtc) {
+      return DateTime.utc(
+        year,
+        month,
+        day,
+        date.hour,
+        date.minute,
+        date.second,
+        date.millisecond,
+        date.microsecond,
+      );
+    }
+    return DateTime(
+      year,
+      month,
+      day,
+      date.hour,
+      date.minute,
+      date.second,
+      date.millisecond,
+      date.microsecond,
+    );
+  }
 }
