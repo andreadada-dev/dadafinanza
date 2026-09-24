@@ -301,10 +301,10 @@ class NotificationService {
     );
     await state.database.setSetting('notification_forecast_month', month);
   }
+
   String _money(AppState state, double value) => NumberFormat.currency(
     locale: 'it_IT',
     name: state.currency,
     decimalDigits: state.showCents ? 2 : 0,
   ).format(value);
-
 }
