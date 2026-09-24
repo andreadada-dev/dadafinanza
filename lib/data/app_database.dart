@@ -1228,6 +1228,8 @@ class AppDatabase {
         includeInAnalytics:
             rule.includeInAnalytics ?? result.includeInAnalytics,
       );
+      // Rules are ordered by descending priority: the first match wins.
+      break;
     }
     return result;
   }
