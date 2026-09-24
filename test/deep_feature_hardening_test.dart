@@ -16,6 +16,7 @@ class _NoopWidgetService extends WidgetService {
   @override
   Future<void> sync({
     required double balance,
+    required String currency,
     required List<Category> expenseCategories,
   }) async {}
 }
