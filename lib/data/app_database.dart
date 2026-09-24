@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../core/money.dart';
 import '../models/models.dart';
 import '../models/smart_models.dart';
 
@@ -80,6 +81,7 @@ class AppDatabase {
       amount REAL NOT NULL,
       category_id INTEGER NOT NULL,
       note TEXT,
+      amount_cents INTEGER,
       FOREIGN KEY(transaction_id) REFERENCES transactions(id) ON DELETE CASCADE,
       FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE RESTRICT
     )''');
@@ -97,6 +99,7 @@ class AppDatabase {
       note TEXT,
       end_date INTEGER,
       auto_create INTEGER NOT NULL DEFAULT 0,
+      amount_cents INTEGER,
       FOREIGN KEY(account_id) REFERENCES accounts(id),
       FOREIGN KEY(to_account_id) REFERENCES accounts(id) ON DELETE SET NULL,
       FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE SET NULL
@@ -110,6 +113,7 @@ class AppDatabase {
       start_date INTEGER NOT NULL,
       end_date INTEGER,
       enabled INTEGER NOT NULL DEFAULT 1,
+      limit_cents INTEGER,
       FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE SET NULL
     )''');
     await db.execute('''CREATE TABLE goals(
@@ -143,6 +147,8 @@ class AppDatabase {
       account_id INTEGER,
       add_tag TEXT,
       include_in_analytics INTEGER,
+      min_amount_cents INTEGER,
+      max_amount_cents INTEGER,
       priority INTEGER NOT NULL DEFAULT 0,
       FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE SET NULL,
       FOREIGN KEY(account_id) REFERENCES accounts(id) ON DELETE SET NULL
@@ -1310,6 +1316,7 @@ class AppDatabase {
         await txn.insert('transaction_splits', {
           'transaction_id': transactionId,
           'amount': item.amount,
+          'amount_cents': Money.toCents(item.amount),
           'category_id': item.categoryId,
           'note': item.note,
         });
@@ -1332,6 +1339,7 @@ class AppDatabase {
   }) => db.insert('recurring', {
     'name': name,
     'amount': amount,
+    'amount_cents': Money.toCents(amount),
     'type': type.dbValue,
     'account_id': accountId,
     'to_account_id': type == TransactionType.transfer ? toAccountId : null,
@@ -1349,6 +1357,7 @@ class AppDatabase {
     {
       'name': item.name,
       'amount': item.amount,
+      'amount_cents': Money.toCents(item.amount),
       'type': item.type.dbValue,
       'account_id': item.accountId,
       'to_account_id': item.type == TransactionType.transfer
@@ -1381,6 +1390,7 @@ class AppDatabase {
     'name': name,
     'category_id': categoryId,
     'limit_amount': limit,
+    'limit_cents': Money.toCents(limit),
     'period': period.name,
     'start_date': startDate.millisecondsSinceEpoch,
     'end_date': endDate?.millisecondsSinceEpoch,
@@ -1392,6 +1402,7 @@ class AppDatabase {
       'name': item.name,
       'category_id': item.categoryId,
       'limit_amount': item.limit,
+      'limit_cents': Money.toCents(item.limit),
       'period': item.period.name,
       'start_date': item.startDate.millisecondsSinceEpoch,
       'end_date': item.endDate?.millisecondsSinceEpoch,
@@ -1460,6 +1471,12 @@ class AppDatabase {
     'type': rule.type?.dbValue,
     'min_amount': rule.minAmount,
     'max_amount': rule.maxAmount,
+    'min_amount_cents': rule.minAmount == null
+        ? null
+        : Money.toCents(rule.minAmount!),
+    'max_amount_cents': rule.maxAmount == null
+        ? null
+        : Money.toCents(rule.maxAmount!),
     'category_id': rule.categoryId,
     'account_id': rule.accountId,
     'add_tag': rule.addTag,
