@@ -1331,18 +1331,18 @@ class _FinancePersonPickerSheetState extends State<_FinancePersonPickerSheet> {
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
     final query = _query.trim().toLowerCase();
-    final people = state.people
-        .where((item) => !item.archived)
-        .where(
-          (item) =>
-              query.isEmpty || item.name.toLowerCase().contains(query),
-        )
-        .toList()
-      ..sort(
-        (first, second) => first.name.toLowerCase().compareTo(
-          second.name.toLowerCase(),
-        ),
-      );
+    final people =
+        state.people
+            .where((item) => !item.archived)
+            .where(
+              (item) =>
+                  query.isEmpty || item.name.toLowerCase().contains(query),
+            )
+            .toList()
+          ..sort(
+            (first, second) =>
+                first.name.toLowerCase().compareTo(second.name.toLowerCase()),
+          );
 
     return FractionallySizedBox(
       heightFactor: .78,
@@ -1382,7 +1382,8 @@ class _FinancePersonPickerSheetState extends State<_FinancePersonPickerSheet> {
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   final columns = constraints.maxWidth >= 360 ? 4 : 3;
-                  final itemCount = people.length + (widget.allowCreate ? 1 : 0);
+                  final itemCount =
+                      people.length + (widget.allowCreate ? 1 : 0);
                   if (itemCount == 0) {
                     return const Center(
                       child: Text('Nessuna persona trovata.'),
@@ -1415,9 +1416,8 @@ class _FinancePersonPickerSheetState extends State<_FinancePersonPickerSheet> {
                         );
                       }
 
-                      final person = people[
-                        index - (widget.allowCreate ? 1 : 0)
-                      ];
+                      final person =
+                          people[index - (widget.allowCreate ? 1 : 0)];
                       return _PersonPickerTile(
                         icon: Icons.person_outline_rounded,
                         label: person.name,
