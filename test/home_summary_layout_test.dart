@@ -42,7 +42,10 @@ void main() {
     final settings = File('lib/screens/settings_screen.dart').readAsStringSync();
     final models = File('lib/models/models.dart').readAsStringSync();
 
-    expect(models, contains("DashboardWidgetType.topCategories => 'Grafico categorie'"));
+    expect(
+      models,
+      contains("DashboardWidgetType.topCategories => 'Grafico categorie'"),
+    );
     expect(
       settings,
       contains(
