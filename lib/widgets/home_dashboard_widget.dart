@@ -255,6 +255,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
 
   var _selectedIndex = -1;
   var _type = TransactionType.expense;
+  var _typeDirection = 1;
   var _range = _CategoryChartRange.thisMonth;
   DateTimeRange? _customRange;
 
@@ -349,10 +350,21 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
     _selectRange(_rangeOrder[nextIndex]);
   }
 
-  void _handleRangeSwipe(DragEndDetails details) {
+  void _stepType(int direction) {
+    final next = _type == TransactionType.expense
+        ? TransactionType.income
+        : TransactionType.expense;
+    setState(() {
+      _type = next;
+      _selectedIndex = -1;
+      _typeDirection = direction == 0 ? 1 : direction;
+    });
+  }
+
+  void _handleTypeSwipe(DragEndDetails details) {
     final velocity = details.primaryVelocity ?? 0;
-    if (velocity.abs() < 80) return;
-    _stepRange(velocity < 0 ? 1 : -1);
+    if (velocity.abs() < 120) return;
+    _stepType(velocity < 0 ? 1 : -1);
   }
 
   List<MapEntry<Category, double>> _topCategories(
@@ -452,318 +464,425 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
       DashboardWidgetSize.large => 288.0,
     };
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _CategoryChartControls(
-          selectedType: _type,
-          rangeLabel: _rangeLabel,
-          onTypeChanged: (value) {
-            if (value == _type) return;
-            setState(() {
-              _type = value;
-              _selectedIndex = -1;
-            });
-          },
-          onPreviousRange: () => _stepRange(-1),
-          onNextRange: () => _stepRange(1),
-          onRangeSwipe: _handleRangeSwipe,
-          onRangeTap: () {
-            if (_range == _CategoryChartRange.custom) {
-              _selectRange(_CategoryChartRange.custom);
-            } else {
-              _stepRange(1);
-            }
-          },
-        ),
-        const SizedBox(height: 20),
-        SectionTitle(
-          title,
-          trailing: Text(
-            state.hideBalance ? '••••' : moneyFor(state, total),
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: accent,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-        ),
-        if (top.isEmpty || total <= 0) ...[
-          const SizedBox(height: 8),
-          Text(emptyLabel),
-        ] else ...[
-          const SizedBox(height: 8),
-          Center(
-            child: SizedBox.square(
-              dimension: chartSize,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  TweenAnimationBuilder<double>(
-                    tween: Tween(begin: 0, end: 1),
-                    duration: const Duration(milliseconds: 850),
-                    curve: Curves.easeInOutCubicEmphasized,
-                    builder: (context, progress, child) {
-                      return PieChart(
-                        PieChartData(
-                          startDegreeOffset: -90,
-                          sectionsSpace: 4,
-                          centerSpaceRadius: chartSize * .30,
-                          borderData: FlBorderData(show: false),
-                          pieTouchData: PieTouchData(
-                            touchCallback: (event, response) {
-                              if (event is! FlTapDownEvent ||
-                                  response?.touchedSection == null) {
-                                return;
-                              }
-                              final next =
-                                  response!.touchedSection!.touchedSectionIndex;
-                              setState(() {
-                                _selectedIndex = _selectedIndex == next
-                                    ? -1
-                                    : next;
-                              });
-                            },
-                          ),
-                          sections: [
-                            for (var index = 0; index < slices.length; index++)
-                              PieChartSectionData(
-                                color:
-                                    _selectedIndex == -1 ||
-                                        _selectedIndex == index
-                                    ? slices[index].color
-                                    : slices[index].color.withValues(
-                                        alpha: .22,
-                                      ),
-                                value: slices[index].amount * progress,
-                                title: '',
-                                radius:
-                                    chartSize *
-                                    (_selectedIndex == index ? .165 : .145),
-                                showTitle: false,
-                              ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                  IgnorePointer(
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 260),
-                      switchInCurve: Curves.easeOutCubic,
-                      child: Column(
-                        key: ValueKey(
-                          '${_type.name}-${_range.name}-$_selectedIndex',
-                        ),
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            selected?.category == null
-                                ? Icons.pie_chart_rounded
-                                : categoryIcon(selected!.category!.iconKey),
-                            size: 24,
-                            color: selected?.color ?? accent,
-                          ),
-                          const SizedBox(height: 5),
-                          ConstrainedBox(
-                            constraints: BoxConstraints(
-                              maxWidth: chartSize * .46,
-                            ),
-                            child: Text(
-                              selected?.label ?? _rangeLabel,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.labelLarge
-                                  ?.copyWith(fontWeight: FontWeight.w800),
-                            ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            selected == null
-                                ? '${slices.length} categorie'
-                                : '${(selected.amount / total * 100).round()}%',
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(
-                                  color: selected?.color ?? accent,
-                                  fontWeight: FontWeight.w900,
-                                ),
-                          ),
-                          if (selected != null) ...[
-                            const SizedBox(height: 2),
-                            Text(
-                              state.hideBalance
-                                  ? '••••'
-                                  : moneyFor(state, selected.amount),
-                              style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onSurface,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                            ),
-                          ],
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 12),
-          for (final entry in top)
-            _CategoryDonutRow(
-              category: entry.key,
-              amount: entry.value.abs(),
-              total: total,
-              state: state,
-            ),
-        ],
-      ],
-    );
-  }
-}
+    final otherTypeLabel = isExpense ? 'Entrate' : 'Spese';
+    final typeIcon = isExpense
+        ? Icons.arrow_upward_rounded
+        : Icons.arrow_downward_rounded;
 
-class _CategoryChartControls extends StatelessWidget {
-  const _CategoryChartControls({
-    required this.selectedType,
-    required this.rangeLabel,
-    required this.onTypeChanged,
-    required this.onPreviousRange,
-    required this.onNextRange,
-    required this.onRangeSwipe,
-    required this.onRangeTap,
-  });
-
-  final TransactionType selectedType;
-  final String rangeLabel;
-  final ValueChanged<TransactionType> onTypeChanged;
-  final VoidCallback onPreviousRange;
-  final VoidCallback onNextRange;
-  final GestureDragEndCallback onRangeSwipe;
-  final VoidCallback onRangeTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final inactive = theme.colorScheme.onSurfaceVariant;
-    final selectedColor = theme.colorScheme.onSurface;
-
-    Widget typeAction({
-      required TransactionType type,
-      required String label,
-      required Color color,
-      required Alignment alignment,
-    }) {
-      final selected = selectedType == type;
-      final resolvedColor = selected ? selectedColor : color;
-
-      return Align(
-        alignment: alignment,
-        child: Semantics(
-          button: true,
-          selected: selected,
-          label: label,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(12),
-            onTap: () => onTypeChanged(type),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 2),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    label,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      color: resolvedColor,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 180),
-                    curve: Curves.easeOutCubic,
-                    width: 26,
-                    height: 2,
-                    decoration: BoxDecoration(
-                      color: selected ? selectedColor : Colors.transparent,
-                      borderRadius: BorderRadius.circular(999),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-          child: typeAction(
-            type: TransactionType.expense,
-            label: 'Spese',
-            color: context.financeColors.negative,
-            alignment: Alignment.centerLeft,
-          ),
-        ),
-        Flexible(
-          flex: 2,
-          child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onHorizontalDragEnd: onRangeSwipe,
-            onTap: onRangeTap,
-            child: Semantics(
-              button: true,
-              label: 'Periodo: $rangeLabel',
-              hint: 'Scorri a destra o sinistra per cambiare periodo',
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(minHeight: 48),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onHorizontalDragEnd: _handleTypeSwipe,
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 240),
+        switchInCurve: Curves.easeOutCubic,
+        switchOutCurve: Curves.easeInCubic,
+        transitionBuilder: (child, animation) {
+          final slide = Tween<Offset>(
+            begin: Offset(.07 * _typeDirection, 0),
+            end: Offset.zero,
+          ).animate(animation);
+          return FadeTransition(
+            opacity: animation,
+            child: SlideTransition(position: slide, child: child),
+          );
+        },
+        child: Column(
+          key: ValueKey(_type),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (top.isEmpty || total <= 0) ...[
+              SizedBox(
+                height: chartSize * .72,
+                child: Stack(
+                  alignment: Alignment.center,
                   children: [
-                    IconButton(
-                      tooltip: 'Periodo precedente',
-                      visualDensity: VisualDensity.compact,
-                      onPressed: onPreviousRange,
-                      icon: const Icon(Icons.chevron_left_rounded),
-                    ),
-                    Flexible(
-                      child: Text(
-                        rangeLabel,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style: theme.textTheme.labelLarge?.copyWith(
-                          color: inactive,
-                          fontWeight: FontWeight.w800,
-                        ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: _CarouselTypeArrow(
+                        icon: Icons.chevron_left_rounded,
+                        tooltip: 'Mostra $otherTypeLabel',
+                        onPressed: () => _stepType(-1),
                       ),
                     ),
-                    IconButton(
-                      tooltip: 'Periodo successivo',
-                      visualDensity: VisualDensity.compact,
-                      onPressed: onNextRange,
-                      icon: const Icon(Icons.chevron_right_rounded),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: _CarouselTypeArrow(
+                        icon: Icons.chevron_right_rounded,
+                        tooltip: 'Mostra $otherTypeLabel',
+                        onPressed: () => _stepType(1),
+                      ),
+                    ),
+                    _EmptyDonutCenter(
+                      icon: typeIcon,
+                      accent: accent,
+                      rangeLabel: _rangeLabel,
+                      totalLabel: state.hideBalance
+                          ? '••••'
+                          : moneyFor(state, total),
+                      onPreviousRange: () => _stepRange(-1),
+                      onNextRange: () => _stepRange(1),
                     ),
                   ],
                 ),
               ),
+              Center(
+                child: Text(
+                  emptyLabel,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ] else ...[
+              Center(
+                child: SizedBox(
+                  height: chartSize,
+                  width: double.infinity,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Center(
+                        child: SizedBox.square(
+                          dimension: chartSize,
+                          child: PieChart(
+                            PieChartData(
+                              startDegreeOffset: -90,
+                              sectionsSpace: 4,
+                              centerSpaceRadius: chartSize * .32,
+                              borderData: FlBorderData(show: false),
+                              pieTouchData: PieTouchData(
+                                touchCallback: (event, response) {
+                                  if (event is! FlTapDownEvent ||
+                                      response?.touchedSection == null) {
+                                    return;
+                                  }
+                                  final next = response!
+                                      .touchedSection!
+                                      .touchedSectionIndex;
+                                  setState(() {
+                                    _selectedIndex = _selectedIndex == next
+                                        ? -1
+                                        : next;
+                                  });
+                                },
+                              ),
+                              sections: [
+                                for (
+                                  var index = 0;
+                                  index < slices.length;
+                                  index++
+                                )
+                                  PieChartSectionData(
+                                    color:
+                                        _selectedIndex == -1 ||
+                                            _selectedIndex == index
+                                        ? slices[index].color
+                                        : slices[index].color.withValues(
+                                            alpha: .22,
+                                          ),
+                                    value: slices[index].amount,
+                                    title: '',
+                                    radius:
+                                        chartSize *
+                                        (_selectedIndex == index ? .165 : .145),
+                                    showTitle: false,
+                                  ),
+                              ],
+                            ),
+                            duration: const Duration(milliseconds: 420),
+                            curve: Curves.easeOutCubic,
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: _CarouselTypeArrow(
+                          icon: Icons.chevron_left_rounded,
+                          tooltip: 'Mostra $otherTypeLabel',
+                          onPressed: () => _stepType(-1),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: _CarouselTypeArrow(
+                          icon: Icons.chevron_right_rounded,
+                          tooltip: 'Mostra $otherTypeLabel',
+                          onPressed: () => _stepType(1),
+                        ),
+                      ),
+                      Center(
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 220),
+                          switchInCurve: Curves.easeOutCubic,
+                          child: selected == null
+                              ? _DonutPeriodCenter(
+                                  key: ValueKey(
+                                    '${_type.name}-${_range.name}-period',
+                                  ),
+                                  icon: typeIcon,
+                                  accent: accent,
+                                  rangeLabel: _rangeLabel,
+                                  totalLabel: state.hideBalance
+                                      ? '••••'
+                                      : moneyFor(state, total),
+                                  onPreviousRange: () => _stepRange(-1),
+                                  onNextRange: () => _stepRange(1),
+                                )
+                              : _SelectedDonutCenter(
+                                  key: ValueKey(
+                                    '${_type.name}-${_range.name}-$_selectedIndex',
+                                  ),
+                                  slice: selected,
+                                  percentage:
+                                      total <= 0
+                                      ? 0
+                                      : selected.amount / total,
+                                  amountLabel: state.hideBalance
+                                      ? '••••'
+                                      : moneyFor(state, selected.amount),
+                                  onTap: () =>
+                                      setState(() => _selectedIndex = -1),
+                                ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              for (final entry in top)
+                _CategoryDonutRow(
+                  category: entry.key,
+                  amount: entry.value.abs(),
+                  total: total,
+                  state: state,
+                ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CarouselTypeArrow extends StatelessWidget {
+  const _CarouselTypeArrow({
+    required this.icon,
+    required this.tooltip,
+    required this.onPressed,
+  });
+
+  final IconData icon;
+  final String tooltip;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return IconButton(
+      tooltip: tooltip,
+      onPressed: onPressed,
+      style: IconButton.styleFrom(
+        backgroundColor: theme.colorScheme.surfaceContainer.withValues(
+          alpha: .72,
+        ),
+        foregroundColor: theme.colorScheme.onSurface,
+      ),
+      icon: Icon(icon, size: 26),
+    );
+  }
+}
+
+class _DonutPeriodCenter extends StatelessWidget {
+  const _DonutPeriodCenter({
+    required this.icon,
+    required this.accent,
+    required this.rangeLabel,
+    required this.totalLabel,
+    required this.onPreviousRange,
+    required this.onNextRange,
+    super.key,
+  });
+
+  final IconData icon;
+  final Color accent;
+  final String rangeLabel;
+  final String totalLabel;
+  final VoidCallback onPreviousRange;
+  final VoidCallback onNextRange;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Semantics(
+      label: 'Periodo $rangeLabel, totale $totalLabel',
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 26, color: accent),
+          const SizedBox(height: 6),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _DonutRangeArrow(
+                icon: Icons.chevron_left_rounded,
+                tooltip: 'Periodo precedente',
+                onPressed: onPreviousRange,
+              ),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 96),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    rangeLabel,
+                    maxLines: 1,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+              ),
+              _DonutRangeArrow(
+                icon: Icons.chevron_right_rounded,
+                tooltip: 'Periodo successivo',
+                onPressed: onNextRange,
+              ),
+            ],
+          ),
+          const SizedBox(height: 2),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              totalLabel,
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: accent,
+                fontWeight: FontWeight.w900,
+              ),
             ),
           ),
-        ),
-        Expanded(
-          child: typeAction(
-            type: TransactionType.income,
-            label: 'Entrate',
-            color: context.financeColors.positive,
-            alignment: Alignment.centerRight,
+        ],
+      ),
+    );
+  }
+}
+
+class _EmptyDonutCenter extends StatelessWidget {
+  const _EmptyDonutCenter({
+    required this.icon,
+    required this.accent,
+    required this.rangeLabel,
+    required this.totalLabel,
+    required this.onPreviousRange,
+    required this.onNextRange,
+  });
+
+  final IconData icon;
+  final Color accent;
+  final String rangeLabel;
+  final String totalLabel;
+  final VoidCallback onPreviousRange;
+  final VoidCallback onNextRange;
+
+  @override
+  Widget build(BuildContext context) => _DonutPeriodCenter(
+    icon: icon,
+    accent: accent,
+    rangeLabel: rangeLabel,
+    totalLabel: totalLabel,
+    onPreviousRange: onPreviousRange,
+    onNextRange: onNextRange,
+  );
+}
+
+class _DonutRangeArrow extends StatelessWidget {
+  const _DonutRangeArrow({
+    required this.icon,
+    required this.tooltip,
+    required this.onPressed,
+  });
+
+  final IconData icon;
+  final String tooltip;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) => IconButton(
+    tooltip: tooltip,
+    onPressed: onPressed,
+    visualDensity: VisualDensity.compact,
+    constraints: const BoxConstraints.tightFor(width: 36, height: 36),
+    padding: EdgeInsets.zero,
+    icon: Icon(icon, size: 21),
+  );
+}
+
+class _SelectedDonutCenter extends StatelessWidget {
+  const _SelectedDonutCenter({
+    required this.slice,
+    required this.percentage,
+    required this.amountLabel,
+    required this.onTap,
+    super.key,
+  });
+
+  final _DonutSlice slice;
+  final double percentage;
+  final String amountLabel;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Semantics(
+      button: true,
+      label:
+          '${slice.label}, ${(percentage * 100).round()}%, $amountLabel. Tocca per tornare al periodo.',
+      child: InkWell(
+        borderRadius: BorderRadius.circular(24),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                slice.category == null
+                    ? Icons.pie_chart_rounded
+                    : categoryIcon(slice.category!.iconKey),
+                size: 24,
+                color: slice.color,
+              ),
+              const SizedBox(height: 4),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 112),
+                child: Text(
+                  slice.label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                '${(percentage * 100).round()}%',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: slice.color,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              Text(
+                amountLabel,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurface,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
           ),
         ),
-      ],
+      ),
     );
   }
 }
