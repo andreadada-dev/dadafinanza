@@ -536,7 +536,8 @@ class AppDatabase {
         SELECT 1 FROM accounts a WHERE a.id = r.account_id
       ) THEN r.account_id ELSE NULL END,
       r.add_tag, r.include_in_analytics, r.min_amount_cents,
-      r.max_amount_cents, r.priority
+      r.max_amount_cents,
+      CASE WHEN r.priority = 0 THEN r.id ELSE r.priority END
     FROM automation_rules r''');
     await db.execute('DROP TABLE automation_rules');
     await db.execute('ALTER TABLE automation_rules_v6 RENAME TO automation_rules');
