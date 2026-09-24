@@ -94,8 +94,20 @@ void main() {
     await tester.enterText(find.byType(TextField), 'Persona 27');
     await tester.pumpAndSettle();
 
-    expect(find.text('Persona 27'), findsOneWidget);
-    expect(find.text('Persona 1'), findsNothing);
+    expect(
+      find.descendant(
+        of: find.byType(GridView),
+        matching: find.text('Persona 27'),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(
+        of: find.byType(GridView),
+        matching: find.text('Persona 1'),
+      ),
+      findsNothing,
+    );
     expect(find.text('Nuova'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
