@@ -54,6 +54,18 @@ void main() {
     );
   });
 
+  test('category carousel keeps type and period controls inside the donut', () {
+    final source = File(
+      'lib/widgets/home_dashboard_widget.dart',
+    ).readAsStringSync();
+
+    expect(source, isNot(contains('_CategoryChartControls')));
+    expect(source, contains('onHorizontalDragEnd: _handleTypeSwipe'));
+    expect(source, contains('class _CarouselTypeArrow'));
+    expect(source, contains('class _DonutPeriodCenter'));
+    expect(source, contains('totalLabel'));
+  });
+
   test('dashboard seeding backfills missing widget types', () {
     final database = File('lib/data/app_database.dart').readAsStringSync();
 
