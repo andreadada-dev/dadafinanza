@@ -460,7 +460,7 @@ class _IvyFinanceOverview extends StatelessWidget {
           if (metrics.isNotEmpty) ...[
             const SizedBox(height: 20),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 for (var index = 0; index < metrics.length; index++) ...[
                   if (index > 0) const SizedBox(width: 8),
