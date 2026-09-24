@@ -258,11 +258,7 @@ class AccountCategoryCarousel extends StatelessWidget {
 }
 
 class _TopCategoriesDonut extends StatefulWidget {
-  const _TopCategoriesDonut({
-    required this.config,
-    this.accountId,
-    super.key,
-  });
+  const _TopCategoriesDonut({required this.config, this.accountId, super.key});
 
   final DashboardWidgetConfig config;
   final int? accountId;
