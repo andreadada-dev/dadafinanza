@@ -244,6 +244,40 @@ class _TopCategoriesDonut extends StatefulWidget {
 
 class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
   var _selectedIndex = -1;
+  var _type = TransactionType.expense;
+
+  List<MapEntry<Category, double>> _topCategories(
+    AppState state,
+    TransactionType type,
+    int limit,
+  ) {
+    if (type == TransactionType.expense) {
+      return state.topExpenseCategories(limit: limit);
+    }
+
+    final now = DateTime.now();
+    final from = DateTime(now.year, now.month);
+    final to = DateTime(now.year, now.month + 1);
+    final totals = <int, double>{};
+    for (final transaction in state.analyticTransactions(from: from, to: to)) {
+      if (transaction.type != TransactionType.income ||
+          transaction.refundOfTransactionId != null ||
+          transaction.categoryId == null) {
+        continue;
+      }
+      totals[transaction.categoryId!] =
+          (totals[transaction.categoryId!] ?? 0) + transaction.amount;
+    }
+
+    final items =
+        state
+            .categoriesFor(TransactionType.income)
+            .map((category) => MapEntry(category, totals[category.id] ?? 0))
+            .where((entry) => entry.value > 0)
+            .toList()
+          ..sort((a, b) => b.value.compareTo(a.value));
+    return items.take(limit).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -253,18 +287,16 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
       DashboardWidgetSize.medium => 4,
       DashboardWidgetSize.large => 5,
     };
-    final top = state.topExpenseCategories(limit: limit);
-    final totalExpense = state.monthTotal(TransactionType.expense).abs();
-
-    if (top.isEmpty || totalExpense <= 0) {
-      return const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SectionTitle('Spese per categoria'),
-          Text('Nessuna spesa da mostrare questo mese'),
-        ],
-      );
-    }
+    final top = _topCategories(state, _type, limit);
+    final total = state.monthTotal(_type).abs();
+    final isExpense = _type == TransactionType.expense;
+    final accent = isExpense
+        ? context.financeColors.negative
+        : context.financeColors.positive;
+    final title = isExpense ? 'Spese per categoria' : 'Entrate per categoria';
+    final emptyLabel = isExpense
+        ? 'Nessuna spesa da mostrare questo mese'
+        : 'Nessuna entrata da mostrare questo mese';
 
     final slices = <_DonutSlice>[
       for (final entry in top)
@@ -276,7 +308,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
         ),
     ];
     final shown = slices.fold<double>(0, (sum, item) => sum + item.amount);
-    final other = totalExpense > shown ? totalExpense - shown : 0.0;
+    final other = total > shown ? total - shown : 0.0;
     if (other > 0.005) {
       slices.add(
         _DonutSlice(
@@ -293,130 +325,222 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
     if (_selectedIndex >= slices.length) _selectedIndex = -1;
     final selected = _selectedIndex >= 0 ? slices[_selectedIndex] : null;
     final chartSize = switch (widget.config.size) {
-      DashboardWidgetSize.small => 158.0,
-      DashboardWidgetSize.medium => 184.0,
-      DashboardWidgetSize.large => 212.0,
+      DashboardWidgetSize.small => 210.0,
+      DashboardWidgetSize.medium => 248.0,
+      DashboardWidgetSize.large => 288.0,
     };
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        _CategoryTypeToggle(
+          selected: _type,
+          onChanged: (value) {
+            if (value == _type) return;
+            setState(() {
+              _type = value;
+              _selectedIndex = -1;
+            });
+          },
+        ),
+        const SizedBox(height: 20),
         SectionTitle(
-          'Spese per categoria',
+          title,
           trailing: Text(
-            state.hideBalance ? '••••' : moneyFor(state, totalExpense),
+            state.hideBalance ? '••••' : moneyFor(state, total),
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: context.financeColors.negative,
+              color: accent,
               fontWeight: FontWeight.w900,
             ),
           ),
         ),
-        const SizedBox(height: 4),
-        Center(
-          child: SizedBox.square(
-            dimension: chartSize,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                TweenAnimationBuilder<double>(
-                  tween: Tween(begin: 0, end: 1),
-                  duration: const Duration(milliseconds: 850),
-                  curve: Curves.easeInOutCubicEmphasized,
-                  builder: (context, progress, child) {
-                    return PieChart(
-                      PieChartData(
-                        startDegreeOffset: -90,
-                        sectionsSpace: 3,
-                        centerSpaceRadius: chartSize * .25,
-                        borderData: FlBorderData(show: false),
-                        pieTouchData: PieTouchData(
-                          touchCallback: (event, response) {
-                            if (event is! FlTapDownEvent ||
-                                response?.touchedSection == null) {
-                              return;
-                            }
-                            final next =
-                                response!.touchedSection!.touchedSectionIndex;
-                            setState(() {
-                              _selectedIndex = _selectedIndex == next
-                                  ? -1
-                                  : next;
-                            });
-                          },
+        if (top.isEmpty || total <= 0) ...[
+          const SizedBox(height: 8),
+          Text(emptyLabel),
+        ] else ...[
+          const SizedBox(height: 8),
+          Center(
+            child: SizedBox.square(
+              dimension: chartSize,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  TweenAnimationBuilder<double>(
+                    tween: Tween(begin: 0, end: 1),
+                    duration: const Duration(milliseconds: 850),
+                    curve: Curves.easeInOutCubicEmphasized,
+                    builder: (context, progress, child) {
+                      return PieChart(
+                        PieChartData(
+                          startDegreeOffset: -90,
+                          sectionsSpace: 4,
+                          centerSpaceRadius: chartSize * .30,
+                          borderData: FlBorderData(show: false),
+                          pieTouchData: PieTouchData(
+                            touchCallback: (event, response) {
+                              if (event is! FlTapDownEvent ||
+                                  response?.touchedSection == null) {
+                                return;
+                              }
+                              final next =
+                                  response!.touchedSection!.touchedSectionIndex;
+                              setState(() {
+                                _selectedIndex = _selectedIndex == next
+                                    ? -1
+                                    : next;
+                              });
+                            },
+                          ),
+                          sections: [
+                            for (var index = 0; index < slices.length; index++)
+                              PieChartSectionData(
+                                color:
+                                    _selectedIndex == -1 ||
+                                        _selectedIndex == index
+                                    ? slices[index].color
+                                    : slices[index].color.withValues(
+                                        alpha: .22,
+                                      ),
+                                value: slices[index].amount * progress,
+                                title: '',
+                                radius:
+                                    chartSize *
+                                    (_selectedIndex == index ? .165 : .145),
+                                showTitle: false,
+                              ),
+                          ],
                         ),
-                        sections: [
-                          for (var index = 0; index < slices.length; index++)
-                            PieChartSectionData(
-                              color:
-                                  _selectedIndex == -1 ||
-                                      _selectedIndex == index
-                                  ? slices[index].color
-                                  : slices[index].color.withValues(alpha: .22),
-                              value: slices[index].amount * progress,
-                              title: '',
-                              radius: _selectedIndex == index ? 26 : 21,
-                              showTitle: false,
+                      );
+                    },
+                  ),
+                  IgnorePointer(
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 260),
+                      switchInCurve: Curves.easeOutCubic,
+                      child: Column(
+                        key: ValueKey('${_type.name}-$_selectedIndex'),
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            selected?.category == null
+                                ? Icons.pie_chart_rounded
+                                : categoryIcon(selected!.category!.iconKey),
+                            size: 24,
+                            color: selected?.color ?? accent,
+                          ),
+                          const SizedBox(height: 5),
+                          ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxWidth: chartSize * .46,
                             ),
+                            child: Text(
+                              selected?.label ?? 'Questo mese',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.labelLarge
+                                  ?.copyWith(fontWeight: FontWeight.w800),
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            selected == null
+                                ? '${slices.length} categorie'
+                                : '${(selected.amount / total * 100).round()}%',
+                            style: Theme.of(context).textTheme.titleMedium
+                                ?.copyWith(
+                                  color: selected?.color ?? accent,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                          ),
+                          if (selected != null) ...[
+                            const SizedBox(height: 2),
+                            Text(
+                              state.hideBalance
+                                  ? '••••'
+                                  : moneyFor(state, selected.amount),
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurface,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                            ),
+                          ],
                         ],
                       ),
-                    );
-                  },
-                ),
-                IgnorePointer(
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 260),
-                    switchInCurve: Curves.easeOutCubic,
-                    child: Column(
-                      key: ValueKey(_selectedIndex),
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          selected?.category == null
-                              ? Icons.pie_chart_rounded
-                              : categoryIcon(selected!.category!.iconKey),
-                          size: 22,
-                          color:
-                              selected?.color ??
-                              Theme.of(context).colorScheme.primary,
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          selected?.label ?? 'Questo mese',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.labelSmall
-                              ?.copyWith(fontWeight: FontWeight.w800),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          selected == null
-                              ? '${slices.length} categorie'
-                              : '${(selected.amount / totalExpense * 100).round()}%',
-                          style: Theme.of(context).textTheme.titleSmall
-                              ?.copyWith(
-                                color:
-                                    selected?.color ??
-                                    Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.w900,
-                              ),
-                        ),
-                      ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        const SizedBox(height: 8),
-        for (final entry in top)
-          _CategoryDonutRow(
-            category: entry.key,
-            amount: entry.value.abs(),
-            total: totalExpense,
-            state: state,
-          ),
+          const SizedBox(height: 12),
+          for (final entry in top)
+            _CategoryDonutRow(
+              category: entry.key,
+              amount: entry.value.abs(),
+              total: total,
+              state: state,
+            ),
+        ],
       ],
+    );
+  }
+}
+
+class _CategoryTypeToggle extends StatelessWidget {
+  const _CategoryTypeToggle({required this.selected, required this.onChanged});
+
+  final TransactionType selected;
+  final ValueChanged<TransactionType> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final selectedColor = selected == TransactionType.expense
+        ? context.financeColors.negative
+        : context.financeColors.positive;
+
+    return SegmentedButton<TransactionType>(
+      showSelectedIcon: false,
+      segments: const [
+        ButtonSegment(
+          value: TransactionType.expense,
+          label: Text('Spese'),
+          icon: Icon(Icons.arrow_upward_rounded, size: 18),
+        ),
+        ButtonSegment(
+          value: TransactionType.income,
+          label: Text('Entrate'),
+          icon: Icon(Icons.arrow_downward_rounded, size: 18),
+        ),
+      ],
+      selected: {selected},
+      onSelectionChanged: (value) => onChanged(value.first),
+      style: ButtonStyle(
+        minimumSize: const WidgetStatePropertyAll(Size(48, 48)),
+        side: const WidgetStatePropertyAll(BorderSide.none),
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        ),
+        backgroundColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? selectedColor.withValues(
+                  alpha: theme.brightness == Brightness.dark ? .16 : .10,
+                )
+              : theme.colorScheme.surfaceContainer,
+        ),
+        foregroundColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? selectedColor
+              : theme.colorScheme.onSurfaceVariant,
+        ),
+        textStyle: const WidgetStatePropertyAll(
+          TextStyle(fontWeight: FontWeight.w800),
+        ),
+      ),
     );
   }
 }

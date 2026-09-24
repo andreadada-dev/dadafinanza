@@ -25,11 +25,12 @@ class _FinanceQuickActionState extends State<FinanceQuickAction> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final enabled = widget.onTap != null;
-    final base = widget.color ?? Theme.of(context).colorScheme.primary;
+    final base = widget.color ?? theme.colorScheme.onSurface;
     final resolvedColor = enabled ? base : base.withValues(alpha: .38);
-    final surface = resolvedColor.withValues(
-      alpha: Theme.of(context).brightness == Brightness.dark ? .14 : .08,
+    final circleSurface = resolvedColor.withValues(
+      alpha: theme.brightness == Brightness.dark ? .14 : .08,
     );
 
     return Semantics(
@@ -39,65 +40,56 @@ class _FinanceQuickActionState extends State<FinanceQuickAction> {
       child: Tooltip(
         message: widget.semanticLabel ?? widget.label,
         child: AnimatedScale(
-          scale: _pressed ? .96 : 1,
+          scale: _pressed ? .95 : 1,
           duration: const Duration(milliseconds: 140),
           curve: Curves.easeOutCubic,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            child: Material(
-              color: surface,
-              borderRadius: BorderRadius.circular(22),
-              clipBehavior: Clip.antiAlias,
-              child: InkWell(
-                onTap: widget.onTap,
-                onHighlightChanged: enabled
-                    ? (value) => setState(() => _pressed = value)
-                    : null,
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    minHeight: 78,
-                    minWidth: 48,
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(24),
+              onTap: widget.onTap,
+              onHighlightChanged: enabled
+                  ? (value) => setState(() => _pressed = value)
+                  : null,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(minHeight: 92, minWidth: 48),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 4,
+                    vertical: 8,
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 12,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 36,
-                          height: 36,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: resolvedColor.withValues(alpha: .12),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            widget.icon,
-                            size: 21,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 56,
+                        height: 56,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: circleSurface,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          widget.icon,
+                          size: 29,
+                          color: resolvedColor,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          widget.label,
+                          maxLines: 1,
+                          softWrap: false,
+                          style: theme.textTheme.labelLarge?.copyWith(
                             color: resolvedColor,
+                            fontWeight: FontWeight.w800,
                           ),
                         ),
-                        const SizedBox(height: 7),
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            widget.label,
-                            maxLines: 1,
-                            softWrap: false,
-                            overflow: TextOverflow.visible,
-                            style: Theme.of(context).textTheme.labelLarge
-                                ?.copyWith(
-                                  color: resolvedColor,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
