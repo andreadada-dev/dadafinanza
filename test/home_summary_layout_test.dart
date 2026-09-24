@@ -100,14 +100,17 @@ void main() {
     expect(widget, contains('AccountContextService.periodTotal'));
   });
 
-  test('selected account summary links to account analytics without repeating its name', () {
-    final source = File(
-      'lib/screens/account_context_home_screen.dart',
-    ).readAsStringSync();
+  test(
+    'selected account summary links to account analytics without repeating its name',
+    () {
+      final source = File(
+        'lib/screens/account_context_home_screen.dart',
+      ).readAsStringSync();
 
-    expect(source, contains("'Analytics del conto'"));
-    expect(source, contains("'Entrate, spese e andamento del conto'"));
-    expect(source, contains('AccountContextAnalyticsScreen('));
-    expect(source, contains('onTap: onOpenAnalytics'));
-  });
+      expect(source, contains("'Analytics del conto'"));
+      expect(source, contains("'Entrate, spese e andamento del conto'"));
+      expect(source, contains('AccountContextAnalyticsScreen('));
+      expect(source, contains('onTap: onOpenAnalytics'));
+    },
+  );
 }
