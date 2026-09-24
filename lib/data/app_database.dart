@@ -525,9 +525,9 @@ class AppDatabase {
       'dashboard_widgets',
       columns: ['type', 'order_index'],
     );
-    final existingTypes = existingRows
-        .map((row) => row['type'] as String)
-        .toSet();
+    final existingTypes = existingRows.map(
+      (row) => row['type'] as String,
+    ).toSet();
     final isFreshDashboard = existingRows.isEmpty;
     var nextOrder = existingRows.fold<int>(
       0,
