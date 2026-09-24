@@ -508,12 +508,6 @@ class AppDatabase {
   }
 
   Future<void> _seedDashboard(Database db) async {
-    final count =
-        Sqflite.firstIntValue(
-          await db.rawQuery('SELECT COUNT(*) FROM dashboard_widgets'),
-        ) ??
-        0;
-    if (count > 0) return;
     final defaults = <DashboardWidgetType>[
       DashboardWidgetType.totalBalance,
       DashboardWidgetType.monthlyCashFlow,
@@ -527,13 +521,33 @@ class AppDatabase {
       DashboardWidgetType.endMonthForecast,
       DashboardWidgetType.unassignedTransactions,
     ];
+    final existingRows = await db.query(
+      'dashboard_widgets',
+      columns: ['type', 'order_index'],
+    );
+    final existingTypes = existingRows
+        .map((row) => row['type'] as String)
+        .toSet();
+    final isFreshDashboard = existingRows.isEmpty;
+    var nextOrder = existingRows.fold<int>(
+      0,
+      (maxOrder, row) {
+        final order = row['order_index'] as int? ?? -1;
+        return order >= maxOrder ? order + 1 : maxOrder;
+      },
+    );
+
     for (var i = 0; i < DashboardWidgetType.values.length; i++) {
       final type = DashboardWidgetType.values[i];
-      final order = defaults.indexOf(type);
+      if (existingTypes.contains(type.name)) continue;
+
+      final defaultOrder = defaults.indexOf(type);
       await db.insert('dashboard_widgets', {
         'type': type.name,
-        'enabled': order >= 0 ? 1 : 0,
-        'order_index': order >= 0 ? order : defaults.length + i,
+        'enabled': isFreshDashboard && defaultOrder >= 0 ? 1 : 0,
+        'order_index': isFreshDashboard && defaultOrder >= 0
+            ? defaultOrder
+            : nextOrder++,
         'size': DashboardWidgetSize.medium.name,
       });
     }
