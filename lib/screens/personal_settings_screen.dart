@@ -329,7 +329,8 @@ class PersonalSettingsScreen extends StatelessWidget {
               style: Theme.of(sheetContext).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
-            Flexible(
+            SizedBox(
+              height: 260,
               child: SingleChildScrollView(
                 child: Wrap(
                   spacing: 8,
