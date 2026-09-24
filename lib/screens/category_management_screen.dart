@@ -408,12 +408,42 @@ class CategoryManagementScreen extends StatelessWidget {
     AppState state,
     Category category,
   ) async {
+    final splitCount = state.splits
+        .where((split) => split.categoryId == category.id)
+        .length;
+    if (splitCount > 0) {
+      final merge = await showDialog<bool>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          title: const Text('Categoria usata in divisioni'),
+          content: Text(
+            splitCount == 1
+                ? 'Questa categoria è usata in una divisione di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.'
+                : 'Questa categoria è usata in $splitCount divisioni di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: const Text('Chiudi'),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(dialogContext, true),
+              child: const Text('Unisci categoria'),
+            ),
+          ],
+        ),
+      );
+      if (merge == true && context.mounted) {
+        await _merge(context, state, category);
+      }
+      return;
+    }
     final count = state.transactionCountForCategory(category.id);
     final confirmed = await confirmDestructiveAction(
       context,
       title: 'Eliminare “${category.name}”?',
       message:
-          '$count riferimenti perderanno questa categoria. Se vuoi conservare la classificazione, usa “Unisci in…”.',
+          '$count riferimenti perderanno questa categoria. I preset che la usano torneranno a chiedere la categoria.',
     );
     if (confirmed) await state.deleteCategory(category);
   }
