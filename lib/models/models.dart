@@ -81,7 +81,7 @@ extension DashboardWidgetTypeX on DashboardWidgetType {
     DashboardWidgetType.todayExpense => 'Spese di oggi',
     DashboardWidgetType.weekExpense => 'Spese della settimana',
     DashboardWidgetType.previousMonthComparison => 'Confronto mese precedente',
-    DashboardWidgetType.topCategories => 'Categorie principali',
+    DashboardWidgetType.topCategories => 'Grafico categorie',
     DashboardWidgetType.closestBudget => 'Budget più vicino al limite',
     DashboardWidgetType.upcomingRecurring => 'Prossimi pagamenti',
     DashboardWidgetType.financeCalendar => 'Calendario finanziario',
