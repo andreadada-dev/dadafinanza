@@ -75,11 +75,11 @@ void main() {
 
     expect(
       csv.split('\n').first,
-      'type,amount,date,account,to_account,category,description,tags,include_in_analytics,stable_key',
+      'type,amount,date,account,to_account,category,description,tags,tags_json,include_in_analytics,stable_key',
     );
     expect(csv, contains('"Carta, principale"'));
     expect(csv, contains('"Cibo ""fuori"""'));
-    expect(csv, contains('"Pizza, ""sera"" con amici"'));
+    expect(csv, contains('"Pizza, ""sera""\ncon amici"'));
     expect(preview.invalidRows, 0);
     expect(preview.rows, hasLength(1));
 
@@ -89,7 +89,7 @@ void main() {
     expect(row.date.toUtc(), date);
     expect(row.account, 'Carta, principale');
     expect(row.category, 'Cibo "fuori"');
-    expect(row.note, 'Pizza, "sera" con amici');
+    expect(row.note, 'Pizza, "sera"\ncon amici');
     expect(row.tags, ['amici', 'cena']);
     expect(row.includeInAnalytics, isTrue);
     expect(row.duplicate, isTrue);
