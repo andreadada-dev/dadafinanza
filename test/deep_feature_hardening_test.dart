@@ -235,10 +235,7 @@ void main() {
       iconKey: 'restaurant',
       colorValue: 0xFF8E8E93,
     );
-    final state = AppState(
-      database,
-      widgetService: _NoopWidgetService(),
-    );
+    final state = AppState(database, widgetService: _NoopWidgetService());
     await state.load();
     const service = RuleService();
 
@@ -269,9 +266,7 @@ void main() {
       state,
       coffee.copyWith(name: 'Coffee disabled', enabled: false),
     );
-    final disabled = state.rules.firstWhere(
-      (item) => item.id == coffee.id,
-    );
+    final disabled = state.rules.firstWhere((item) => item.id == coffee.id);
     expect(disabled.enabled, isFalse);
     expect(disabled.name, 'Coffee disabled');
 
