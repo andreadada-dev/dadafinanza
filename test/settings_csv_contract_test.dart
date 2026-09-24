@@ -5,10 +5,19 @@ import 'package:dadafinanza/data/app_database.dart';
 import 'package:dadafinanza/models/models.dart';
 import 'package:dadafinanza/services/csv_service.dart';
 import 'package:dadafinanza/services/finance_schema_service.dart';
+import 'package:dadafinanza/services/widget_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart' as ffi;
+
+class _NoopWidgetService extends WidgetService {
+  @override
+  Future<void> sync({
+    required double balance,
+    required List<Category> expenseCategories,
+  }) async {}
+}
 
 void main() {
   late Directory databaseRoot;
@@ -42,7 +51,7 @@ void main() {
 
   test('settings values persist through AppState reload', () async {
     final database = await openReadyDatabase();
-    final state = AppState(database);
+    final state = AppState(database, widgetService: _NoopWidgetService());
     await state.load();
 
     await state.setSetting('currency', 'USD');
@@ -51,7 +60,7 @@ void main() {
     await state.setSetting('financial_month_start', '15');
     await state.setSetting('confirm_delete', '0');
 
-    final reloaded = AppState(database);
+    final reloaded = AppState(database, widgetService: _NoopWidgetService());
     await reloaded.load();
     expect(reloaded.currency, 'USD');
     expect(reloaded.showCents, isFalse);
