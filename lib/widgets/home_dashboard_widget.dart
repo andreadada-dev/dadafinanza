@@ -390,8 +390,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
 
   void _commitCarouselPage() {
     if (!_typePageController.hasClients) return;
-    final page =
-        _typePageController.page?.round() ?? _initialCarouselPage;
+    final page = _typePageController.page?.round() ?? _initialCarouselPage;
     final nextType = _typeForPage(page);
     setState(() {
       _carouselDragging = false;
@@ -550,11 +549,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                         },
                       ),
                       sections: [
-                        for (
-                          var index = 0;
-                          index < data.slices.length;
-                          index++
-                        )
+                        for (var index = 0; index < data.slices.length; index++)
                           PieChartSectionData(
                             color:
                                 pageSelectedIndex == -1 ||
@@ -583,9 +578,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                 switchInCurve: Curves.easeOutCubic,
                 child: selected == null
                     ? _DonutPeriodCenter(
-                        key: ValueKey(
-                          '${type.name}-${_range.name}-period',
-                        ),
+                        key: ValueKey('${type.name}-${_range.name}-period'),
                         icon: data.icon,
                         accent: data.accent,
                         rangeLabel: _rangeLabel,
@@ -743,10 +736,7 @@ class _CategoryCarouselData {
 }
 
 class _SwipeHintChevron extends StatelessWidget {
-  const _SwipeHintChevron({
-    required this.direction,
-    required this.animation,
-  });
+  const _SwipeHintChevron({required this.direction, required this.animation});
 
   final int direction;
   final Animation<double> animation;
