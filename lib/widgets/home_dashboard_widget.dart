@@ -427,7 +427,6 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
     final accent = isExpense
         ? context.financeColors.negative
         : context.financeColors.positive;
-    final title = isExpense ? 'Spese per categoria' : 'Entrate per categoria';
     final emptyLabel = isExpense
         ? 'Nessuna spesa da mostrare nel periodo'
         : 'Nessuna entrata da mostrare nel periodo';
