@@ -8,16 +8,22 @@ import 'models/advance_models.dart';
 import 'models/models.dart';
 import 'models/smart_models.dart';
 import 'services/advance_service.dart';
+import 'services/attachment_service.dart';
 import 'services/goal_ledger_service.dart';
 import 'services/smart_finance_engine.dart';
 import 'services/widget_service.dart';
 
 class AppState extends ChangeNotifier {
-  AppState(this.database, {WidgetService? widgetService})
-    : widgetService = widgetService ?? WidgetService();
+  AppState(
+    this.database, {
+    WidgetService? widgetService,
+    AttachmentService? attachmentService,
+  }) : widgetService = widgetService ?? WidgetService(),
+       attachmentService = attachmentService ?? AttachmentService();
 
   final AppDatabase database;
   final WidgetService widgetService;
+  final AttachmentService attachmentService;
 
   List<Account> accounts = [];
   List<Category> categories = [];
@@ -58,7 +64,6 @@ class AppState extends ChangeNotifier {
 
   Future<void> load() async {
     await _reloadAll();
-    await _processDueRecurring();
     if (smartSuggestionsEnabled) {
       await _rebuildLearning(notify: false);
     }
@@ -89,84 +94,6 @@ class AppState extends ChangeNotifier {
     netWorthSnapshots = await database.netWorthSnapshots();
     await _loadSettingsOnly();
   }
-
-  Future<void> _processDueRecurring() async {
-    final now = DateTime.now();
-    var changed = false;
-    for (final item in [...recurring]) {
-      if (!item.enabled || !item.autoCreate || item.nextDate.isAfter(now))
-        continue;
-      final account = accountById(item.accountId);
-      if (account == null ||
-          account.isLocked ||
-          account.isArchived ||
-          account.isSystem)
-        continue;
-      var next = item.nextDate;
-      var safety = 0;
-      while (!next.isAfter(now) && safety < 24) {
-        if (item.endDate != null && next.isAfter(item.endDate!)) break;
-        await database.addTransaction(
-          type: item.type,
-          amount: item.amount,
-          accountId: item.accountId,
-          categoryId: item.categoryId,
-          date: next,
-          note: item.note ?? item.name,
-          recurringId: item.id,
-        );
-        next = _advanceRecurring(next, item.frequency);
-        safety++;
-        changed = true;
-      }
-      if (next != item.nextDate) {
-        await database.updateRecurring(
-          RecurringPayment(
-            id: item.id,
-            name: item.name,
-            amount: item.amount,
-            type: item.type,
-            accountId: item.accountId,
-            frequency: item.frequency,
-            nextDate: next,
-            enabled: item.enabled,
-            autoCreate: item.autoCreate,
-            categoryId: item.categoryId,
-            note: item.note,
-            endDate: item.endDate,
-          ),
-        );
-      }
-    }
-    if (changed) await _reloadAll();
-  }
-
-  DateTime _advanceRecurring(DateTime date, String frequency) =>
-      switch (frequency) {
-        'Settimanale' => date.add(const Duration(days: 7)),
-        'Quindicinale' => date.add(const Duration(days: 14)),
-        'Trimestrale' => DateTime(
-          date.year,
-          date.month + 3,
-          date.day,
-          date.hour,
-          date.minute,
-        ),
-        'Annuale' => DateTime(
-          date.year + 1,
-          date.month,
-          date.day,
-          date.hour,
-          date.minute,
-        ),
-        _ => DateTime(
-          date.year,
-          date.month + 1,
-          date.day,
-          date.hour,
-          date.minute,
-        ),
-      };
 
   List<Account> get userAccounts =>
       accounts.where((a) => !a.isSystem).toList(growable: false);
@@ -520,8 +447,9 @@ class AppState extends ChangeNotifier {
   int transactionCountForAccount(int accountId) => transactions
       .where((t) => t.accountId == accountId || t.toAccountId == accountId)
       .length;
-  int recurringCountForAccount(int accountId) =>
-      recurring.where((r) => r.accountId == accountId).length;
+  int recurringCountForAccount(int accountId) => recurring
+      .where((r) => r.accountId == accountId || r.toAccountId == accountId)
+      .length;
   int transactionCountForCategory(int categoryId) =>
       transactions.where((t) => t.categoryId == categoryId).length +
       splits.where((s) => s.categoryId == categoryId).length;
@@ -586,6 +514,9 @@ class AppState extends ChangeNotifier {
     }
     await database.deleteTransaction(item);
     await refreshCore(includePlanning: true);
+    await attachmentService.cleanup(
+      transactions.map((transaction) => transaction.receiptPath),
+    );
     await _rebuildLearning();
   }
 
@@ -1409,6 +1340,7 @@ class AppState extends ChangeNotifier {
 
   Future<void> clearAllUserData() async {
     await database.clearAllUserData();
+    await attachmentService.clear();
     await _reloadAll();
     notifyListeners();
     await syncWidget();
