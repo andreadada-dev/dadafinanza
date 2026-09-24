@@ -225,4 +225,76 @@ void main() {
       );
     },
   );
+
+  test('automation rule lifecycle stays ordered and editable', () async {
+    final database = await openReadyDatabase();
+    final accountId = await addAccount(database, 'Main');
+    final categoryId = await database.addCategory(
+      name: 'Food',
+      type: TransactionType.expense,
+      iconKey: 'restaurant',
+      colorValue: 0xFF8E8E93,
+    );
+    final state = AppState(
+      database,
+      widgetService: _NoopWidgetService(),
+    );
+    await state.load();
+    const service = RuleService();
+
+    await state.addRule(
+      AutomationRule(
+        id: 0,
+        name: 'Coffee',
+        enabled: true,
+        containsText: 'coffee',
+        type: TransactionType.expense,
+        categoryId: categoryId,
+        priority: 3,
+      ),
+    );
+    await state.addRule(
+      AutomationRule(
+        id: 0,
+        name: 'Generic expense',
+        enabled: true,
+        type: TransactionType.expense,
+        priority: 1,
+      ),
+    );
+    expect(state.rules.map((item) => item.priority), [3, 1]);
+
+    final coffee = state.rules.firstWhere((item) => item.name == 'Coffee');
+    await service.update(
+      state,
+      coffee.copyWith(name: 'Coffee disabled', enabled: false),
+    );
+    final disabled = state.rules.firstWhere(
+      (item) => item.id == coffee.id,
+    );
+    expect(disabled.enabled, isFalse);
+    expect(disabled.name, 'Coffee disabled');
+
+    await service.duplicate(state, state.rules.last);
+    expect(state.rules, hasLength(3));
+
+    final reordered = [...state.rules.reversed];
+    await service.reorder(state, reordered);
+    expect(state.rules.first.id, reordered.first.id);
+
+    await database.addTransaction(
+      type: TransactionType.expense,
+      amount: 4,
+      accountId: accountId,
+      date: DateTime.utc(2026, 9, 24),
+      note: 'coffee',
+    );
+    await state.refreshCore();
+    final enabledRule = state.rules.firstWhere((item) => item.enabled);
+    expect(service.preview(state, enabledRule).count, greaterThanOrEqualTo(1));
+
+    final beforeDelete = state.rules.length;
+    await state.deleteRule(state.rules.last);
+    expect(state.rules, hasLength(beforeDelete - 1));
+  });
 }
