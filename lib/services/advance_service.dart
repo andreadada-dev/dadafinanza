@@ -226,7 +226,6 @@ class AdvanceService {
     String? note,
   }) async {
     final cents = _positiveCents(amount);
-    final currency = await database.getSetting('currency') ?? 'EUR';
     return database.db.transaction((txn) async {
       await _validatePerson(txn, personId);
       await _validateAccount(txn, accountId);
@@ -373,6 +372,7 @@ class AdvanceService {
     String? note,
   }) async {
     final cents = _positiveCents(amount);
+    final currency = await database.getSetting('currency') ?? 'EUR';
     return database.db.transaction((txn) async {
       final advance = await _advanceIn(txn, advanceId);
       if (advance.closedKind != null) {
