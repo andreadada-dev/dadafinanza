@@ -242,36 +242,164 @@ class _TopCategoriesDonut extends StatefulWidget {
   State<_TopCategoriesDonut> createState() => _TopCategoriesDonutState();
 }
 
+enum _CategoryChartRange {
+  thisMonth,
+  thisWeek,
+  last7Days,
+  last30Days,
+  custom,
+}
+
 class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
+  static const _rangeOrder = <_CategoryChartRange>[
+    _CategoryChartRange.thisMonth,
+    _CategoryChartRange.thisWeek,
+    _CategoryChartRange.last7Days,
+    _CategoryChartRange.last30Days,
+    _CategoryChartRange.custom,
+  ];
+
   var _selectedIndex = -1;
   var _type = TransactionType.expense;
+  var _range = _CategoryChartRange.thisMonth;
+  DateTimeRange? _customRange;
+
+  (DateTime, DateTime) _bounds() {
+    final now = DateTime.now();
+    final todayEnd = DateTime(now.year, now.month, now.day + 1);
+
+    return switch (_range) {
+      _CategoryChartRange.thisMonth => (
+        DateTime(now.year, now.month),
+        DateTime(now.year, now.month + 1),
+      ),
+      _CategoryChartRange.thisWeek => (
+        DateTime(now.year, now.month, now.day)
+            .subtract(Duration(days: now.weekday - 1)),
+        DateTime(now.year, now.month, now.day)
+            .subtract(Duration(days: now.weekday - 1))
+            .add(const Duration(days: 7)),
+      ),
+      _CategoryChartRange.last7Days => (
+        todayEnd.subtract(const Duration(days: 7)),
+        todayEnd,
+      ),
+      _CategoryChartRange.last30Days => (
+        todayEnd.subtract(const Duration(days: 30)),
+        todayEnd,
+      ),
+      _CategoryChartRange.custom => _customRange == null
+          ? (
+              DateTime(now.year, now.month),
+              DateTime(now.year, now.month + 1),
+            )
+          : (
+              DateTime(
+                _customRange!.start.year,
+                _customRange!.start.month,
+                _customRange!.start.day,
+              ),
+              DateTime(
+                _customRange!.end.year,
+                _customRange!.end.month,
+                _customRange!.end.day + 1,
+              ),
+            ),
+    };
+  }
+
+  String get _rangeLabel => switch (_range) {
+    _CategoryChartRange.thisMonth => 'Questo mese',
+    _CategoryChartRange.thisWeek => 'Questa settimana',
+    _CategoryChartRange.last7Days => 'Ultimi 7 giorni',
+    _CategoryChartRange.last30Days => 'Ultimi 30 giorni',
+    _CategoryChartRange.custom => _customRange == null
+        ? 'Personalizzato'
+        : '${_customRange!.start.day}/${_customRange!.start.month} – '
+              '${_customRange!.end.day}/${_customRange!.end.month}',
+  };
+
+  Future<void> _selectRange(_CategoryChartRange next) async {
+    if (next == _CategoryChartRange.custom) {
+      final now = DateTime.now();
+      final picked = await showDateRangePicker(
+        context: context,
+        firstDate: DateTime(2000),
+        lastDate: now.add(const Duration(days: 3650)),
+        initialDateRange:
+            _customRange ??
+            DateTimeRange(
+              start: DateTime(now.year, now.month),
+              end: now,
+            ),
+      );
+      if (!mounted || picked == null) return;
+      setState(() {
+        _customRange = picked;
+        _range = next;
+        _selectedIndex = -1;
+      });
+      return;
+    }
+
+    if (next == _range) return;
+    setState(() {
+      _range = next;
+      _selectedIndex = -1;
+    });
+  }
+
+  void _stepRange(int delta) {
+    final current = _rangeOrder.indexOf(_range);
+    final nextIndex =
+        (current + delta + _rangeOrder.length) % _rangeOrder.length;
+    _selectRange(_rangeOrder[nextIndex]);
+  }
+
+  void _handleRangeSwipe(DragEndDetails details) {
+    final velocity = details.primaryVelocity ?? 0;
+    if (velocity.abs() < 80) return;
+    _stepRange(velocity < 0 ? 1 : -1);
+  }
 
   List<MapEntry<Category, double>> _topCategories(
     AppState state,
     TransactionType type,
     int limit,
+    DateTime from,
+    DateTime to,
   ) {
-    if (type == TransactionType.expense) {
-      return state.topExpenseCategories(limit: limit);
-    }
-
-    final now = DateTime.now();
-    final from = DateTime(now.year, now.month);
-    final to = DateTime(now.year, now.month + 1);
     final totals = <int, double>{};
+
     for (final transaction in state.analyticTransactions(from: from, to: to)) {
-      if (transaction.type != TransactionType.income ||
-          transaction.refundOfTransactionId != null ||
-          transaction.categoryId == null) {
+      if (transaction.type != type) continue;
+      if (type == TransactionType.income &&
+          transaction.refundOfTransactionId != null) {
         continue;
       }
-      totals[transaction.categoryId!] =
-          (totals[transaction.categoryId!] ?? 0) + transaction.amount;
+
+      if (type == TransactionType.expense) {
+        final itemSplits = state.splitsFor(transaction.id);
+        if (itemSplits.isNotEmpty) {
+          for (final split in itemSplits) {
+            totals[split.categoryId] =
+                (totals[split.categoryId] ?? 0) +
+                state.analyticsAmountForSplit(transaction.id, split);
+          }
+        } else if (transaction.categoryId != null) {
+          totals[transaction.categoryId!] =
+              (totals[transaction.categoryId!] ?? 0) +
+              state.effectiveExpense(transaction);
+        }
+      } else if (transaction.categoryId != null) {
+        totals[transaction.categoryId!] =
+            (totals[transaction.categoryId!] ?? 0) + transaction.amount;
+      }
     }
 
     final items =
         state
-            .categoriesFor(TransactionType.income)
+            .categoriesFor(type)
             .map((category) => MapEntry(category, totals[category.id] ?? 0))
             .where((entry) => entry.value > 0)
             .toList()
@@ -287,16 +415,17 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
       DashboardWidgetSize.medium => 4,
       DashboardWidgetSize.large => 5,
     };
-    final top = _topCategories(state, _type, limit);
-    final total = state.monthTotal(_type).abs();
+    final (from, to) = _bounds();
+    final top = _topCategories(state, _type, limit, from, to);
+    final total = state.periodTotal(_type, from, to).abs();
     final isExpense = _type == TransactionType.expense;
     final accent = isExpense
         ? context.financeColors.negative
         : context.financeColors.positive;
     final title = isExpense ? 'Spese per categoria' : 'Entrate per categoria';
     final emptyLabel = isExpense
-        ? 'Nessuna spesa da mostrare questo mese'
-        : 'Nessuna entrata da mostrare questo mese';
+        ? 'Nessuna spesa da mostrare nel periodo'
+        : 'Nessuna entrata da mostrare nel periodo';
 
     final slices = <_DonutSlice>[
       for (final entry in top)
@@ -333,14 +462,25 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _CategoryTypeToggle(
-          selected: _type,
-          onChanged: (value) {
+        _CategoryChartControls(
+          selectedType: _type,
+          rangeLabel: _rangeLabel,
+          onTypeChanged: (value) {
             if (value == _type) return;
             setState(() {
               _type = value;
               _selectedIndex = -1;
             });
+          },
+          onPreviousRange: () => _stepRange(-1),
+          onNextRange: () => _stepRange(1),
+          onRangeSwipe: _handleRangeSwipe,
+          onRangeTap: () {
+            if (_range == _CategoryChartRange.custom) {
+              _selectRange(_CategoryChartRange.custom);
+            } else {
+              _stepRange(1);
+            }
           },
         ),
         const SizedBox(height: 20),
@@ -418,7 +558,9 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
                       duration: const Duration(milliseconds: 260),
                       switchInCurve: Curves.easeOutCubic,
                       child: Column(
-                        key: ValueKey('${_type.name}-$_selectedIndex'),
+                        key: ValueKey(
+                          '${_type.name}-${_range.name}-$_selectedIndex',
+                        ),
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
@@ -434,7 +576,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
                               maxWidth: chartSize * .46,
                             ),
                             child: Text(
-                              selected?.label ?? 'Questo mese',
+                              selected?.label ?? _rangeLabel,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.center,
@@ -490,57 +632,140 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
   }
 }
 
-class _CategoryTypeToggle extends StatelessWidget {
-  const _CategoryTypeToggle({required this.selected, required this.onChanged});
+class _CategoryChartControls extends StatelessWidget {
+  const _CategoryChartControls({
+    required this.selectedType,
+    required this.rangeLabel,
+    required this.onTypeChanged,
+    required this.onPreviousRange,
+    required this.onNextRange,
+    required this.onRangeSwipe,
+    required this.onRangeTap,
+  });
 
-  final TransactionType selected;
-  final ValueChanged<TransactionType> onChanged;
+  final TransactionType selectedType;
+  final String rangeLabel;
+  final ValueChanged<TransactionType> onTypeChanged;
+  final VoidCallback onPreviousRange;
+  final VoidCallback onNextRange;
+  final GestureDragEndCallback onRangeSwipe;
+  final VoidCallback onRangeTap;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final selectedColor = selected == TransactionType.expense
-        ? context.financeColors.negative
-        : context.financeColors.positive;
+    final inactive = theme.colorScheme.onSurfaceVariant;
 
-    return SegmentedButton<TransactionType>(
-      showSelectedIcon: false,
-      segments: const [
-        ButtonSegment(
-          value: TransactionType.expense,
-          label: Text('Spese'),
-          icon: Icon(Icons.arrow_upward_rounded, size: 18),
+    Widget typeAction({
+      required TransactionType type,
+      required IconData icon,
+      required String label,
+      required Color color,
+      required Alignment alignment,
+    }) {
+      final selected = selectedType == type;
+      return Align(
+        alignment: alignment,
+        child: Semantics(
+          button: true,
+          selected: selected,
+          label: label,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(16),
+            onTap: () => onTypeChanged(type),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 2),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    icon,
+                    size: 24,
+                    color: selected ? color : color.withValues(alpha: .58),
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    label,
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      color: selected ? color : color.withValues(alpha: .58),
+                      fontWeight: selected ? FontWeight.w900 : FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
-        ButtonSegment(
-          value: TransactionType.income,
-          label: Text('Entrate'),
-          icon: Icon(Icons.arrow_downward_rounded, size: 18),
+      );
+    }
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: typeAction(
+            type: TransactionType.expense,
+            icon: Icons.arrow_upward_rounded,
+            label: 'Spese',
+            color: context.financeColors.negative,
+            alignment: Alignment.centerLeft,
+          ),
+        ),
+        Flexible(
+          flex: 2,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onHorizontalDragEnd: onRangeSwipe,
+            onTap: onRangeTap,
+            child: Semantics(
+              button: true,
+              label: 'Periodo: $rangeLabel',
+              hint: 'Scorri a destra o sinistra per cambiare periodo',
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(minHeight: 48),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      tooltip: 'Periodo precedente',
+                      visualDensity: VisualDensity.compact,
+                      onPressed: onPreviousRange,
+                      icon: const Icon(Icons.chevron_left_rounded),
+                    ),
+                    Flexible(
+                      child: Text(
+                        rangeLabel,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: theme.textTheme.labelLarge?.copyWith(
+                          color: inactive,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      tooltip: 'Periodo successivo',
+                      visualDensity: VisualDensity.compact,
+                      onPressed: onNextRange,
+                      icon: const Icon(Icons.chevron_right_rounded),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          child: typeAction(
+            type: TransactionType.income,
+            icon: Icons.arrow_downward_rounded,
+            label: 'Entrate',
+            color: context.financeColors.positive,
+            alignment: Alignment.centerRight,
+          ),
         ),
       ],
-      selected: {selected},
-      onSelectionChanged: (value) => onChanged(value.first),
-      style: ButtonStyle(
-        minimumSize: const WidgetStatePropertyAll(Size(48, 48)),
-        side: const WidgetStatePropertyAll(BorderSide.none),
-        shape: WidgetStatePropertyAll(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-        ),
-        backgroundColor: WidgetStateProperty.resolveWith(
-          (states) => states.contains(WidgetState.selected)
-              ? selectedColor.withValues(
-                  alpha: theme.brightness == Brightness.dark ? .16 : .10,
-                )
-              : theme.colorScheme.surfaceContainer,
-        ),
-        foregroundColor: WidgetStateProperty.resolveWith(
-          (states) => states.contains(WidgetState.selected)
-              ? selectedColor
-              : theme.colorScheme.onSurfaceVariant,
-        ),
-        textStyle: const WidgetStatePropertyAll(
-          TextStyle(fontWeight: FontWeight.w800),
-        ),
-      ),
     );
   }
 }
