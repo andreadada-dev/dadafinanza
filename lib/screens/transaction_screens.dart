@@ -492,7 +492,7 @@ Future<void> showSplitEditor(
                     Expanded(
                       child: DropdownButtonFormField<int>(
                         initialValue: row.categoryId,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: 'Categoria',
                         ),
                         items: expenseCategories
@@ -515,9 +515,9 @@ Future<void> showSplitEditor(
                         keyboardType: const TextInputType.numberWithOptions(
                           decimal: true,
                         ),
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: 'Importo',
-                          suffixText: '€',
+                          suffixText: state.currency,
                         ),
                       ),
                     ),
