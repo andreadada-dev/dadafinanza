@@ -402,12 +402,27 @@ class AppDatabase {
   }
 
   Future<void> _migrateV6(Database db) async {
-    await _addColumnIfMissing(db, 'transaction_splits', 'amount_cents', 'INTEGER');
+    await _addColumnIfMissing(
+      db,
+      'transaction_splits',
+      'amount_cents',
+      'INTEGER',
+    );
     await _addColumnIfMissing(db, 'recurring', 'amount_cents', 'INTEGER');
     await _addColumnIfMissing(db, 'recurring', 'to_account_id', 'INTEGER');
     await _addColumnIfMissing(db, 'budgets', 'limit_cents', 'INTEGER');
-    await _addColumnIfMissing(db, 'automation_rules', 'min_amount_cents', 'INTEGER');
-    await _addColumnIfMissing(db, 'automation_rules', 'max_amount_cents', 'INTEGER');
+    await _addColumnIfMissing(
+      db,
+      'automation_rules',
+      'min_amount_cents',
+      'INTEGER',
+    );
+    await _addColumnIfMissing(
+      db,
+      'automation_rules',
+      'max_amount_cents',
+      'INTEGER',
+    );
     await _addColumnIfMissing(
       db,
       'automation_rules',
@@ -446,7 +461,9 @@ class AppDatabase {
     WHERE EXISTS(SELECT 1 FROM transactions t WHERE t.id = s.transaction_id)
       AND EXISTS(SELECT 1 FROM categories c WHERE c.id = s.category_id)''');
     await db.execute('DROP TABLE transaction_splits');
-    await db.execute('ALTER TABLE transaction_splits_v6 RENAME TO transaction_splits');
+    await db.execute(
+      'ALTER TABLE transaction_splits_v6 RENAME TO transaction_splits',
+    );
 
     await db.execute('''CREATE TABLE recurring_v6(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -546,7 +563,9 @@ class AppDatabase {
       CASE WHEN r.priority = 0 THEN r.id ELSE r.priority END
     FROM automation_rules r''');
     await db.execute('DROP TABLE automation_rules');
-    await db.execute('ALTER TABLE automation_rules_v6 RENAME TO automation_rules');
+    await db.execute(
+      'ALTER TABLE automation_rules_v6 RENAME TO automation_rules',
+    );
 
     await db.rawUpdate(
       'UPDATE goals SET linked_account_id = NULL WHERE linked_account_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM accounts a WHERE a.id = goals.linked_account_id)',
@@ -1219,8 +1238,7 @@ class AppDatabase {
           whereArgs: [rule.categoryId],
           limit: 1,
         );
-        if (rows.isNotEmpty &&
-            rows.first['type'] == result.type.dbValue) {
+        if (rows.isNotEmpty && rows.first['type'] == result.type.dbValue) {
           categoryId = rule.categoryId;
         }
       }
