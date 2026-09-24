@@ -337,7 +337,7 @@ class _IvyFinanceOverview extends StatelessWidget {
     if (_shows(DashboardWidgetType.monthlyIncome)) {
       metrics.add(
         _OverviewMetric(
-          label: 'Entrate',
+          label: DashboardWidgetType.monthlyIncome.label,
           value: state.hideBalance
               ? '••••'
               : moneyFor(state, state.monthTotal(TransactionType.income)),
@@ -349,7 +349,7 @@ class _IvyFinanceOverview extends StatelessWidget {
     if (_shows(DashboardWidgetType.monthlyExpense)) {
       metrics.add(
         _OverviewMetric(
-          label: 'Spese',
+          label: DashboardWidgetType.monthlyExpense.label,
           value: state.hideBalance
               ? '••••'
               : moneyFor(state, state.monthTotal(TransactionType.expense)),
@@ -361,7 +361,7 @@ class _IvyFinanceOverview extends StatelessWidget {
     if (_shows(DashboardWidgetType.safeToSpend)) {
       metrics.add(
         _OverviewMetric(
-          label: 'Disponibile',
+          label: DashboardWidgetType.safeToSpend.label,
           value: state.hideBalance
               ? '••••'
               : moneyFor(state, state.safeToSpend),
@@ -427,7 +427,7 @@ class _IvyFinanceOverview extends StatelessWidget {
           if (showBalance) ...[
             const SizedBox(height: 18),
             Text(
-              'Saldo totale',
+              'PATRIMONIO',
               style: theme.textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
