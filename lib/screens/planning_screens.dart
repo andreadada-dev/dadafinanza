@@ -379,21 +379,21 @@ Future<void> showBudgetEditor(BuildContext context, {Budget? existing}) async {
               TextField(
                 controller: name,
                 autofocus: existing == null,
-                decoration: const InputDecoration(labelText: 'Nome'),
+                decoration: InputDecoration(labelText: 'Nome'),
               ),
               TextField(
                 controller: limit,
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Limite',
-                  suffixText: '€',
+                  suffixText: state.currency,
                 ),
               ),
               DropdownButtonFormField<BudgetPeriod>(
                 initialValue: period,
-                decoration: const InputDecoration(labelText: 'Periodo'),
+                decoration: InputDecoration(labelText: 'Periodo'),
                 items: BudgetPeriod.values
                     .map(
                       (item) => DropdownMenuItem(
@@ -408,7 +408,7 @@ Future<void> showBudgetEditor(BuildContext context, {Budget? existing}) async {
               ),
               DropdownButtonFormField<int?>(
                 initialValue: categoryId,
-                decoration: const InputDecoration(labelText: 'Categoria'),
+                decoration: InputDecoration(labelText: 'Categoria'),
                 items: [
                   const DropdownMenuItem<int?>(
                     value: null,
@@ -560,9 +560,9 @@ class GoalsScreen extends StatelessWidget {
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Importo',
-                  suffixText: '€',
+                  suffixText: state.currency,
                 ),
               ),
             ],
@@ -827,16 +827,16 @@ Future<void> showGoalEditor(BuildContext context, {Goal? existing}) async {
               TextField(
                 controller: name,
                 autofocus: existing == null,
-                decoration: const InputDecoration(labelText: 'Nome'),
+                decoration: InputDecoration(labelText: 'Nome'),
               ),
               TextField(
                 controller: target,
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Importo obiettivo',
-                  suffixText: '€',
+                  suffixText: state.currency,
                 ),
               ),
               ListTile(
@@ -889,7 +889,7 @@ Future<void> showGoalEditor(BuildContext context, {Goal? existing}) async {
               ),
               DropdownButtonFormField<int?>(
                 initialValue: linkedAccountId,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Conto risparmio collegato',
                 ),
                 items: [
@@ -1249,16 +1249,16 @@ Future<void> showRecurringEditor(
                 TextField(
                   controller: name,
                   autofocus: existing == null && detected == null,
-                  decoration: const InputDecoration(labelText: 'Nome'),
+                  decoration: InputDecoration(labelText: 'Nome'),
                 ),
                 TextField(
                   controller: amount,
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
                   ),
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Importo',
-                    suffixText: '€',
+                    suffixText: state.currency,
                   ),
                 ),
                 SegmentedButton<TransactionType>(
@@ -1281,7 +1281,7 @@ Future<void> showRecurringEditor(
                 ),
                 DropdownButtonFormField<int>(
                   initialValue: accountId,
-                  decoration: const InputDecoration(labelText: 'Conto'),
+                  decoration: InputDecoration(labelText: 'Conto'),
                   items: usableAccounts
                       .map(
                         (item) => DropdownMenuItem(
@@ -1297,7 +1297,7 @@ Future<void> showRecurringEditor(
                 DropdownButtonFormField<int?>(
                   key: ValueKey('recurring-category-$type-$categoryId'),
                   initialValue: categoryId,
-                  decoration: const InputDecoration(labelText: 'Categoria'),
+                  decoration: InputDecoration(labelText: 'Categoria'),
                   items: [
                     const DropdownMenuItem<int?>(
                       value: null,
@@ -1314,7 +1314,7 @@ Future<void> showRecurringEditor(
                 ),
                 DropdownButtonFormField<String>(
                   initialValue: frequency,
-                  decoration: const InputDecoration(labelText: 'Frequenza'),
+                  decoration: InputDecoration(labelText: 'Frequenza'),
                   items:
                       const [
                             'Settimanale',
@@ -1353,7 +1353,7 @@ Future<void> showRecurringEditor(
                 ),
                 TextField(
                   controller: note,
-                  decoration: const InputDecoration(labelText: 'Descrizione'),
+                  decoration: InputDecoration(labelText: 'Descrizione'),
                 ),
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
