@@ -6,8 +6,8 @@ import '../main.dart';
 import '../models/models.dart';
 import '../screens/account_management_screen.dart';
 import '../screens/account_screens.dart' show showAccountEditor;
-import '../screens/canonical_shell.dart'
-    show CanonicalDashboardWidget, CategoryDetailScreen;
+import '../screens/canonical_shell.dart' show CanonicalDashboardWidget;
+import '../screens/category_management_screen.dart' show CategoryDetailScreen;
 import 'ui_helpers.dart';
 
 /// Renders a dashboard configuration on the canonical Home.
