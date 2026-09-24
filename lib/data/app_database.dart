@@ -537,6 +537,17 @@ class AppDatabase {
 
     final hasGoalEntries = await _tableExists(db, 'goal_entries');
     if (hasGoalEntries) {
+      for (final trigger in const [
+        'money_goal_entries_insert',
+        'money_goal_entries_update',
+        'goal_entries_after_insert',
+        'goal_entries_after_update',
+        'goal_entries_after_delete',
+        'goal_transfer_before_delete',
+        'goal_transfer_after_update',
+      ]) {
+        await db.execute('DROP TRIGGER IF EXISTS $trigger');
+      }
       await db.execute(
         'CREATE TEMP TABLE goal_entries_v6_backup AS SELECT * FROM goal_entries',
       );
