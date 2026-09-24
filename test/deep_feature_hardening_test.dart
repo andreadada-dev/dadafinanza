@@ -292,4 +292,28 @@ void main() {
     await state.deleteRule(state.rules.last);
     expect(state.rules, hasLength(beforeDelete - 1));
   });
+
+  test('recurring calendar dates clamp to the destination month', () {
+    expect(
+      RecurringExecutionService.advance(
+        DateTime.utc(2026, 1, 31, 9, 30),
+        'Mensile',
+      ),
+      DateTime.utc(2026, 2, 28, 9, 30),
+    );
+    expect(
+      RecurringExecutionService.advance(
+        DateTime.utc(2024, 2, 29, 9, 30),
+        'Annuale',
+      ),
+      DateTime.utc(2025, 2, 28, 9, 30),
+    );
+    expect(
+      RecurringExecutionService.advance(
+        DateTime.utc(2026, 11, 30, 9, 30),
+        'Trimestrale',
+      ),
+      DateTime.utc(2027, 2, 28, 9, 30),
+    );
+  });
 }
