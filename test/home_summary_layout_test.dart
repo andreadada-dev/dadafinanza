@@ -79,4 +79,35 @@ void main() {
     expect(database, contains('existingTypes.contains(type.name)'));
     expect(database, contains('isFreshDashboard && defaultOrder >= 0'));
   });
+
+  test('selected account Home starts with its category carousel', () {
+    final home = File(
+      'lib/screens/account_context_home_screen.dart',
+    ).readAsStringSync();
+    final widget = File(
+      'lib/widgets/home_dashboard_widget.dart',
+    ).readAsStringSync();
+
+    final accountCarousel = home.indexOf(
+      'AccountCategoryCarousel(accountId: selectedAccount!.id)',
+    );
+    final quickActions = home.indexOf('_QuickActions(', accountCarousel + 1);
+
+    expect(accountCarousel, greaterThanOrEqualTo(0));
+    expect(quickActions, greaterThan(accountCarousel));
+    expect(widget, contains('class AccountCategoryCarousel'));
+    expect(widget, contains('widget.accountId'));
+    expect(widget, contains('AccountContextService.periodTotal'));
+  });
+
+  test('selected account summary links to account analytics without repeating its name', () {
+    final source = File(
+      'lib/screens/account_context_home_screen.dart',
+    ).readAsStringSync();
+
+    expect(source, contains("'Analytics del conto'"));
+    expect(source, contains("'Entrate, spese e andamento del conto'"));
+    expect(source, contains('AccountContextAnalyticsScreen('));
+    expect(source, contains('onTap: onOpenAnalytics'));
+  });
 }
