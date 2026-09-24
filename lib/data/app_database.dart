@@ -1319,6 +1319,7 @@ class AppDatabase {
     required double amount,
     required TransactionType type,
     required int accountId,
+    int? toAccountId,
     int? categoryId,
     required String frequency,
     required DateTime nextDate,
@@ -1330,7 +1331,8 @@ class AppDatabase {
     'amount': amount,
     'type': type.dbValue,
     'account_id': accountId,
-    'category_id': categoryId,
+    'to_account_id': type == TransactionType.transfer ? toAccountId : null,
+    'category_id': type == TransactionType.transfer ? null : categoryId,
     'frequency': frequency,
     'next_date': nextDate.millisecondsSinceEpoch,
     'enabled': 1,
@@ -1346,7 +1348,12 @@ class AppDatabase {
       'amount': item.amount,
       'type': item.type.dbValue,
       'account_id': item.accountId,
-      'category_id': item.categoryId,
+      'to_account_id': item.type == TransactionType.transfer
+          ? item.toAccountId
+          : null,
+      'category_id': item.type == TransactionType.transfer
+          ? null
+          : item.categoryId,
       'frequency': item.frequency,
       'next_date': item.nextDate.millisecondsSinceEpoch,
       'enabled': item.enabled ? 1 : 0,
