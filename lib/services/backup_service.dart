@@ -59,7 +59,18 @@ class BackupService {
     final databaseCopy = File(p.join(work.path, 'dadafinanza.db'));
     await File(await database.databaseFilePath()).copy(databaseCopy.path);
 
-    final attachmentFiles = await attachments.all();
+    final transactions = await database.transactions();
+    await attachments.cleanup(
+      transactions.map((transaction) => transaction.receiptPath),
+    );
+    final referenced = transactions
+        .map((transaction) => transaction.receiptPath)
+        .whereType<String>()
+        .map(p.basename)
+        .toSet();
+    final attachmentFiles = (await attachments.all())
+        .where((file) => referenced.contains(p.basename(file.path)))
+        .toList(growable: false);
     final manifest = <String, Object?>{
       'format': 'DadaFinanzaBackup',
       'formatVersion': formatVersion,
