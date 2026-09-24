@@ -508,9 +508,7 @@ Future<void> showSplitEditor(
                     Expanded(
                       child: DropdownButtonFormField<int>(
                         initialValue: row.categoryId,
-                        decoration: InputDecoration(
-                          labelText: 'Categoria',
-                        ),
+                        decoration: InputDecoration(labelText: 'Categoria'),
                         items: expenseCategories
                             .map(
                               (c) => DropdownMenuItem(
