@@ -558,11 +558,11 @@ Future<Account?> showAccountEditor(
                 controller: name,
                 autofocus: existing == null,
                 textCapitalization: TextCapitalization.sentences,
-                decoration: const InputDecoration(labelText: 'Nome'),
+                decoration: InputDecoration(labelText: 'Nome'),
               ),
               DropdownButtonFormField<AccountType>(
                 initialValue: type,
-                decoration: const InputDecoration(labelText: 'Tipo'),
+                decoration: InputDecoration(labelText: 'Tipo'),
                 items: AccountType.values
                     .map(
                       (item) => DropdownMenuItem(
@@ -583,7 +583,7 @@ Future<Account?> showAccountEditor(
                   labelText: existing == null
                       ? 'Saldo iniziale'
                       : 'Saldo / riconciliazione',
-                  suffixText: '€',
+                  suffixText: state.currency,
                 ),
               ),
               ListTile(
@@ -679,7 +679,7 @@ Future<Account?> showAccountEditor(
                           TextField(
                             controller: note,
                             maxLines: 2,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               labelText: 'Nota opzionale',
                             ),
                           ),
