@@ -37,4 +37,25 @@ void main() {
     expect(source, contains('_fixedSummaryTypes.contains(item.type)'));
     expect(source, contains('await state.saveDashboard(normalized)'));
   });
+
+  test('category chart is clearly exposed in Personalizza Home', () {
+    final settings = File('lib/screens/settings_screen.dart').readAsStringSync();
+    final models = File('lib/models/models.dart').readAsStringSync();
+
+    expect(models, contains("DashboardWidgetType.topCategories => 'Grafico categorie'"));
+    expect(
+      settings,
+      contains(
+        'Torta Spese/Entrate con periodo scorrevole e intervallo personalizzato.',
+      ),
+    );
+  });
+
+  test('dashboard seeding backfills missing widget types', () {
+    final database = File('lib/data/app_database.dart').readAsStringSync();
+
+    expect(database, contains("columns: ['type', 'order_index']"));
+    expect(database, contains('existingTypes.contains(type.name)'));
+    expect(database, contains('isFreshDashboard && defaultOrder >= 0'));
+  });
 }
