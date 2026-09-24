@@ -56,14 +56,18 @@ void main() {
     );
   });
 
-  test('category carousel keeps type and period controls inside the donut', () {
+  test('category carousel drags fluidly and commits data after release', () {
     final source = File(
       'lib/widgets/home_dashboard_widget.dart',
     ).readAsStringSync();
 
     expect(source, isNot(contains('_CategoryChartControls')));
-    expect(source, contains('onHorizontalDragEnd: _handleTypeSwipe'));
-    expect(source, contains('class _CarouselTypeArrow'));
+    expect(source, contains('PageView.builder'));
+    expect(source, contains('NotificationListener<ScrollNotification>'));
+    expect(source, contains('notification is ScrollEndNotification'));
+    expect(source, contains('_commitCarouselPage()'));
+    expect(source, contains('class _SwipeHintChevron'));
+    expect(source, contains('repeat(reverse: true)'));
     expect(source, contains('class _DonutPeriodCenter'));
     expect(source, contains('totalLabel'));
   });
