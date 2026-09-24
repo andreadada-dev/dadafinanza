@@ -640,9 +640,9 @@ Future<void> showAdvanceEditor(
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Importo',
-                  suffixText: '€',
+                  suffixText: state.currency,
                 ),
               ),
               const SizedBox(height: 12),
@@ -737,7 +737,7 @@ Future<void> showAdvanceEditor(
                   ),
                   TextField(
                     controller: note,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Nota opzionale',
                     ),
                   ),
@@ -846,7 +846,7 @@ Future<void> showAdvanceMetadataEditor(
               ),
               TextField(
                 controller: note,
-                decoration: const InputDecoration(labelText: 'Nota opzionale'),
+                decoration: InputDecoration(labelText: 'Nota opzionale'),
               ),
               ListTile(
                 contentPadding: EdgeInsets.zero,
@@ -968,7 +968,7 @@ Future<void> showSettlementEditor(
                   labelText: advance.direction == AdvanceDirection.receivable
                       ? 'Importo ricevuto'
                       : 'Importo restituito',
-                  suffixText: '€',
+                  suffixText: state.currency,
                 ),
               ),
               ListTile(
@@ -1005,7 +1005,7 @@ Future<void> showSettlementEditor(
               ),
               TextField(
                 controller: note,
-                decoration: const InputDecoration(labelText: 'Nota opzionale'),
+                decoration: InputDecoration(labelText: 'Nota opzionale'),
               ),
               const SizedBox(height: 20),
               SizedBox(
@@ -1265,7 +1265,7 @@ Future<void> showFinancePersonRename(
         controller: controller,
         autofocus: true,
         textCapitalization: TextCapitalization.words,
-        decoration: const InputDecoration(labelText: 'Nome'),
+        decoration: InputDecoration(labelText: 'Nome'),
       ),
       actions: [
         TextButton(
@@ -1350,7 +1350,7 @@ Future<int?> showFinancePersonCreator(BuildContext context) async {
         controller: controller,
         autofocus: true,
         textCapitalization: TextCapitalization.words,
-        decoration: const InputDecoration(labelText: 'Nome'),
+        decoration: InputDecoration(labelText: 'Nome'),
       ),
       actions: [
         TextButton(
