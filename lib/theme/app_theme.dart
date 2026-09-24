@@ -167,11 +167,11 @@ class AppTheme {
         height: 72,
         elevation: 0,
         backgroundColor: background,
-        indicatorColor: primary.withValues(alpha: dark ? .18 : .10),
+        indicatorColor: Colors.transparent,
         labelTextStyle: WidgetStateProperty.resolveWith(
           (states) => TextStyle(
             color: states.contains(WidgetState.selected)
-                ? primary
+                ? onSurface
                 : secondaryText,
             fontSize: 11,
             fontWeight: states.contains(WidgetState.selected)
@@ -182,7 +182,7 @@ class AppTheme {
         iconTheme: WidgetStateProperty.resolveWith(
           (states) => IconThemeData(
             color: states.contains(WidgetState.selected)
-                ? primary
+                ? onSurface
                 : secondaryText,
           ),
         ),
@@ -190,8 +190,8 @@ class AppTheme {
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         elevation: 0,
         highlightElevation: 0,
-        backgroundColor: primary,
-        foregroundColor: Colors.white,
+        backgroundColor: onSurface,
+        foregroundColor: background,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
       inputDecorationTheme: InputDecorationTheme(
