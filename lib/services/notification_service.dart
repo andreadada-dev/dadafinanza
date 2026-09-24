@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:intl/intl.dart';
 import 'package:timezone/data/latest.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -107,7 +108,7 @@ class NotificationService {
         9,
       ).subtract(const Duration(days: 1));
       if (!reminder.isAfter(now)) continue;
-      final amount = item.amount.toStringAsFixed(2).replaceAll('.', ',');
+      final amount = _money(state, item.amount);
       final destination = item.type == TransactionType.transfer
           ? state.accountById(item.toAccountId)?.name
           : null;
@@ -115,8 +116,8 @@ class NotificationService {
         id: 100000 + item.id,
         title: 'Scadenza domani',
         body: item.type == TransactionType.transfer && destination != null
-            ? '${item.name}: $amount € verso $destination'
-            : '${item.name}: $amount €',
+            ? '${item.name}: $amount verso $destination'
+            : '${item.name}: $amount',
         scheduledDate: tz.TZDateTime.from(reminder.toUtc(), tz.UTC),
         notificationDetails: const NotificationDetails(
           android: AndroidNotificationDetails(
@@ -222,14 +223,12 @@ class NotificationService {
           await state.database.getSetting(overdueKey) ?? '',
         );
         if (previous == remainingCents) continue;
-        final amount = (remainingCents / 100)
-            .toStringAsFixed(2)
-            .replaceAll('.', ',');
+        final amount = _money(state, remainingCents / 100);
         await plugin.show(
           id: 500000 + advance.id,
           title: advance.direction.name == 'receivable'
-              ? '${person?.name ?? 'Qualcuno'} deve ancora restituirti $amount €'
-              : 'Devi ancora restituire $amount € a ${person?.name ?? 'qualcuno'}',
+              ? '${person?.name ?? 'Qualcuno'} deve ancora restituirti $amount'
+              : 'Devi ancora restituire $amount a ${person?.name ?? 'qualcuno'}',
           body:
               'Apri Anticipi per registrare un rimborso o aggiornare il promemoria.',
           notificationDetails: const NotificationDetails(
@@ -247,14 +246,12 @@ class NotificationService {
         await state.database.setSetting(overdueKey, '$remainingCents');
         continue;
       }
-      final amount = (remainingCents / 100)
-          .toStringAsFixed(2)
-          .replaceAll('.', ',');
+      final amount = _money(state, remainingCents / 100);
       await plugin.zonedSchedule(
         id: 500000 + advance.id,
         title: advance.direction.name == 'receivable'
-            ? '${person?.name ?? 'Qualcuno'} deve restituirti $amount €'
-            : 'Devi restituire $amount € a ${person?.name ?? 'qualcuno'}',
+            ? '${person?.name ?? 'Qualcuno'} deve restituirti $amount'
+            : 'Devi restituire $amount a ${person?.name ?? 'qualcuno'}',
         body: due == null
             ? 'Promemoria Anticipi'
             : 'Scadenza ${due.day}/${due.month}/${due.year}',
@@ -304,4 +301,10 @@ class NotificationService {
     );
     await state.database.setSetting('notification_forecast_month', month);
   }
+  String _money(AppState state, double value) => NumberFormat.currency(
+    locale: 'it_IT',
+    name: state.currency,
+    decimalDigits: state.showCents ? 2 : 0,
+  ).format(value);
+
 }
