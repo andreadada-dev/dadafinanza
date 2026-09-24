@@ -314,7 +314,11 @@ void main() {
     final dir = await attachments.directory();
     await File(p.join(dir.path, 'orphan.jpg')).writeAsBytes([1]);
 
-    final state = AppState(database, widgetService: _NoopWidgetService(), attachmentService: attachments);
+    final state = AppState(
+      database,
+      widgetService: _NoopWidgetService(),
+      attachmentService: attachments,
+    );
     await state.load();
     await state.clearAllUserData();
 
