@@ -7,6 +7,7 @@ import '../main.dart';
 import '../models/models.dart';
 import '../services/haptic_service.dart';
 import '../widgets/ui_helpers.dart';
+import 'account_management_screen.dart';
 import 'android_widgets_screen.dart';
 import 'advances_screen.dart';
 import 'category_management_screen.dart';
@@ -51,6 +52,52 @@ class PersonalSettingsScreen extends StatelessWidget {
             ),
             value: state.hideBalance,
             onChanged: (value) => _setHideBalance(state, value),
+          ),
+          const SizedBox(height: 32),
+          const SectionTitle('Generali'),
+          _Link(
+            icon: Icons.account_balance_wallet_outlined,
+            title: 'Conti',
+            subtitle: '${state.userAccounts.length} conti',
+            onTap: () => _open(context, const AccountManagementScreen()),
+          ),
+          _Link(
+            icon: Icons.currency_exchange_rounded,
+            title: 'Valuta principale',
+            subtitle: state.currency,
+            onTap: () => _pickCurrency(context, state),
+          ),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            secondary: const Icon(Icons.pin_outlined),
+            title: const Text('Mostra centesimi'),
+            value: state.showCents,
+            onChanged: (value) => _setBoolSetting(state, 'show_cents', value),
+          ),
+          _Link(
+            icon: Icons.calendar_view_week_outlined,
+            title: 'Primo giorno settimana',
+            subtitle: state.weekStart == DateTime.sunday
+                ? 'Domenica'
+                : 'Lunedì',
+            onTap: () => _pickWeekStart(context, state),
+          ),
+          _Link(
+            icon: Icons.calendar_month_outlined,
+            title: 'Inizio mese finanziario',
+            subtitle: 'Giorno ${state.financialMonthStart}',
+            onTap: () => _pickFinancialMonthStart(context, state),
+          ),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            secondary: const Icon(Icons.warning_amber_rounded),
+            title: const Text('Conferma eliminazioni'),
+            subtitle: const Text(
+              'Richiede conferma prima di eliminare un movimento.',
+            ),
+            value: state.confirmDelete,
+            onChanged: (value) =>
+                _setBoolSetting(state, 'confirm_delete', value),
           ),
           const SizedBox(height: 32),
           const SectionTitle('Privacy locale'),
@@ -194,6 +241,119 @@ class PersonalSettingsScreen extends StatelessWidget {
     // enabling, before persisting the new preference.
     await HapticService.medium(enabled: state.haptics || value);
     await state.setSetting('haptics', value ? '1' : '0');
+  }
+
+  Future<void> _pickCurrency(BuildContext context, AppState state) async {
+    const currencies = ['EUR', 'USD', 'GBP', 'CHF'];
+    final selected = await showModalBottomSheet<String>(
+      context: context,
+      useSafeArea: true,
+      showDragHandle: true,
+      builder: (sheetContext) => Padding(
+        padding: const EdgeInsets.fromLTRB(20, 4, 20, 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: currencies
+              .map(
+                (value) => ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Icon(
+                    value == state.currency
+                        ? Icons.check_circle_rounded
+                        : Icons.circle_outlined,
+                  ),
+                  title: Text(value),
+                  onTap: () => Navigator.pop(sheetContext, value),
+                ),
+              )
+              .toList(),
+        ),
+      ),
+    );
+    if (selected != null) {
+      await HapticService.light(enabled: state.haptics);
+      await state.setSetting('currency', selected);
+    }
+  }
+
+  Future<void> _pickWeekStart(BuildContext context, AppState state) async {
+    final selected = await showModalBottomSheet<int>(
+      context: context,
+      useSafeArea: true,
+      showDragHandle: true,
+      builder: (sheetContext) => Padding(
+        padding: const EdgeInsets.fromLTRB(20, 4, 20, 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            for (final entry in const [
+              (DateTime.monday, 'Lunedì'),
+              (DateTime.sunday, 'Domenica'),
+            ])
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Icon(
+                  entry.$1 == state.weekStart
+                      ? Icons.check_circle_rounded
+                      : Icons.circle_outlined,
+                ),
+                title: Text(entry.$2),
+                onTap: () => Navigator.pop(sheetContext, entry.$1),
+              ),
+          ],
+        ),
+      ),
+    );
+    if (selected != null) {
+      await HapticService.light(enabled: state.haptics);
+      await state.setSetting('week_start', selected.toString());
+    }
+  }
+
+  Future<void> _pickFinancialMonthStart(
+    BuildContext context,
+    AppState state,
+  ) async {
+    final selected = await showModalBottomSheet<int>(
+      context: context,
+      useSafeArea: true,
+      showDragHandle: true,
+      builder: (sheetContext) => Padding(
+        padding: const EdgeInsets.fromLTRB(20, 4, 20, 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Inizio mese finanziario',
+              style: Theme.of(sheetContext).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 8),
+            SizedBox(
+              height: 260,
+              child: SingleChildScrollView(
+                child: Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    for (var day = 1; day <= 28; day++)
+                      ChoiceChip(
+                        label: Text('$day'),
+                        selected: state.financialMonthStart == day,
+                        onSelected: (_) => Navigator.pop(sheetContext, day),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (selected != null) {
+      await HapticService.light(enabled: state.haptics);
+      await state.setSetting('financial_month_start', selected.toString());
+    }
   }
 
   Future<void> _pickTheme(BuildContext context, AppState state) async {

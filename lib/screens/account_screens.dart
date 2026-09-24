@@ -163,12 +163,39 @@ class AccountDetailPage extends StatelessWidget {
   ) async {
     final movementCount = state.transactionCountForAccount(account.id);
     final recurringCount = state.recurringCountForAccount(account.id);
+    if (movementCount > 0 || recurringCount > 0) {
+      final archive = await showDialog<bool>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          title: const Text('Il conto contiene storico'),
+          content: Text(
+            'Il conto ha $movementCount movimenti e $recurringCount ricorrenze collegate. Per proteggere lo storico non può essere eliminato: puoi archiviarlo.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: const Text('Chiudi'),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(dialogContext, true),
+              child: const Text('Archivia conto'),
+            ),
+          ],
+        ),
+      );
+      if (archive == true) {
+        await state.updateAccount(account.copyWith(isArchived: true));
+        if (context.mounted) Navigator.pop(context);
+      }
+      return;
+    }
+
     final confirmed = await confirmDestructiveAction(
       context,
       title: 'Eliminare “${account.name}”?',
       message:
-          'Il conto ha $movementCount movimenti e $recurringCount ricorrenti collegati. Archiviare è l’opzione consigliata. Eliminando definitivamente, i movimenti collegati verranno rimossi e i saldi degli altri conti verranno corretti.',
-      confirmLabel: 'Elimina definitivamente',
+          'Il conto è vuoto. Eventuali riferimenti in preset e obiettivi verranno scollegati in sicurezza.',
+      confirmLabel: 'Elimina conto',
     );
     if (!confirmed) return;
     await state.deleteAccount(account);
@@ -531,11 +558,11 @@ Future<Account?> showAccountEditor(
                 controller: name,
                 autofocus: existing == null,
                 textCapitalization: TextCapitalization.sentences,
-                decoration: const InputDecoration(labelText: 'Nome'),
+                decoration: InputDecoration(labelText: 'Nome'),
               ),
               DropdownButtonFormField<AccountType>(
                 initialValue: type,
-                decoration: const InputDecoration(labelText: 'Tipo'),
+                decoration: InputDecoration(labelText: 'Tipo'),
                 items: AccountType.values
                     .map(
                       (item) => DropdownMenuItem(
@@ -556,7 +583,7 @@ Future<Account?> showAccountEditor(
                   labelText: existing == null
                       ? 'Saldo iniziale'
                       : 'Saldo / riconciliazione',
-                  suffixText: '€',
+                  suffixText: state.currency,
                 ),
               ),
               ListTile(
@@ -652,7 +679,7 @@ Future<Account?> showAccountEditor(
                           TextField(
                             controller: note,
                             maxLines: 2,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               labelText: 'Nota opzionale',
                             ),
                           ),

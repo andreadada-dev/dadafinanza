@@ -1256,9 +1256,9 @@ class _QuickAddPageState extends State<QuickAddPage> {
               style: Theme.of(
                 context,
               ).textTheme.displaySmall?.copyWith(fontSize: 48),
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: '0,00',
-                suffixText: '€',
+                suffixText: state.currency,
                 helperText: 'Calcoli rapidi: usa +  −  ×  ÷',
               ),
             ),
@@ -1413,9 +1413,9 @@ class _QuickAddPageState extends State<QuickAddPage> {
                     keyboardType: const TextInputType.numberWithOptions(
                       decimal: true,
                     ),
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Quota anticipata',
-                      suffixText: '€',
+                      suffixText: state.currency,
                       helperText:
                           'Inserisci una parte oppure usa tutto l’importo.',
                     ),

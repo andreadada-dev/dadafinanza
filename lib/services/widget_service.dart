@@ -13,12 +13,14 @@ class WidgetService {
 
   Future<void> sync({
     required double balance,
+    required String currency,
     required List<Category> expenseCategories,
   }) async {
     await HomeWidget.saveWidgetData<String>(
       'balance',
       balance.toStringAsFixed(2),
     );
+    await HomeWidget.saveWidgetData<String>('currency', currency);
     final ordered = [...expenseCategories]
       ..sort((a, b) {
         final quickA = a.quickOrder ?? 999;

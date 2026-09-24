@@ -33,4 +33,25 @@ void main() {
     expect(summary, contains('android:targetCellWidth="4"'));
     expect(summary, contains('android:targetCellHeight="2"'));
   });
+
+  test('Android widgets use the configured app currency', () {
+    final provider = File(
+      'android/app/src/main/kotlin/com/dadafinanza/app/DadaFinanceWidgetProvider.kt',
+    ).readAsStringSync();
+    final widgetService = File(
+      'lib/services/widget_service.dart',
+    ).readAsStringSync();
+    final balanceLayout = File(
+      'android/app/src/main/res/layout/dada_balance_widget.xml',
+    ).readAsStringSync();
+    final summaryLayout = File(
+      'android/app/src/main/res/layout/dada_finance_widget.xml',
+    ).readAsStringSync();
+
+    expect(widgetService, contains("'currency', currency"));
+    expect(provider, contains('getString("currency", "EUR")'));
+    expect(provider, contains('fun moneyLabel'));
+    expect(balanceLayout, isNot(contains('0,00 €')));
+    expect(summaryLayout, isNot(contains('0,00 €')));
+  });
 }

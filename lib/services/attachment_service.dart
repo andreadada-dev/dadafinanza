@@ -4,10 +4,14 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 class AttachmentService {
+  AttachmentService({Directory? rootDirectory})
+    : _rootDirectory = rootDirectory;
+
   static const _folderName = 'attachments';
+  final Directory? _rootDirectory;
 
   Future<Directory> directory() async {
-    final root = await getApplicationSupportDirectory();
+    final root = _rootDirectory ?? await getApplicationSupportDirectory();
     final dir = Directory(p.join(root.path, _folderName));
     if (!await dir.exists()) await dir.create(recursive: true);
     return dir;
@@ -69,6 +73,14 @@ class AttachmentService {
       }
     }
     return removed;
+  }
+
+  Future<void> clear() async {
+    final dir = await directory();
+    if (await dir.exists()) {
+      await dir.delete(recursive: true);
+    }
+    await dir.create(recursive: true);
   }
 
   Future<void> replaceDirectory(Directory source) async {

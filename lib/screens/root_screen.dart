@@ -11,6 +11,7 @@ import '../models/models.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_screens.dart';
 import 'advances_screen.dart';
+import 'personal_settings_screen.dart';
 import 'planning_screens.dart';
 import 'quick_add_page.dart';
 import 'settings_screen.dart';
@@ -123,7 +124,9 @@ class HomeScreen extends StatelessWidget {
               tooltip: 'Impostazioni',
               onPressed: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                MaterialPageRoute(
+                  builder: (_) => const PersonalSettingsScreen(),
+                ),
               ),
               icon: const Icon(Icons.settings_outlined),
             ),

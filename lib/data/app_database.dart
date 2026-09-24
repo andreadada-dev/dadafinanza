@@ -3,11 +3,12 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../core/money.dart';
 import '../models/models.dart';
 import '../models/smart_models.dart';
 
 class AppDatabase {
-  static const databaseVersion = 5;
+  static const databaseVersion = 6;
   static const _unassignedName = '__UNASSIGNED__';
 
   Database? _db;
@@ -80,6 +81,7 @@ class AppDatabase {
       amount REAL NOT NULL,
       category_id INTEGER NOT NULL,
       note TEXT,
+      amount_cents INTEGER,
       FOREIGN KEY(transaction_id) REFERENCES transactions(id) ON DELETE CASCADE,
       FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE RESTRICT
     )''');
@@ -90,13 +92,16 @@ class AppDatabase {
       type TEXT NOT NULL,
       account_id INTEGER NOT NULL,
       category_id INTEGER,
+      to_account_id INTEGER,
       frequency TEXT NOT NULL,
       next_date INTEGER NOT NULL,
       enabled INTEGER NOT NULL DEFAULT 1,
       note TEXT,
       end_date INTEGER,
       auto_create INTEGER NOT NULL DEFAULT 0,
+      amount_cents INTEGER,
       FOREIGN KEY(account_id) REFERENCES accounts(id),
+      FOREIGN KEY(to_account_id) REFERENCES accounts(id) ON DELETE SET NULL,
       FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE SET NULL
     )''');
     await db.execute('''CREATE TABLE budgets(
@@ -108,6 +113,7 @@ class AppDatabase {
       start_date INTEGER NOT NULL,
       end_date INTEGER,
       enabled INTEGER NOT NULL DEFAULT 1,
+      limit_cents INTEGER,
       FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE SET NULL
     )''');
     await db.execute('''CREATE TABLE goals(
@@ -141,6 +147,9 @@ class AppDatabase {
       account_id INTEGER,
       add_tag TEXT,
       include_in_analytics INTEGER,
+      min_amount_cents INTEGER,
+      max_amount_cents INTEGER,
+      priority INTEGER NOT NULL DEFAULT 0,
       FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE SET NULL,
       FOREIGN KEY(account_id) REFERENCES accounts(id) ON DELETE SET NULL
     )''');
@@ -386,7 +395,286 @@ class AppDatabase {
         "TEXT NOT NULL DEFAULT 'normal'",
       );
     }
+    if (oldVersion < 6) {
+      await _migrateV6(db);
+    }
     await _createIndexes(db);
+  }
+
+  Future<void> _migrateV6(Database db) async {
+    await _addColumnIfMissing(
+      db,
+      'transaction_splits',
+      'amount_cents',
+      'INTEGER',
+    );
+    await _addColumnIfMissing(db, 'recurring', 'amount_cents', 'INTEGER');
+    await _addColumnIfMissing(db, 'recurring', 'to_account_id', 'INTEGER');
+    await _addColumnIfMissing(db, 'budgets', 'limit_cents', 'INTEGER');
+    await _addColumnIfMissing(db, 'goals', 'target_amount_cents', 'INTEGER');
+    await _addColumnIfMissing(db, 'goals', 'current_amount_cents', 'INTEGER');
+    await _addColumnIfMissing(
+      db,
+      'automation_rules',
+      'min_amount_cents',
+      'INTEGER',
+    );
+    await _addColumnIfMissing(
+      db,
+      'automation_rules',
+      'max_amount_cents',
+      'INTEGER',
+    );
+    await _addColumnIfMissing(
+      db,
+      'automation_rules',
+      'priority',
+      'INTEGER NOT NULL DEFAULT 0',
+    );
+
+    await db.rawUpdate(
+      'UPDATE transaction_splits SET amount_cents = CAST(ROUND(amount * 100) AS INTEGER) WHERE amount_cents IS NULL',
+    );
+    await db.rawUpdate(
+      'UPDATE recurring SET amount_cents = CAST(ROUND(amount * 100) AS INTEGER) WHERE amount_cents IS NULL',
+    );
+    await db.rawUpdate(
+      'UPDATE budgets SET limit_cents = CAST(ROUND(limit_amount * 100) AS INTEGER) WHERE limit_cents IS NULL',
+    );
+    await db.rawUpdate(
+      'UPDATE goals SET target_amount_cents = CAST(ROUND(target_amount * 100) AS INTEGER) WHERE target_amount_cents IS NULL',
+    );
+    await db.rawUpdate(
+      'UPDATE goals SET current_amount_cents = CAST(ROUND(current_amount * 100) AS INTEGER) WHERE current_amount_cents IS NULL',
+    );
+    await db.rawUpdate(
+      'UPDATE automation_rules SET min_amount_cents = CASE WHEN min_amount IS NULL THEN NULL ELSE CAST(ROUND(min_amount * 100) AS INTEGER) END, max_amount_cents = CASE WHEN max_amount IS NULL THEN NULL ELSE CAST(ROUND(max_amount * 100) AS INTEGER) END',
+    );
+
+    await db.execute('''CREATE TABLE transaction_splits_v6(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      transaction_id INTEGER NOT NULL,
+      amount REAL NOT NULL,
+      category_id INTEGER NOT NULL,
+      note TEXT,
+      amount_cents INTEGER,
+      FOREIGN KEY(transaction_id) REFERENCES transactions(id) ON DELETE CASCADE,
+      FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE RESTRICT
+    )''');
+    await db.execute('''INSERT INTO transaction_splits_v6(
+      id, transaction_id, amount, category_id, note, amount_cents
+    )
+    SELECT s.id, s.transaction_id, s.amount, s.category_id, s.note, s.amount_cents
+    FROM transaction_splits s
+    WHERE EXISTS(SELECT 1 FROM transactions t WHERE t.id = s.transaction_id)
+      AND EXISTS(SELECT 1 FROM categories c WHERE c.id = s.category_id)''');
+    await db.execute('DROP TABLE transaction_splits');
+    await db.execute(
+      'ALTER TABLE transaction_splits_v6 RENAME TO transaction_splits',
+    );
+
+    await db.execute('''CREATE TABLE recurring_v6(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      amount REAL NOT NULL,
+      type TEXT NOT NULL,
+      account_id INTEGER NOT NULL,
+      to_account_id INTEGER,
+      category_id INTEGER,
+      frequency TEXT NOT NULL,
+      next_date INTEGER NOT NULL,
+      enabled INTEGER NOT NULL DEFAULT 1,
+      note TEXT,
+      end_date INTEGER,
+      auto_create INTEGER NOT NULL DEFAULT 0,
+      amount_cents INTEGER,
+      FOREIGN KEY(account_id) REFERENCES accounts(id) ON DELETE RESTRICT,
+      FOREIGN KEY(to_account_id) REFERENCES accounts(id) ON DELETE SET NULL,
+      FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE SET NULL
+    )''');
+    await db.execute('''INSERT INTO recurring_v6(
+      id, name, amount, type, account_id, to_account_id, category_id,
+      frequency, next_date, enabled, note, end_date, auto_create, amount_cents
+    )
+    SELECT r.id, r.name, r.amount, r.type, r.account_id,
+      CASE WHEN r.to_account_id IS NULL OR EXISTS(
+        SELECT 1 FROM accounts a WHERE a.id = r.to_account_id
+      ) THEN r.to_account_id ELSE NULL END,
+      CASE WHEN r.category_id IS NULL OR EXISTS(
+        SELECT 1 FROM categories c WHERE c.id = r.category_id
+      ) THEN r.category_id ELSE NULL END,
+      r.frequency, r.next_date, r.enabled, r.note, r.end_date,
+      r.auto_create, r.amount_cents
+    FROM recurring r
+    WHERE EXISTS(SELECT 1 FROM accounts a WHERE a.id = r.account_id)''');
+    await db.execute('DROP TABLE recurring');
+    await db.execute('ALTER TABLE recurring_v6 RENAME TO recurring');
+
+    await db.execute('''CREATE TABLE budgets_v6(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      category_id INTEGER,
+      limit_amount REAL NOT NULL,
+      period TEXT NOT NULL,
+      start_date INTEGER NOT NULL,
+      end_date INTEGER,
+      enabled INTEGER NOT NULL DEFAULT 1,
+      limit_cents INTEGER,
+      FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE SET NULL
+    )''');
+    await db.execute('''INSERT INTO budgets_v6(
+      id, name, category_id, limit_amount, period, start_date, end_date,
+      enabled, limit_cents
+    )
+    SELECT b.id, b.name,
+      CASE WHEN b.category_id IS NULL OR EXISTS(
+        SELECT 1 FROM categories c WHERE c.id = b.category_id
+      ) THEN b.category_id ELSE NULL END,
+      b.limit_amount, b.period, b.start_date, b.end_date, b.enabled, b.limit_cents
+    FROM budgets b''');
+    await db.execute('DROP TABLE budgets');
+    await db.execute('ALTER TABLE budgets_v6 RENAME TO budgets');
+
+    final hasGoalEntries = await _tableExists(db, 'goal_entries');
+    if (hasGoalEntries) {
+      for (final trigger in const [
+        'money_goal_entries_insert',
+        'money_goal_entries_update',
+        'goal_entries_after_insert',
+        'goal_entries_after_update',
+        'goal_entries_after_delete',
+        'goal_transfer_before_delete',
+        'goal_transfer_after_update',
+      ]) {
+        await db.execute('DROP TRIGGER IF EXISTS $trigger');
+      }
+      await db.execute(
+        'CREATE TEMP TABLE goal_entries_v6_backup AS SELECT * FROM goal_entries',
+      );
+      await db.execute('DROP TABLE goal_entries');
+    }
+
+    await db.execute('''CREATE TABLE goals_v6(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      icon_key TEXT NOT NULL,
+      color INTEGER NOT NULL,
+      target_amount REAL NOT NULL,
+      current_amount REAL NOT NULL DEFAULT 0,
+      target_date INTEGER,
+      linked_account_id INTEGER,
+      archived INTEGER NOT NULL DEFAULT 0,
+      completed INTEGER NOT NULL DEFAULT 0,
+      target_amount_cents INTEGER,
+      current_amount_cents INTEGER,
+      FOREIGN KEY(linked_account_id) REFERENCES accounts(id) ON DELETE SET NULL
+    )''');
+    await db.execute('''INSERT INTO goals_v6(
+      id, name, icon_key, color, target_amount, current_amount, target_date,
+      linked_account_id, archived, completed, target_amount_cents,
+      current_amount_cents
+    )
+    SELECT g.id, g.name, g.icon_key, g.color, g.target_amount,
+      g.current_amount, g.target_date,
+      CASE WHEN g.linked_account_id IS NULL OR EXISTS(
+        SELECT 1 FROM accounts a WHERE a.id = g.linked_account_id
+      ) THEN g.linked_account_id ELSE NULL END,
+      g.archived, g.completed, g.target_amount_cents, g.current_amount_cents
+    FROM goals g''');
+    await db.execute('DROP TABLE goals');
+    await db.execute('ALTER TABLE goals_v6 RENAME TO goals');
+
+    if (hasGoalEntries) {
+      await db.execute('''CREATE TABLE goal_entries(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        goal_id INTEGER NOT NULL,
+        transaction_id INTEGER UNIQUE,
+        amount REAL NOT NULL DEFAULT 0,
+        amount_cents INTEGER,
+        kind TEXT NOT NULL DEFAULT 'manual',
+        created_at INTEGER NOT NULL,
+        FOREIGN KEY(goal_id) REFERENCES goals(id) ON DELETE CASCADE,
+        FOREIGN KEY(transaction_id) REFERENCES transactions(id) ON DELETE CASCADE
+      )''');
+      await db.execute('''INSERT INTO goal_entries(
+        id, goal_id, transaction_id, amount, amount_cents, kind, created_at
+      )
+      SELECT e.id, e.goal_id,
+        CASE WHEN e.transaction_id IS NULL OR EXISTS(
+          SELECT 1 FROM transactions t WHERE t.id = e.transaction_id
+        ) THEN e.transaction_id ELSE NULL END,
+        e.amount, e.amount_cents, e.kind, e.created_at
+      FROM goal_entries_v6_backup e
+      WHERE EXISTS(SELECT 1 FROM goals g WHERE g.id = e.goal_id)''');
+      await db.execute('DROP TABLE goal_entries_v6_backup');
+    }
+
+    await db.execute('''CREATE TABLE automation_rules_v6(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      enabled INTEGER NOT NULL DEFAULT 1,
+      contains_text TEXT,
+      type TEXT,
+      min_amount REAL,
+      max_amount REAL,
+      category_id INTEGER,
+      account_id INTEGER,
+      add_tag TEXT,
+      include_in_analytics INTEGER,
+      min_amount_cents INTEGER,
+      max_amount_cents INTEGER,
+      priority INTEGER NOT NULL DEFAULT 0,
+      FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE SET NULL,
+      FOREIGN KEY(account_id) REFERENCES accounts(id) ON DELETE SET NULL
+    )''');
+    await db.execute('''INSERT INTO automation_rules_v6(
+      id, name, enabled, contains_text, type, min_amount, max_amount,
+      category_id, account_id, add_tag, include_in_analytics,
+      min_amount_cents, max_amount_cents, priority
+    )
+    SELECT r.id, r.name, r.enabled, r.contains_text, r.type,
+      r.min_amount, r.max_amount,
+      CASE WHEN r.category_id IS NULL OR EXISTS(
+        SELECT 1 FROM categories c WHERE c.id = r.category_id
+      ) THEN r.category_id ELSE NULL END,
+      CASE WHEN r.account_id IS NULL OR EXISTS(
+        SELECT 1 FROM accounts a WHERE a.id = r.account_id
+      ) THEN r.account_id ELSE NULL END,
+      r.add_tag, r.include_in_analytics, r.min_amount_cents,
+      r.max_amount_cents,
+      CASE WHEN r.priority = 0 THEN r.id ELSE r.priority END
+    FROM automation_rules r''');
+    await db.execute('DROP TABLE automation_rules');
+    await db.execute(
+      'ALTER TABLE automation_rules_v6 RENAME TO automation_rules',
+    );
+
+    if (await _tableExists(db, 'quick_presets')) {
+      await db.rawUpdate(
+        'UPDATE quick_presets SET account_id = NULL WHERE account_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM accounts a WHERE a.id = quick_presets.account_id)',
+      );
+      await db.rawUpdate(
+        'UPDATE quick_presets SET to_account_id = NULL WHERE to_account_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM accounts a WHERE a.id = quick_presets.to_account_id)',
+      );
+      await db.rawUpdate(
+        'UPDATE quick_presets SET category_id = NULL WHERE category_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM categories c WHERE c.id = quick_presets.category_id)',
+      );
+    }
+
+    final foreignKeyViolations = await db.rawQuery('PRAGMA foreign_key_check');
+    if (foreignKeyViolations.isNotEmpty) {
+      throw StateError(
+        'Migrazione v6 non valida: riferimenti esterni incoerenti.',
+      );
+    }
+  }
+
+  Future<bool> _tableExists(DatabaseExecutor db, String table) async {
+    final rows = await db.rawQuery(
+      "SELECT name FROM sqlite_master WHERE type = 'table' AND name = ?",
+      [table],
+    );
+    return rows.isNotEmpty;
   }
 
   Future<void> _createSmartTables(Database db) async {
@@ -613,7 +901,7 @@ class AppDatabase {
       )).map(DashboardWidgetConfig.fromMap).toList();
   Future<List<AutomationRule>> rules() async => (await db.query(
     'automation_rules',
-    orderBy: 'id DESC',
+    orderBy: 'priority DESC, id ASC',
   )).map(AutomationRule.fromMap).toList();
   Future<List<LearnedPattern>> learnedPatterns() async => (await db.query(
     'learned_patterns',
@@ -697,51 +985,57 @@ class AppDatabase {
         whereArgs: [id],
       );
       if (accountRows.isEmpty) return;
-      final linkedRows = await txn.query(
-        'transactions',
-        where: 'account_id = ? OR to_account_id = ?',
-        whereArgs: [id, id],
-        orderBy: 'date DESC, id DESC',
-      );
-      final hasAdvanceHistory = linkedRows.any((row) {
-        final kind = (row['kind'] as String?) ?? 'normal';
-        return kind == 'advance_origin' ||
-            kind == 'mixed_advance' ||
-            kind == 'advance_settlement' ||
-            kind == 'advance_writeoff' ||
-            kind == 'advance_forgiven_income';
-      });
-      if (hasAdvanceHistory) {
+
+      final movementCount =
+          Sqflite.firstIntValue(
+            await txn.rawQuery(
+              'SELECT COUNT(*) FROM transactions WHERE account_id = ? OR to_account_id = ?',
+              [id, id],
+            ),
+          ) ??
+          0;
+      final recurringCount =
+          Sqflite.firstIntValue(
+            await txn.rawQuery(
+              'SELECT COUNT(*) FROM recurring WHERE account_id = ? OR to_account_id = ?',
+              [id, id],
+            ),
+          ) ??
+          0;
+      if (movementCount > 0 || recurringCount > 0) {
         throw StateError(
-          'Questo conto contiene movimenti collegati ad Anticipi. Archivialo invece di eliminarlo per conservare lo storico.',
+          'Questo conto contiene storico o ricorrenze. Archivialo invece di eliminarlo.',
         );
       }
-      for (final row in linkedRows) {
-        await _applyBalance(
-          txn,
-          FinanceTransaction.fromMap(row),
-          -1,
-          validateAccounts: false,
-        );
-      }
-      await txn.delete(
-        'transaction_splits',
-        where:
-            'transaction_id IN (SELECT id FROM transactions WHERE account_id = ? OR to_account_id = ?)',
-        whereArgs: [id, id],
-      );
-      await txn.delete(
-        'transactions',
-        where: 'account_id = ? OR to_account_id = ?',
-        whereArgs: [id, id],
-      );
-      await txn.delete('recurring', where: 'account_id = ?', whereArgs: [id]);
+
       await txn.update(
         'goals',
         {'linked_account_id': null},
         where: 'linked_account_id = ?',
         whereArgs: [id],
       );
+      if (await _tableExists(txn, 'quick_presets')) {
+        await txn.update(
+          'quick_presets',
+          {'account_id': null},
+          where: 'account_id = ?',
+          whereArgs: [id],
+        );
+        await txn.update(
+          'quick_presets',
+          {'to_account_id': null},
+          where: 'to_account_id = ?',
+          whereArgs: [id],
+        );
+      }
+      if (await _tableExists(txn, 'advances')) {
+        await txn.update(
+          'advances',
+          {'source_account_id': null},
+          where: 'source_account_id = ?',
+          whereArgs: [id],
+        );
+      }
       await txn.delete('accounts', where: 'id = ?', whereArgs: [id]);
     });
   }
@@ -786,29 +1080,42 @@ class AppDatabase {
 
   Future<void> deleteCategory(int id) async {
     await db.transaction((txn) async {
-      await txn.update(
+      final splitCount =
+          Sqflite.firstIntValue(
+            await txn.rawQuery(
+              'SELECT COUNT(*) FROM transaction_splits WHERE category_id = ?',
+              [id],
+            ),
+          ) ??
+          0;
+      if (splitCount > 0) {
+        throw StateError(
+          'Questa categoria è usata in divisioni di spesa. Uniscila in un’altra categoria prima di eliminarla.',
+        );
+      }
+      for (final table in [
         'transactions',
-        {'category_id': null},
-        where: 'category_id = ?',
-        whereArgs: [id],
-      );
-      await txn.update(
         'recurring',
-        {'category_id': null},
-        where: 'category_id = ?',
-        whereArgs: [id],
-      );
-      await txn.update(
         'budgets',
-        {'category_id': null},
-        where: 'category_id = ?',
-        whereArgs: [id],
-      );
-      await txn.delete(
-        'transaction_splits',
-        where: 'category_id = ?',
-        whereArgs: [id],
-      );
+        'automation_rules',
+        'learned_patterns',
+        'detected_recurring_patterns',
+      ]) {
+        await txn.update(
+          table,
+          {'category_id': null},
+          where: 'category_id = ?',
+          whereArgs: [id],
+        );
+      }
+      if (await _tableExists(txn, 'quick_presets')) {
+        await txn.update(
+          'quick_presets',
+          {'category_id': null},
+          where: 'category_id = ?',
+          whereArgs: [id],
+        );
+      }
       await txn.delete('categories', where: 'id = ?', whereArgs: [id]);
     });
   }
@@ -1004,10 +1311,26 @@ class AppDatabase {
       if (rule.maxAmount != null && result.amount > rule.maxAmount!) continue;
       final haystack = (result.note ?? '').toLowerCase();
       if (rule.containsText?.isNotEmpty == true &&
-          !haystack.contains(rule.containsText!.toLowerCase()))
+          !haystack.contains(rule.containsText!.toLowerCase())) {
         continue;
+      }
+
+      int? categoryId = result.categoryId;
+      if (rule.categoryId != null && result.type != TransactionType.transfer) {
+        final rows = await db.query(
+          'categories',
+          columns: ['type'],
+          where: 'id = ?',
+          whereArgs: [rule.categoryId],
+          limit: 1,
+        );
+        if (rows.isNotEmpty && rows.first['type'] == result.type.dbValue) {
+          categoryId = rule.categoryId;
+        }
+      }
+
       result = result.copyWith(
-        categoryId: rule.categoryId ?? result.categoryId,
+        categoryId: categoryId,
         accountId: rule.accountId ?? result.accountId,
         tags: rule.addTag == null || result.tags.contains(rule.addTag)
             ? result.tags
@@ -1015,8 +1338,66 @@ class AppDatabase {
         includeInAnalytics:
             rule.includeInAnalytics ?? result.includeInAnalytics,
       );
+      // Rules are ordered by descending priority: the first match wins.
+      break;
     }
     return result;
+  }
+
+  Future<int> applyRuleToHistory(
+    AutomationRule rule,
+    List<FinanceTransaction> items,
+  ) async {
+    var changed = 0;
+    await db.transaction((txn) async {
+      for (final oldItem in items) {
+        final nextTags =
+            rule.addTag == null || oldItem.tags.contains(rule.addTag)
+            ? oldItem.tags
+            : [...oldItem.tags, rule.addTag!];
+        final next = oldItem.copyWith(
+          categoryId: rule.categoryId ?? oldItem.categoryId,
+          accountId: rule.accountId ?? oldItem.accountId,
+          tags: nextTags,
+          includeInAnalytics:
+              rule.includeInAnalytics ?? oldItem.includeInAnalytics,
+          updatedAt: DateTime.now(),
+        );
+        final tagsChanged =
+            oldItem.tags.length != next.tags.length ||
+            oldItem.tags.asMap().entries.any(
+              (entry) => next.tags[entry.key] != entry.value,
+            );
+        if (next.categoryId == oldItem.categoryId &&
+            next.accountId == oldItem.accountId &&
+            next.includeInAnalytics == oldItem.includeInAnalytics &&
+            !tagsChanged) {
+          continue;
+        }
+
+        await _validateAccount(txn, next.accountId);
+        if (next.type == TransactionType.transfer) {
+          if (next.toAccountId == null || next.toAccountId == next.accountId) {
+            throw StateError('Il trasferimento richiede due conti diversi.');
+          }
+          await _validateAccount(txn, next.toAccountId!);
+        }
+        await _applyBalance(txn, oldItem, -1, validateAccounts: false);
+        await txn.update(
+          'transactions',
+          _transactionMap(
+            next,
+            DateTime.now().millisecondsSinceEpoch,
+            preserveCreatedAt: true,
+          ),
+          where: 'id = ?',
+          whereArgs: [oldItem.id],
+        );
+        await _applyBalance(txn, next, 1);
+        changed++;
+      }
+    });
+    return changed;
   }
 
   Future<void> replaceSplits(
@@ -1039,6 +1420,7 @@ class AppDatabase {
         await txn.insert('transaction_splits', {
           'transaction_id': transactionId,
           'amount': item.amount,
+          'amount_cents': Money.toCents(item.amount),
           'category_id': item.categoryId,
           'note': item.note,
         });
@@ -1051,6 +1433,7 @@ class AppDatabase {
     required double amount,
     required TransactionType type,
     required int accountId,
+    int? toAccountId,
     int? categoryId,
     required String frequency,
     required DateTime nextDate,
@@ -1060,9 +1443,11 @@ class AppDatabase {
   }) => db.insert('recurring', {
     'name': name,
     'amount': amount,
+    'amount_cents': Money.toCents(amount),
     'type': type.dbValue,
     'account_id': accountId,
-    'category_id': categoryId,
+    'to_account_id': type == TransactionType.transfer ? toAccountId : null,
+    'category_id': type == TransactionType.transfer ? null : categoryId,
     'frequency': frequency,
     'next_date': nextDate.millisecondsSinceEpoch,
     'enabled': 1,
@@ -1076,9 +1461,15 @@ class AppDatabase {
     {
       'name': item.name,
       'amount': item.amount,
+      'amount_cents': Money.toCents(item.amount),
       'type': item.type.dbValue,
       'account_id': item.accountId,
-      'category_id': item.categoryId,
+      'to_account_id': item.type == TransactionType.transfer
+          ? item.toAccountId
+          : null,
+      'category_id': item.type == TransactionType.transfer
+          ? null
+          : item.categoryId,
       'frequency': item.frequency,
       'next_date': item.nextDate.millisecondsSinceEpoch,
       'enabled': item.enabled ? 1 : 0,
@@ -1103,6 +1494,7 @@ class AppDatabase {
     'name': name,
     'category_id': categoryId,
     'limit_amount': limit,
+    'limit_cents': Money.toCents(limit),
     'period': period.name,
     'start_date': startDate.millisecondsSinceEpoch,
     'end_date': endDate?.millisecondsSinceEpoch,
@@ -1114,6 +1506,7 @@ class AppDatabase {
       'name': item.name,
       'category_id': item.categoryId,
       'limit_amount': item.limit,
+      'limit_cents': Money.toCents(item.limit),
       'period': item.period.name,
       'start_date': item.startDate.millisecondsSinceEpoch,
       'end_date': item.endDate?.millisecondsSinceEpoch,
@@ -1182,12 +1575,19 @@ class AppDatabase {
     'type': rule.type?.dbValue,
     'min_amount': rule.minAmount,
     'max_amount': rule.maxAmount,
+    'min_amount_cents': rule.minAmount == null
+        ? null
+        : Money.toCents(rule.minAmount!),
+    'max_amount_cents': rule.maxAmount == null
+        ? null
+        : Money.toCents(rule.maxAmount!),
     'category_id': rule.categoryId,
     'account_id': rule.accountId,
     'add_tag': rule.addTag,
     'include_in_analytics': rule.includeInAnalytics == null
         ? null
         : (rule.includeInAnalytics! ? 1 : 0),
+    'priority': rule.priority,
   });
   Future<void> deleteRule(int id) =>
       db.delete('automation_rules', where: 'id = ?', whereArgs: [id]);
@@ -1400,6 +1800,9 @@ class AppDatabase {
       await txn.delete('budgets');
       await txn.delete('goals');
       await txn.delete('automation_rules');
+      if (await _tableExists(txn, 'quick_presets')) {
+        await txn.delete('quick_presets');
+      }
       await txn.delete('categories');
       await txn.delete('net_worth_snapshots');
       await txn.delete('accounts', where: 'is_system = 0');

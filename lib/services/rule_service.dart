@@ -21,14 +21,35 @@ class RuleService {
     return true;
   }
 
-  RuleMatchPreview preview(AppState state, AutomationRule rule) =>
-      RuleMatchPreview(
-        matches: state.transactions
-            .where((item) => matches(rule, item))
-            .toList(),
+  RuleMatchPreview preview(
+    AppState state,
+    AutomationRule rule,
+  ) => RuleMatchPreview(
+    matches: state.transactions
+        .where(
+          (item) =>
+              !state.isAdvanceProtectedTransaction(item) && matches(rule, item),
+        )
+        .toList(),
+  );
+
+  void validate(AppState state, AutomationRule rule) {
+    if (rule.categoryId == null) return;
+    if (rule.type == null || rule.type == TransactionType.transfer) {
+      throw StateError(
+        'Per assegnare una categoria la regola deve avere un tipo Spesa o Entrata.',
       );
+    }
+    final category = state.categoryById(rule.categoryId);
+    if (category == null || category.type != rule.type) {
+      throw StateError(
+        'La categoria non è compatibile con il tipo della regola.',
+      );
+    }
+  }
 
   Future<void> update(AppState state, AutomationRule rule) async {
+    validate(state, rule);
     await state.database.db.update(
       'automation_rules',
       {
@@ -73,36 +94,10 @@ class RuleService {
   }
 
   Future<int> applyToHistory(AppState state, AutomationRule rule) async {
+    validate(state, rule);
     final matched = preview(state, rule).matches;
-    var changed = 0;
-    for (final old in matched) {
-      final next = old.copyWith(
-        categoryId: rule.categoryId ?? old.categoryId,
-        accountId: rule.accountId ?? old.accountId,
-        tags: rule.addTag == null || old.tags.contains(rule.addTag)
-            ? old.tags
-            : [...old.tags, rule.addTag!],
-        includeInAnalytics: rule.includeInAnalytics ?? old.includeInAnalytics,
-        updatedAt: DateTime.now(),
-      );
-      if (next.categoryId == old.categoryId &&
-          next.accountId == old.accountId &&
-          next.includeInAnalytics == old.includeInAnalytics &&
-          _sameTags(next.tags, old.tags)) {
-        continue;
-      }
-      await state.database.updateTransaction(old, next);
-      changed++;
-    }
+    final changed = await state.database.applyRuleToHistory(rule, matched);
     if (changed > 0) await state.load();
     return changed;
-  }
-
-  bool _sameTags(List<String> a, List<String> b) {
-    if (a.length != b.length) return false;
-    for (var i = 0; i < a.length; i++) {
-      if (a[i] != b[i]) return false;
-    }
-    return true;
   }
 }

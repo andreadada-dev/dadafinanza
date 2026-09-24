@@ -372,6 +372,7 @@ class AdvanceService {
     String? note,
   }) async {
     final cents = _positiveCents(amount);
+    final currency = await database.getSetting('currency') ?? 'EUR';
     return database.db.transaction((txn) async {
       final advance = await _advanceIn(txn, advanceId);
       if (advance.closedKind != null) {
@@ -381,7 +382,7 @@ class AdvanceService {
       final remaining = await remainingCents(advanceId, txn: txn);
       if (cents > remaining) {
         throw StateError(
-          'L’importo supera il residuo di ${Money.fromCents(remaining).toStringAsFixed(2)} €.',
+          'L’importo supera il residuo di ${Money.fromCents(remaining).toStringAsFixed(2)} $currency.',
         );
       }
       final type = advance.direction == AdvanceDirection.receivable

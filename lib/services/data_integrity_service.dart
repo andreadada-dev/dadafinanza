@@ -132,7 +132,7 @@ class DataIntegrityService {
     }
     if (requested > remaining) {
       throw StateError(
-        'Il rimborso supera il residuo di ${Money.fromCents(remaining).toStringAsFixed(2)} €.',
+        'Il rimborso supera il residuo di ${Money.fromCents(remaining).toStringAsFixed(2)} ${state.currency}.',
       );
     }
   }
@@ -197,6 +197,24 @@ class DataIntegrityService {
         where: 'linked_account_id = ?',
         whereArgs: [account.id],
       );
+      await txn.update(
+        'quick_presets',
+        {'account_id': null},
+        where: 'account_id = ?',
+        whereArgs: [account.id],
+      );
+      await txn.update(
+        'quick_presets',
+        {'to_account_id': null},
+        where: 'to_account_id = ?',
+        whereArgs: [account.id],
+      );
+      await txn.update(
+        'advances',
+        {'source_account_id': null},
+        where: 'source_account_id = ?',
+        whereArgs: [account.id],
+      );
       await txn.delete('accounts', where: 'id = ?', whereArgs: [account.id]);
     });
     await state.refreshCore(includePlanning: true);
@@ -221,6 +239,7 @@ class DataIntegrityService {
         'automation_rules',
         'learned_patterns',
         'detected_recurring_patterns',
+        'quick_presets',
       ]) {
         await txn.update(
           table,

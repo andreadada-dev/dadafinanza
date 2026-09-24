@@ -351,9 +351,9 @@ class SafeAccountDetailScreen extends StatelessWidget {
                 decimal: true,
                 signed: true,
               ),
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Saldo reale',
-                suffixText: '€',
+                suffixText: state.currency,
               ),
             ),
             const SizedBox(height: 20),
@@ -505,13 +505,11 @@ class SafeAccountDetailScreen extends StatelessWidget {
                 ),
                 TextField(
                   controller: name,
-                  decoration: const InputDecoration(labelText: 'Nome'),
+                  decoration: InputDecoration(labelText: 'Nome'),
                 ),
                 TextField(
                   controller: note,
-                  decoration: const InputDecoration(
-                    labelText: 'Nota opzionale',
-                  ),
+                  decoration: InputDecoration(labelText: 'Nota opzionale'),
                 ),
                 const SizedBox(height: 16),
                 SwitchListTile(

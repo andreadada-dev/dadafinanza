@@ -189,14 +189,26 @@ class TransactionDetailPage extends StatelessWidget {
                 );
               if (value == 'recurring' && context.mounted) {
                 final account = state.accountById(item.accountId);
-                if (account == null ||
+                final destination = state.accountById(item.toAccountId);
+                final invalidSource =
+                    account == null ||
                     account.isLocked ||
                     account.isArchived ||
-                    account.isSystem) {
+                    account.isSystem;
+                final invalidDestination =
+                    item.type == TransactionType.transfer &&
+                    (destination == null ||
+                        destination.isLocked ||
+                        destination.isArchived ||
+                        destination.isSystem ||
+                        destination.id == item.accountId);
+                if (invalidSource || invalidDestination) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
+                    SnackBar(
                       content: Text(
-                        'Assegna il movimento a un conto attivo prima di creare una ricorrenza.',
+                        item.type == TransactionType.transfer
+                            ? 'Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.'
+                            : 'Assegna il movimento a un conto attivo prima di creare una ricorrenza.',
                       ),
                     ),
                   );
@@ -204,11 +216,14 @@ class TransactionDetailPage extends StatelessWidget {
                   await state.addRecurring(
                     name: category?.name ?? item.note ?? 'Movimento ricorrente',
                     amount: item.amount,
-                    type: item.type == TransactionType.transfer
-                        ? TransactionType.expense
-                        : item.type,
+                    type: item.type,
                     accountId: item.accountId,
-                    categoryId: item.categoryId,
+                    toAccountId: item.type == TransactionType.transfer
+                        ? item.toAccountId
+                        : null,
+                    categoryId: item.type == TransactionType.transfer
+                        ? null
+                        : item.categoryId,
                     frequency: 'Mensile',
                     nextDate: DateTime(
                       item.date.year,
@@ -217,7 +232,7 @@ class TransactionDetailPage extends StatelessWidget {
                     ),
                     note: item.note,
                   );
-                  if (context.mounted)
+                  if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text(
@@ -225,6 +240,7 @@ class TransactionDetailPage extends StatelessWidget {
                         ),
                       ),
                     );
+                  }
                 }
               }
               if (value == 'delete' && context.mounted)
@@ -492,9 +508,7 @@ Future<void> showSplitEditor(
                     Expanded(
                       child: DropdownButtonFormField<int>(
                         initialValue: row.categoryId,
-                        decoration: const InputDecoration(
-                          labelText: 'Categoria',
-                        ),
+                        decoration: InputDecoration(labelText: 'Categoria'),
                         items: expenseCategories
                             .map(
                               (c) => DropdownMenuItem(
@@ -515,9 +529,9 @@ Future<void> showSplitEditor(
                         keyboardType: const TextInputType.numberWithOptions(
                           decimal: true,
                         ),
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: 'Importo',
-                          suffixText: '€',
+                          suffixText: state.currency,
                         ),
                       ),
                     ),

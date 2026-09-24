@@ -379,21 +379,21 @@ Future<void> showBudgetEditor(BuildContext context, {Budget? existing}) async {
               TextField(
                 controller: name,
                 autofocus: existing == null,
-                decoration: const InputDecoration(labelText: 'Nome'),
+                decoration: InputDecoration(labelText: 'Nome'),
               ),
               TextField(
                 controller: limit,
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Limite',
-                  suffixText: '€',
+                  suffixText: state.currency,
                 ),
               ),
               DropdownButtonFormField<BudgetPeriod>(
                 initialValue: period,
-                decoration: const InputDecoration(labelText: 'Periodo'),
+                decoration: InputDecoration(labelText: 'Periodo'),
                 items: BudgetPeriod.values
                     .map(
                       (item) => DropdownMenuItem(
@@ -408,7 +408,7 @@ Future<void> showBudgetEditor(BuildContext context, {Budget? existing}) async {
               ),
               DropdownButtonFormField<int?>(
                 initialValue: categoryId,
-                decoration: const InputDecoration(labelText: 'Categoria'),
+                decoration: InputDecoration(labelText: 'Categoria'),
                 items: [
                   const DropdownMenuItem<int?>(
                     value: null,
@@ -560,9 +560,9 @@ class GoalsScreen extends StatelessWidget {
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Importo',
-                  suffixText: '€',
+                  suffixText: state.currency,
                 ),
               ),
             ],
@@ -827,16 +827,16 @@ Future<void> showGoalEditor(BuildContext context, {Goal? existing}) async {
               TextField(
                 controller: name,
                 autofocus: existing == null,
-                decoration: const InputDecoration(labelText: 'Nome'),
+                decoration: InputDecoration(labelText: 'Nome'),
               ),
               TextField(
                 controller: target,
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Importo obiettivo',
-                  suffixText: '€',
+                  suffixText: state.currency,
                 ),
               ),
               ListTile(
@@ -889,7 +889,7 @@ Future<void> showGoalEditor(BuildContext context, {Goal? existing}) async {
               ),
               DropdownButtonFormField<int?>(
                 initialValue: linkedAccountId,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Conto risparmio collegato',
                 ),
                 items: [
@@ -1194,12 +1194,12 @@ Future<void> showRecurringEditor(
     text: existing?.note ?? detected?.normalizedText ?? '',
   );
   var type = existing?.type ?? detected?.type ?? TransactionType.expense;
-  if (type == TransactionType.transfer) type = TransactionType.expense;
   int accountId =
       existing?.accountId ?? detected?.accountId ?? usableAccounts.first.id;
   if (usableAccounts.every((item) => item.id != accountId)) {
     accountId = usableAccounts.first.id;
   }
+  int? toAccountId = existing?.toAccountId;
   int? categoryId = existing?.categoryId ?? detected?.categoryId;
   var frequency = existing?.frequency ?? detected?.frequency ?? 'Mensile';
   var nextDate =
@@ -1210,6 +1210,18 @@ Future<void> showRecurringEditor(
   var enabled = existing?.enabled ?? true;
   var autoCreate = existing?.autoCreate ?? false;
 
+  int? firstDestination() => usableAccounts
+      .where((item) => item.id != accountId)
+      .map((item) => item.id)
+      .firstOrNull;
+
+  if (type == TransactionType.transfer &&
+      (toAccountId == null ||
+          toAccountId == accountId ||
+          usableAccounts.every((item) => item.id != toAccountId))) {
+    toAccountId = firstDestination();
+  }
+
   await showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
@@ -1217,11 +1229,22 @@ Future<void> showRecurringEditor(
     showDragHandle: true,
     builder: (context) => StatefulBuilder(
       builder: (context, setSheetState) {
-        final availableCategories = state.categoriesFor(type);
+        final availableCategories = type == TransactionType.transfer
+            ? const <Category>[]
+            : state.categoriesFor(type);
         if (categoryId != null &&
             availableCategories.every((item) => item.id != categoryId)) {
           categoryId = null;
         }
+        final destinations = usableAccounts
+            .where((item) => item.id != accountId)
+            .toList();
+        if (type == TransactionType.transfer &&
+            (toAccountId == null ||
+                destinations.every((item) => item.id != toAccountId))) {
+          toAccountId = destinations.firstOrNull?.id;
+        }
+
         return Padding(
           padding: EdgeInsets.fromLTRB(
             20,
@@ -1256,9 +1279,9 @@ Future<void> showRecurringEditor(
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
                   ),
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Importo',
-                    suffixText: '€',
+                    suffixText: state.currency,
                   ),
                 ),
                 SegmentedButton<TransactionType>(
@@ -1272,16 +1295,30 @@ Future<void> showRecurringEditor(
                       value: TransactionType.income,
                       label: Text('Entrata'),
                     ),
+                    ButtonSegment(
+                      value: TransactionType.transfer,
+                      label: Text('Trasferimento'),
+                    ),
                   ],
                   selected: {type},
                   onSelectionChanged: (value) => setSheetState(() {
                     type = value.first;
                     categoryId = null;
+                    if (type == TransactionType.transfer) {
+                      toAccountId = firstDestination();
+                    } else {
+                      toAccountId = null;
+                    }
                   }),
                 ),
                 DropdownButtonFormField<int>(
+                  key: ValueKey('recurring-source-$accountId-$type'),
                   initialValue: accountId,
-                  decoration: const InputDecoration(labelText: 'Conto'),
+                  decoration: InputDecoration(
+                    labelText: type == TransactionType.transfer
+                        ? 'Conto origine'
+                        : 'Conto',
+                  ),
                   items: usableAccounts
                       .map(
                         (item) => DropdownMenuItem(
@@ -1291,27 +1328,55 @@ Future<void> showRecurringEditor(
                       )
                       .toList(),
                   onChanged: (value) {
-                    if (value != null) accountId = value;
+                    if (value == null) return;
+                    setSheetState(() {
+                      accountId = value;
+                      if (toAccountId == accountId) {
+                        toAccountId = firstDestination();
+                      }
+                    });
                   },
                 ),
-                DropdownButtonFormField<int?>(
-                  key: ValueKey('recurring-category-$type-$categoryId'),
-                  initialValue: categoryId,
-                  decoration: const InputDecoration(labelText: 'Categoria'),
-                  items: [
-                    const DropdownMenuItem<int?>(
-                      value: null,
-                      child: Text('Nessuna categoria'),
+                if (type == TransactionType.transfer)
+                  DropdownButtonFormField<int>(
+                    key: ValueKey(
+                      'recurring-destination-$accountId-$toAccountId',
                     ),
-                    ...availableCategories.map(
-                      (item) => DropdownMenuItem<int?>(
-                        value: item.id,
-                        child: Text(item.name),
+                    initialValue: toAccountId,
+                    decoration: const InputDecoration(
+                      labelText: 'Conto destinazione',
+                    ),
+                    items: destinations
+                        .map(
+                          (item) => DropdownMenuItem(
+                            value: item.id,
+                            child: Text(item.name),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: destinations.isEmpty
+                        ? null
+                        : (value) => setSheetState(() => toAccountId = value),
+                  )
+                else
+                  DropdownButtonFormField<int?>(
+                    key: ValueKey('recurring-category-$type-$categoryId'),
+                    initialValue: categoryId,
+                    decoration: const InputDecoration(labelText: 'Categoria'),
+                    items: [
+                      const DropdownMenuItem<int?>(
+                        value: null,
+                        child: Text('Nessuna categoria'),
                       ),
-                    ),
-                  ],
-                  onChanged: (value) => categoryId = value,
-                ),
+                      ...availableCategories.map(
+                        (item) => DropdownMenuItem<int?>(
+                          value: item.id,
+                          child: Text(item.name),
+                        ),
+                      ),
+                    ],
+                    onChanged: (value) => categoryId = value,
+                  ),
                 DropdownButtonFormField<String>(
                   initialValue: frequency,
                   decoration: const InputDecoration(labelText: 'Frequenza'),
@@ -1410,13 +1475,30 @@ Future<void> showRecurringEditor(
                           parsed <= 0) {
                         return;
                       }
+                      if (type == TransactionType.transfer &&
+                          (toAccountId == null || toAccountId == accountId)) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Un trasferimento ricorrente richiede due conti diversi.',
+                            ),
+                          ),
+                        );
+                        return;
+                      }
+
                       if (existing == null) {
                         await state.addRecurring(
                           name: name.text.trim(),
                           amount: parsed,
                           type: type,
                           accountId: accountId,
-                          categoryId: categoryId,
+                          toAccountId: type == TransactionType.transfer
+                              ? toAccountId
+                              : null,
+                          categoryId: type == TransactionType.transfer
+                              ? null
+                              : categoryId,
                           frequency: frequency,
                           nextDate: nextDate,
                           note: note.text.trim().isEmpty
@@ -1433,7 +1515,12 @@ Future<void> showRecurringEditor(
                             amount: parsed,
                             type: type,
                             accountId: accountId,
-                            categoryId: categoryId,
+                            toAccountId: type == TransactionType.transfer
+                                ? toAccountId
+                                : null,
+                            categoryId: type == TransactionType.transfer
+                                ? null
+                                : categoryId,
                             frequency: frequency,
                             nextDate: nextDate,
                             enabled: enabled,

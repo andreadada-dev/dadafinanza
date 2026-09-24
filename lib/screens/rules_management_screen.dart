@@ -344,7 +344,7 @@ class _RulesManagementScreenState extends State<RulesManagementScreen> {
                     ),
                   ],
                 ),
-                if (type != TransactionType.transfer)
+                if (type != null && type != TransactionType.transfer)
                   DropdownButtonFormField<int?>(
                     initialValue: categoryId,
                     decoration: const InputDecoration(labelText: 'Categoria'),
@@ -448,7 +448,8 @@ class _RulesManagementScreenState extends State<RulesManagementScreen> {
                         type: type,
                         minAmount: minValue,
                         maxAmount: maxValue,
-                        categoryId: type == TransactionType.transfer
+                        categoryId:
+                            type == null || type == TransactionType.transfer
                             ? null
                             : categoryId,
                         accountId: accountId,

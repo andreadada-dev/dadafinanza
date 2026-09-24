@@ -15,7 +15,7 @@ import 'android_widgets_screen.dart';
 import 'planning_screens.dart';
 import 'quick_add_page.dart';
 import 'root_screen.dart' as advanced;
-import 'settings_screen.dart';
+import 'personal_settings_screen.dart';
 import 'transaction_screens.dart';
 
 class PolishedRootScreen extends StatefulWidget {
@@ -150,7 +150,7 @@ class PolishedHomeScreen extends StatelessWidget {
                 final page = switch (value) {
                   'widgets' => const AndroidWidgetsScreen(),
                   'dashboard' => const advanced.HomeScreen(),
-                  _ => const SettingsScreen(),
+                  _ => const PersonalSettingsScreen(),
                 };
                 Navigator.push(
                   context,

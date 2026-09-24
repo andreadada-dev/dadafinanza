@@ -74,7 +74,10 @@ class SmartFinanceEngine {
   }) {
     final groups = <String, List<FinanceTransaction>>{};
     for (final item in transactions) {
-      if (item.refundOfTransactionId != null) continue;
+      if (item.refundOfTransactionId != null ||
+          item.type == TransactionType.transfer) {
+        continue;
+      }
       final normalized = normalizeText(item.note);
       if (normalized.isEmpty) continue;
       final signature = patternSignature(
