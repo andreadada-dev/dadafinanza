@@ -132,7 +132,7 @@ class DataIntegrityService {
     }
     if (requested > remaining) {
       throw StateError(
-        'Il rimborso supera il residuo di ${Money.fromCents(remaining).toStringAsFixed(2)} €.',
+        'Il rimborso supera il residuo di ${Money.fromCents(remaining).toStringAsFixed(2)} ${state.currency}.',
       );
     }
   }
