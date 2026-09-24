@@ -10,7 +10,7 @@ import '../widgets/account_context_selector.dart';
 import '../widgets/finance_quick_action.dart';
 import '../widgets/home_dashboard_widget.dart';
 import '../widgets/ui_helpers.dart';
-import 'account_management_screen.dart' show SafeAccountDetailScreen;
+import 'account_context_analytics_screen.dart';
 import 'account_screens.dart' show showAccountEditor;
 import 'advances_screen.dart';
 import 'personal_settings_screen.dart';
@@ -161,6 +161,9 @@ class AccountContextHomeScreen extends StatelessWidget {
                   available: state.safeToSpend,
                 ),
                 const SizedBox(height: 20),
+              ] else ...[
+                AccountCategoryCarousel(accountId: selectedAccount!.id),
+                const SizedBox(height: 24),
               ],
               _QuickActions(
                 onOpen: (type) => _openQuick(context, type, effectiveAccountId),
@@ -235,6 +238,15 @@ class AccountContextHomeScreen extends StatelessWidget {
                   balance: balance,
                   income: income,
                   expense: expense,
+                  onOpenAnalytics: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => AccountContextAnalyticsScreen(
+                        accountId: selectedAccount.id,
+                        onAccountChanged: onAccountChanged,
+                      ),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 32),
                 SectionTitle(
@@ -500,12 +512,14 @@ class _SelectedAccountSummary extends StatelessWidget {
     required this.balance,
     required this.income,
     required this.expense,
+    required this.onOpenAnalytics,
   });
 
   final Account account;
   final double balance;
   final double income;
   final double expense;
+  final VoidCallback onOpenAnalytics;
 
   @override
   Widget build(BuildContext context) {
@@ -553,21 +567,16 @@ class _SelectedAccountSummary extends StatelessWidget {
         ListTile(
           contentPadding: EdgeInsets.zero,
           leading: Icon(
-            accountIcon(account.iconKey),
+            Icons.insights_rounded,
             color: Color(account.colorValue),
           ),
-          title: Text(
-            account.name,
-            style: const TextStyle(fontWeight: FontWeight.w700),
+          title: const Text(
+            'Analytics del conto',
+            style: TextStyle(fontWeight: FontWeight.w700),
           ),
-          subtitle: Text(account.accountType.label),
+          subtitle: const Text('Entrate, spese e andamento del conto'),
           trailing: const Icon(Icons.chevron_right_rounded),
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => SafeAccountDetailScreen(accountId: account.id),
-            ),
-          ),
+          onTap: onOpenAnalytics,
         ),
       ],
     );
