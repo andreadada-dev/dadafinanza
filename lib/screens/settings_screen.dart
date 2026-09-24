@@ -896,30 +896,42 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
             key: ValueKey(item.type),
             leading: const Icon(Icons.drag_handle_rounded),
             title: Text(item.type.label),
-            subtitle: DropdownButton<DashboardWidgetSize>(
-              value: item.size,
-              isDense: true,
-              underline: const SizedBox.shrink(),
-              items: DashboardWidgetSize.values
-                  .map(
-                    (size) => DropdownMenuItem(
-                      value: size,
-                      child: Text(_sizeLabel(size)),
-                    ),
-                  )
-                  .toList(),
-              onChanged: (size) async {
-                if (size == null) return;
-                setState(
-                  () => items![index] = DashboardWidgetConfig(
-                    type: item.type,
-                    enabled: item.enabled,
-                    orderIndex: item.orderIndex,
-                    size: size,
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (item.type == DashboardWidgetType.topCategories) ...[
+                  const SizedBox(height: 3),
+                  const Text(
+                    'Torta Spese/Entrate con periodo scorrevole e intervallo personalizzato.',
                   ),
-                );
-                await _save(state);
-              },
+                  const SizedBox(height: 6),
+                ],
+                DropdownButton<DashboardWidgetSize>(
+                  value: item.size,
+                  isDense: true,
+                  underline: const SizedBox.shrink(),
+                  items: DashboardWidgetSize.values
+                      .map(
+                        (size) => DropdownMenuItem(
+                          value: size,
+                          child: Text(_sizeLabel(size)),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (size) async {
+                    if (size == null) return;
+                    setState(
+                      () => items![index] = DashboardWidgetConfig(
+                        type: item.type,
+                        enabled: item.enabled,
+                        orderIndex: item.orderIndex,
+                        size: size,
+                      ),
+                    );
+                    await _save(state);
+                  },
+                ),
+              ],
             ),
             trailing: Switch(
               value: item.enabled,
