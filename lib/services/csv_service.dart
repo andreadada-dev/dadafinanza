@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import '../app_state.dart';
 import '../core/money.dart';
 import '../models/models.dart';
@@ -66,7 +68,7 @@ class CsvService {
   String export(AppState state, {int? accountId}) {
     final buffer = StringBuffer();
     buffer.writeln(
-      'type,amount,date,account,to_account,category,description,tags,include_in_analytics,stable_key',
+      'type,amount,date,account,to_account,category,description,tags,tags_json,include_in_analytics,stable_key',
     );
     final transactions = accountId == null
         ? state.transactions
@@ -91,6 +93,7 @@ class CsvService {
           _quote(category?.name),
           _quote(item.note),
           _quote(item.tags.join('|')),
+          _quote(jsonEncode(item.tags)),
           item.includeInAnalytics ? '1' : '0',
           _quote(_stableKey(state, item)),
         ].join(','),
@@ -167,11 +170,13 @@ class CsvService {
             : value('to_account');
         final category = value('category').isEmpty ? null : value('category');
         final note = value('description').isEmpty ? null : value('description');
-        final tags = value('tags')
-            .split('|')
-            .map((item) => item.trim())
-            .where((item) => item.isNotEmpty)
-            .toList();
+        final tags = value('tags_json').isNotEmpty
+            ? _decodeTags(value('tags_json'))
+            : value('tags')
+                  .split('|')
+                  .map((item) => item.trim())
+                  .where((item) => item.isNotEmpty)
+                  .toList();
         final include = value('include_in_analytics') != '0';
         if (_key(account) != _key('Non assegnato') &&
             !accountNames.contains(_key(account))) {
@@ -376,8 +381,21 @@ class CsvService {
     SmartFinanceEngine.normalizeText(note),
   ].join('|');
 
-  String _quote(String? value) =>
-      '"${(value ?? '').replaceAll('"', '""').replaceAll('\r', ' ').replaceAll('\n', ' ')}"';
+  List<String> _decodeTags(String raw) {
+    try {
+      final decoded = jsonDecode(raw);
+      if (decoded is! List) return const [];
+      return decoded
+          .whereType<String>()
+          .map((item) => item.trim())
+          .where((item) => item.isNotEmpty)
+          .toList(growable: false);
+    } on FormatException {
+      return const [];
+    }
+  }
+
+  String _quote(String? value) => '"${(value ?? '').replaceAll('"', '""')}"';
 
   String _key(String value) => value.trim().toLowerCase();
 
