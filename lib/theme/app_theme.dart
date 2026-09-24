@@ -40,7 +40,11 @@ class FinanceColors extends ThemeExtension<FinanceColors> {
 }
 
 class AppTheme {
-  static const muted = Color(0xFF71717A);
+  // DadaFinanza keeps the flat hierarchy requested by the product, while
+  // adopting Ivy-like high-contrast neutrals and a restrained purple accent.
+  static const purple = Color(0xFF5C3DF5);
+  static const purpleDark = Color(0xFF7B62F5);
+  static const muted = Color(0xFF74747A);
   static const surface = Colors.transparent;
   static const border = Colors.transparent;
 
@@ -49,29 +53,35 @@ class AppTheme {
 
   static ThemeData _build(Brightness brightness) {
     final dark = brightness == Brightness.dark;
-    final background = dark ? const Color(0xFF09090B) : const Color(0xFFFAFAFA);
-    final raised = dark ? const Color(0xFF17171A) : const Color(0xFFF0F0F2);
-    final hairline = dark ? const Color(0xFF2A2A2E) : const Color(0xFFE4E4E7);
-    final onSurface = dark ? const Color(0xFFF7F7F8) : const Color(0xFF18181B);
+    final background = dark ? const Color(0xFF09090A) : const Color(0xFFFAFAFC);
+    final raised = dark ? const Color(0xFF1C1C1F) : const Color(0xFFF0F0F5);
+    final raisedStrong = dark
+        ? const Color(0xFF303033)
+        : const Color(0xFFE8E8EF);
+    final hairline = dark ? const Color(0xFF303033) : const Color(0xFFEBEBF0);
+    final onSurface = dark ? const Color(0xFFFAFAFC) : const Color(0xFF09090A);
     final secondaryText = dark
-        ? const Color(0xFFA7A7B0)
-        : const Color(0xFF65656F);
+        ? const Color(0xFFCBCBD6)
+        : const Color(0xFF74747A);
+    final primary = dark ? purpleDark : purple;
 
     final scheme =
         ColorScheme.fromSeed(
-          seedColor: dark ? const Color(0xFFF5F5F5) : const Color(0xFF27272A),
+          seedColor: primary,
           brightness: brightness,
           surface: background,
-          error: dark ? const Color(0xFFFF7474) : const Color(0xFFB42318),
+          error: dark ? const Color(0xFFFF7373) : const Color(0xFFF53D3D),
         ).copyWith(
-          primary: dark ? const Color(0xFFF5F5F5) : const Color(0xFF27272A),
-          onPrimary: dark ? const Color(0xFF09090B) : Colors.white,
+          primary: primary,
+          onPrimary: Colors.white,
+          secondary: dark ? const Color(0xFF38E0A8) : const Color(0xFF12B880),
+          onSecondary: Colors.white,
           surface: background,
           surfaceContainer: raised,
-          surfaceContainerHighest: dark
-              ? const Color(0xFF222226)
-              : const Color(0xFFE8E8EB),
+          surfaceContainerHigh: raisedStrong,
+          surfaceContainerHighest: raisedStrong,
           onSurface: onSurface,
+          onSurfaceVariant: secondaryText,
           outlineVariant: hairline,
         );
 
@@ -79,7 +89,7 @@ class AppTheme {
       borderSide: BorderSide(color: hairline),
     );
     final focusedUnderline = UnderlineInputBorder(
-      borderSide: BorderSide(color: scheme.primary, width: 1.5),
+      borderSide: BorderSide(color: scheme.primary, width: 1.7),
     );
 
     return ThemeData(
@@ -89,50 +99,62 @@ class AppTheme {
       scaffoldBackgroundColor: background,
       dividerColor: hairline,
       visualDensity: VisualDensity.standard,
+      splashFactory: InkSparkle.splashFactory,
       extensions: [
         FinanceColors(
-          positive: dark ? const Color(0xFF82AFFF) : const Color(0xFF2C63B7),
-          negative: dark ? const Color(0xFFFF8585) : const Color(0xFFB42318),
-          warning: dark ? const Color(0xFFFFC96B) : const Color(0xFF9A6700),
+          positive: dark ? const Color(0xFF38E0A8) : const Color(0xFF12B880),
+          negative: dark ? const Color(0xFFFF7373) : const Color(0xFFF53D3D),
+          warning: dark ? const Color(0xFFFFB86B) : const Color(0xFFF57A3D),
           neutral: secondaryText,
         ),
       ],
       textTheme: TextTheme(
         displaySmall: TextStyle(
           color: onSurface,
-          letterSpacing: -1.4,
+          letterSpacing: -1.5,
           fontWeight: FontWeight.w800,
         ),
         headlineLarge: TextStyle(
           color: onSurface,
-          letterSpacing: -1,
+          letterSpacing: -1.1,
           fontWeight: FontWeight.w800,
         ),
         headlineMedium: TextStyle(
           color: onSurface,
-          letterSpacing: -.7,
+          letterSpacing: -.8,
+          fontWeight: FontWeight.w800,
+        ),
+        headlineSmall: TextStyle(
+          color: onSurface,
+          letterSpacing: -.5,
           fontWeight: FontWeight.w800,
         ),
         titleLarge: TextStyle(
           color: onSurface,
-          letterSpacing: -.4,
+          letterSpacing: -.5,
           fontWeight: FontWeight.w800,
         ),
-        titleMedium: TextStyle(color: onSurface, fontWeight: FontWeight.w700),
+        titleMedium: TextStyle(
+          color: onSurface,
+          letterSpacing: -.15,
+          fontWeight: FontWeight.w700,
+        ),
+        bodyLarge: TextStyle(color: onSurface, height: 1.4),
         bodyMedium: TextStyle(color: secondaryText, height: 1.4),
+        bodySmall: TextStyle(color: secondaryText, height: 1.35),
         labelLarge: TextStyle(color: onSurface, fontWeight: FontWeight.w700),
       ),
       appBarTheme: AppBarTheme(
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: false,
-        backgroundColor: Colors.transparent,
+        backgroundColor: background.withValues(alpha: .96),
         foregroundColor: onSurface,
         titleTextStyle: TextStyle(
           color: onSurface,
           fontSize: 22,
           fontWeight: FontWeight.w800,
-          letterSpacing: -.5,
+          letterSpacing: -.6,
         ),
       ),
       cardTheme: const CardThemeData(
@@ -145,23 +167,32 @@ class AppTheme {
         height: 72,
         elevation: 0,
         backgroundColor: background,
-        indicatorColor: scheme.primary.withValues(alpha: .09),
+        indicatorColor: primary.withValues(alpha: dark ? .18 : .10),
         labelTextStyle: WidgetStateProperty.resolveWith(
           (states) => TextStyle(
             color: states.contains(WidgetState.selected)
-                ? onSurface
+                ? primary
                 : secondaryText,
             fontSize: 11,
             fontWeight: states.contains(WidgetState.selected)
-                ? FontWeight.w700
+                ? FontWeight.w800
                 : FontWeight.w500,
+          ),
+        ),
+        iconTheme: WidgetStateProperty.resolveWith(
+          (states) => IconThemeData(
+            color: states.contains(WidgetState.selected)
+                ? primary
+                : secondaryText,
           ),
         ),
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         elevation: 0,
-        backgroundColor: scheme.primary,
-        foregroundColor: scheme.onPrimary,
+        highlightElevation: 0,
+        backgroundColor: primary,
+        foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: false,
@@ -177,7 +208,7 @@ class AppTheme {
           minimumSize: const Size(48, 52),
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(18),
           ),
           textStyle: const TextStyle(fontWeight: FontWeight.w800),
         ),
@@ -186,49 +217,65 @@ class AppTheme {
         style: OutlinedButton.styleFrom(
           minimumSize: const Size(48, 52),
           side: BorderSide.none,
-          backgroundColor: scheme.primary.withValues(alpha: .06),
+          backgroundColor: raised,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(18),
           ),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
+        style: TextButton.styleFrom(
+          minimumSize: const Size(48, 48),
+          foregroundColor: primary,
+        ),
       ),
       iconButtonTheme: IconButtonThemeData(
-        style: IconButton.styleFrom(minimumSize: const Size(48, 48)),
+        style: IconButton.styleFrom(
+          minimumSize: const Size(48, 48),
+          foregroundColor: onSurface,
+        ),
       ),
       chipTheme: ChipThemeData(
-        backgroundColor: Colors.transparent,
-        selectedColor: scheme.primary.withValues(alpha: .09),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        backgroundColor: raised,
+        selectedColor: primary.withValues(alpha: dark ? .20 : .11),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         side: BorderSide.none,
-        labelStyle: const TextStyle(fontWeight: FontWeight.w600),
+        labelStyle: const TextStyle(fontWeight: FontWeight.w700),
       ),
       segmentedButtonTheme: SegmentedButtonThemeData(
         style: ButtonStyle(
           minimumSize: const WidgetStatePropertyAll(Size(48, 48)),
           side: const WidgetStatePropertyAll(BorderSide.none),
+          shape: WidgetStatePropertyAll(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          ),
           backgroundColor: WidgetStateProperty.resolveWith(
             (states) => states.contains(WidgetState.selected)
-                ? scheme.primary.withValues(alpha: .09)
-                : Colors.transparent,
+                ? primary.withValues(alpha: dark ? .20 : .11)
+                : raised,
+          ),
+          foregroundColor: WidgetStateProperty.resolveWith(
+            (states) =>
+                states.contains(WidgetState.selected) ? primary : onSurface,
           ),
         ),
       ),
       dialogTheme: DialogThemeData(
-        backgroundColor: raised,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        backgroundColor: dark ? const Color(0xFF1C1C1F) : Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
       ),
       bottomSheetTheme: BottomSheetThemeData(
-        backgroundColor: raised,
-        modalBackgroundColor: raised,
+        backgroundColor: dark ? const Color(0xFF1C1C1F) : Colors.white,
+        modalBackgroundColor: dark ? const Color(0xFF1C1C1F) : Colors.white,
         showDragHandle: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+        ),
       ),
       progressIndicatorTheme: ProgressIndicatorThemeData(
-        color: scheme.primary,
-        linearTrackColor: scheme.primary.withValues(alpha: .09),
-        circularTrackColor: scheme.primary.withValues(alpha: .09),
+        color: primary,
+        linearTrackColor: primary.withValues(alpha: .10),
+        circularTrackColor: primary.withValues(alpha: .10),
       ),
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: {
