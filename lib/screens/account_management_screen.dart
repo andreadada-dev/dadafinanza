@@ -509,9 +509,7 @@ class SafeAccountDetailScreen extends StatelessWidget {
                 ),
                 TextField(
                   controller: note,
-                  decoration: InputDecoration(
-                    labelText: 'Nota opzionale',
-                  ),
+                  decoration: InputDecoration(labelText: 'Nota opzionale'),
                 ),
                 const SizedBox(height: 16),
                 SwitchListTile(
