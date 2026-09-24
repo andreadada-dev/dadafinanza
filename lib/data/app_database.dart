@@ -7,7 +7,7 @@ import '../models/models.dart';
 import '../models/smart_models.dart';
 
 class AppDatabase {
-  static const databaseVersion = 5;
+  static const databaseVersion = 6;
   static const _unassignedName = '__UNASSIGNED__';
 
   Database? _db;
@@ -90,6 +90,7 @@ class AppDatabase {
       type TEXT NOT NULL,
       account_id INTEGER NOT NULL,
       category_id INTEGER,
+      to_account_id INTEGER,
       frequency TEXT NOT NULL,
       next_date INTEGER NOT NULL,
       enabled INTEGER NOT NULL DEFAULT 1,
@@ -97,6 +98,7 @@ class AppDatabase {
       end_date INTEGER,
       auto_create INTEGER NOT NULL DEFAULT 0,
       FOREIGN KEY(account_id) REFERENCES accounts(id),
+      FOREIGN KEY(to_account_id) REFERENCES accounts(id) ON DELETE SET NULL,
       FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE SET NULL
     )''');
     await db.execute('''CREATE TABLE budgets(
@@ -141,6 +143,7 @@ class AppDatabase {
       account_id INTEGER,
       add_tag TEXT,
       include_in_analytics INTEGER,
+      priority INTEGER NOT NULL DEFAULT 0,
       FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE SET NULL,
       FOREIGN KEY(account_id) REFERENCES accounts(id) ON DELETE SET NULL
     )''');
@@ -386,7 +389,180 @@ class AppDatabase {
         "TEXT NOT NULL DEFAULT 'normal'",
       );
     }
+    if (oldVersion < 6) {
+      await _migrateV6(db);
+    }
     await _createIndexes(db);
+  }
+
+  Future<void> _migrateV6(Database db) async {
+    await _addColumnIfMissing(db, 'transaction_splits', 'amount_cents', 'INTEGER');
+    await _addColumnIfMissing(db, 'recurring', 'amount_cents', 'INTEGER');
+    await _addColumnIfMissing(db, 'recurring', 'to_account_id', 'INTEGER');
+    await _addColumnIfMissing(db, 'budgets', 'limit_cents', 'INTEGER');
+    await _addColumnIfMissing(db, 'automation_rules', 'min_amount_cents', 'INTEGER');
+    await _addColumnIfMissing(db, 'automation_rules', 'max_amount_cents', 'INTEGER');
+    await _addColumnIfMissing(
+      db,
+      'automation_rules',
+      'priority',
+      'INTEGER NOT NULL DEFAULT 0',
+    );
+
+    await db.rawUpdate(
+      'UPDATE transaction_splits SET amount_cents = CAST(ROUND(amount * 100) AS INTEGER) WHERE amount_cents IS NULL',
+    );
+    await db.rawUpdate(
+      'UPDATE recurring SET amount_cents = CAST(ROUND(amount * 100) AS INTEGER) WHERE amount_cents IS NULL',
+    );
+    await db.rawUpdate(
+      'UPDATE budgets SET limit_cents = CAST(ROUND(limit_amount * 100) AS INTEGER) WHERE limit_cents IS NULL',
+    );
+    await db.rawUpdate(
+      'UPDATE automation_rules SET min_amount_cents = CASE WHEN min_amount IS NULL THEN NULL ELSE CAST(ROUND(min_amount * 100) AS INTEGER) END, max_amount_cents = CASE WHEN max_amount IS NULL THEN NULL ELSE CAST(ROUND(max_amount * 100) AS INTEGER) END',
+    );
+
+    await db.execute('''CREATE TABLE transaction_splits_v6(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      transaction_id INTEGER NOT NULL,
+      amount REAL NOT NULL,
+      category_id INTEGER NOT NULL,
+      note TEXT,
+      amount_cents INTEGER,
+      FOREIGN KEY(transaction_id) REFERENCES transactions(id) ON DELETE CASCADE,
+      FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE RESTRICT
+    )''');
+    await db.execute('''INSERT INTO transaction_splits_v6(
+      id, transaction_id, amount, category_id, note, amount_cents
+    )
+    SELECT s.id, s.transaction_id, s.amount, s.category_id, s.note, s.amount_cents
+    FROM transaction_splits s
+    WHERE EXISTS(SELECT 1 FROM transactions t WHERE t.id = s.transaction_id)
+      AND EXISTS(SELECT 1 FROM categories c WHERE c.id = s.category_id)''');
+    await db.execute('DROP TABLE transaction_splits');
+    await db.execute('ALTER TABLE transaction_splits_v6 RENAME TO transaction_splits');
+
+    await db.execute('''CREATE TABLE recurring_v6(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      amount REAL NOT NULL,
+      type TEXT NOT NULL,
+      account_id INTEGER NOT NULL,
+      to_account_id INTEGER,
+      category_id INTEGER,
+      frequency TEXT NOT NULL,
+      next_date INTEGER NOT NULL,
+      enabled INTEGER NOT NULL DEFAULT 1,
+      note TEXT,
+      end_date INTEGER,
+      auto_create INTEGER NOT NULL DEFAULT 0,
+      amount_cents INTEGER,
+      FOREIGN KEY(account_id) REFERENCES accounts(id) ON DELETE RESTRICT,
+      FOREIGN KEY(to_account_id) REFERENCES accounts(id) ON DELETE SET NULL,
+      FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE SET NULL
+    )''');
+    await db.execute('''INSERT INTO recurring_v6(
+      id, name, amount, type, account_id, to_account_id, category_id,
+      frequency, next_date, enabled, note, end_date, auto_create, amount_cents
+    )
+    SELECT r.id, r.name, r.amount, r.type, r.account_id,
+      CASE WHEN r.to_account_id IS NULL OR EXISTS(
+        SELECT 1 FROM accounts a WHERE a.id = r.to_account_id
+      ) THEN r.to_account_id ELSE NULL END,
+      CASE WHEN r.category_id IS NULL OR EXISTS(
+        SELECT 1 FROM categories c WHERE c.id = r.category_id
+      ) THEN r.category_id ELSE NULL END,
+      r.frequency, r.next_date, r.enabled, r.note, r.end_date,
+      r.auto_create, r.amount_cents
+    FROM recurring r
+    WHERE EXISTS(SELECT 1 FROM accounts a WHERE a.id = r.account_id)''');
+    await db.execute('DROP TABLE recurring');
+    await db.execute('ALTER TABLE recurring_v6 RENAME TO recurring');
+
+    await db.execute('''CREATE TABLE budgets_v6(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      category_id INTEGER,
+      limit_amount REAL NOT NULL,
+      period TEXT NOT NULL,
+      start_date INTEGER NOT NULL,
+      end_date INTEGER,
+      enabled INTEGER NOT NULL DEFAULT 1,
+      limit_cents INTEGER,
+      FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE SET NULL
+    )''');
+    await db.execute('''INSERT INTO budgets_v6(
+      id, name, category_id, limit_amount, period, start_date, end_date,
+      enabled, limit_cents
+    )
+    SELECT b.id, b.name,
+      CASE WHEN b.category_id IS NULL OR EXISTS(
+        SELECT 1 FROM categories c WHERE c.id = b.category_id
+      ) THEN b.category_id ELSE NULL END,
+      b.limit_amount, b.period, b.start_date, b.end_date, b.enabled, b.limit_cents
+    FROM budgets b''');
+    await db.execute('DROP TABLE budgets');
+    await db.execute('ALTER TABLE budgets_v6 RENAME TO budgets');
+
+    await db.execute('''CREATE TABLE automation_rules_v6(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      enabled INTEGER NOT NULL DEFAULT 1,
+      contains_text TEXT,
+      type TEXT,
+      min_amount REAL,
+      max_amount REAL,
+      category_id INTEGER,
+      account_id INTEGER,
+      add_tag TEXT,
+      include_in_analytics INTEGER,
+      min_amount_cents INTEGER,
+      max_amount_cents INTEGER,
+      priority INTEGER NOT NULL DEFAULT 0,
+      FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE SET NULL,
+      FOREIGN KEY(account_id) REFERENCES accounts(id) ON DELETE SET NULL
+    )''');
+    await db.execute('''INSERT INTO automation_rules_v6(
+      id, name, enabled, contains_text, type, min_amount, max_amount,
+      category_id, account_id, add_tag, include_in_analytics,
+      min_amount_cents, max_amount_cents, priority
+    )
+    SELECT r.id, r.name, r.enabled, r.contains_text, r.type,
+      r.min_amount, r.max_amount,
+      CASE WHEN r.category_id IS NULL OR EXISTS(
+        SELECT 1 FROM categories c WHERE c.id = r.category_id
+      ) THEN r.category_id ELSE NULL END,
+      CASE WHEN r.account_id IS NULL OR EXISTS(
+        SELECT 1 FROM accounts a WHERE a.id = r.account_id
+      ) THEN r.account_id ELSE NULL END,
+      r.add_tag, r.include_in_analytics, r.min_amount_cents,
+      r.max_amount_cents, r.priority
+    FROM automation_rules r''');
+    await db.execute('DROP TABLE automation_rules');
+    await db.execute('ALTER TABLE automation_rules_v6 RENAME TO automation_rules');
+
+    await db.rawUpdate(
+      'UPDATE goals SET linked_account_id = NULL WHERE linked_account_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM accounts a WHERE a.id = goals.linked_account_id)',
+    );
+    if (await _tableExists(db, 'quick_presets')) {
+      await db.rawUpdate(
+        'UPDATE quick_presets SET account_id = NULL WHERE account_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM accounts a WHERE a.id = quick_presets.account_id)',
+      );
+      await db.rawUpdate(
+        'UPDATE quick_presets SET to_account_id = NULL WHERE to_account_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM accounts a WHERE a.id = quick_presets.to_account_id)',
+      );
+      await db.rawUpdate(
+        'UPDATE quick_presets SET category_id = NULL WHERE category_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM categories c WHERE c.id = quick_presets.category_id)',
+      );
+    }
+  }
+
+  Future<bool> _tableExists(Database db, String table) async {
+    final rows = await db.rawQuery(
+      "SELECT name FROM sqlite_master WHERE type = 'table' AND name = ?",
+      [table],
+    );
+    return rows.isNotEmpty;
   }
 
   Future<void> _createSmartTables(Database db) async {
@@ -613,7 +789,7 @@ class AppDatabase {
       )).map(DashboardWidgetConfig.fromMap).toList();
   Future<List<AutomationRule>> rules() async => (await db.query(
     'automation_rules',
-    orderBy: 'id DESC',
+    orderBy: 'priority DESC, id ASC',
   )).map(AutomationRule.fromMap).toList();
   Future<List<LearnedPattern>> learnedPatterns() async => (await db.query(
     'learned_patterns',
@@ -1188,6 +1364,7 @@ class AppDatabase {
     'include_in_analytics': rule.includeInAnalytics == null
         ? null
         : (rule.includeInAnalytics! ? 1 : 0),
+    'priority': rule.priority,
   });
   Future<void> deleteRule(int id) =>
       db.delete('automation_rules', where: 'id = ?', whereArgs: [id]);
