@@ -246,6 +246,7 @@ class AccountCategoryCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => _TopCategoriesDonut(
+    key: ValueKey(accountId),
     config: DashboardWidgetConfig(
       type: DashboardWidgetType.topCategories,
       enabled: true,
@@ -257,7 +258,11 @@ class AccountCategoryCarousel extends StatelessWidget {
 }
 
 class _TopCategoriesDonut extends StatefulWidget {
-  const _TopCategoriesDonut({required this.config, this.accountId});
+  const _TopCategoriesDonut({
+    required this.config,
+    this.accountId,
+    super.key,
+  });
 
   final DashboardWidgetConfig config;
   final int? accountId;
@@ -266,17 +271,10 @@ class _TopCategoriesDonut extends StatefulWidget {
   State<_TopCategoriesDonut> createState() => _TopCategoriesDonutState();
 }
 
-enum _CategoryChartRange { thisMonth, thisWeek, last7Days, last30Days, custom }
+enum _CategoryChartRange { today, thisWeek, thisMonth, custom }
 
 class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
     with SingleTickerProviderStateMixin {
-  static const _rangeOrder = <_CategoryChartRange>[
-    _CategoryChartRange.thisMonth,
-    _CategoryChartRange.thisWeek,
-    _CategoryChartRange.last7Days,
-    _CategoryChartRange.last30Days,
-    _CategoryChartRange.custom,
-  ];
   static const _initialCarouselPage = 1000;
 
   late final PageController _typePageController;
@@ -287,6 +285,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
   var _type = TransactionType.expense;
   var _range = _CategoryChartRange.thisMonth;
   var _carouselDragging = false;
+  var _initialRangeResolved = false;
   DateTimeRange? _customRange;
 
   @override
@@ -304,21 +303,58 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_initialRangeResolved) return;
+    _initialRangeResolved = true;
+    final state = AppScope.of(context);
+    if (_hasTodayData(state, TransactionType.expense)) {
+      _range = _CategoryChartRange.today;
+    }
+  }
+
+  @override
   void dispose() {
     _typePageController.dispose();
     _swipeHintController.dispose();
     super.dispose();
   }
 
+  (DateTime, DateTime) _todayBounds() {
+    final now = DateTime.now();
+    return (
+      DateTime(now.year, now.month, now.day),
+      DateTime(now.year, now.month, now.day + 1),
+    );
+  }
+
+  bool _hasTodayData(AppState state, TransactionType type) {
+    final (from, to) = _todayBounds();
+    return AccountContextService.periodTotal(
+          state,
+          widget.accountId,
+          type,
+          from,
+          to,
+        ).abs() >
+        .005;
+  }
+
+  List<_CategoryChartRange> _availableRanges(
+    AppState state,
+    TransactionType type,
+  ) => [
+    if (_hasTodayData(state, type)) _CategoryChartRange.today,
+    _CategoryChartRange.thisWeek,
+    _CategoryChartRange.thisMonth,
+    _CategoryChartRange.custom,
+  ];
+
   (DateTime, DateTime) _bounds() {
     final now = DateTime.now();
-    final todayEnd = DateTime(now.year, now.month, now.day + 1);
 
     return switch (_range) {
-      _CategoryChartRange.thisMonth => (
-        DateTime(now.year, now.month),
-        DateTime(now.year, now.month + 1),
-      ),
+      _CategoryChartRange.today => _todayBounds(),
       _CategoryChartRange.thisWeek => (
         DateTime(
           now.year,
@@ -329,13 +365,9 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
             .subtract(Duration(days: now.weekday - 1))
             .add(const Duration(days: 7)),
       ),
-      _CategoryChartRange.last7Days => (
-        todayEnd.subtract(const Duration(days: 7)),
-        todayEnd,
-      ),
-      _CategoryChartRange.last30Days => (
-        todayEnd.subtract(const Duration(days: 30)),
-        todayEnd,
+      _CategoryChartRange.thisMonth => (
+        DateTime(now.year, now.month),
+        DateTime(now.year, now.month + 1),
       ),
       _CategoryChartRange.custom =>
         _customRange == null
@@ -356,13 +388,12 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
   }
 
   String get _rangeLabel => switch (_range) {
-    _CategoryChartRange.thisMonth => 'Questo mese',
-    _CategoryChartRange.thisWeek => 'Questa settimana',
-    _CategoryChartRange.last7Days => 'Ultimi 7 giorni',
-    _CategoryChartRange.last30Days => 'Ultimi 30 giorni',
+    _CategoryChartRange.today => 'Oggi',
+    _CategoryChartRange.thisWeek => 'Settimana',
+    _CategoryChartRange.thisMonth => 'Mese',
     _CategoryChartRange.custom =>
       _customRange == null
-          ? 'Personalizzato'
+          ? 'Custom'
           : '${_customRange!.start.day}/${_customRange!.start.month} – '
                 '${_customRange!.end.day}/${_customRange!.end.month}',
   };
@@ -395,10 +426,12 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
   }
 
   void _stepRange(int delta) {
-    final current = _rangeOrder.indexOf(_range);
-    final nextIndex =
-        (current + delta + _rangeOrder.length) % _rangeOrder.length;
-    _selectRange(_rangeOrder[nextIndex]);
+    final state = AppScope.of(context);
+    final ranges = _availableRanges(state, _type);
+    final current = ranges.indexOf(_range);
+    final safeCurrent = current < 0 ? 0 : current;
+    final nextIndex = (safeCurrent + delta + ranges.length) % ranges.length;
+    _selectRange(ranges[nextIndex]);
   }
 
   TransactionType _typeForPage(int page) =>
@@ -416,11 +449,16 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
     if (!_typePageController.hasClients) return;
     final page = _typePageController.page?.round() ?? _initialCarouselPage;
     final nextType = _typeForPage(page);
+    final state = AppScope.of(context);
     setState(() {
       _carouselDragging = false;
       if (nextType != _type) {
         _type = nextType;
         _selectedIndex = -1;
+        if (_range == _CategoryChartRange.today &&
+            !_hasTodayData(state, nextType)) {
+          _range = _CategoryChartRange.thisWeek;
+        }
       }
     });
   }
