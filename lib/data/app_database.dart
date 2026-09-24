@@ -544,7 +544,7 @@ class AppDatabase {
     await db.rawUpdate(
       'UPDATE goals SET linked_account_id = NULL WHERE linked_account_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM accounts a WHERE a.id = goals.linked_account_id)',
     );
-    if (await _tableExists(db, 'quick_presets')) {
+    if (await _tableExists(txn, 'quick_presets')) {
       await db.rawUpdate(
         'UPDATE quick_presets SET account_id = NULL WHERE account_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM accounts a WHERE a.id = quick_presets.account_id)',
       );
@@ -557,7 +557,7 @@ class AppDatabase {
     }
   }
 
-  Future<bool> _tableExists(Database db, String table) async {
+  Future<bool> _tableExists(DatabaseExecutor db, String table) async {
     final rows = await db.rawQuery(
       "SELECT name FROM sqlite_master WHERE type = 'table' AND name = ?",
       [table],
@@ -902,7 +902,7 @@ class AppDatabase {
         where: 'linked_account_id = ?',
         whereArgs: [id],
       );
-      if (await _tableExists(db, 'quick_presets')) {
+      if (await _tableExists(txn, 'quick_presets')) {
         await txn.update(
           'quick_presets',
           {'account_id': null},
@@ -916,7 +916,7 @@ class AppDatabase {
           whereArgs: [id],
         );
       }
-      if (await _tableExists(db, 'advances')) {
+      if (await _tableExists(txn, 'advances')) {
         await txn.update(
           'advances',
           {'source_account_id': null},
@@ -996,7 +996,7 @@ class AppDatabase {
           whereArgs: [id],
         );
       }
-      if (await _tableExists(db, 'quick_presets')) {
+      if (await _tableExists(txn, 'quick_presets')) {
         await txn.update(
           'quick_presets',
           {'category_id': null},
