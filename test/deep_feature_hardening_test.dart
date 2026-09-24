@@ -4,12 +4,22 @@ import 'package:dadafinanza/app_state.dart';
 import 'package:dadafinanza/data/app_database.dart';
 import 'package:dadafinanza/models/models.dart';
 import 'package:dadafinanza/services/finance_schema_service.dart';
+import 'package:dadafinanza/services/widget_service.dart';
 import 'package:dadafinanza/services/recurring_execution_service.dart';
 import 'package:dadafinanza/services/rule_service.dart';
+import 'package:dadafinanza/services/widget_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart' as ffi;
+
+class _NoopWidgetService extends WidgetService {
+  @override
+  Future<void> sync({
+    required double balance,
+    required List<Category> expenseCategories,
+  }) async {}
+}
 
 void main() {
   late Directory databaseRoot;
@@ -158,7 +168,7 @@ void main() {
       iconKey: 'restaurant',
       colorValue: 0xFF8E8E93,
     );
-    final state = AppState(database);
+    final state = AppState(database, widgetService: _NoopWidgetService());
     await state.load();
     expect(
       () => const RuleService().validate(
