@@ -1,11 +1,13 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+import '../app_state.dart';
 import '../main.dart';
 import '../models/models.dart';
 import '../screens/account_management_screen.dart';
 import '../screens/account_screens.dart' show showAccountEditor;
-import '../screens/canonical_shell.dart' show CanonicalDashboardWidget;
+import '../screens/canonical_shell.dart'
+    show CanonicalDashboardWidget, CategoryDetailScreen;
 import 'ui_helpers.dart';
 
 /// Renders a dashboard configuration on the canonical Home.
@@ -281,9 +283,9 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
           category: null,
           label: 'Altro',
           amount: other,
-          color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(
-            alpha: .38,
-          ),
+          color: Theme.of(
+            context,
+          ).colorScheme.onSurfaceVariant.withValues(alpha: .38),
         ),
       );
     }
@@ -333,19 +335,20 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
                                 response?.touchedSection == null) {
                               return;
                             }
-                            final next = response!
-                                .touchedSection!
-                                .touchedSectionIndex;
+                            final next =
+                                response!.touchedSection!.touchedSectionIndex;
                             setState(() {
-                              _selectedIndex =
-                                  _selectedIndex == next ? -1 : next;
+                              _selectedIndex = _selectedIndex == next
+                                  ? -1
+                                  : next;
                             });
                           },
                         ),
                         sections: [
                           for (var index = 0; index < slices.length; index++)
                             PieChartSectionData(
-                              color: _selectedIndex == -1 ||
+                              color:
+                                  _selectedIndex == -1 ||
                                       _selectedIndex == index
                                   ? slices[index].color
                                   : slices[index].color.withValues(alpha: .22),
@@ -381,21 +384,21 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
                           selected?.label ?? 'Questo mese',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            fontWeight: FontWeight.w800,
-                          ),
+                          style: Theme.of(context).textTheme.labelSmall
+                              ?.copyWith(fontWeight: FontWeight.w800),
                         ),
                         const SizedBox(height: 2),
                         Text(
                           selected == null
                               ? '${slices.length} categorie'
                               : '${(selected.amount / totalExpense * 100).round()}%',
-                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            color:
-                                selected?.color ??
-                                Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.w900,
-                          ),
+                          style: Theme.of(context).textTheme.titleSmall
+                              ?.copyWith(
+                                color:
+                                    selected?.color ??
+                                    Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.w900,
+                              ),
                         ),
                       ],
                     ),
@@ -455,7 +458,11 @@ class _CategoryDonutRow extends StatelessWidget {
                 color: color.withValues(alpha: .11),
                 borderRadius: BorderRadius.circular(14),
               ),
-              child: Icon(categoryIcon(category.iconKey), color: color, size: 19),
+              child: Icon(
+                categoryIcon(category.iconKey),
+                color: color,
+                size: 19,
+              ),
             ),
             const SizedBox(width: 11),
             Expanded(
