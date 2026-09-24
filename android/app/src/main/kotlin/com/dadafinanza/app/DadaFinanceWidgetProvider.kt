@@ -90,8 +90,18 @@ private object DadaWidgetIntents {
     ): String {
         if (!reveal || widgetData.getBoolean("hide_balance", false)) return "••••"
         val balance = widgetData.getString("balance", "0.00") ?: "0.00"
-        return "$balance €"
+        val currency = widgetData.getString("currency", "EUR") ?: "EUR"
+        return moneyLabel(balance, currency)
     }
+
+    fun moneyLabel(amount: String, currency: String): String =
+        when (currency.uppercase()) {
+            "EUR" -> "$amount €"
+            "USD" -> "\$amount"
+            "GBP" -> "£$amount"
+            "CHF" -> "$amount CHF"
+            else -> "$amount \${currency.uppercase()}"
+        }
 }
 
 class DadaFinanceWidgetProvider : HomeWidgetProvider() {
@@ -279,7 +289,11 @@ class DadaQuickAmountsWidgetProvider : HomeWidgetProvider() {
                     R.id.amount_widget_3,
                 )
                 amountViews.forEachIndexed { index, viewId ->
-                    setTextViewText(viewId, if (showAmounts) "${amounts[index]} €" else "••")
+                    val currency = widgetData.getString("currency", "EUR") ?: "EUR"
+                    setTextViewText(
+                        viewId,
+                        if (showAmounts) DadaWidgetIntents.moneyLabel(amounts[index], currency) else "••",
+                    )
                     setOnClickPendingIntent(
                         viewId,
                         DadaWidgetIntents.quickAddIntent(
