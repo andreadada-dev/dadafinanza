@@ -129,18 +129,14 @@ void main() {
       categoryId: sourceId,
       date: DateTime.utc(2026, 9, 24),
     );
-    await database.replaceSplits(
-      transactionId,
-      [
-        TransactionSplit(
-          id: 0,
-          transactionId: transactionId,
-          amount: 10,
-          categoryId: sourceId,
-        ),
-      ],
-      10,
-    );
+    await database.replaceSplits(transactionId, [
+      TransactionSplit(
+        id: 0,
+        transactionId: transactionId,
+        amount: 10,
+        categoryId: sourceId,
+      ),
+    ], 10);
     await QuickPresetService(database).save(
       name: 'Preset',
       type: TransactionType.expense,
@@ -179,18 +175,14 @@ void main() {
       accountId: accountId,
       date: DateTime.utc(2026, 9, 24),
     );
-    await database.replaceSplits(
-      transactionId,
-      [
-        TransactionSplit(
-          id: 0,
-          transactionId: transactionId,
-          amount: 10,
-          categoryId: categoryId,
-        ),
-      ],
-      10,
-    );
+    await database.replaceSplits(transactionId, [
+      TransactionSplit(
+        id: 0,
+        transactionId: transactionId,
+        amount: 10,
+        categoryId: categoryId,
+      ),
+    ], 10);
 
     await expectLater(database.deleteCategory(categoryId), throwsStateError);
     expect(
@@ -202,11 +194,9 @@ void main() {
   test('empty account deletion clears preset references', () async {
     final database = await openReadyDatabase();
     final accountId = await addAccount(database, 'Disposable');
-    await QuickPresetService(database).save(
-      name: 'Preset',
-      type: TransactionType.expense,
-      accountId: accountId,
-    );
+    await QuickPresetService(
+      database,
+    ).save(name: 'Preset', type: TransactionType.expense, accountId: accountId);
     final state = AppState(database);
     await state.load();
 
@@ -216,55 +206,55 @@ void main() {
     );
 
     expect(state.accountById(accountId), isNull);
-    expect(
-      (await QuickPresetService(database).all()).single.accountId,
-      isNull,
-    );
+    expect((await QuickPresetService(database).all()).single.accountId, isNull);
   });
 
-  test('backup removes orphan attachments and keeps referenced receipt', () async {
-    final database = await openReadyDatabase();
-    final accountId = await addAccount(database, 'Main');
-    await database.addTransaction(
-      type: TransactionType.expense,
-      amount: 5,
-      accountId: accountId,
-      date: DateTime.utc(2026, 9, 24),
-      receiptPath: 'keep.jpg',
-    );
+  test(
+    'backup removes orphan attachments and keeps referenced receipt',
+    () async {
+      final database = await openReadyDatabase();
+      final accountId = await addAccount(database, 'Main');
+      await database.addTransaction(
+        type: TransactionType.expense,
+        amount: 5,
+        accountId: accountId,
+        date: DateTime.utc(2026, 9, 24),
+        receiptPath: 'keep.jpg',
+      );
 
-    final supportRoot = await Directory.systemTemp.createTemp(
-      'dada-attachments-test-',
-    );
-    final backupRoot = await Directory.systemTemp.createTemp(
-      'dada-backup-test-',
-    );
-    addTearDown(() async {
-      if (await supportRoot.exists()) {
-        await supportRoot.delete(recursive: true);
-      }
-      if (await backupRoot.exists()) {
-        await backupRoot.delete(recursive: true);
-      }
-    });
+      final supportRoot = await Directory.systemTemp.createTemp(
+        'dada-attachments-test-',
+      );
+      final backupRoot = await Directory.systemTemp.createTemp(
+        'dada-backup-test-',
+      );
+      addTearDown(() async {
+        if (await supportRoot.exists()) {
+          await supportRoot.delete(recursive: true);
+        }
+        if (await backupRoot.exists()) {
+          await backupRoot.delete(recursive: true);
+        }
+      });
 
-    final attachments = AttachmentService(rootDirectory: supportRoot);
-    final dir = await attachments.directory();
-    await File(p.join(dir.path, 'keep.jpg')).writeAsBytes([1, 2, 3]);
-    await File(p.join(dir.path, 'orphan.jpg')).writeAsBytes([4, 5, 6]);
+      final attachments = AttachmentService(rootDirectory: supportRoot);
+      final dir = await attachments.directory();
+      await File(p.join(dir.path, 'keep.jpg')).writeAsBytes([1, 2, 3]);
+      await File(p.join(dir.path, 'orphan.jpg')).writeAsBytes([4, 5, 6]);
 
-    final service = BackupService(
-      database,
-      attachments: attachments,
-      temporaryDirectory: () async => backupRoot,
-    );
-    final backup = await service.create();
-    final preview = await service.inspect(backup.path);
+      final service = BackupService(
+        database,
+        attachments: attachments,
+        temporaryDirectory: () async => backupRoot,
+      );
+      final backup = await service.create();
+      final preview = await service.inspect(backup.path);
 
-    expect(preview.attachments, 1);
-    expect(await File(p.join(dir.path, 'keep.jpg')).exists(), isTrue);
-    expect(await File(p.join(dir.path, 'orphan.jpg')).exists(), isFalse);
-  });
+      expect(preview.attachments, 1);
+      expect(await File(p.join(dir.path, 'keep.jpg')).exists(), isTrue);
+      expect(await File(p.join(dir.path, 'orphan.jpg')).exists(), isFalse);
+    },
+  );
 
   test('deleting a movement removes its orphaned receipt file', () async {
     final database = await openReadyDatabase();
