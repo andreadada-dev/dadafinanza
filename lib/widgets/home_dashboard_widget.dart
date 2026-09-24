@@ -308,9 +308,9 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
     if (_initialRangeResolved) return;
     _initialRangeResolved = true;
     final state = AppScope.of(context);
-    if (_hasTodayData(state, TransactionType.expense)) {
-      _range = _CategoryChartRange.today;
-    }
+    _range = _hasTodayData(state, TransactionType.expense)
+        ? _CategoryChartRange.today
+        : _CategoryChartRange.thisWeek;
   }
 
   @override
