@@ -242,13 +242,7 @@ class _TopCategoriesDonut extends StatefulWidget {
   State<_TopCategoriesDonut> createState() => _TopCategoriesDonutState();
 }
 
-enum _CategoryChartRange {
-  thisMonth,
-  thisWeek,
-  last7Days,
-  last30Days,
-  custom,
-}
+enum _CategoryChartRange { thisMonth, thisWeek, last7Days, last30Days, custom }
 
 class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
   static const _rangeOrder = <_CategoryChartRange>[
@@ -274,8 +268,11 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
         DateTime(now.year, now.month + 1),
       ),
       _CategoryChartRange.thisWeek => (
-        DateTime(now.year, now.month, now.day)
-            .subtract(Duration(days: now.weekday - 1)),
+        DateTime(
+          now.year,
+          now.month,
+          now.day,
+        ).subtract(Duration(days: now.weekday - 1)),
         DateTime(now.year, now.month, now.day)
             .subtract(Duration(days: now.weekday - 1))
             .add(const Duration(days: 7)),
@@ -288,23 +285,21 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
         todayEnd.subtract(const Duration(days: 30)),
         todayEnd,
       ),
-      _CategoryChartRange.custom => _customRange == null
-          ? (
-              DateTime(now.year, now.month),
-              DateTime(now.year, now.month + 1),
-            )
-          : (
-              DateTime(
-                _customRange!.start.year,
-                _customRange!.start.month,
-                _customRange!.start.day,
+      _CategoryChartRange.custom =>
+        _customRange == null
+            ? (DateTime(now.year, now.month), DateTime(now.year, now.month + 1))
+            : (
+                DateTime(
+                  _customRange!.start.year,
+                  _customRange!.start.month,
+                  _customRange!.start.day,
+                ),
+                DateTime(
+                  _customRange!.end.year,
+                  _customRange!.end.month,
+                  _customRange!.end.day + 1,
+                ),
               ),
-              DateTime(
-                _customRange!.end.year,
-                _customRange!.end.month,
-                _customRange!.end.day + 1,
-              ),
-            ),
     };
   }
 
@@ -313,10 +308,11 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
     _CategoryChartRange.thisWeek => 'Questa settimana',
     _CategoryChartRange.last7Days => 'Ultimi 7 giorni',
     _CategoryChartRange.last30Days => 'Ultimi 30 giorni',
-    _CategoryChartRange.custom => _customRange == null
-        ? 'Personalizzato'
-        : '${_customRange!.start.day}/${_customRange!.start.month} – '
-              '${_customRange!.end.day}/${_customRange!.end.month}',
+    _CategoryChartRange.custom =>
+      _customRange == null
+          ? 'Personalizzato'
+          : '${_customRange!.start.day}/${_customRange!.start.month} – '
+                '${_customRange!.end.day}/${_customRange!.end.month}',
   };
 
   Future<void> _selectRange(_CategoryChartRange next) async {
@@ -328,10 +324,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
         lastDate: now.add(const Duration(days: 3650)),
         initialDateRange:
             _customRange ??
-            DateTimeRange(
-              start: DateTime(now.year, now.month),
-              end: now,
-            ),
+            DateTimeRange(start: DateTime(now.year, now.month), end: now),
       );
       if (!mounted || picked == null) return;
       setState(() {
