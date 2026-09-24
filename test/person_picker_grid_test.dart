@@ -44,10 +44,8 @@ void main() {
               builder: (context) => Scaffold(
                 body: Center(
                   child: FilledButton(
-                    onPressed: () => showFinancePersonPicker(
-                      context,
-                      allowCreate: true,
-                    ),
+                    onPressed: () =>
+                        showFinancePersonPicker(context, allowCreate: true),
                     child: const Text('Apri persone'),
                   ),
                 ),
