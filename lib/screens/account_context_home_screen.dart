@@ -11,6 +11,7 @@ import '../widgets/finance_quick_action.dart';
 import '../widgets/home_dashboard_widget.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_context_analytics_screen.dart';
+import 'account_management_screen.dart' show SafeAccountDetailScreen;
 import 'account_screens.dart' show showAccountEditor;
 import 'advances_screen.dart';
 import 'personal_settings_screen.dart';
@@ -242,7 +243,7 @@ class AccountContextHomeScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (_) => AccountContextAnalyticsScreen(
-                        accountId: selectedAccount.id,
+                        accountId: selectedAccount!.id,
                         onAccountChanged: onAccountChanged,
                       ),
                     ),
