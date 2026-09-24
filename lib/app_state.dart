@@ -1050,6 +1050,17 @@ class AppState extends ChangeNotifier {
   }
 
   Future<void> addRule(AutomationRule rule) async {
+    if (rule.categoryId != null) {
+      final category = categoryById(rule.categoryId);
+      if (rule.type == null ||
+          rule.type == TransactionType.transfer ||
+          category == null ||
+          category.type != rule.type) {
+        throw StateError(
+          'Per assegnare una categoria la regola deve avere un tipo compatibile.',
+        );
+      }
+    }
     await database.addRule(rule);
     rules = await database.rules();
     notifyListeners();
