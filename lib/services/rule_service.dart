@@ -21,16 +21,17 @@ class RuleService {
     return true;
   }
 
-  RuleMatchPreview preview(AppState state, AutomationRule rule) =>
-      RuleMatchPreview(
-        matches: state.transactions
-            .where(
-              (item) =>
-                  !state.isAdvanceProtectedTransaction(item) &&
-                  matches(rule, item),
-            )
-            .toList(),
-      );
+  RuleMatchPreview preview(
+    AppState state,
+    AutomationRule rule,
+  ) => RuleMatchPreview(
+    matches: state.transactions
+        .where(
+          (item) =>
+              !state.isAdvanceProtectedTransaction(item) && matches(rule, item),
+        )
+        .toList(),
+  );
 
   void validate(AppState state, AutomationRule rule) {
     if (rule.categoryId == null) return;
@@ -41,7 +42,9 @@ class RuleService {
     }
     final category = state.categoryById(rule.categoryId);
     if (category == null || category.type != rule.type) {
-      throw StateError('La categoria non è compatibile con il tipo della regola.');
+      throw StateError(
+        'La categoria non è compatibile con il tipo della regola.',
+      );
     }
   }
 
@@ -97,5 +100,4 @@ class RuleService {
     if (changed > 0) await state.load();
     return changed;
   }
-
 }
