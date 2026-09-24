@@ -150,9 +150,9 @@ class _NotificationSettingsScreenState
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
                   ),
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Soglia saldo previsto',
-                    suffixText: '€',
+                    suffixText: AppScope.of(context).currency,
                     helperText: '0 disattiva la soglia.',
                   ),
                   onSubmitted: (_) => _saveThreshold(),
