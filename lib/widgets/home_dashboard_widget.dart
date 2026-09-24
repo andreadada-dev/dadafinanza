@@ -839,34 +839,6 @@ class _DonutPeriodCenter extends StatelessWidget {
   }
 }
 
-class _EmptyDonutCenter extends StatelessWidget {
-  const _EmptyDonutCenter({
-    required this.icon,
-    required this.accent,
-    required this.rangeLabel,
-    required this.totalLabel,
-    required this.onPreviousRange,
-    required this.onNextRange,
-  });
-
-  final IconData icon;
-  final Color accent;
-  final String rangeLabel;
-  final String totalLabel;
-  final VoidCallback onPreviousRange;
-  final VoidCallback onNextRange;
-
-  @override
-  Widget build(BuildContext context) => _DonutPeriodCenter(
-    icon: icon,
-    accent: accent,
-    rangeLabel: rangeLabel,
-    totalLabel: totalLabel,
-    onPreviousRange: onPreviousRange,
-    onNextRange: onNextRange,
-  );
-}
-
 class _DonutRangeArrow extends StatelessWidget {
   const _DonutRangeArrow({
     required this.icon,
