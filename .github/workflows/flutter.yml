@@ -43,7 +43,11 @@ jobs:
       - name: Pub get
         run: flutter pub get
       - name: Format check
-        run: dart format --output=none --set-exit-if-changed lib test
+        shell: bash
+        run: |
+          dart format lib test
+          git diff -- lib/widgets/home_dashboard_widget.dart
+          git diff --quiet -- lib test
       - name: Analyze
         run: flutter analyze --no-fatal-infos
       - name: Test
