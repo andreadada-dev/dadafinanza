@@ -255,9 +255,8 @@ class AppTheme {
                 : raised,
           ),
           foregroundColor: WidgetStateProperty.resolveWith(
-            (states) => states.contains(WidgetState.selected)
-                ? primary
-                : onSurface,
+            (states) =>
+                states.contains(WidgetState.selected) ? primary : onSurface,
           ),
         ),
       ),
