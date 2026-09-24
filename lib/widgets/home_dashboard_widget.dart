@@ -487,7 +487,6 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
     }
 
     return _CategoryCarouselData(
-      type: type,
       top: top,
       total: total,
       slices: slices,
@@ -727,7 +726,6 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
 
 class _CategoryCarouselData {
   const _CategoryCarouselData({
-    required this.type,
     required this.top,
     required this.total,
     required this.slices,
@@ -736,7 +734,6 @@ class _CategoryCarouselData {
     required this.emptyLabel,
   });
 
-  final TransactionType type;
   final List<MapEntry<Category, double>> top;
   final double total;
   final List<_DonutSlice> slices;
