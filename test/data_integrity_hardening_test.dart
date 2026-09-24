@@ -265,4 +265,56 @@ void main() {
     expect(await File(p.join(dir.path, 'keep.jpg')).exists(), isTrue);
     expect(await File(p.join(dir.path, 'orphan.jpg')).exists(), isFalse);
   });
+
+  test('deleting a movement removes its orphaned receipt file', () async {
+    final database = await openReadyDatabase();
+    final accountId = await addAccount(database, 'Main');
+    await database.addTransaction(
+      type: TransactionType.expense,
+      amount: 7,
+      accountId: accountId,
+      date: DateTime.utc(2026, 9, 24),
+      receiptPath: 'receipt.jpg',
+    );
+
+    final supportRoot = await Directory.systemTemp.createTemp(
+      'dada-delete-receipt-test-',
+    );
+    addTearDown(() async {
+      if (await supportRoot.exists()) {
+        await supportRoot.delete(recursive: true);
+      }
+    });
+    final attachments = AttachmentService(rootDirectory: supportRoot);
+    final dir = await attachments.directory();
+    final receipt = File(p.join(dir.path, 'receipt.jpg'));
+    await receipt.writeAsBytes([1, 2, 3]);
+
+    final state = AppState(database, attachmentService: attachments);
+    await state.load();
+    await state.deleteTransaction(state.transactions.single);
+
+    expect(await receipt.exists(), isFalse);
+  });
+
+  test('clear all user data clears managed attachments too', () async {
+    final database = await openReadyDatabase();
+    final supportRoot = await Directory.systemTemp.createTemp(
+      'dada-clear-attachments-test-',
+    );
+    addTearDown(() async {
+      if (await supportRoot.exists()) {
+        await supportRoot.delete(recursive: true);
+      }
+    });
+    final attachments = AttachmentService(rootDirectory: supportRoot);
+    final dir = await attachments.directory();
+    await File(p.join(dir.path, 'orphan.jpg')).writeAsBytes([1]);
+
+    final state = AppState(database, attachmentService: attachments);
+    await state.load();
+    await state.clearAllUserData();
+
+    expect(await attachments.all(), isEmpty);
+  });
 }
