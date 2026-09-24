@@ -118,10 +118,7 @@ class DadaHomeScreen extends StatelessWidget {
               if (overview.isNotEmpty) ...[
                 DadaReveal(
                   key: const ValueKey('home-overview'),
-                  child: _IvyFinanceOverview(
-                    state: state,
-                    configs: overview,
-                  ),
+                  child: _IvyFinanceOverview(state: state, configs: overview),
                 ),
                 const SizedBox(height: 16),
               ],
@@ -315,10 +312,7 @@ class DadaHomeScreen extends StatelessWidget {
 }
 
 class _IvyFinanceOverview extends StatelessWidget {
-  const _IvyFinanceOverview({
-    required this.state,
-    required this.configs,
-  });
+  const _IvyFinanceOverview({required this.state, required this.configs});
 
   final AppState state;
   final List<DashboardWidgetConfig> configs;
@@ -368,16 +362,18 @@ class _IvyFinanceOverview extends StatelessWidget {
       metrics.add(
         _OverviewMetric(
           label: 'Disponibile',
-          value: state.hideBalance ? '••••' : moneyFor(state, state.safeToSpend),
+          value: state.hideBalance
+              ? '••••'
+              : moneyFor(state, state.safeToSpend),
           icon: Icons.account_balance_wallet_rounded,
           color: scheme.primary,
         ),
       );
     }
 
-    final balanceSize = switch (
-      _configFor(DashboardWidgetType.totalBalance)?.size
-    ) {
+    final balanceSize = switch (_configFor(
+      DashboardWidgetType.totalBalance,
+    )?.size) {
       DashboardWidgetSize.small => theme.textTheme.headlineMedium,
       DashboardWidgetSize.large => theme.textTheme.displaySmall,
       _ => theme.textTheme.headlineLarge,
@@ -444,10 +440,7 @@ class _IvyFinanceOverview extends StatelessWidget {
               transitionBuilder: (child, animation) => FadeTransition(
                 opacity: animation,
                 child: ScaleTransition(
-                  scale: Tween<double>(
-                    begin: .97,
-                    end: 1,
-                  ).animate(animation),
+                  scale: Tween<double>(begin: .97, end: 1).animate(animation),
                   child: child,
                 ),
               ),
