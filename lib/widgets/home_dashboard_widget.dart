@@ -269,12 +269,13 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
           (totals[transaction.categoryId!] ?? 0) + transaction.amount;
     }
 
-    final items = state
-        .categoriesFor(TransactionType.income)
-        .map((category) => MapEntry(category, totals[category.id] ?? 0))
-        .where((entry) => entry.value > 0)
-        .toList()
-      ..sort((a, b) => b.value.compareTo(a.value));
+    final items =
+        state
+            .categoriesFor(TransactionType.income)
+            .map((category) => MapEntry(category, totals[category.id] ?? 0))
+            .where((entry) => entry.value > 0)
+            .toList()
+          ..sort((a, b) => b.value.compareTo(a.value));
     return items.take(limit).toList();
   }
 
@@ -397,10 +398,13 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
                                     _selectedIndex == -1 ||
                                         _selectedIndex == index
                                     ? slices[index].color
-                                    : slices[index].color.withValues(alpha: .22),
+                                    : slices[index].color.withValues(
+                                        alpha: .22,
+                                      ),
                                 value: slices[index].amount * progress,
                                 title: '',
-                                radius: chartSize *
+                                radius:
+                                    chartSize *
                                     (_selectedIndex == index ? .165 : .145),
                                 showTitle: false,
                               ),
@@ -487,10 +491,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut> {
 }
 
 class _CategoryTypeToggle extends StatelessWidget {
-  const _CategoryTypeToggle({
-    required this.selected,
-    required this.onChanged,
-  });
+  const _CategoryTypeToggle({required this.selected, required this.onChanged});
 
   final TransactionType selected;
   final ValueChanged<TransactionType> onChanged;
