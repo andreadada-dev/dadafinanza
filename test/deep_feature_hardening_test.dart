@@ -174,39 +174,46 @@ void main() {
     );
   });
 
-  test('recurring transfer creates a real transfer and advances date', () async {
-    final database = await openReadyDatabase();
-    final source = await addAccount(database, 'Source', balance: 100);
-    final destination = await addAccount(database, 'Destination', balance: 50);
-    final due = DateTime.utc(2026, 9, 24, 12);
-    await database.addRecurring(
-      name: 'Savings transfer',
-      amount: 12.34,
-      type: TransactionType.transfer,
-      accountId: source,
-      toAccountId: destination,
-      frequency: 'Mensile',
-      nextDate: due,
-      autoCreate: true,
-    );
+  test(
+    'recurring transfer creates a real transfer and advances date',
+    () async {
+      final database = await openReadyDatabase();
+      final source = await addAccount(database, 'Source', balance: 100);
+      final destination = await addAccount(
+        database,
+        'Destination',
+        balance: 50,
+      );
+      final due = DateTime.utc(2026, 9, 24, 12);
+      await database.addRecurring(
+        name: 'Savings transfer',
+        amount: 12.34,
+        type: TransactionType.transfer,
+        accountId: source,
+        toAccountId: destination,
+        frequency: 'Mensile',
+        nextDate: due,
+        autoCreate: true,
+      );
 
-    final created = await const RecurringExecutionService().processDue(
-      database,
-      now: due.add(const Duration(minutes: 1)),
-    );
-    expect(created, 1);
-    final movement = (await database.transactions()).single;
-    expect(movement.type, TransactionType.transfer);
-    expect(movement.accountId, source);
-    expect(movement.toAccountId, destination);
-    final accounts = await database.accounts();
-    expect(
-      accounts.firstWhere((item) => item.id == source).balance,
-      closeTo(87.66, 0.001),
-    );
-    expect(
-      accounts.firstWhere((item) => item.id == destination).balance,
-      closeTo(62.34, 0.001),
-    );
-  });
+      final created = await const RecurringExecutionService().processDue(
+        database,
+        now: due.add(const Duration(minutes: 1)),
+      );
+      expect(created, 1);
+      final movement = (await database.transactions()).single;
+      expect(movement.type, TransactionType.transfer);
+      expect(movement.accountId, source);
+      expect(movement.toAccountId, destination);
+      final accounts = await database.accounts();
+      expect(
+        accounts.firstWhere((item) => item.id == source).balance,
+        closeTo(87.66, 0.001),
+      );
+      expect(
+        accounts.firstWhere((item) => item.id == destination).balance,
+        closeTo(62.34, 0.001),
+      );
+    },
+  );
 }
