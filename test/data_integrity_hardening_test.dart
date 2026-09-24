@@ -7,11 +7,21 @@ import 'package:dadafinanza/services/attachment_service.dart';
 import 'package:dadafinanza/services/backup_service.dart';
 import 'package:dadafinanza/services/data_integrity_service.dart';
 import 'package:dadafinanza/services/finance_schema_service.dart';
+import 'package:dadafinanza/services/widget_service.dart';
 import 'package:dadafinanza/services/quick_preset_service.dart';
+import 'package:dadafinanza/services/widget_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart' as ffi;
+
+class _NoopWidgetService extends WidgetService {
+  @override
+  Future<void> sync({
+    required double balance,
+    required List<Category> expenseCategories,
+  }) async {}
+}
 
 void main() {
   late Directory databaseRoot;
@@ -143,7 +153,7 @@ void main() {
       accountId: accountId,
       categoryId: sourceId,
     );
-    final state = AppState(database);
+    final state = AppState(database, widgetService: _NoopWidgetService());
     await state.load();
 
     await DataIntegrityService.mergeCategories(
@@ -197,7 +207,7 @@ void main() {
     await QuickPresetService(
       database,
     ).save(name: 'Preset', type: TransactionType.expense, accountId: accountId);
-    final state = AppState(database);
+    final state = AppState(database, widgetService: _NoopWidgetService());
     await state.load();
 
     await DataIntegrityService.deleteEmptyAccount(
@@ -280,7 +290,7 @@ void main() {
     final receipt = File(p.join(dir.path, 'receipt.jpg'));
     await receipt.writeAsBytes([1, 2, 3]);
 
-    final state = AppState(database, attachmentService: attachments);
+    final state = AppState(database, widgetService: _NoopWidgetService(), attachmentService: attachments);
     await state.load();
     await state.deleteTransaction(state.transactions.single);
 
@@ -301,7 +311,7 @@ void main() {
     final dir = await attachments.directory();
     await File(p.join(dir.path, 'orphan.jpg')).writeAsBytes([1]);
 
-    final state = AppState(database, attachmentService: attachments);
+    final state = AppState(database, widgetService: _NoopWidgetService(), attachmentService: attachments);
     await state.load();
     await state.clearAllUserData();
 
