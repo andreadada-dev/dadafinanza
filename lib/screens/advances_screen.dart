@@ -1297,44 +1297,197 @@ Future<int?> showFinancePersonPicker(
   BuildContext context, {
   bool allowCreate = false,
 }) async {
-  final state = AppScope.of(context);
   return showModalBottomSheet<int>(
     context: context,
     useSafeArea: true,
+    isScrollControlled: true,
     showDragHandle: true,
-    builder: (sheetContext) => Padding(
-      padding: const EdgeInsets.fromLTRB(20, 4, 20, 20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Persona', style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: 8),
-          ...state.people
-              .where((item) => !item.archived)
-              .map(
-                (person) => ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.person_outline_rounded),
-                  title: Text(person.name),
-                  onTap: () => Navigator.pop(sheetContext, person.id),
-                ),
-              ),
-          if (allowCreate)
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.person_add_alt_1_rounded),
-              title: const Text('Nuova persona'),
-              onTap: () async {
-                final id = await showFinancePersonCreator(sheetContext);
-                if (id != null && sheetContext.mounted)
-                  Navigator.pop(sheetContext, id);
-              },
-            ),
-        ],
-      ),
-    ),
+    builder: (sheetContext) =>
+        _FinancePersonPickerSheet(allowCreate: allowCreate),
   );
+}
+
+class _FinancePersonPickerSheet extends StatefulWidget {
+  const _FinancePersonPickerSheet({required this.allowCreate});
+
+  final bool allowCreate;
+
+  @override
+  State<_FinancePersonPickerSheet> createState() =>
+      _FinancePersonPickerSheetState();
+}
+
+class _FinancePersonPickerSheetState extends State<_FinancePersonPickerSheet> {
+  final _searchController = TextEditingController();
+  String _query = '';
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = AppScope.of(context);
+    final query = _query.trim().toLowerCase();
+    final people = state.people
+        .where((item) => !item.archived)
+        .where(
+          (item) =>
+              query.isEmpty || item.name.toLowerCase().contains(query),
+        )
+        .toList()
+      ..sort(
+        (first, second) => first.name.toLowerCase().compareTo(
+          second.name.toLowerCase(),
+        ),
+      );
+
+    return FractionallySizedBox(
+      heightFactor: .78,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(
+          20,
+          4,
+          20,
+          16 + MediaQuery.viewInsetsOf(context).bottom,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Persona', style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 12),
+            TextField(
+              controller: _searchController,
+              textInputAction: TextInputAction.search,
+              decoration: InputDecoration(
+                hintText: 'Cerca persona',
+                prefixIcon: const Icon(Icons.search_rounded),
+                suffixIcon: _query.isEmpty
+                    ? null
+                    : IconButton(
+                        tooltip: 'Cancella ricerca',
+                        onPressed: () {
+                          _searchController.clear();
+                          setState(() => _query = '');
+                        },
+                        icon: const Icon(Icons.close_rounded),
+                      ),
+              ),
+              onChanged: (value) => setState(() => _query = value),
+            ),
+            const SizedBox(height: 16),
+            Expanded(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final columns = constraints.maxWidth >= 400 ? 4 : 3;
+                  final itemCount = people.length + (widget.allowCreate ? 1 : 0);
+                  if (itemCount == 0) {
+                    return const Center(
+                      child: Text('Nessuna persona trovata.'),
+                    );
+                  }
+
+                  return GridView.builder(
+                    keyboardDismissBehavior:
+                        ScrollViewKeyboardDismissBehavior.onDrag,
+                    padding: const EdgeInsets.only(bottom: 8),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: columns,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      childAspectRatio: .9,
+                    ),
+                    itemCount: itemCount,
+                    itemBuilder: (context, index) {
+                      if (widget.allowCreate && index == 0) {
+                        return _PersonPickerTile(
+                          icon: Icons.person_add_alt_1_rounded,
+                          label: 'Nuova',
+                          semanticLabel: 'Crea nuova persona',
+                          onTap: () async {
+                            final id = await showFinancePersonCreator(context);
+                            if (id != null && context.mounted) {
+                              Navigator.pop(context, id);
+                            }
+                          },
+                        );
+                      }
+
+                      final person = people[
+                        index - (widget.allowCreate ? 1 : 0)
+                      ];
+                      return _PersonPickerTile(
+                        icon: Icons.person_outline_rounded,
+                        label: person.name,
+                        semanticLabel: 'Seleziona ' + person.name,
+                        color: Color(person.colorValue),
+                        onTap: () => Navigator.pop(context, person.id),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PersonPickerTile extends StatelessWidget {
+  const _PersonPickerTile({
+    required this.icon,
+    required this.label,
+    required this.semanticLabel,
+    required this.onTap,
+    this.color,
+  });
+
+  final IconData icon;
+  final String label;
+  final String semanticLabel;
+  final VoidCallback onTap;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final foreground = color ?? theme.colorScheme.primary;
+    return Semantics(
+      button: true,
+      label: semanticLabel,
+      child: Material(
+        color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: .55),
+        borderRadius: BorderRadius.circular(18),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, color: foreground, size: 28),
+                const SizedBox(height: 10),
+                Text(
+                  label,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 Future<int?> showFinancePersonCreator(BuildContext context) async {
