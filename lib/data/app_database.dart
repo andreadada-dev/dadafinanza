@@ -1696,6 +1696,9 @@ class AppDatabase {
       await txn.delete('budgets');
       await txn.delete('goals');
       await txn.delete('automation_rules');
+      if (await _tableExists(txn, 'quick_presets')) {
+        await txn.delete('quick_presets');
+      }
       await txn.delete('categories');
       await txn.delete('net_worth_snapshots');
       await txn.delete('accounts', where: 'is_system = 0');
