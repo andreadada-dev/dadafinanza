@@ -1381,7 +1381,7 @@ class _FinancePersonPickerSheetState extends State<_FinancePersonPickerSheet> {
             Expanded(
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  final columns = constraints.maxWidth >= 400 ? 4 : 3;
+                  final columns = constraints.maxWidth >= 360 ? 4 : 3;
                   final itemCount = people.length + (widget.allowCreate ? 1 : 0);
                   if (itemCount == 0) {
                     return const Center(
@@ -1397,7 +1397,7 @@ class _FinancePersonPickerSheetState extends State<_FinancePersonPickerSheet> {
                       crossAxisCount: columns,
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
-                      childAspectRatio: .9,
+                      childAspectRatio: .88,
                     ),
                     itemCount: itemCount,
                     itemBuilder: (context, index) {
@@ -1466,12 +1466,12 @@ class _PersonPickerTile extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(icon, color: foreground, size: 28),
-                const SizedBox(height: 10),
+                Icon(icon, color: foreground, size: 26),
+                const SizedBox(height: 8),
                 Text(
                   label,
                   maxLines: 2,
