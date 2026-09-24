@@ -243,7 +243,7 @@ class AccountContextHomeScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (_) => AccountContextAnalyticsScreen(
-                        accountId: selectedAccount!.id,
+                        accountId: selectedAccount.id,
                         onAccountChanged: onAccountChanged,
                       ),
                     ),
