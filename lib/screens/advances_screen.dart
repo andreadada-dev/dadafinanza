@@ -737,9 +737,7 @@ Future<void> showAdvanceEditor(
                   ),
                   TextField(
                     controller: note,
-                    decoration: InputDecoration(
-                      labelText: 'Nota opzionale',
-                    ),
+                    decoration: InputDecoration(labelText: 'Nota opzionale'),
                   ),
                 ],
               ),
