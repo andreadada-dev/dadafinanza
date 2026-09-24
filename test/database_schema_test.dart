@@ -38,7 +38,7 @@ void main() {
       if (database.db.isOpen) await database.db.close();
     });
 
-    expect(AppDatabase.databaseVersion, 5);
+    expect(AppDatabase.databaseVersion, 6);
     final columns = await database.db.rawQuery(
       'PRAGMA table_info(transactions)',
     );
