@@ -193,4 +193,13 @@ void main() {
     expect(preview.rows.single.tags, const ['work', 'break']);
     expect(preview.rows.single.note, 'Coffee');
   });
+
+  test('deep hardening plan and app version are finalized', () {
+    final plan = File('docs/DEEP_FEATURE_FIX_PLAN.md').readAsStringSync();
+    final pubspec = File('pubspec.yaml').readAsStringSync();
+
+    expect(plan, isNot(contains('- [ ]')));
+    expect(plan, contains('Oggi · Settimana · Mese · Custom'));
+    expect(pubspec, contains('version: 1.6.0+17'));
+  });
 }
