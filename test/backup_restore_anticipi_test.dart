@@ -96,6 +96,14 @@ void main() {
       await File(
         p.join(attachmentDir.path, 'receipt-test.jpg'),
       ).writeAsBytes([1, 2, 3, 4]);
+      await database.addTransaction(
+        type: TransactionType.expense,
+        amount: 5,
+        accountId: accountId,
+        date: DateTime(2026, 9, 7),
+        note: 'Movimento con ricevuta',
+        receiptPath: 'receipt-test.jpg',
+      );
 
       final backupService = BackupService(
         database,
