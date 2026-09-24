@@ -648,15 +648,17 @@ class _CategoryChartControls extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final inactive = theme.colorScheme.onSurfaceVariant;
+    final selectedColor = theme.colorScheme.onSurface;
 
     Widget typeAction({
       required TransactionType type,
-      required IconData icon,
       required String label,
       required Color color,
       required Alignment alignment,
     }) {
       final selected = selectedType == type;
+      final resolvedColor = selected ? selectedColor : color;
+
       return Align(
         alignment: alignment,
         child: Semantics(
@@ -664,24 +666,29 @@ class _CategoryChartControls extends StatelessWidget {
           selected: selected,
           label: label,
           child: InkWell(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(12),
             onTap: () => onTypeChanged(type),
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 2),
-              child: Row(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 2),
+              child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(
-                    icon,
-                    size: 24,
-                    color: selected ? color : color.withValues(alpha: .58),
-                  ),
-                  const SizedBox(width: 6),
                   Text(
                     label,
-                    style: theme.textTheme.titleLarge?.copyWith(
-                      color: selected ? color : color.withValues(alpha: .58),
-                      fontWeight: selected ? FontWeight.w900 : FontWeight.w700,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: resolvedColor,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 180),
+                    curve: Curves.easeOutCubic,
+                    width: 26,
+                    height: 2,
+                    decoration: BoxDecoration(
+                      color: selected ? selectedColor : Colors.transparent,
+                      borderRadius: BorderRadius.circular(999),
                     ),
                   ),
                 ],
@@ -698,7 +705,6 @@ class _CategoryChartControls extends StatelessWidget {
         Expanded(
           child: typeAction(
             type: TransactionType.expense,
-            icon: Icons.arrow_upward_rounded,
             label: 'Spese',
             color: context.financeColors.negative,
             alignment: Alignment.centerLeft,
@@ -752,7 +758,6 @@ class _CategoryChartControls extends StatelessWidget {
         Expanded(
           child: typeAction(
             type: TransactionType.income,
-            icon: Icons.arrow_downward_rounded,
             label: 'Entrate',
             color: context.financeColors.positive,
             alignment: Alignment.centerRight,
