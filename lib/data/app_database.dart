@@ -411,6 +411,8 @@ class AppDatabase {
     await _addColumnIfMissing(db, 'recurring', 'amount_cents', 'INTEGER');
     await _addColumnIfMissing(db, 'recurring', 'to_account_id', 'INTEGER');
     await _addColumnIfMissing(db, 'budgets', 'limit_cents', 'INTEGER');
+    await _addColumnIfMissing(db, 'goals', 'target_amount_cents', 'INTEGER');
+    await _addColumnIfMissing(db, 'goals', 'current_amount_cents', 'INTEGER');
     await _addColumnIfMissing(
       db,
       'automation_rules',
@@ -438,6 +440,12 @@ class AppDatabase {
     );
     await db.rawUpdate(
       'UPDATE budgets SET limit_cents = CAST(ROUND(limit_amount * 100) AS INTEGER) WHERE limit_cents IS NULL',
+    );
+    await db.rawUpdate(
+      'UPDATE goals SET target_amount_cents = CAST(ROUND(target_amount * 100) AS INTEGER) WHERE target_amount_cents IS NULL',
+    );
+    await db.rawUpdate(
+      'UPDATE goals SET current_amount_cents = CAST(ROUND(current_amount * 100) AS INTEGER) WHERE current_amount_cents IS NULL',
     );
     await db.rawUpdate(
       'UPDATE automation_rules SET min_amount_cents = CASE WHEN min_amount IS NULL THEN NULL ELSE CAST(ROUND(min_amount * 100) AS INTEGER) END, max_amount_cents = CASE WHEN max_amount IS NULL THEN NULL ELSE CAST(ROUND(max_amount * 100) AS INTEGER) END',
@@ -527,6 +535,69 @@ class AppDatabase {
     await db.execute('DROP TABLE budgets');
     await db.execute('ALTER TABLE budgets_v6 RENAME TO budgets');
 
+    final hasGoalEntries = await _tableExists(db, 'goal_entries');
+    if (hasGoalEntries) {
+      await db.execute(
+        'CREATE TEMP TABLE goal_entries_v6_backup AS SELECT * FROM goal_entries',
+      );
+      await db.execute('DROP TABLE goal_entries');
+    }
+
+    await db.execute('''CREATE TABLE goals_v6(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      icon_key TEXT NOT NULL,
+      color INTEGER NOT NULL,
+      target_amount REAL NOT NULL,
+      current_amount REAL NOT NULL DEFAULT 0,
+      target_date INTEGER,
+      linked_account_id INTEGER,
+      archived INTEGER NOT NULL DEFAULT 0,
+      completed INTEGER NOT NULL DEFAULT 0,
+      target_amount_cents INTEGER,
+      current_amount_cents INTEGER,
+      FOREIGN KEY(linked_account_id) REFERENCES accounts(id) ON DELETE SET NULL
+    )''');
+    await db.execute('''INSERT INTO goals_v6(
+      id, name, icon_key, color, target_amount, current_amount, target_date,
+      linked_account_id, archived, completed, target_amount_cents,
+      current_amount_cents
+    )
+    SELECT g.id, g.name, g.icon_key, g.color, g.target_amount,
+      g.current_amount, g.target_date,
+      CASE WHEN g.linked_account_id IS NULL OR EXISTS(
+        SELECT 1 FROM accounts a WHERE a.id = g.linked_account_id
+      ) THEN g.linked_account_id ELSE NULL END,
+      g.archived, g.completed, g.target_amount_cents, g.current_amount_cents
+    FROM goals g''');
+    await db.execute('DROP TABLE goals');
+    await db.execute('ALTER TABLE goals_v6 RENAME TO goals');
+
+    if (hasGoalEntries) {
+      await db.execute('''CREATE TABLE goal_entries(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        goal_id INTEGER NOT NULL,
+        transaction_id INTEGER UNIQUE,
+        amount REAL NOT NULL DEFAULT 0,
+        amount_cents INTEGER,
+        kind TEXT NOT NULL DEFAULT 'manual',
+        created_at INTEGER NOT NULL,
+        FOREIGN KEY(goal_id) REFERENCES goals(id) ON DELETE CASCADE,
+        FOREIGN KEY(transaction_id) REFERENCES transactions(id) ON DELETE CASCADE
+      )''');
+      await db.execute('''INSERT INTO goal_entries(
+        id, goal_id, transaction_id, amount, amount_cents, kind, created_at
+      )
+      SELECT e.id, e.goal_id,
+        CASE WHEN e.transaction_id IS NULL OR EXISTS(
+          SELECT 1 FROM transactions t WHERE t.id = e.transaction_id
+        ) THEN e.transaction_id ELSE NULL END,
+        e.amount, e.amount_cents, e.kind, e.created_at
+      FROM goal_entries_v6_backup e
+      WHERE EXISTS(SELECT 1 FROM goals g WHERE g.id = e.goal_id)''');
+      await db.execute('DROP TABLE goal_entries_v6_backup');
+    }
+
     await db.execute('''CREATE TABLE automation_rules_v6(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
@@ -567,9 +638,6 @@ class AppDatabase {
       'ALTER TABLE automation_rules_v6 RENAME TO automation_rules',
     );
 
-    await db.rawUpdate(
-      'UPDATE goals SET linked_account_id = NULL WHERE linked_account_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM accounts a WHERE a.id = goals.linked_account_id)',
-    );
     if (await _tableExists(db, 'quick_presets')) {
       await db.rawUpdate(
         'UPDATE quick_presets SET account_id = NULL WHERE account_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM accounts a WHERE a.id = quick_presets.account_id)',
@@ -579,6 +647,13 @@ class AppDatabase {
       );
       await db.rawUpdate(
         'UPDATE quick_presets SET category_id = NULL WHERE category_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM categories c WHERE c.id = quick_presets.category_id)',
+      );
+    }
+
+    final foreignKeyViolations = await db.rawQuery('PRAGMA foreign_key_check');
+    if (foreignKeyViolations.isNotEmpty) {
+      throw StateError(
+        'Migrazione v6 non valida: riferimenti esterni incoerenti.',
       );
     }
   }
