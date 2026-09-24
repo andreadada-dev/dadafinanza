@@ -89,12 +89,11 @@ class _FinanceQuickActionState extends State<FinanceQuickAction> {
                             maxLines: 1,
                             softWrap: false,
                             overflow: TextOverflow.visible,
-                            style: Theme.of(
-                              context,
-                            ).textTheme.labelLarge?.copyWith(
-                              color: resolvedColor,
-                              fontWeight: FontWeight.w800,
-                            ),
+                            style: Theme.of(context).textTheme.labelLarge
+                                ?.copyWith(
+                                  color: resolvedColor,
+                                  fontWeight: FontWeight.w800,
+                                ),
                           ),
                         ),
                       ],
