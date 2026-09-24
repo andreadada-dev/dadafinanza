@@ -88,7 +88,7 @@ class RecurringExecutionService {
         'note': item.note ?? item.name,
         'tags': '',
         'receipt_path': null,
-        'include_in_analytics': item.type == TransactionType.transfer ? 0 : 1,
+        'include_in_analytics': 1,
         'recurring_id': item.id,
         'refund_of_transaction_id': null,
         'kind': 'normal',
