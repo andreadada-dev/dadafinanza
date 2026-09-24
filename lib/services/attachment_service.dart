@@ -71,6 +71,14 @@ class AttachmentService {
     return removed;
   }
 
+  Future<void> clear() async {
+    final dir = await directory();
+    if (await dir.exists()) {
+      await dir.delete(recursive: true);
+    }
+    await dir.create(recursive: true);
+  }
+
   Future<void> replaceDirectory(Directory source) async {
     final target = await directory();
     if (await target.exists()) {
