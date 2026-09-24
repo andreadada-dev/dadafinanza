@@ -1371,6 +1371,7 @@ class AppState extends ChangeNotifier {
 
   Future<void> syncWidget() => widgetService.sync(
     balance: totalBalance,
+    currency: currency,
     expenseCategories: categoriesFor(TransactionType.expense),
   );
 }
