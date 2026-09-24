@@ -39,7 +39,9 @@ void main() {
   });
 
   test('category chart is clearly exposed in Personalizza Home', () {
-    final settings = File('lib/screens/settings_screen.dart').readAsStringSync();
+    final settings = File(
+      'lib/screens/settings_screen.dart',
+    ).readAsStringSync();
     final models = File('lib/models/models.dart').readAsStringSync();
 
     expect(
