@@ -157,4 +157,39 @@ void main() {
     expect(donut, contains('_hasTodayData'));
     expect(donut, contains('widget.accountId'));
   });
+
+  test('CSV import remains compatible with the previous header', () {
+    final now = DateTime.utc(2026, 9, 24, 12);
+    final state = AppState(AppDatabase())
+      ..accounts = [
+        Account(
+          id: 1,
+          name: 'Main',
+          balance: 100,
+          colorValue: 0xFF8E8E93,
+          iconKey: 'wallet',
+          accountType: AccountType.checking,
+          includeInTotal: true,
+          includeInAnalytics: true,
+          isLocked: false,
+          isArchived: false,
+          hideBalance: false,
+          isSystem: false,
+          createdAt: now,
+          updatedAt: now,
+        ),
+      ];
+
+    const oldCsv =
+        'type,amount,date,account,to_account,category,description,tags,include_in_analytics,stable_key\n'
+        'expense,4.20,2026-09-24T12:00:00.000Z,Main,,,Coffee,work|break,1,legacy-key\n';
+
+    const service = CsvService();
+    final preview = service.preview(state, oldCsv);
+
+    expect(preview.invalidRows, 0);
+    expect(preview.rows, hasLength(1));
+    expect(preview.rows.single.tags, const ['work', 'break']);
+    expect(preview.rows.single.note, 'Coffee');
+  });
 }
