@@ -40,8 +40,8 @@ class FinanceColors extends ThemeExtension<FinanceColors> {
 }
 
 class AppTheme {
-  // DadaFinanza keeps the flat hierarchy requested by the product, while
-  // adopting Ivy-like high-contrast neutrals and a restrained purple accent.
+  // DadaFinanza keeps a neutral high-contrast shell. Semantic finance colors
+  // carry meaning; navigation and primary chrome stay black/white.
   static const purple = Color(0xFF5C3DF5);
   static const purpleDark = Color(0xFF7B62F5);
   static const muted = Color(0xFF74747A);
@@ -63,7 +63,7 @@ class AppTheme {
     final secondaryText = dark
         ? const Color(0xFFCBCBD6)
         : const Color(0xFF74747A);
-    final primary = dark ? purpleDark : purple;
+    final primary = onSurface;
 
     final scheme =
         ColorScheme.fromSeed(
@@ -73,7 +73,7 @@ class AppTheme {
           error: dark ? const Color(0xFFFF7373) : const Color(0xFFF53D3D),
         ).copyWith(
           primary: primary,
-          onPrimary: Colors.white,
+          onPrimary: background,
           secondary: dark ? const Color(0xFF38E0A8) : const Color(0xFF12B880),
           onSecondary: Colors.white,
           surface: background,
