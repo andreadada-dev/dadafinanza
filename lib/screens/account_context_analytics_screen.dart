@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -258,6 +259,17 @@ class _AccountContextAnalyticsScreenState
               ),
             ],
           ),
+          if (effectiveAccountId != null && selected != null) ...[
+            const SizedBox(height: 32),
+            const SectionTitle('Andamento saldo'),
+            const SizedBox(height: 12),
+            _AccountBalanceTrend(
+              state: state,
+              account: selected,
+              from: from,
+              to: to,
+            ),
+          ],
           const SizedBox(height: 24),
           _AnalyticsLine(
             icon: delta == null
@@ -377,6 +389,127 @@ class _AccountContextAnalyticsScreenState
           ],
         ],
       ),
+    );
+  }
+}
+
+
+class _AccountBalanceTrend extends StatelessWidget {
+  const _AccountBalanceTrend({
+    required this.state,
+    required this.account,
+    required this.from,
+    required this.to,
+  });
+
+  final AppState state;
+  final Account account;
+  final DateTime from;
+  final DateTime to;
+
+  double _deltaFor(FinanceTransaction item) {
+    var delta = 0.0;
+    if (item.accountId == account.id) {
+      delta += switch (item.type) {
+        TransactionType.expense => -item.amount,
+        TransactionType.income => item.amount,
+        TransactionType.transfer => -item.amount,
+      };
+    }
+    if (item.type == TransactionType.transfer &&
+        item.toAccountId == account.id) {
+      delta += item.amount;
+    }
+    return delta;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final items = AccountContextService.transactionsFor(state, account.id)
+      ..sort((a, b) {
+        final byDate = a.date.compareTo(b.date);
+        return byDate != 0 ? byDate : a.id.compareTo(b.id);
+      });
+
+    var value = account.openingBalance;
+    for (final item in items) {
+      if (!item.date.isBefore(from)) break;
+      value += _deltaFor(item);
+    }
+
+    final startValue = value;
+    final spots = <FlSpot>[FlSpot(0, value)];
+    var point = 0.0;
+    for (final item in items) {
+      if (item.date.isBefore(from) || !item.date.isBefore(to)) continue;
+      value += _deltaFor(item);
+      point += 1;
+      spots.add(FlSpot(point, value));
+    }
+    if (spots.length == 1) {
+      spots.add(FlSpot(1, value));
+    }
+
+    var minValue = spots.first.y;
+    var maxValue = spots.first.y;
+    for (final spot in spots.skip(1)) {
+      if (spot.y < minValue) minValue = spot.y;
+      if (spot.y > maxValue) maxValue = spot.y;
+    }
+    final spread = (maxValue - minValue).abs();
+    final padding = spread < .01 ? maxValue.abs() * .08 + 1 : spread * .14;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 150,
+          child: Semantics(
+            label:
+                'Andamento del saldo di ${account.name} nel periodo selezionato',
+            child: LineChart(
+              LineChartData(
+                minY: minValue - padding,
+                maxY: maxValue + padding,
+                titlesData: const FlTitlesData(show: false),
+                gridData: FlGridData(
+                  show: true,
+                  drawVerticalLine: false,
+                  horizontalInterval: spread < .01 ? padding : null,
+                ),
+                borderData: FlBorderData(show: false),
+                lineTouchData: const LineTouchData(enabled: true),
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: spots,
+                    isCurved: true,
+                    dotData: const FlDotData(show: false),
+                    barWidth: 3,
+                    color: Color(account.colorValue),
+                  ),
+                ],
+              ),
+              duration: const Duration(milliseconds: 260),
+              curve: Curves.easeOutCubic,
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                'Inizio ${state.hideBalance || account.hideBalance ? '••••' : moneyFor(state, startValue)}',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ),
+            Text(
+              'Fine ${state.hideBalance || account.hideBalance ? '••••' : moneyFor(state, value)}',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
