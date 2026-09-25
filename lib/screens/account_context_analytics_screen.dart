@@ -946,7 +946,7 @@ class _BalanceTrendState extends State<_BalanceTrend> {
                                 (spot.x - selectedSpot.x).abs() < .0001 &&
                                 (spot.y - selectedSpot.y).abs() < .0001),
                       ),
-                      barWidth: spots.length == 1 ? 0 : 3,
+                      barWidth: 3,
                       color: lineColor,
                     ),
                   ],
