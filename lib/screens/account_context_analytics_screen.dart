@@ -33,6 +33,45 @@ class _AccountContextAnalyticsScreenState
   _AnalyticsPeriod period = _AnalyticsPeriod.month;
   DateTimeRange? custom;
 
+  String _periodLabel(_AnalyticsPeriod item) {
+    if (item != _AnalyticsPeriod.custom || custom == null) {
+      return switch (item) {
+        _AnalyticsPeriod.week => 'Settimana',
+        _AnalyticsPeriod.month => 'Mese',
+        _AnalyticsPeriod.year => 'Anno',
+        _AnalyticsPeriod.custom => 'Custom',
+      };
+    }
+    final formatter = DateFormat('d/M/yyyy');
+    return '${formatter.format(custom!.start)} ~ ${formatter.format(custom!.end)}';
+  }
+
+  Future<void> _selectPeriod(_AnalyticsPeriod next) async {
+    if (next != _AnalyticsPeriod.custom) {
+      if (next != period) setState(() => period = next);
+      return;
+    }
+
+    final now = DateTime.now();
+    final result = await showDateRangePicker(
+      context: context,
+      firstDate: DateTime(2000),
+      lastDate: now.add(const Duration(days: 3650)),
+      initialDateRange:
+          custom ??
+          DateTimeRange(
+            start: DateTime(now.year, now.month),
+            end: now,
+          ),
+    );
+    if (result != null && mounted) {
+      setState(() {
+        custom = result;
+        period = _AnalyticsPeriod.custom;
+      });
+    }
+  }
+
   (DateTime, DateTime) _bounds(AppState state) {
     final now = DateTime.now();
     switch (period) {
@@ -167,52 +206,18 @@ class _AccountContextAnalyticsScreenState
         children: [
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: SegmentedButton<_AnalyticsPeriod>(
-              showSelectedIcon: false,
-              segments: const [
-                ButtonSegment(
-                  value: _AnalyticsPeriod.week,
-                  label: Text('Settimana'),
-                ),
-                ButtonSegment(
-                  value: _AnalyticsPeriod.month,
-                  label: Text('Mese'),
-                ),
-                ButtonSegment(
-                  value: _AnalyticsPeriod.year,
-                  label: Text('Anno'),
-                ),
-                ButtonSegment(
-                  value: _AnalyticsPeriod.custom,
-                  label: Text('Custom'),
-                ),
+            child: Row(
+              children: [
+                for (final item in _AnalyticsPeriod.values) ...[
+                  _PeriodPill(
+                    label: _periodLabel(item),
+                    selected: period == item,
+                    onTap: () => _selectPeriod(item),
+                  ),
+                  if (item != _AnalyticsPeriod.values.last)
+                    const SizedBox(width: 10),
+                ],
               ],
-              selected: {period},
-              onSelectionChanged: (value) async {
-                final next = value.first;
-                if (next != _AnalyticsPeriod.custom) {
-                  setState(() => period = next);
-                  return;
-                }
-                final now = DateTime.now();
-                final result = await showDateRangePicker(
-                  context: context,
-                  firstDate: DateTime(2000),
-                  lastDate: now.add(const Duration(days: 3650)),
-                  initialDateRange:
-                      custom ??
-                      DateTimeRange(
-                        start: DateTime(now.year, now.month),
-                        end: now,
-                      ),
-                );
-                if (result != null && mounted) {
-                  setState(() {
-                    custom = result;
-                    period = _AnalyticsPeriod.custom;
-                  });
-                }
-              },
             ),
           ),
           const SizedBox(height: 24),
@@ -259,17 +264,17 @@ class _AccountContextAnalyticsScreenState
               ),
             ],
           ),
-          if (effectiveAccountId != null && selected != null) ...[
-            const SizedBox(height: 32),
-            const SectionTitle('Andamento saldo'),
-            const SizedBox(height: 12),
-            _AccountBalanceTrend(
-              state: state,
-              account: selected,
-              from: from,
-              to: to,
-            ),
-          ],
+          const SizedBox(height: 32),
+          SectionTitle(
+            effectiveAccountId == null ? 'Andamento patrimonio' : 'Andamento saldo',
+          ),
+          const SizedBox(height: 12),
+          _BalanceTrend(
+            state: state,
+            account: effectiveAccountId == null ? null : selected,
+            from: from,
+            to: to,
+          ),
           const SizedBox(height: 24),
           _AnalyticsLine(
             icon: delta == null
