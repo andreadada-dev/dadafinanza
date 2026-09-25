@@ -796,15 +796,17 @@ class _BalanceTrendState extends State<_BalanceTrend>
             onNext: () => widget.onShiftPeriod(1),
           ),
         ),
-        const SizedBox(height: 4),
-        OverflowBox(
-          alignment: Alignment.center,
-          minWidth: MediaQuery.sizeOf(context).width - 4,
-          maxWidth: MediaQuery.sizeOf(context).width - 4,
-          child: SizedBox(
-            height: 224,
+        const SizedBox(height: 14),
+        SizedBox(
+          height: 224,
+          child: OverflowBox(
+            alignment: Alignment.center,
+            minWidth: MediaQuery.sizeOf(context).width - 4,
+            maxWidth: MediaQuery.sizeOf(context).width - 4,
+            minHeight: 224,
+            maxHeight: 224,
             child: Semantics(
-            label: account == null
+              label: account == null
                 ? 'Andamento del patrimonio nel periodo selezionato'
                 : 'Andamento del saldo di ${account.name} nel periodo selezionato',
             child: Listener(
@@ -1018,7 +1020,6 @@ class _BalanceTrendState extends State<_BalanceTrend>
                 ),
                 duration: const Duration(milliseconds: 220),
                 curve: Curves.easeOutCubic,
-              ),
               ),
             ),
           ),
