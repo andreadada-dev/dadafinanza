@@ -393,7 +393,6 @@ class _AccountContextAnalyticsScreenState
   }
 }
 
-
 class _AccountBalanceTrend extends StatelessWidget {
   const _AccountBalanceTrend({
     required this.state,
