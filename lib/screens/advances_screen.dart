@@ -8,15 +8,29 @@ import '../models/advance_models.dart';
 import '../models/models.dart';
 import '../widgets/ui_helpers.dart';
 
-class AdvancesScreen extends StatelessWidget {
+class AdvancesScreen extends StatefulWidget {
   const AdvancesScreen({this.showFab = true, super.key});
 
   final bool showFab;
 
   @override
+  State<AdvancesScreen> createState() => _AdvancesScreenState();
+}
+
+class _AdvancesScreenState extends State<AdvancesScreen> {
+  final _searchController = TextEditingController();
+  String _query = '';
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
-    final people =
+    final allPeople =
         state.people
             .where(
               (person) =>
@@ -32,6 +46,13 @@ class AdvancesScreen extends StatelessWidget {
             );
           });
 
+    final query = _query.trim().toLowerCase();
+    final people = query.isEmpty
+        ? allPeople
+        : allPeople
+              .where((person) => person.name.toLowerCase().contains(query))
+              .toList();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Anticipi'),
@@ -46,7 +67,7 @@ class AdvancesScreen extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: showFab
+      floatingActionButton: widget.showFab
           ? FloatingActionButton.extended(
               onPressed: () => showAdvanceEditor(context),
               icon: const Icon(Icons.add_rounded),
@@ -54,6 +75,7 @@ class AdvancesScreen extends StatelessWidget {
             )
           : null,
       body: ListView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 120),
         children: [
           FlatMetric(
@@ -84,10 +106,56 @@ class AdvancesScreen extends StatelessWidget {
           ),
           const SizedBox(height: 32),
           const SectionTitle('Persone'),
-          if (people.isEmpty)
+          const SizedBox(height: 8),
+          TextField(
+            controller: _searchController,
+            textInputAction: TextInputAction.search,
+            decoration: InputDecoration(
+              hintText: 'Cerca persona',
+              prefixIcon: const Icon(Icons.search_rounded),
+              suffixIcon: _query.isEmpty
+                  ? null
+                  : IconButton(
+                      tooltip: 'Cancella ricerca',
+                      onPressed: () {
+                        _searchController.clear();
+                        setState(() => _query = '');
+                      },
+                      icon: const Icon(Icons.close_rounded),
+                    ),
+            ),
+            onChanged: (value) => setState(() => _query = value),
+          ),
+          const SizedBox(height: 16),
+          if (allPeople.isEmpty)
             const Text('Nessun anticipo registrato.')
+          else if (people.isEmpty)
+            const Text('Nessuna persona trovata.')
           else
-            ...people.map((person) => _AdvancePersonSummaryRow(person: person)),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final columns = constraints.maxWidth >= 560
+                    ? 4
+                    : constraints.maxWidth >= 350
+                    ? 3
+                    : 2;
+
+                return GridView.builder(
+                  shrinkWrap: true,
+                  primary: false,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: columns,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: .9,
+                  ),
+                  itemCount: people.length,
+                  itemBuilder: (context, index) =>
+                      _AdvancePersonSummaryCard(person: people[index]),
+                );
+              },
+            ),
         ],
       ),
     );
@@ -131,68 +199,95 @@ String _notificationLabel(DateTime? reminder) {
   return 'Notifica: ${DateFormat('d MMM', 'it_IT').format(reminder)}';
 }
 
-class _AdvancePersonSummaryRow extends StatelessWidget {
-  const _AdvancePersonSummaryRow({required this.person});
+String _gridNotificationLabel(DateTime? reminder) {
+  if (reminder == null) return 'Nessuna notifica';
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+  final target = DateTime(reminder.year, reminder.month, reminder.day);
+  final days = target.difference(today).inDays;
+  if (days < 0) return 'Notifica scaduta';
+  if (days == 0) return 'Notifica oggi';
+  if (days == 1) return 'Notifica domani';
+  return 'Notifica ${DateFormat('d MMM', 'it_IT').format(reminder)}';
+}
+
+class _AdvancePersonSummaryCard extends StatelessWidget {
+  const _AdvancePersonSummaryCard({required this.person});
 
   final FinancePerson person;
 
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
-    final items = state.advances
+    final movementCount = state.advances
         .where((item) => item.personId == person.id)
-        .toList();
-    var receivable = 0;
-    var payable = 0;
-    var openCount = 0;
-    for (final item in items) {
-      if (item.closedKind != null) continue;
-      final remaining = state.advanceRemainingCents(item.id);
-      if (remaining <= 0) continue;
-      openCount++;
-      if (item.direction == AdvanceDirection.receivable) {
-        receivable += remaining;
-      } else {
-        payable += remaining;
-      }
-    }
+        .length;
     final reminder = _nextAdvanceReminder(state, person.id);
-    final summary = <String>[
-      if (receivable > 0)
-        'Da ricevere ${state.hideBalance ? '••••' : moneyFor(state, Money.fromCents(receivable))}',
-      if (payable > 0)
-        'Da restituire ${state.hideBalance ? '••••' : moneyFor(state, Money.fromCents(payable))}',
-      if (openCount == 0)
-        '${items.length} ${items.length == 1 ? 'movimento' : 'movimenti'} nello storico',
-    ].join(' · ');
+    final notification = _gridNotificationLabel(reminder);
+    final theme = Theme.of(context);
 
     return Semantics(
       button: true,
-      label: '${person.name}. ${_notificationLabel(reminder)}. $summary',
-      child: ListTile(
-        contentPadding: EdgeInsets.zero,
-        minVerticalPadding: 12,
-        leading: Icon(
-          Icons.person_outline_rounded,
-          color: Color(person.colorValue),
-        ),
-        title: Text(
-          person.name,
-          style: const TextStyle(fontWeight: FontWeight.w800),
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(_notificationLabel(reminder)),
-            const SizedBox(height: 2),
-            Text(summary),
-          ],
-        ),
-        trailing: const Icon(Icons.chevron_right_rounded),
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => FinancePersonDetailScreen(personId: person.id),
+      label:
+          '${person.name}. $notification. $movementCount ${movementCount == 1 ? 'movimento' : 'movimenti'}.',
+      child: Material(
+        color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: .5),
+        borderRadius: BorderRadius.circular(18),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => FinancePersonDetailScreen(personId: person.id),
+            ),
+          ),
+          child: Stack(
+            children: [
+              Positioned(
+                top: 10,
+                right: 12,
+                child: Text(
+                  '$movementCount',
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    fontWeight: FontWeight.w800,
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 18, 10, 12),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.person_outline_rounded,
+                      color: Color(person.colorValue),
+                      size: 28,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      person.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      notification,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
