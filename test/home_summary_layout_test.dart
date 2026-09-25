@@ -211,6 +211,34 @@ void main() {
     expect(analytics, contains('periodOffset += delta'));
   });
 
+  test('shared user palette offers many muted colors everywhere', () {
+    final helpers = File('lib/widgets/ui_helpers.dart').readAsStringSync();
+    final paletteStart = helpers.indexOf('const categoryPalette = <Color>[');
+    final paletteEnd = helpers.indexOf('];', paletteStart);
+    expect(paletteStart, greaterThanOrEqualTo(0));
+    expect(paletteEnd, greaterThan(paletteStart));
+
+    final paletteSource = helpers.substring(paletteStart, paletteEnd);
+    final colorCount = RegExp(
+      r'Color\(0xFF[0-9A-F]{6}\)',
+    ).allMatches(paletteSource).length;
+    expect(colorCount, greaterThanOrEqualTo(40));
+
+    for (final path in const [
+      'lib/screens/account_screens.dart',
+      'lib/screens/account_management_screen.dart',
+      'lib/screens/category_management_screen.dart',
+      'lib/screens/advances_screen.dart',
+      'lib/screens/planning_screens.dart',
+    ]) {
+      expect(
+        File(path).readAsStringSync(),
+        contains('categoryPalette'),
+        reason: '$path deve usare la palette condivisa',
+      );
+    }
+  });
+
   test('category donut always offers Today and renders an empty ring', () {
     final source = File(
       'lib/widgets/home_dashboard_widget.dart',
