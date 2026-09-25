@@ -173,6 +173,23 @@ void main() {
     expect(analytics, contains('item.includeInTotal'));
   });
 
+  test('analytics balance chart uses daily closes and selectable dates', () {
+    final analytics = File(
+      'lib/screens/account_context_analytics_screen.dart',
+    ).readAsStringSync();
+
+    expect(analytics, contains('endOfDayBalances'));
+    expect(analytics, contains('isCurved: false'));
+    expect(analytics, contains('leftTitles: AxisTitles('));
+    expect(analytics, contains('interval: yInterval'));
+    expect(analytics, contains('minIncluded: true'));
+    expect(analytics, contains('maxIncluded: true'));
+    expect(analytics, contains('onTap: () => setState(() => _selectedDay = day)'));
+    expect(analytics, contains("'Saldo finale "));
+    expect(analytics, contains('touchCallback: (event, response)'));
+    expect(analytics, contains('VerticalLine('));
+  });
+
   test('category donut always offers Today and renders an empty ring', () {
     final source = File(
       'lib/widgets/home_dashboard_widget.dart',
