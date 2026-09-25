@@ -603,6 +603,7 @@ class _BalanceTrend extends StatelessWidget {
                       showTitles: true,
                       interval: interval,
                       reservedSize: 32,
+                      maxIncluded: false,
                       getTitlesWidget: (axisValue, meta) {
                         final day = axisValue.round();
                         final date = from.add(Duration(days: day));
@@ -632,6 +633,8 @@ class _BalanceTrend extends StatelessWidget {
                     getTooltipColor: (_) =>
                         theme.colorScheme.surfaceContainerHighest,
                     tooltipBorderRadius: BorderRadius.circular(10),
+                    fitInsideHorizontally: true,
+                    fitInsideVertically: true,
                     getTooltipItems: (touchedSpots) => touchedSpots
                         .map((spot) {
                           final date = from.add(
