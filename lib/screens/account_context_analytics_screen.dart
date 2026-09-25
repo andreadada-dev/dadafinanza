@@ -569,7 +569,7 @@ class _BalanceTrendState extends State<_BalanceTrend> {
     }
 
     final startValue = value;
-    final durationDays = to.difference(from).inDays.clamp(1, 10000);
+    final durationDays = to.difference(from).inDays.clamp(1, 10000).toInt();
     final endOfDayBalances = <double>[];
     var itemIndex = items.indexWhere((item) => !item.date.isBefore(from));
     if (itemIndex < 0) itemIndex = items.length;
@@ -616,7 +616,7 @@ class _BalanceTrendState extends State<_BalanceTrend> {
 
     final selectedDay = _selectedDay == null
         ? null
-        : _selectedDay!.clamp(0, endOfDayBalances.length - 1);
+        : _selectedDay!.clamp(0, endOfDayBalances.length - 1).toInt();
     final selectedDate = selectedDay == null
         ? null
         : from.add(Duration(days: selectedDay));
@@ -671,12 +671,12 @@ class _BalanceTrendState extends State<_BalanceTrend> {
                       interval: xInterval,
                       reservedSize: 38,
                       minIncluded: true,
-                      maxIncluded: true,
+                      maxIncluded: endOfDayBalances.length > 1,
                       getTitlesWidget: (axisValue, meta) {
-                        final day = axisValue.round().clamp(
-                          0,
-                          endOfDayBalances.length - 1,
-                        );
+                        final day = axisValue
+                            .round()
+                            .clamp(0, endOfDayBalances.length - 1)
+                            .toInt();
                         final date = from.add(Duration(days: day));
                         final selected = selectedDay == day;
                         return Padding(
@@ -723,10 +723,10 @@ class _BalanceTrendState extends State<_BalanceTrend> {
                     fitInsideVertically: true,
                     getTooltipItems: (touchedSpots) => touchedSpots
                         .map((spot) {
-                          final day = spot.x.round().clamp(
-                            0,
-                            endOfDayBalances.length - 1,
-                          );
+                          final day = spot.x
+                              .round()
+                              .clamp(0, endOfDayBalances.length - 1)
+                              .toInt();
                           final date = from.add(Duration(days: day));
                           return LineTooltipItem(
                             '${DateFormat('d MMM yyyy', 'it_IT').format(date)}\n'
