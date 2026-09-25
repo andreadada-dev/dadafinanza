@@ -153,7 +153,7 @@ void main() {
     expect(find.text('Dario'), findsOneWidget);
     expect(find.text('Notifica: domani'), findsOneWidget);
     expect(find.text('Movimenti'), findsOneWidget);
-    expect(find.text('Nuovo anticipo per questa persona'), findsOneWidget);
+    expect(find.text('Nuovo anticipo'), findsOneWidget);
     expect(find.textContaining('25 set 2026 ·'), findsOneWidget);
     expect(find.text('Da saldare'), findsOneWidget);
     expect(find.text('Non recuperato'), findsOneWidget);
