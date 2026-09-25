@@ -625,7 +625,7 @@ class _BalanceTrendState extends State<_BalanceTrend> {
 
     final spread = (maxValue - minValue).abs();
     final rawStep = spread < .0001
-        ? math.max(1.0, maxValue.abs() * .05)
+        ? math.max(1.0, maxValue.abs() * .05).toDouble()
         : spread / 4;
     final step = _niceStep(rawStep);
     var minY = (minValue / step).floorToDouble() * step;
@@ -718,7 +718,7 @@ class _BalanceTrendState extends State<_BalanceTrend> {
     final finalValue = value;
     final chartMaxX = isToday
         ? 24.0
-        : math.max(1.0, (durationDays - 1).toDouble());
+        : math.max(1.0, (durationDays - 1).toDouble()).toDouble();
     final xInterval = isToday ? 1.0 : _labelInterval(chartMaxX);
     final (chartMin, chartMax, yInterval) = _yScale(spots);
     final lineColor = account == null
@@ -895,10 +895,9 @@ class _BalanceTrendState extends State<_BalanceTrend> {
                       fitInsideVertically: true,
                       getTooltipItems: (touchedSpots) => touchedSpots
                           .map((spot) {
-                            final index = spot.spotIndex.clamp(
-                              0,
-                              spotDates.length - 1,
-                            );
+                            final index = spot.spotIndex
+                                .clamp(0, spotDates.length - 1)
+                                .toInt();
                             final date = spotDates[index];
                             final dateLabel = isToday
                                 ? DateFormat(
