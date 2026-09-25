@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../app_state.dart';
 import '../core/money.dart';
 import '../main.dart';
 import '../models/advance_models.dart';
