@@ -1361,7 +1361,7 @@ class FinancePersonDetailScreen extends StatelessWidget {
                 onPressed: () =>
                     showAdvanceEditor(context, initialPersonId: person.id),
                 icon: const Icon(Icons.add_rounded),
-                label: const Text('Nuovo anticipo per questa persona'),
+                label: const Text('Nuovo anticipo'),
               ),
             ),
           ],
