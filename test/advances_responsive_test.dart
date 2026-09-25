@@ -34,8 +34,10 @@ void main() {
       await tester.pump();
 
       expect(find.text('Anticipi'), findsOneWidget);
-      expect(find.text('Da ricevere'), findsOneWidget);
-      expect(find.text('Da restituire'), findsOneWidget);
+      expect(find.text('DA RICEVERE'), findsOneWidget);
+      expect(find.text('DA RESTITUIRE'), findsOneWidget);
+      expect(find.text('Persone'), findsOneWidget);
+      expect(find.text('Nessun anticipo registrato.'), findsOneWidget);
       expect(tester.takeException(), isNull);
     });
   }
