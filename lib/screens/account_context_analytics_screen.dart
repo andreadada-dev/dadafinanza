@@ -807,9 +807,9 @@ class _BalanceTrendState extends State<_BalanceTrend>
             maxHeight: 224,
             child: Semantics(
               label: account == null
-                ? 'Andamento del patrimonio nel periodo selezionato'
-                : 'Andamento del saldo di ${account.name} nel periodo selezionato',
-            child: Listener(
+                  ? 'Andamento del patrimonio nel periodo selezionato'
+                  : 'Andamento del saldo di ${account.name} nel periodo selezionato',
+              child: Listener(
               behavior: HitTestBehavior.opaque,
               onPointerDown: (event) => _swipeStartX = event.position.dx,
               onPointerCancel: (_) => _swipeStartX = null,
@@ -1023,6 +1023,7 @@ class _BalanceTrendState extends State<_BalanceTrend>
               ),
             ),
           ),
+        ),
         ),
         if (selectedDate != null && selectedBalance != null) ...[
           const SizedBox(height: 6),
