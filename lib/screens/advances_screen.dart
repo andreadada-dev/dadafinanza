@@ -1417,9 +1417,21 @@ class FinancePersonDetailScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 120),
         children: [
-          Text(
-            _notificationLabel(reminder),
-            style: Theme.of(context).textTheme.bodyMedium,
+          Row(
+            children: [
+              Icon(
+                personIcon(person.iconKey),
+                color: Color(person.colorValue),
+                size: 24,
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  _notificationLabel(reminder),
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 20),
           Row(
@@ -1469,48 +1481,184 @@ class FinancePersonDetailScreen extends StatelessWidget {
   }
 }
 
-Future<void> showFinancePersonRename(
+class _PersonAdvanceMetric extends StatelessWidget {
+  const _PersonAdvanceMetric({
+    required this.label,
+    required this.value,
+    required this.icon,
+  });
+
+  final String label;
+  final String value;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 24, color: theme.colorScheme.onSurfaceVariant),
+        const SizedBox(height: 6),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            label,
+            maxLines: 1,
+            style: theme.textTheme.bodyMedium,
+          ),
+        ),
+        const SizedBox(height: 4),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            value,
+            maxLines: 1,
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+Future<void> showFinancePersonEditor(
   BuildContext context,
   FinancePerson person,
 ) async {
   final state = AppScope.of(context);
-  final controller = TextEditingController(text: person.name);
-  final saved = await showDialog<bool>(
+  final name = TextEditingController(text: person.name);
+  var iconKey = person.iconKey;
+  var color = Color(person.colorValue);
+
+  await showModalBottomSheet<void>(
     context: context,
-    builder: (dialogContext) => AlertDialog(
-      title: const Text('Rinomina persona'),
-      content: TextField(
-        controller: controller,
-        autofocus: true,
-        textCapitalization: TextCapitalization.words,
-        decoration: InputDecoration(labelText: 'Nome'),
+    isScrollControlled: true,
+    useSafeArea: true,
+    showDragHandle: true,
+    builder: (sheetContext) => StatefulBuilder(
+      builder: (sheetContext, setSheetState) => Padding(
+        padding: EdgeInsets.fromLTRB(
+          20,
+          4,
+          20,
+          MediaQuery.viewInsetsOf(sheetContext).bottom + 20,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Modifica persona',
+                style: Theme.of(sheetContext).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: name,
+                autofocus: true,
+                textCapitalization: TextCapitalization.words,
+                decoration: const InputDecoration(labelText: 'Nome'),
+              ),
+              const SizedBox(height: 12),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Icon(personIcon(iconKey), color: color),
+                title: const Text('Icona'),
+                subtitle: const Text('Scegli l’icona della persona'),
+                trailing: const Icon(Icons.chevron_right_rounded),
+                onTap: () async {
+                  final selected = await showIconPicker(
+                    sheetContext,
+                    options: personIconOptions,
+                    selected: iconKey,
+                  );
+                  if (selected != null) {
+                    setSheetState(() => iconKey = selected);
+                  }
+                },
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Colore',
+                style: Theme.of(sheetContext).textTheme.titleSmall,
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: categoryPalette
+                    .map(
+                      (item) => Semantics(
+                        button: true,
+                        selected: item == color,
+                        label: 'Colore persona',
+                        child: InkWell(
+                          customBorder: const CircleBorder(),
+                          onTap: () => setSheetState(() => color = item),
+                          child: SizedBox.square(
+                            dimension: 44,
+                            child: Center(
+                              child: Container(
+                                width: 28,
+                                height: 28,
+                                decoration: BoxDecoration(
+                                  color: item,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: item == color
+                                    ? const Icon(
+                                        Icons.check_rounded,
+                                        size: 17,
+                                        color: Colors.white,
+                                      )
+                                    : null,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+              const SizedBox(height: 22),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: () async {
+                    try {
+                      await state.updateFinancePerson(
+                        personId: person.id,
+                        name: name.text,
+                        colorValue: color.toARGB32(),
+                        iconKey: iconKey,
+                        note: person.note,
+                      );
+                      if (sheetContext.mounted) Navigator.pop(sheetContext);
+                    } catch (error) {
+                      if (sheetContext.mounted) {
+                        ScaffoldMessenger.of(sheetContext).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              error.toString().replaceFirst('Bad state: ', ''),
+                            ),
+                          ),
+                        );
+                      }
+                    }
+                  },
+                  child: const Text('Salva modifiche'),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(dialogContext, false),
-          child: const Text('Annulla'),
-        ),
-        FilledButton(
-          onPressed: () => Navigator.pop(dialogContext, true),
-          child: const Text('Salva'),
-        ),
-      ],
     ),
   );
-  if (saved == true) {
-    try {
-      await state.renameFinancePerson(person.id, controller.text);
-    } catch (error) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(error.toString().replaceFirst('Bad state: ', '')),
-          ),
-        );
-      }
-    }
-  }
-  controller.dispose();
+  name.dispose();
 }
 
 Future<int?> showFinancePersonPicker(
@@ -1712,45 +1860,136 @@ class _PersonPickerTile extends StatelessWidget {
 
 Future<int?> showFinancePersonCreator(BuildContext context) async {
   final state = AppScope.of(context);
-  final controller = TextEditingController();
-  final id = await showDialog<int>(
+  final name = TextEditingController();
+  var iconKey = 'person';
+  var color = categoryPalette.first;
+
+  final id = await showModalBottomSheet<int>(
     context: context,
-    builder: (dialogContext) => AlertDialog(
-      title: const Text('Nuova persona'),
-      content: TextField(
-        controller: controller,
-        autofocus: true,
-        textCapitalization: TextCapitalization.words,
-        decoration: InputDecoration(labelText: 'Nome'),
+    isScrollControlled: true,
+    useSafeArea: true,
+    showDragHandle: true,
+    builder: (sheetContext) => StatefulBuilder(
+      builder: (sheetContext, setSheetState) => Padding(
+        padding: EdgeInsets.fromLTRB(
+          20,
+          4,
+          20,
+          MediaQuery.viewInsetsOf(sheetContext).bottom + 20,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Nuova persona',
+                style: Theme.of(sheetContext).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: name,
+                autofocus: true,
+                textCapitalization: TextCapitalization.words,
+                decoration: const InputDecoration(labelText: 'Nome'),
+              ),
+              const SizedBox(height: 12),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Icon(personIcon(iconKey), color: color),
+                title: const Text('Icona'),
+                subtitle: const Text('Scegli l’icona della persona'),
+                trailing: const Icon(Icons.chevron_right_rounded),
+                onTap: () async {
+                  final selected = await showIconPicker(
+                    sheetContext,
+                    options: personIconOptions,
+                    selected: iconKey,
+                  );
+                  if (selected != null) {
+                    setSheetState(() => iconKey = selected);
+                  }
+                },
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Colore',
+                style: Theme.of(sheetContext).textTheme.titleSmall,
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: categoryPalette
+                    .map(
+                      (item) => Semantics(
+                        button: true,
+                        selected: item == color,
+                        label: 'Colore persona',
+                        child: InkWell(
+                          customBorder: const CircleBorder(),
+                          onTap: () => setSheetState(() => color = item),
+                          child: SizedBox.square(
+                            dimension: 44,
+                            child: Center(
+                              child: Container(
+                                width: 28,
+                                height: 28,
+                                decoration: BoxDecoration(
+                                  color: item,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: item == color
+                                    ? const Icon(
+                                        Icons.check_rounded,
+                                        size: 17,
+                                        color: Colors.white,
+                                      )
+                                    : null,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+              const SizedBox(height: 22),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: () async {
+                    try {
+                      final result = await state.createFinancePerson(
+                        name.text,
+                        colorValue: color.toARGB32(),
+                        iconKey: iconKey,
+                      );
+                      if (sheetContext.mounted) {
+                        Navigator.pop(sheetContext, result);
+                      }
+                    } catch (error) {
+                      if (sheetContext.mounted) {
+                        ScaffoldMessenger.of(sheetContext).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              error.toString().replaceFirst('Bad state: ', ''),
+                            ),
+                          ),
+                        );
+                      }
+                    }
+                  },
+                  child: const Text('Crea persona'),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(dialogContext),
-          child: const Text('Annulla'),
-        ),
-        FilledButton(
-          onPressed: () async {
-            try {
-              final result = await state.createFinancePerson(controller.text);
-              if (dialogContext.mounted) Navigator.pop(dialogContext, result);
-            } catch (error) {
-              if (dialogContext.mounted) {
-                ScaffoldMessenger.of(dialogContext).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      error.toString().replaceFirst('Bad state: ', ''),
-                    ),
-                  ),
-                );
-              }
-            }
-          },
-          child: const Text('Crea'),
-        ),
-      ],
     ),
   );
-  controller.dispose();
+  name.dispose();
   return id;
 }
 
