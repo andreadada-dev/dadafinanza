@@ -200,6 +200,10 @@ void main() {
     expect(analytics, contains('horizontalNudge'));
     expect(analytics, contains('0 => -3.0'));
     expect(analytics, contains('1 => 3.0'));
+    expect(analytics, contains('24 => -8.0'));
+    expect(analytics, contains('final allPositive = dataMin >= 0'));
+    expect(analytics, contains('final allNegative = dataMax <= 0'));
+    expect(analytics, contains('final minValue = allPositive ? 0.0 : dataMin'));
     expect(analytics, contains('chartMaxX = isToday'));
     expect(analytics, contains('isCurved: false'));
     expect(analytics, contains('leftTitles: AxisTitles('));
