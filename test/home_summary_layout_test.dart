@@ -152,7 +152,7 @@ void main() {
     expect(analytics, contains('class _PeriodPill'));
     expect(analytics, isNot(contains('SegmentedButton<_AnalyticsPeriod>')));
     expect(analytics, contains("DateFormat('d/M/yyyy')"));
-    expect(analytics, contains("' ~ '"));
+    expect(analytics, contains(' ~ '));
     expect(analytics, contains('showDateRangePicker('));
     expect(analytics, contains('onTap: () => _selectPeriod(item)'));
   });
@@ -165,7 +165,10 @@ void main() {
     expect(analytics, contains('bottomTitles: AxisTitles('));
     expect(analytics, contains("_AnalyticsPeriod.week => DateFormat('EEE'"));
     expect(analytics, contains("_AnalyticsPeriod.year => DateFormat('MMM'"));
-    expect(analytics, contains('account: effectiveAccountId == null ? null : selected'));
+    expect(
+      analytics,
+      contains('account: effectiveAccountId == null ? null : selected'),
+    );
     expect(analytics, contains('!item.isArchived'));
     expect(analytics, contains('item.includeInTotal'));
   });
