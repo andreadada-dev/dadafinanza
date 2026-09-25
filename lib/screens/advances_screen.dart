@@ -134,11 +134,11 @@ class _AdvancesScreenState extends State<AdvancesScreen> {
           else
             LayoutBuilder(
               builder: (context, constraints) {
-                final columns = constraints.maxWidth >= 560
+                final columns = constraints.maxWidth >= 700
+                    ? 5
+                    : constraints.maxWidth >= 500
                     ? 4
-                    : constraints.maxWidth >= 350
-                    ? 3
-                    : 2;
+                    : 3;
 
                 return GridView.builder(
                   shrinkWrap: true,
@@ -146,9 +146,9 @@ class _AdvancesScreenState extends State<AdvancesScreen> {
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: columns,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                    childAspectRatio: .9,
+                    mainAxisSpacing: 8,
+                    crossAxisSpacing: 8,
+                    childAspectRatio: 1.02,
                   ),
                   itemCount: people.length,
                   itemBuilder: (context, index) =>
@@ -188,18 +188,6 @@ DateTime? _nextAdvanceReminder(AppState state, int personId) {
 }
 
 String _notificationLabel(DateTime? reminder) {
-  if (reminder == null) return 'Notifica: nessuna';
-  final now = DateTime.now();
-  final today = DateTime(now.year, now.month, now.day);
-  final target = DateTime(reminder.year, reminder.month, reminder.day);
-  final days = target.difference(today).inDays;
-  if (days < 0) return 'Notifica: scaduta';
-  if (days == 0) return 'Notifica: oggi';
-  if (days == 1) return 'Notifica: domani';
-  return 'Notifica: ${DateFormat('d MMM', 'it_IT').format(reminder)}';
-}
-
-String _gridNotificationLabel(DateTime? reminder) {
   if (reminder == null) return 'Nessuna notifica';
   final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);
@@ -210,6 +198,9 @@ String _gridNotificationLabel(DateTime? reminder) {
   if (days == 1) return 'Notifica domani';
   return 'Notifica ${DateFormat('d MMM', 'it_IT').format(reminder)}';
 }
+
+String _gridPersonSubtitle(DateTime? reminder) =>
+    reminder == null ? 'Apri Storico' : _notificationLabel(reminder);
 
 class _AdvancePersonSummaryCard extends StatelessWidget {
   const _AdvancePersonSummaryCard({required this.person});
@@ -223,16 +214,16 @@ class _AdvancePersonSummaryCard extends StatelessWidget {
         .where((item) => item.personId == person.id)
         .length;
     final reminder = _nextAdvanceReminder(state, person.id);
-    final notification = _gridNotificationLabel(reminder);
+    final subtitle = _gridPersonSubtitle(reminder);
     final theme = Theme.of(context);
 
     return Semantics(
       button: true,
       label:
-          '${person.name}. $notification. $movementCount ${movementCount == 1 ? 'movimento' : 'movimenti'}.',
+          '${person.name}. $subtitle. $movementCount ${movementCount == 1 ? 'movimento' : 'movimenti'}.',
       child: Material(
         color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: .5),
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(16),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: () => Navigator.push(
@@ -244,8 +235,8 @@ class _AdvancePersonSummaryCard extends StatelessWidget {
           child: Stack(
             children: [
               Positioned(
-                top: 10,
-                right: 12,
+                top: 7,
+                right: 9,
                 child: Text(
                   '$movementCount',
                   style: theme.textTheme.labelLarge?.copyWith(
@@ -255,29 +246,29 @@ class _AdvancePersonSummaryCard extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 18, 10, 12),
+                padding: const EdgeInsets.fromLTRB(7, 14, 7, 9),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      Icons.person_outline_rounded,
+                      personIcon(person.iconKey),
                       color: Color(person.colorValue),
-                      size: 28,
+                      size: 24,
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 6),
                     Text(
                       person.name,
-                      maxLines: 2,
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
-                      style: theme.textTheme.bodyLarge?.copyWith(
+                      style: theme.textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w800,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      notification,
-                      maxLines: 2,
+                      subtitle,
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
                       style: theme.textTheme.bodySmall?.copyWith(
@@ -1318,7 +1309,10 @@ class FinancePeopleScreen extends StatelessWidget {
                     .length;
                 return ListTile(
                   contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.person_outline_rounded),
+                  leading: Icon(
+                    personIcon(person.iconKey),
+                    color: Color(person.colorValue),
+                  ),
                   title: Text(person.name),
                   subtitle: Text(
                     open == 0
@@ -1335,8 +1329,8 @@ class FinancePeopleScreen extends StatelessWidget {
                   trailing: PopupMenuButton<String>(
                     tooltip: 'Azioni persona',
                     onSelected: (value) async {
-                      if (value == 'rename') {
-                        await showFinancePersonRename(context, person);
+                      if (value == 'edit') {
+                        await showFinancePersonEditor(context, person);
                       } else if (value == 'archive') {
                         try {
                           await state.archiveFinancePerson(
@@ -1361,8 +1355,8 @@ class FinancePeopleScreen extends StatelessWidget {
                     },
                     itemBuilder: (context) => [
                       const PopupMenuItem(
-                        value: 'rename',
-                        child: Text('Rinomina'),
+                        value: 'edit',
+                        child: Text('Modifica'),
                       ),
                       PopupMenuItem(
                         value: 'archive',
@@ -1414,8 +1408,8 @@ class FinancePersonDetailScreen extends StatelessWidget {
         title: Text(person.name),
         actions: [
           IconButton(
-            tooltip: 'Rinomina persona',
-            onPressed: () => showFinancePersonRename(context, person),
+            tooltip: 'Modifica persona',
+            onPressed: () => showFinancePersonEditor(context, person),
             icon: const Icon(Icons.edit_outlined),
           ),
         ],
@@ -1431,7 +1425,7 @@ class FinancePersonDetailScreen extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: FlatMetric(
+                child: _PersonAdvanceMetric(
                   label: 'Da ricevere',
                   value: state.hideBalance
                       ? '••••'
@@ -1439,9 +1433,9 @@ class FinancePersonDetailScreen extends StatelessWidget {
                   icon: Icons.call_received_rounded,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 16),
               Expanded(
-                child: FlatMetric(
+                child: _PersonAdvanceMetric(
                   label: 'Da restituire',
                   value: state.hideBalance
                       ? '••••'
@@ -1645,7 +1639,7 @@ class _FinancePersonPickerSheetState extends State<_FinancePersonPickerSheet> {
                       final person =
                           people[index - (widget.allowCreate ? 1 : 0)];
                       return _PersonPickerTile(
-                        icon: Icons.person_outline_rounded,
+                        icon: personIcon(person.iconKey),
                         label: person.name,
                         semanticLabel: 'Seleziona ' + person.name,
                         color: Color(person.colorValue),
