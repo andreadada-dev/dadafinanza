@@ -71,7 +71,7 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  testWidgets('main advances screen groups every person into one row', (
+  testWidgets('main advances screen shows people in a searchable grid', (
     tester,
   ) async {
     final now = DateTime.now();
@@ -103,10 +103,20 @@ void main() {
     await pumpScreen(tester, state);
 
     expect(find.text('Persone'), findsOneWidget);
+    expect(find.text('Cerca persona'), findsOneWidget);
+    expect(find.byType(GridView), findsOneWidget);
     expect(find.text('Dario'), findsOneWidget);
     expect(find.text('Anna'), findsOneWidget);
-    expect(find.text('Notifica: domani'), findsOneWidget);
-    expect(find.textContaining('Da ricevere'), findsWidgets);
+    expect(find.text('Notifica domani'), findsOneWidget);
+    expect(find.text('Nessuna notifica'), findsOneWidget);
+    expect(find.text('2'), findsOneWidget);
+    expect(find.text('1'), findsOneWidget);
+
+    await tester.enterText(find.byType(TextField), 'Anna');
+    await tester.pumpAndSettle();
+
+    expect(find.text('Anna'), findsOneWidget);
+    expect(find.text('Dario'), findsNothing);
     expect(tester.takeException(), isNull);
   });
 
