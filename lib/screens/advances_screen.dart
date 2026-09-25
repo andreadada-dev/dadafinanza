@@ -125,7 +125,7 @@ String _notificationLabel(DateTime? reminder) {
   if (days < 0) return 'Notifica: scaduta';
   if (days == 0) return 'Notifica: oggi';
   if (days == 1) return 'Notifica: domani';
-  return 'Notifica: \${DateFormat('d MMM', 'it_IT').format(reminder)}';
+  return 'Notifica: ${DateFormat('d MMM', 'it_IT').format(reminder)}';
 }
 
 class _AdvancePersonSummaryRow extends StatelessWidget {
@@ -156,16 +156,16 @@ class _AdvancePersonSummaryRow extends StatelessWidget {
     final reminder = _nextAdvanceReminder(state, person.id);
     final summary = <String>[
       if (receivable > 0)
-        'Da ricevere \${state.hideBalance ? '••••' : moneyFor(state, Money.fromCents(receivable))}',
+        'Da ricevere ${state.hideBalance ? '••••' : moneyFor(state, Money.fromCents(receivable))}',
       if (payable > 0)
-        'Da restituire \${state.hideBalance ? '••••' : moneyFor(state, Money.fromCents(payable))}',
+        'Da restituire ${state.hideBalance ? '••••' : moneyFor(state, Money.fromCents(payable))}',
       if (openCount == 0)
-        '\${items.length} \${items.length == 1 ? 'movimento' : 'movimenti'} nello storico',
+        '${items.length} ${items.length == 1 ? 'movimento' : 'movimenti'} nello storico',
     ].join(' · ');
 
     return Semantics(
       button: true,
-      label: '\${person.name}. \${_notificationLabel(reminder)}. $summary',
+      label: '${person.name}. ${_notificationLabel(reminder)}. $summary',
       child: ListTile(
         contentPadding: EdgeInsets.zero,
         minVerticalPadding: 12,
@@ -215,8 +215,8 @@ class _AdvanceRow extends StatelessWidget {
             : 'Da restituire',
       AdvanceStatus.partial =>
         advance.direction == AdvanceDirection.receivable
-            ? 'Da saldare · \${moneyFor(state, Money.fromCents(remaining))} residui'
-            : 'Da restituire · \${moneyFor(state, Money.fromCents(remaining))} residui',
+            ? 'Da saldare · ${moneyFor(state, Money.fromCents(remaining))} residui'
+            : 'Da restituire · ${moneyFor(state, Money.fromCents(remaining))} residui',
       AdvanceStatus.overdue =>
         advance.direction == AdvanceDirection.receivable
             ? 'Scaduto · da saldare'
@@ -241,8 +241,8 @@ class _AdvanceRow extends StatelessWidget {
                 : Icons.call_made_rounded,
           ),
           title: Text(
-            '\${DateFormat('d MMM yyyy', 'it_IT').format(advance.createdAt)} · '
-            '\${state.hideBalance ? '••••' : moneyFor(state, advance.originalAmount)}',
+            '${DateFormat('d MMM yyyy', 'it_IT').format(advance.createdAt)} · '
+            '${state.hideBalance ? '••••' : moneyFor(state, advance.originalAmount)}',
             style: const TextStyle(fontWeight: FontWeight.w700),
           ),
           subtitle: Text(
@@ -688,8 +688,8 @@ Future<void> _closeAdvanceWithoutRecoveryFlow(
       ),
       content: Text(
         advance.direction == AdvanceDirection.receivable
-            ? 'Restano \${moneyFor(state, Money.fromCents(remaining))}. Vuoi registrarli come una tua spesa?'
-            : 'Restano \${moneyFor(state, Money.fromCents(remaining))}. Vuoi registrarli come una tua entrata?',
+            ? 'Restano ${moneyFor(state, Money.fromCents(remaining))}. Vuoi registrarli come una tua spesa?'
+            : 'Restano ${moneyFor(state, Money.fromCents(remaining))}. Vuoi registrarli come una tua entrata?',
       ),
       actions: [
         TextButton(
