@@ -196,7 +196,7 @@ void main() {
     expect(analytics, contains('chartMaxX = isToday'));
     expect(analytics, contains('isCurved: false'));
     expect(analytics, contains('leftTitles: AxisTitles('));
-    expect(analytics, contains('reservedSize: 30'));
+    expect(analytics, contains('reservedSize: 22'));
     expect(analytics, contains('interval: yInterval'));
     expect(analytics, contains('minIncluded: true'));
     expect(analytics, contains('maxIncluded: true'));
@@ -211,6 +211,8 @@ void main() {
     expect(analytics, contains('widget.onShiftPeriod(deltaX < 0 ? 1 : -1)'));
     expect(analytics, contains('class _AnalyticsPeriodNavigator'));
     expect(analytics, contains('class _AnalyticsSwipeChevron'));
+    expect(analytics, contains('rangeLabel: _visibleRangeLabel(from, to)'));
+    expect(analytics, contains('label: widget.rangeLabel'));
     expect(analytics, contains('duration: const Duration(milliseconds: 850)'));
     expect(analytics, contains('onPrevious: () => widget.onShiftPeriod(-1)'));
     expect(analytics, contains('onNext: () => widget.onShiftPeriod(1)'));
