@@ -685,19 +685,31 @@ class _BalanceTrendState extends State<_BalanceTrend> {
     final movementHours = <int>{};
 
     if (isToday) {
+      // A balance is continuous through the day: start from midnight, keep
+      // the previous balance until a movement happens, jump at that exact
+      // time, then keep the final value all the way to 24:00.
+      spots.add(FlSpot(0, value));
+      spotDates.add(from);
       for (final item in periodItems) {
         final delta = _deltaFor(item, accountIds);
         if (delta == 0) continue;
-        value += delta;
         final minutes = item.date.difference(from).inMinutes;
         final x = (minutes / 60).clamp(0.0, 24.0).toDouble();
+
+        if (spots.last.x != x || spots.last.y != value) {
+          spots.add(FlSpot(x, value));
+          spotDates.add(item.date);
+        }
+
+        value += delta;
         spots.add(FlSpot(x, value));
         spotDates.add(item.date);
         movementHours.add(item.date.hour);
       }
-      if (spots.isEmpty) {
-        spots.add(FlSpot(0, value));
-        spotDates.add(from);
+
+      if (spots.last.x < 24) {
+        spots.add(FlSpot(24, value));
+        spotDates.add(to);
       }
     } else {
       var itemIndex = items.indexWhere((item) => !item.date.isBefore(from));
@@ -785,16 +797,20 @@ class _BalanceTrendState extends State<_BalanceTrend> {
                       sideTitles: SideTitles(
                         showTitles: true,
                         interval: yInterval,
-                        reservedSize: 44,
+                        reservedSize: 34,
                         minIncluded: true,
                         maxIncluded: true,
                         getTitlesWidget: (axisValue, meta) => Padding(
-                          padding: const EdgeInsets.only(right: 5),
-                          child: Text(
-                            _axisValue(axisValue),
-                            textAlign: TextAlign.right,
-                            style: theme.textTheme.labelSmall?.copyWith(
-                              color: theme.colorScheme.onSurfaceVariant,
+                          padding: const EdgeInsets.only(right: 2),
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              _axisValue(axisValue),
+                              textAlign: TextAlign.right,
+                              style: theme.textTheme.labelSmall?.copyWith(
+                                color: theme.colorScheme.onSurfaceVariant,
+                              ),
                             ),
                           ),
                         ),
