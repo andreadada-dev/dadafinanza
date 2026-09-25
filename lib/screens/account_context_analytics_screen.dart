@@ -513,9 +513,31 @@ class _BalanceTrend extends StatefulWidget {
   State<_BalanceTrend> createState() => _BalanceTrendState();
 }
 
-class _BalanceTrendState extends State<_BalanceTrend> {
+class _BalanceTrendState extends State<_BalanceTrend>
+    with SingleTickerProviderStateMixin {
   int? _selectedSpotIndex;
   double? _swipeStartX;
+  late final AnimationController _swipeHintController;
+  late final Animation<double> _swipeHintAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _swipeHintController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 850),
+    )..repeat(reverse: true);
+    _swipeHintAnimation = CurvedAnimation(
+      parent: _swipeHintController,
+      curve: Curves.easeInOutSine,
+    );
+  }
+
+  @override
+  void dispose() {
+    _swipeHintController.dispose();
+    super.dispose();
+  }
 
   @override
   void didUpdateWidget(covariant _BalanceTrend oldWidget) {
@@ -589,6 +611,14 @@ class _BalanceTrendState extends State<_BalanceTrend> {
             : DateFormat('MMM yy', 'it_IT').format(date),
     };
   }
+
+  String get _navigatorLabel => switch (widget.period) {
+    _AnalyticsPeriod.today => 'Oggi',
+    _AnalyticsPeriod.week => 'Settimana',
+    _AnalyticsPeriod.month => 'Mese',
+    _AnalyticsPeriod.year => 'Anno',
+    _AnalyticsPeriod.custom => 'Custom',
+  };
 
   String _axisValue(double value) {
     if (widget.state.hideBalance || (widget.account?.hideBalance ?? false)) {
@@ -768,6 +798,15 @@ class _BalanceTrendState extends State<_BalanceTrend> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Center(
+          child: _AnalyticsPeriodNavigator(
+            label: _navigatorLabel,
+            animation: _swipeHintAnimation,
+            onPrevious: () => widget.onShiftPeriod(-1),
+            onNext: () => widget.onShiftPeriod(1),
+          ),
+        ),
+        const SizedBox(height: 4),
         SizedBox(
           height: 224,
           child: Semantics(
@@ -797,11 +836,11 @@ class _BalanceTrendState extends State<_BalanceTrend> {
                       sideTitles: SideTitles(
                         showTitles: true,
                         interval: yInterval,
-                        reservedSize: 34,
+                        reservedSize: 30,
                         minIncluded: true,
                         maxIncluded: true,
                         getTitlesWidget: (axisValue, meta) => Padding(
-                          padding: const EdgeInsets.only(right: 2),
+                          padding: EdgeInsets.zero,
                           child: FittedBox(
                             fit: BoxFit.scaleDown,
                             alignment: Alignment.centerRight,
@@ -1014,6 +1053,105 @@ class _BalanceTrendState extends State<_BalanceTrend> {
           ],
         ),
       ],
+    );
+  }
+}
+
+class _AnalyticsPeriodNavigator extends StatelessWidget {
+  const _AnalyticsPeriodNavigator({
+    required this.label,
+    required this.animation,
+    required this.onPrevious,
+    required this.onNext,
+  });
+
+  final String label;
+  final Animation<double> animation;
+  final VoidCallback onPrevious;
+  final VoidCallback onNext;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Semantics(
+      label:
+          'Periodo $label. Usa le frecce o scorri il grafico per cambiare periodo.',
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _AnalyticsSwipeChevron(
+            direction: -1,
+            animation: animation,
+            tooltip: 'Periodo precedente',
+            onPressed: onPrevious,
+          ),
+          ConstrainedBox(
+            constraints: const BoxConstraints(minWidth: 86, maxWidth: 118),
+            child: Text(
+              label,
+              maxLines: 1,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.labelLarge?.copyWith(
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ),
+          _AnalyticsSwipeChevron(
+            direction: 1,
+            animation: animation,
+            tooltip: 'Periodo successivo',
+            onPressed: onNext,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AnalyticsSwipeChevron extends StatelessWidget {
+  const _AnalyticsSwipeChevron({
+    required this.direction,
+    required this.animation,
+    required this.tooltip,
+    required this.onPressed,
+  });
+
+  final int direction;
+  final Animation<double> animation;
+  final String tooltip;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return AnimatedBuilder(
+      animation: animation,
+      builder: (context, child) {
+        final travel = 2 + animation.value * 4;
+        return Transform.translate(
+          offset: Offset(direction * travel, 0),
+          child: Opacity(
+            opacity: .42 + animation.value * .48,
+            child: IconButton(
+              tooltip: tooltip,
+              onPressed: onPressed,
+              visualDensity: VisualDensity.compact,
+              constraints: const BoxConstraints.tightFor(
+                width: 36,
+                height: 36,
+              ),
+              padding: EdgeInsets.zero,
+              icon: Icon(
+                direction < 0
+                    ? Icons.chevron_left_rounded
+                    : Icons.chevron_right_rounded,
+                size: 24,
+                color: theme.colorScheme.onSurface,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
