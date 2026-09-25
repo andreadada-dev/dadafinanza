@@ -144,15 +144,22 @@ void main() {
     expect(analytics, contains('surfaceContainerHighest'));
   });
 
-  test('analytics uses separate period pills and editable custom range', () {
+  test('analytics periods all fit on screen and Custom stays Custom', () {
     final analytics = File(
       'lib/screens/account_context_analytics_screen.dart',
     ).readAsStringSync();
 
     expect(analytics, contains('class _PeriodPill'));
     expect(analytics, isNot(contains('SegmentedButton<_AnalyticsPeriod>')));
-    expect(analytics, contains("DateFormat('d/M/yyyy')"));
-    expect(analytics, contains(' ~ '));
+    expect(
+      analytics,
+      isNot(contains('scrollDirection: Axis.horizontal')),
+    );
+    expect(analytics, contains("_AnalyticsPeriod.today => 'Oggi'"));
+    expect(analytics, contains("_AnalyticsPeriod.month => 'Mese'"));
+    expect(analytics, contains("_AnalyticsPeriod.year => 'Anno'"));
+    expect(analytics, contains("_AnalyticsPeriod.custom => 'Custom'"));
+    expect(analytics, contains('Expanded('));
     expect(analytics, contains('showDateRangePicker('));
     expect(analytics, contains('onTap: () => _selectPeriod(item)'));
   });
@@ -163,7 +170,7 @@ void main() {
     ).readAsStringSync();
 
     expect(analytics, contains('bottomTitles: AxisTitles('));
-    expect(analytics, contains("_AnalyticsPeriod.week => DateFormat('EEE'"));
+    expect(analytics, contains("_AnalyticsPeriod.today => 'Oggi'"));
     expect(analytics, contains("_AnalyticsPeriod.year => DateFormat('MMM'"));
     expect(
       analytics,
