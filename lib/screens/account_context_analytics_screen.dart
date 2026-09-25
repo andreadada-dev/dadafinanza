@@ -11,7 +11,7 @@ import '../widgets/ui_helpers.dart';
 import 'account_management_screen.dart';
 import 'transaction_screens.dart';
 
-enum _AnalyticsPeriod { week, month, year, custom }
+enum _AnalyticsPeriod { today, month, year, custom }
 
 class AccountContextAnalyticsScreen extends StatefulWidget {
   const AccountContextAnalyticsScreen({
@@ -33,18 +33,12 @@ class _AccountContextAnalyticsScreenState
   _AnalyticsPeriod period = _AnalyticsPeriod.month;
   DateTimeRange? custom;
 
-  String _periodLabel(_AnalyticsPeriod item) {
-    if (item != _AnalyticsPeriod.custom || custom == null) {
-      return switch (item) {
-        _AnalyticsPeriod.week => 'Settimana',
-        _AnalyticsPeriod.month => 'Mese',
-        _AnalyticsPeriod.year => 'Anno',
-        _AnalyticsPeriod.custom => 'Custom',
-      };
-    }
-    final formatter = DateFormat('d/M/yyyy');
-    return '${formatter.format(custom!.start)} ~ ${formatter.format(custom!.end)}';
-  }
+  String _periodLabel(_AnalyticsPeriod item) => switch (item) {
+    _AnalyticsPeriod.today => 'Oggi',
+    _AnalyticsPeriod.month => 'Mese',
+    _AnalyticsPeriod.year => 'Anno',
+    _AnalyticsPeriod.custom => 'Custom',
+  };
 
   Future<void> _selectPeriod(_AnalyticsPeriod next) async {
     if (next != _AnalyticsPeriod.custom) {
@@ -75,15 +69,9 @@ class _AccountContextAnalyticsScreenState
   (DateTime, DateTime) _bounds(AppState state) {
     final now = DateTime.now();
     switch (period) {
-      case _AnalyticsPeriod.week:
-        final startWeekday = state.weekStart.clamp(1, 7);
-        final offset = (now.weekday - startWeekday) % 7;
-        final start = DateTime(
-          now.year,
-          now.month,
-          now.day,
-        ).subtract(Duration(days: offset));
-        return (start, start.add(const Duration(days: 7)));
+      case _AnalyticsPeriod.today:
+        final start = DateTime(now.year, now.month, now.day);
+        return (start, start.add(const Duration(days: 1)));
       case _AnalyticsPeriod.month:
         final day = state.financialMonthStart.clamp(1, 28);
         var start = DateTime(now.year, now.month, day);
@@ -204,21 +192,20 @@ class _AccountContextAnalyticsScreenState
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 120),
         children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                for (final item in _AnalyticsPeriod.values) ...[
-                  _PeriodPill(
+          Row(
+            children: [
+              for (final item in _AnalyticsPeriod.values) ...[
+                Expanded(
+                  child: _PeriodPill(
                     label: _periodLabel(item),
                     selected: period == item,
                     onTap: () => _selectPeriod(item),
                   ),
-                  if (item != _AnalyticsPeriod.values.last)
-                    const SizedBox(width: 10),
-                ],
+                ),
+                if (item != _AnalyticsPeriod.values.last)
+                  const SizedBox(width: 6),
               ],
-            ),
+            ],
           ),
           const SizedBox(height: 24),
           Text(
@@ -427,26 +414,19 @@ class _PeriodPill extends StatelessWidget {
           onTap: onTap,
           borderRadius: BorderRadius.circular(22),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (selected) ...[
-                  Icon(
-                    Icons.check_rounded,
-                    size: 18,
-                    color: theme.colorScheme.onSurface,
-                  ),
-                  const SizedBox(width: 7),
-                ],
-                Text(
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 11),
+            child: Center(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
                   label,
+                  maxLines: 1,
                   style: theme.textTheme.labelLarge?.copyWith(
                     fontWeight: FontWeight.w700,
                     color: theme.colorScheme.onSurface,
                   ),
                 ),
-              ],
+              ),
             ),
           ),
         ),
@@ -505,7 +485,7 @@ class _BalanceTrendState extends State<_BalanceTrend> {
   }
 
   double _labelInterval(double maxX) {
-    if (widget.period == _AnalyticsPeriod.week) return 1;
+    if (widget.period == _AnalyticsPeriod.today) return 1;
     final targetLabels = widget.period == _AnalyticsPeriod.year ? 7 : 6;
     return (maxX / targetLabels)
         .ceilToDouble()
@@ -515,7 +495,7 @@ class _BalanceTrendState extends State<_BalanceTrend> {
 
   String _axisLabel(DateTime date, int durationDays) {
     return switch (widget.period) {
-      _AnalyticsPeriod.week => DateFormat('EEE', 'it_IT').format(date),
+      _AnalyticsPeriod.today => 'Oggi',
       _AnalyticsPeriod.month => DateFormat('d MMM', 'it_IT').format(date),
       _AnalyticsPeriod.year => DateFormat('MMM', 'it_IT').format(date),
       _AnalyticsPeriod.custom =>
