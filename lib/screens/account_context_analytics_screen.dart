@@ -636,26 +636,49 @@ class _BalanceTrendState extends State<_BalanceTrend>
   }
 
   (double, double, double) _yScale(List<FlSpot> spots) {
-    var minValue = spots.first.y;
-    var maxValue = spots.first.y;
+    var dataMin = spots.first.y;
+    var dataMax = spots.first.y;
     for (final spot in spots.skip(1)) {
-      if (spot.y < minValue) minValue = spot.y;
-      if (spot.y > maxValue) maxValue = spot.y;
+      if (spot.y < dataMin) dataMin = spot.y;
+      if (spot.y > dataMax) dataMax = spot.y;
     }
+
+    // Keep zero visible whenever all balances are on the same side of zero.
+    // This gives the chart an explicit € baseline instead of making a
+    // positive balance look as if it started from an arbitrary value.
+    final allPositive = dataMin >= 0;
+    final allNegative = dataMax <= 0;
+    final minValue = allPositive ? 0.0 : dataMin;
+    final maxValue = allNegative ? 0.0 : dataMax;
 
     final spread = (maxValue - minValue).abs();
     final rawStep = spread < .0001
-        ? math.max(1.0, maxValue.abs() * .05).toDouble()
+        ? math.max(1.0, math.max(dataMin.abs(), dataMax.abs()) * .05).toDouble()
         : spread / 4;
     final step = _niceStep(rawStep);
-    var minY = (minValue / step).floorToDouble() * step;
-    var maxY = (maxValue / step).ceilToDouble() * step;
 
-    if ((minY - minValue).abs() < .0001) minY -= step;
-    if ((maxY - maxValue).abs() < .0001) maxY += step;
-    if ((maxY - minY).abs() < step * 2) {
+    var minY = allPositive
+        ? 0.0
+        : (minValue / step).floorToDouble() * step;
+    var maxY = allNegative
+        ? 0.0
+        : (maxValue / step).ceilToDouble() * step;
+
+    if (!allPositive && (minY - minValue).abs() < .0001) {
       minY -= step;
+    }
+    if (!allNegative && (maxY - maxValue).abs() < .0001) {
       maxY += step;
+    }
+    if ((maxY - minY).abs() < step * 2) {
+      if (allPositive) {
+        maxY += step;
+      } else if (allNegative) {
+        minY -= step;
+      } else {
+        minY -= step;
+        maxY += step;
+      }
     }
     return (minY, maxY, step);
   }
@@ -874,7 +897,7 @@ class _BalanceTrendState extends State<_BalanceTrend>
                               0 => -3.0,
                               1 => 3.0,
                               23 => -3.0,
-                              24 => 3.0,
+                              24 => -8.0,
                               _ => 0.0,
                             };
                             return Padding(
