@@ -490,7 +490,10 @@ class _BalanceTrend extends StatelessWidget {
   double _labelInterval(double maxX) {
     if (period == _AnalyticsPeriod.week) return 1;
     final targetLabels = period == _AnalyticsPeriod.year ? 7 : 6;
-    return (maxX / targetLabels).ceilToDouble().clamp(1, double.infinity);
+    return (maxX / targetLabels)
+        .ceilToDouble()
+        .clamp(1.0, double.infinity)
+        .toDouble();
   }
 
   String _axisLabel(DateTime date, int durationDays) {
@@ -549,7 +552,7 @@ class _BalanceTrend extends StatelessWidget {
       value += delta;
       final x =
           item.date.difference(from).inMinutes / Duration.minutesPerDay;
-      spots.add(FlSpot(x.clamp(0, safeMaxX), value));
+      spots.add(FlSpot(x.clamp(0.0, safeMaxX).toDouble(), value));
     }
     if (spots.last.x < safeMaxX) {
       spots.add(FlSpot(safeMaxX, value));
@@ -628,7 +631,7 @@ class _BalanceTrend extends StatelessWidget {
                   touchTooltipData: LineTouchTooltipData(
                     getTooltipColor: (_) =>
                         theme.colorScheme.surfaceContainerHighest,
-                    tooltipRoundedRadius: 10,
+                    tooltipBorderRadius: BorderRadius.circular(10),
                     getTooltipItems: (touchedSpots) => touchedSpots
                         .map((spot) {
                           final date = from.add(
