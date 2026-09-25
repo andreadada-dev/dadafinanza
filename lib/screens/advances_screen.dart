@@ -1280,17 +1280,21 @@ class FinancePersonDetailScreen extends StatelessWidget {
     }
     final items = state.advances
         .where((item) => item.personId == personId)
-        .toList();
+        .toList()
+      ..sort((first, second) => second.createdAt.compareTo(first.createdAt));
     var receivable = 0;
     var payable = 0;
     for (final item in items.where((item) => item.closedKind == null)) {
       final remaining = state.advanceRemainingCents(item.id);
+      if (remaining <= 0) continue;
       if (item.direction == AdvanceDirection.receivable) {
         receivable += remaining;
       } else {
         payable += remaining;
       }
     }
+    final reminder = _nextAdvanceReminder(state, person.id);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(person.name),
@@ -1303,8 +1307,13 @@ class FinancePersonDetailScreen extends StatelessWidget {
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 100),
+        padding: const EdgeInsets.fromLTRB(20, 8, 20, 120),
         children: [
+          Text(
+            _notificationLabel(reminder),
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          const SizedBox(height: 20),
           Row(
             children: [
               Expanded(
@@ -1328,19 +1337,24 @@ class FinancePersonDetailScreen extends StatelessWidget {
               ),
             ],
           ),
+          if (!person.archived) ...[
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton.icon(
+                onPressed: () =>
+                    showAdvanceEditor(context, initialPersonId: person.id),
+                icon: const Icon(Icons.add_rounded),
+                label: const Text('Nuovo anticipo per questa persona'),
+              ),
+            ),
+          ],
           const SizedBox(height: 28),
-          const SectionTitle('Storico'),
+          const SectionTitle('Movimenti'),
           if (items.isEmpty)
             const Text('Nessun anticipo con questa persona.')
           else
-            ...items.map(
-              (item) => _AdvanceRow(
-                advance: item,
-                closed:
-                    item.closedKind != null ||
-                    state.advanceRemainingCents(item.id) == 0,
-              ),
-            ),
+            ...items.map((item) => _AdvanceRow(advance: item)),
         ],
       ),
     );
