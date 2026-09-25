@@ -183,10 +183,10 @@ class SafeAccountDetailScreen extends StatelessWidget {
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.edit_outlined),
             title: const Text(
-              'Modifica nome e nota',
+              'Nome, icona e nota',
               style: TextStyle(fontWeight: FontWeight.w700),
             ),
-            subtitle: const Text('Aggiorna i dettagli principali del conto'),
+            subtitle: const Text('Modifica nome, icona, colore e nota'),
             trailing: const Icon(Icons.chevron_right_rounded),
             onTap: () => _editMetadata(context, state, account),
           ),
@@ -457,55 +457,125 @@ class SafeAccountDetailScreen extends StatelessWidget {
   ) async {
     final name = TextEditingController(text: account.name);
     final note = TextEditingController(text: account.note ?? '');
+    var iconKey = account.iconKey;
+    var color = Color(account.colorValue);
+
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
       showDragHandle: true,
-      builder: (sheetContext) => Padding(
-        padding: EdgeInsets.fromLTRB(
-          20,
-          4,
-          20,
-          MediaQuery.viewInsetsOf(sheetContext).bottom + 20,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Modifica nome e nota',
-                style: Theme.of(sheetContext).textTheme.titleLarge,
-              ),
-              TextField(
-                controller: name,
-                decoration: const InputDecoration(labelText: 'Nome'),
-              ),
-              TextField(
-                controller: note,
-                decoration: const InputDecoration(labelText: 'Nota opzionale'),
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton(
-                  onPressed: () async {
-                    if (name.text.trim().isEmpty) return;
-                    await state.updateAccount(
-                      account.copyWith(
-                        name: name.text.trim(),
-                        note: note.text.trim().isEmpty
-                            ? null
-                            : note.text.trim(),
-                      ),
-                    );
-                    if (sheetContext.mounted) Navigator.pop(sheetContext);
-                  },
-                  child: const Text('Salva modifiche'),
+      builder: (sheetContext) => StatefulBuilder(
+        builder: (sheetContext, setSheetState) => Padding(
+          padding: EdgeInsets.fromLTRB(
+            20,
+            4,
+            20,
+            MediaQuery.viewInsetsOf(sheetContext).bottom + 20,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Modifica conto',
+                  style: Theme.of(sheetContext).textTheme.titleLarge,
                 ),
-              ),
-            ],
+                TextField(
+                  controller: name,
+                  decoration: const InputDecoration(labelText: 'Nome'),
+                ),
+                const SizedBox(height: 12),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Icon(accountIcon(iconKey), color: color),
+                  title: const Text('Icona'),
+                  subtitle: const Text('Scegli l’icona del conto'),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: () async {
+                    final picked = await showIconPicker(
+                      sheetContext,
+                      options: accountIconOptions,
+                      selected: iconKey,
+                    );
+                    if (picked != null) {
+                      setSheetState(() => iconKey = picked);
+                    }
+                  },
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Colore',
+                  style: Theme.of(sheetContext).textTheme.titleSmall,
+                ),
+                const SizedBox(height: 8),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: categoryPalette
+                      .map(
+                        (item) => Semantics(
+                          button: true,
+                          selected: item == color,
+                          label: 'Colore conto',
+                          child: InkWell(
+                            customBorder: const CircleBorder(),
+                            onTap: () => setSheetState(() => color = item),
+                            child: SizedBox.square(
+                              dimension: 44,
+                              child: Center(
+                                child: Container(
+                                  width: 28,
+                                  height: 28,
+                                  decoration: BoxDecoration(
+                                    color: item,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: item == color
+                                      ? const Icon(
+                                          Icons.check_rounded,
+                                          size: 17,
+                                          color: Colors.white,
+                                        )
+                                      : null,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: note,
+                  maxLines: 2,
+                  decoration: const InputDecoration(labelText: 'Nota opzionale'),
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    onPressed: () async {
+                      if (name.text.trim().isEmpty) return;
+                      await state.updateAccount(
+                        account.copyWith(
+                          name: name.text.trim(),
+                          iconKey: iconKey,
+                          colorValue: color.toARGB32(),
+                          note: note.text.trim().isEmpty
+                              ? null
+                              : note.text.trim(),
+                        ),
+                      );
+                      if (sheetContext.mounted) Navigator.pop(sheetContext);
+                    },
+                    child: const Text('Salva modifiche'),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
