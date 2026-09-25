@@ -195,6 +195,8 @@ void main() {
     expect(analytics, contains('minutes / 60'));
     expect(analytics, contains('minWidth: MediaQuery.sizeOf(context).width - 4'));
     expect(analytics, contains('maxWidth: MediaQuery.sizeOf(context).width - 4'));
+    expect(analytics, contains('minHeight: 224'));
+    expect(analytics, contains('maxHeight: 224'));
     expect(analytics, contains('horizontalNudge'));
     expect(analytics, contains('0 => -3.0'));
     expect(analytics, contains('1 => 3.0'));
