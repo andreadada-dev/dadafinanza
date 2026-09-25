@@ -200,8 +200,9 @@ void main() {
     expect(analytics, contains("'Saldo finale "));
     expect(analytics, contains('touchCallback: (event, response)'));
     expect(analytics, contains('VerticalLine('));
-    expect(analytics, contains('onHorizontalDragEnd: (details)'));
-    expect(analytics, contains('widget.onShiftPeriod(velocity < 0 ? -1 : 1)'));
+    expect(analytics, contains('onPointerDown: (event)'));
+    expect(analytics, contains('onPointerUp: (event)'));
+    expect(analytics, contains('widget.onShiftPeriod(deltaX < 0 ? -1 : 1)'));
     expect(analytics, contains('periodOffset += delta'));
   });
 
