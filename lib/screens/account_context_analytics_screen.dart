@@ -715,6 +715,16 @@ class _BalanceTrendState extends State<_BalanceTrend> {
                 borderData: FlBorderData(show: false),
                 lineTouchData: LineTouchData(
                   enabled: true,
+                  touchCallback: (event, response) {
+                    if (event is! FlTapUpEvent) return;
+                    final touched = response?.lineBarSpots;
+                    if (touched == null || touched.isEmpty) return;
+                    final day = touched.first.x
+                        .round()
+                        .clamp(0, endOfDayBalances.length - 1)
+                        .toInt();
+                    setState(() => _selectedDay = day);
+                  },
                   touchTooltipData: LineTouchTooltipData(
                     getTooltipColor: (_) =>
                         theme.colorScheme.surfaceContainerHighest,
