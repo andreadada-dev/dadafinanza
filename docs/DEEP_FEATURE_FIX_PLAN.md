@@ -95,11 +95,13 @@ Audit tecnico del 24/09/2026. Questo documento è il piano operativo per elimina
 
 ## 10. Grafico categorie Home / Conti
 
-- [x] Unificare i periodi visibili della torta in `Oggi · Settimana · Mese · Custom`.
+- [x] Unificare i periodi della torta in `Oggi · Settimana · Mese · Anno`, con intervallo `Custom` su pressione lunga.
 - [x] Mostrare sempre `Oggi`, anche quando il periodo non contiene movimenti.
 - [x] Aprire la torta su `Oggi` sia nella Home complessiva sia nella Home del singolo conto.
 - [x] Se il totale del periodo è zero, mantenere la torta visibile come anello neutro grigio e mostrare `0 €` al centro.
 - [x] Passando Spese ↔ Entrate, mantenere il periodo selezionato anche se il nuovo tipo non contiene movimenti.
+- [x] Toccare il periodo centrale per ciclare Oggi → Settimana → Mese → Anno; usare `<` e `>` per spostarsi al periodo precedente/successivo.
+- [x] Mostrare date/range reali quando ci si sposta dal periodo corrente e includere l'anno quando diverso da quello attuale.
 
 ## Esito implementazione
 
