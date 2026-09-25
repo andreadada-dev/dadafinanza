@@ -85,6 +85,19 @@ class _AccountContextAnalyticsScreenState
       }
     });
   }
+  String _visibleRangeLabel(DateTime from, DateTime toExclusive) {
+    final now = DateTime.now();
+    final end = toExclusive.subtract(const Duration(days: 1));
+    final oneDay =
+        from.year == end.year &&
+        from.month == end.month &&
+        from.day == end.day;
+    final includeYear = from.year != now.year || end.year != now.year;
+    final format = DateFormat(includeYear ? 'd MMM yy' : 'd MMM', 'it_IT');
+    if (oneDay) return format.format(from);
+    return '${format.format(from)} – ${format.format(end)}';
+  }
+
 
   (DateTime, DateTime) _bounds(AppState state) {
     final now = DateTime.now();
@@ -251,8 +264,7 @@ class _AccountContextAnalyticsScreenState
           ),
           const SizedBox(height: 24),
           Text(
-            '${DateFormat('d MMM', 'it_IT').format(from)} – '
-            '${DateFormat('d MMM', 'it_IT').format(to.subtract(const Duration(days: 1)))}',
+            _visibleRangeLabel(from, to),
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 12),
@@ -501,6 +513,7 @@ class _BalanceTrend extends StatefulWidget {
 
 class _BalanceTrendState extends State<_BalanceTrend> {
   int? _selectedDay;
+  double? _swipeStartX;
 
   @override
   void didUpdateWidget(covariant _BalanceTrend oldWidget) {
@@ -679,12 +692,17 @@ class _BalanceTrendState extends State<_BalanceTrend> {
             label: account == null
                 ? 'Andamento del patrimonio nel periodo selezionato'
                 : 'Andamento del saldo di ${account.name} nel periodo selezionato',
-            child: GestureDetector(
+            child: Listener(
               behavior: HitTestBehavior.opaque,
-              onHorizontalDragEnd: (details) {
-                final velocity = details.primaryVelocity ?? 0;
-                if (velocity.abs() < 150) return;
-                widget.onShiftPeriod(velocity < 0 ? -1 : 1);
+              onPointerDown: (event) => _swipeStartX = event.position.dx,
+              onPointerCancel: (_) => _swipeStartX = null,
+              onPointerUp: (event) {
+                final startX = _swipeStartX;
+                _swipeStartX = null;
+                if (startX == null) return;
+                final deltaX = event.position.dx - startX;
+                if (deltaX.abs() < 48) return;
+                widget.onShiftPeriod(deltaX < 0 ? -1 : 1);
               },
               child: LineChart(
                 LineChartData(
