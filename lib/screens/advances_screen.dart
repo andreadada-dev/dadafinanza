@@ -673,12 +673,18 @@ class AdvanceDetailScreen extends StatelessWidget {
 Future<void> showAdvanceEditor(
   BuildContext context, {
   AdvanceDirection? initialDirection,
+  int? initialPersonId,
 }) async {
   final state = AppScope.of(context);
   var direction = initialDirection ?? AdvanceDirection.receivable;
   final amount = TextEditingController();
   final note = TextEditingController();
-  int? personId = state.people.where((item) => !item.archived).firstOrNull?.id;
+  final activePeople = state.people.where((item) => !item.archived).toList();
+  int? personId =
+      initialPersonId != null &&
+          activePeople.any((item) => item.id == initialPersonId)
+      ? initialPersonId
+      : activePeople.firstOrNull?.id;
   int? accountId = state.activeAccounts
       .where((item) => !item.isLocked)
       .firstOrNull
