@@ -148,15 +148,17 @@ void main() {
     expect(
       donut,
       contains(
-        'enum _CategoryChartRange { today, thisWeek, thisMonth, custom }',
+        'enum _CategoryChartRange { today, thisWeek, thisMonth, thisYear, custom }',
       ),
     );
     expect(donut, contains("_CategoryChartRange.today => 'Oggi'"));
     expect(donut, contains("_CategoryChartRange.thisWeek => 'Settimana'"));
     expect(donut, contains("_CategoryChartRange.thisMonth => 'Mese'"));
+    expect(donut, contains("_CategoryChartRange.thisYear => 'Anno'"));
     expect(donut, contains("_CategoryChartRange.custom"));
     expect(donut, isNot(contains('_hasTodayData')));
-    expect(donut, contains('static const _availableRanges'));
+    expect(donut, contains('static const _cycleRanges'));
+    expect(donut, contains('onLongPress: onRangeLongPress'));
     expect(donut, contains('var _range = _CategoryChartRange.today;'));
     expect(donut, contains('widget.accountId'));
   });
