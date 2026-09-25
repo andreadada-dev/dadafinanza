@@ -15,26 +15,17 @@ class AdvancesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
-    final open = state.advances
+    final people = state.people
         .where(
-          (item) =>
-              item.closedKind == null &&
-              state.advanceRemainingCents(item.id) > 0,
+          (person) => state.advances.any((item) => item.personId == person.id),
         )
-        .toList();
-    final closed = state.advances
-        .where(
-          (item) =>
-              item.closedKind != null ||
-              state.advanceRemainingCents(item.id) == 0,
-        )
-        .toList();
-    final receivable = open
-        .where((item) => item.direction == AdvanceDirection.receivable)
-        .toList();
-    final payable = open
-        .where((item) => item.direction == AdvanceDirection.payable)
-        .toList();
+        .toList()
+      ..sort((first, second) {
+        final firstOpen = _openAdvanceCount(state, first.id);
+        final secondOpen = _openAdvanceCount(state, second.id);
+        if (firstOpen != secondOpen) return secondOpen.compareTo(firstOpen);
+        return first.name.toLowerCase().compareTo(second.name.toLowerCase());
+      });
 
     return Scaffold(
       appBar: AppBar(
@@ -87,111 +78,218 @@ class AdvancesScreen extends StatelessWidget {
             icon: Icons.balance_rounded,
           ),
           const SizedBox(height: 32),
-          const SectionTitle('Da ricevere'),
-          if (receivable.isEmpty)
-            const Text('Nessun anticipo da ricevere.')
+          const SectionTitle('Persone'),
+          if (people.isEmpty)
+            const Text('Nessun anticipo registrato.')
           else
-            ...receivable.map((item) => _AdvanceRow(advance: item)),
-          const SizedBox(height: 32),
-          const SectionTitle('Da restituire'),
-          if (payable.isEmpty)
-            const Text('Nessun anticipo da restituire.')
-          else
-            ...payable.map((item) => _AdvanceRow(advance: item)),
-          const SizedBox(height: 32),
-          const SectionTitle('Saldati e storico'),
-          if (closed.isEmpty)
-            const Text('Lo storico comparirà qui quando chiudi un anticipo.')
-          else
-            ...closed
-                .take(30)
-                .map((item) => _AdvanceRow(advance: item, closed: true)),
+            ...people.map(
+              (person) => _AdvancePersonSummaryRow(person: person),
+            ),
         ],
       ),
     );
   }
 }
 
-class _AdvanceRow extends StatelessWidget {
-  const _AdvanceRow({required this.advance, this.closed = false});
+int _openAdvanceCount(AppState state, int personId) => state.advances
+    .where(
+      (item) =>
+          item.personId == personId &&
+          item.closedKind == null &&
+          state.advanceRemainingCents(item.id) > 0,
+    )
+    .length;
 
-  final Advance advance;
-  final bool closed;
+DateTime? _nextAdvanceReminder(AppState state, int personId) {
+  final reminders = state.advances
+      .where(
+        (item) =>
+            item.personId == personId &&
+            item.closedKind == null &&
+            state.advanceRemainingCents(item.id) > 0 &&
+            item.reminderDate != null,
+      )
+      .map((item) => item.reminderDate!)
+      .toList()
+    ..sort();
+  return reminders.firstOrNull;
+}
+
+String _notificationLabel(DateTime? reminder) {
+  if (reminder == null) return 'Notifica: nessuna';
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+  final target = DateTime(reminder.year, reminder.month, reminder.day);
+  final days = target.difference(today).inDays;
+  if (days < 0) return 'Notifica: scaduta';
+  if (days == 0) return 'Notifica: oggi';
+  if (days == 1) return 'Notifica: domani';
+  return 'Notifica: \${DateFormat('d MMM', 'it_IT').format(reminder)}';
+}
+
+class _AdvancePersonSummaryRow extends StatelessWidget {
+  const _AdvancePersonSummaryRow({required this.person});
+
+  final FinancePerson person;
 
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
-    final person = state.personById(advance.personId);
-    final remaining = state.advanceRemainingCents(advance.id);
-    final settled = advance.originalAmountCents - remaining;
-    final status = state.advanceStatus(advance);
-    final due = advance.dueDate;
-    final statusText = switch (status) {
-      AdvanceStatus.open => advance.direction.label,
-      AdvanceStatus.partial =>
-        advance.direction == AdvanceDirection.receivable
-            ? 'Parziale · da ricevere'
-            : 'Parziale · da restituire',
-      AdvanceStatus.overdue => 'Scaduto',
-      AdvanceStatus.settled => 'Saldato',
-      AdvanceStatus.cancelled => 'Annullato',
-      AdvanceStatus.writtenOff => 'Non recuperato',
-      AdvanceStatus.forgiven => 'Condonato',
-    };
+    final items = state.advances
+        .where((item) => item.personId == person.id)
+        .toList();
+    var receivable = 0;
+    var payable = 0;
+    var openCount = 0;
+    for (final item in items) {
+      if (item.closedKind != null) continue;
+      final remaining = state.advanceRemainingCents(item.id);
+      if (remaining <= 0) continue;
+      openCount++;
+      if (item.direction == AdvanceDirection.receivable) {
+        receivable += remaining;
+      } else {
+        payable += remaining;
+      }
+    }
+    final reminder = _nextAdvanceReminder(state, person.id);
+    final summary = <String>[
+      if (receivable > 0)
+        'Da ricevere \${state.hideBalance ? '••••' : moneyFor(state, Money.fromCents(receivable))}',
+      if (payable > 0)
+        'Da restituire \${state.hideBalance ? '••••' : moneyFor(state, Money.fromCents(payable))}',
+      if (openCount == 0)
+        '\${items.length} \${items.length == 1 ? 'movimento' : 'movimenti'} nello storico',
+    ].join(' · ');
+
     return Semantics(
       button: true,
-      label:
-          '${person?.name ?? 'Persona'}, ${Money.fromCents(remaining).toStringAsFixed(2)} euro ${advance.direction.label.toLowerCase()}, $statusText',
+      label: '\${person.name}. \${_notificationLabel(reminder)}. $summary',
       child: ListTile(
         contentPadding: EdgeInsets.zero,
-        minVerticalPadding: 10,
+        minVerticalPadding: 12,
         leading: Icon(
-          advance.direction == AdvanceDirection.receivable
-              ? Icons.call_received_rounded
-              : Icons.call_made_rounded,
+          Icons.person_outline_rounded,
+          color: Color(person.colorValue),
         ),
         title: Text(
-          person?.name ?? 'Persona',
-          style: const TextStyle(fontWeight: FontWeight.w700),
+          person.name,
+          style: const TextStyle(fontWeight: FontWeight.w800),
         ),
-        subtitle: Text(
-          [
-            if (closed)
-              statusText
-            else
-              '${moneyFor(state, Money.fromCents(remaining))} ${advance.direction.label.toLowerCase()}',
-            if (settled > 0 && remaining > 0)
-              '${moneyFor(state, Money.fromCents(settled))} regolati su ${moneyFor(state, advance.originalAmount)}',
-            if (due != null && remaining > 0) _dueLabel(due),
-          ].join(' · '),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(_notificationLabel(reminder)),
+            const SizedBox(height: 2),
+            Text(summary),
+          ],
         ),
-        trailing: closed
-            ? const Icon(Icons.chevron_right_rounded)
-            : Text(
-                state.hideBalance
-                    ? '••••'
-                    : moneyFor(state, Money.fromCents(remaining)),
-                style: const TextStyle(fontWeight: FontWeight.w800),
-              ),
+        trailing: const Icon(Icons.chevron_right_rounded),
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => AdvanceDetailScreen(advanceId: advance.id),
+            builder: (_) => FinancePersonDetailScreen(personId: person.id),
           ),
         ),
       ),
     );
   }
+}
 
-  String _dueLabel(DateTime due) {
-    final today = DateTime.now();
-    final day = DateTime(today.year, today.month, today.day);
-    final target = DateTime(due.year, due.month, due.day);
-    final diff = target.difference(day).inDays;
-    if (diff < 0) return 'Scaduto da ${diff.abs()} g';
-    if (diff == 0) return 'Scade oggi';
-    if (diff == 1) return 'Scade domani';
-    return 'Scade tra $diff giorni';
+class _AdvanceRow extends StatelessWidget {
+  const _AdvanceRow({required this.advance});
+
+  final Advance advance;
+
+  @override
+  Widget build(BuildContext context) {
+    final state = AppScope.of(context);
+    final remaining = state.advanceRemainingCents(advance.id);
+    final status = state.advanceStatus(advance);
+    final canSettle = advance.closedKind == null && remaining > 0;
+    final statusText = switch (status) {
+      AdvanceStatus.open =>
+        advance.direction == AdvanceDirection.receivable
+            ? 'Da saldare'
+            : 'Da restituire',
+      AdvanceStatus.partial =>
+        advance.direction == AdvanceDirection.receivable
+            ? 'Da saldare · \${moneyFor(state, Money.fromCents(remaining))} residui'
+            : 'Da restituire · \${moneyFor(state, Money.fromCents(remaining))} residui',
+      AdvanceStatus.overdue =>
+        advance.direction == AdvanceDirection.receivable
+            ? 'Scaduto · da saldare'
+            : 'Scaduto · da restituire',
+      AdvanceStatus.settled =>
+        advance.direction == AdvanceDirection.receivable
+            ? 'Mi hanno saldato'
+            : 'Restituito',
+      AdvanceStatus.cancelled => 'Annullato',
+      AdvanceStatus.writtenOff => 'Non recuperato',
+      AdvanceStatus.forgiven => 'Condonato',
+    };
+
+    return Column(
+      children: [
+        ListTile(
+          contentPadding: EdgeInsets.zero,
+          minVerticalPadding: 10,
+          leading: Icon(
+            advance.direction == AdvanceDirection.receivable
+                ? Icons.call_received_rounded
+                : Icons.call_made_rounded,
+          ),
+          title: Text(
+            '\${DateFormat('d MMM yyyy', 'it_IT').format(advance.createdAt)} · '
+            '\${state.hideBalance ? '••••' : moneyFor(state, advance.originalAmount)}',
+            style: const TextStyle(fontWeight: FontWeight.w700),
+          ),
+          subtitle: Text(
+            [
+              statusText,
+              if (advance.note?.isNotEmpty == true) advance.note!,
+            ].join(' · '),
+          ),
+          trailing: const Icon(Icons.chevron_right_rounded),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => AdvanceDetailScreen(advanceId: advance.id),
+            ),
+          ),
+        ),
+        if (canSettle)
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 4,
+              children: [
+                FilledButton.tonalIcon(
+                  onPressed: () => showSettlementEditor(context, advance),
+                  icon: const Icon(Icons.check_rounded, size: 18),
+                  label: Text(
+                    advance.direction == AdvanceDirection.receivable
+                        ? 'Mi hanno saldato'
+                        : 'Ho restituito',
+                  ),
+                ),
+                TextButton.icon(
+                  onPressed: () =>
+                      _closeAdvanceFromPerson(context, advance),
+                  icon: const Icon(Icons.block_rounded, size: 18),
+                  label: Text(
+                    advance.direction == AdvanceDirection.receivable
+                        ? 'Non recuperato'
+                        : 'Condona',
+                  ),
+                ),
+              ],
+            ),
+          ),
+        const Divider(height: 24),
+      ],
+    );
   }
 }
 
