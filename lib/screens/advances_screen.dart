@@ -276,7 +276,7 @@ class _AdvanceRow extends StatelessWidget {
                 ),
                 TextButton.icon(
                   onPressed: () =>
-                      _closeAdvanceFromPerson(context, advance),
+                      _closeAdvanceWithoutRecoveryFlow(context, advance),
                   icon: const Icon(Icons.block_rounded, size: 18),
                   label: Text(
                     advance.direction == AdvanceDirection.receivable
@@ -668,6 +668,64 @@ class AdvanceDetailScreen extends StatelessWidget {
     );
     if (context.mounted) Navigator.pop(context);
   }
+}
+Future<void> _closeAdvanceWithoutRecoveryFlow(
+  BuildContext context,
+  Advance advance,
+) async {
+  final state = AppScope.of(context);
+  final remaining = state.advanceRemainingCents(advance.id);
+  if (remaining <= 0) return;
+
+  final recognize = await showDialog<bool>(
+    context: context,
+    builder: (dialogContext) => AlertDialog(
+      title: Text(
+        advance.direction == AdvanceDirection.receivable
+            ? 'Non verrà restituito?'
+            : 'Anticipo condonato?',
+      ),
+      content: Text(
+        advance.direction == AdvanceDirection.receivable
+            ? 'Restano \${moneyFor(state, Money.fromCents(remaining))}. Vuoi registrarli come una tua spesa?'
+            : 'Restano \${moneyFor(state, Money.fromCents(remaining))}. Vuoi registrarli come una tua entrata?',
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(dialogContext),
+          child: const Text('Annulla'),
+        ),
+        TextButton(
+          onPressed: () => Navigator.pop(dialogContext, false),
+          child: const Text('Chiudi senza statistica'),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.pop(dialogContext, true),
+          child: const Text('Registra'),
+        ),
+      ],
+    ),
+  );
+  if (recognize == null || !context.mounted) return;
+
+  int? categoryId;
+  int? accountId;
+  if (recognize) {
+    final type = advance.direction == AdvanceDirection.receivable
+        ? TransactionType.expense
+        : TransactionType.income;
+    categoryId = await _pickCategory(context, type);
+    if (categoryId == null || !context.mounted) return;
+    accountId = await _pickAccount(context);
+    if (accountId == null || !context.mounted) return;
+  }
+
+  await state.closeAdvanceWithoutRecovery(
+    advance.id,
+    recognizeInAnalytics: recognize,
+    categoryId: categoryId,
+    accountId: accountId,
+  );
 }
 
 Future<void> showAdvanceEditor(
