@@ -457,95 +457,55 @@ class SafeAccountDetailScreen extends StatelessWidget {
   ) async {
     final name = TextEditingController(text: account.name);
     final note = TextEditingController(text: account.note ?? '');
-    var includeInTotal = account.includeInTotal;
-    var includeInAnalytics = account.includeInAnalytics;
-    var hideBalance = account.hideBalance;
-    var locked = account.isLocked;
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
       showDragHandle: true,
-      builder: (sheetContext) => StatefulBuilder(
-        builder: (sheetContext, setSheetState) => Padding(
-          padding: EdgeInsets.fromLTRB(
-            20,
-            4,
-            20,
-            MediaQuery.viewInsetsOf(sheetContext).bottom + 20,
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Modifica conto',
-                  style: Theme.of(sheetContext).textTheme.titleLarge,
+      builder: (sheetContext) => Padding(
+        padding: EdgeInsets.fromLTRB(
+          20,
+          4,
+          20,
+          MediaQuery.viewInsetsOf(sheetContext).bottom + 20,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Modifica nome e nota',
+                style: Theme.of(sheetContext).textTheme.titleLarge,
+              ),
+              TextField(
+                controller: name,
+                decoration: const InputDecoration(labelText: 'Nome'),
+              ),
+              TextField(
+                controller: note,
+                decoration: const InputDecoration(labelText: 'Nota opzionale'),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: () async {
+                    if (name.text.trim().isEmpty) return;
+                    await state.updateAccount(
+                      account.copyWith(
+                        name: name.text.trim(),
+                        note: note.text.trim().isEmpty
+                            ? null
+                            : note.text.trim(),
+                      ),
+                    );
+                    if (sheetContext.mounted) Navigator.pop(sheetContext);
+                  },
+                  child: const Text('Salva modifiche'),
                 ),
-                TextField(
-                  controller: name,
-                  decoration: InputDecoration(labelText: 'Nome'),
-                ),
-                TextField(
-                  controller: note,
-                  decoration: InputDecoration(labelText: 'Nota opzionale'),
-                ),
-                const SizedBox(height: 16),
-                SwitchListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: const Text('Includi nel patrimonio'),
-                  value: includeInTotal,
-                  onChanged: (value) =>
-                      setSheetState(() => includeInTotal = value),
-                ),
-                SwitchListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: const Text('Includi nelle statistiche'),
-                  value: includeInAnalytics,
-                  onChanged: (value) =>
-                      setSheetState(() => includeInAnalytics = value),
-                ),
-                SwitchListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: const Text('Nascondi saldo'),
-                  value: hideBalance,
-                  onChanged: (value) =>
-                      setSheetState(() => hideBalance = value),
-                ),
-                SwitchListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: const Text('Blocca conto'),
-                  value: locked,
-                  onChanged: (value) => setSheetState(() => locked = value),
-                ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton(
-                    onPressed: () async {
-                      if (name.text.trim().isEmpty) return;
-                      await state.updateAccount(
-                        account.copyWith(
-                          name: name.text.trim(),
-                          note: note.text.trim().isEmpty
-                              ? null
-                              : note.text.trim(),
-                          includeInTotal: includeInTotal,
-                          includeInAnalytics: includeInAnalytics,
-                          hideBalance: hideBalance,
-                          isLocked: locked,
-                        ),
-                      );
-                      if (sheetContext.mounted) {
-                        Navigator.pop(sheetContext);
-                      }
-                    },
-                    child: const Text('Salva modifiche'),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
