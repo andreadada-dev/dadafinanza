@@ -11,7 +11,7 @@ import '../widgets/ui_helpers.dart';
 import 'account_management_screen.dart';
 import 'transaction_screens.dart';
 
-enum _AnalyticsPeriod { today, month, year, custom }
+enum _AnalyticsPeriod { today, week, month, year, custom }
 
 class AccountContextAnalyticsScreen extends StatefulWidget {
   const AccountContextAnalyticsScreen({
@@ -31,10 +31,12 @@ class AccountContextAnalyticsScreen extends StatefulWidget {
 class _AccountContextAnalyticsScreenState
     extends State<AccountContextAnalyticsScreen> {
   _AnalyticsPeriod period = _AnalyticsPeriod.month;
+  int periodOffset = 0;
   DateTimeRange? custom;
 
   String _periodLabel(_AnalyticsPeriod item) => switch (item) {
     _AnalyticsPeriod.today => 'Oggi',
+    _AnalyticsPeriod.week => 'Settimana',
     _AnalyticsPeriod.month => 'Mese',
     _AnalyticsPeriod.year => 'Anno',
     _AnalyticsPeriod.custom => 'Custom',
@@ -42,7 +44,10 @@ class _AccountContextAnalyticsScreenState
 
   Future<void> _selectPeriod(_AnalyticsPeriod next) async {
     if (next != _AnalyticsPeriod.custom) {
-      if (next != period) setState(() => period = next);
+      setState(() {
+        period = next;
+        periodOffset = 0;
+      });
       return;
     }
 
@@ -62,23 +67,60 @@ class _AccountContextAnalyticsScreenState
       setState(() {
         custom = result;
         period = _AnalyticsPeriod.custom;
+        periodOffset = 0;
       });
     }
+  }
+
+  void _shiftPeriod(int delta) {
+    setState(() {
+      if (period == _AnalyticsPeriod.custom && custom != null) {
+        final days = custom!.end.difference(custom!.start).inDays + 1;
+        custom = DateTimeRange(
+          start: custom!.start.add(Duration(days: delta * days)),
+          end: custom!.end.add(Duration(days: delta * days)),
+        );
+      } else {
+        periodOffset += delta;
+      }
+    });
   }
 
   (DateTime, DateTime) _bounds(AppState state) {
     final now = DateTime.now();
     switch (period) {
       case _AnalyticsPeriod.today:
-        final start = DateTime(now.year, now.month, now.day);
+        final start = DateTime(
+          now.year,
+          now.month,
+          now.day,
+        ).add(Duration(days: periodOffset));
         return (start, start.add(const Duration(days: 1)));
+      case _AnalyticsPeriod.week:
+        final startWeekday = state.weekStart.clamp(1, 7);
+        final offset = (now.weekday - startWeekday) % 7;
+        final currentStart = DateTime(
+          now.year,
+          now.month,
+          now.day,
+        ).subtract(Duration(days: offset));
+        final start = currentStart.add(Duration(days: periodOffset * 7));
+        return (start, start.add(const Duration(days: 7)));
       case _AnalyticsPeriod.month:
         final day = state.financialMonthStart.clamp(1, 28);
-        var start = DateTime(now.year, now.month, day);
-        if (now.isBefore(start)) start = DateTime(now.year, now.month - 1, day);
+        var currentStart = DateTime(now.year, now.month, day);
+        if (now.isBefore(currentStart)) {
+          currentStart = DateTime(now.year, now.month - 1, day);
+        }
+        final start = DateTime(
+          currentStart.year,
+          currentStart.month + periodOffset,
+          day,
+        );
         return (start, DateTime(start.year, start.month + 1, day));
       case _AnalyticsPeriod.year:
-        return (DateTime(now.year), DateTime(now.year + 1));
+        final start = DateTime(now.year + periodOffset);
+        return (start, DateTime(start.year + 1));
       case _AnalyticsPeriod.custom:
         final range = custom;
         if (range == null) {
@@ -203,7 +245,7 @@ class _AccountContextAnalyticsScreenState
                   ),
                 ),
                 if (item != _AnalyticsPeriod.values.last)
-                  const SizedBox(width: 6),
+                  const SizedBox(width: 4),
               ],
             ],
           ),
@@ -262,6 +304,7 @@ class _AccountContextAnalyticsScreenState
             from: from,
             to: to,
             period: period,
+            onShiftPeriod: _shiftPeriod,
           ),
           const SizedBox(height: 24),
           _AnalyticsLine(
@@ -442,6 +485,7 @@ class _BalanceTrend extends StatefulWidget {
     required this.from,
     required this.to,
     required this.period,
+    required this.onShiftPeriod,
   });
 
   final AppState state;
@@ -449,6 +493,7 @@ class _BalanceTrend extends StatefulWidget {
   final DateTime from;
   final DateTime to;
   final _AnalyticsPeriod period;
+  final ValueChanged<int> onShiftPeriod;
 
   @override
   State<_BalanceTrend> createState() => _BalanceTrendState();
@@ -494,15 +539,36 @@ class _BalanceTrendState extends State<_BalanceTrend> {
   }
 
   String _axisLabel(DateTime date, int durationDays) {
+    final from = widget.from;
+    final sameMonth = date.month == from.month && date.year == from.year;
+    final sameYear = date.year == from.year;
+
     return switch (widget.period) {
-      _AnalyticsPeriod.today => 'Oggi',
-      _AnalyticsPeriod.month => DateFormat('d MMM', 'it_IT').format(date),
+      _AnalyticsPeriod.today => DateFormat('dd MMM', 'it_IT').format(date),
+      _AnalyticsPeriod.week => sameMonth
+          ? DateFormat('EEE dd', 'it_IT').format(date)
+          : sameYear
+          ? DateFormat('EEE dd MMM', 'it_IT').format(date)
+          : DateFormat('EEE dd MMM yy', 'it_IT').format(date),
+      _AnalyticsPeriod.month => sameMonth
+          ? DateFormat('dd', 'it_IT').format(date)
+          : sameYear
+          ? DateFormat('dd MMM', 'it_IT').format(date)
+          : DateFormat('dd MMM yy', 'it_IT').format(date),
       _AnalyticsPeriod.year => DateFormat('MMM', 'it_IT').format(date),
       _AnalyticsPeriod.custom =>
         durationDays <= 8
-            ? DateFormat('EEE d', 'it_IT').format(date)
+            ? sameMonth
+                  ? DateFormat('EEE dd', 'it_IT').format(date)
+                  : sameYear
+                  ? DateFormat('EEE dd MMM', 'it_IT').format(date)
+                  : DateFormat('EEE dd MMM yy', 'it_IT').format(date)
             : durationDays <= 70
-            ? DateFormat('d MMM', 'it_IT').format(date)
+            ? sameMonth
+                  ? DateFormat('dd', 'it_IT').format(date)
+                  : sameYear
+                  ? DateFormat('dd MMM', 'it_IT').format(date)
+                  : DateFormat('dd MMM yy', 'it_IT').format(date)
             : DateFormat('MMM yy', 'it_IT').format(date),
     };
   }
@@ -613,8 +679,15 @@ class _BalanceTrendState extends State<_BalanceTrend> {
             label: account == null
                 ? 'Andamento del patrimonio nel periodo selezionato'
                 : 'Andamento del saldo di ${account.name} nel periodo selezionato',
-            child: LineChart(
-              LineChartData(
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onHorizontalDragEnd: (details) {
+                final velocity = details.primaryVelocity ?? 0;
+                if (velocity.abs() < 150) return;
+                widget.onShiftPeriod(velocity < 0 ? -1 : 1);
+              },
+              child: LineChart(
+                LineChartData(
                 minX: 0,
                 maxX: maxX,
                 minY: chartMin,
@@ -759,8 +832,9 @@ class _BalanceTrendState extends State<_BalanceTrend> {
                   ),
                 ],
               ),
-              duration: const Duration(milliseconds: 220),
-              curve: Curves.easeOutCubic,
+                duration: const Duration(milliseconds: 220),
+                curve: Curves.easeOutCubic,
+              ),
             ),
           ),
         ),
