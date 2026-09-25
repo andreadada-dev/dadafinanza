@@ -228,7 +228,7 @@ void main() {
     expect(source, contains('_stepPeriod(1)'));
     expect(source, isNot(contains('_hasTodayData')));
     expect(source, contains('emptyRingColor'));
-    expect(source, contains(': Colors.black'));
+    expect(source, contains('centerSpaceColor: Theme.of(context).scaffoldBackgroundColor'));
     expect(source, contains('value: 1'));
   });
 }
