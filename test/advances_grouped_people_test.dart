@@ -125,12 +125,7 @@ void main() {
           createdAt: DateTime(2026, 9, 25),
           reminderDate: now.add(const Duration(days: 1)),
         ),
-        advance(
-          id: 2,
-          personId: 1,
-          cents: 500,
-          createdAt: settledAt,
-        ),
+        advance(id: 2, personId: 1, cents: 500, createdAt: settledAt),
       ]
       ..advanceSettlements = [
         AdvanceSettlement(
@@ -192,9 +187,7 @@ void main() {
   });
 
   test('new advance flow accepts a preselected person', () {
-    final source = File(
-      'lib/screens/advances_screen.dart',
-    ).readAsStringSync();
+    final source = File('lib/screens/advances_screen.dart').readAsStringSync();
 
     expect(source, contains('int? initialPersonId'));
     expect(
