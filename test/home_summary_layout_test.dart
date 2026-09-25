@@ -156,6 +156,7 @@ void main() {
       isNot(contains('scrollDirection: Axis.horizontal')),
     );
     expect(analytics, contains("_AnalyticsPeriod.today => 'Oggi'"));
+    expect(analytics, contains("_AnalyticsPeriod.week => 'Settimana'"));
     expect(analytics, contains("_AnalyticsPeriod.month => 'Mese'"));
     expect(analytics, contains("_AnalyticsPeriod.year => 'Anno'"));
     expect(analytics, contains("_AnalyticsPeriod.custom => 'Custom'"));
@@ -170,7 +171,11 @@ void main() {
     ).readAsStringSync();
 
     expect(analytics, contains('bottomTitles: AxisTitles('));
-    expect(analytics, contains("_AnalyticsPeriod.today => 'Oggi'"));
+    expect(
+      analytics,
+      contains("_AnalyticsPeriod.week => sameMonth"),
+    );
+    expect(analytics, contains("DateFormat('EEE dd'"));
     expect(analytics, contains("_AnalyticsPeriod.year => DateFormat('MMM'"));
     expect(
       analytics,
@@ -195,6 +200,9 @@ void main() {
     expect(analytics, contains("'Saldo finale "));
     expect(analytics, contains('touchCallback: (event, response)'));
     expect(analytics, contains('VerticalLine('));
+    expect(analytics, contains('onHorizontalDragEnd: (details)'));
+    expect(analytics, contains('widget.onShiftPeriod(velocity < 0 ? -1 : 1)'));
+    expect(analytics, contains('periodOffset += delta'));
   });
 
   test('category donut always offers Today and renders an empty ring', () {
@@ -203,8 +211,15 @@ void main() {
     ).readAsStringSync();
 
     expect(source, contains('var _range = _CategoryChartRange.today;'));
-    expect(source, contains('static const _availableRanges'));
+    expect(source, contains('static const _cycleRanges'));
     expect(source, contains('_CategoryChartRange.today,'));
+    expect(source, contains('_CategoryChartRange.thisWeek,'));
+    expect(source, contains('_CategoryChartRange.thisMonth,'));
+    expect(source, contains('_CategoryChartRange.thisYear,'));
+    expect(source, contains('onRangeTap: _cycleRange'));
+    expect(source, contains('onRangeLongPress: _selectCustomRange'));
+    expect(source, contains('_stepPeriod(-1)'));
+    expect(source, contains('_stepPeriod(1)'));
     expect(source, isNot(contains('_hasTodayData')));
     expect(source, contains('emptyRingColor'));
     expect(source, contains('centerSpaceColor: Theme.of(context).scaffoldBackgroundColor'));
