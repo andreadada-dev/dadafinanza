@@ -494,7 +494,11 @@ class AdvanceDetailScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             TextButton(
-              onPressed: () => _closeWithoutRecovery(context, advance),
+              onPressed: () => _closeAdvanceWithoutRecoveryFlow(
+                context,
+                advance,
+                popAfter: true,
+              ),
               child: Text(
                 advance.direction == AdvanceDirection.receivable
                     ? 'Non verrà restituito'
@@ -613,67 +617,13 @@ class AdvanceDetailScreen extends StatelessWidget {
     }
   }
 
-  Future<void> _closeWithoutRecovery(
-    BuildContext context,
-    Advance advance,
-  ) async {
-    final state = AppScope.of(context);
-    final remaining = state.advanceRemainingCents(advance.id);
-    if (remaining <= 0) return;
-    final recognize = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(
-          advance.direction == AdvanceDirection.receivable
-              ? 'Non verrà restituito?'
-              : 'Anticipo condonato?',
-        ),
-        content: Text(
-          advance.direction == AdvanceDirection.receivable
-              ? 'Restano ${moneyFor(state, Money.fromCents(remaining))}. Vuoi registrarli come una tua spesa?'
-              : 'Restano ${moneyFor(state, Money.fromCents(remaining))}. Vuoi registrarli come una tua entrata?',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Annulla'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext, false),
-            child: const Text('Chiudi senza statistica'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(dialogContext, true),
-            child: const Text('Registra'),
-          ),
-        ],
-      ),
-    );
-    if (recognize == null || !context.mounted) return;
-    int? categoryId;
-    int? accountId;
-    if (recognize) {
-      final type = advance.direction == AdvanceDirection.receivable
-          ? TransactionType.expense
-          : TransactionType.income;
-      categoryId = await _pickCategory(context, type);
-      if (categoryId == null || !context.mounted) return;
-      accountId = await _pickAccount(context);
-      if (accountId == null || !context.mounted) return;
-    }
-    await state.closeAdvanceWithoutRecovery(
-      advance.id,
-      recognizeInAnalytics: recognize,
-      categoryId: categoryId,
-      accountId: accountId,
-    );
-    if (context.mounted) Navigator.pop(context);
-  }
 }
+
 Future<void> _closeAdvanceWithoutRecoveryFlow(
   BuildContext context,
-  Advance advance,
-) async {
+  Advance advance, {
+  bool popAfter = false,
+}) async {
   final state = AppScope.of(context);
   final remaining = state.advanceRemainingCents(advance.id);
   if (remaining <= 0) return;
@@ -727,6 +677,7 @@ Future<void> _closeAdvanceWithoutRecoveryFlow(
     categoryId: categoryId,
     accountId: accountId,
   );
+  if (popAfter && context.mounted) Navigator.pop(context);
 }
 
 Future<void> showAdvanceEditor(
