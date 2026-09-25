@@ -592,11 +592,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                     ),
                     sections: hasData
                         ? [
-                            for (
-                              var index = 0;
-                              index < data.slices.length;
-                              index++
-                            )
+                            for (var index = 0; index < data.slices.length; index++)
                               PieChartSectionData(
                                 color:
                                     pageSelectedIndex == -1 ||
