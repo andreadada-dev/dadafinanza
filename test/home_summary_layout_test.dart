@@ -129,14 +129,45 @@ void main() {
     ).readAsStringSync();
 
     expect(account, contains("'Impostazioni conto'"));
-    expect(account, contains("'Modifica nome e nota'"));
+    expect(account, contains("'Nome, icona e nota'"));
+    expect(account, contains("'Colore'"));
+    expect(account, contains('accountIconOptions'));
     expect(account, contains('SwitchListTile('));
     expect(account, isNot(contains("tooltip: 'Azioni conto'")));
     expect(account, isNot(contains('class _AccountTrend')));
 
     expect(analytics, contains("'Andamento saldo'"));
-    expect(analytics, contains('class _AccountBalanceTrend'));
+    expect(analytics, contains("'Andamento patrimonio'"));
+    expect(analytics, contains('class _BalanceTrend'));
     expect(analytics, contains('LineChart('));
+    expect(analytics, contains('LineTouchTooltipData('));
+    expect(analytics, contains('surfaceContainerHighest'));
+  });
+
+  test('analytics uses separate period pills and editable custom range', () {
+    final analytics = File(
+      'lib/screens/account_context_analytics_screen.dart',
+    ).readAsStringSync();
+
+    expect(analytics, contains('class _PeriodPill'));
+    expect(analytics, isNot(contains('SegmentedButton<_AnalyticsPeriod>')));
+    expect(analytics, contains("DateFormat('d/M/yyyy')"));
+    expect(analytics, contains("' ~ '"));
+    expect(analytics, contains('showDateRangePicker('));
+    expect(analytics, contains('onTap: () => _selectPeriod(item)'));
+  });
+
+  test('analytics trend has date axis labels for total and account views', () {
+    final analytics = File(
+      'lib/screens/account_context_analytics_screen.dart',
+    ).readAsStringSync();
+
+    expect(analytics, contains('bottomTitles: AxisTitles('));
+    expect(analytics, contains("_AnalyticsPeriod.week => DateFormat('EEE'"));
+    expect(analytics, contains("_AnalyticsPeriod.year => DateFormat('MMM'"));
+    expect(analytics, contains('account: effectiveAccountId == null ? null : selected'));
+    expect(analytics, contains('!item.isArchived'));
+    expect(analytics, contains('item.includeInTotal'));
   });
 
   test('category donut always offers Today and renders an empty ring', () {
