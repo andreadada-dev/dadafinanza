@@ -797,9 +797,13 @@ class _BalanceTrendState extends State<_BalanceTrend>
           ),
         ),
         const SizedBox(height: 4),
-        SizedBox(
-          height: 224,
-          child: Semantics(
+        OverflowBox(
+          alignment: Alignment.center,
+          minWidth: MediaQuery.sizeOf(context).width - 4,
+          maxWidth: MediaQuery.sizeOf(context).width - 4,
+          child: SizedBox(
+            height: 224,
+            child: Semantics(
             label: account == null
                 ? 'Andamento del patrimonio nel periodo selezionato'
                 : 'Andamento del saldo di ${account.name} nel periodo selezionato',
@@ -826,7 +830,7 @@ class _BalanceTrendState extends State<_BalanceTrend>
                       sideTitles: SideTitles(
                         showTitles: true,
                         interval: yInterval,
-                        reservedSize: 22,
+                        reservedSize: 20,
                         minIncluded: true,
                         maxIncluded: true,
                         getTitlesWidget: (axisValue, meta) => Padding(
@@ -864,15 +868,31 @@ class _BalanceTrendState extends State<_BalanceTrend>
                               return const SizedBox.shrink();
                             }
                             final hour = axisValue.round();
+                            final horizontalNudge = switch (hour) {
+                              0 => -3.0,
+                              1 => 3.0,
+                              23 => -3.0,
+                              24 => 3.0,
+                              _ => 0.0,
+                            };
                             return Padding(
                               padding: const EdgeInsets.only(top: 8),
-                              child: Text(
-                                hour == 24
-                                    ? '24'
-                                    : hour.toString().padLeft(2, '0'),
-                                style: theme.textTheme.labelSmall?.copyWith(
-                                  color:
-                                      theme.colorScheme.onSurfaceVariant,
+                              child: Transform.translate(
+                                offset: Offset(horizontalNudge, 0),
+                                child: SizedBox(
+                                  width: 18,
+                                  child: Text(
+                                    hour == 24
+                                        ? '24'
+                                        : hour.toString().padLeft(2, '0'),
+                                    maxLines: 1,
+                                    textAlign: TextAlign.center,
+                                    style: theme.textTheme.labelSmall?.copyWith(
+                                      fontSize: 10.5,
+                                      color:
+                                          theme.colorScheme.onSurfaceVariant,
+                                    ),
+                                  ),
                                 ),
                               ),
                             );
@@ -998,6 +1018,7 @@ class _BalanceTrendState extends State<_BalanceTrend>
                 ),
                 duration: const Duration(milliseconds: 220),
                 curve: Curves.easeOutCubic,
+              ),
               ),
             ),
           ),
