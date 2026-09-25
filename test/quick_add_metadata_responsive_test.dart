@@ -57,6 +57,23 @@ void main() {
     });
   }
 
+  testWidgets('Quick Add exposes separate date and time controls', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await _pumpQuickAdd(tester, dark: true);
+
+    expect(find.text('Data'), findsOneWidget);
+    expect(find.text('Ora'), findsOneWidget);
+    expect(find.byIcon(Icons.calendar_today_outlined), findsOneWidget);
+    expect(find.byIcon(Icons.schedule_rounded), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('Quick Add metadata supports dark mode and large text', (
     tester,
   ) async {
