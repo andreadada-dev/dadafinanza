@@ -654,6 +654,22 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                 ),
               ),
             ),
+            // fl_chart can visually retain/tint its center space while the
+            // section animates. Paint the donut hole ourselves above the
+            // chart so it always matches the actual app surface in both
+            // light and dark themes.
+            Center(
+              child: IgnorePointer(
+                child: Container(
+                  width: chartSize * .64,
+                  height: chartSize * .64,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+            ),
             Center(
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 180),
