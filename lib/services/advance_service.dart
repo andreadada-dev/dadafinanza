@@ -104,6 +104,32 @@ class AdvanceService {
     if (changed == 0) throw StateError('Persona non trovata.');
   }
 
+  Future<void> updatePerson({
+    required int personId,
+    required String name,
+    required int colorValue,
+    required String iconKey,
+    String? note,
+  }) async {
+    final normalized = name.trim();
+    if (normalized.isEmpty) {
+      throw StateError('Inserisci il nome della persona.');
+    }
+    final changed = await database.db.update(
+      'finance_people',
+      {
+        'name': normalized,
+        'color': colorValue,
+        'icon_key': iconKey,
+        'note': note?.trim().isEmpty == true ? null : note?.trim(),
+        'updated_at': DateTime.now().millisecondsSinceEpoch,
+      },
+      where: 'id = ?',
+      whereArgs: [personId],
+    );
+    if (changed == 0) throw StateError('Persona non trovata.');
+  }
+
   Future<void> updateAdvanceDetails({
     required int advanceId,
     required int personId,
