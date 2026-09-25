@@ -201,6 +201,10 @@ void main() {
     expect(analytics, contains('0 => -3.0'));
     expect(analytics, contains('1 => 3.0'));
     expect(analytics, contains('24 => -8.0'));
+    expect(analytics, contains('final isFirstLabel = axisValue <= .01'));
+    expect(analytics, contains('axisValue >= chartMaxX - .01'));
+    expect(analytics, contains('isLastLabel'));
+    expect(analytics, contains('? -12.0'));
     expect(analytics, contains('final allPositive = dataMin >= 0'));
     expect(analytics, contains('final allNegative = dataMax <= 0'));
     expect(analytics, contains('final minValue = allPositive ? 0.0 : dataMin'));
