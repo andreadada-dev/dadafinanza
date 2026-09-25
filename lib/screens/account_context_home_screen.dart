@@ -163,8 +163,13 @@ class AccountContextHomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
               ] else ...[
-                AccountCategoryCarousel(accountId: selectedAccount!.id),
-                const SizedBox(height: 24),
+                _SelectedAccountSummary(
+                  account: selectedAccount!,
+                  balance: balance,
+                  income: income,
+                  expense: expense,
+                ),
+                const SizedBox(height: 20),
               ],
               _QuickActions(
                 onOpen: (type) => _openQuick(context, type, effectiveAccountId),
@@ -234,12 +239,44 @@ class AccountContextHomeScreen extends StatelessWidget {
                   ),
               ] else ...[
                 const SizedBox(height: 28),
-                _SelectedAccountSummary(
-                  account: selectedAccount!,
-                  balance: balance,
-                  income: income,
-                  expense: expense,
-                  onOpenAnalytics: () => Navigator.push(
+                AccountCategoryCarousel(accountId: selectedAccount!.id),
+                const SizedBox(height: 28),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Icon(
+                    accountIcon(selectedAccount.iconKey),
+                    color: Color(selectedAccount.colorValue),
+                  ),
+                  title: const Text(
+                    'Apri conto',
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  subtitle: Text('Modifica e gestisci ${selectedAccount.name}'),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => SafeAccountDetailScreen(
+                        accountId: selectedAccount.id,
+                      ),
+                    ),
+                  ),
+                ),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Icon(
+                    Icons.insights_rounded,
+                    color: Color(selectedAccount.colorValue),
+                  ),
+                  title: const Text(
+                    'Analytics del conto',
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  subtitle: const Text(
+                    'Entrate, spese e andamento del conto',
+                  ),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (_) => AccountContextAnalyticsScreen(
@@ -250,20 +287,7 @@ class AccountContextHomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 32),
-                SectionTitle(
-                  'Ultimi movimenti',
-                  trailing: TextButton(
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => SafeAccountDetailScreen(
-                          accountId: selectedAccount.id,
-                        ),
-                      ),
-                    ),
-                    child: const Text('Apri conto'),
-                  ),
-                ),
+                const SectionTitle('Ultimi movimenti'),
                 if (recent.isEmpty)
                   const EmptyState(
                     icon: Icons.receipt_long_outlined,
@@ -513,14 +537,12 @@ class _SelectedAccountSummary extends StatelessWidget {
     required this.balance,
     required this.income,
     required this.expense,
-    required this.onOpenAnalytics,
   });
 
   final Account account;
   final double balance;
   final double income;
   final double expense;
-  final VoidCallback onOpenAnalytics;
 
   @override
   Widget build(BuildContext context) {
@@ -563,21 +585,6 @@ class _SelectedAccountSummary extends StatelessWidget {
               ),
             ),
           ],
-        ),
-        const SizedBox(height: 24),
-        ListTile(
-          contentPadding: EdgeInsets.zero,
-          leading: Icon(
-            Icons.insights_rounded,
-            color: Color(account.colorValue),
-          ),
-          title: const Text(
-            'Analytics del conto',
-            style: TextStyle(fontWeight: FontWeight.w700),
-          ),
-          subtitle: const Text('Entrate, spese e andamento del conto'),
-          trailing: const Icon(Icons.chevron_right_rounded),
-          onTap: onOpenAnalytics,
         ),
       ],
     );
