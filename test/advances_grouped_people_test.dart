@@ -105,10 +105,14 @@ void main() {
     expect(find.text('Persone'), findsOneWidget);
     expect(find.text('Cerca persona'), findsOneWidget);
     expect(find.byType(GridView), findsOneWidget);
+    final grid = tester.widget<GridView>(find.byType(GridView));
+    final delegate =
+        grid.gridDelegate as SliverGridDelegateWithFixedCrossAxisCount;
+    expect(delegate.crossAxisCount, 3);
     expect(find.text('Dario'), findsOneWidget);
     expect(find.text('Anna'), findsOneWidget);
     expect(find.text('Notifica domani'), findsOneWidget);
-    expect(find.text('Nessuna notifica'), findsOneWidget);
+    expect(find.text('Apri Storico'), findsOneWidget);
     expect(find.text('2'), findsOneWidget);
     expect(find.text('1'), findsOneWidget);
 
@@ -156,7 +160,7 @@ void main() {
     );
 
     expect(find.text('Dario'), findsOneWidget);
-    expect(find.text('Notifica: domani'), findsOneWidget);
+    expect(find.text('Notifica domani'), findsOneWidget);
     expect(find.text('Movimenti'), findsOneWidget);
     expect(find.text('Nuovo anticipo'), findsOneWidget);
     expect(find.textContaining('25 set 2026 ·'), findsOneWidget);
@@ -194,6 +198,17 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(tester.takeException(), isNull);
+  });
+
+  test('people expose editable icon and color', () {
+    final source = File('lib/screens/advances_screen.dart').readAsStringSync();
+    final state = File('lib/app_state.dart').readAsStringSync();
+
+    expect(source, contains('showFinancePersonEditor'));
+    expect(source, contains('personIconOptions'));
+    expect(source, contains("'Colore'"));
+    expect(source, contains('personIcon(person.iconKey)'));
+    expect(state, contains('updateFinancePerson'));
   });
 
   test('new advance flow accepts a preselected person', () {
