@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -11,11 +10,8 @@ import '../main.dart';
 import '../models/models.dart';
 import '../services/csv_service.dart';
 import '../services/data_integrity_service.dart';
-import '../widgets/finance_quick_action.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_screens.dart' show showAccountEditor;
-import 'quick_add_page.dart';
-import 'transaction_screens.dart';
 
 class AccountManagementScreen extends StatelessWidget {
   const AccountManagementScreen({super.key});
@@ -128,79 +124,42 @@ class SafeAccountDetailScreen extends StatelessWidget {
     if (account == null) {
       return const Scaffold(body: Center(child: Text('Conto non trovato')));
     }
-    final transactions = state.transactions
-        .where(
-          (item) =>
-              item.accountId == account.id || item.toAccountId == account.id,
-        )
-        .toList();
-    final recent = transactions.take(8).toList();
-    final income = state.accountMonthTotal(account.id, TransactionType.income);
-    final expense = state.accountMonthTotal(
-      account.id,
-      TransactionType.expense,
-    );
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(account.name),
-        actions: [
-          PopupMenuButton<String>(
-            tooltip: 'Azioni conto',
-            onSelected: (value) async {
-              if (value == 'edit') {
-                await _editMetadata(context, state, account);
-              } else if (value == 'reconcile') {
-                await _reconcile(context, state, account);
-              } else if (value == 'export') {
-                await _export(context, state, account);
-              } else if (value == 'archive') {
-                if (account.isArchived) {
-                  await state.updateAccount(
-                    account.copyWith(isArchived: false),
-                  );
-                } else {
-                  await DataIntegrityService.archiveAccount(state, account);
-                }
-              } else if (value == 'delete' && context.mounted) {
-                await _delete(context, state, account);
-              }
-            },
-            itemBuilder: (_) => [
-              const PopupMenuItem(
-                value: 'edit',
-                child: Text('Modifica dettagli'),
-              ),
-              if (!account.isArchived && !account.isLocked)
-                const PopupMenuItem(
-                  value: 'reconcile',
-                  child: Text('Riconcilia saldo'),
-                ),
-              const PopupMenuItem(
-                value: 'export',
-                child: Text('Esporta movimenti CSV'),
-              ),
-              PopupMenuItem(
-                value: 'archive',
-                child: Text(
-                  account.isArchived ? 'Ripristina conto' : 'Archivia conto',
-                ),
-              ),
-              const PopupMenuItem(
-                value: 'delete',
-                child: Text('Elimina se vuoto'),
-              ),
-            ],
-          ),
-        ],
-      ),
+      appBar: AppBar(title: Text(account.name)),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 100),
         children: [
-          Text(
-            account.accountType.label,
-            style: Theme.of(context).textTheme.bodyMedium,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                accountIcon(account.iconKey),
+                size: 34,
+                color: Color(account.colorValue),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      account.name,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      account.accountType.label,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 18),
+          Text('SALDO', style: Theme.of(context).textTheme.labelMedium),
+          const SizedBox(height: 6),
           Text(
             state.hideBalance || account.hideBalance
                 ? '••••••'
@@ -214,101 +173,122 @@ class SafeAccountDetailScreen extends StatelessWidget {
                 : 'Ultimo controllo ${DateFormat('dd MMM yyyy', 'it_IT').format(account.lastReconciledAt!)}',
             style: Theme.of(context).textTheme.bodySmall,
           ),
-          const SizedBox(height: 24),
-          if (transactions.length >= 2)
-            _AccountTrend(account: account, items: transactions),
-          if (!account.isArchived) ...[
-            const SizedBox(height: 24),
-            Row(
-              children: [
-                Expanded(
-                  child: FinanceQuickAction(
-                    icon: Icons.arrow_upward_rounded,
-                    label: 'Spesa',
-                    semanticLabel: 'Nuova spesa da ${account.name}',
-                    onTap: account.isLocked
-                        ? null
-                        : () => _openQuick(
-                            context,
-                            account,
-                            TransactionType.expense,
-                          ),
-                  ),
-                ),
-                Expanded(
-                  child: FinanceQuickAction(
-                    icon: Icons.arrow_downward_rounded,
-                    label: 'Entrata',
-                    semanticLabel: 'Nuova entrata su ${account.name}',
-                    onTap: account.isLocked
-                        ? null
-                        : () => _openQuick(
-                            context,
-                            account,
-                            TransactionType.income,
-                          ),
-                  ),
-                ),
-                Expanded(
-                  child: FinanceQuickAction(
-                    icon: Icons.swap_horiz_rounded,
-                    label: 'Trasferisci',
-                    semanticLabel: 'Nuovo trasferimento da ${account.name}',
-                    onTap: account.isLocked
-                        ? null
-                        : () => _openQuick(
-                            context,
-                            account,
-                            TransactionType.transfer,
-                          ),
-                  ),
-                ),
-              ],
-            ),
+          if (account.note?.trim().isNotEmpty == true) ...[
+            const SizedBox(height: 10),
+            Text(account.note!, style: Theme.of(context).textTheme.bodyMedium),
           ],
+          const SizedBox(height: 32),
+          const SectionTitle('Impostazioni conto'),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.edit_outlined),
+            title: const Text(
+              'Modifica nome e nota',
+              style: TextStyle(fontWeight: FontWeight.w700),
+            ),
+            subtitle: const Text('Aggiorna i dettagli principali del conto'),
+            trailing: const Icon(Icons.chevron_right_rounded),
+            onTap: () => _editMetadata(context, state, account),
+          ),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            title: const Text('Includi nel patrimonio'),
+            subtitle: const Text('Il saldo contribuisce al patrimonio totale'),
+            value: account.includeInTotal,
+            onChanged: (value) => state.updateAccount(
+              account.copyWith(includeInTotal: value),
+            ),
+          ),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            title: const Text('Includi nelle statistiche'),
+            subtitle: const Text('Usa i movimenti del conto nelle analytics'),
+            value: account.includeInAnalytics,
+            onChanged: (value) => state.updateAccount(
+              account.copyWith(includeInAnalytics: value),
+            ),
+          ),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            title: const Text('Nascondi saldo'),
+            subtitle: const Text('Nasconde il saldo di questo conto'),
+            value: account.hideBalance,
+            onChanged: (value) => state.updateAccount(
+              account.copyWith(hideBalance: value),
+            ),
+          ),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            title: const Text('Blocca conto'),
+            subtitle: const Text('Impedisce nuovi movimenti sul conto'),
+            value: account.isLocked,
+            onChanged: (value) => state.updateAccount(
+              account.copyWith(isLocked: value),
+            ),
+          ),
           const SizedBox(height: 28),
-          const SectionTitle('Questo mese'),
-          FlatMetric(
-            label: 'Entrate',
-            value: moneyFor(state, income),
-            icon: Icons.arrow_downward_rounded,
-            color: context.financeColors.positive,
+          const SectionTitle('Gestione'),
+          if (!account.isArchived && !account.isLocked)
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.balance_outlined),
+              title: const Text('Riconcilia saldo'),
+              subtitle: const Text('Allinea il saldo con quello reale'),
+              trailing: const Icon(Icons.chevron_right_rounded),
+              onTap: () => _reconcile(context, state, account),
+            ),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.download_outlined),
+            title: const Text('Esporta movimenti CSV'),
+            subtitle: const Text('Esporta lo storico di questo conto'),
+            trailing: const Icon(Icons.chevron_right_rounded),
+            onTap: () => _export(context, state, account),
           ),
-          const Divider(height: 1),
-          FlatMetric(
-            label: 'Spese',
-            value: moneyFor(state, expense),
-            icon: Icons.arrow_upward_rounded,
-            color: context.financeColors.negative,
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: Icon(
+              account.isArchived
+                  ? Icons.unarchive_outlined
+                  : Icons.archive_outlined,
+            ),
+            title: Text(
+              account.isArchived ? 'Ripristina conto' : 'Archivia conto',
+            ),
+            subtitle: Text(
+              account.isArchived
+                  ? 'Rende nuovamente disponibile il conto'
+                  : 'Nasconde il conto mantenendo tutto lo storico',
+            ),
+            trailing: const Icon(Icons.chevron_right_rounded),
+            onTap: () async {
+              if (account.isArchived) {
+                await state.updateAccount(account.copyWith(isArchived: false));
+              } else {
+                await DataIntegrityService.archiveAccount(state, account);
+              }
+            },
           ),
-          const Divider(height: 1),
-          FlatMetric(
-            label: 'Cash flow',
-            value: moneyFor(state, income - expense, signed: true),
-            icon: Icons.compare_arrows_rounded,
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: Icon(
+              Icons.delete_outline_rounded,
+              color: Theme.of(context).colorScheme.error,
+            ),
+            title: Text(
+              'Elimina se vuoto',
+              style: TextStyle(color: Theme.of(context).colorScheme.error),
+            ),
+            subtitle: const Text(
+              'Se contiene storico potrai archiviarlo invece di eliminarlo',
+            ),
+            trailing: Icon(
+              Icons.chevron_right_rounded,
+              color: Theme.of(context).colorScheme.error,
+            ),
+            onTap: () => _delete(context, state, account),
           ),
-          const SizedBox(height: 28),
-          SectionTitle(
-            'Movimenti recenti',
-            trailing: Text('${transactions.length}'),
-          ),
-          if (recent.isEmpty)
-            const Text('Nessun movimento')
-          else
-            ...recent.map((item) => TransactionListTile(item: item)),
         ],
-      ),
-    );
-  }
-
-  void _openQuick(BuildContext context, Account account, TransactionType type) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => QuickAddPage(
-          initialTypeName: type.name,
-          initialAccountId: account.id,
-        ),
       ),
     );
   }
@@ -572,55 +552,5 @@ class SafeAccountDetailScreen extends StatelessWidget {
     );
     name.dispose();
     note.dispose();
-  }
-}
-
-class _AccountTrend extends StatelessWidget {
-  const _AccountTrend({required this.account, required this.items});
-  final Account account;
-  final List<FinanceTransaction> items;
-
-  @override
-  Widget build(BuildContext context) {
-    final chronological = items.reversed.toList();
-    var value = account.openingBalance;
-    final spots = <FlSpot>[FlSpot(0, value)];
-    for (var index = 0; index < chronological.length; index++) {
-      final item = chronological[index];
-      if (item.accountId == account.id) {
-        value += switch (item.type) {
-          TransactionType.expense => -item.amount,
-          TransactionType.income => item.amount,
-          TransactionType.transfer => -item.amount,
-        };
-      }
-      if (item.type == TransactionType.transfer &&
-          item.toAccountId == account.id) {
-        value += item.amount;
-      }
-      spots.add(FlSpot((index + 1).toDouble(), value));
-    }
-    return SizedBox(
-      height: 84,
-      child: Semantics(
-        label: 'Andamento del saldo del conto',
-        child: LineChart(
-          LineChartData(
-            titlesData: const FlTitlesData(show: false),
-            gridData: const FlGridData(show: false),
-            borderData: FlBorderData(show: false),
-            lineTouchData: const LineTouchData(enabled: false),
-            lineBarsData: [
-              LineChartBarData(
-                spots: spots,
-                isCurved: true,
-                dotData: const FlDotData(show: false),
-                barWidth: 2,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }
