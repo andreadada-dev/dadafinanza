@@ -80,7 +80,7 @@ void main() {
     expect(database, contains('isFreshDashboard && defaultOrder >= 0'));
   });
 
-  test('selected account Home starts with its category carousel', () {
+  test('selected account Home mirrors the main summary hierarchy', () {
     final home = File(
       'lib/screens/account_context_home_screen.dart',
     ).readAsStringSync();
@@ -88,29 +88,67 @@ void main() {
       'lib/widgets/home_dashboard_widget.dart',
     ).readAsStringSync();
 
+    final summary = home.indexOf('_SelectedAccountSummary(');
+    final quickActions = home.indexOf('_QuickActions(', summary + 1);
     final accountCarousel = home.indexOf(
       'AccountCategoryCarousel(accountId: selectedAccount!.id)',
+      quickActions + 1,
     );
-    final quickActions = home.indexOf('_QuickActions(', accountCarousel + 1);
+    final openAccount = home.indexOf("'Apri conto'", accountCarousel + 1);
+    final analytics = home.indexOf("'Analytics del conto'", openAccount + 1);
 
-    expect(accountCarousel, greaterThanOrEqualTo(0));
-    expect(quickActions, greaterThan(accountCarousel));
+    expect(summary, greaterThanOrEqualTo(0));
+    expect(quickActions, greaterThan(summary));
+    expect(accountCarousel, greaterThan(quickActions));
+    expect(openAccount, greaterThan(accountCarousel));
+    expect(analytics, greaterThan(openAccount));
     expect(widget, contains('class AccountCategoryCarousel'));
     expect(widget, contains('widget.accountId'));
     expect(widget, contains('AccountContextService.periodTotal'));
   });
 
-  test(
-    'selected account summary links to account analytics without repeating its name',
-    () {
-      final source = File(
-        'lib/screens/account_context_home_screen.dart',
-      ).readAsStringSync();
+  test('selected account exposes account settings before account analytics', () {
+    final source = File(
+      'lib/screens/account_context_home_screen.dart',
+    ).readAsStringSync();
 
-      expect(source, contains("'Analytics del conto'"));
-      expect(source, contains("'Entrate, spese e andamento del conto'"));
-      expect(source, contains('AccountContextAnalyticsScreen('));
-      expect(source, contains('onTap: onOpenAnalytics'));
-    },
-  );
+    expect(source, contains("'Apri conto'"));
+    expect(source, contains('accountIcon(selectedAccount.iconKey)'));
+    expect(source, contains('SafeAccountDetailScreen('));
+    expect(source, contains("'Analytics del conto'"));
+    expect(source, contains("'Entrate, spese e andamento del conto'"));
+    expect(source, contains('AccountContextAnalyticsScreen('));
+  });
+
+  test('account management is settings-first and trend lives in analytics', () {
+    final account = File(
+      'lib/screens/account_management_screen.dart',
+    ).readAsStringSync();
+    final analytics = File(
+      'lib/screens/account_context_analytics_screen.dart',
+    ).readAsStringSync();
+
+    expect(account, contains("'Impostazioni conto'"));
+    expect(account, contains("'Modifica nome e nota'"));
+    expect(account, contains('SwitchListTile('));
+    expect(account, isNot(contains("tooltip: 'Azioni conto'")));
+    expect(account, isNot(contains('class _AccountTrend')));
+
+    expect(analytics, contains("'Andamento saldo'"));
+    expect(analytics, contains('class _AccountBalanceTrend'));
+    expect(analytics, contains('LineChart('));
+  });
+
+  test('category donut always offers Today and renders an empty ring', () {
+    final source = File(
+      'lib/widgets/home_dashboard_widget.dart',
+    ).readAsStringSync();
+
+    expect(source, contains('var _range = _CategoryChartRange.today;'));
+    expect(source, contains('static const _availableRanges'));
+    expect(source, contains('_CategoryChartRange.today,'));
+    expect(source, isNot(contains('_hasTodayData')));
+    expect(source, contains('emptyRingColor'));
+    expect(source, contains('value: 1'));
+  });
 }
