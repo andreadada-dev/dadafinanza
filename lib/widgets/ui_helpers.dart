@@ -720,7 +720,10 @@ const personIconOptions = <IconOption>[
   IconOption('contact_person', Icons.contact_page_rounded, 'Contatto', group: 'Altro'),
 ];
 
+/// Shared muted palette for every user-selectable entity color:
+/// categories, accounts, people and planning goals.
 const categoryPalette = <Color>[
+  // Existing colors kept first so current defaults do not change.
   Color(0xFF8E8E93),
   Color(0xFF59636F),
   Color(0xFF5B78D4),
@@ -731,6 +734,48 @@ const categoryPalette = <Color>[
   Color(0xFFB47A43),
   Color(0xFF4F7A71),
   Color(0xFF6E6E73),
+
+  // Neutri e slate.
+  Color(0xFF78838F),
+  Color(0xFF687787),
+  Color(0xFF5F6F82),
+
+  // Blu e indaco, sempre desaturati.
+  Color(0xFF536F96),
+  Color(0xFF557EAA),
+  Color(0xFF4F82A1),
+  Color(0xFF5C8EAF),
+  Color(0xFF668DB8),
+  Color(0xFF697AA8),
+  Color(0xFF626FA2),
+
+  // Petrolio, teal e verdi.
+  Color(0xFF4F8399),
+  Color(0xFF548F9B),
+  Color(0xFF4C8C87),
+  Color(0xFF578E7A),
+  Color(0xFF64906F),
+  Color(0xFF74936A),
+  Color(0xFF829466),
+
+  // Oliva, ocra e arancio tenue.
+  Color(0xFF8F8F60),
+  Color(0xFF9C8B58),
+  Color(0xFFAA8351),
+  Color(0xFFB0794E),
+  Color(0xFFB66F55),
+
+  // Rossi, rosa e malva.
+  Color(0xFFB7645E),
+  Color(0xFFB85F69),
+  Color(0xFFAD6178),
+  Color(0xFFA66A84),
+  Color(0xFF9B6D91),
+
+  // Viola.
+  Color(0xFF8F6D9E),
+  Color(0xFF816FA8),
+  Color(0xFF746FAF),
 ];
 
 IconData _iconFor(String key, List<IconOption> options, IconData fallback) {
