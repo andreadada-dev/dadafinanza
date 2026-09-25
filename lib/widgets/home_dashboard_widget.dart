@@ -279,9 +279,8 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
 
   var _selectedIndex = -1;
   var _type = TransactionType.expense;
-  var _range = _CategoryChartRange.thisMonth;
+  var _range = _CategoryChartRange.today;
   var _carouselDragging = false;
-  var _initialRangeResolved = false;
   DateTimeRange? _customRange;
 
   @override
@@ -299,17 +298,6 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_initialRangeResolved) return;
-    _initialRangeResolved = true;
-    final state = AppScope.of(context);
-    _range = _hasTodayData(state, TransactionType.expense)
-        ? _CategoryChartRange.today
-        : _CategoryChartRange.thisWeek;
-  }
-
-  @override
   void dispose() {
     _typePageController.dispose();
     _swipeHintController.dispose();
@@ -324,23 +312,8 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
     );
   }
 
-  bool _hasTodayData(AppState state, TransactionType type) {
-    final (from, to) = _todayBounds();
-    return AccountContextService.periodTotal(
-          state,
-          widget.accountId,
-          type,
-          from,
-          to,
-        ).abs() >
-        .005;
-  }
-
-  List<_CategoryChartRange> _availableRanges(
-    AppState state,
-    TransactionType type,
-  ) => [
-    if (_hasTodayData(state, type)) _CategoryChartRange.today,
+  static const _availableRanges = <_CategoryChartRange>[
+    _CategoryChartRange.today,
     _CategoryChartRange.thisWeek,
     _CategoryChartRange.thisMonth,
     _CategoryChartRange.custom,
@@ -422,12 +395,12 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
   }
 
   void _stepRange(int delta) {
-    final state = AppScope.of(context);
-    final ranges = _availableRanges(state, _type);
-    final current = ranges.indexOf(_range);
+    final current = _availableRanges.indexOf(_range);
     final safeCurrent = current < 0 ? 0 : current;
-    final nextIndex = (safeCurrent + delta + ranges.length) % ranges.length;
-    _selectRange(ranges[nextIndex]);
+    final nextIndex =
+        (safeCurrent + delta + _availableRanges.length) %
+        _availableRanges.length;
+    _selectRange(_availableRanges[nextIndex]);
   }
 
   TransactionType _typeForPage(int page) =>
@@ -445,16 +418,11 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
     if (!_typePageController.hasClients) return;
     final page = _typePageController.page?.round() ?? _initialCarouselPage;
     final nextType = _typeForPage(page);
-    final state = AppScope.of(context);
     setState(() {
       _carouselDragging = false;
       if (nextType != _type) {
         _type = nextType;
         _selectedIndex = -1;
-        if (_range == _CategoryChartRange.today &&
-            !_hasTodayData(state, nextType)) {
-          _range = _CategoryChartRange.thisWeek;
-        }
       }
     });
   }
@@ -580,12 +548,16 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
     required double chartSize,
   }) {
     final data = _dataFor(context, state, type, limit, from, to);
-    final interactive = !_carouselDragging && type == _type;
+    final hasData = data.total > 0 && data.slices.isNotEmpty;
+    final interactive = hasData && !_carouselDragging && type == _type;
     final pageSelectedIndex = interactive ? _selectedIndex : -1;
     final selected =
         pageSelectedIndex >= 0 && pageSelectedIndex < data.slices.length
         ? data.slices[pageSelectedIndex]
         : null;
+    final emptyRingColor = Theme.of(
+      context,
+    ).colorScheme.onSurface.withValues(alpha: .16);
 
     return Center(
       child: SizedBox(
@@ -594,55 +566,68 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
         child: Stack(
           alignment: Alignment.center,
           children: [
-            if (data.total > 0 && data.slices.isNotEmpty)
-              Center(
-                child: SizedBox.square(
-                  dimension: chartSize,
-                  child: PieChart(
-                    PieChartData(
-                      startDegreeOffset: -90,
-                      sectionsSpace: 4,
-                      centerSpaceRadius: chartSize * .32,
-                      borderData: FlBorderData(show: false),
-                      pieTouchData: PieTouchData(
-                        enabled: interactive,
-                        touchCallback: (event, response) {
-                          if (!interactive ||
-                              event is! FlTapDownEvent ||
-                              response?.touchedSection == null) {
-                            return;
-                          }
-                          final next =
-                              response!.touchedSection!.touchedSectionIndex;
-                          setState(() {
-                            _selectedIndex = _selectedIndex == next ? -1 : next;
-                          });
-                        },
-                      ),
-                      sections: [
-                        for (var index = 0; index < data.slices.length; index++)
-                          PieChartSectionData(
-                            color:
-                                pageSelectedIndex == -1 ||
-                                    pageSelectedIndex == index
-                                ? data.slices[index].color
-                                : data.slices[index].color.withValues(
-                                    alpha: .22,
-                                  ),
-                            value: data.slices[index].amount,
-                            title: '',
-                            radius:
-                                chartSize *
-                                (pageSelectedIndex == index ? .165 : .145),
-                            showTitle: false,
-                          ),
-                      ],
+            Center(
+              child: SizedBox.square(
+                dimension: chartSize,
+                child: PieChart(
+                  PieChartData(
+                    startDegreeOffset: -90,
+                    sectionsSpace: hasData ? 4 : 0,
+                    centerSpaceRadius: chartSize * .32,
+                    borderData: FlBorderData(show: false),
+                    pieTouchData: PieTouchData(
+                      enabled: interactive,
+                      touchCallback: (event, response) {
+                        if (!interactive ||
+                            event is! FlTapDownEvent ||
+                            response?.touchedSection == null) {
+                          return;
+                        }
+                        final next =
+                            response!.touchedSection!.touchedSectionIndex;
+                        setState(() {
+                          _selectedIndex = _selectedIndex == next ? -1 : next;
+                        });
+                      },
                     ),
-                    duration: const Duration(milliseconds: 260),
-                    curve: Curves.easeOutCubic,
+                    sections: hasData
+                        ? [
+                            for (
+                              var index = 0;
+                              index < data.slices.length;
+                              index++
+                            )
+                              PieChartSectionData(
+                                color:
+                                    pageSelectedIndex == -1 ||
+                                        pageSelectedIndex == index
+                                    ? data.slices[index].color
+                                    : data.slices[index].color.withValues(
+                                        alpha: .22,
+                                      ),
+                                value: data.slices[index].amount,
+                                title: '',
+                                radius:
+                                    chartSize *
+                                    (pageSelectedIndex == index ? .165 : .145),
+                                showTitle: false,
+                              ),
+                          ]
+                        : [
+                            PieChartSectionData(
+                              color: emptyRingColor,
+                              value: 1,
+                              title: '',
+                              radius: chartSize * .145,
+                              showTitle: false,
+                            ),
+                          ],
                   ),
+                  duration: const Duration(milliseconds: 260),
+                  curve: Curves.easeOutCubic,
                 ),
               ),
+            ),
             Center(
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 180),
