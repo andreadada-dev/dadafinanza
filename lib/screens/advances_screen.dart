@@ -16,17 +16,21 @@ class AdvancesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
-    final people = state.people
-        .where(
-          (person) => state.advances.any((item) => item.personId == person.id),
-        )
-        .toList()
-      ..sort((first, second) {
-        final firstOpen = _openAdvanceCount(state, first.id);
-        final secondOpen = _openAdvanceCount(state, second.id);
-        if (firstOpen != secondOpen) return secondOpen.compareTo(firstOpen);
-        return first.name.toLowerCase().compareTo(second.name.toLowerCase());
-      });
+    final people =
+        state.people
+            .where(
+              (person) =>
+                  state.advances.any((item) => item.personId == person.id),
+            )
+            .toList()
+          ..sort((first, second) {
+            final firstOpen = _openAdvanceCount(state, first.id);
+            final secondOpen = _openAdvanceCount(state, second.id);
+            if (firstOpen != secondOpen) return secondOpen.compareTo(firstOpen);
+            return first.name.toLowerCase().compareTo(
+              second.name.toLowerCase(),
+            );
+          });
 
     return Scaffold(
       appBar: AppBar(
@@ -83,9 +87,7 @@ class AdvancesScreen extends StatelessWidget {
           if (people.isEmpty)
             const Text('Nessun anticipo registrato.')
           else
-            ...people.map(
-              (person) => _AdvancePersonSummaryRow(person: person),
-            ),
+            ...people.map((person) => _AdvancePersonSummaryRow(person: person)),
         ],
       ),
     );
@@ -102,17 +104,18 @@ int _openAdvanceCount(AppState state, int personId) => state.advances
     .length;
 
 DateTime? _nextAdvanceReminder(AppState state, int personId) {
-  final reminders = state.advances
-      .where(
-        (item) =>
-            item.personId == personId &&
-            item.closedKind == null &&
-            state.advanceRemainingCents(item.id) > 0 &&
-            item.reminderDate != null,
-      )
-      .map((item) => item.reminderDate!)
-      .toList()
-    ..sort();
+  final reminders =
+      state.advances
+          .where(
+            (item) =>
+                item.personId == personId &&
+                item.closedKind == null &&
+                state.advanceRemainingCents(item.id) > 0 &&
+                item.reminderDate != null,
+          )
+          .map((item) => item.reminderDate!)
+          .toList()
+        ..sort();
   return reminders.firstOrNull;
 }
 
@@ -616,7 +619,6 @@ class AdvanceDetailScreen extends StatelessWidget {
       );
     }
   }
-
 }
 
 Future<void> _closeAdvanceWithoutRecoveryFlow(
@@ -1294,10 +1296,11 @@ class FinancePersonDetailScreen extends StatelessWidget {
     if (person == null) {
       return const Scaffold(body: Center(child: Text('Persona non trovata')));
     }
-    final items = state.advances
-        .where((item) => item.personId == personId)
-        .toList()
-      ..sort((first, second) => second.createdAt.compareTo(first.createdAt));
+    final items =
+        state.advances.where((item) => item.personId == personId).toList()
+          ..sort(
+            (first, second) => second.createdAt.compareTo(first.createdAt),
+          );
     var receivable = 0;
     var payable = 0;
     for (final item in items.where((item) => item.closedKind == null)) {
