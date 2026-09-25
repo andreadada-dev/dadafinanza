@@ -196,11 +196,12 @@ void main() {
     expect(analytics, contains('chartMaxX = isToday'));
     expect(analytics, contains('isCurved: false'));
     expect(analytics, contains('leftTitles: AxisTitles('));
-    expect(analytics, contains('reservedSize: 44'));
+    expect(analytics, contains('reservedSize: 34'));
     expect(analytics, contains('interval: yInterval'));
     expect(analytics, contains('minIncluded: true'));
     expect(analytics, contains('maxIncluded: true'));
-    expect(analytics, contains('spots.length == 1 || selectedSpot != null'));
+    expect(analytics, contains('spots.add(FlSpot(0, value))'));
+    expect(analytics, contains('spots.add(FlSpot(24, value))'));
     expect(analytics, contains("'Saldo alle "));
     expect(analytics, contains("'Saldo finale "));
     expect(analytics, contains('touchCallback: (event, response)'));
@@ -257,6 +258,8 @@ void main() {
     expect(source, isNot(contains('_hasTodayData')));
     expect(source, contains('emptyRingColor'));
     expect(source, contains('centerSpaceColor: Theme.of(context).scaffoldBackgroundColor'));
+    expect(source, contains('color: Theme.of(context).colorScheme.surface'));
+    expect(source, contains('width: chartSize * .64'));
     expect(source, contains('value: 1'));
   });
 }
