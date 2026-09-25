@@ -267,7 +267,7 @@ class _TopCategoriesDonut extends StatefulWidget {
   State<_TopCategoriesDonut> createState() => _TopCategoriesDonutState();
 }
 
-enum _CategoryChartRange { today, thisWeek, thisMonth, custom }
+enum _CategoryChartRange { today, thisWeek, thisMonth, thisYear, custom }
 
 class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
     with SingleTickerProviderStateMixin {
@@ -280,6 +280,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
   var _selectedIndex = -1;
   var _type = TransactionType.expense;
   var _range = _CategoryChartRange.today;
+  var _periodOffset = 0;
   var _carouselDragging = false;
   DateTimeRange? _customRange;
 
@@ -304,39 +305,34 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
     super.dispose();
   }
 
-  (DateTime, DateTime) _todayBounds() {
-    final now = DateTime.now();
-    return (
-      DateTime(now.year, now.month, now.day),
-      DateTime(now.year, now.month, now.day + 1),
-    );
-  }
-
-  static const _availableRanges = <_CategoryChartRange>[
+  static const _cycleRanges = <_CategoryChartRange>[
     _CategoryChartRange.today,
     _CategoryChartRange.thisWeek,
     _CategoryChartRange.thisMonth,
-    _CategoryChartRange.custom,
+    _CategoryChartRange.thisYear,
   ];
 
   (DateTime, DateTime) _bounds() {
     final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final weekStart = today.subtract(Duration(days: now.weekday - 1));
 
     return switch (_range) {
-      _CategoryChartRange.today => _todayBounds(),
+      _CategoryChartRange.today => (
+        today.add(Duration(days: _periodOffset)),
+        today.add(Duration(days: _periodOffset + 1)),
+      ),
       _CategoryChartRange.thisWeek => (
-        DateTime(
-          now.year,
-          now.month,
-          now.day,
-        ).subtract(Duration(days: now.weekday - 1)),
-        DateTime(now.year, now.month, now.day)
-            .subtract(Duration(days: now.weekday - 1))
-            .add(const Duration(days: 7)),
+        weekStart.add(Duration(days: _periodOffset * 7)),
+        weekStart.add(Duration(days: (_periodOffset + 1) * 7)),
       ),
       _CategoryChartRange.thisMonth => (
-        DateTime(now.year, now.month),
-        DateTime(now.year, now.month + 1),
+        DateTime(now.year, now.month + _periodOffset),
+        DateTime(now.year, now.month + _periodOffset + 1),
+      ),
+      _CategoryChartRange.thisYear => (
+        DateTime(now.year + _periodOffset),
+        DateTime(now.year + _periodOffset + 1),
       ),
       _CategoryChartRange.custom =>
         _customRange == null
@@ -356,51 +352,84 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
     };
   }
 
-  String get _rangeLabel => switch (_range) {
-    _CategoryChartRange.today => 'Oggi',
-    _CategoryChartRange.thisWeek => 'Settimana',
-    _CategoryChartRange.thisMonth => 'Mese',
-    _CategoryChartRange.custom =>
-      _customRange == null
-          ? 'Custom'
-          : '${_customRange!.start.day}/${_customRange!.start.month} – '
-                '${_customRange!.end.day}/${_customRange!.end.month}',
-  };
+  String _shortDate(DateTime date, {required bool includeYear}) {
+    final year = (date.year % 100).toString().padLeft(2, '0');
+    return '${date.day}/${date.month}${includeYear ? '/$year' : ''}';
+  }
 
-  Future<void> _selectRange(_CategoryChartRange next) async {
-    if (next == _CategoryChartRange.custom) {
-      final now = DateTime.now();
-      final picked = await showDateRangePicker(
-        context: context,
-        firstDate: DateTime(2000),
-        lastDate: now.add(const Duration(days: 3650)),
-        initialDateRange:
-            _customRange ??
-            DateTimeRange(start: DateTime(now.year, now.month), end: now),
-      );
-      if (!mounted || picked == null) return;
-      setState(() {
-        _customRange = picked;
-        _range = next;
-        _selectedIndex = -1;
-      });
-      return;
+  String _dateRangeLabel(DateTime from, DateTime toExclusive) {
+    final now = DateTime.now();
+    final end = toExclusive.subtract(const Duration(days: 1));
+    final includeYear = from.year != now.year || end.year != now.year;
+    return '${_shortDate(from, includeYear: includeYear)} ~ '
+        '${_shortDate(end, includeYear: includeYear)}';
+  }
+
+  String get _rangeLabel {
+    final (from, to) = _bounds();
+    if (_range == _CategoryChartRange.custom) {
+      return _dateRangeLabel(from, to);
     }
+    if (_periodOffset == 0) {
+      return switch (_range) {
+        _CategoryChartRange.today => 'Oggi',
+        _CategoryChartRange.thisWeek => 'Settimana',
+        _CategoryChartRange.thisMonth => 'Mese',
+        _CategoryChartRange.thisYear => 'Anno',
+        _CategoryChartRange.custom => 'Custom',
+      };
+    }
+    if (_range == _CategoryChartRange.today) {
+      return _shortDate(
+        from,
+        includeYear: from.year != DateTime.now().year,
+      );
+    }
+    return _dateRangeLabel(from, to);
+  }
 
-    if (next == _range) return;
+  Future<void> _selectCustomRange() async {
+    final now = DateTime.now();
+    final picked = await showDateRangePicker(
+      context: context,
+      firstDate: DateTime(2000),
+      lastDate: now.add(const Duration(days: 3650)),
+      initialDateRange:
+          _customRange ??
+          DateTimeRange(start: DateTime(now.year, now.month), end: now),
+    );
+    if (!mounted || picked == null) return;
     setState(() {
-      _range = next;
+      _customRange = picked;
+      _range = _CategoryChartRange.custom;
+      _periodOffset = 0;
       _selectedIndex = -1;
     });
   }
 
-  void _stepRange(int delta) {
-    final current = _availableRanges.indexOf(_range);
-    final safeCurrent = current < 0 ? 0 : current;
-    final nextIndex =
-        (safeCurrent + delta + _availableRanges.length) %
-        _availableRanges.length;
-    _selectRange(_availableRanges[nextIndex]);
+  void _cycleRange() {
+    final current = _cycleRanges.indexOf(_range);
+    final nextIndex = current < 0 ? 0 : (current + 1) % _cycleRanges.length;
+    setState(() {
+      _range = _cycleRanges[nextIndex];
+      _periodOffset = 0;
+      _selectedIndex = -1;
+    });
+  }
+
+  void _stepPeriod(int delta) {
+    setState(() {
+      if (_range == _CategoryChartRange.custom && _customRange != null) {
+        final days = _customRange!.end.difference(_customRange!.start).inDays + 1;
+        _customRange = DateTimeRange(
+          start: _customRange!.start.add(Duration(days: delta * days)),
+          end: _customRange!.end.add(Duration(days: delta * days)),
+        );
+      } else {
+        _periodOffset += delta;
+      }
+      _selectedIndex = -1;
+    });
   }
 
   TransactionType _typeForPage(int page) =>
@@ -638,8 +667,10 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                         totalLabel: state.hideBalance
                             ? '••••'
                             : moneyFor(state, data.total),
-                        onPreviousRange: () => _stepRange(-1),
-                        onNextRange: () => _stepRange(1),
+                        onRangeTap: _cycleRange,
+                        onRangeLongPress: _selectCustomRange,
+                        onPreviousRange: () => _stepPeriod(-1),
+                        onNextRange: () => _stepPeriod(1),
                       )
                     : _SelectedDonutCenter(
                         key: ValueKey(
@@ -825,6 +856,8 @@ class _DonutPeriodCenter extends StatelessWidget {
     required this.accent,
     required this.rangeLabel,
     required this.totalLabel,
+    required this.onRangeTap,
+    required this.onRangeLongPress,
     required this.onPreviousRange,
     required this.onNextRange,
     super.key,
@@ -834,6 +867,8 @@ class _DonutPeriodCenter extends StatelessWidget {
   final Color accent;
   final String rangeLabel;
   final String totalLabel;
+  final VoidCallback onRangeTap;
+  final VoidCallback onRangeLongPress;
   final VoidCallback onPreviousRange;
   final VoidCallback onNextRange;
 
@@ -855,15 +890,31 @@ class _DonutPeriodCenter extends StatelessWidget {
                 tooltip: 'Periodo precedente',
                 onPressed: onPreviousRange,
               ),
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 96),
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    rangeLabel,
-                    maxLines: 1,
-                    style: theme.textTheme.labelLarge?.copyWith(
-                      fontWeight: FontWeight.w800,
+              Semantics(
+                button: true,
+                label:
+                    'Periodo $rangeLabel. Tocca per cambiare periodo, pressione lunga per intervallo personalizzato.',
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(14),
+                  onTap: onRangeTap,
+                  onLongPress: onRangeLongPress,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 4,
+                      vertical: 6,
+                    ),
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 112),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          rangeLabel,
+                          maxLines: 1,
+                          style: theme.textTheme.labelLarge?.copyWith(
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
