@@ -193,10 +193,15 @@ void main() {
     expect(analytics, contains("import 'dart:math' as math;"));
     expect(analytics, contains('movementHours'));
     expect(analytics, contains('minutes / 60'));
+    expect(analytics, contains('minWidth: MediaQuery.sizeOf(context).width - 4'));
+    expect(analytics, contains('maxWidth: MediaQuery.sizeOf(context).width - 4'));
+    expect(analytics, contains('horizontalNudge'));
+    expect(analytics, contains('0 => -3.0'));
+    expect(analytics, contains('1 => 3.0'));
     expect(analytics, contains('chartMaxX = isToday'));
     expect(analytics, contains('isCurved: false'));
     expect(analytics, contains('leftTitles: AxisTitles('));
-    expect(analytics, contains('reservedSize: 22'));
+    expect(analytics, contains('reservedSize: 20'));
     expect(analytics, contains('interval: yInterval'));
     expect(analytics, contains('minIncluded: true'));
     expect(analytics, contains('maxIncluded: true'));
