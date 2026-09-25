@@ -185,24 +185,29 @@ void main() {
     expect(analytics, contains('item.includeInTotal'));
   });
 
-  test('analytics balance chart uses daily closes and selectable dates', () {
+  test('analytics chart supports hourly Today and clean selectable scales', () {
     final analytics = File(
       'lib/screens/account_context_analytics_screen.dart',
     ).readAsStringSync();
 
-    expect(analytics, contains('endOfDayBalances'));
+    expect(analytics, contains("import 'dart:math' as math;"));
+    expect(analytics, contains('movementHours'));
+    expect(analytics, contains('minutes / 60'));
+    expect(analytics, contains('chartMaxX = isToday'));
     expect(analytics, contains('isCurved: false'));
     expect(analytics, contains('leftTitles: AxisTitles('));
+    expect(analytics, contains('reservedSize: 44'));
     expect(analytics, contains('interval: yInterval'));
     expect(analytics, contains('minIncluded: true'));
     expect(analytics, contains('maxIncluded: true'));
-    expect(analytics, contains('onTap: () => setState(() => _selectedDay = day)'));
+    expect(analytics, contains('spots.length == 1 || selectedSpot != null'));
+    expect(analytics, contains("'Saldo alle "));
     expect(analytics, contains("'Saldo finale "));
     expect(analytics, contains('touchCallback: (event, response)'));
     expect(analytics, contains('VerticalLine('));
     expect(analytics, contains('onPointerDown: (event)'));
     expect(analytics, contains('onPointerUp: (event)'));
-    expect(analytics, contains('widget.onShiftPeriod(deltaX < 0 ? -1 : 1)'));
+    expect(analytics, contains('widget.onShiftPeriod(deltaX < 0 ? 1 : -1)'));
     expect(analytics, contains('periodOffset += delta'));
   });
 
@@ -223,7 +228,7 @@ void main() {
     expect(source, contains('_stepPeriod(1)'));
     expect(source, isNot(contains('_hasTodayData')));
     expect(source, contains('emptyRingColor'));
-    expect(source, contains('centerSpaceColor: Theme.of(context).scaffoldBackgroundColor'));
+    expect(source, contains(': Colors.black'));
     expect(source, contains('value: 1'));
   });
 }
