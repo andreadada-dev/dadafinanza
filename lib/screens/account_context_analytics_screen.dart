@@ -274,6 +274,7 @@ class _AccountContextAnalyticsScreenState
             account: effectiveAccountId == null ? null : selected,
             from: from,
             to: to,
+            period: period,
           ),
           const SizedBox(height: 24),
           _AnalyticsLine(
@@ -398,22 +399,80 @@ class _AccountContextAnalyticsScreenState
   }
 }
 
-class _AccountBalanceTrend extends StatelessWidget {
-  const _AccountBalanceTrend({
+class _PeriodPill extends StatelessWidget {
+  const _PeriodPill({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: label,
+      child: Material(
+        color: selected
+            ? theme.colorScheme.surfaceContainerHighest
+            : Colors.transparent,
+        borderRadius: BorderRadius.circular(22),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(22),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (selected) ...[
+                  Icon(
+                    Icons.check_rounded,
+                    size: 18,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                  const SizedBox(width: 7),
+                ],
+                Text(
+                  label,
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _BalanceTrend extends StatelessWidget {
+  const _BalanceTrend({
     required this.state,
     required this.account,
     required this.from,
     required this.to,
+    required this.period,
   });
 
   final AppState state;
-  final Account account;
+  final Account? account;
   final DateTime from;
   final DateTime to;
+  final _AnalyticsPeriod period;
 
-  double _deltaFor(FinanceTransaction item) {
+  double _deltaFor(FinanceTransaction item, Set<int> accountIds) {
     var delta = 0.0;
-    if (item.accountId == account.id) {
+    if (accountIds.contains(item.accountId)) {
       delta += switch (item.type) {
         TransactionType.expense => -item.amount,
         TransactionType.income => item.amount,
@@ -421,37 +480,79 @@ class _AccountBalanceTrend extends StatelessWidget {
       };
     }
     if (item.type == TransactionType.transfer &&
-        item.toAccountId == account.id) {
+        item.toAccountId != null &&
+        accountIds.contains(item.toAccountId)) {
       delta += item.amount;
     }
     return delta;
   }
 
+  double _labelInterval(double maxX) {
+    if (period == _AnalyticsPeriod.week) return 1;
+    final targetLabels = period == _AnalyticsPeriod.year ? 7 : 6;
+    return (maxX / targetLabels).ceilToDouble().clamp(1, double.infinity);
+  }
+
+  String _axisLabel(DateTime date, int durationDays) {
+    return switch (period) {
+      _AnalyticsPeriod.week => DateFormat('EEE', 'it_IT').format(date),
+      _AnalyticsPeriod.month => DateFormat('d MMM', 'it_IT').format(date),
+      _AnalyticsPeriod.year => DateFormat('MMM', 'it_IT').format(date),
+      _AnalyticsPeriod.custom =>
+        durationDays <= 8
+            ? DateFormat('EEE d', 'it_IT').format(date)
+            : durationDays <= 70
+            ? DateFormat('d MMM', 'it_IT').format(date)
+            : DateFormat('MMM yy', 'it_IT').format(date),
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
-    final items = AccountContextService.transactionsFor(state, account.id)
+    final theme = Theme.of(context);
+    final scopeAccounts = account == null
+        ? state.accounts
+              .where(
+                (item) =>
+                    !item.isSystem &&
+                    !item.isArchived &&
+                    item.includeInTotal,
+              )
+              .toList(growable: false)
+        : [account!];
+    final accountIds = scopeAccounts.map((item) => item.id).toSet();
+
+    final items = state.transactions.toList()
       ..sort((a, b) {
         final byDate = a.date.compareTo(b.date);
         return byDate != 0 ? byDate : a.id.compareTo(b.id);
       });
 
-    var value = account.openingBalance;
+    var value = scopeAccounts.fold<double>(
+      0,
+      (sum, item) => sum + item.openingBalance,
+    );
     for (final item in items) {
       if (!item.date.isBefore(from)) break;
-      value += _deltaFor(item);
+      value += _deltaFor(item, accountIds);
     }
 
     final startValue = value;
+    final maxX = to.difference(from).inMinutes / Duration.minutesPerDay;
+    final safeMaxX = maxX <= 0 ? 1.0 : maxX;
     final spots = <FlSpot>[FlSpot(0, value)];
-    var point = 0.0;
+
     for (final item in items) {
       if (item.date.isBefore(from) || !item.date.isBefore(to)) continue;
-      value += _deltaFor(item);
-      point += 1;
-      spots.add(FlSpot(point, value));
+      final delta = _deltaFor(item, accountIds);
+      if (delta == 0) continue;
+      value += delta;
+      final x =
+          item.date.difference(from).inMinutes / Duration.minutesPerDay;
+      spots.add(FlSpot(x.clamp(0, safeMaxX), value));
     }
-    if (spots.length == 1) {
-      spots.add(FlSpot(1, value));
+    if (spots.last.x < safeMaxX) {
+      spots.add(FlSpot(safeMaxX, value));
     }
 
     var minValue = spots.first.y;
@@ -462,34 +563,99 @@ class _AccountBalanceTrend extends StatelessWidget {
     }
     final spread = (maxValue - minValue).abs();
     final padding = spread < .01 ? maxValue.abs() * .08 + 1 : spread * .14;
+    final durationDays = to.difference(from).inDays;
+    final interval = _labelInterval(safeMaxX);
+    final lineColor = account == null
+        ? theme.colorScheme.onSurfaceVariant
+        : Color(account!.colorValue);
+    final hideValues = state.hideBalance || (account?.hideBalance ?? false);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          height: 150,
+          height: 190,
           child: Semantics(
-            label:
-                'Andamento del saldo di ${account.name} nel periodo selezionato',
+            label: account == null
+                ? 'Andamento del patrimonio nel periodo selezionato'
+                : 'Andamento del saldo di ${account!.name} nel periodo selezionato',
             child: LineChart(
               LineChartData(
+                minX: 0,
+                maxX: safeMaxX,
                 minY: minValue - padding,
                 maxY: maxValue + padding,
-                titlesData: const FlTitlesData(show: false),
+                titlesData: FlTitlesData(
+                  leftTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  rightTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  topTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      interval: interval,
+                      reservedSize: 32,
+                      getTitlesWidget: (axisValue, meta) {
+                        final day = axisValue.round();
+                        final date = from.add(Duration(days: day));
+                        if (date.isAfter(to)) return const SizedBox.shrink();
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Text(
+                            _axisLabel(date, durationDays),
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
                 gridData: FlGridData(
                   show: true,
                   drawVerticalLine: false,
                   horizontalInterval: spread < .01 ? padding : null,
                 ),
                 borderData: FlBorderData(show: false),
-                lineTouchData: const LineTouchData(enabled: true),
+                lineTouchData: LineTouchData(
+                  enabled: true,
+                  touchTooltipData: LineTouchTooltipData(
+                    getTooltipColor: (_) =>
+                        theme.colorScheme.surfaceContainerHighest,
+                    tooltipRoundedRadius: 10,
+                    getTooltipItems: (touchedSpots) => touchedSpots
+                        .map((spot) {
+                          final date = from.add(
+                            Duration(
+                              minutes:
+                                  (spot.x * Duration.minutesPerDay).round(),
+                            ),
+                          );
+                          return LineTooltipItem(
+                            '${DateFormat('d MMM yyyy', 'it_IT').format(date)}\n'
+                            '${hideValues ? '••••' : moneyFor(state, spot.y)}',
+                            theme.textTheme.bodyMedium!.copyWith(
+                              color: theme.colorScheme.onSurface,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          );
+                        })
+                        .toList(),
+                  ),
+                ),
                 lineBarsData: [
                   LineChartBarData(
                     spots: spots,
                     isCurved: true,
                     dotData: const FlDotData(show: false),
                     barWidth: 3,
-                    color: Color(account.colorValue),
+                    color: lineColor,
                   ),
                 ],
               ),
@@ -503,13 +669,13 @@ class _AccountBalanceTrend extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                'Inizio ${state.hideBalance || account.hideBalance ? '••••' : moneyFor(state, startValue)}',
-                style: Theme.of(context).textTheme.bodySmall,
+                'Inizio ${hideValues ? '••••' : moneyFor(state, startValue)}',
+                style: theme.textTheme.bodySmall,
               ),
             ),
             Text(
-              'Fine ${state.hideBalance || account.hideBalance ? '••••' : moneyFor(state, value)}',
-              style: Theme.of(context).textTheme.bodySmall,
+              'Fine ${hideValues ? '••••' : moneyFor(state, value)}',
+              style: theme.textTheme.bodySmall,
             ),
           ],
         ),
