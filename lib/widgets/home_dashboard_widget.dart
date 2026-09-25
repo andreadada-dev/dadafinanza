@@ -603,9 +603,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                     startDegreeOffset: -90,
                     sectionsSpace: hasData ? 4 : 0,
                     centerSpaceRadius: chartSize * .32,
-                    centerSpaceColor: hasData
-                        ? Theme.of(context).scaffoldBackgroundColor
-                        : Colors.black,
+                    centerSpaceColor: Colors.black,
                     borderData: FlBorderData(show: false),
                     pieTouchData: PieTouchData(
                       enabled: interactive,
