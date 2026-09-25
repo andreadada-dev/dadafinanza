@@ -604,8 +604,18 @@ class AppState extends ChangeNotifier {
     await _rebuildLearning();
   }
 
-  Future<int> createFinancePerson(String name) async {
-    final id = await AdvanceService(database).createPerson(name);
+  Future<int> createFinancePerson(
+    String name, {
+    int colorValue = 0xFF8E8E93,
+    String iconKey = 'person',
+    String? note,
+  }) async {
+    final id = await AdvanceService(database).createPerson(
+      name,
+      colorValue: colorValue,
+      iconKey: iconKey,
+      note: note,
+    );
     people = await AdvanceService(database).people(includeArchived: true);
     notifyListeners();
     return id;
@@ -613,6 +623,24 @@ class AppState extends ChangeNotifier {
 
   Future<void> renameFinancePerson(int personId, String name) async {
     await AdvanceService(database).renamePerson(personId, name);
+    await _reloadAdvances();
+    notifyListeners();
+  }
+
+  Future<void> updateFinancePerson({
+    required int personId,
+    required String name,
+    required int colorValue,
+    required String iconKey,
+    String? note,
+  }) async {
+    await AdvanceService(database).updatePerson(
+      personId: personId,
+      name: name,
+      colorValue: colorValue,
+      iconKey: iconKey,
+      note: note,
+    );
     await _reloadAdvances();
     notifyListeners();
   }
