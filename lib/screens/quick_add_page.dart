@@ -1510,7 +1510,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
             _PickerRow(
               icon: Icons.calendar_today_outlined,
               label: 'Data',
-              value: DateFormat('dd MMM yyyy, HH:mm', 'it_IT').format(date),
+              value: DateFormat('dd MMM yyyy', 'it_IT').format(date),
               onTap: () async {
                 final picked = await showDatePicker(
                   context: context,
@@ -1526,6 +1526,33 @@ class _QuickAddPageState extends State<QuickAddPage> {
                       picked.day,
                       date.hour,
                       date.minute,
+                    ),
+                  );
+                  _scheduleSuggestion();
+                }
+              },
+            ),
+            const Divider(height: 1),
+            _PickerRow(
+              icon: Icons.schedule_rounded,
+              label: 'Ora',
+              value: DateFormat('HH:mm', 'it_IT').format(date),
+              onTap: () async {
+                final picked = await showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay.fromDateTime(date),
+                  helpText: 'Seleziona ora',
+                  hourLabelText: 'Ora',
+                  minuteLabelText: 'Minuti',
+                );
+                if (picked != null && mounted) {
+                  setState(
+                    () => date = DateTime(
+                      date.year,
+                      date.month,
+                      date.day,
+                      picked.hour,
+                      picked.minute,
                     ),
                   );
                   _scheduleSuggestion();
