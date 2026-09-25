@@ -183,6 +183,7 @@ void main() {
     expect(source, contains('_CategoryChartRange.today,'));
     expect(source, isNot(contains('_hasTodayData')));
     expect(source, contains('emptyRingColor'));
+    expect(source, contains('centerSpaceColor: Theme.of(context).scaffoldBackgroundColor'));
     expect(source, contains('value: 1'));
   });
 }
