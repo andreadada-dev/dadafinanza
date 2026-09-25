@@ -928,29 +928,42 @@ class _BalanceTrendState extends State<_BalanceTrend>
                               .clamp(0, durationDays - 1)
                               .toInt();
                           final date = from.add(Duration(days: day));
+                          final isFirstLabel = axisValue <= .01;
+                          final isLastLabel =
+                              axisValue >= chartMaxX - .01;
+                          final edgeNudge = isLastLabel
+                              ? -12.0
+                              : isFirstLabel
+                              ? 5.0
+                              : 0.0;
                           return Padding(
                             padding: const EdgeInsets.only(top: 8),
-                            child: GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () => setState(
-                                () => _selectedSpotIndex = day,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 3,
-                                  vertical: 3,
+                            child: Transform.translate(
+                              offset: Offset(edgeNudge, 0),
+                              child: GestureDetector(
+                                behavior: HitTestBehavior.opaque,
+                                onTap: () => setState(
+                                  () => _selectedSpotIndex = day,
                                 ),
-                                child: Text(
-                                  _axisLabel(date, durationDays),
-                                  style: theme.textTheme.labelSmall?.copyWith(
-                                    color: selectedSpotIndex == day
-                                        ? theme.colorScheme.onSurface
-                                        : theme
-                                              .colorScheme
-                                              .onSurfaceVariant,
-                                    fontWeight: selectedSpotIndex == day
-                                        ? FontWeight.w800
-                                        : FontWeight.w500,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 3,
+                                    vertical: 3,
+                                  ),
+                                  child: Text(
+                                    _axisLabel(date, durationDays),
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    style: theme.textTheme.labelSmall?.copyWith(
+                                      color: selectedSpotIndex == day
+                                          ? theme.colorScheme.onSurface
+                                          : theme
+                                                .colorScheme
+                                                .onSurfaceVariant,
+                                      fontWeight: selectedSpotIndex == day
+                                          ? FontWeight.w800
+                                          : FontWeight.w500,
+                                    ),
                                   ),
                                 ),
                               ),
