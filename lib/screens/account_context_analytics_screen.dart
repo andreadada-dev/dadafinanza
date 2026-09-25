@@ -455,7 +455,7 @@ class _PeriodPill extends StatelessWidget {
   }
 }
 
-class _BalanceTrend extends StatelessWidget {
+class _BalanceTrend extends StatefulWidget {
   const _BalanceTrend({
     required this.state,
     required this.account,
@@ -469,6 +469,23 @@ class _BalanceTrend extends StatelessWidget {
   final DateTime from;
   final DateTime to;
   final _AnalyticsPeriod period;
+
+  @override
+  State<_BalanceTrend> createState() => _BalanceTrendState();
+}
+
+class _BalanceTrendState extends State<_BalanceTrend> {
+  int? _selectedDay;
+
+  @override
+  void didUpdateWidget(covariant _BalanceTrend oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.from != widget.from ||
+        oldWidget.to != widget.to ||
+        oldWidget.account?.id != widget.account?.id) {
+      _selectedDay = null;
+    }
+  }
 
   double _deltaFor(FinanceTransaction item, Set<int> accountIds) {
     var delta = 0.0;
@@ -488,8 +505,8 @@ class _BalanceTrend extends StatelessWidget {
   }
 
   double _labelInterval(double maxX) {
-    if (period == _AnalyticsPeriod.week) return 1;
-    final targetLabels = period == _AnalyticsPeriod.year ? 7 : 6;
+    if (widget.period == _AnalyticsPeriod.week) return 1;
+    final targetLabels = widget.period == _AnalyticsPeriod.year ? 7 : 6;
     return (maxX / targetLabels)
         .ceilToDouble()
         .clamp(1.0, double.infinity)
@@ -497,7 +514,7 @@ class _BalanceTrend extends StatelessWidget {
   }
 
   String _axisLabel(DateTime date, int durationDays) {
-    return switch (period) {
+    return switch (widget.period) {
       _AnalyticsPeriod.week => DateFormat('EEE', 'it_IT').format(date),
       _AnalyticsPeriod.month => DateFormat('d MMM', 'it_IT').format(date),
       _AnalyticsPeriod.year => DateFormat('MMM', 'it_IT').format(date),
@@ -510,8 +527,19 @@ class _BalanceTrend extends StatelessWidget {
     };
   }
 
+  String _axisValue(double value) {
+    if (widget.state.hideBalance || (widget.account?.hideBalance ?? false)) {
+      return '••';
+    }
+    return NumberFormat.compact(locale: 'it_IT').format(value);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final state = widget.state;
+    final account = widget.account;
+    final from = widget.from;
+    final to = widget.to;
     final theme = Theme.of(context);
     final scopeAccounts = account == null
         ? state.accounts
@@ -522,7 +550,7 @@ class _BalanceTrend extends StatelessWidget {
                     item.includeInTotal,
               )
               .toList(growable: false)
-        : [account!];
+        : [account];
     final accountIds = scopeAccounts.map((item) => item.id).toSet();
 
     final items = state.transactions.toList()
@@ -541,56 +569,95 @@ class _BalanceTrend extends StatelessWidget {
     }
 
     final startValue = value;
-    final maxX = to.difference(from).inMinutes / Duration.minutesPerDay;
-    final safeMaxX = maxX <= 0 ? 1.0 : maxX;
-    final spots = <FlSpot>[FlSpot(0, value)];
+    final durationDays = to.difference(from).inDays.clamp(1, 10000);
+    final endOfDayBalances = <double>[];
+    var itemIndex = items.indexWhere((item) => !item.date.isBefore(from));
+    if (itemIndex < 0) itemIndex = items.length;
 
-    for (final item in items) {
-      if (item.date.isBefore(from) || !item.date.isBefore(to)) continue;
-      final delta = _deltaFor(item, accountIds);
-      if (delta == 0) continue;
-      value += delta;
-      final x =
-          item.date.difference(from).inMinutes / Duration.minutesPerDay;
-      spots.add(FlSpot(x.clamp(0.0, safeMaxX).toDouble(), value));
-    }
-    if (spots.last.x < safeMaxX) {
-      spots.add(FlSpot(safeMaxX, value));
+    for (var day = 0; day < durationDays; day++) {
+      final nextDay = from.add(Duration(days: day + 1));
+      while (itemIndex < items.length && items[itemIndex].date.isBefore(nextDay)) {
+        value += _deltaFor(items[itemIndex], accountIds);
+        itemIndex++;
+      }
+      endOfDayBalances.add(value);
     }
 
+    final spots = <FlSpot>[
+      for (var day = 0; day < endOfDayBalances.length; day++)
+        FlSpot(day.toDouble(), endOfDayBalances[day]),
+    ];
+    if (spots.length == 1) {
+      spots.add(FlSpot(1, spots.first.y));
+    }
+
+    final maxX = spots.last.x;
     var minValue = spots.first.y;
     var maxValue = spots.first.y;
     for (final spot in spots.skip(1)) {
       if (spot.y < minValue) minValue = spot.y;
       if (spot.y > maxValue) maxValue = spot.y;
     }
+
     final spread = (maxValue - minValue).abs();
-    final padding = spread < .01 ? maxValue.abs() * .08 + 1 : spread * .14;
-    final durationDays = to.difference(from).inDays;
-    final interval = _labelInterval(safeMaxX);
+    final basePadding = spread < .01
+        ? (maxValue.abs() * .06 + 1)
+        : spread * .08;
+    final chartMin = minValue - basePadding;
+    final chartMax = maxValue + basePadding;
+    final yInterval = ((chartMax - chartMin) / 4)
+        .clamp(.01, double.infinity)
+        .toDouble();
+    final xInterval = _labelInterval(maxX);
     final lineColor = account == null
         ? theme.colorScheme.onSurfaceVariant
-        : Color(account!.colorValue);
+        : Color(account.colorValue);
     final hideValues = state.hideBalance || (account?.hideBalance ?? false);
+
+    final selectedDay = _selectedDay == null
+        ? null
+        : _selectedDay!.clamp(0, endOfDayBalances.length - 1);
+    final selectedDate = selectedDay == null
+        ? null
+        : from.add(Duration(days: selectedDay));
+    final selectedBalance = selectedDay == null
+        ? null
+        : endOfDayBalances[selectedDay];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          height: 190,
+          height: 220,
           child: Semantics(
             label: account == null
                 ? 'Andamento del patrimonio nel periodo selezionato'
-                : 'Andamento del saldo di ${account!.name} nel periodo selezionato',
+                : 'Andamento del saldo di ${account.name} nel periodo selezionato',
             child: LineChart(
               LineChartData(
                 minX: 0,
-                maxX: safeMaxX,
-                minY: minValue - padding,
-                maxY: maxValue + padding,
+                maxX: maxX,
+                minY: chartMin,
+                maxY: chartMax,
                 titlesData: FlTitlesData(
-                  leftTitles: const AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      interval: yInterval,
+                      reservedSize: 56,
+                      minIncluded: true,
+                      maxIncluded: true,
+                      getTitlesWidget: (axisValue, meta) => Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: Text(
+                          _axisValue(axisValue),
+                          textAlign: TextAlign.right,
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                   rightTitles: const AxisTitles(
                     sideTitles: SideTitles(showTitles: false),
@@ -601,19 +668,38 @@ class _BalanceTrend extends StatelessWidget {
                   bottomTitles: AxisTitles(
                     sideTitles: SideTitles(
                       showTitles: true,
-                      interval: interval,
-                      reservedSize: 32,
-                      maxIncluded: false,
+                      interval: xInterval,
+                      reservedSize: 38,
+                      minIncluded: true,
+                      maxIncluded: true,
                       getTitlesWidget: (axisValue, meta) {
-                        final day = axisValue.round();
+                        final day = axisValue.round().clamp(
+                          0,
+                          endOfDayBalances.length - 1,
+                        );
                         final date = from.add(Duration(days: day));
-                        if (date.isAfter(to)) return const SizedBox.shrink();
+                        final selected = selectedDay == day;
                         return Padding(
                           padding: const EdgeInsets.only(top: 8),
-                          child: Text(
-                            _axisLabel(date, durationDays),
-                            style: theme.textTheme.labelSmall?.copyWith(
-                              color: theme.colorScheme.onSurfaceVariant,
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () => setState(() => _selectedDay = day),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 4,
+                                vertical: 3,
+                              ),
+                              child: Text(
+                                _axisLabel(date, durationDays),
+                                style: theme.textTheme.labelSmall?.copyWith(
+                                  color: selected
+                                      ? theme.colorScheme.onSurface
+                                      : theme.colorScheme.onSurfaceVariant,
+                                  fontWeight: selected
+                                      ? FontWeight.w800
+                                      : FontWeight.w500,
+                                ),
+                              ),
                             ),
                           ),
                         );
@@ -624,7 +710,7 @@ class _BalanceTrend extends StatelessWidget {
                 gridData: FlGridData(
                   show: true,
                   drawVerticalLine: false,
-                  horizontalInterval: spread < .01 ? padding : null,
+                  horizontalInterval: yInterval,
                 ),
                 borderData: FlBorderData(show: false),
                 lineTouchData: LineTouchData(
@@ -637,15 +723,14 @@ class _BalanceTrend extends StatelessWidget {
                     fitInsideVertically: true,
                     getTooltipItems: (touchedSpots) => touchedSpots
                         .map((spot) {
-                          final date = from.add(
-                            Duration(
-                              minutes:
-                                  (spot.x * Duration.minutesPerDay).round(),
-                            ),
+                          final day = spot.x.round().clamp(
+                            0,
+                            endOfDayBalances.length - 1,
                           );
+                          final date = from.add(Duration(days: day));
                           return LineTooltipItem(
                             '${DateFormat('d MMM yyyy', 'it_IT').format(date)}\n'
-                            '${hideValues ? '••••' : moneyFor(state, spot.y)}',
+                            '${hideValues ? '••••' : moneyFor(state, endOfDayBalances[day])}',
                             theme.textTheme.bodyMedium!.copyWith(
                               color: theme.colorScheme.onSurface,
                               fontWeight: FontWeight.w700,
@@ -655,21 +740,63 @@ class _BalanceTrend extends StatelessWidget {
                         .toList(),
                   ),
                 ),
+                extraLinesData: selectedDay == null
+                    ? const ExtraLinesData()
+                    : ExtraLinesData(
+                        verticalLines: [
+                          VerticalLine(
+                            x: selectedDay.toDouble(),
+                            color: theme.colorScheme.onSurface.withValues(
+                              alpha: .22,
+                            ),
+                            strokeWidth: 1,
+                            dashArray: const [4, 4],
+                          ),
+                        ],
+                      ),
                 lineBarsData: [
                   LineChartBarData(
                     spots: spots,
-                    isCurved: true,
-                    dotData: const FlDotData(show: false),
+                    isCurved: false,
+                    dotData: FlDotData(
+                      show: selectedDay != null,
+                      checkToShowDot: (spot, barData) =>
+                          selectedDay != null &&
+                          spot.x.round() == selectedDay,
+                    ),
                     barWidth: 3,
                     color: lineColor,
                   ),
                 ],
               ),
-              duration: const Duration(milliseconds: 260),
+              duration: const Duration(milliseconds: 220),
               curve: Curves.easeOutCubic,
             ),
           ),
         ),
+        if (selectedDate != null && selectedBalance != null) ...[
+          const SizedBox(height: 6),
+          Row(
+            children: [
+              const Icon(Icons.event_outlined, size: 18),
+              const SizedBox(width: 7),
+              Expanded(
+                child: Text(
+                  'Saldo finale ${DateFormat('d MMM yyyy', 'it_IT').format(selectedDate)}',
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              Text(
+                hideValues ? '••••' : moneyFor(state, selectedBalance),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ],
+          ),
+        ],
         const SizedBox(height: 8),
         Row(
           children: [
