@@ -265,11 +265,6 @@ class _AccountContextAnalyticsScreenState
             ],
           ),
           const SizedBox(height: 24),
-          Text(
-            _visibleRangeLabel(from, to),
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          const SizedBox(height: 12),
           Row(
             children: [
               Expanded(
@@ -318,6 +313,7 @@ class _AccountContextAnalyticsScreenState
             from: from,
             to: to,
             period: period,
+            rangeLabel: _visibleRangeLabel(from, to),
             onShiftPeriod: _shiftPeriod,
           ),
           const SizedBox(height: 24),
@@ -499,6 +495,7 @@ class _BalanceTrend extends StatefulWidget {
     required this.from,
     required this.to,
     required this.period,
+    required this.rangeLabel,
     required this.onShiftPeriod,
   });
 
@@ -507,6 +504,7 @@ class _BalanceTrend extends StatefulWidget {
   final DateTime from;
   final DateTime to;
   final _AnalyticsPeriod period;
+  final String rangeLabel;
   final ValueChanged<int> onShiftPeriod;
 
   @override
@@ -611,14 +609,6 @@ class _BalanceTrendState extends State<_BalanceTrend>
             : DateFormat('MMM yy', 'it_IT').format(date),
     };
   }
-
-  String get _navigatorLabel => switch (widget.period) {
-    _AnalyticsPeriod.today => 'Oggi',
-    _AnalyticsPeriod.week => 'Settimana',
-    _AnalyticsPeriod.month => 'Mese',
-    _AnalyticsPeriod.year => 'Anno',
-    _AnalyticsPeriod.custom => 'Custom',
-  };
 
   String _axisValue(double value) {
     if (widget.state.hideBalance || (widget.account?.hideBalance ?? false)) {
@@ -800,7 +790,7 @@ class _BalanceTrendState extends State<_BalanceTrend>
       children: [
         Center(
           child: _AnalyticsPeriodNavigator(
-            label: _navigatorLabel,
+            label: widget.rangeLabel,
             animation: _swipeHintAnimation,
             onPrevious: () => widget.onShiftPeriod(-1),
             onNext: () => widget.onShiftPeriod(1),
@@ -836,7 +826,7 @@ class _BalanceTrendState extends State<_BalanceTrend>
                       sideTitles: SideTitles(
                         showTitles: true,
                         interval: yInterval,
-                        reservedSize: 30,
+                        reservedSize: 22,
                         minIncluded: true,
                         maxIncluded: true,
                         getTitlesWidget: (axisValue, meta) => Padding(
@@ -1086,7 +1076,7 @@ class _AnalyticsPeriodNavigator extends StatelessWidget {
             onPressed: onPrevious,
           ),
           ConstrainedBox(
-            constraints: const BoxConstraints(minWidth: 86, maxWidth: 118),
+            constraints: const BoxConstraints(minWidth: 110, maxWidth: 170),
             child: Text(
               label,
               maxLines: 1,
