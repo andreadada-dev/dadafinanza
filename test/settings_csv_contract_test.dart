@@ -200,6 +200,6 @@ void main() {
 
     expect(plan, isNot(contains('- [ ]')));
     expect(plan, contains('Oggi · Settimana · Mese · Custom'));
-    expect(pubspec, contains('version: 1.6.1+18'));
+    expect(pubspec, contains('version: 1.7.0+19'));
   });
 }
