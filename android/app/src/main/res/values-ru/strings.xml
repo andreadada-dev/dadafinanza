@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" formatted="false">DadaFinanza</string>
+    <string name="widget_summary_name" formatted="false">ДадаФинанса · Резюме</string>
+    <string name="widget_balance_name" formatted="false">ДадаФинанса · Баланс</string>
+    <string name="widget_quick_name" formatted="false">DadaFinanza · Быстрый захват</string>
+    <string name="widget_amounts_name" formatted="false">DadaFinanza · Быстрые суммы</string>
+    <string name="widget_description" formatted="false">Баланс и быстрые категории для записи транзакции</string>
+    <string name="widget_balance_description" formatted="false">Компактный общий баланс с быстрым доступом к DadaFinanza</string>
+    <string name="widget_quick_description" formatted="false">Расходы, доходы, переводы и доходы с главного экрана</string>
+    <string name="widget_amounts_description" formatted="false">Счет, категория и четыре суммы, настраиваемые с помощью голосового доступа</string>
+    <string name="widget_balance_total" formatted="false">Общий баланс</string>
+    <string name="widget_add_expense" formatted="false">Добавить расходы</string>
+    <string name="widget_quick_title" formatted="false">Добавить транзакцию</string>
+    <string name="widget_expense" formatted="false">Расход</string>
+    <string name="widget_income" formatted="false">Доход</string>
+    <string name="widget_transfer" formatted="false">Трансфер</string>
+    <string name="widget_voice" formatted="false">Голос</string>
+    <string name="widget_new_expense" formatted="false">Новый расход</string>
+    <string name="widget_new_income" formatted="false">Новый доход</string>
+    <string name="widget_new_transfer" formatted="false">Новый трансфер</string>
+    <string name="widget_voice_description" formatted="false">Компилировать транзакцию с помощью голоса</string>
+    <string name="widget_fast_title" formatted="false">ДадаФинанса · Рапидо</string>
+    <string name="widget_account_category" formatted="false">Аккаунт · Категория</string>
+    <string name="widget_configure_account_category" formatted="false">Настройте учетную запись и категорию</string>
+    <string name="widget_config_title" formatted="false">Настройка виджетов</string>
+    <string name="widget_config_subtitle" formatted="false">Каждый виджет имеет свои собственные настройки. Имена учетных записей и категорий проверяются приложением при открытии быстрого добавления.</string>
+    <string name="widget_config_default_type" formatted="false">Тип по умолчанию</string>
+    <string name="widget_config_account_hint" formatted="false">Аккаунт (например, Revolut)</string>
+    <string name="widget_config_category_hint" formatted="false">Категория (например, Бар)</string>
+    <string name="widget_config_destination_hint" formatted="false">Пункт назначения трансфера (необязательно)</string>
+    <string name="widget_config_quick_amounts" formatted="false">Быстрые суммы</string>
+    <string name="widget_config_show_balance" formatted="false">Показать баланс в виджете</string>
+    <string name="widget_config_show_amounts" formatted="false">Показать быстрые суммы</string>
+    <string name="widget_config_save" formatted="false">Сохранить виджет</string>
+</resources>

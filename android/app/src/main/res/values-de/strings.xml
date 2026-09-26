@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" formatted="false">DadaFinanza</string>
+    <string name="widget_summary_name" formatted="false">DadaFinanza · Zusammenfassung</string>
+    <string name="widget_balance_name" formatted="false">DadaFinanza · Balance</string>
+    <string name="widget_quick_name" formatted="false">DadaFinanza · Schnelle Erfassung</string>
+    <string name="widget_amounts_name" formatted="false">DadaFinanza · Schnelle Beträge</string>
+    <string name="widget_description" formatted="false">Kontostand und Schnellkategorien zum Aufzeichnen einer Transaktion</string>
+    <string name="widget_balance_description" formatted="false">Kompakter Gesamtsaldo mit schnellem Zugriff auf DadaFinanza</string>
+    <string name="widget_quick_description" formatted="false">Ausgaben, Einnahmen, Überweisungen und Einnahmen auf dem Startbildschirm</string>
+    <string name="widget_amounts_description" formatted="false">Konto, Kategorie und vier Beträge konfigurierbar mit Sprachzugriff</string>
+    <string name="widget_balance_total" formatted="false">Gesamtbilanz</string>
+    <string name="widget_add_expense" formatted="false">Kosten hinzufügen</string>
+    <string name="widget_quick_title" formatted="false">Transaktion hinzufügen</string>
+    <string name="widget_expense" formatted="false">Kosten</string>
+    <string name="widget_income" formatted="false">Einkommen</string>
+    <string name="widget_transfer" formatted="false">Übertragen</string>
+    <string name="widget_voice" formatted="false">Stimme</string>
+    <string name="widget_new_expense" formatted="false">Neue Ausgabe</string>
+    <string name="widget_new_income" formatted="false">Neues Einkommen</string>
+    <string name="widget_new_transfer" formatted="false">Neuer Transfer</string>
+    <string name="widget_voice_description" formatted="false">Kompilieren Sie die Transaktion per Spracheingabe</string>
+    <string name="widget_fast_title" formatted="false">DadaFinanza · Rapido</string>
+    <string name="widget_account_category" formatted="false">Konto · Kategorie</string>
+    <string name="widget_configure_account_category" formatted="false">Konto und Kategorie konfigurieren</string>
+    <string name="widget_config_title" formatted="false">Widgets konfigurieren</string>
+    <string name="widget_config_subtitle" formatted="false">Jedes Widget verwaltet seine eigenen Einstellungen. Die Konto- und Kategorienamen werden von der App überprüft, wenn Sie Quick Add öffnen.</string>
+    <string name="widget_config_default_type" formatted="false">Standardtyp</string>
+    <string name="widget_config_account_hint" formatted="false">Konto (z. B. Revolut)</string>
+    <string name="widget_config_category_hint" formatted="false">Kategorie (z. B. Bar)</string>
+    <string name="widget_config_destination_hint" formatted="false">Übertragungsziel (optional)</string>
+    <string name="widget_config_quick_amounts" formatted="false">Schnelle Beträge</string>
+    <string name="widget_config_show_balance" formatted="false">Kontostand im Widget anzeigen</string>
+    <string name="widget_config_show_amounts" formatted="false">Schnelle Beträge anzeigen</string>
+    <string name="widget_config_save" formatted="false">Widget speichern</string>
+</resources>
