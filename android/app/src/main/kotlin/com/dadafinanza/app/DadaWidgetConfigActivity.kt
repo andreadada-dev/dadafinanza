@@ -2,7 +2,9 @@ package com.dadafinanza.app
 
 import android.app.Activity
 import android.appwidget.AppWidgetManager
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.text.InputType
@@ -15,8 +17,39 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.Spinner
 import android.widget.TextView
+import es.antonborri.home_widget.HomeWidgetPlugin
+import java.util.Locale
 
 class DadaWidgetConfigActivity : Activity() {
+    override fun attachBaseContext(newBase: Context) {
+        val widgetData = HomeWidgetPlugin.getData(newBase)
+        val code = widgetData.getString("language_code", "it") ?: "it"
+        if (code == "system") {
+            super.attachBaseContext(newBase)
+            return
+        }
+        val configuration = Configuration(newBase.resources.configuration)
+        configuration.setLocale(Locale.forLanguageTag(localeTag(code)))
+        super.attachBaseContext(newBase.createConfigurationContext(configuration))
+    }
+
+    private fun localeTag(code: String): String =
+        when (code) {
+            "it" -> "it-IT"
+            "en" -> "en-US"
+            "es" -> "es-ES"
+            "fr" -> "fr-FR"
+            "de" -> "de-DE"
+            "pt" -> "pt-BR"
+            "ru" -> "ru-RU"
+            "zh" -> "zh-CN"
+            "ja" -> "ja-JP"
+            "ko" -> "ko-KR"
+            "ar" -> "ar"
+            "hi" -> "hi-IN"
+            else -> code
+        }
+
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     private val prefs by lazy {
         getSharedPreferences("dada_widget_config", MODE_PRIVATE)
