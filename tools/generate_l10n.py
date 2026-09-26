@@ -6,11 +6,29 @@ from urllib.request import Request, urlopen
 import json
 import re
 import time
+import xml.etree.ElementTree as ET
+from xml.sax.saxutils import escape as xml_escape
 
 ROOT = Path(__file__).resolve().parents[1]
 LIB = ROOT / "lib"
 GENERATED = LIB / "l10n" / "generated_translations.dart"
 STATS = ROOT / "tools" / "l10n_stats.json"
+ANDROID_STRINGS = (
+    ROOT / "android" / "app" / "src" / "main" / "res" / "values" / "strings.xml"
+)
+ANDROID_RESOURCE_DIRS = {
+    "en": "values-en",
+    "es": "values-es",
+    "fr": "values-fr",
+    "de": "values-de",
+    "pt": "values-pt-rBR",
+    "ru": "values-ru",
+    "zh": "values-zh-rCN",
+    "ja": "values-ja",
+    "ko": "values-ko",
+    "ar": "values-ar",
+    "hi": "values-hi",
+}
 
 TARGETS = {
     "en": "en",
@@ -109,6 +127,20 @@ def source_files() -> list[Path]:
             files.append(path)
     return sorted(files)
 
+
+def android_base_strings() -> dict[str, str]:
+    if not ANDROID_STRINGS.exists():
+        return {}
+    root = ET.parse(ANDROID_STRINGS).getroot()
+    values: dict[str, str] = {}
+    for node in root.findall("string"):
+        name = node.attrib.get("name")
+        value = "".join(node.itertext()).strip()
+        if not name or not value:
+            continue
+        values[name] = value
+    return values
+
 def extract_phrases() -> tuple[set[str], set[str]]:
     exact: set[str] = set()
     fragments: set[str] = set()
@@ -129,6 +161,10 @@ def extract_phrases() -> tuple[set[str], set[str]]:
                     piece = piece.strip(" \t\n·:;,.()[]{}+-→")
                     if human_candidate(piece, dynamic_fragment=True):
                         fragments.add(piece)
+    for value in android_base_strings().values():
+        if value != "DadaFinanza" and human_candidate(value):
+            exact.add(value)
+
     fragments.difference_update(exact)
     return exact, fragments
 
@@ -256,6 +292,31 @@ def write_generated(
     GENERATED.parent.mkdir(parents=True, exist_ok=True)
     GENERATED.write_text("\n".join(lines), encoding="utf-8")
 
+def write_android_resources(
+    exact_maps: dict[str, dict[str, str]],
+) -> int:
+    base = android_base_strings()
+    written = 0
+    for code, folder in ANDROID_RESOURCE_DIRS.items():
+        target_dir = (
+            ROOT / "android" / "app" / "src" / "main" / "res" / folder
+        )
+        target_dir.mkdir(parents=True, exist_ok=True)
+        lines = ['<?xml version="1.0" encoding="utf-8"?>', "<resources>"]
+        mapping = exact_maps.get(code, {})
+        for name, source in base.items():
+            target = source if name == "app_name" else mapping.get(source, source)
+            escaped = xml_escape(target, {'"': "&quot;"})
+            lines.append(f'    <string name="{name}">{escaped}</string>')
+        lines.append("</resources>")
+        lines.append("")
+        (target_dir / "strings.xml").write_text(
+            "\n".join(lines),
+            encoding="utf-8",
+        )
+        written += 1
+    return written
+
 UI_PROPERTY_RE = re.compile(
     r"(?P<prefix>\b(?:tooltip|hintText|labelText|helperText|errorText|"
     r"semanticLabel|barrierLabel|helpText|hourLabelText|minuteLabelText)"
@@ -347,12 +408,14 @@ def main() -> None:
     exact_maps = build_maps(exact_values)
     phrase_maps = build_maps(fragment_values)
     write_generated(exact_maps, phrase_maps)
+    android_resource_files = write_android_resources(exact_maps)
     transform_stats = transform_source()
 
     stats = {
         "languages": ["it", *TARGETS.keys()],
         "exact_phrases": len(exact_values),
         "dynamic_fragments": len(fragment_values),
+        "android_resource_files": android_resource_files,
         **transform_stats,
     }
     STATS.parent.mkdir(parents=True, exist_ok=True)
