@@ -1,0 +1,45 @@
+name: L10n POST quality test
+
+on:
+  push:
+    branches:
+      - 'test/l10n-post-quality'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Test complete POST translation
+        shell: python
+        run: |
+          from urllib.parse import urlencode
+          from urllib.request import Request, urlopen
+          import json, re
+          samples = [
+              f"Testo di prova numero {i}: movimento, conto, categoria, saldo e impostazioni."
+              for i in range(120)
+          ]
+          marker = "\n[DADA_SPLIT_9F3A]\n"
+          text = marker.join(samples)
+          query = urlencode({"client":"gtx","sl":"it","tl":"en","dt":"t"})
+          body = urlencode({"q": text}).encode()
+          req = Request(
+              "https://translate.googleapis.com/translate_a/single?" + query,
+              data=body,
+              headers={"User-Agent":"Mozilla/5.0","Content-Type":"application/x-www-form-urlencoded"},
+              method="POST",
+          )
+          payload=json.loads(urlopen(req,timeout=60).read().decode())
+          translated="".join(chunk[0] for chunk in payload[0] if chunk and chunk[0])
+          parts=re.split(r"\s*\[\s*DADA[_ ]SPLIT[_ ]9F3A\s*\]\s*",translated,flags=re.I)
+          changed=sum(a.strip()!=b.strip() for a,b in zip(samples,parts))
+          italian=sum("Testo di prova" in p for p in parts)
+          print("chars",len(text))
+          print("parts",len(parts))
+          print("changed",changed)
+          print("italian",italian)
+          print("first",parts[0][:100] if parts else "")
+          print("last",parts[-1][:100] if parts else "")
+          if len(parts)!=len(samples) or changed != len(samples) or italian:
+              raise SystemExit(1)
