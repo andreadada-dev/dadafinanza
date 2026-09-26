@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:intl/intl.dart';
 
+import 'finance_glossary.dart';
 import 'generated_translations.dart';
 
 class AppLanguage {
@@ -356,6 +357,12 @@ class AppI18n {
     final cacheKey = '$_resolvedCode\u0000$source';
     final cached = _runtimeCache[cacheKey];
     if (cached != null) return cached;
+
+    final curated = curatedFinanceGlossary[_resolvedCode]?[source];
+    if (curated != null && curated.isNotEmpty) {
+      _runtimeCache[cacheKey] = curated;
+      return curated;
+    }
 
     final exact = generatedTranslations[_resolvedCode];
     final exactMatch = exact?[source];
