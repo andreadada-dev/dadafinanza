@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart' hide Category;
 
 import 'core/money.dart';
 import 'data/app_database.dart';
+import 'l10n/app_i18n.dart';
 import 'models/advance_models.dart';
 import 'models/models.dart';
 import 'models/smart_models.dart';
@@ -50,6 +51,7 @@ class AppState extends ChangeNotifier {
   bool showCents = true;
   bool haptics = true;
   String currency = 'EUR';
+  String languageCode = 'it';
   AppThemePreference themePreference = AppThemePreference.system;
   int weekStart = 1;
   int financialMonthStart = 1;
@@ -1246,6 +1248,11 @@ class AppState extends ChangeNotifier {
     showCents = (await database.getSetting('show_cents') ?? '1') == '1';
     haptics = (await database.getSetting('haptics') ?? '1') == '1';
     currency = await database.getSetting('currency') ?? 'EUR';
+    final storedLanguage = await database.getSetting('language_code') ?? 'it';
+    languageCode = AppI18n.isSupportedPreference(storedLanguage)
+        ? storedLanguage
+        : 'it';
+    AppI18n.use(languageCode);
     weekStart =
         int.tryParse(await database.getSetting('week_start') ?? '1') ?? 1;
     financialMonthStart =
@@ -1281,6 +1288,13 @@ class AppState extends ChangeNotifier {
       setSetting('hide_balance', value ? '1' : '0');
   Future<void> setThemePreference(AppThemePreference value) =>
       setSetting('theme_mode', value.name);
+
+  Future<void> setLanguageCode(String value) async {
+    final next = AppI18n.isSupportedPreference(value) ? value : 'it';
+    await setSetting('language_code', next);
+    AppI18n.use(languageCode);
+    await syncWidget();
+  }
 
   Future<void> refreshCore({bool includePlanning = false}) async {
     accounts = await database.accounts();
