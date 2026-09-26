@@ -213,7 +213,7 @@ def request_translation(text: str, source: str, target: str) -> str:
 
 _BATCH_MARKER = "[DADA_SPLIT_9F3A]"
 _BATCH_SPLIT_RE = re.compile(
-    r"\\s*\\[\\s*DADA[_ ]SPLIT[_ ]9F3A\\s*\\]\\s*",
+    r"\s*\[\s*DADA[_ ]SPLIT[_ ]9F3A\s*\]\s*",
     re.IGNORECASE,
 )
 
@@ -227,7 +227,7 @@ def _translate_batch(
     if len(values) == 1:
         return [request_translation(values[0], source, target)]
 
-    joined = f"\\n{_BATCH_MARKER}\\n".join(values)
+    joined = f"\n{_BATCH_MARKER}\n".join(values)
     translated = request_translation(joined, source, target)
     parts = [
         part.strip()
