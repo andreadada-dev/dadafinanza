@@ -479,7 +479,7 @@ class _DashboardWidget extends StatelessWidget {
               ...upcoming.map(
                 (item) => FlatMetric(
                   label:
-                      AppI18n.tr('${item.name} · ${DateFormat(')dd MMM', AppI18n.intlLocale).format(item.nextDate)}',
+                      '${item.name} · ${DateFormat('dd MMM', AppI18n.intlLocale).format(item.nextDate)}',
                   value:
                       '${item.type == TransactionType.expense
                           ? '-'
