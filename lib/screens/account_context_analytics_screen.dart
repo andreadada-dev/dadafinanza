@@ -60,10 +60,7 @@ class _AccountContextAnalyticsScreenState
       lastDate: now.add(const Duration(days: 3650)),
       initialDateRange:
           custom ??
-          DateTimeRange(
-            start: DateTime(now.year, now.month),
-            end: now,
-          ),
+          DateTimeRange(start: DateTime(now.year, now.month), end: now),
     );
     if (result != null && mounted) {
       setState(() {
@@ -87,19 +84,17 @@ class _AccountContextAnalyticsScreenState
       }
     });
   }
+
   String _visibleRangeLabel(DateTime from, DateTime toExclusive) {
     final now = DateTime.now();
     final end = toExclusive.subtract(const Duration(days: 1));
     final oneDay =
-        from.year == end.year &&
-        from.month == end.month &&
-        from.day == end.day;
+        from.year == end.year && from.month == end.month && from.day == end.day;
     final includeYear = from.year != now.year || end.year != now.year;
     final format = DateFormat(includeYear ? 'd MMM yy' : 'd MMM', 'it_IT');
     if (oneDay) return format.format(from);
     return '${format.format(from)} – ${format.format(end)}';
   }
-
 
   (DateTime, DateTime) _bounds(AppState state) {
     final now = DateTime.now();
@@ -304,7 +299,9 @@ class _AccountContextAnalyticsScreenState
           ),
           const SizedBox(height: 32),
           SectionTitle(
-            effectiveAccountId == null ? 'Andamento patrimonio' : 'Andamento saldo',
+            effectiveAccountId == null
+                ? 'Andamento patrimonio'
+                : 'Andamento saldo',
           ),
           const SizedBox(height: 12),
           _BalanceTrend(
@@ -582,16 +579,18 @@ class _BalanceTrendState extends State<_BalanceTrend>
 
     return switch (widget.period) {
       _AnalyticsPeriod.today => DateFormat('HH', 'it_IT').format(date),
-      _AnalyticsPeriod.week => sameMonth
-          ? DateFormat('EEE dd', 'it_IT').format(date)
-          : sameYear
-          ? DateFormat('EEE dd MMM', 'it_IT').format(date)
-          : DateFormat('EEE dd MMM yy', 'it_IT').format(date),
-      _AnalyticsPeriod.month => sameMonth
-          ? DateFormat('dd', 'it_IT').format(date)
-          : sameYear
-          ? DateFormat('dd MMM', 'it_IT').format(date)
-          : DateFormat('dd MMM yy', 'it_IT').format(date),
+      _AnalyticsPeriod.week =>
+        sameMonth
+            ? DateFormat('EEE dd', 'it_IT').format(date)
+            : sameYear
+            ? DateFormat('EEE dd MMM', 'it_IT').format(date)
+            : DateFormat('EEE dd MMM yy', 'it_IT').format(date),
+      _AnalyticsPeriod.month =>
+        sameMonth
+            ? DateFormat('dd', 'it_IT').format(date)
+            : sameYear
+            ? DateFormat('dd MMM', 'it_IT').format(date)
+            : DateFormat('dd MMM yy', 'it_IT').format(date),
       _AnalyticsPeriod.year => DateFormat('MMM', 'it_IT').format(date),
       _AnalyticsPeriod.custom =>
         durationDays <= 8
@@ -657,12 +656,8 @@ class _BalanceTrendState extends State<_BalanceTrend>
         : spread / 4;
     final step = _niceStep(rawStep);
 
-    var minY = allPositive
-        ? 0.0
-        : (minValue / step).floorToDouble() * step;
-    var maxY = allNegative
-        ? 0.0
-        : (maxValue / step).ceilToDouble() * step;
+    var minY = allPositive ? 0.0 : (minValue / step).floorToDouble() * step;
+    var maxY = allNegative ? 0.0 : (maxValue / step).ceilToDouble() * step;
 
     if (!allPositive && (minY - minValue).abs() < .0001) {
       minY -= step;
@@ -694,9 +689,7 @@ class _BalanceTrendState extends State<_BalanceTrend>
         ? state.accounts
               .where(
                 (item) =>
-                    !item.isSystem &&
-                    !item.isArchived &&
-                    item.includeInTotal,
+                    !item.isSystem && !item.isArchived && item.includeInTotal,
               )
               .toList(growable: false)
         : [account];
@@ -759,8 +752,7 @@ class _BalanceTrendState extends State<_BalanceTrend>
       if (itemIndex < 0) itemIndex = items.length;
       for (var day = 0; day < durationDays; day++) {
         final nextDay = from.add(Duration(days: day + 1));
-        while (
-            itemIndex < items.length &&
+        while (itemIndex < items.length &&
             items[itemIndex].date.isBefore(nextDay)) {
           value += _deltaFor(items[itemIndex], accountIds);
           itemIndex++;
@@ -833,233 +825,230 @@ class _BalanceTrendState extends State<_BalanceTrend>
                   ? 'Andamento del patrimonio nel periodo selezionato'
                   : 'Andamento del saldo di ${account.name} nel periodo selezionato',
               child: Listener(
-              behavior: HitTestBehavior.opaque,
-              onPointerDown: (event) => _swipeStartX = event.position.dx,
-              onPointerCancel: (_) => _swipeStartX = null,
-              onPointerUp: (event) {
-                final startX = _swipeStartX;
-                _swipeStartX = null;
-                if (startX == null) return;
-                final deltaX = event.position.dx - startX;
-                if (deltaX.abs() < 48) return;
-                widget.onShiftPeriod(deltaX < 0 ? 1 : -1);
-              },
-              child: LineChart(
-                LineChartData(
-                  minX: 0,
-                  maxX: chartMaxX,
-                  minY: chartMin,
-                  maxY: chartMax,
-                  titlesData: FlTitlesData(
-                    leftTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        interval: yInterval,
-                        reservedSize: 20,
-                        minIncluded: true,
-                        maxIncluded: true,
-                        getTitlesWidget: (axisValue, meta) => Padding(
-                          padding: EdgeInsets.zero,
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              _axisValue(axisValue),
-                              textAlign: TextAlign.right,
-                              style: theme.textTheme.labelSmall?.copyWith(
-                                color: theme.colorScheme.onSurfaceVariant,
+                behavior: HitTestBehavior.opaque,
+                onPointerDown: (event) => _swipeStartX = event.position.dx,
+                onPointerCancel: (_) => _swipeStartX = null,
+                onPointerUp: (event) {
+                  final startX = _swipeStartX;
+                  _swipeStartX = null;
+                  if (startX == null) return;
+                  final deltaX = event.position.dx - startX;
+                  if (deltaX.abs() < 48) return;
+                  widget.onShiftPeriod(deltaX < 0 ? 1 : -1);
+                },
+                child: LineChart(
+                  LineChartData(
+                    minX: 0,
+                    maxX: chartMaxX,
+                    minY: chartMin,
+                    maxY: chartMax,
+                    titlesData: FlTitlesData(
+                      leftTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          interval: yInterval,
+                          reservedSize: 20,
+                          minIncluded: true,
+                          maxIncluded: true,
+                          getTitlesWidget: (axisValue, meta) => Padding(
+                            padding: EdgeInsets.zero,
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                _axisValue(axisValue),
+                                textAlign: TextAlign.right,
+                                style: theme.textTheme.labelSmall?.copyWith(
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    rightTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    topTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    bottomTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        interval: xInterval,
-                        reservedSize: 38,
-                        minIncluded: true,
-                        maxIncluded: true,
-                        getTitlesWidget: (axisValue, meta) {
-                          if (isToday) {
-                            if (!showTodayHour(axisValue)) {
-                              return const SizedBox.shrink();
+                      rightTitles: const AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      topTitles: const AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      bottomTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          interval: xInterval,
+                          reservedSize: 38,
+                          minIncluded: true,
+                          maxIncluded: true,
+                          getTitlesWidget: (axisValue, meta) {
+                            if (isToday) {
+                              if (!showTodayHour(axisValue)) {
+                                return const SizedBox.shrink();
+                              }
+                              final hour = axisValue.round();
+                              final horizontalNudge = switch (hour) {
+                                0 => -3.0,
+                                1 => 3.0,
+                                23 => -3.0,
+                                24 => -8.0,
+                                _ => 0.0,
+                              };
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: Transform.translate(
+                                  offset: Offset(horizontalNudge, 0),
+                                  child: SizedBox(
+                                    width: 18,
+                                    child: Text(
+                                      hour == 24
+                                          ? '24'
+                                          : hour.toString().padLeft(2, '0'),
+                                      maxLines: 1,
+                                      textAlign: TextAlign.center,
+                                      style: theme.textTheme.labelSmall
+                                          ?.copyWith(
+                                            fontSize: 10.5,
+                                            color: theme
+                                                .colorScheme
+                                                .onSurfaceVariant,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              );
                             }
-                            final hour = axisValue.round();
-                            final horizontalNudge = switch (hour) {
-                              0 => -3.0,
-                              1 => 3.0,
-                              23 => -3.0,
-                              24 => -8.0,
-                              _ => 0.0,
-                            };
+
+                            final day = axisValue
+                                .round()
+                                .clamp(0, durationDays - 1)
+                                .toInt();
+                            final date = from.add(Duration(days: day));
+                            final isFirstLabel = axisValue <= .01;
+                            final isLastLabel = axisValue >= chartMaxX - .01;
+                            final edgeNudge = isLastLabel
+                                ? -12.0
+                                : isFirstLabel
+                                ? 5.0
+                                : 0.0;
                             return Padding(
                               padding: const EdgeInsets.only(top: 8),
                               child: Transform.translate(
-                                offset: Offset(horizontalNudge, 0),
-                                child: SizedBox(
-                                  width: 18,
-                                  child: Text(
-                                    hour == 24
-                                        ? '24'
-                                        : hour.toString().padLeft(2, '0'),
-                                    maxLines: 1,
-                                    textAlign: TextAlign.center,
-                                    style: theme.textTheme.labelSmall?.copyWith(
-                                      fontSize: 10.5,
-                                      color:
-                                          theme.colorScheme.onSurfaceVariant,
+                                offset: Offset(edgeNudge, 0),
+                                child: GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () =>
+                                      setState(() => _selectedSpotIndex = day),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 3,
+                                      vertical: 3,
+                                    ),
+                                    child: Text(
+                                      _axisLabel(date, durationDays),
+                                      maxLines: 1,
+                                      softWrap: false,
+                                      style: theme.textTheme.labelSmall
+                                          ?.copyWith(
+                                            color: selectedSpotIndex == day
+                                                ? theme.colorScheme.onSurface
+                                                : theme
+                                                      .colorScheme
+                                                      .onSurfaceVariant,
+                                            fontWeight: selectedSpotIndex == day
+                                                ? FontWeight.w800
+                                                : FontWeight.w500,
+                                          ),
                                     ),
                                   ),
                                 ),
                               ),
                             );
-                          }
-
-                          final day = axisValue
-                              .round()
-                              .clamp(0, durationDays - 1)
+                          },
+                        ),
+                      ),
+                    ),
+                    gridData: FlGridData(
+                      show: true,
+                      drawVerticalLine: false,
+                      horizontalInterval: yInterval,
+                    ),
+                    borderData: FlBorderData(show: false),
+                    lineTouchData: LineTouchData(
+                      enabled: true,
+                      touchCallback: (event, response) {
+                        if (event is! FlTapUpEvent) return;
+                        final touched = response?.lineBarSpots;
+                        if (touched == null || touched.isEmpty) return;
+                        setState(
+                          () => _selectedSpotIndex = touched.first.spotIndex,
+                        );
+                      },
+                      touchTooltipData: LineTouchTooltipData(
+                        getTooltipColor: (_) =>
+                            theme.colorScheme.surfaceContainerHighest,
+                        tooltipBorderRadius: BorderRadius.circular(10),
+                        fitInsideHorizontally: true,
+                        fitInsideVertically: true,
+                        getTooltipItems: (touchedSpots) => touchedSpots.map((
+                          spot,
+                        ) {
+                          final index = spot.spotIndex
+                              .clamp(0, spotDates.length - 1)
                               .toInt();
-                          final date = from.add(Duration(days: day));
-                          final isFirstLabel = axisValue <= .01;
-                          final isLastLabel =
-                              axisValue >= chartMaxX - .01;
-                          final edgeNudge = isLastLabel
-                              ? -12.0
-                              : isFirstLabel
-                              ? 5.0
-                              : 0.0;
-                          return Padding(
-                            padding: const EdgeInsets.only(top: 8),
-                            child: Transform.translate(
-                              offset: Offset(edgeNudge, 0),
-                              child: GestureDetector(
-                                behavior: HitTestBehavior.opaque,
-                                onTap: () => setState(
-                                  () => _selectedSpotIndex = day,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 3,
-                                    vertical: 3,
-                                  ),
-                                  child: Text(
-                                    _axisLabel(date, durationDays),
-                                    maxLines: 1,
-                                    softWrap: false,
-                                    style: theme.textTheme.labelSmall?.copyWith(
-                                      color: selectedSpotIndex == day
-                                          ? theme.colorScheme.onSurface
-                                          : theme
-                                                .colorScheme
-                                                .onSurfaceVariant,
-                                      fontWeight: selectedSpotIndex == day
-                                          ? FontWeight.w800
-                                          : FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                          final date = spotDates[index];
+                          final dateLabel = isToday
+                              ? DateFormat(
+                                  'd MMM yyyy, HH:mm',
+                                  'it_IT',
+                                ).format(date)
+                              : DateFormat('d MMM yyyy', 'it_IT').format(date);
+                          return LineTooltipItem(
+                            '$dateLabel\n'
+                            '${hideValues ? '••••' : moneyFor(state, spot.y)}',
+                            theme.textTheme.bodyMedium!.copyWith(
+                              color: theme.colorScheme.onSurface,
+                              fontWeight: FontWeight.w700,
                             ),
                           );
-                        },
+                        }).toList(),
                       ),
                     ),
-                  ),
-                  gridData: FlGridData(
-                    show: true,
-                    drawVerticalLine: false,
-                    horizontalInterval: yInterval,
-                  ),
-                  borderData: FlBorderData(show: false),
-                  lineTouchData: LineTouchData(
-                    enabled: true,
-                    touchCallback: (event, response) {
-                      if (event is! FlTapUpEvent) return;
-                      final touched = response?.lineBarSpots;
-                      if (touched == null || touched.isEmpty) return;
-                      setState(
-                        () => _selectedSpotIndex =
-                            touched.first.spotIndex,
-                      );
-                    },
-                    touchTooltipData: LineTouchTooltipData(
-                      getTooltipColor: (_) =>
-                          theme.colorScheme.surfaceContainerHighest,
-                      tooltipBorderRadius: BorderRadius.circular(10),
-                      fitInsideHorizontally: true,
-                      fitInsideVertically: true,
-                      getTooltipItems: (touchedSpots) => touchedSpots
-                          .map((spot) {
-                            final index = spot.spotIndex
-                                .clamp(0, spotDates.length - 1)
-                                .toInt();
-                            final date = spotDates[index];
-                            final dateLabel = isToday
-                                ? DateFormat(
-                                    'd MMM yyyy, HH:mm',
-                                    'it_IT',
-                                  ).format(date)
-                                : DateFormat(
-                                    'd MMM yyyy',
-                                    'it_IT',
-                                  ).format(date);
-                            return LineTooltipItem(
-                              '$dateLabel\n'
-                              '${hideValues ? '••••' : moneyFor(state, spot.y)}',
-                              theme.textTheme.bodyMedium!.copyWith(
-                                color: theme.colorScheme.onSurface,
-                                fontWeight: FontWeight.w700,
+                    extraLinesData: selectedSpot == null
+                        ? const ExtraLinesData()
+                        : ExtraLinesData(
+                            verticalLines: [
+                              VerticalLine(
+                                x: selectedSpot.x,
+                                color: theme.colorScheme.onSurface.withValues(
+                                  alpha: .22,
+                                ),
+                                strokeWidth: 1,
+                                dashArray: const [4, 4],
                               ),
-                            );
-                          })
-                          .toList(),
-                    ),
-                  ),
-                  extraLinesData: selectedSpot == null
-                      ? const ExtraLinesData()
-                      : ExtraLinesData(
-                          verticalLines: [
-                            VerticalLine(
-                              x: selectedSpot.x,
-                              color: theme.colorScheme.onSurface.withValues(
-                                alpha: .22,
-                              ),
-                              strokeWidth: 1,
-                              dashArray: const [4, 4],
-                            ),
-                          ],
+                            ],
+                          ),
+                    lineBarsData: [
+                      LineChartBarData(
+                        spots: spots,
+                        isCurved: false,
+                        dotData: FlDotData(
+                          show: spots.length == 1 || selectedSpot != null,
+                          checkToShowDot: (spot, barData) =>
+                              spots.length == 1 ||
+                              (selectedSpot != null &&
+                                  (spot.x - selectedSpot.x).abs() < .0001 &&
+                                  (spot.y - selectedSpot.y).abs() < .0001),
                         ),
-                  lineBarsData: [
-                    LineChartBarData(
-                      spots: spots,
-                      isCurved: false,
-                      dotData: FlDotData(
-                        show: spots.length == 1 || selectedSpot != null,
-                        checkToShowDot: (spot, barData) =>
-                            spots.length == 1 ||
-                            (selectedSpot != null &&
-                                (spot.x - selectedSpot.x).abs() < .0001 &&
-                                (spot.y - selectedSpot.y).abs() < .0001),
+                        barWidth: 3,
+                        color: lineColor,
                       ),
-                      barWidth: 3,
-                      color: lineColor,
-                    ),
-                  ],
+                    ],
+                  ),
+                  duration: const Duration(milliseconds: 220),
+                  curve: Curves.easeOutCubic,
                 ),
-                duration: const Duration(milliseconds: 220),
-                curve: Curves.easeOutCubic,
               ),
             ),
           ),
-        ),
         ),
         if (selectedDate != null && selectedBalance != null) ...[
           const SizedBox(height: 6),
@@ -1185,10 +1174,7 @@ class _AnalyticsSwipeChevron extends StatelessWidget {
               tooltip: tooltip,
               onPressed: onPressed,
               visualDensity: VisualDensity.compact,
-              constraints: const BoxConstraints.tightFor(
-                width: 36,
-                height: 36,
-              ),
+              constraints: const BoxConstraints.tightFor(width: 36, height: 36),
               padding: EdgeInsets.zero,
               icon: Icon(
                 direction < 0

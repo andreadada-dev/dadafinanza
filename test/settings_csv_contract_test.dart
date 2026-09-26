@@ -203,7 +203,8 @@ void main() {
     final pubspec = File('pubspec.yaml').readAsStringSync();
 
     expect(plan, isNot(contains('- [ ]')));
-    expect(plan, contains('Oggi · Settimana · Mese · Custom'));
+    expect(plan, contains('Oggi · Settimana · Mese · Anno'));
+    expect(plan, contains('Custom'));
     expect(pubspec, contains('version: 1.7.0+19'));
   });
 }

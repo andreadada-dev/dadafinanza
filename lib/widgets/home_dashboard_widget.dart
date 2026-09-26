@@ -380,10 +380,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
       };
     }
     if (_range == _CategoryChartRange.today) {
-      return _shortDate(
-        from,
-        includeYear: from.year != DateTime.now().year,
-      );
+      return _shortDate(from, includeYear: from.year != DateTime.now().year);
     }
     return _dateRangeLabel(from, to);
   }
@@ -420,7 +417,8 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
   void _stepPeriod(int delta) {
     setState(() {
       if (_range == _CategoryChartRange.custom && _customRange != null) {
-        final days = _customRange!.end.difference(_customRange!.start).inDays + 1;
+        final days =
+            _customRange!.end.difference(_customRange!.start).inDays + 1;
         _customRange = DateTimeRange(
           start: _customRange!.start.add(Duration(days: delta * days)),
           end: _customRange!.end.add(Duration(days: delta * days)),
@@ -622,7 +620,11 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                     ),
                     sections: hasData
                         ? [
-                            for (var index = 0; index < data.slices.length; index++)
+                            for (
+                              var index = 0;
+                              index < data.slices.length;
+                              index++
+                            )
                               PieChartSectionData(
                                 color:
                                     pageSelectedIndex == -1 ||

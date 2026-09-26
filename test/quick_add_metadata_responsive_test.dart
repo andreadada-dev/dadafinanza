@@ -66,6 +66,12 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
 
     await _pumpQuickAdd(tester, dark: true);
+    await tester.scrollUntilVisible(
+      find.text('Data'),
+      240,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
 
     expect(find.text('Data'), findsOneWidget);
     expect(find.text('Ora'), findsOneWidget);
