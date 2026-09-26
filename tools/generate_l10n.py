@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
+from urllib.error import HTTPError, URLError
 import json
 import re
 import time
@@ -182,44 +183,85 @@ def request_translation(text: str, source: str, target: str) -> str:
         "https://translate.googleapis.com/translate_a/single?" + query,
         headers={"User-Agent": "Mozilla/5.0 DadaFinanza-l10n"},
     )
-    for attempt in range(5):
+    for attempt in range(7):
         try:
-            with urlopen(req, timeout=35) as response:
+            with urlopen(req, timeout=45) as response:
                 payload = json.loads(response.read().decode("utf-8"))
             result = "".join(
                 chunk[0] for chunk in payload[0] if chunk and chunk[0]
             ).strip()
             return result or text
-        except Exception:
-            if attempt == 4:
+        except HTTPError as error:
+            if error.code != 429 or attempt == 6:
                 raise
-            time.sleep(1.5 * (attempt + 1))
+            delay = min(90, 8 * (2 ** attempt))
+            print(
+                f"Rate limited for {source}->{target}; retry in {delay}s",
+                flush=True,
+            )
+            time.sleep(delay)
+        except (URLError, TimeoutError):
+            if attempt == 6:
+                raise
+            time.sleep(min(30, 2 * (attempt + 1)))
     return text
+
+_BATCH_MARKER = "[DADA_SPLIT_9F3A]"
+_BATCH_SPLIT_RE = re.compile(
+    r"\\s*\\[\\s*DADA[_ ]SPLIT[_ ]9F3A\\s*\\]\\s*",
+    re.IGNORECASE,
+)
+
+def _translate_batch(
+    values: list[str],
+    source: str,
+    target: str,
+) -> list[str]:
+    if not values:
+        return []
+    if len(values) == 1:
+        return [request_translation(values[0], source, target)]
+
+    joined = f"\\n{_BATCH_MARKER}\\n".join(values)
+    translated = request_translation(joined, source, target)
+    parts = [
+        part.strip()
+        for part in _BATCH_SPLIT_RE.split(translated)
+    ]
+    if len(parts) == len(values):
+        return parts
+
+    # Never fall back from a whole batch to N individual requests. Split the
+    # problematic batch in half and retry, which keeps request volume bounded
+    # even when a translation engine reformats one separator.
+    midpoint = len(values) // 2
+    return [
+        *_translate_batch(values[:midpoint], source, target),
+        *_translate_batch(values[midpoint:], source, target),
+    ]
 
 def translate_many(values: list[str], source: str, target: str) -> list[str]:
     if not values:
         return []
-    marker = " DADAFINANZAQQSPLITQQ "
     result: list[str] = []
     index = 0
     while index < len(values):
         chunk: list[str] = []
         chars = 0
-        while index < len(values) and len(chunk) < 50:
+        while index < len(values) and len(chunk) < 80:
             candidate = values[index]
-            projected = chars + len(candidate) + len(marker)
-            if chunk and projected > 6000:
+            projected = chars + len(candidate) + len(_BATCH_MARKER) + 2
+            if chunk and projected > 7600:
                 break
             chunk.append(candidate)
             chars = projected
             index += 1
-        joined = marker.join(chunk)
-        translated = request_translation(joined, source, target)
-        parts = [part.strip() for part in translated.split(marker)]
-        if len(parts) != len(chunk):
-            parts = [request_translation(item, source, target) for item in chunk]
-        result.extend(parts)
-        time.sleep(0.08)
+        result.extend(_translate_batch(chunk, source, target))
+        print(
+            f"{source}->{target}: {len(result)}/{len(values)}",
+            flush=True,
+        )
+        time.sleep(0.35)
     return result
 
 def fix_english(source: str, translated: str) -> str:
