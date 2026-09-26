@@ -272,9 +272,7 @@ class AccountContextHomeScreen extends StatelessWidget {
                     'Analytics del conto',
                     style: TextStyle(fontWeight: FontWeight.w700),
                   ),
-                  subtitle: const Text(
-                    'Entrate, spese e andamento del conto',
-                  ),
+                  subtitle: const Text('Entrate, spese e andamento del conto'),
                   trailing: const Icon(Icons.chevron_right_rounded),
                   onTap: () => Navigator.push(
                     context,

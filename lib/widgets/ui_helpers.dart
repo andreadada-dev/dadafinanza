@@ -708,16 +708,51 @@ const accountIconOptions = <IconOption>[
 const personIconOptions = <IconOption>[
   IconOption('person', Icons.person_rounded, 'Persona', group: 'Persone'),
   IconOption('face', Icons.face_rounded, 'Volto', group: 'Persone'),
-  IconOption('smile', Icons.sentiment_satisfied_rounded, 'Sorriso', group: 'Persone'),
-  IconOption('favorite_person', Icons.favorite_rounded, 'Cuore', group: 'Persone'),
-  IconOption('family', Icons.family_restroom_rounded, 'Famiglia', group: 'Persone'),
+  IconOption(
+    'smile',
+    Icons.sentiment_satisfied_rounded,
+    'Sorriso',
+    group: 'Persone',
+  ),
+  IconOption(
+    'favorite_person',
+    Icons.favorite_rounded,
+    'Cuore',
+    group: 'Persone',
+  ),
+  IconOption(
+    'family',
+    Icons.family_restroom_rounded,
+    'Famiglia',
+    group: 'Persone',
+  ),
   IconOption('friend', Icons.people_alt_rounded, 'Amici', group: 'Persone'),
   IconOption('work_person', Icons.work_rounded, 'Lavoro', group: 'Contesto'),
-  IconOption('school_person', Icons.school_rounded, 'Studio', group: 'Contesto'),
-  IconOption('sport_person', Icons.sports_soccer_rounded, 'Sport', group: 'Contesto'),
-  IconOption('music_person', Icons.music_note_rounded, 'Musica', group: 'Contesto'),
+  IconOption(
+    'school_person',
+    Icons.school_rounded,
+    'Studio',
+    group: 'Contesto',
+  ),
+  IconOption(
+    'sport_person',
+    Icons.sports_soccer_rounded,
+    'Sport',
+    group: 'Contesto',
+  ),
+  IconOption(
+    'music_person',
+    Icons.music_note_rounded,
+    'Musica',
+    group: 'Contesto',
+  ),
   IconOption('star_person', Icons.star_rounded, 'Preferita', group: 'Altro'),
-  IconOption('contact_person', Icons.contact_page_rounded, 'Contatto', group: 'Altro'),
+  IconOption(
+    'contact_person',
+    Icons.contact_page_rounded,
+    'Contatto',
+    group: 'Altro',
+  ),
 ];
 
 /// Shared muted palette for every user-selectable entity color:

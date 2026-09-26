@@ -107,18 +107,21 @@ void main() {
     expect(widget, contains('AccountContextService.periodTotal'));
   });
 
-  test('selected account exposes account settings before account analytics', () {
-    final source = File(
-      'lib/screens/account_context_home_screen.dart',
-    ).readAsStringSync();
+  test(
+    'selected account exposes account settings before account analytics',
+    () {
+      final source = File(
+        'lib/screens/account_context_home_screen.dart',
+      ).readAsStringSync();
 
-    expect(source, contains("'Apri conto'"));
-    expect(source, contains('accountIcon(selectedAccount.iconKey)'));
-    expect(source, contains('SafeAccountDetailScreen('));
-    expect(source, contains("'Analytics del conto'"));
-    expect(source, contains("'Entrate, spese e andamento del conto'"));
-    expect(source, contains('AccountContextAnalyticsScreen('));
-  });
+      expect(source, contains("'Apri conto'"));
+      expect(source, contains('accountIcon(selectedAccount.iconKey)'));
+      expect(source, contains('SafeAccountDetailScreen('));
+      expect(source, contains("'Analytics del conto'"));
+      expect(source, contains("'Entrate, spese e andamento del conto'"));
+      expect(source, contains('AccountContextAnalyticsScreen('));
+    },
+  );
 
   test('account management is settings-first and trend lives in analytics', () {
     final account = File(
@@ -151,10 +154,7 @@ void main() {
 
     expect(analytics, contains('class _PeriodPill'));
     expect(analytics, isNot(contains('SegmentedButton<_AnalyticsPeriod>')));
-    expect(
-      analytics,
-      isNot(contains('scrollDirection: Axis.horizontal')),
-    );
+    expect(analytics, isNot(contains('scrollDirection: Axis.horizontal')));
     expect(analytics, contains("_AnalyticsPeriod.today => 'Oggi'"));
     expect(analytics, contains("_AnalyticsPeriod.week => 'Settimana'"));
     expect(analytics, contains("_AnalyticsPeriod.month => 'Mese'"));
@@ -171,10 +171,7 @@ void main() {
     ).readAsStringSync();
 
     expect(analytics, contains('bottomTitles: AxisTitles('));
-    expect(
-      analytics,
-      contains("_AnalyticsPeriod.week => sameMonth"),
-    );
+    expect(analytics, contains("_AnalyticsPeriod.week => sameMonth"));
     expect(analytics, contains("DateFormat('EEE dd'"));
     expect(analytics, contains("_AnalyticsPeriod.year => DateFormat('MMM'"));
     expect(
@@ -193,8 +190,14 @@ void main() {
     expect(analytics, contains("import 'dart:math' as math;"));
     expect(analytics, contains('movementHours'));
     expect(analytics, contains('minutes / 60'));
-    expect(analytics, contains('minWidth: MediaQuery.sizeOf(context).width - 4'));
-    expect(analytics, contains('maxWidth: MediaQuery.sizeOf(context).width - 4'));
+    expect(
+      analytics,
+      contains('minWidth: MediaQuery.sizeOf(context).width - 4'),
+    );
+    expect(
+      analytics,
+      contains('maxWidth: MediaQuery.sizeOf(context).width - 4'),
+    );
     expect(analytics, contains('minHeight: 224'));
     expect(analytics, contains('maxHeight: 224'));
     expect(analytics, contains('horizontalNudge'));
@@ -279,7 +282,10 @@ void main() {
     expect(source, contains('_stepPeriod(1)'));
     expect(source, isNot(contains('_hasTodayData')));
     expect(source, contains('emptyRingColor'));
-    expect(source, contains('centerSpaceColor: Theme.of(context).scaffoldBackgroundColor'));
+    expect(
+      source,
+      contains('centerSpaceColor: Theme.of(context).scaffoldBackgroundColor'),
+    );
     expect(source, contains('color: Theme.of(context).colorScheme.surface'));
     expect(source, contains('width: chartSize * .64'));
     expect(source, contains('value: 1'));

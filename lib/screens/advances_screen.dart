@@ -1507,11 +1507,7 @@ class _PersonAdvanceMetric extends StatelessWidget {
         const SizedBox(height: 6),
         FittedBox(
           fit: BoxFit.scaleDown,
-          child: Text(
-            label,
-            maxLines: 1,
-            style: theme.textTheme.bodyMedium,
-          ),
+          child: Text(label, maxLines: 1, style: theme.textTheme.bodyMedium),
         ),
         const SizedBox(height: 4),
         FittedBox(

@@ -195,9 +195,8 @@ class SafeAccountDetailScreen extends StatelessWidget {
             title: const Text('Includi nel patrimonio'),
             subtitle: const Text('Il saldo contribuisce al patrimonio totale'),
             value: account.includeInTotal,
-            onChanged: (value) => state.updateAccount(
-              account.copyWith(includeInTotal: value),
-            ),
+            onChanged: (value) =>
+                state.updateAccount(account.copyWith(includeInTotal: value)),
           ),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
@@ -213,18 +212,16 @@ class SafeAccountDetailScreen extends StatelessWidget {
             title: const Text('Nascondi saldo'),
             subtitle: const Text('Nasconde il saldo di questo conto'),
             value: account.hideBalance,
-            onChanged: (value) => state.updateAccount(
-              account.copyWith(hideBalance: value),
-            ),
+            onChanged: (value) =>
+                state.updateAccount(account.copyWith(hideBalance: value)),
           ),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
             title: const Text('Blocca conto'),
             subtitle: const Text('Impedisce nuovi movimenti sul conto'),
             value: account.isLocked,
-            onChanged: (value) => state.updateAccount(
-              account.copyWith(isLocked: value),
-            ),
+            onChanged: (value) =>
+                state.updateAccount(account.copyWith(isLocked: value)),
           ),
           const SizedBox(height: 28),
           const SectionTitle('Gestione'),
@@ -551,7 +548,9 @@ class SafeAccountDetailScreen extends StatelessWidget {
                 TextField(
                   controller: note,
                   maxLines: 2,
-                  decoration: const InputDecoration(labelText: 'Nota opzionale'),
+                  decoration: const InputDecoration(
+                    labelText: 'Nota opzionale',
+                  ),
                 ),
                 const SizedBox(height: 20),
                 SizedBox(

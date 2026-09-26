@@ -610,12 +610,9 @@ class AppState extends ChangeNotifier {
     String iconKey = 'person',
     String? note,
   }) async {
-    final id = await AdvanceService(database).createPerson(
-      name,
-      colorValue: colorValue,
-      iconKey: iconKey,
-      note: note,
-    );
+    final id = await AdvanceService(
+      database,
+    ).createPerson(name, colorValue: colorValue, iconKey: iconKey, note: note);
     people = await AdvanceService(database).people(includeArchived: true);
     notifyListeners();
     return id;
