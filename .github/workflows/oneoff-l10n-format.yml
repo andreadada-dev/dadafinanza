@@ -27,6 +27,9 @@ jobs:
           channel: stable
           cache: false
 
+      - name: Resolve packages
+        run: flutter pub get
+
       - name: Format localization changes
         run: dart format lib test
 
