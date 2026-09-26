@@ -4,11 +4,13 @@ on:
   push:
     branches:
       - 'feature/multilanguage-post'
-    paths:
-      - '.github/workflows/oneoff-hosted-l10n-validation.yml'
 
 permissions:
   contents: read
+
+concurrency:
+  group: dadafinanza-l10n-validate-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   validate:
