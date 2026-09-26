@@ -3,7 +3,7 @@ name: One-off generate multilingual app
 on:
   push:
     branches:
-      - 'feature/multilanguage'
+      - 'feature/multilanguage-core'
 
 permissions:
   contents: write
