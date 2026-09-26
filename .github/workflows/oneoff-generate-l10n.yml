@@ -3,13 +3,13 @@ name: One-off generate multilingual app
 on:
   push:
     branches:
-      - 'feature/multilanguage-core'
+      - 'feature/multilanguage-fast'
 
 permissions:
   contents: write
 
 concurrency:
-  group: dadafinanza-generate-l10n-${{ github.ref }}
+  group: dadafinanza-generate-l10n-fast
   cancel-in-progress: true
 
 jobs:
