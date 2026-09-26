@@ -5,6 +5,8 @@ import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
+import '../l10n/app_i18n.dart';
+
 class VoiceInputStatus {
   const VoiceInputStatus({
     required this.available,
@@ -137,7 +139,7 @@ class VoiceInputService {
     required bool onDevice,
     required void Function(String text, bool finalResult) onResult,
     void Function(double level)? onSoundLevel,
-    String localeId = 'it_IT',
+    String? localeId,
   }) async {
     if (!_initialized) throw StateError('VoiceInputService non inizializzato.');
     await _speech.listen(
@@ -154,7 +156,7 @@ class VoiceInputService {
         // without seeing a brand-new prompt.
         pauseFor: const Duration(seconds: 30),
         listenFor: const Duration(seconds: 90),
-        localeId: localeId,
+        localeId: localeId ?? AppI18n.speechLocaleId,
       ),
     );
   }
