@@ -177,11 +177,16 @@ def request_translation(text: str, source: str, target: str) -> str:
         "sl": source,
         "tl": target,
         "dt": "t",
-        "q": text,
     })
+    body = urlencode({"q": text}).encode("utf-8")
     req = Request(
         "https://translate.googleapis.com/translate_a/single?" + query,
-        headers={"User-Agent": "Mozilla/5.0 DadaFinanza-l10n"},
+        data=body,
+        headers={
+            "User-Agent": "Mozilla/5.0 DadaFinanza-l10n",
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        method="POST",
     )
     for attempt in range(7):
         try:
@@ -248,10 +253,10 @@ def translate_many(values: list[str], source: str, target: str) -> list[str]:
     while index < len(values):
         chunk: list[str] = []
         chars = 0
-        while index < len(values) and len(chunk) < 80:
+        while index < len(values) and len(chunk) < 120:
             candidate = values[index]
             projected = chars + len(candidate) + len(_BATCH_MARKER) + 2
-            if chunk and projected > 7600:
+            if chunk and projected > 12000:
                 break
             chunk.append(candidate)
             chars = projected
@@ -261,7 +266,7 @@ def translate_many(values: list[str], source: str, target: str) -> list[str]:
             f"{source}->{target}: {len(result)}/{len(values)}",
             flush=True,
         )
-        time.sleep(0.35)
+        time.sleep(0.65)
     return result
 
 def fix_english(source: str, translated: str) -> str:
