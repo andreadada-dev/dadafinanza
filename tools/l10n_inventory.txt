@@ -1,0 +1,7046 @@
+## 0001
+ : account?.name ?? 
+  - lib/screens/transaction_screens.dart:53
+
+## 0002
+ : actions.join(
+  - lib/screens/rules_management_screen.dart:164
+
+## 0003
+ : conditions.join(
+  - lib/screens/rules_management_screen.dart:164
+
+## 0004
+ : moneyFor(state, advance.originalAmount)}
+  - lib/screens/advances_screen.dart:342
+
+## 0005
+ : moneyFor(state, finalValue)}
+  - lib/screens/account_context_analytics_screen.dart:1088
+
+## 0006
+ : moneyFor(state, spot.y)}
+  - lib/screens/account_context_analytics_screen.dart:1006
+
+## 0007
+ : moneyFor(state, startValue)}
+  - lib/screens/account_context_analytics_screen.dart:1083
+
+## 0008
+ anticipo 
+  - lib/services/voice_transaction_parser.dart:363
+
+## 0009
+"${(value ?? 
+  - lib/data/app_database.dart:1829
+  - lib/services/csv_service.dart:398
+
+## 0010
+#$item
+  - lib/screens/quick_add_page.dart:674
+
+## 0011
+#$tag
+  - lib/screens/transaction_screens.dart:372
+
+## 0012
+#$value
+  - lib/widgets/transaction_metadata_fields.dart:305
+
+## 0013
+#${entry.$1}
+  - lib/screens/root_screen.dart:1699
+
+## 0014
+#${item.value}
+  - lib/widgets/transaction_metadata_fields.dart:320
+  - lib/widgets/transaction_metadata_fields.dart:514
+
+## 0015
+#${rule.addTag}
+  - lib/screens/rules_management_screen.dart:163
+
+## 0016
+$advancesEnabled
+  - lib/services/notification_service.dart:66
+
+## 0017
+$budgetEnabled
+  - lib/services/notification_service.dart:63
+
+## 0018
+$changed movimenti aggiornati.
+  - lib/screens/rules_management_screen.dart:243
+
+## 0019
+$count movimenti importati.
+  - lib/screens/data_management_screen.dart:463
+
+## 0020
+$count movimenti · media ${moneyFor(state, expense / math.max(1, duration.inDays))} di spese al giorno.
+  - lib/screens/polished_shell.dart:939
+
+## 0021
+$count riferimenti perderanno questa categoria. I preset che la usano torneranno a chiedere la categoria.
+  - lib/screens/category_management_screen.dart:446
+
+## 0022
+$dateLabel\n
+  - lib/screens/account_context_analytics_screen.dart:1005
+
+## 0023
+$day
+  - lib/screens/personal_settings_screen.dart:341
+
+## 0024
+$exception
+  - lib/screens/quick_add_page.dart:1767
+
+## 0025
+$forecastEnabled
+  - lib/services/notification_service.dart:65
+
+## 0026
+$goalEnabled
+  - lib/services/notification_service.dart:64
+
+## 0027
+$level
+  - lib/services/notification_service.dart:168
+
+## 0028
+$movementCount
+  - lib/screens/advances_screen.dart:244
+
+## 0029
+$normalizedText|${type.name}|${categoryId ?? 0}|${accountId ?? 0}|${toAccountId ?? 0}
+  - lib/services/smart_finance_engine.dart:69
+
+## 0030
+$normalized|${item.type.name}|${item.accountId}|${item.categoryId ?? 0}
+  - lib/services/smart_finance_engine.dart:319
+
+## 0031
+$open anticipi aperti
+  - lib/screens/advances_screen.dart:1328
+
+## 0032
+$raw $month
+  - lib/services/voice_transaction_parser.dart:451
+
+## 0033
+$recurringEnabled
+  - lib/services/notification_service.dart:62
+
+## 0034
+$remainingCents
+  - lib/services/notification_service.dart:246
+
+## 0035
+$title, $amount, $percentage, $count
+  - lib/screens/account_context_transactions_screen.dart:547
+
+## 0036
+$title. $subtitle
+  - lib/screens/android_widgets_screen.dart:169
+
+## 0037
+${((active.currentAmount / active.targetAmount) * 100).clamp(0, 100).round()}%
+  - lib/screens/root_screen.dart:515
+
+## 0038
+${(entry.value / expense * 100).toStringAsFixed(0)}% delle spese
+  - lib/screens/account_context_analytics_screen.dart:360
+  - lib/screens/canonical_shell.dart:1038
+  - lib/screens/polished_shell.dart:969
+
+## 0039
+${(percent * 100).round()}%
+  - lib/widgets/home_dashboard_widget.dart:1134
+
+## 0040
+${(percentage * 100).round()}%
+  - lib/widgets/home_dashboard_widget.dart:1037
+
+## 0041
+${(progress * 100).round()}%
+  - lib/screens/canonical_shell.dart:577
+  - lib/screens/polished_shell.dart:592
+  - lib/screens/root_screen.dart:302
+
+## 0042
+${(state.budgetProgressFor(budget) * 100).round()}%
+  - lib/screens/canonical_shell.dart:1090
+  - lib/screens/root_screen.dart:449
+
+## 0043
+${_budgetPeriodLabel(budget.period)} · ${category?.name ?? 
+  - lib/screens/planning_screens.dart:254
+
+## 0044
+${_shortDate(end, includeYear: includeYear)}
+  - lib/widgets/home_dashboard_widget.dart:365
+
+## 0045
+${_shortDate(from, includeYear: includeYear)} ~ 
+  - lib/widgets/home_dashboard_widget.dart:364
+
+## 0046
+${_summary(state, rule)}\n${preview.count} movimenti corrispondenti
+  - lib/screens/rules_management_screen.dart:84
+
+## 0047
+${_type.name}-empty-${_range.name}
+  - lib/widgets/home_dashboard_widget.dart:797
+
+## 0048
+${_type.name}-list-${_range.name}
+  - lib/widgets/home_dashboard_widget.dart:805
+
+## 0049
+${account.accountType.label}${!account.includeInTotal ? 
+  - lib/screens/polished_shell.dart:554
+
+## 0050
+${account.name.replaceAll(RegExp(r
+  - lib/screens/account_management_screen.dart:438
+
+## 0051
+${active.name} · ${moneyFor(state, active.currentAmount)} / ${moneyFor(state, active.targetAmount)}
+  - lib/screens/root_screen.dart:518
+
+## 0052
+${blocking.first.message} Puoi inserirlo manualmente oppure riprovare.
+  - lib/screens/quick_add_page.dart:504
+
+## 0053
+${budget.name} copia
+  - lib/screens/planning_screens.dart:277
+
+## 0054
+${budget.name}: ${(progress * 100).round()}% del limite usato.
+  - lib/services/notification_service.dart:156
+
+## 0055
+${budgets.length + rules.length}
+  - lib/screens/category_management_screen.dart:526
+
+## 0056
+${budgets.length}
+  - lib/screens/category_management_screen.dart:530
+
+## 0057
+${budgets.length} attivi
+  - lib/screens/polished_shell.dart:649
+
+## 0058
+${candidate.name} 
+  - lib/services/voice_transaction_parser.dart:541
+
+## 0059
+${change >= 0 ? 
+  - lib/screens/root_screen.dart:1643
+
+## 0060
+${conditions.isEmpty ? 
+  - lib/screens/rules_management_screen.dart:164
+
+## 0061
+${date.day}/${date.month}${includeYear ? 
+  - lib/widgets/home_dashboard_widget.dart:357
+
+## 0062
+${DateFormat(
+  - lib/screens/advances_screen.dart:341
+  - lib/screens/canonical_shell.dart:930
+  - lib/screens/planning_screens.dart:1091
+  - lib/screens/polished_shell.dart:896
+
+## 0063
+${DateTime.now().year}-${DateTime.now().month}
+  - lib/services/notification_service.dart:281
+
+## 0064
+${delta <= 0 ? 
+  - lib/screens/account_context_analytics_screen.dart:326
+
+## 0065
+${delta >= 0 ? 
+  - lib/screens/canonical_shell.dart:629
+  - lib/screens/root_screen.dart:1917
+  - lib/screens/root_screen.dart:408
+
+## 0066
+${detected.frequency} · ${moneyFor(state, detected.amountMedian)} · ${(detected.confidence * 100).round()}% confidenza
+  - lib/screens/polished_shell.dart:297
+
+## 0067
+${detected.normalizedText} sembra ricorrente
+  - lib/screens/polished_shell.dart:295
+
+## 0068
+${Directory.systemTemp.path}/dada-import-${DateTime.now().microsecondsSinceEpoch}$extension
+  - lib/screens/data_management_screen.dart:286
+
+## 0069
+${event.source} · ${DateFormat(
+  - lib/screens/planning_screens.dart:1640
+
+## 0070
+${filtered.length} icone${group == null ? 
+  - lib/widgets/ui_helpers.dart:937
+
+## 0071
+${forecast.historyWeeks} settimane di storico utile · previsioni locali
+  - lib/screens/polished_shell.dart:640
+
+## 0072
+${format.format(from)} – ${format.format(end)}
+  - lib/screens/account_context_analytics_screen.dart:96
+
+## 0073
+${goal.name}: con il ritmo attuale la scadenza potrebbe richiedere un aggiustamento.
+  - lib/services/notification_service.dart:187
+
+## 0074
+${goals.first.name}: ${moneyFor(state, goals.first.currentAmount)} / ${moneyFor(state, goals.first.targetAmount)}
+  - lib/screens/polished_shell.dart:680
+
+## 0075
+${goals.length} attivi
+  - lib/screens/polished_shell.dart:677
+
+## 0076
+${group.count} ${group.count == 1 ? 
+  - lib/screens/account_context_transactions_screen.dart:252
+
+## 0077
+${group.percentage.toStringAsFixed(0)}% ${_typeShareLabel(group.type)}
+  - lib/screens/account_context_transactions_screen.dart:250
+
+## 0078
+${hideValues ? 
+  - lib/screens/account_context_analytics_screen.dart:1006
+
+## 0079
+${item.date.year}-${item.date.month}-${item.date.day}
+  - lib/screens/root_screen.dart:1551
+
+## 0080
+${item.frequency} · ${moneyFor(state, item.amountMedian)} · ${(item.confidence * 100).round()}% confidenza
+  - lib/screens/planning_screens.dart:1043
+
+## 0081
+${item.id}:${item.currentAmount}:${item.completed}:${item.archived}
+  - lib/services/notification_service.dart:80
+
+## 0082
+${item.id}:${item.nextDate.millisecondsSinceEpoch}:${item.enabled}:${item.amount}:${item.toAccountId}
+  - lib/services/notification_service.dart:70
+
+## 0083
+${item.id}:${state.budgetProgressFor(item).toStringAsFixed(2)}
+  - lib/services/notification_service.dart:75
+
+## 0084
+${item.name} copia
+  - lib/screens/planning_screens.dart:1117
+
+## 0085
+${item.name} · ${DateFormat(
+  - lib/screens/canonical_shell.dart:677
+  - lib/screens/root_screen.dart:482
+
+## 0086
+${item.name}: $amount
+  - lib/services/notification_service.dart:120
+
+## 0087
+${item.name}: $amount verso $destination
+  - lib/services/notification_service.dart:119
+
+## 0088
+${item.type.name}:${categoryId ?? -1}:$title
+  - lib/services/account_context_service.dart:127
+
+## 0089
+${item.value}${item.favorite ? 
+  - lib/widgets/transaction_metadata_fields.dart:267
+
+## 0090
+${items.length}
+  - lib/screens/category_management_screen.dart:189
+
+## 0091
+${items.length} ${items.length == 1 ? 
+  - lib/screens/polished_shell.dart:1054
+
+## 0092
+${longest.name} 
+  - lib/services/voice_transaction_parser.dart:554
+
+## 0093
+${math.max(0, days - spentDays)}
+  - lib/screens/root_screen.dart:1675
+
+## 0094
+${moneyFor(state, currentExpense)} questo mese · ${moneyFor(state, previousExpense)} precedente
+  - lib/screens/root_screen.dart:410
+
+## 0095
+${moneyFor(state, goal.currentAmount)} / ${moneyFor(state, goal.targetAmount)}
+  - lib/screens/canonical_shell.dart:699
+
+## 0096
+${moneyFor(state, goal.currentAmount)} / ${moneyFor(state, goal.targetAmount)}${goal.targetDate == null ? 
+  - lib/screens/planning_screens.dart:654
+
+## 0097
+${moneyFor(state, goalPlan.realisticWeekly)}/settimana è il ritmo sostenibile stimato.
+  - lib/screens/polished_shell.dart:311
+
+## 0098
+${moneyFor(state, Money.fromCents(remaining))} ${advance.direction.label.toLowerCase()}
+  - lib/screens/quick_add_page.dart:617
+
+## 0099
+${moneyFor(state, Money.fromCents(state.advancePayableCents))} da restituire
+  - lib/screens/home_screen.dart:174
+
+## 0100
+${moneyFor(state, Money.fromCents(state.advanceReceivableCents))} da ricevere · 
+  - lib/screens/home_screen.dart:173
+
+## 0101
+${moneyFor(state, Money.fromCents(state.advanceReceivableCents))} da ricevere · ${moneyFor(state, Money.fromCents(state.advancePayableCents))} da restituire
+  - lib/screens/account_context_home_screen.dart:195
+
+## 0102
+${moneyFor(state, Money.fromCents(state.advanceRemainingCents(linkedAdvance.id)))} residui
+  - lib/screens/root_screen.dart:1451
+
+## 0103
+${moneyFor(state, plan.realisticWeekly)}/settimana è il ritmo realistico stimato.
+  - lib/screens/account_context_home_screen.dart:378
+  - lib/screens/canonical_shell.dart:434
+  - lib/screens/home_screen.dart:260
+
+## 0104
+${moneyFor(state, remaining)} ancora disponibili
+  - lib/screens/polished_shell.dart:596
+
+## 0105
+${moneyFor(state, spent)} / ${moneyFor(state, budget.limit)}
+  - lib/screens/planning_screens.dart:265
+  - lib/screens/root_screen.dart:305
+
+## 0106
+${moneyFor(state, state.monthTotal(TransactionType.income))} entrate · ${moneyFor(state, currentExpense)} spese
+  - lib/screens/root_screen.dart:259
+
+## 0107
+${moneyFor(state, state.monthTotal(TransactionType.income))} entrate · ${moneyFor(state, expense)} spese
+  - lib/screens/canonical_shell.dart:556
+
+## 0108
+${option.label} · ${option.group}
+  - lib/widgets/ui_helpers.dart:955
+
+## 0109
+${option.label}, ${option.group}
+  - lib/widgets/ui_helpers.dart:959
+
+## 0110
+${pattern.acceptedCount} accettati
+  - lib/screens/settings_screen.dart:272
+
+## 0111
+${pattern.normalizedText} · ${pattern.frequency}
+  - lib/screens/account_context_home_screen.dart:393
+  - lib/screens/canonical_shell.dart:445
+  - lib/screens/home_screen.dart:276
+
+## 0112
+${pattern.rejectedCount} rifiutati
+  - lib/screens/settings_screen.dart:274
+
+## 0113
+${pattern.sampleCount} esempi
+  - lib/screens/settings_screen.dart:268
+
+## 0114
+${person.name}. $subtitle. $movementCount ${movementCount == 1 ? 
+  - lib/screens/advances_screen.dart:226
+
+## 0115
+${person?.name ?? 
+  - lib/services/notification_service.dart:230
+  - lib/services/notification_service.dart:253
+
+## 0116
+${preview.accounts}
+  - lib/screens/data_management_screen.dart:189
+
+## 0117
+${preview.attachments}
+  - lib/screens/data_management_screen.dart:192
+
+## 0118
+${preview.categories}
+  - lib/screens/data_management_screen.dart:191
+
+## 0119
+${preview.transactions}
+  - lib/screens/data_management_screen.dart:190
+
+## 0120
+${recurring.first.name} · ${moneyFor(state, recurring.first.amount)}
+  - lib/screens/polished_shell.dart:667
+
+## 0121
+${row.account} · ${row.category ?? row.type.label}
+  - lib/screens/data_management_screen.dart:379
+
+## 0122
+${rule.name} copia
+  - lib/services/rule_service.dart:78
+
+## 0123
+${rules.length}
+  - lib/screens/category_management_screen.dart:536
+
+## 0124
+${savingsRate.toStringAsFixed(0)}%
+  - lib/screens/account_context_analytics_screen.dart:289
+  - lib/screens/canonical_shell.dart:957
+
+## 0125
+${selected.length} selezionati
+  - lib/screens/root_screen.dart:932
+
+## 0126
+${slice.label}, ${(percentage * 100).round()}%, $amountLabel. Tocca per tornare al periodo.
+  - lib/widgets/home_dashboard_widget.dart:1006
+
+## 0127
+${snapshots.length} snapshot locali
+  - lib/screens/root_screen.dart:533
+
+## 0128
+${state.advances.where((item) => item.closedKind == null && state.advanceRemainingCents(item.id) > 0).length} aperti · persone e storico
+  - lib/screens/personal_settings_screen.dart:150
+
+## 0129
+${state.archivedAccounts.length}
+  - lib/screens/account_management_screen.dart:62
+  - lib/screens/account_screens.dart:115
+
+## 0130
+${state.budgets.where((item) => item.enabled).length} budget attivi
+  - lib/screens/planning_screens.dart:35
+
+## 0131
+${state.categories.length} categorie · preferite e quick slot
+  - lib/screens/personal_settings_screen.dart:157
+
+## 0132
+${state.detectedRecurringPatterns.length} pattern ricorrenti rilevati.
+  - lib/screens/polished_shell.dart:666
+
+## 0133
+${state.goals.where((item) => !item.archived && !item.completed).length} obiettivi attivi
+  - lib/screens/planning_screens.dart:59
+
+## 0134
+${state.hideBalance ? 
+  - lib/screens/advances_screen.dart:342
+
+## 0135
+${state.learnedPatterns.length} pattern appresi
+  - lib/screens/personal_settings_screen.dart:134
+
+## 0136
+${state.learnedPatterns.length} pattern · ${state.detectedRecurringPatterns.length} ricorrenze rilevate
+  - lib/screens/settings_screen.dart:140
+
+## 0137
+${state.noSpendDaysThisMonth}
+  - lib/screens/canonical_shell.dart:748
+  - lib/screens/root_screen.dart:548
+
+## 0138
+${state.recurring.where((item) => item.enabled).length} configurate · ${state.detectedRecurringPatterns.length} rilevate
+  - lib/screens/planning_screens.dart:47
+
+## 0139
+${state.recurring.where((item) => item.enabled).length} ricorrenze configurate
+  - lib/screens/planning_screens.dart:46
+
+## 0140
+${state.rules.length} regole · priorità e test
+  - lib/screens/personal_settings_screen.dart:163
+
+## 0141
+${state.transactionCountForAccount(account.id)}
+  - lib/screens/account_screens.dart:460
+
+## 0142
+${state.unassignedCount}
+  - lib/screens/canonical_shell.dart:762
+  - lib/screens/root_screen.dart:566
+
+## 0143
+${state.unassignedCount} movimenti da assegnare
+  - lib/screens/polished_shell.dart:267
+
+## 0144
+${state.userAccounts.length} conti
+  - lib/screens/personal_settings_screen.dart:61
+
+## 0145
+${t.id},${t.type.name},${t.amount},${t.accountId},${t.toAccountId ?? 
+  - lib/data/app_database.dart:1831
+
+## 0146
+${transactions.length}
+  - lib/screens/root_screen.dart:1681
+
+## 0147
+${type.name}-${_range.name}-$pageSelectedIndex
+  - lib/widgets/home_dashboard_widget.dart:695
+
+## 0148
+${type.name}-${_range.name}-period
+  - lib/widgets/home_dashboard_widget.dart:681
+
+## 0149
+${unassigned ? 
+  - lib/screens/transaction_screens.dart:53
+
+## 0150
+${value > 0 ? 
+  - lib/widgets/ui_helpers.dart:23
+
+## 0151
+${value >= 0 ? 
+  - lib/screens/planning_screens.dart:161
+
+## 0152
+${widget.preview.duplicates}
+  - lib/screens/data_management_screen.dart:372
+
+## 0153
+${widget.preview.duplicates} righe corrispondono allo storico esistente.
+  - lib/screens/data_management_screen.dart:419
+
+## 0154
+${widget.preview.invalidRows}
+  - lib/screens/data_management_screen.dart:371
+
+## 0155
+${widget.preview.rows.length}
+  - lib/screens/data_management_screen.dart:370
+
+## 0156
+(?:€\s*)?([a-z]+|\d+(?:[\.,]\d{1,2})?)\s*(?:euro|eur|€)(?:\s+e\s+([a-z]+|\d{1,2}))?
+  - lib/services/voice_transaction_parser.dart:388
+
+## 0157
+(?:€|\b(?:euro|eur)\b)
+  - lib/services/voice_transaction_parser.dart:243
+
+## 0158
+(\d+(?:\.\d+)?|[+\-*/])
+  - lib/core/money.dart:49
+
+## 0159
+))},${t.includeInAnalytics ? 1 : 0}
+  - lib/data/app_database.dart:1831
+
+## 0160
+).format(account.lastReconciledAt!)}
+  - lib/screens/account_management_screen.dart:173
+
+## 0161
+).format(advance.createdAt)} · 
+  - lib/screens/advances_screen.dart:341
+
+## 0162
+).format(from)} – ${DateFormat(
+  - lib/screens/canonical_shell.dart:930
+  - lib/screens/polished_shell.dart:896
+
+## 0163
+).format(item.date)}${item.note?.isNotEmpty == true ? 
+  - lib/screens/transaction_screens.dart:53
+
+## 0164
+).format(item.nextDate)} · ${item.frequency}${invalid ? 
+  - lib/screens/planning_screens.dart:1091
+
+## 0165
+).format(plan.estimatedCompletion!)}.
+  - lib/screens/planning_screens.dart:777
+
+## 0166
+).format(to.subtract(const Duration(days: 1)))}
+  - lib/screens/canonical_shell.dart:930
+  - lib/screens/polished_shell.dart:896
+
+## 0167
+)} → ${actions.isEmpty ? 
+  - lib/screens/rules_management_screen.dart:164
+
+## 0168
++ ${preview.count - 4} altri
+  - lib/screens/rules_management_screen.dart:205
+
+## 0169
++${moneyFor(state, group.total)}
+  - lib/screens/account_context_transactions_screen.dart:280
+
+## 0170
++${moneyFor(state, item.amount)}
+  - lib/screens/root_screen.dart:1461
+  - lib/screens/transaction_screens.dart:310
+  - lib/screens/transaction_screens.dart:59
+
+## 0171
+-${moneyFor(state, group.total)}
+  - lib/screens/account_context_transactions_screen.dart:279
+
+## 0172
+-${moneyFor(state, item.amount)}
+  - lib/screens/root_screen.dart:1459
+  - lib/screens/transaction_screens.dart:308
+  - lib/screens/transaction_screens.dart:57
+
+## 0173
+0 disattiva la soglia.
+  - lib/screens/notification_settings_screen.dart:156
+
+## 0174
+1 minuto
+  - lib/services/security_service.dart:9
+
+## 0175
+15 minuti
+  - lib/services/security_service.dart:11
+
+## 0176
+30 giorni
+  - lib/screens/planning_screens.dart:1611
+
+## 0177
+5 minuti
+  - lib/services/security_service.dart:10
+
+## 0178
+7 giorni
+  - lib/screens/planning_screens.dart:1610
+
+## 0179
+7, 30 e 90 giorni · confermato, previsto e stimato.
+  - lib/screens/polished_shell.dart:693
+
+## 0180
+7, 30 o 90 giorni · confermato, previsto e stimato
+  - lib/screens/planning_screens.dart:69
+
+## 0181
+90 giorni
+  - lib/screens/planning_screens.dart:1612
+
+## 0182
+[,:;\-\s]+$
+  - lib/services/voice_transaction_parser.dart:298
+
+## 0183
+[^a-z0-9àèéìòù:.,]+
+  - lib/services/voice_input_service.dart:62
+
+## 0184
+[^a-zàèéìòù0-9]+
+  - lib/services/smart_finance_engine.dart:25
+
+## 0185
+\b(?:aggiungi\s+(?:il\s+)?tag|metti\s+(?:il\s+)?tag|tag)\b
+  - lib/services/voice_transaction_parser.dart:181
+
+## 0186
+\b(?:al|alla|presso)\s+([A-Za-zÀ-ÿ0-9'’&. -]+?)(?=\s+(?:con|nel|sul|su|oggi|ieri|domani)\b|,|$)
+  - lib/services/voice_transaction_parser.dart:704
+
+## 0187
+\b(?:anticipato|anticipata|anticipati|anticipate|anticipo)\b
+  - lib/services/voice_transaction_parser.dart:336
+
+## 0188
+\b(?:a|verso)\s+(.+?)(?=\s+(?:oggi|ieri|domani|lunedi|martedi|mercoledi|giovedi|venerdi|sabato|domenica)|$)
+  - lib/services/voice_transaction_parser.dart:604
+
+## 0189
+\b(?:di cui|una parte|in parte|parte)\b
+  - lib/services/voice_transaction_parser.dart:343
+
+## 0190
+\b(?:il\s+)?(\d{1,2})\s+
+  - lib/services/voice_transaction_parser.dart:679
+
+## 0191
+\b(?:scrivi\s+(?:nella|in)\s+nota|descrizione|nota)\b
+  - lib/services/voice_transaction_parser.dart:177
+
+## 0192
+\b(?:una parte|in parte)(?:\s+di)?\s+([a-z]+|\d+(?:[\.,]\d{1,2})?)\s*(?:euro|eur|€)?\s+(?:anticipato|anticipata|anticipati|anticipate)\b
+  - lib/services/voice_transaction_parser.dart:352
+
+## 0193
+\b\d+(?:[\.,]\d{1,2})?\b
+  - lib/services/voice_transaction_parser.dart:407
+
+## 0194
+\bda\s+(.+?)(?=\s+a\s+|\s+verso\s+|$)
+  - lib/services/voice_transaction_parser.dart:601
+
+## 0195
+\bdi cui\s+([a-z]+|\d+(?:[\.,]\d{1,2})?)\s*(?:euro|eur|€)?\s+(?:sono\s+)?(?:anticipato|anticipata|anticipati|anticipate)\b
+  - lib/services/voice_transaction_parser.dart:349
+
+## 0196
+\r?\n
+  - lib/app_state.dart:1303
+
+## 0197
+\s*(?:,|;|\be\b)\s*
+  - lib/services/voice_transaction_parser.dart:265
+
+## 0198
+^\d+(?:[\.,]\d+)?€?$
+  - lib/services/voice_transaction_parser.dart:774
+
+## 0199
+^\d+(?:[\.,]\d{1,2})?$
+  - lib/services/voice_transaction_parser.dart:378
+
+## 0200
+^\d{4,8}$
+  - lib/screens/local_privacy_screen.dart:120
+  - lib/services/security_service.dart:105
+
+## 0201
+^\s*segna\s+(.+?)\s*$
+  - lib/services/voice_transaction_parser.dart:194
+
+## 0202
+Abbonamento
+  - lib/widgets/ui_helpers.dart:564
+
+## 0203
+Abilita inserimento vocale
+  - lib/screens/voice_settings_screen.dart:61
+
+## 0204
+Account, pubblicità e tracciamento
+  - lib/screens/privacy_policy_screen.dart:75
+
+## 0205
+account_id = ?
+  - lib/data/app_database.dart:1021
+  - lib/services/data_integrity_service.dart:203
+
+## 0206
+Acqua
+  - lib/widgets/ui_helpers.dart:458
+
+## 0207
+advance is closed or missing
+  - lib/services/finance_schema_service.dart:226
+  - lib/services/finance_schema_service.dart:238
+
+## 0208
+advance settlement exceeds remaining amount
+  - lib/services/finance_schema_service.dart:229
+  - lib/services/finance_schema_service.dart:241
+
+## 0209
+advance settlement must be positive
+  - lib/services/finance_schema_service.dart:224
+  - lib/services/finance_schema_service.dart:236
+
+## 0210
+advance:${advance.id}
+  - lib/services/notification_service.dart:244
+  - lib/services/notification_service.dart:270
+
+## 0211
+advance:${advance.id}:${state.advanceRemainingCents(advance.id)}:${advance.reminderDate?.millisecondsSinceEpoch}:${advance.dueDate?.millisecondsSinceEpoch}:${advance.closedKind}
+  - lib/services/notification_service.dart:86
+
+## 0212
+Aggiorna obiettivo
+  - lib/screens/planning_screens.dart:543
+
+## 0213
+Aggiorna progresso
+  - lib/screens/planning_screens.dart:695
+
+## 0214
+Aggiornamenti non invasivi sugli obiettivi
+  - lib/services/notification_service.dart:192
+
+## 0215
+Aggiungi
+  - lib/screens/planning_screens.dart:550
+
+## 0216
+Aggiungi ai preferiti
+  - lib/widgets/transaction_metadata_fields.dart:525
+
+## 0217
+Aggiungi bollette, abbonamenti o stipendio per prevedere il saldo futuro.
+  - lib/screens/polished_shell.dart:375
+
+## 0218
+Aggiungi bollette, abbonamenti, rate o entrate regolari.
+  - lib/screens/planning_screens.dart:1061
+
+## 0219
+Aggiungi dettagli
+  - lib/screens/quick_add_page.dart:1571
+
+## 0220
+Aggiungi entrata
+  - lib/screens/quick_add_page.dart:1636
+
+## 0221
+Aggiungi il conto che usi davvero o continua con movimenti Non assegnati.
+  - lib/screens/polished_shell.dart:335
+
+## 0222
+Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.
+  - lib/widgets/home_dashboard_widget.dart:184
+
+## 0223
+Aggiungi Importi rapidi
+  - lib/screens/android_widgets_screen.dart:98
+
+## 0224
+Aggiungi parte
+  - lib/screens/transaction_screens.dart:560
+
+## 0225
+Aggiungi preferita
+  - lib/screens/category_management_screen.dart:232
+
+## 0226
+Aggiungi Quick Capture
+  - lib/screens/android_widgets_screen.dart:88
+
+## 0227
+Aggiungi ricevuta
+  - lib/screens/quick_add_page.dart:1598
+
+## 0228
+Aggiungi ricorrenza
+  - lib/screens/polished_shell.dart:379
+
+## 0229
+Aggiungi Riepilogo
+  - lib/screens/android_widgets_screen.dart:108
+
+## 0230
+Aggiungi Saldo
+  - lib/screens/android_widgets_screen.dart:78
+
+## 0231
+Aggiungi spesa
+  - lib/screens/quick_add_page.dart:1635
+
+## 0232
+Aggiungi tag
+  - lib/screens/rules_management_screen.dart:388
+
+## 0233
+Aggiungi trasferimento
+  - lib/screens/quick_add_page.dart:1637
+
+## 0234
+Aggiungi una spesa o un’entrata.
+  - lib/screens/account_context_transactions_screen.dart:206
+
+## 0235
+Aggiungi una spesa, un’entrata o un trasferimento.
+  - lib/screens/root_screen.dart:1071
+
+## 0236
+Al
+  - lib/screens/account_context_transactions_screen.dart:393
+  - lib/screens/root_screen.dart:1260
+
+## 0237
+allegare a un movimento.
+  - lib/screens/privacy_policy_screen.dart:33
+
+## 0238
+Allegati
+  - lib/screens/data_management_screen.dart:192
+
+## 0239
+Allegato non trovato.
+  - lib/services/attachment_service.dart:23
+
+## 0240
+Allinea il saldo con quello reale
+  - lib/screens/account_management_screen.dart:233
+
+## 0241
+Altre opzioni
+  - lib/screens/account_screens.dart:644
+  - lib/screens/polished_shell.dart:148
+
+## 0242
+Altro
+  - lib/models/models.dart:31
+  - lib/screens/quick_add_page.dart:1222
+  - lib/widgets/home_dashboard_widget.dart:545
+  - lib/widgets/ui_helpers.dart:37
+  - lib/widgets/ui_helpers.dart:560
+  - lib/widgets/ui_helpers.dart:565
+  - lib/widgets/ui_helpers.dart:567
+  - lib/widgets/ui_helpers.dart:568
+  - lib/widgets/ui_helpers.dart:569
+  - lib/widgets/ui_helpers.dart:693
+  - lib/widgets/ui_helpers.dart:698
+  - lib/widgets/ui_helpers.dart:749
+  - lib/widgets/ui_helpers.dart:754
+
+## 0243
+Amici
+  - lib/widgets/ui_helpers.dart:421
+  - lib/widgets/ui_helpers.dart:729
+
+## 0244
+Analisi
+  - lib/screens/app_shell.dart:154
+  - lib/screens/canonical_shell.dart:69
+  - lib/screens/canonical_shell.dart:874
+  - lib/screens/polished_shell.dart:69
+  - lib/screens/polished_shell.dart:870
+  - lib/screens/root_screen.dart:1556
+  - lib/screens/root_screen.dart:68
+
+## 0245
+Analisi avanzata
+  - lib/screens/polished_shell.dart:991
+
+## 0246
+Analytics del conto
+  - lib/screens/account_context_home_screen.dart:272
+
+## 0247
+Ancora nessun movimento
+  - lib/screens/canonical_shell.dart:605
+  - lib/screens/category_management_screen.dart:542
+  - lib/screens/root_screen.dart:384
+
+## 0248
+Andamento
+  - lib/screens/root_screen.dart:1639
+
+## 0249
+Andamento del patrimonio nel periodo selezionato
+  - lib/screens/account_context_analytics_screen.dart:825
+
+## 0250
+Andamento del saldo di ${account.name} nel periodo selezionato
+  - lib/screens/account_context_analytics_screen.dart:826
+
+## 0251
+Andamento patrimonio
+  - lib/models/models.dart:89
+  - lib/screens/account_context_analytics_screen.dart:303
+  - lib/screens/canonical_shell.dart:710
+
+## 0252
+Andamento saldo
+  - lib/screens/account_context_analytics_screen.dart:304
+
+## 0253
+Android può chiederti conferma e aprire la configurazione prima di posizionare il widget.
+  - lib/screens/android_widgets_screen.dart:141
+
+## 0254
+Android secondo le regole di quel fornitore.
+  - lib/screens/privacy_policy_screen.dart:42
+
+## 0255
+Animali
+  - lib/widgets/ui_helpers.dart:393
+
+## 0256
+Anno
+  - lib/screens/account_context_analytics_screen.dart:43
+  - lib/screens/canonical_shell.dart:893
+  - lib/screens/polished_shell.dart:881
+  - lib/screens/root_screen.dart:1575
+  - lib/widgets/home_dashboard_widget.dart:378
+
+## 0257
+Annuale
+  - lib/screens/account_context_analytics_screen.dart:232
+  - lib/screens/canonical_shell.dart:869
+  - lib/screens/planning_screens.dart:1389
+  - lib/screens/planning_screens.dart:341
+  - lib/services/recurring_execution_service.dart:126
+  - lib/services/smart_finance_engine.dart:345
+  - lib/services/smart_finance_engine.dart:561
+  - lib/services/smart_finance_engine.dart:628
+
+## 0258
+Annulla
+  - lib/screens/account_management_screen.dart:367
+  - lib/screens/advances_screen.dart:743
+  - lib/screens/data_management_screen.dart:203
+  - lib/screens/data_management_screen.dart:323
+  - lib/screens/planning_screens.dart:573
+  - lib/screens/quick_add_page.dart:1195
+  - lib/widgets/ui_helpers.dart:851
+
+## 0259
+Annulla anticipo
+  - lib/screens/advances_screen.dart:437
+  - lib/screens/advances_screen.dart:457
+
+## 0260
+Annulla selezione
+  - lib/screens/root_screen.dart:937
+
+## 0261
+Annullare questo anticipo?
+  - lib/screens/advances_screen.dart:433
+
+## 0262
+Annullato
+  - lib/screens/advances_screen.dart:325
+  - lib/screens/advances_screen.dart:616
+
+## 0263
+Anteprima
+  - lib/screens/data_management_screen.dart:369
+
+## 0264
+Anteprima, mapping dei dati mancanti e duplicati.
+  - lib/screens/data_management_screen.dart:52
+
+## 0265
+Anticipati ${moneyFor(state, advance.originalAmount)}
+  - lib/screens/advances_screen.dart:519
+
+## 0266
+Anticipato a
+  - lib/screens/quick_add_page.dart:1395
+
+## 0267
+Anticipi
+  - lib/screens/account_context_home_screen.dart:189
+  - lib/screens/advances_screen.dart:58
+  - lib/screens/app_shell.dart:159
+  - lib/screens/canonical_shell.dart:981
+  - lib/screens/home_screen.dart:169
+  - lib/screens/notification_settings_screen.dart:130
+  - lib/screens/personal_settings_screen.dart:148
+  - lib/screens/root_screen.dart:1026
+  - lib/services/notification_service.dart:237
+  - lib/services/notification_service.dart:262
+
+## 0268
+Anticipo
+  - lib/screens/advances_screen.dart:417
+  - lib/screens/advances_screen.dart:74
+  - lib/screens/app_shell.dart:377
+
+## 0269
+Anticipo a ${person?.name ?? 
+  - lib/screens/root_screen.dart:1407
+
+## 0270
+Anticipo aggiornato.
+  - lib/screens/advances_screen.dart:1282
+
+## 0271
+Anticipo condonato
+  - lib/screens/root_screen.dart:1413
+  - lib/services/advance_service.dart:688
+
+## 0272
+Anticipo condonato?
+  - lib/screens/advances_screen.dart:733
+
+## 0273
+Anticipo da ${person?.name ?? 
+  - lib/screens/root_screen.dart:1408
+
+## 0274
+Anticipo non recuperato
+  - lib/screens/root_screen.dart:1412
+  - lib/services/advance_service.dart:687
+
+## 0275
+Anticipo non trovato
+  - lib/screens/advances_screen.dart:406
+
+## 0276
+Anticipo non trovato.
+  - lib/services/advance_service.dart:377
+  - lib/services/advance_service.dart:822
+
+## 0277
+Anticipo registrato.
+  - lib/screens/advances_screen.dart:1009
+
+## 0278
+Aperto
+  - lib/screens/advances_screen.dart:612
+
+## 0279
+Applica
+  - lib/screens/account_context_transactions_screen.dart:457
+  - lib/screens/quick_add_page.dart:709
+  - lib/screens/root_screen.dart:1365
+  - lib/screens/rules_management_screen.dart:236
+
+## 0280
+Applica allo storico
+  - lib/screens/rules_management_screen.dart:221
+
+## 0281
+Applicare allo storico?
+  - lib/screens/rules_management_screen.dart:233
+
+## 0282
+Apprendimento
+  - lib/screens/settings_screen.dart:206
+
+## 0283
+AppScope not found
+  - lib/main.dart:154
+
+## 0284
+Apre DadaFinanza senza autenticazione.
+  - lib/screens/local_privacy_screen.dart:156
+
+## 0285
+Apri
+  - lib/screens/account_context_home_screen.dart:309
+  - lib/screens/canonical_shell.dart:987
+  - lib/screens/polished_shell.dart:367
+  - lib/screens/root_screen.dart:473
+
+## 0286
+Apri Anticipi per registrare un rimborso o aggiornare il promemoria.
+  - lib/services/notification_service.dart:233
+
+## 0287
+Apri conto
+  - lib/screens/account_context_home_screen.dart:251
+
+## 0288
+Apri il selettore widget del launcher e cerca DadaFinanza.
+  - lib/screens/android_widgets_screen.dart:50
+
+## 0289
+Apri per vedere residuo e ritmo di spesa.
+  - lib/screens/polished_shell.dart:652
+
+## 0290
+Apri Storico
+  - lib/screens/advances_screen.dart:206
+
+## 0291
+archived = 0
+  - lib/services/advance_service.dart:23
+
+## 0292
+archived, name COLLATE NOCASE
+  - lib/services/advance_service.dart:24
+
+## 0293
+Archivia
+  - lib/screens/advances_screen.dart:1372
+  - lib/screens/planning_screens.dart:699
+
+## 0294
+Archivia conto
+  - lib/screens/account_management_screen.dart:253
+  - lib/screens/account_management_screen.dart:412
+  - lib/screens/account_screens.dart:181
+  - lib/screens/account_screens.dart:276
+
+## 0295
+Archiviati
+  - lib/screens/account_management_screen.dart:61
+  - lib/screens/account_screens.dart:114
+
+## 0296
+Archiviato
+  - lib/screens/account_management_screen.dart:95
+  - lib/screens/account_screens.dart:364
+
+## 0297
+Archivio
+  - lib/widgets/ui_helpers.dart:697
+
+## 0298
+Arredamento
+  - lib/widgets/ui_helpers.dart:99
+
+## 0299
+Arte
+  - lib/widgets/ui_helpers.dart:316
+
+## 0300
+Aspetto
+  - lib/screens/personal_settings_screen.dart:35
+
+## 0301
+Assegna il movimento a un conto attivo prima di creare una ricorrenza.
+  - lib/screens/transaction_screens.dart:211
+
+## 0302
+Asset digitale
+  - lib/widgets/ui_helpers.dart:656
+
+## 0303
+Assicurazione
+  - lib/widgets/ui_helpers.dart:470
+
+## 0304
+attachments/${p.basename(file.path)}
+  - lib/services/backup_service.dart:107
+
+## 0305
+Attiva
+  - lib/screens/planning_screens.dart:1145
+  - lib/screens/planning_screens.dart:312
+  - lib/screens/rules_management_screen.dart:118
+  - lib/screens/settings_screen.dart:301
+
+## 0306
+Attivalo solo per importi sufficientemente stabili.
+  - lib/screens/planning_screens.dart:1427
+
+## 0307
+Autenticazione non riuscita.
+  - lib/widgets/app_lock_gate.dart:79
+
+## 0308
+Auto
+  - lib/widgets/ui_helpers.dart:109
+  - lib/widgets/ui_helpers.dart:683
+
+## 0309
+Autobus
+  - lib/widgets/ui_helpers.dart:121
+
+## 0310
+Avvisa all’80% e al raggiungimento del limite.
+  - lib/screens/notification_settings_screen.dart:115
+
+## 0311
+Avvisi
+  - lib/screens/notification_settings_screen.dart:104
+
+## 0312
+Avvisi locali sul cash-flow previsto
+  - lib/services/notification_service.dart:295
+
+## 0313
+Azioni
+  - lib/screens/app_shell.dart:368
+
+## 0314
+Azioni anticipo
+  - lib/screens/advances_screen.dart:426
+
+## 0315
+Azioni apprendimento
+  - lib/screens/settings_screen.dart:209
+
+## 0316
+Azioni budget
+  - lib/screens/planning_screens.dart:271
+
+## 0317
+Azioni categoria
+  - lib/screens/category_management_screen.dart:209
+
+## 0318
+Azioni conto
+  - lib/screens/account_screens.dart:230
+
+## 0319
+Azioni movimento
+  - lib/screens/transaction_screens.dart:141
+
+## 0320
+Azioni multiple
+  - lib/screens/root_screen.dart:954
+
+## 0321
+Azioni obiettivo
+  - lib/screens/planning_screens.dart:657
+
+## 0322
+Azioni pattern
+  - lib/screens/settings_screen.dart:278
+
+## 0323
+Azioni persona
+  - lib/screens/advances_screen.dart:1338
+
+## 0324
+Azioni preset
+  - lib/screens/preset_management_screen.dart:93
+
+## 0325
+Azioni regola
+  - lib/screens/rules_management_screen.dart:88
+
+## 0326
+Azioni ricorrenza
+  - lib/screens/planning_screens.dart:1094
+
+## 0327
+Azioni rimborso
+  - lib/screens/advances_screen.dart:548
+
+## 0328
+Azzera
+  - lib/screens/account_context_transactions_screen.dart:441
+  - lib/screens/root_screen.dart:1058
+  - lib/screens/root_screen.dart:1333
+
+## 0329
+Azzera filtri
+  - lib/screens/account_context_transactions_screen.dart:193
+
+## 0330
+Backup completo
+  - lib/screens/data_management_screen.dart:27
+
+## 0331
+Backup completo con allegati · import portabile
+  - lib/screens/personal_settings_screen.dart:184
+
+## 0332
+Backup completo salvato.
+  - lib/screens/data_management_screen.dart:105
+
+## 0333
+Backup DadaFinanza non riconosciuto.
+  - lib/services/backup_service.dart:120
+
+## 0334
+Backup non leggibile: $error
+  - lib/screens/data_management_screen.dart:140
+
+## 0335
+Backup non riuscito: $error
+  - lib/screens/data_management_screen.dart:109
+
+## 0336
+Backup non trovato.
+  - lib/services/backup_service.dart:215
+
+## 0337
+Backup ripristinato e verificato.
+  - lib/screens/data_management_screen.dart:155
+
+## 0338
+Backup, CSV e allegati vengono esportati solo quando avvii 
+  - lib/screens/privacy_policy_screen.dart:61
+
+## 0339
+Backup, CSV e ripristino
+  - lib/screens/personal_settings_screen.dart:183
+
+## 0340
+Backup, import ed export
+  - lib/screens/privacy_policy_screen.dart:59
+
+## 0341
+Bad state: 
+  - lib/screens/advances_screen.dart:1261
+  - lib/screens/advances_screen.dart:1354
+  - lib/screens/advances_screen.dart:1649
+  - lib/screens/advances_screen.dart:1980
+  - lib/screens/advances_screen.dart:447
+  - lib/screens/advances_screen.dart:988
+  - lib/screens/quick_add_page.dart:978
+  - lib/screens/transaction_screens.dart:119
+  - lib/screens/transaction_screens.dart:590
+
+## 0342
+Bambini
+  - lib/widgets/ui_helpers.dart:403
+
+## 0343
+Banca
+  - lib/widgets/ui_helpers.dart:601
+
+## 0344
+Banca online
+  - lib/widgets/ui_helpers.dart:625
+
+## 0345
+Banche e carte
+  - lib/widgets/ui_helpers.dart:602
+  - lib/widgets/ui_helpers.dart:608
+  - lib/widgets/ui_helpers.dart:614
+  - lib/widgets/ui_helpers.dart:620
+  - lib/widgets/ui_helpers.dart:626
+
+## 0346
+Bar
+  - lib/widgets/ui_helpers.dart:71
+
+## 0347
+Bar e caffè
+  - lib/widgets/ui_helpers.dart:68
+
+## 0348
+Barca
+  - lib/widgets/ui_helpers.dart:181
+
+## 0349
+Benessere
+  - lib/widgets/ui_helpers.dart:239
+
+## 0350
+Benzina
+  - lib/widgets/ui_helpers.dart:115
+
+## 0351
+Bici
+  - lib/widgets/ui_helpers.dart:145
+
+## 0352
+Biglietti
+  - lib/widgets/ui_helpers.dart:328
+
+## 0353
+Bilanciata
+  - lib/screens/settings_screen.dart:156
+
+## 0354
+Biometria
+  - lib/screens/local_privacy_screen.dart:162
+  - lib/screens/privacy_policy_screen.dart:46
+
+## 0355
+Biometria non disponibile o non configurata sul dispositivo.
+  - lib/screens/local_privacy_screen.dart:57
+
+## 0356
+Biometria o PIN · timeout · protezione screenshot
+  - lib/screens/personal_settings_screen.dart:107
+
+## 0357
+Blocca conto
+  - lib/screens/account_management_screen.dart:220
+  - lib/screens/account_screens.dart:270
+
+## 0358
+Blocca dopo
+  - lib/screens/local_privacy_screen.dart:180
+
+## 0359
+Bloccato
+  - lib/screens/account_management_screen.dart:96
+  - lib/screens/account_screens.dart:359
+  - lib/screens/account_screens.dart:84
+
+## 0360
+Blocco app
+  - lib/screens/local_privacy_screen.dart:152
+
+## 0361
+Blocco e schermata recenti
+  - lib/screens/personal_settings_screen.dart:106
+
+## 0362
+Bollette
+  - lib/widgets/ui_helpers.dart:434
+
+## 0363
+Bonus
+  - lib/widgets/ui_helpers.dart:556
+
+## 0364
+Budget
+  - lib/screens/canonical_shell.dart:1079
+  - lib/screens/canonical_shell.dart:576
+  - lib/screens/category_management_screen.dart:529
+  - lib/screens/planning_screens.dart:198
+  - lib/screens/planning_screens.dart:32
+  - lib/screens/polished_shell.dart:591
+  - lib/services/notification_service.dart:160
+
+## 0365
+Budget all’80%
+  - lib/services/notification_service.dart:155
+
+## 0366
+Budget attivo
+  - lib/screens/planning_screens.dart:469
+
+## 0367
+Budget del periodo
+  - lib/screens/polished_shell.dart:646
+
+## 0368
+Budget mensile
+  - lib/data/app_database.dart:372
+  - lib/models/models.dart:76
+
+## 0369
+Budget più vicino al limite
+  - lib/models/models.dart:85
+
+## 0370
+Budget raggiunto
+  - lib/services/notification_service.dart:155
+
+## 0371
+Budget, ricorrenti e goal in un’unica vista.
+  - lib/screens/polished_shell.dart:706
+
+## 0372
+budget:${budget.id}
+  - lib/services/notification_service.dart:166
+
+## 0373
+Business
+  - lib/widgets/ui_helpers.dart:365
+  - lib/widgets/ui_helpers.dart:670
+
+## 0374
+Caffè, benzina, spesa e azioni personalizzate
+  - lib/screens/personal_settings_screen.dart:141
+
+## 0375
+Calcio
+  - lib/widgets/ui_helpers.dart:230
+
+## 0376
+Calcola un ritmo realistico usando il tuo cash-flow storico.
+  - lib/screens/settings_screen.dart:119
+
+## 0377
+Calcoli rapidi: usa +  −  ×  ÷
+  - lib/screens/quick_add_page.dart:1262
+
+## 0378
+Calendario
+  - lib/screens/planning_screens.dart:1621
+
+## 0379
+Calendario finanziario
+  - lib/models/models.dart:87
+
+## 0380
+Cambia categoria
+  - lib/screens/root_screen.dart:831
+
+## 0381
+Cambia categoria spese
+  - lib/screens/root_screen.dart:965
+
+## 0382
+Cambia conto
+  - lib/screens/root_screen.dart:969
+
+## 0383
+Cambia PIN
+  - lib/screens/local_privacy_screen.dart:201
+
+## 0384
+Cambio valuta
+  - lib/widgets/ui_helpers.dart:532
+
+## 0385
+Camera
+  - lib/widgets/ui_helpers.dart:102
+
+## 0386
+Cancella apprendimento
+  - lib/screens/settings_screen.dart:217
+  - lib/screens/settings_screen.dart:226
+
+## 0387
+Cancella definitivamente
+  - lib/screens/data_management_screen.dart:269
+
+## 0388
+Cancella ricerca
+  - lib/screens/account_context_transactions_screen.dart:156
+  - lib/screens/advances_screen.dart:119
+  - lib/screens/advances_screen.dart:1742
+  - lib/screens/root_screen.dart:1005
+
+## 0389
+Cancella tutti i dati
+  - lib/screens/data_management_screen.dart:72
+
+## 0390
+Cancellare l’apprendimento?
+  - lib/screens/settings_screen.dart:214
+
+## 0391
+Cancellare tutti i dati?
+  - lib/screens/data_management_screen.dart:266
+
+## 0392
+Cancelleria
+  - lib/widgets/ui_helpers.dart:377
+
+## 0393
+Carosello categorie. Scorri a destra o sinistra per passare tra Spese ed Entrate.
+  - lib/widgets/home_dashboard_widget.dart:742
+
+## 0394
+Carta
+  - lib/models/models.dart:28
+  - lib/widgets/ui_helpers.dart:607
+
+## 0395
+Casa
+  - lib/widgets/ui_helpers.dart:51
+  - lib/widgets/ui_helpers.dart:666
+
+## 0396
+Cash flow
+  - lib/screens/account_screens.dart:453
+
+## 0397
+Cash flow del mese
+  - lib/models/models.dart:73
+
+## 0398
+Cassaforte
+  - lib/widgets/ui_helpers.dart:638
+
+## 0399
+Categoria
+  - lib/screens/account_context_transactions_screen.dart:354
+  - lib/screens/advances_screen.dart:2047
+  - lib/screens/planning_screens.dart:1365
+  - lib/screens/planning_screens.dart:411
+  - lib/screens/polished_shell.dart:1049
+  - lib/screens/preset_management_screen.dart:266
+  - lib/screens/quick_add_page.dart:1348
+  - lib/screens/quick_add_page.dart:999
+  - lib/screens/root_screen.dart:1052
+  - lib/screens/root_screen.dart:1195
+  - lib/screens/rules_management_screen.dart:350
+  - lib/screens/transaction_screens.dart:318
+  - lib/screens/transaction_screens.dart:399
+  - lib/screens/transaction_screens.dart:511
+
+## 0400
+Categoria non trovata
+  - lib/screens/category_management_screen.dart:461
+
+## 0401
+Categoria usata in divisioni
+  - lib/screens/category_management_screen.dart:418
+
+## 0402
+Categorie
+  - lib/screens/category_management_screen.dart:143
+  - lib/screens/data_management_screen.dart:191
+  - lib/screens/personal_settings_screen.dart:155
+
+## 0403
+Categorie di spesa
+  - lib/screens/root_screen.dart:1651
+
+## 0404
+Categorie non trovate
+  - lib/screens/data_management_screen.dart:402
+
+## 0405
+Categorie principali
+  - lib/screens/canonical_shell.dart:640
+
+## 0406
+category_id = ?
+  - lib/data/app_database.dart:1107
+  - lib/data/app_database.dart:1115
+  - lib/services/data_integrity_service.dart:247
+
+## 0407
+Cerca descrizione
+  - lib/widgets/transaction_metadata_fields.dart:162
+
+## 0408
+Cerca icona o categoria
+  - lib/widgets/ui_helpers.dart:906
+
+## 0409
+Cerca nota, conto, categoria o tag
+  - lib/screens/account_context_transactions_screen.dart:151
+  - lib/screens/root_screen.dart:1000
+
+## 0410
+Cerca o aggiungi tag
+  - lib/widgets/transaction_metadata_fields.dart:334
+
+## 0411
+Cerca persona
+  - lib/screens/advances_screen.dart:114
+  - lib/screens/advances_screen.dart:1737
+
+## 0412
+Cerca tag
+  - lib/widgets/transaction_metadata_fields.dart:180
+
+## 0413
+Cerimonia
+  - lib/widgets/ui_helpers.dart:427
+
+## 0414
+Chiaro
+  - lib/screens/personal_settings_screen.dart:383
+  - lib/screens/personal_settings_screen.dart:41
+
+## 0415
+Chiudi
+  - lib/screens/account_management_screen.dart:405
+  - lib/screens/account_screens.dart:177
+  - lib/screens/category_management_screen.dart:427
+  - lib/screens/quick_add_page.dart:1872
+  - lib/screens/rules_management_screen.dart:214
+
+## 0416
+Chiudi scorciatoie
+  - lib/screens/app_shell.dart:237
+
+## 0417
+Chiudi senza statistica
+  - lib/screens/advances_screen.dart:747
+
+## 0418
+Cinema
+  - lib/widgets/ui_helpers.dart:286
+
+## 0419
+Circa 2×1 · saldo compatto e accesso a Nuovo movimento. La visibilità del saldo è configurabile per istanza.
+  - lib/screens/android_widgets_screen.dart:77
+
+## 0420
+Circa 2×2 · Spesa, Entrata, Trasferisci e Voce. Conto e categoria possono essere preconfigurati.
+  - lib/screens/android_widgets_screen.dart:87
+
+## 0421
+Circa 4×2 · quattro importi personalizzati, conto, categoria, trasferimento e microfono.
+  - lib/screens/android_widgets_screen.dart:97
+
+## 0422
+Circa 4×2 · saldo e quattro categorie rapide. Le categorie seguono prima i quick slot e poi le preferite.
+  - lib/screens/android_widgets_screen.dart:107
+
+## 0423
+closed_at IS NOT NULL, created_at DESC, id DESC
+  - lib/services/advance_service.dart:31
+
+## 0424
+Collega
+  - lib/screens/quick_add_page.dart:1230
+
+## 0425
+Collega a un anticipo
+  - lib/screens/quick_add_page.dart:605
+
+## 0426
+Collegamenti
+  - lib/screens/category_management_screen.dart:525
+
+## 0427
+Collegato a un anticipo
+  - lib/screens/quick_add_page.dart:1189
+
+## 0428
+Colore
+  - lib/screens/account_management_screen.dart:506
+  - lib/screens/advances_screen.dart:1589
+  - lib/screens/advances_screen.dart:1920
+  - lib/screens/category_management_screen.dart:66
+
+## 0429
+Colore categoria
+  - lib/screens/category_management_screen.dart:78
+  - lib/widgets/ui_helpers.dart:1098
+
+## 0430
+Colore conto
+  - lib/screens/account_management_screen.dart:518
+
+## 0431
+Colore persona
+  - lib/screens/advances_screen.dart:1601
+  - lib/screens/advances_screen.dart:1932
+
+## 0432
+com.dadafinanza.app.$provider
+  - lib/screens/android_widgets_screen.dart:43
+
+## 0433
+Compatto
+  - lib/screens/settings_screen.dart:485
+
+## 0434
+Compila con la voce
+  - lib/screens/quick_add_page.dart:1141
+  - lib/screens/quick_add_page.dart:1143
+
+## 0435
+Compila il movimento parlando
+  - lib/screens/app_shell.dart:372
+
+## 0436
+Compilato dalla voce · controlla e salva
+  - lib/screens/quick_add_page.dart:1173
+
+## 0437
+Compleanno
+  - lib/widgets/ui_helpers.dart:409
+
+## 0438
+Completa
+  - lib/screens/quick_add_page.dart:1158
+
+## 0439
+Completa con il suggerimento
+  - lib/screens/quick_add_page.dart:1153
+
+## 0440
+Completa descrizione
+  - lib/widgets/transaction_metadata_fields.dart:256
+
+## 0441
+Completa il conto per mantenere i saldi ordinati.
+  - lib/screens/polished_shell.dart:271
+
+## 0442
+Completa importo, persona e conto.
+  - lib/screens/advances_screen.dart:966
+
+## 0443
+completed, archived, id DESC
+  - lib/data/app_database.dart:895
+
+## 0444
+Comportamento
+  - lib/screens/personal_settings_screen.dart:188
+
+## 0445
+Con il cash-flow attuale la data è difficile: sostenibili circa ${moneyFor(state, plan.realisticWeekly)}/settimana.
+  - lib/screens/planning_screens.dart:773
+
+## 0446
+Condona
+  - lib/screens/advances_screen.dart:382
+
+## 0447
+Condonato
+  - lib/screens/advances_screen.dart:327
+  - lib/screens/advances_screen.dart:618
+
+## 0448
+Conferma
+  - lib/screens/planning_screens.dart:584
+
+## 0449
+Conferma eliminazioni
+  - lib/screens/personal_settings_screen.dart:94
+
+## 0450
+Conferma importazione
+  - lib/screens/data_management_screen.dart:438
+
+## 0451
+Conferma PIN
+  - lib/screens/local_privacy_screen.dart:112
+
+## 0452
+Conferma riconciliazione
+  - lib/screens/account_management_screen.dart:360
+
+## 0453
+Confermato
+  - lib/screens/planning_screens.dart:129
+  - lib/screens/planning_screens.dart:1580
+  - lib/screens/planning_screens.dart:1634
+
+## 0454
+Confermato = ricorrenza configurata. Previsto = pattern storico ad alta confidenza. Stimato = comportamento aggregato, non un evento certo.
+  - lib/screens/planning_screens.dart:1663
+
+## 0455
+confidence DESC, next_expected ASC
+  - lib/data/app_database.dart:913
+
+## 0456
+Configura
+  - lib/screens/planning_screens.dart:1048
+  - lib/screens/polished_shell.dart:298
+
+## 0457
+Configura DadaFinanza
+  - lib/screens/account_context_home_screen.dart:603
+  - lib/screens/home_screen.dart:551
+  - lib/screens/polished_shell.dart:493
+  - lib/screens/root_screen.dart:180
+
+## 0458
+Configurate
+  - lib/screens/planning_screens.dart:1054
+
+## 0459
+Configurazione per istanza
+  - lib/screens/android_widgets_screen.dart:125
+
+## 0460
+Confronto mese precedente
+  - lib/models/models.dart:83
+
+## 0461
+Consenti recognizer di sistema
+  - lib/screens/voice_settings_screen.dart:93
+
+## 0462
+Conservativa
+  - lib/screens/settings_screen.dart:155
+
+## 0463
+Contanti
+  - lib/models/models.dart:25
+  - lib/widgets/ui_helpers.dart:582
+
+## 0464
+Contatti
+  - lib/screens/privacy_policy_screen.dart:81
+
+## 0465
+Contatto
+  - lib/widgets/ui_helpers.dart:753
+
+## 0466
+Contenuto backup
+  - lib/screens/data_management_screen.dart:180
+
+## 0467
+Contesto
+  - lib/widgets/ui_helpers.dart:730
+  - lib/widgets/ui_helpers.dart:735
+  - lib/widgets/ui_helpers.dart:741
+  - lib/widgets/ui_helpers.dart:747
+
+## 0468
+Contesto trasversale, es. #Università o #Vacanza
+  - lib/widgets/transaction_metadata_fields.dart:294
+
+## 0469
+context-home-${config.type.name}
+  - lib/screens/account_context_home_screen.dart:229
+
+## 0470
+Conti
+  - lib/models/models.dart:79
+  - lib/screens/account_management_screen.dart:24
+  - lib/screens/account_screens.dart:20
+  - lib/screens/canonical_shell.dart:332
+  - lib/screens/data_management_screen.dart:189
+  - lib/screens/personal_settings_screen.dart:60
+  - lib/screens/polished_shell.dart:321
+  - lib/widgets/home_dashboard_widget.dart:168
+
+## 0471
+Conti inclusi
+  - lib/screens/root_screen.dart:1965
+
+## 0472
+Conti non trovati
+  - lib/screens/data_management_screen.dart:389
+
+## 0473
+Conti, movimenti, categorie, budget, obiettivi, regole e apprendimento locale verranno eliminati. Crea prima un backup se vuoi conservarli.
+  - lib/screens/data_management_screen.dart:268
+
+## 0474
+Continua
+  - lib/screens/account_management_screen.dart:346
+  - lib/screens/data_management_screen.dart:327
+
+## 0475
+Conto
+  - lib/screens/advances_screen.dart:2015
+  - lib/screens/planning_screens.dart:1320
+  - lib/screens/quick_add_page.dart:1055
+  - lib/screens/quick_add_page.dart:1360
+  - lib/screens/root_screen.dart:1043
+  - lib/screens/root_screen.dart:1177
+  - lib/screens/root_screen.dart:1446
+  - lib/screens/rules_management_screen.dart:369
+  - lib/screens/transaction_screens.dart:330
+
+## 0476
+Conto archiviato · storico conservato
+  - lib/screens/account_screens.dart:122
+
+## 0477
+Conto bloccato
+  - lib/screens/polished_shell.dart:548
+
+## 0478
+Conto corrente
+  - lib/models/models.dart:26
+  - lib/widgets/ui_helpers.dart:619
+
+## 0479
+Conto destinazione
+  - lib/screens/planning_screens.dart:1347
+  - lib/screens/quick_add_page.dart:1055
+
+## 0480
+Conto non trovato
+  - lib/screens/account_management_screen.dart:125
+  - lib/screens/account_screens.dart:210
+
+## 0481
+Conto non trovato.
+  - lib/data/app_database.dart:1264
+  - lib/services/advance_service.dart:804
+
+## 0482
+Conto origine
+  - lib/screens/planning_screens.dart:1319
+
+## 0483
+Conto preferito
+  - lib/screens/preset_management_screen.dart:218
+
+## 0484
+Conto risparmio collegato
+  - lib/screens/planning_screens.dart:893
+
+## 0485
+Conto selezionato
+  - lib/screens/account_context_analytics_screen.dart:416
+
+## 0486
+Contribuisce al saldo totale mostrato in Home.
+  - lib/screens/account_screens.dart:656
+
+## 0487
+Controlla il contenuto prima di sostituire i dati locali.
+  - lib/screens/data_management_screen.dart:38
+
+## 0488
+Converti in regola
+  - lib/screens/settings_screen.dart:305
+
+## 0489
+Corrisponde alla regola manuale “${rule.name}”.
+  - lib/services/smart_finance_engine.dart:193
+
+## 0490
+Corsa
+  - lib/widgets/ui_helpers.dart:236
+
+## 0491
+Corso
+  - lib/widgets/ui_helpers.dart:371
+
+## 0492
+Crea #$cleanedTag
+  - lib/widgets/transaction_metadata_fields.dart:346
+
+## 0493
+Crea automaticamente alla scadenza
+  - lib/screens/planning_screens.dart:1425
+
+## 0494
+Crea backup
+  - lib/screens/data_management_screen.dart:30
+
+## 0495
+Crea budget
+  - lib/screens/planning_screens.dart:219
+  - lib/screens/planning_screens.dart:515
+
+## 0496
+Crea categoria
+  - lib/widgets/ui_helpers.dart:1142
+
+## 0497
+Crea conto
+  - lib/screens/account_management_screen.dart:51
+  - lib/screens/account_screens.dart:53
+  - lib/screens/account_screens.dart:734
+  - lib/screens/polished_shell.dart:339
+  - lib/widgets/home_dashboard_widget.dart:188
+
+## 0498
+Crea il primo conto per iniziare.
+  - lib/screens/account_management_screen.dart:47
+
+## 0499
+Crea il primo preset
+  - lib/screens/app_shell.dart:362
+
+## 0500
+Crea nuova persona
+  - lib/screens/advances_screen.dart:1781
+
+## 0501
+Crea nuovo
+  - lib/screens/data_management_screen.dart:494
+  - lib/screens/data_management_screen.dart:504
+
+## 0502
+Crea obiettivo
+  - lib/screens/planning_screens.dart:621
+  - lib/screens/planning_screens.dart:981
+
+## 0503
+Crea persona
+  - lib/screens/advances_screen.dart:1987
+
+## 0504
+Crea preset
+  - lib/screens/preset_management_screen.dart:67
+
+## 0505
+Crea prima un conto per programmare movimenti ricorrenti.
+  - lib/screens/planning_screens.dart:1060
+
+## 0506
+Crea primo conto
+  - lib/screens/account_context_home_screen.dart:615
+  - lib/screens/home_screen.dart:567
+  - lib/screens/polished_shell.dart:508
+  - lib/screens/root_screen.dart:196
+
+## 0507
+Crea regola
+  - lib/screens/rules_management_screen.dart:47
+  - lib/screens/rules_management_screen.dart:470
+
+## 0508
+Crea ricorrenza
+  - lib/screens/planning_screens.dart:1538
+
+## 0509
+Crea scorciatoie per i movimenti che inserisci spesso.
+  - lib/screens/preset_management_screen.dart:60
+
+## 0510
+Crea un conto oppure registra un movimento come Non assegnato.
+  - lib/screens/account_screens.dart:49
+
+## 0511
+Crea un limite in Pianifica
+  - lib/screens/root_screen.dart:282
+
+## 0512
+Crea un obiettivo di risparmio realistico.
+  - lib/screens/planning_screens.dart:58
+
+## 0513
+Crea un obiettivo in Pianifica
+  - lib/screens/root_screen.dart:517
+
+## 0514
+Crea, modifica e riordina le scorciatoie
+  - lib/screens/app_shell.dart:384
+
+## 0515
+Creala senza perdere i dati inseriti
+  - lib/screens/quick_add_page.dart:1022
+
+## 0516
+created_at = 0 OR updated_at = 0
+  - lib/data/app_database.dart:260
+
+## 0517
+Creato
+  - lib/screens/data_management_screen.dart:185
+
+## 0518
+Cronologia
+  - lib/screens/advances_screen.dart:513
+
+## 0519
+CSV esportato.
+  - lib/screens/data_management_screen.dart:235
+
+## 0520
+CSV non valido: $error
+  - lib/screens/data_management_screen.dart:259
+
+## 0521
+CSV portabile
+  - lib/screens/data_management_screen.dart:42
+
+## 0522
+Cucina
+  - lib/widgets/ui_helpers.dart:103
+
+## 0523
+Cuore
+  - lib/widgets/ui_helpers.dart:720
+
+## 0524
+Cura personale
+  - lib/widgets/ui_helpers.dart:255
+
+## 0525
+Custom
+  - lib/screens/account_context_analytics_screen.dart:44
+  - lib/screens/canonical_shell.dart:897
+  - lib/screens/polished_shell.dart:882
+  - lib/screens/root_screen.dart:1579
+  - lib/widgets/home_dashboard_widget.dart:379
+
+## 0526
+d MMM
+  - lib/screens/account_context_analytics_screen.dart:94
+  - lib/screens/polished_shell.dart:664
+
+## 0527
+d MMM yy
+  - lib/screens/account_context_analytics_screen.dart:94
+
+## 0528
+d MMM yyyy
+  - lib/screens/account_context_analytics_screen.dart:1003
+  - lib/screens/advances_screen.dart:1066
+  - lib/screens/advances_screen.dart:1085
+  - lib/screens/advances_screen.dart:1203
+  - lib/screens/advances_screen.dart:524
+  - lib/screens/advances_screen.dart:541
+  - lib/screens/advances_screen.dart:651
+  - lib/screens/advances_screen.dart:671
+  - lib/screens/advances_screen.dart:904
+  - lib/screens/advances_screen.dart:928
+  - lib/screens/planning_screens.dart:654
+
+## 0529
+d MMM yyyy, HH:mm
+  - lib/screens/account_context_analytics_screen.dart:1000
+
+## 0530
+d MMMM yyyy
+  - lib/screens/advances_screen.dart:495
+  - lib/screens/advances_screen.dart:506
+
+## 0531
+Da
+  - lib/screens/quick_add_page.dart:1460
+  - lib/screens/transaction_screens.dart:330
+
+## 0532
+Da apprendimento · ${pattern.normalizedText}
+  - lib/app_state.dart:1185
+
+## 0533
+DA RESTITUIRE
+  - lib/screens/advances_screen.dart:93
+
+## 0534
+Da restituire
+  - lib/models/advance_models.dart:10
+  - lib/screens/advances_screen.dart:1459
+  - lib/screens/advances_screen.dart:312
+  - lib/screens/canonical_shell.dart:1004
+
+## 0535
+Da restituire · ${moneyFor(state, Money.fromCents(remaining))} residui
+  - lib/screens/advances_screen.dart:316
+
+## 0536
+DA RICEVERE
+  - lib/screens/advances_screen.dart:82
+
+## 0537
+Da ricevere
+  - lib/models/advance_models.dart:9
+  - lib/screens/advances_screen.dart:1449
+  - lib/screens/canonical_shell.dart:994
+
+## 0538
+Da saldare
+  - lib/screens/advances_screen.dart:311
+
+## 0539
+Da saldare · ${moneyFor(state, Money.fromCents(remaining))} residui
+  - lib/screens/advances_screen.dart:315
+
+## 0540
+dada-backup-${DateTime.now().microsecondsSinceEpoch}
+  - lib/services/backup_service.dart:56
+
+## 0541
+dada-restore-${DateTime.now().microsecondsSinceEpoch}
+  - lib/services/backup_service.dart:152
+
+## 0542
+dada-safety-${DateTime.now().microsecondsSinceEpoch}
+  - lib/services/backup_service.dart:181
+
+## 0543
+DadaBalanceWidgetProvider
+  - lib/main.dart:96
+  - lib/screens/android_widgets_screen.dart:80
+  - lib/services/widget_service.dart:46
+
+## 0544
+DadaFinanceWidgetProvider
+  - lib/main.dart:92
+  - lib/screens/android_widgets_screen.dart:110
+  - lib/services/widget_service.dart:42
+
+## 0545
+DadaFinanza
+  - lib/main.dart:131
+  - lib/screens/canonical_shell.dart:221
+  - lib/screens/home_screen.dart:67
+  - lib/screens/polished_shell.dart:130
+  - lib/screens/root_screen.dart:99
+
+## 0546
+DadaFinanza non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.
+  - lib/screens/data_management_screen.dart:62
+
+## 0547
+DadaFinanza non riceve né memorizza dati biometrici.
+  - lib/screens/privacy_policy_screen.dart:49
+
+## 0548
+DadaFinanza non richiede un account e non integra pubblicità, 
+  - lib/screens/privacy_policy_screen.dart:77
+
+## 0549
+DadaFinanza sulla Home
+  - lib/screens/android_widgets_screen.dart:64
+
+## 0550
+DadaFinanza usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.
+  - lib/screens/notification_settings_screen.dart:170
+
+## 0551
+DadaFinanza è bloccata
+  - lib/widgets/app_lock_gate.dart:124
+
+## 0552
+DadaFinanza è progettata local-first. Movimenti, conti, categorie, 
+  - lib/screens/privacy_policy_screen.dart:21
+
+## 0553
+dadafinanza-${DateFormat(
+  - lib/screens/data_management_screen.dart:227
+
+## 0554
+DadaFinanza.
+  - lib/screens/privacy_policy_screen.dart:24
+
+## 0555
+DadaFinanzaBackup
+  - lib/services/backup_service.dart:128
+  - lib/services/backup_service.dart:75
+
+## 0556
+DadaFinanzaBackup-${DateFormat(
+  - lib/screens/data_management_screen.dart:97
+
+## 0557
+DadaFinanzaBackup-${DateTime.now().millisecondsSinceEpoch}.zip
+  - lib/services/backup_service.dart:97
+
+## 0558
+DadaQuickAddWidgetProvider
+  - lib/main.dart:100
+  - lib/screens/android_widgets_screen.dart:90
+  - lib/services/widget_service.dart:50
+
+## 0559
+DadaQuickAmountsWidgetProvider
+  - lib/main.dart:104
+  - lib/screens/android_widgets_screen.dart:100
+  - lib/services/widget_service.dart:54
+
+## 0560
+Dai un nome ai risparmi che vuoi costruire.
+  - lib/screens/polished_shell.dart:679
+
+## 0561
+Dal
+  - lib/screens/account_context_transactions_screen.dart:372
+  - lib/screens/root_screen.dart:1240
+
+## 0562
+Dashboard avanzata
+  - lib/screens/account_context_home_screen.dart:121
+  - lib/screens/home_screen.dart:85
+  - lib/screens/polished_shell.dart:164
+  - lib/screens/polished_shell.dart:409
+
+## 0563
+Dashboard vuota
+  - lib/screens/root_screen.dart:152
+
+## 0564
+Data
+  - lib/screens/advances_screen.dart:1202
+  - lib/screens/quick_add_page.dart:1512
+  - lib/screens/transaction_screens.dart:348
+
+## 0565
+Data fine opzionale
+  - lib/screens/planning_screens.dart:1442
+
+## 0566
+Data obiettivo
+  - lib/screens/planning_screens.dart:912
+
+## 0567
+Data promemoria
+  - lib/screens/advances_screen.dart:667
+
+## 0568
+Database mancante nel backup.
+  - lib/services/backup_service.dart:165
+
+## 0569
+Database, impostazioni, Smart Finance e ricevute.
+  - lib/screens/data_management_screen.dart:31
+
+## 0570
+date ASC
+  - lib/data/app_database.dart:1786
+
+## 0571
+date DESC, id DESC
+  - lib/data/app_database.dart:879
+  - lib/services/advance_service.dart:37
+
+## 0572
+Dati
+  - lib/screens/personal_settings_screen.dart:180
+
+## 0573
+Dati e backup
+  - lib/screens/data_management_screen.dart:23
+
+## 0574
+Dati locali cancellati.
+  - lib/screens/data_management_screen.dart:276
+
+## 0575
+Dati locali, permessi, backup e servizi di sistema
+  - lib/screens/personal_settings_screen.dart:113
+
+## 0576
+Dati sul dispositivo
+  - lib/screens/data_management_screen.dart:60
+
+## 0577
+Dati, PIN e preferenze restano locali. Nessun account o server è coinvolto.
+  - lib/screens/local_privacy_screen.dart:223
+
+## 0578
+dd MMM
+  - lib/screens/account_context_analytics_screen.dart:592
+  - lib/screens/account_context_analytics_screen.dart:606
+  - lib/screens/account_screens.dart:479
+  - lib/screens/root_screen.dart:500
+
+## 0579
+dd MMM yy
+  - lib/screens/account_context_analytics_screen.dart:593
+  - lib/screens/account_context_analytics_screen.dart:607
+
+## 0580
+dd MMM yyyy
+  - lib/screens/quick_add_page.dart:1513
+
+## 0581
+dd MMM, HH:mm
+  - lib/screens/root_screen.dart:1447
+
+## 0582
+dd MMMM yyyy, HH:mm
+  - lib/screens/transaction_screens.dart:349
+
+## 0583
+dd/MM/yyyy HH:mm
+  - lib/screens/data_management_screen.dart:186
+
+## 0584
+Definisci una cifra e, se vuoi, una data: DadaFinanza stimerà un ritmo sostenibile.
+  - lib/screens/planning_screens.dart:617
+
+## 0585
+dei trasferimenti
+  - lib/screens/account_context_transactions_screen.dart:274
+
+## 0586
+delle entrate
+  - lib/screens/account_context_transactions_screen.dart:273
+
+## 0587
+delle spese
+  - lib/screens/account_context_transactions_screen.dart:272
+
+## 0588
+Denaro
+  - lib/widgets/ui_helpers.dart:538
+
+## 0589
+Deposito
+  - lib/widgets/ui_helpers.dart:693
+
+## 0590
+Descrizione
+  - lib/screens/planning_screens.dart:1421
+
+## 0591
+Descrizione contiene
+  - lib/screens/rules_management_screen.dart:296
+
+## 0592
+Descrizione opzionale
+  - lib/widgets/transaction_metadata_fields.dart:283
+
+## 0593
+Descrizioni
+  - lib/widgets/transaction_metadata_fields.dart:161
+
+## 0594
+Descrizioni preferite e recenti
+  - lib/widgets/transaction_metadata_fields.dart:255
+
+## 0595
+Destinazione
+  - lib/screens/preset_management_screen.dart:243
+
+## 0596
+Dettagli
+  - lib/screens/polished_shell.dart:312
+
+## 0597
+Devi ancora restituire $amount a ${person?.name ?? 
+  - lib/services/notification_service.dart:231
+
+## 0598
+Devi restituire $amount a ${person?.name ?? 
+  - lib/services/notification_service.dart:254
+
+## 0599
+Devo restituire dei soldi
+  - lib/models/advance_models.dart:20
+
+## 0600
+Devo ricevere dei soldi
+  - lib/models/advance_models.dart:19
+
+## 0601
+Disattiva
+  - lib/screens/planning_screens.dart:1145
+  - lib/screens/planning_screens.dart:312
+  - lib/screens/rules_management_screen.dart:118
+  - lib/screens/rules_management_screen.dart:78
+  - lib/screens/settings_screen.dart:301
+
+## 0602
+Disattiva per movimenti eccezionali che non vuoi nelle analisi.
+  - lib/screens/quick_add_page.dart:1584
+
+## 0603
+Disattivate
+  - lib/screens/personal_settings_screen.dart:135
+
+## 0604
+Disattivato
+  - lib/screens/local_privacy_screen.dart:155
+
+## 0605
+Disinstallando l’app vengono rimossi i dati conservati nello 
+  - lib/screens/privacy_policy_screen.dart:70
+
+## 0606
+Disponibile
+  - lib/screens/account_context_home_screen.dart:486
+  - lib/screens/account_context_home_screen.dart:581
+  - lib/screens/canonical_shell.dart:289
+  - lib/screens/polished_shell.dart:221
+
+## 0607
+Disponibile da spendere
+  - lib/models/models.dart:77
+  - lib/screens/root_screen.dart:593
+
+## 0608
+Disponibile: ${moneyFor(state, Money.fromCents(available))}
+  - lib/screens/advances_screen.dart:1166
+
+## 0609
+Dividi ${moneyFor(state, item.amount)}
+  - lib/screens/transaction_screens.dart:500
+
+## 0610
+Dividi movimento
+  - lib/screens/transaction_screens.dart:265
+
+## 0611
+Divisione
+  - lib/screens/transaction_screens.dart:395
+
+## 0612
+Domenica
+  - lib/screens/personal_settings_screen.dart:291
+  - lib/screens/personal_settings_screen.dart:81
+
+## 0613
+Donazione
+  - lib/widgets/ui_helpers.dart:415
+
+## 0614
+Dopo alcuni movimenti coerenti compariranno qui le abitudini riconosciute.
+  - lib/screens/settings_screen.dart:247
+
+## 0615
+Dove stai spendendo
+  - lib/screens/account_context_analytics_screen.dart:343
+  - lib/screens/canonical_shell.dart:1021
+  - lib/screens/polished_shell.dart:942
+
+## 0616
+Duplica
+  - lib/screens/planning_screens.dart:1149
+  - lib/screens/planning_screens.dart:308
+  - lib/screens/rules_management_screen.dart:122
+  - lib/screens/transaction_screens.dart:251
+
+## 0617
+Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.
+  - lib/screens/android_widgets_screen.dart:119
+
+## 0618
+EEE d MMM
+  - lib/screens/account_context_home_screen.dart:327
+  - lib/screens/polished_shell.dart:395
+
+## 0619
+EEE dd
+  - lib/screens/account_context_analytics_screen.dart:584
+  - lib/screens/account_context_analytics_screen.dart:598
+
+## 0620
+EEE dd MMM
+  - lib/screens/account_context_analytics_screen.dart:586
+  - lib/screens/account_context_analytics_screen.dart:600
+
+## 0621
+EEE dd MMM yy
+  - lib/screens/account_context_analytics_screen.dart:587
+  - lib/screens/account_context_analytics_screen.dart:601
+
+## 0622
+Elettricità
+  - lib/widgets/ui_helpers.dart:452
+
+## 0623
+Elimina
+  - lib/screens/advances_screen.dart:570
+  - lib/screens/category_management_screen.dart:243
+  - lib/screens/planning_screens.dart:1154
+  - lib/screens/planning_screens.dart:317
+  - lib/screens/planning_screens.dart:704
+  - lib/screens/preset_management_screen.dart:120
+  - lib/screens/root_screen.dart:982
+  - lib/screens/rules_management_screen.dart:131
+  - lib/screens/transaction_screens.dart:288
+  - lib/widgets/ui_helpers.dart:841
+
+## 0624
+Elimina $count
+  - lib/screens/root_screen.dart:808
+
+## 0625
+Elimina conto
+  - lib/screens/account_screens.dart:198
+  - lib/screens/account_screens.dart:304
+
+## 0626
+Elimina pattern
+  - lib/screens/settings_screen.dart:310
+
+## 0627
+Elimina prima i rimborsi/restituzioni registrati per annullare l’anticipo.
+  - lib/services/advance_service.dart:184
+
+## 0628
+Elimina se vuoto
+  - lib/screens/account_management_screen.dart:276
+
+## 0629
+Eliminare $count movimenti?
+  - lib/screens/root_screen.dart:806
+
+## 0630
+Eliminare il movimento?
+  - lib/screens/transaction_screens.dart:90
+
+## 0631
+Eliminare questo rimborso?
+  - lib/screens/advances_screen.dart:559
+
+## 0632
+Eliminare “${account.name}”?
+  - lib/screens/account_management_screen.dart:421
+  - lib/screens/account_screens.dart:195
+
+## 0633
+Eliminare “${budget.name}”?
+  - lib/screens/planning_screens.dart:187
+
+## 0634
+Eliminare “${category.name}”?
+  - lib/screens/category_management_screen.dart:444
+
+## 0635
+Eliminare “${goal.name}”?
+  - lib/screens/planning_screens.dart:681
+
+## 0636
+Eliminare “${item.name}”?
+  - lib/screens/planning_screens.dart:1131
+
+## 0637
+Eliminare “${preset.name}”?
+  - lib/screens/preset_management_screen.dart:100
+
+## 0638
+Eliminare “${rule.name}”?
+  - lib/screens/rules_management_screen.dart:104
+
+## 0639
+Eliminazione
+  - lib/screens/privacy_policy_screen.dart:67
+
+## 0640
+enabled = 1
+  - lib/services/quick_preset_service.dart:76
+
+## 0641
+enabled = 1 AND auto_create = 1 AND next_date <= ?
+  - lib/services/recurring_execution_service.dart:12
+
+## 0642
+enabled DESC, id DESC
+  - lib/data/app_database.dart:891
+
+## 0643
+Entrata
+  - lib/models/models.dart:11
+  - lib/screens/account_context_home_screen.dart:516
+  - lib/screens/account_screens.dart:402
+  - lib/screens/canonical_shell.dart:152
+  - lib/screens/canonical_shell.dart:311
+  - lib/screens/home_screen.dart:142
+  - lib/screens/planning_screens.dart:1296
+  - lib/screens/polished_shell.dart:243
+  - lib/screens/quick_add_page.dart:1296
+  - lib/widgets/ui_helpers.dart:1063
+
+## 0644
+Entrata registrata.
+  - lib/screens/quick_add_page.dart:966
+
+## 0645
+Entrate
+  - lib/screens/account_context_analytics_screen.dart:267
+  - lib/screens/account_context_home_screen.dart:470
+  - lib/screens/account_context_home_screen.dart:565
+  - lib/screens/account_screens.dart:439
+  - lib/screens/canonical_shell.dart:267
+  - lib/screens/canonical_shell.dart:938
+  - lib/screens/category_management_screen.dart:166
+  - lib/screens/polished_shell.dart:201
+  - lib/screens/polished_shell.dart:904
+  - lib/screens/root_screen.dart:1614
+
+## 0646
+Entrate del mese
+  - lib/models/models.dart:74
+
+## 0647
+Entrate, spese e andamento del conto
+  - lib/screens/account_context_home_screen.dart:275
+
+## 0648
+Equilibrio tra utilità e prudenza. Consigliata.
+  - lib/screens/settings_screen.dart:182
+
+## 0649
+Es. Benzina
+  - lib/widgets/ui_helpers.dart:1049
+
+## 0650
+Es. LIDL
+  - lib/screens/rules_management_screen.dart:297
+
+## 0651
+Es. LIDL, Spotify, stipendio…
+  - lib/widgets/transaction_metadata_fields.dart:284
+
+## 0652
+Es. Università
+  - lib/widgets/transaction_metadata_fields.dart:335
+
+## 0653
+Escludi
+  - lib/screens/rules_management_screen.dart:404
+  - lib/screens/rules_management_screen.dart:417
+
+## 0654
+Escludi dal patrimonio
+  - lib/screens/account_screens.dart:283
+
+## 0655
+Escludi dalle statistiche
+  - lib/screens/account_screens.dart:291
+  - lib/screens/root_screen.dart:977
+  - lib/screens/transaction_screens.dart:281
+
+## 0656
+Escluso
+  - lib/screens/transaction_screens.dart:356
+
+## 0657
+Escursione
+  - lib/widgets/ui_helpers.dart:175
+
+## 0658
+Esempio: descrizione contiene LIDL → Alimentari.
+  - lib/screens/rules_management_screen.dart:43
+
+## 0659
+esplicitamente l’operazione e scegli una destinazione. I backup 
+  - lib/screens/privacy_policy_screen.dart:62
+
+## 0660
+Esporta ${account.name}
+  - lib/screens/account_management_screen.dart:436
+
+## 0661
+Esporta lo storico di questo conto
+  - lib/screens/account_management_screen.dart:241
+
+## 0662
+Esporta movimenti
+  - lib/screens/data_management_screen.dart:225
+  - lib/screens/data_management_screen.dart:45
+
+## 0663
+Esporta movimenti CSV
+  - lib/screens/account_management_screen.dart:240
+
+## 0664
+Esportazione non riuscita: $error
+  - lib/screens/data_management_screen.dart:238
+
+## 0665
+Evento
+  - lib/widgets/ui_helpers.dart:560
+
+## 0666
+Fallback opzionale. La privacy dipende dal servizio vocale configurato sul dispositivo.
+  - lib/screens/voice_settings_screen.dart:95
+
+## 0667
+Fallback semplice da 4 a 8 cifre.
+  - lib/screens/local_privacy_screen.dart:174
+
+## 0668
+Famiglia
+  - lib/widgets/ui_helpers.dart:397
+  - lib/widgets/ui_helpers.dart:677
+  - lib/widgets/ui_helpers.dart:726
+
+## 0669
+Famiglia e social
+  - lib/widgets/ui_helpers.dart:391
+  - lib/widgets/ui_helpers.dart:393
+  - lib/widgets/ui_helpers.dart:398
+  - lib/widgets/ui_helpers.dart:404
+  - lib/widgets/ui_helpers.dart:410
+  - lib/widgets/ui_helpers.dart:416
+  - lib/widgets/ui_helpers.dart:422
+  - lib/widgets/ui_helpers.dart:428
+
+## 0670
+Farmacia
+  - lib/widgets/ui_helpers.dart:206
+
+## 0671
+Fast food
+  - lib/widgets/ui_helpers.dart:75
+
+## 0672
+Fattura
+  - lib/widgets/ui_helpers.dart:550
+
+## 0673
+Feedback aptico
+  - lib/screens/personal_settings_screen.dart:211
+
+## 0674
+Festa
+  - lib/widgets/ui_helpers.dart:322
+
+## 0675
+filter-category-$draftType-$draftCategory
+  - lib/screens/root_screen.dart:1193
+
+## 0676
+Filtra movimenti
+  - lib/screens/account_context_transactions_screen.dart:325
+  - lib/screens/root_screen.dart:1152
+
+## 0677
+Filtri
+  - lib/screens/account_context_transactions_screen.dart:134
+  - lib/screens/root_screen.dart:944
+
+## 0678
+Finanza e entrate
+  - lib/widgets/ui_helpers.dart:502
+  - lib/widgets/ui_helpers.dart:508
+  - lib/widgets/ui_helpers.dart:514
+  - lib/widgets/ui_helpers.dart:520
+  - lib/widgets/ui_helpers.dart:522
+  - lib/widgets/ui_helpers.dart:527
+  - lib/widgets/ui_helpers.dart:533
+  - lib/widgets/ui_helpers.dart:539
+  - lib/widgets/ui_helpers.dart:545
+  - lib/widgets/ui_helpers.dart:551
+  - lib/widgets/ui_helpers.dart:557
+
+## 0679
+Fine ${hideValues ? 
+  - lib/screens/account_context_analytics_screen.dart:1088
+
+## 0680
+Fine inclusa
+  - lib/screens/planning_screens.dart:449
+
+## 0681
+Fotocamera
+  - lib/screens/privacy_policy_screen.dart:30
+
+## 0682
+Fotocamera o galleria
+  - lib/screens/quick_add_page.dart:1600
+
+## 0683
+Fotografia
+  - lib/widgets/ui_helpers.dart:310
+
+## 0684
+Freelance
+  - lib/widgets/ui_helpers.dart:359
+
+## 0685
+Frequenza
+  - lib/screens/planning_screens.dart:1382
+
+## 0686
+Fuori patrimonio
+  - lib/screens/account_management_screen.dart:97
+  - lib/screens/account_screens.dart:369
+  - lib/screens/account_screens.dart:89
+
+## 0687
+Gas
+  - lib/widgets/ui_helpers.dart:464
+
+## 0688
+Generali
+  - lib/screens/personal_settings_screen.dart:57
+
+## 0689
+Generica
+  - lib/widgets/ui_helpers.dart:48
+
+## 0690
+Generico
+  - lib/widgets/ui_helpers.dart:569
+
+## 0691
+Gestione
+  - lib/screens/account_management_screen.dart:227
+
+## 0692
+Gestisci apprendimento
+  - lib/screens/settings_screen.dart:138
+
+## 0693
+Gestisci persone
+  - lib/screens/advances_screen.dart:61
+
+## 0694
+Gestisci preset
+  - lib/screens/app_shell.dart:383
+
+## 0695
+Gestisci questo movimento dalla sezione Anticipi.
+  - lib/app_state.dart:493
+  - lib/app_state.dart:513
+
+## 0696
+Giardino
+  - lib/widgets/ui_helpers.dart:104
+
+## 0697
+Giochi
+  - lib/widgets/ui_helpers.dart:334
+
+## 0698
+Giornaliero
+  - lib/screens/planning_screens.dart:338
+
+## 0699
+Giorni senza spese
+  - lib/models/models.dart:91
+  - lib/screens/root_screen.dart:1674
+
+## 0700
+giorni senza spese questo mese
+  - lib/screens/canonical_shell.dart:749
+
+## 0701
+Giorni senza spese questo mese
+  - lib/screens/root_screen.dart:549
+
+## 0702
+Giorno ${state.financialMonthStart}
+  - lib/screens/personal_settings_screen.dart:88
+
+## 0703
+Giroconti netti ${moneyFor(state, transferNet, signed: true)} nel periodo.
+  - lib/screens/account_context_analytics_screen.dart:333
+
+## 0704
+Gli anticipi richiedono un conto reale.
+  - lib/services/advance_service.dart:807
+
+## 0705
+goal:${goal.id}
+  - lib/services/notification_service.dart:197
+
+## 0706
+Grafici, patrimonio e viste aggiuntive.
+  - lib/screens/polished_shell.dart:992
+
+## 0707
+Grafico categorie
+  - lib/models/models.dart:84
+
+## 0708
+Grande
+  - lib/screens/settings_screen.dart:487
+
+## 0709
+Hai detto: “$lastVoiceTranscript”
+  - lib/screens/quick_add_page.dart:1502
+
+## 0710
+Hai registrato ${best.sampleCount} movimenti simili a “${best.normalizedText}” con la stessa combinazione principale.
+  - lib/services/smart_finance_engine.dart:306
+
+## 0711
+Hai speso ${delta.abs().toStringAsFixed(0)}% ${delta <= 0 ? 
+  - lib/screens/polished_shell.dart:928
+
+## 0712
+HH
+  - lib/screens/account_context_analytics_screen.dart:581
+
+## 0713
+HH:mm
+  - lib/screens/quick_add_page.dart:1539
+
+## 0714
+Ho anticipato
+  - lib/models/advance_models.dart:14
+  - lib/screens/advances_screen.dart:829
+
+## 0715
+Ho capito
+  - lib/screens/quick_add_page.dart:1840
+
+## 0716
+ho pagato
+  - lib/services/voice_transaction_parser.dart:326
+
+## 0717
+Ho restituito
+  - lib/screens/advances_screen.dart:372
+
+## 0718
+ho ricevuto
+  - lib/services/voice_transaction_parser.dart:314
+
+## 0719
+Ho riconosciuto più importi. Scegli quello corretto.
+  - lib/services/voice_transaction_parser.dart:29
+
+## 0720
+ho speso
+  - lib/services/voice_transaction_parser.dart:324
+
+## 0721
+Home
+  - lib/screens/app_shell.dart:144
+  - lib/screens/canonical_shell.dart:59
+  - lib/screens/polished_shell.dart:59
+  - lib/screens/root_screen.dart:58
+
+## 0722
+Home essenziale
+  - lib/screens/home_screen.dart:189
+
+## 0723
+home-${widgets[index].type.name}
+  - lib/screens/home_screen.dart:206
+
+## 0724
+Hotel
+  - lib/widgets/ui_helpers.dart:169
+
+## 0725
+I movimenti Anticipi non possono essere duplicati direttamente.
+  - lib/app_state.dart:503
+
+## 0726
+I movimenti del conto entrano nelle analisi.
+  - lib/screens/account_screens.dart:666
+
+## 0727
+I movimenti di questo conto compariranno qui.
+  - lib/screens/account_screens.dart:466
+
+## 0728
+I movimenti già classificati non cambieranno.
+  - lib/screens/rules_management_screen.dart:106
+
+## 0729
+I movimenti già registrati resteranno invariati.
+  - lib/screens/planning_screens.dart:1133
+
+## 0730
+I pattern sono ricavati dai tuoi movimenti. Puoi disattivarli, convertirli in regole esplicite o eliminarli senza modificare lo storico.
+  - lib/screens/settings_screen.dart:238
+
+## 0731
+I saldi dei conti verranno ricalcolati automaticamente.
+  - lib/screens/root_screen.dart:807
+
+## 0732
+I widget di questa sezione sono disponibili su Android.
+  - lib/screens/android_widgets_screen.dart:137
+
+## 0733
+Icona
+  - lib/screens/account_management_screen.dart:490
+  - lib/screens/account_screens.dart:592
+  - lib/screens/advances_screen.dart:1573
+  - lib/screens/advances_screen.dart:1904
+  - lib/screens/category_management_screen.dart:50
+  - lib/screens/planning_screens.dart:845
+  - lib/widgets/ui_helpers.dart:1075
+
+## 0734
+id = ?
+  - lib/data/app_database.dart:1039
+  - lib/data/app_database.dart:1077
+  - lib/data/app_database.dart:1119
+  - lib/data/app_database.dart:1190
+  - lib/data/app_database.dart:1225
+  - lib/data/app_database.dart:1260
+  - lib/data/app_database.dart:1323
+  - lib/data/app_database.dart:1393
+  - lib/data/app_database.dart:1480
+  - lib/data/app_database.dart:1484
+  - lib/data/app_database.dart:1515
+  - lib/data/app_database.dart:1519
+  - lib/data/app_database.dart:1552
+  - lib/data/app_database.dart:1556
+  - lib/data/app_database.dart:1593
+  - lib/data/app_database.dart:1744
+  - lib/data/app_database.dart:1749
+  - lib/services/advance_service.dart:101
+  - lib/services/advance_service.dart:127
+  - lib/services/advance_service.dart:157
+  - lib/services/advance_service.dart:192
+  - lib/services/advance_service.dart:208
+  - lib/services/advance_service.dart:213
+  - lib/services/advance_service.dart:223
+  - lib/services/advance_service.dart:238
+  - lib/services/advance_service.dart:324
+  - lib/services/advance_service.dart:444
+  - lib/services/advance_service.dart:462
+  - lib/services/advance_service.dart:485
+  - lib/services/advance_service.dart:515
+  - lib/services/advance_service.dart:531
+  - lib/services/advance_service.dart:537
+  - lib/services/advance_service.dart:547
+  - lib/services/advance_service.dart:555
+  - lib/services/advance_service.dart:568
+  - lib/services/advance_service.dart:572
+  - lib/services/advance_service.dart:579
+  - lib/services/advance_service.dart:595
+  - lib/services/advance_service.dart:627
+  - lib/services/advance_service.dart:669
+  - lib/services/advance_service.dart:704
+  - lib/services/advance_service.dart:722
+  - lib/services/advance_service.dart:800
+  - lib/services/advance_service.dart:818
+  - lib/services/advance_service.dart:87
+  - lib/services/data_integrity_service.dart:218
+  - lib/services/data_integrity_service.dart:251
+  - lib/services/data_integrity_service.dart:264
+  - lib/services/data_integrity_service.dart:280
+  - lib/services/data_integrity_service.dart:39
+  - lib/services/data_integrity_service.dart:83
+  - lib/services/goal_ledger_service.dart:46
+  - lib/services/goal_ledger_service.dart:81
+  - lib/services/goal_ledger_service.dart:94
+  - lib/services/quick_preset_service.dart:116
+  - lib/services/quick_preset_service.dart:123
+  - lib/services/quick_preset_service.dart:134
+  - lib/services/recurring_execution_service.dart:21
+  - lib/services/recurring_execution_service.dart:37
+  - lib/services/recurring_execution_service.dart:61
+  - lib/services/rule_service.dart:70
+  - lib/services/rule_service.dart:88
+
+## 0735
+id = ? AND archived = 0
+  - lib/services/advance_service.dart:790
+
+## 0736
+id = ? AND is_system = 0
+  - lib/data/app_database.dart:975
+  - lib/data/app_database.dart:984
+
+## 0737
+Ignora
+  - lib/screens/data_management_screen.dart:513
+
+## 0738
+Ignora possibili duplicati
+  - lib/screens/data_management_screen.dart:417
+
+## 0739
+Ignora riferimento
+  - lib/screens/data_management_screen.dart:497
+
+## 0740
+Il budget verrà eliminato. I movimenti non saranno modificati.
+  - lib/screens/planning_screens.dart:188
+
+## 0741
+Il cash-flow attuale non lascia ancora un margine stabile.
+  - lib/screens/account_context_home_screen.dart:379
+  - lib/screens/canonical_shell.dart:435
+  - lib/screens/home_screen.dart:261
+  - lib/screens/polished_shell.dart:310
+
+## 0742
+Il conto contiene storico
+  - lib/screens/account_management_screen.dart:398
+  - lib/screens/account_screens.dart:170
+
+## 0743
+Il conto di sistema non è eliminabile.
+  - lib/services/data_integrity_service.dart:179
+
+## 0744
+Il conto ha $movementCount movimenti e $recurringCount ricorrenze collegate. Per proteggere lo storico non può essere eliminato: puoi archiviarlo.
+  - lib/screens/account_screens.dart:172
+
+## 0745
+Il conto non può essere riconciliato in questo stato.
+  - lib/services/data_integrity_service.dart:29
+
+## 0746
+Il conto è archiviato.
+  - lib/services/advance_service.dart:810
+
+## 0747
+Il conto è bloccato.
+  - lib/services/advance_service.dart:812
+
+## 0748
+Il conto è vuoto e può essere eliminato in sicurezza.
+  - lib/screens/account_management_screen.dart:422
+
+## 0749
+Il conto è vuoto. Eventuali riferimenti in preset e obiettivi verranno scollegati in sicurezza.
+  - lib/screens/account_screens.dart:197
+
+## 0750
+Il conto “${account.name}” è archiviato.
+  - lib/data/app_database.dart:1269
+
+## 0751
+Il conto “${account.name}” è bloccato.
+  - lib/data/app_database.dart:1267
+
+## 0752
+Il CSV deve contenere almeno type, amount, date e account.
+  - lib/services/csv_service.dart:124
+
+## 0753
+Il database ripristinato non supera il controllo integrità.
+  - lib/services/backup_service.dart:241
+
+## 0754
+Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → DadaFinanza.
+  - lib/screens/android_widgets_screen.dart:136
+
+## 0755
+Il microfono compila Nuovo movimento ma non salva mai automaticamente.
+  - lib/screens/voice_settings_screen.dart:63
+
+## 0756
+Il movimento ha una direzione incompatibile.
+  - lib/services/advance_service.dart:605
+
+## 0757
+Il movimento supera il residuo dell’anticipo.
+  - lib/services/advance_service.dart:609
+
+## 0758
+Il permesso microfono non è disponibile.
+  - lib/screens/quick_add_page.dart:1823
+
+## 0759
+Il PIN deve contenere da 4 a 8 cifre.
+  - lib/services/security_service.dart:106
+
+## 0760
+Il preset verrà rimosso. I movimenti già registrati non cambieranno.
+  - lib/screens/preset_management_screen.dart:102
+
+## 0761
+Il recognizer di sistema non è disponibile offline.
+  - lib/screens/quick_add_page.dart:1829
+
+## 0762
+Il riconoscimento vocale offline non è disponibile su questo dispositivo.
+  - lib/services/voice_input_service.dart:111
+
+## 0763
+Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.
+  - lib/screens/account_context_home_screen.dart:214
+
+## 0764
+Il rimborso deve essere maggiore di zero.
+  - lib/services/data_integrity_service.dart:131
+
+## 0765
+Il rimborso supera il residuo di ${Money.fromCents(remaining).toStringAsFixed(2)} ${state.currency}.
+  - lib/services/data_integrity_service.dart:135
+
+## 0766
+Il saldo contribuisce al patrimonio totale
+  - lib/screens/account_management_screen.dart:196
+
+## 0767
+Il saldo del conto e il residuo dell’anticipo verranno ripristinati automaticamente.
+  - lib/screens/advances_screen.dart:561
+
+## 0768
+Il saldo del conto verrà ricalcolato automaticamente.
+  - lib/screens/transaction_screens.dart:91
+
+## 0769
+Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.
+  - lib/screens/settings_screen.dart:46
+
+## 0770
+Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server DadaFinanza.
+  - lib/screens/voice_settings_screen.dart:122
+
+## 0771
+Il trasferimento deve arrivare al conto collegato all’obiettivo.
+  - lib/services/goal_ledger_service.dart:105
+
+## 0772
+Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.
+  - lib/screens/transaction_screens.dart:210
+
+## 0773
+Il trasferimento richiede due conti diversi.
+  - lib/data/app_database.dart:1160
+  - lib/data/app_database.dart:1179
+  - lib/data/app_database.dart:1381
+
+## 0774
+Immediato
+  - lib/services/security_service.dart:8
+
+## 0775
+Impedisce nuovi movimenti sul conto
+  - lib/screens/account_management_screen.dart:221
+
+## 0776
+Importa CSV
+  - lib/screens/data_management_screen.dart:365
+
+## 0777
+Importa movimenti
+  - lib/screens/data_management_screen.dart:51
+
+## 0778
+Importazione non riuscita: $error
+  - lib/screens/data_management_screen.dart:469
+
+## 0779
+Importazione…
+  - lib/screens/data_management_screen.dart:438
+
+## 0780
+Importi rapidi
+  - lib/screens/android_widgets_screen.dart:95
+
+## 0781
+Importo
+  - lib/screens/advances_screen.dart:854
+  - lib/screens/planning_screens.dart:1283
+  - lib/screens/planning_screens.dart:564
+  - lib/screens/transaction_screens.dart:533
+
+## 0782
+IMPORTO
+  - lib/screens/quick_add_page.dart:1240
+
+## 0783
+Importo crescente
+  - lib/screens/account_context_transactions_screen.dart:427
+  - lib/screens/root_screen.dart:1315
+
+## 0784
+Importo decrescente
+  - lib/screens/account_context_transactions_screen.dart:423
+  - lib/screens/root_screen.dart:1319
+
+## 0785
+Importo max.
+  - lib/screens/root_screen.dart:1231
+  - lib/screens/rules_management_screen.dart:341
+
+## 0786
+Importo min.
+  - lib/screens/root_screen.dart:1219
+  - lib/screens/rules_management_screen.dart:329
+
+## 0787
+Importo obiettivo
+  - lib/screens/planning_screens.dart:838
+
+## 0788
+Importo opzionale
+  - lib/screens/preset_management_screen.dart:289
+
+## 0789
+Importo restituito
+  - lib/screens/advances_screen.dart:1178
+
+## 0790
+Importo ricevuto
+  - lib/screens/advances_screen.dart:1177
+
+## 0791
+importo uguale al residuo
+  - lib/services/advance_service.dart:748
+
+## 0792
+importo vicino al residuo
+  - lib/services/advance_service.dart:751
+
+## 0793
+Imposta limiti giornalieri, settimanali, mensili o annuali.
+  - lib/screens/planning_screens.dart:34
+
+## 0794
+Imposta PIN locale
+  - lib/screens/local_privacy_screen.dart:94
+
+## 0795
+Imposta un limite per sapere quanto puoi ancora spendere nel periodo.
+  - lib/screens/planning_screens.dart:215
+
+## 0796
+Imposta un limite per sapere quanto puoi ancora spendere.
+  - lib/screens/polished_shell.dart:651
+
+## 0797
+Impostazioni
+  - lib/screens/account_context_home_screen.dart:131
+  - lib/screens/canonical_shell.dart:236
+  - lib/screens/home_screen.dart:95
+  - lib/screens/personal_settings_screen.dart:31
+  - lib/screens/polished_shell.dart:166
+  - lib/screens/root_screen.dart:124
+
+## 0798
+Impostazioni conto
+  - lib/screens/account_management_screen.dart:181
+
+## 0799
+In anticipo · ritmo realistico ${moneyFor(state, plan.realisticWeekly)}/settimana
+  - lib/screens/planning_screens.dart:767
+
+## 0800
+In ascolto
+  - lib/screens/quick_add_page.dart:1883
+
+## 0801
+In linea · circa ${moneyFor(state, plan.realisticWeekly)}/settimana è sostenibile
+  - lib/screens/planning_screens.dart:769
+
+## 0802
+In raccolta
+  - lib/screens/root_screen.dart:532
+
+## 0803
+Include ${moneyFor(state, Money.fromCents(sourceAdvance.originalAmountCents))} anticipati a ${person?.name ?? 
+  - lib/screens/root_screen.dart:1449
+
+## 0804
+Include anticipi, rimborsi e restituzioni.
+  - lib/screens/root_screen.dart:1288
+
+## 0805
+Includi
+  - lib/screens/rules_management_screen.dart:403
+  - lib/screens/rules_management_screen.dart:414
+
+## 0806
+Includi nel patrimonio
+  - lib/screens/account_management_screen.dart:195
+  - lib/screens/account_screens.dart:284
+  - lib/screens/account_screens.dart:654
+
+## 0807
+Includi nelle statistiche
+  - lib/screens/account_management_screen.dart:203
+  - lib/screens/account_screens.dart:292
+  - lib/screens/account_screens.dart:664
+  - lib/screens/quick_add_page.dart:1582
+  - lib/screens/root_screen.dart:973
+  - lib/screens/transaction_screens.dart:282
+
+## 0808
+Indicatori
+  - lib/screens/root_screen.dart:1666
+
+## 0809
+Inizia dal primo movimento
+  - lib/screens/polished_shell.dart:353
+
+## 0810
+Inizio
+  - lib/screens/planning_screens.dart:432
+
+## 0811
+Inizio ${hideValues ? 
+  - lib/screens/account_context_analytics_screen.dart:1083
+
+## 0812
+Inizio mese finanziario
+  - lib/screens/personal_settings_screen.dart:328
+  - lib/screens/personal_settings_screen.dart:87
+
+## 0813
+Inserimento
+  - lib/screens/personal_settings_screen.dart:123
+
+## 0814
+Inserimento vocale
+  - lib/screens/personal_settings_screen.dart:126
+  - lib/screens/voice_settings_screen.dart:52
+
+## 0815
+Inserisci il nome della persona.
+  - lib/services/advance_service.dart:116
+  - lib/services/advance_service.dart:48
+  - lib/services/advance_service.dart:96
+
+## 0816
+Inserisci il PIN locale per continuare.
+  - lib/widgets/app_lock_gate.dart:132
+
+## 0817
+Inserisci la password usata per creare il backup.
+  - lib/screens/data_management_screen.dart:317
+
+## 0818
+Inserisci prima l’importo totale.
+  - lib/screens/quick_add_page.dart:1429
+
+## 0819
+Inserisci un importo maggiore di 0.
+  - lib/screens/quick_add_page.dart:838
+
+## 0820
+Inserisci un importo valido entro il residuo e scegli un conto.
+  - lib/screens/advances_screen.dart:1231
+
+## 0821
+Inserisci una parte oppure usa tutto l’importo.
+  - lib/screens/quick_add_page.dart:1420
+
+## 0822
+INTEGER
+  - lib/data/app_database.dart:268
+  - lib/data/app_database.dart:273
+  - lib/data/app_database.dart:295
+  - lib/data/app_database.dart:409
+  - lib/data/app_database.dart:411
+  - lib/data/app_database.dart:412
+  - lib/data/app_database.dart:413
+  - lib/data/app_database.dart:414
+  - lib/data/app_database.dart:415
+  - lib/data/app_database.dart:420
+  - lib/data/app_database.dart:426
+  - lib/services/finance_schema_service.dart:19
+  - lib/services/finance_schema_service.dart:20
+  - lib/services/finance_schema_service.dart:22
+  - lib/services/finance_schema_service.dart:23
+  - lib/services/finance_schema_service.dart:30
+  - lib/services/finance_schema_service.dart:31
+  - lib/services/finance_schema_service.dart:32
+  - lib/services/finance_schema_service.dart:33
+  - lib/services/finance_schema_service.dart:34
+  - lib/services/finance_schema_service.dart:35
+  - lib/services/finance_schema_service.dart:36
+  - lib/services/finance_schema_service.dart:37
+  - lib/services/finance_schema_service.dart:96
+
+## 0823
+INTEGER NOT NULL DEFAULT 0
+  - lib/data/app_database.dart:224
+  - lib/data/app_database.dart:230
+  - lib/data/app_database.dart:236
+  - lib/data/app_database.dart:242
+  - lib/data/app_database.dart:249
+  - lib/data/app_database.dart:255
+  - lib/data/app_database.dart:279
+  - lib/data/app_database.dart:285
+  - lib/data/app_database.dart:300
+  - lib/data/app_database.dart:432
+  - lib/services/finance_schema_service.dart:42
+  - lib/services/finance_schema_service.dart:48
+
+## 0824
+INTEGER NOT NULL DEFAULT 1
+  - lib/data/app_database.dart:218
+  - lib/data/app_database.dart:266
+
+## 0825
+Interessi
+  - lib/widgets/ui_helpers.dart:513
+
+## 0826
+Internet
+  - lib/widgets/ui_helpers.dart:446
+
+## 0827
+Investimenti
+  - lib/models/models.dart:30
+  - lib/widgets/ui_helpers.dart:644
+
+## 0828
+Investimento
+  - lib/widgets/ui_helpers.dart:507
+
+## 0829
+is_system = 0
+  - lib/data/app_database.dart:1808
+  - lib/services/backup_service.dart:79
+
+## 0830
+is_system = 1
+  - lib/data/app_database.dart:1809
+  - lib/services/csv_service.dart:248
+
+## 0831
+is_system, is_archived, id
+  - lib/data/app_database.dart:870
+
+## 0832
+IT
+  - lib/main.dart:137
+
+## 0833
+it_IT · comandi brevi per movimenti finanziari
+  - lib/screens/voice_settings_screen.dart:112
+
+## 0834
+Italiano (Italia)
+  - lib/screens/voice_settings_screen.dart:110
+
+## 0835
+key = ?
+  - lib/data/app_database.dart:1764
+  - lib/data/app_database.dart:357
+  - lib/services/finance_schema_service.dart:104
+
+## 0836
+La categoria non è compatibile con il tipo della regola.
+  - lib/services/rule_service.dart:46
+
+## 0837
+La categoria non è compatibile con l’aggiustamento.
+  - lib/services/advance_service.dart:676
+
+## 0838
+La divisione in categorie è disponibile per le spese.
+  - lib/services/data_integrity_service.dart:147
+
+## 0839
+La mia parte
+  - lib/screens/quick_add_page.dart:1449
+
+## 0840
+La posizione verrà chiusa come annullata.
+  - lib/screens/advances_screen.dart:435
+
+## 0841
+La previsione di fine mese è sotto la soglia che hai impostato. Apri Pianifica per i dettagli.
+  - lib/services/notification_service.dart:290
+
+## 0842
+La quota anticipata deve essere maggiore di 0 e minore o uguale al totale.
+  - lib/screens/quick_add_page.dart:860
+
+## 0843
+La regola aggiornerà ${preview.count} movimenti corrispondenti. I saldi vengono ricalcolati se cambia il conto.
+  - lib/screens/rules_management_screen.dart:235
+
+## 0844
+La somma delle divisioni deve coincidere con il totale.
+  - lib/data/app_database.dart:1411
+  - lib/services/data_integrity_service.dart:155
+
+## 0845
+La stima comportamentale è comunque inclusa nel saldo previsto sopra.
+  - lib/screens/planning_screens.dart:1627
+
+## 0846
+La tua parte e la quota anticipata devono coincidere con il totale.
+  - lib/services/advance_service.dart:315
+
+## 0847
+Lascia vuoto per un backup non cifrato.
+  - lib/screens/data_management_screen.dart:316
+
+## 0848
+last_seen DESC, sample_count DESC
+  - lib/data/app_database.dart:908
+
+## 0849
+Lavanderia
+  - lib/widgets/ui_helpers.dart:87
+
+## 0850
+Lavori casa
+  - lib/widgets/ui_helpers.dart:488
+
+## 0851
+Lavoro
+  - lib/widgets/ui_helpers.dart:353
+  - lib/widgets/ui_helpers.dart:730
+
+## 0852
+Lavoro e formazione
+  - lib/widgets/ui_helpers.dart:342
+  - lib/widgets/ui_helpers.dart:348
+  - lib/widgets/ui_helpers.dart:354
+  - lib/widgets/ui_helpers.dart:360
+  - lib/widgets/ui_helpers.dart:366
+  - lib/widgets/ui_helpers.dart:372
+  - lib/widgets/ui_helpers.dart:378
+  - lib/widgets/ui_helpers.dart:384
+
+## 0853
+Le categorie compariranno qui quando registri movimenti.
+  - lib/screens/polished_shell.dart:948
+
+## 0854
+Le metriche principali restano in alto. Riattiva altri widget dalla personalizzazione Home.
+  - lib/screens/home_screen.dart:191
+
+## 0855
+Le notifiche possono essere disattivate in qualsiasi momento.
+  - lib/screens/privacy_policy_screen.dart:56
+
+## 0856
+Le persone servono solo per organizzare gli anticipi e restano sul dispositivo.
+  - lib/screens/advances_screen.dart:1305
+
+## 0857
+Leggermente indietro · sostenibili ${moneyFor(state, plan.realisticWeekly)}/settimana, richiesti ${moneyFor(state, plan.mathematicalWeekly)}/settimana
+  - lib/screens/planning_screens.dart:771
+
+## 0858
+Libri
+  - lib/widgets/ui_helpers.dart:304
+
+## 0859
+Limite
+  - lib/screens/planning_screens.dart:390
+
+## 0860
+Lingua
+  - lib/screens/voice_settings_screen.dart:106
+
+## 0861
+linked_account_id = ?
+  - lib/data/app_database.dart:1014
+  - lib/services/data_integrity_service.dart:197
+
+## 0862
+Lista
+  - lib/screens/account_context_transactions_screen.dart:172
+
+## 0863
+Livello microfono attivo
+  - lib/screens/quick_add_page.dart:1929
+
+## 0864
+Livello microfono in pausa
+  - lib/screens/quick_add_page.dart:1929
+
+## 0865
+Lo storico di un anticipo chiuso non è modificabile.
+  - lib/services/advance_service.dart:144
+
+## 0866
+Lo storico si costruisce automaticamente durante l’uso.
+  - lib/screens/root_screen.dart:1931
+
+## 0867
+Locale
+  - lib/screens/data_management_screen.dart:56
+
+## 0868
+locale. Se abiliti il recognizer di sistema, audio o testo 
+  - lib/screens/privacy_policy_screen.dart:40
+
+## 0869
+Lunedì
+  - lib/screens/personal_settings_screen.dart:290
+  - lib/screens/personal_settings_screen.dart:82
+
+## 0870
+L’importo deve essere maggiore di 0.
+  - lib/services/advance_service.dart:783
+
+## 0871
+L’importo supera il residuo di ${Money.fromCents(remaining).toStringAsFixed(2)} $currency.
+  - lib/services/advance_service.dart:411
+
+## 0872
+L’importo supera il residuo disponibile.
+  - lib/services/advance_service.dart:481
+
+## 0873
+L’inserimento vocale è disattivato nelle Impostazioni.
+  - lib/screens/quick_add_page.dart:374
+
+## 0874
+L’obiettivo collegato non è più disponibile.
+  - lib/screens/quick_add_page.dart:875
+
+## 0875
+L’obiettivo non ha un conto collegato.
+  - lib/services/goal_ledger_service.dart:88
+
+## 0876
+L’obiettivo verrà eliminato. Conti e movimenti non saranno modificati.
+  - lib/screens/planning_screens.dart:683
+
+## 0877
+Mai riconciliato
+  - lib/screens/account_management_screen.dart:172
+
+## 0878
+Manifest backup non leggibile.
+  - lib/services/backup_service.dart:124
+
+## 0879
+Manifest backup non valido.
+  - lib/services/backup_service.dart:129
+
+## 0880
+Margine prudenziale budget: ${moneyFor(state, budgetReserve)}/settimana.
+  - lib/screens/planning_screens.dart:786
+
+## 0881
+Media giornaliera del mese
+  - lib/screens/root_screen.dart:543
+
+## 0882
+Media spesa giornaliera
+  - lib/models/models.dart:90
+  - lib/screens/root_screen.dart:1668
+
+## 0883
+media spesa giornaliera questo mese
+  - lib/screens/canonical_shell.dart:743
+
+## 0884
+Medico
+  - lib/widgets/ui_helpers.dart:212
+
+## 0885
+Medio
+  - lib/screens/settings_screen.dart:486
+
+## 0886
+memorizzati sul dispositivo e non vengono inviati a server 
+  - lib/screens/privacy_policy_screen.dart:23
+
+## 0887
+Mensile
+  - lib/screens/planning_screens.dart:1204
+  - lib/screens/planning_screens.dart:1387
+  - lib/screens/planning_screens.dart:340
+  - lib/screens/transaction_screens.dart:227
+  - lib/services/smart_finance_engine.dart:342
+
+## 0888
+Mese
+  - lib/screens/account_context_analytics_screen.dart:42
+  - lib/screens/canonical_shell.dart:889
+  - lib/screens/polished_shell.dart:880
+  - lib/screens/root_screen.dart:1571
+  - lib/widgets/home_dashboard_widget.dart:377
+
+## 0889
+Metro
+  - lib/widgets/ui_helpers.dart:133
+
+## 0890
+Mi hanno anticipato
+  - lib/models/advance_models.dart:15
+  - lib/screens/advances_screen.dart:834
+
+## 0891
+Mi hanno saldato
+  - lib/screens/advances_screen.dart:323
+  - lib/screens/advances_screen.dart:371
+
+## 0892
+Microfono
+  - lib/screens/privacy_policy_screen.dart:37
+
+## 0893
+Migrazione v6 non valida: riferimenti esterni incoerenti.
+  - lib/data/app_database.dart:667
+
+## 0894
+Minuti
+  - lib/screens/quick_add_page.dart:1546
+
+## 0895
+MMM
+  - lib/screens/account_context_analytics_screen.dart:594
+  - lib/screens/home_screen.dart:418
+
+## 0896
+MMM yy
+  - lib/screens/account_context_analytics_screen.dart:608
+
+## 0897
+MMMM yyyy
+  - lib/screens/account_context_home_screen.dart:105
+  - lib/screens/canonical_shell.dart:213
+  - lib/screens/home_screen.dart:69
+  - lib/screens/polished_shell.dart:132
+  - lib/screens/root_screen.dart:90
+
+## 0898
+Modifica
+  - lib/screens/advances_screen.dart:1367
+  - lib/screens/advances_screen.dart:456
+  - lib/screens/advances_screen.dart:569
+  - lib/screens/category_management_screen.dart:226
+  - lib/screens/planning_screens.dart:1141
+  - lib/screens/planning_screens.dart:304
+  - lib/screens/planning_screens.dart:691
+  - lib/screens/preset_management_screen.dart:115
+  - lib/screens/quick_add_page.dart:705
+  - lib/screens/rules_management_screen.dart:114
+  - lib/screens/transaction_screens.dart:250
+
+## 0899
+Modifica anticipo
+  - lib/screens/advances_screen.dart:1041
+
+## 0900
+Modifica budget
+  - lib/screens/planning_screens.dart:376
+
+## 0901
+Modifica categoria
+  - lib/screens/category_management_screen.dart:38
+  - lib/screens/category_management_screen.dart:495
+
+## 0902
+Modifica conto
+  - lib/screens/account_management_screen.dart:479
+  - lib/screens/account_screens.dart:266
+  - lib/screens/account_screens.dart:554
+
+## 0903
+Modifica e gestisci ${selectedAccount.name}
+  - lib/screens/account_context_home_screen.dart:254
+
+## 0904
+Modifica movimento
+  - lib/screens/quick_add_page.dart:1135
+
+## 0905
+Modifica nome, icona, colore e nota
+  - lib/screens/account_management_screen.dart:189
+
+## 0906
+Modifica obiettivo
+  - lib/screens/planning_screens.dart:824
+
+## 0907
+Modifica persona
+  - lib/screens/advances_screen.dart:1419
+  - lib/screens/advances_screen.dart:1559
+
+## 0908
+Modifica preset
+  - lib/screens/preset_management_screen.dart:187
+
+## 0909
+Modifica regola
+  - lib/screens/rules_management_screen.dart:285
+
+## 0910
+Modifica ricorrenza
+  - lib/screens/planning_screens.dart:1261
+
+## 0911
+Monete
+  - lib/widgets/ui_helpers.dart:588
+
+## 0912
+Mostra centesimi
+  - lib/screens/personal_settings_screen.dart:73
+
+## 0913
+Mostra prima i pattern, mantenendo sempre la conferma.
+  - lib/screens/settings_screen.dart:184
+
+## 0914
+Mostra saldi
+  - lib/screens/account_context_home_screen.dart:112
+  - lib/screens/canonical_shell.dart:227
+  - lib/screens/home_screen.dart:76
+  - lib/screens/polished_shell.dart:139
+  - lib/screens/root_screen.dart:105
+
+## 0915
+Mostra saldo
+  - lib/screens/account_screens.dart:298
+
+## 0916
+Mostra tutte
+  - lib/widgets/quick_suggestion_strip.dart:22
+
+## 0917
+Mostra “Completa” solo quando la confidenza è sufficiente.
+  - lib/screens/settings_screen.dart:55
+
+## 0918
+Mostra, nascondi, ridimensiona e riordina i widget
+  - lib/screens/personal_settings_screen.dart:169
+
+## 0919
+Moto
+  - lib/widgets/ui_helpers.dart:151
+
+## 0920
+movement-category-$draftType-$draftCategory
+  - lib/screens/account_context_transactions_screen.dart:351
+
+## 0921
+Movimenti
+  - lib/screens/advances_screen.dart:1481
+  - lib/screens/app_shell.dart:149
+  - lib/screens/canonical_shell.dart:64
+  - lib/screens/data_management_screen.dart:190
+  - lib/screens/polished_shell.dart:64
+  - lib/screens/root_screen.dart:63
+  - lib/screens/root_screen.dart:932
+
+## 0922
+movimenti da assegnare
+  - lib/screens/canonical_shell.dart:765
+  - lib/screens/root_screen.dart:569
+
+## 0923
+Movimenti da assegnare
+  - lib/models/models.dart:93
+
+## 0924
+Movimenti del conto esportati.
+  - lib/screens/account_management_screen.dart:445
+
+## 0925
+Movimenti recenti
+  - lib/screens/account_screens.dart:459
+  - lib/screens/category_management_screen.dart:540
+
+## 0926
+Movimenti, split, budget, regole e apprendimento verranno spostati nella categoria scelta.
+  - lib/screens/category_management_screen.dart:371
+
+## 0927
+Movimento
+  - lib/screens/transaction_screens.dart:138
+
+## 0928
+Movimento aggiornato.
+  - lib/screens/quick_add_page.dart:963
+
+## 0929
+Movimento collegato non trovato.
+  - lib/services/advance_service.dart:490
+
+## 0930
+movimento da assegnare
+  - lib/screens/canonical_shell.dart:764
+  - lib/screens/root_screen.dart:568
+
+## 0931
+Movimento duplicato.
+  - lib/screens/transaction_screens.dart:154
+
+## 0932
+Movimento già collegato a un anticipo.
+  - lib/services/advance_service.dart:619
+
+## 0933
+Movimento maggiore
+  - lib/screens/root_screen.dart:1687
+
+## 0934
+Movimento non trovato
+  - lib/screens/transaction_screens.dart:129
+
+## 0935
+Movimento non trovato.
+  - lib/services/advance_service.dart:599
+
+## 0936
+Movimento ricorrente
+  - lib/screens/transaction_screens.dart:217
+
+## 0937
+Musica
+  - lib/widgets/ui_helpers.dart:298
+  - lib/widgets/ui_helpers.dart:746
+
+## 0938
+name = ? AND is_system = 1
+  - lib/data/app_database.dart:844
+  - lib/data/app_database.dart:924
+
+## 0939
+Nasconde gli importi finanziari nelle viste principali.
+  - lib/screens/personal_settings_screen.dart:51
+
+## 0940
+Nasconde il conto mantenendo tutto lo storico
+  - lib/screens/account_management_screen.dart:258
+
+## 0941
+Nasconde il saldo di questo conto
+  - lib/screens/account_management_screen.dart:213
+
+## 0942
+Nascondi altre opzioni
+  - lib/screens/account_screens.dart:644
+
+## 0943
+Nascondi contenuti sensibili
+  - lib/screens/local_privacy_screen.dart:211
+
+## 0944
+Nascondi dettagli
+  - lib/screens/quick_add_page.dart:1571
+
+## 0945
+Nascondi saldi
+  - lib/screens/account_context_home_screen.dart:112
+  - lib/screens/canonical_shell.dart:227
+  - lib/screens/home_screen.dart:76
+  - lib/screens/polished_shell.dart:139
+  - lib/screens/root_screen.dart:105
+
+## 0946
+Nascondi saldi nell’app
+  - lib/screens/personal_settings_screen.dart:49
+
+## 0947
+Nascondi saldo
+  - lib/screens/account_management_screen.dart:212
+  - lib/screens/account_screens.dart:298
+
+## 0948
+Nascondi saldo del conto
+  - lib/screens/account_screens.dart:674
+
+## 0949
+nella destinazione scelta da te.
+  - lib/screens/privacy_policy_screen.dart:72
+
+## 0950
+Nessun anticipo aperto
+  - lib/screens/advances_screen.dart:1327
+
+## 0951
+Nessun anticipo compatibile con questo movimento.
+  - lib/screens/quick_add_page.dart:593
+
+## 0952
+Nessun anticipo con questa persona.
+  - lib/screens/advances_screen.dart:1483
+
+## 0953
+Nessun anticipo registrato.
+  - lib/screens/advances_screen.dart:131
+
+## 0954
+Nessun assistente cloud DadaFinanza
+  - lib/screens/voice_settings_screen.dart:120
+
+## 0955
+Nessun budget
+  - lib/screens/canonical_shell.dart:568
+  - lib/screens/planning_screens.dart:213
+  - lib/screens/root_screen.dart:281
+  - lib/screens/root_screen.dart:448
+
+## 0956
+Nessun budget attivo
+  - lib/screens/canonical_shell.dart:1081
+
+## 0957
+Nessun confronto
+  - lib/screens/root_screen.dart:407
+
+## 0958
+Nessun conto
+  - lib/screens/account_management_screen.dart:46
+  - lib/screens/account_screens.dart:47
+  - lib/screens/canonical_shell.dart:344
+  - lib/screens/root_screen.dart:356
+  - lib/widgets/home_dashboard_widget.dart:182
+
+## 0959
+Nessun conto ancora
+  - lib/screens/polished_shell.dart:333
+
+## 0960
+Nessun conto collegato
+  - lib/screens/planning_screens.dart:898
+
+## 0961
+Nessun dato
+  - lib/screens/canonical_shell.dart:642
+  - lib/screens/root_screen.dart:1653
+  - lib/screens/root_screen.dart:426
+
+## 0962
+Nessun dato nel periodo
+  - lib/screens/account_context_analytics_screen.dart:345
+  - lib/screens/canonical_shell.dart:1023
+  - lib/screens/polished_shell.dart:946
+
+## 0963
+Nessun elemento disponibile.
+  - lib/widgets/transaction_metadata_fields.dart:496
+
+## 0964
+Nessun evento puntuale
+  - lib/screens/planning_screens.dart:1625
+
+## 0965
+Nessun limite
+  - lib/screens/polished_shell.dart:648
+
+## 0966
+Nessun movimento
+  - lib/screens/account_context_analytics_screen.dart:1224
+  - lib/screens/account_context_home_screen.dart:292
+  - lib/screens/account_context_transactions_screen.dart:203
+  - lib/screens/account_context_transactions_screen.dart:613
+  - lib/screens/account_screens.dart:465
+  - lib/screens/polished_shell.dart:1060
+  - lib/screens/root_screen.dart:1068
+
+## 0967
+Nessun obiettivo
+  - lib/screens/planning_screens.dart:615
+  - lib/screens/root_screen.dart:514
+
+## 0968
+Nessun obiettivo attivo
+  - lib/screens/canonical_shell.dart:693
+
+## 0969
+Nessun pagamento previsto
+  - lib/screens/root_screen.dart:477
+
+## 0970
+Nessun pattern ancora
+  - lib/screens/settings_screen.dart:245
+
+## 0971
+Nessun preset
+  - lib/screens/preset_management_screen.dart:58
+
+## 0972
+Nessun risultato
+  - lib/screens/account_context_transactions_screen.dart:204
+  - lib/screens/root_screen.dart:1069
+
+## 0973
+Nessun servizio di riconoscimento vocale disponibile.
+  - lib/services/voice_input_service.dart:118
+
+## 0974
+Nessuna
+  - lib/screens/advances_screen.dart:1065
+  - lib/screens/advances_screen.dart:650
+  - lib/screens/advances_screen.dart:670
+  - lib/screens/advances_screen.dart:903
+  - lib/screens/planning_screens.dart:1445
+  - lib/screens/polished_shell.dart:663
+
+## 0975
+Nessuna categoria
+  - lib/screens/category_management_screen.dart:191
+  - lib/screens/planning_screens.dart:1369
+
+## 0976
+Nessuna entrata da mostrare nel periodo
+  - lib/widgets/home_dashboard_widget.dart:564
+
+## 0977
+Nessuna notifica
+  - lib/screens/advances_screen.dart:194
+
+## 0978
+Nessuna persona
+  - lib/screens/advances_screen.dart:1303
+
+## 0979
+Nessuna persona trovata.
+  - lib/screens/advances_screen.dart:133
+  - lib/screens/advances_screen.dart:1761
+
+## 0980
+Nessuna regola
+  - lib/screens/rules_management_screen.dart:42
+
+## 0981
+Nessuna ricorrenza
+  - lib/screens/planning_screens.dart:1058
+
+## 0982
+Nessuna scadenza
+  - lib/screens/planning_screens.dart:915
+  - lib/screens/root_screen.dart:499
+
+## 0983
+Nessuna scadenza configurata
+  - lib/screens/canonical_shell.dart:672
+
+## 0984
+Nessuna scadenza prevista
+  - lib/screens/polished_shell.dart:373
+
+## 0985
+Nessuna scadenza prevista per questo conto
+  - lib/screens/account_context_home_screen.dart:313
+
+## 0986
+Nessuna sezione aggiuntiva
+  - lib/screens/account_context_home_screen.dart:212
+
+## 0987
+Nessuna spesa da mostrare nel periodo
+  - lib/widgets/home_dashboard_widget.dart:563
+
+## 0988
+Nessuno
+  - lib/screens/advances_screen.dart:1084
+  - lib/screens/advances_screen.dart:926
+  - lib/screens/polished_shell.dart:677
+
+## 0989
+Netto
+  - lib/screens/root_screen.dart:1631
+
+## 0990
+next_date ASC
+  - lib/data/app_database.dart:887
+
+## 0991
+next_date ASC, id ASC
+  - lib/services/recurring_execution_service.dart:14
+
+## 0992
+Nome
+  - lib/screens/account_management_screen.dart:484
+  - lib/screens/account_screens.dart:561
+  - lib/screens/advances_screen.dart:1567
+  - lib/screens/advances_screen.dart:1898
+  - lib/screens/category_management_screen.dart:44
+  - lib/screens/planning_screens.dart:1275
+  - lib/screens/planning_screens.dart:382
+  - lib/screens/planning_screens.dart:830
+  - lib/screens/preset_management_screen.dart:193
+  - lib/screens/rules_management_screen.dart:291
+  - lib/widgets/ui_helpers.dart:1048
+
+## 0993
+nome ${person.name} nella descrizione
+  - lib/services/advance_service.dart:760
+
+## 0994
+Nome, icona e nota
+  - lib/screens/account_management_screen.dart:186
+
+## 0995
+Non assegnati
+  - lib/screens/root_screen.dart:1031
+
+## 0996
+Non assegnato
+  - lib/screens/quick_add_page.dart:1064
+  - lib/screens/quick_add_page.dart:1362
+  - lib/screens/root_screen.dart:1445
+  - lib/screens/transaction_screens.dart:332
+  - lib/services/csv_service.dart:181
+  - lib/services/csv_service.dart:254
+  - lib/services/csv_service.dart:363
+  - lib/services/csv_service.dart:91
+  - lib/widgets/ui_helpers.dart:703
+
+## 0997
+Non cambiare
+  - lib/screens/rules_management_screen.dart:354
+  - lib/screens/rules_management_screen.dart:373
+  - lib/screens/rules_management_screen.dart:401
+  - lib/screens/rules_management_screen.dart:412
+
+## 0998
+Non ci sono ancora movimenti per questo conto.
+  - lib/screens/account_context_home_screen.dart:293
+
+## 0999
+Non disponibile su questo dispositivo.
+  - lib/screens/local_privacy_screen.dart:165
+
+## 1000
+Non ho capito l’importo.
+  - lib/services/voice_transaction_parser.dart:36
+
+## 1001
+Non ho riconosciuto parole. Puoi ricominciare.
+  - lib/screens/quick_add_page.dart:1826
+
+## 1002
+Non recuperato
+  - lib/screens/advances_screen.dart:326
+  - lib/screens/advances_screen.dart:381
+  - lib/screens/advances_screen.dart:617
+
+## 1003
+Non risultano movimenti per questa categoria nel periodo.
+  - lib/screens/polished_shell.dart:1062
+
+## 1004
+Non suggerire
+  - lib/screens/quick_add_page.dart:701
+
+## 1005
+Non suggerire più per questo testo
+  - lib/screens/quick_add_page.dart:716
+
+## 1006
+Non valide
+  - lib/screens/data_management_screen.dart:371
+
+## 1007
+Non verrà restituito
+  - lib/screens/advances_screen.dart:601
+
+## 1008
+Non verrà restituito?
+  - lib/screens/advances_screen.dart:732
+
+## 1009
+Non è chiaro quali conti usare per il trasferimento.
+  - lib/services/voice_transaction_parser.dart:81
+
+## 1010
+Non è questo
+  - lib/screens/quick_add_page.dart:1218
+
+## 1011
+Nota
+  - lib/screens/advances_screen.dart:578
+  - lib/screens/transaction_screens.dart:362
+
+## 1012
+Nota opzionale
+  - lib/screens/account_management_screen.dart:552
+  - lib/screens/account_screens.dart:683
+  - lib/screens/advances_screen.dart:1057
+  - lib/screens/advances_screen.dart:1216
+  - lib/screens/advances_screen.dart:950
+  - lib/screens/preset_management_screen.dart:296
+
+## 1013
+note, obiettivi, budget, regole e Smart Suggestions vengono 
+  - lib/screens/privacy_policy_screen.dart:22
+
+## 1014
+Notifica ${DateFormat(
+  - lib/screens/advances_screen.dart:202
+
+## 1015
+Notifica domani
+  - lib/screens/advances_screen.dart:201
+
+## 1016
+Notifica oggi
+  - lib/screens/advances_screen.dart:200
+
+## 1017
+Notifica scaduta
+  - lib/screens/advances_screen.dart:199
+
+## 1018
+notification_advance_${advance.id}_remaining
+  - lib/services/notification_service.dart:221
+
+## 1019
+notification_budget_${budget.id}_level
+  - lib/services/notification_service.dart:145
+
+## 1020
+notification_goal_${goal.id}_state
+  - lib/services/notification_service.dart:181
+
+## 1021
+Notifiche
+  - lib/screens/notification_settings_screen.dart:96
+  - lib/screens/privacy_policy_screen.dart:53
+
+## 1022
+Notifiche locali
+  - lib/screens/notification_settings_screen.dart:87
+  - lib/screens/personal_settings_screen.dart:118
+
+## 1023
+Numero movimenti
+  - lib/screens/root_screen.dart:1680
+
+## 1024
+Nuova
+  - lib/screens/advances_screen.dart:1780
+
+## 1025
+Nuova categoria
+  - lib/screens/category_management_screen.dart:146
+  - lib/screens/quick_add_page.dart:1021
+  - lib/widgets/ui_helpers.dart:1040
+
+## 1026
+Nuova persona
+  - lib/screens/advances_screen.dart:1890
+
+## 1027
+Nuova regola
+  - lib/screens/rules_management_screen.dart:285
+  - lib/screens/rules_management_screen.dart:33
+
+## 1028
+Nuova ricorrenza
+  - lib/screens/planning_screens.dart:1022
+  - lib/screens/planning_screens.dart:1067
+  - lib/screens/planning_screens.dart:1261
+
+## 1029
+Nuovo anticipo
+  - lib/screens/advances_screen.dart:1476
+  - lib/screens/advances_screen.dart:820
+  - lib/screens/app_shell.dart:109
+
+## 1030
+Nuovo budget
+  - lib/screens/planning_screens.dart:201
+  - lib/screens/planning_screens.dart:376
+
+## 1031
+Nuovo conto
+  - lib/screens/account_management_screen.dart:27
+  - lib/screens/account_screens.dart:23
+  - lib/screens/account_screens.dart:554
+  - lib/screens/quick_add_page.dart:1092
+
+## 1032
+Nuovo movimento
+  - lib/screens/account_context_transactions_screen.dart:212
+  - lib/screens/app_shell.dart:109
+  - lib/screens/canonical_shell.dart:135
+  - lib/screens/polished_shell.dart:44
+  - lib/screens/quick_add_page.dart:1135
+  - lib/screens/root_screen.dart:1082
+  - lib/screens/root_screen.dart:43
+
+## 1033
+Nuovo movimento. Tieni premuto per preset e scorciatoie.
+  - lib/screens/canonical_shell.dart:46
+
+## 1034
+Nuovo obiettivo
+  - lib/screens/planning_screens.dart:603
+  - lib/screens/planning_screens.dart:824
+
+## 1035
+Nuovo preset
+  - lib/screens/preset_management_screen.dart:187
+  - lib/screens/preset_management_screen.dart:44
+
+## 1036
+Obiettivi
+  - lib/models/models.dart:88
+  - lib/screens/canonical_shell.dart:691
+  - lib/screens/planning_screens.dart:56
+  - lib/screens/planning_screens.dart:600
+  - lib/screens/polished_shell.dart:676
+  - lib/services/notification_service.dart:191
+
+## 1037
+Obiettivi fuori ritmo
+  - lib/screens/notification_settings_screen.dart:122
+
+## 1038
+Obiettivo
+  - lib/widgets/ui_helpers.dart:662
+
+## 1039
+Obiettivo da rivedere
+  - lib/services/notification_service.dart:185
+
+## 1040
+Obiettivo non trovato.
+  - lib/services/goal_ledger_service.dart:50
+  - lib/services/goal_ledger_service.dart:85
+
+## 1041
+Obiettivo: ${linkedGoal.name}
+  - lib/screens/quick_add_page.dart:1480
+
+## 1042
+Oggi
+  - lib/screens/account_context_analytics_screen.dart:40
+  - lib/widgets/home_dashboard_widget.dart:375
+
+## 1043
+Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.
+  - lib/screens/android_widgets_screen.dart:69
+
+## 1044
+Ogni parte deve avere un importo maggiore di zero.
+  - lib/services/data_integrity_service.dart:164
+
+## 1045
+Ogni parte richiede una categoria di spesa valida.
+  - lib/services/data_integrity_service.dart:161
+
+## 1046
+Operazione irreversibile dopo la conferma.
+  - lib/screens/data_management_screen.dart:75
+
+## 1047
+Ora
+  - lib/screens/quick_add_page.dart:1538
+  - lib/screens/quick_add_page.dart:1545
+
+## 1048
+Ordina
+  - lib/screens/account_context_transactions_screen.dart:411
+  - lib/screens/root_screen.dart:1303
+
+## 1049
+Organizzate per tema e ricercabili
+  - lib/widgets/ui_helpers.dart:1076
+
+## 1050
+Organizzazione
+  - lib/screens/personal_settings_screen.dart:145
+
+## 1051
+Pagato da
+  - lib/screens/advances_screen.dart:880
+
+## 1052
+Palestra
+  - lib/widgets/ui_helpers.dart:224
+
+## 1053
+Panetteria
+  - lib/widgets/ui_helpers.dart:81
+
+## 1054
+Parcheggio
+  - lib/widgets/ui_helpers.dart:187
+
+## 1055
+Parla normalmente…
+  - lib/screens/quick_add_page.dart:1885
+
+## 1056
+Parrucchiere
+  - lib/widgets/ui_helpers.dart:249
+
+## 1057
+Parser locale · on-device quando disponibile
+  - lib/screens/personal_settings_screen.dart:127
+
+## 1058
+Parti dal primo conto oppure registra subito un movimento e assegnalo in seguito.
+  - lib/screens/home_screen.dart:556
+  - lib/screens/polished_shell.dart:498
+
+## 1059
+Parti dal primo conto oppure registra subito un movimento.
+  - lib/screens/account_context_home_screen.dart:607
+
+## 1060
+Parzialmente regolato
+  - lib/screens/advances_screen.dart:613
+
+## 1061
+Password
+  - lib/screens/data_management_screen.dart:314
+
+## 1062
+Password backup
+  - lib/screens/data_management_screen.dart:129
+
+## 1063
+Password opzionale
+  - lib/screens/data_management_screen.dart:314
+
+## 1064
+password, il file non è cifrato da DadaFinanza.
+  - lib/screens/privacy_policy_screen.dart:64
+
+## 1065
+PATRIMONIO
+  - lib/screens/account_context_home_screen.dart:458
+  - lib/screens/account_context_home_screen.dart:551
+  - lib/screens/account_management_screen.dart:36
+  - lib/screens/account_screens.dart:33
+  - lib/screens/canonical_shell.dart:252
+  - lib/screens/home_screen.dart:430
+  - lib/screens/polished_shell.dart:183
+  - lib/widgets/home_dashboard_widget.dart:32
+
+## 1066
+PATRIMONIO ATTUALE
+  - lib/screens/root_screen.dart:1904
+
+## 1067
+Patrimonio corrente
+  - lib/screens/root_screen.dart:332
+
+## 1068
+Patrimonio incluso nel totale
+  - lib/screens/canonical_shell.dart:596
+  - lib/screens/root_screen.dart:248
+  - lib/widgets/home_dashboard_widget.dart:36
+
+## 1069
+Patrimonio netto
+  - lib/models/models.dart:78
+  - lib/screens/root_screen.dart:1899
+
+## 1070
+Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.
+  - lib/screens/settings_screen.dart:408
+
+## 1071
+Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.
+  - lib/screens/settings_screen.dart:216
+
+## 1072
+Pedaggio
+  - lib/widgets/ui_helpers.dart:193
+
+## 1073
+Per assegnare una categoria la regola deve avere un tipo compatibile.
+  - lib/app_state.dart:1087
+
+## 1074
+Per assegnare una categoria la regola deve avere un tipo Spesa o Entrata.
+  - lib/services/rule_service.dart:40
+
+## 1075
+Per conto
+  - lib/screens/account_context_analytics_screen.dart:382
+  - lib/screens/canonical_shell.dart:1054
+
+## 1076
+Per proteggere lo storico finanziario un conto con movimenti o ricorrenze non viene eliminato. Puoi archiviarlo e continuare a consultare i dati.
+  - lib/screens/account_management_screen.dart:400
+
+## 1077
+Per te
+  - lib/screens/account_context_home_screen.dart:182
+  - lib/screens/canonical_shell.dart:327
+  - lib/screens/home_screen.dart:163
+  - lib/screens/polished_shell.dart:291
+
+## 1078
+Periodo
+  - lib/screens/planning_screens.dart:396
+
+## 1079
+Periodo $label. Usa le frecce o scorri il grafico per cambiare periodo.
+  - lib/screens/account_context_analytics_screen.dart:1116
+
+## 1080
+Periodo $rangeLabel, totale $totalLabel
+  - lib/widgets/home_dashboard_widget.dart:897
+
+## 1081
+Periodo $rangeLabel. Tocca per cambiare periodo, pressione lunga per intervallo personalizzato.
+  - lib/widgets/home_dashboard_widget.dart:914
+
+## 1082
+Periodo precedente
+  - lib/screens/account_context_analytics_screen.dart:1123
+  - lib/widgets/home_dashboard_widget.dart:908
+
+## 1083
+Periodo successivo
+  - lib/screens/account_context_analytics_screen.dart:1140
+  - lib/widgets/home_dashboard_widget.dart:942
+
+## 1084
+Permessi
+  - lib/screens/privacy_policy_screen.dart:27
+
+## 1085
+Permesso microfono negato o riconoscimento non disponibile.
+  - lib/screens/quick_add_page.dart:1736
+
+## 1086
+Permesso notifiche non concesso.
+  - lib/screens/notification_settings_screen.dart:69
+
+## 1087
+Permetti “Non assegnato”
+  - lib/screens/personal_settings_screen.dart:192
+
+## 1088
+Persona
+  - lib/screens/advances_screen.dart:1048
+  - lib/screens/advances_screen.dart:1298
+  - lib/screens/advances_screen.dart:1731
+  - lib/screens/advances_screen.dart:862
+  - lib/screens/quick_add_page.dart:615
+  - lib/widgets/ui_helpers.dart:709
+
+## 1089
+Persona non disponibile.
+  - lib/services/advance_service.dart:794
+
+## 1090
+Persona non trovata
+  - lib/screens/advances_screen.dart:1394
+
+## 1091
+Persona non trovata.
+  - lib/services/advance_service.dart:104
+  - lib/services/advance_service.dart:130
+  - lib/services/advance_service.dart:90
+
+## 1092
+Personalizza
+  - lib/screens/root_screen.dart:161
+
+## 1093
+Personalizza dashboard
+  - lib/screens/root_screen.dart:114
+
+## 1094
+Personalizza Home
+  - lib/screens/account_context_home_screen.dart:223
+  - lib/screens/home_screen.dart:200
+  - lib/screens/home_screen.dart:23
+  - lib/screens/personal_settings_screen.dart:168
+  - lib/screens/settings_screen.dart:393
+  - lib/widgets/home_dashboard_widget.dart:17
+
+## 1095
+Personalizzato
+  - lib/screens/planning_screens.dart:342
+
+## 1096
+Persone
+  - lib/screens/advances_screen.dart:108
+  - lib/screens/advances_screen.dart:1294
+  - lib/widgets/ui_helpers.dart:709
+  - lib/widgets/ui_helpers.dart:710
+  - lib/widgets/ui_helpers.dart:715
+  - lib/widgets/ui_helpers.dart:721
+  - lib/widgets/ui_helpers.dart:727
+  - lib/widgets/ui_helpers.dart:729
+
+## 1097
+Pianifica
+  - lib/screens/app_shell.dart:164
+  - lib/screens/canonical_shell.dart:74
+  - lib/screens/polished_shell.dart:629
+  - lib/screens/polished_shell.dart:74
+  - lib/screens/root_screen.dart:73
+
+## 1098
+Pianificazione
+  - lib/screens/planning_screens.dart:23
+
+## 1099
+Pianificazione avanzata
+  - lib/screens/polished_shell.dart:704
+
+## 1100
+PIN
+  - lib/screens/local_privacy_screen.dart:105
+  - lib/widgets/app_lock_gate.dart:146
+
+## 1101
+PIN locale
+  - lib/screens/local_privacy_screen.dart:173
+
+## 1102
+PIN non corretto.
+  - lib/widgets/app_lock_gate.dart:93
+
+## 1103
+Più categorie corrispondono a ciò che hai detto.
+  - lib/services/voice_transaction_parser.dart:57
+
+## 1104
+Più conti corrispondono a ciò che hai detto.
+  - lib/services/voice_transaction_parser.dart:104
+
+## 1105
+Più recenti
+  - lib/screens/account_context_transactions_screen.dart:415
+  - lib/screens/root_screen.dart:1307
+
+## 1106
+Più usati
+  - lib/widgets/transaction_metadata_fields.dart:467
+
+## 1107
+Più vecchi
+  - lib/screens/account_context_transactions_screen.dart:419
+  - lib/screens/root_screen.dart:1311
+
+## 1108
+Portafoglio
+  - lib/widgets/ui_helpers.dart:544
+  - lib/widgets/ui_helpers.dart:576
+
+## 1109
+Portafoglio investimenti
+  - lib/widgets/ui_helpers.dart:650
+
+## 1110
+Portamonete
+  - lib/widgets/ui_helpers.dart:594
+
+## 1111
+position ASC, id ASC
+  - lib/services/quick_preset_service.dart:77
+
+## 1112
+Possibile ricorrenza
+  - lib/screens/account_context_home_screen.dart:392
+  - lib/screens/canonical_shell.dart:444
+  - lib/screens/home_screen.dart:275
+
+## 1113
+Possibili duplicati
+  - lib/screens/data_management_screen.dart:372
+
+## 1114
+possono essere protetti con password; se scegli un backup senza 
+  - lib/screens/privacy_policy_screen.dart:63
+
+## 1115
+possono essere trattati dal servizio vocale configurato su 
+  - lib/screens/privacy_policy_screen.dart:41
+
+## 1116
+Potrai scegliere il conto in seguito
+  - lib/screens/quick_add_page.dart:1065
+
+## 1117
+Potrebbe essere il rimborso dell’anticipo di ${person?.name ?? 
+  - lib/screens/quick_add_page.dart:1207
+
+## 1118
+Precompilata da ${detected.sampleCount} movimenti simili. Controlla e conferma.
+  - lib/screens/planning_screens.dart:1268
+
+## 1119
+Preferita
+  - lib/screens/category_management_screen.dart:204
+  - lib/widgets/ui_helpers.dart:749
+
+## 1120
+Preferite e recenti
+  - lib/screens/quick_add_page.dart:1318
+
+## 1121
+Preferiti
+  - lib/widgets/transaction_metadata_fields.dart:464
+
+## 1122
+Premi di nuovo Indietro per chiudere.
+  - lib/screens/app_shell.dart:72
+
+## 1123
+Prepagata
+  - lib/models/models.dart:29
+  - lib/widgets/ui_helpers.dart:613
+
+## 1124
+Prepara trasferimento · ${moneyFor(state, plan.realisticWeekly)}
+  - lib/screens/planning_screens.dart:741
+
+## 1125
+Preparo il microfono…
+  - lib/screens/quick_add_page.dart:1843
+
+## 1126
+Preset
+  - lib/screens/app_shell.dart:346
+  - lib/screens/app_shell.dart:359
+  - lib/screens/canonical_shell.dart:169
+
+## 1127
+Preset rapidi
+  - lib/screens/personal_settings_screen.dart:140
+  - lib/screens/preset_management_screen.dart:41
+
+## 1128
+Prevenzione
+  - lib/widgets/ui_helpers.dart:218
+
+## 1129
+Previsione basata sui ricorrenti attivi
+  - lib/screens/root_screen.dart:557
+
+## 1130
+Previsione fine mese
+  - lib/models/models.dart:92
+
+## 1131
+Previsioni
+  - lib/screens/planning_screens.dart:1603
+  - lib/services/notification_service.dart:294
+
+## 1132
+Previsioni e calendario
+  - lib/screens/planning_screens.dart:68
+  - lib/screens/polished_shell.dart:691
+
+## 1133
+Previsto
+  - lib/screens/planning_screens.dart:1595
+
+## 1134
+Previsto da abitudini
+  - lib/screens/planning_screens.dart:133
+
+## 1135
+Prima del ripristino viene creato un safety backup temporaneo. Se il controllo integrità fallisce, i dati attuali vengono ripristinati.
+  - lib/screens/data_management_screen.dart:195
+
+## 1136
+Primo giorno settimana
+  - lib/screens/personal_settings_screen.dart:79
+
+## 1137
+Principio di base
+  - lib/screens/privacy_policy_screen.dart:19
+
+## 1138
+priority DESC, id ASC
+  - lib/data/app_database.dart:904
+
+## 1139
+Privacy
+  - lib/screens/voice_settings_screen.dart:116
+
+## 1140
+Privacy e dati
+  - lib/screens/personal_settings_screen.dart:112
+  - lib/screens/privacy_policy_screen.dart:10
+
+## 1141
+Privacy locale
+  - lib/screens/local_privacy_screen.dart:146
+  - lib/screens/personal_settings_screen.dart:103
+
+## 1142
+Privacy widget
+  - lib/screens/android_widgets_screen.dart:113
+
+## 1143
+Proattiva
+  - lib/screens/settings_screen.dart:157
+
+## 1144
+profilazione pubblicitaria o analytics di terze parti.
+  - lib/screens/privacy_policy_screen.dart:78
+
+## 1145
+Promemoria
+  - lib/screens/advances_screen.dart:1081
+  - lib/screens/advances_screen.dart:504
+  - lib/screens/advances_screen.dart:642
+  - lib/screens/advances_screen.dart:923
+
+## 1146
+Promemoria Anticipi
+  - lib/services/notification_service.dart:256
+
+## 1147
+Promemoria e dettagli
+  - lib/screens/advances_screen.dart:895
+
+## 1148
+Promemoria e scadenza
+  - lib/screens/advances_screen.dart:420
+
+## 1149
+Promemoria locali per soldi da ricevere o restituire
+  - lib/services/notification_service.dart:239
+  - lib/services/notification_service.dart:264
+
+## 1150
+Promemoria per movimenti ricorrenti
+  - lib/services/notification_service.dart:126
+
+## 1151
+Propone di configurare pattern settimanali, mensili o annuali.
+  - lib/screens/settings_screen.dart:105
+
+## 1152
+Prossima data
+  - lib/screens/planning_screens.dart:1405
+
+## 1153
+Prossime scadenze
+  - lib/screens/account_context_home_screen.dart:301
+  - lib/screens/canonical_shell.dart:670
+  - lib/screens/polished_shell.dart:361
+  - lib/screens/polished_shell.dart:661
+
+## 1154
+Prossimi 30 giorni
+  - lib/screens/planning_screens.dart:27
+
+## 1155
+Prossimi pagamenti
+  - lib/models/models.dart:86
+
+## 1156
+Prossimi ricorrenti
+  - lib/screens/account_screens.dart:472
+
+## 1157
+Proteggi il backup?
+  - lib/screens/data_management_screen.dart:86
+
+## 1158
+Prova a modificare ricerca o filtri.
+  - lib/screens/account_context_transactions_screen.dart:207
+  - lib/screens/root_screen.dart:1072
+
+## 1159
+Prova regola
+  - lib/screens/rules_management_screen.dart:126
+  - lib/screens/rules_management_screen.dart:184
+
+## 1160
+Pulizie
+  - lib/widgets/ui_helpers.dart:93
+
+## 1161
+Puoi avere, per esempio, un widget Revolut/Bar e un altro Contanti/Benzina con importi diversi.
+  - lib/screens/android_widgets_screen.dart:127
+
+## 1162
+Puoi cambiarla in qualsiasi momento
+  - lib/screens/category_management_screen.dart:51
+
+## 1163
+Puoi cancellare i dati finanziari locali dalle impostazioni. 
+  - lib/screens/privacy_policy_screen.dart:69
+
+## 1164
+Puoi creare il primo conto oppure registrare subito un movimento come Non assegnato.
+  - lib/screens/root_screen.dart:185
+
+## 1165
+Puoi unire solo categorie dello stesso tipo.
+  - lib/services/data_integrity_service.dart:230
+
+## 1166
+Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.
+  - lib/screens/quick_add_page.dart:1377
+
+## 1167
+Quale categoria intendevi?
+  - lib/screens/quick_add_page.dart:525
+
+## 1168
+Quale conto intendevi?
+  - lib/screens/quick_add_page.dart:557
+
+## 1169
+Qualsiasi
+  - lib/screens/account_context_transactions_screen.dart:375
+  - lib/screens/account_context_transactions_screen.dart:396
+  - lib/screens/root_screen.dart:1243
+  - lib/screens/root_screen.dart:1263
+
+## 1170
+Qualsiasi tipo
+  - lib/screens/rules_management_screen.dart:306
+
+## 1171
+Questa categoria è usata in $splitCount divisioni di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.
+  - lib/screens/category_management_screen.dart:422
+
+## 1172
+Questa categoria è usata in divisioni di spesa. Uniscila in un’altra categoria prima di eliminarla.
+  - lib/data/app_database.dart:1093
+
+## 1173
+Questa categoria è usata in una divisione di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.
+  - lib/screens/category_management_screen.dart:421
+
+## 1174
+Questa persona ha anticipi ancora aperti. Chiudili prima di archiviarla.
+  - lib/services/advance_service.dart:77
+
+## 1175
+Questa regola corrisponde a ${preview.count} movimenti.
+  - lib/screens/rules_management_screen.dart:191
+
+## 1176
+Questa regola corrisponde a 1 movimento.
+  - lib/screens/rules_management_screen.dart:190
+
+## 1177
+Questa spesa include un anticipo
+  - lib/screens/quick_add_page.dart:1375
+
+## 1178
+Questo anticipo è già chiuso.
+  - lib/services/advance_service.dart:172
+  - lib/services/advance_service.dart:405
+  - lib/services/advance_service.dart:470
+  - lib/services/advance_service.dart:592
+  - lib/services/advance_service.dart:652
+
+## 1179
+Questo conto contiene storico o ricorrenze. Archivialo invece di eliminarlo.
+  - lib/data/app_database.dart:1007
+
+## 1180
+Questo conto contiene storico. Archivialo invece di eliminarlo.
+  - lib/services/data_integrity_service.dart:190
+
+## 1181
+Questo mese
+  - lib/screens/account_screens.dart:437
+  - lib/screens/category_management_screen.dart:514
+
+## 1182
+Questo movimento è un rimborso collegato
+  - lib/screens/quick_add_page.dart:1609
+
+## 1183
+Questo trasferimento aggiornerà automaticamente il progresso.
+  - lib/screens/quick_add_page.dart:1482
+
+## 1184
+Quick ${item.quickOrder! + 1}
+  - lib/screens/category_management_screen.dart:205
+
+## 1185
+Quick Capture
+  - lib/screens/android_widgets_screen.dart:85
+
+## 1186
+Quick slot
+  - lib/screens/category_management_screen.dart:280
+
+## 1187
+Quick slot widget
+  - lib/screens/category_management_screen.dart:158
+
+## 1188
+quick_category_$index
+  - lib/services/widget_service.dart:35
+
+## 1189
+Quindicinale
+  - lib/screens/account_context_analytics_screen.dart:230
+  - lib/screens/canonical_shell.dart:867
+  - lib/screens/planning_screens.dart:1386
+  - lib/services/recurring_execution_service.dart:124
+  - lib/services/smart_finance_engine.dart:339
+  - lib/services/smart_finance_engine.dart:559
+  - lib/services/smart_finance_engine.dart:626
+
+## 1190
+Quota anticipata
+  - lib/screens/quick_add_page.dart:1417
+
+## 1191
+Quotidiano
+  - lib/widgets/ui_helpers.dart:100
+  - lib/widgets/ui_helpers.dart:102
+  - lib/widgets/ui_helpers.dart:103
+  - lib/widgets/ui_helpers.dart:104
+  - lib/widgets/ui_helpers.dart:49
+  - lib/widgets/ui_helpers.dart:51
+  - lib/widgets/ui_helpers.dart:52
+  - lib/widgets/ui_helpers.dart:57
+  - lib/widgets/ui_helpers.dart:63
+  - lib/widgets/ui_helpers.dart:69
+  - lib/widgets/ui_helpers.dart:71
+  - lib/widgets/ui_helpers.dart:76
+  - lib/widgets/ui_helpers.dart:82
+  - lib/widgets/ui_helpers.dart:88
+  - lib/widgets/ui_helpers.dart:94
+
+## 1192
+Rafforza pattern con fasce di importo simili.
+  - lib/screens/settings_screen.dart:81
+
+## 1193
+Raggruppata
+  - lib/screens/account_context_transactions_screen.dart:178
+
+## 1194
+REAL
+  - lib/services/finance_schema_service.dart:21
+
+## 1195
+receipt-${DateTime.now().microsecondsSinceEpoch}$safeExtension
+  - lib/services/attachment_service.dart:29
+
+## 1196
+Recenti
+  - lib/widgets/transaction_metadata_fields.dart:465
+
+## 1197
+recurring-category-$type-$categoryId
+  - lib/screens/planning_screens.dart:1363
+
+## 1198
+recurring-destination-$accountId-$toAccountId
+  - lib/screens/planning_screens.dart:1343
+
+## 1199
+recurring-source-$accountId-$type
+  - lib/screens/planning_screens.dart:1315
+
+## 1200
+recurring:${item.id}
+  - lib/services/notification_service.dart:132
+
+## 1201
+refund_of_transaction_id = ?
+  - lib/data/app_database.dart:1222
+
+## 1202
+Regalo
+  - lib/widgets/ui_helpers.dart:390
+
+## 1203
+Registra
+  - lib/screens/advances_screen.dart:751
+
+## 1204
+Registra movimento
+  - lib/screens/account_context_home_screen.dart:620
+  - lib/screens/home_screen.dart:572
+  - lib/screens/polished_shell.dart:513
+  - lib/screens/root_screen.dart:204
+
+## 1205
+Registra restituzione
+  - lib/screens/advances_screen.dart:1161
+  - lib/screens/advances_screen.dart:589
+
+## 1206
+Registra rimborso
+  - lib/screens/advances_screen.dart:1160
+  - lib/screens/advances_screen.dart:588
+  - lib/screens/transaction_screens.dart:270
+
+## 1207
+Registra velocemente e assegna il conto in seguito.
+  - lib/screens/personal_settings_screen.dart:194
+
+## 1208
+Regola attiva
+  - lib/screens/rules_management_screen.dart:392
+
+## 1209
+Regola manuale creata.
+  - lib/screens/settings_screen.dart:290
+
+## 1210
+Regolati
+  - lib/screens/canonical_shell.dart:1014
+
+## 1211
+Regole
+  - lib/screens/category_management_screen.dart:535
+
+## 1212
+Regole automatiche
+  - lib/screens/personal_settings_screen.dart:162
+  - lib/screens/rules_management_screen.dart:30
+
+## 1213
+Relax
+  - lib/widgets/ui_helpers.dart:243
+
+## 1214
+Rende nuovamente disponibile il conto
+  - lib/screens/account_management_screen.dart:257
+
+## 1215
+Rendi ricorrente
+  - lib/screens/transaction_screens.dart:275
+
+## 1216
+residui su ${moneyFor(state, advance.originalAmount)}
+  - lib/screens/advances_screen.dart:479
+
+## 1217
+Restano ${moneyFor(state, Money.fromCents(remaining))}. Vuoi registrarli come una tua entrata?
+  - lib/screens/advances_screen.dart:738
+
+## 1218
+Restano ${moneyFor(state, Money.fromCents(remaining))}. Vuoi registrarli come una tua spesa?
+  - lib/screens/advances_screen.dart:737
+
+## 1219
+Restituiti ${moneyFor(state, settlement.amount)}
+  - lib/screens/advances_screen.dart:537
+
+## 1220
+Restituito
+  - lib/screens/advances_screen.dart:324
+
+## 1221
+Restituito da
+  - lib/screens/advances_screen.dart:1188
+
+## 1222
+Restituzione a ${person?.name ?? 
+  - lib/screens/root_screen.dart:1411
+
+## 1223
+Ricevuta
+  - lib/screens/transaction_screens.dart:378
+
+## 1224
+Ricevuta allegata
+  - lib/screens/quick_add_page.dart:1597
+
+## 1225
+Ricevuta non disponibile
+  - lib/screens/transaction_screens.dart:388
+
+## 1226
+Ricevuti ${moneyFor(state, advance.originalAmount)}
+  - lib/screens/advances_screen.dart:520
+
+## 1227
+Ricevuti ${moneyFor(state, settlement.amount)}
+  - lib/screens/advances_screen.dart:536
+
+## 1228
+Ricevuto su
+  - lib/screens/advances_screen.dart:1187
+  - lib/screens/advances_screen.dart:881
+
+## 1229
+Richiede conferma prima di eliminare un movimento.
+  - lib/screens/personal_settings_screen.dart:96
+
+## 1230
+Richiede più esempi e una confidenza più alta.
+  - lib/screens/settings_screen.dart:180
+
+## 1231
+Ricomincia
+  - lib/screens/quick_add_page.dart:1862
+
+## 1232
+Riconcilia
+  - lib/screens/account_management_screen.dart:371
+
+## 1233
+Riconcilia saldo
+  - lib/screens/account_management_screen.dart:232
+  - lib/screens/account_management_screen.dart:318
+
+## 1234
+Riconciliazione saldo
+  - lib/services/data_integrity_service.dart:65
+
+## 1235
+Riconoscimento interrotto
+  - lib/screens/quick_add_page.dart:1838
+
+## 1236
+Riconoscimento vocale non disponibile.
+  - lib/screens/quick_add_page.dart:384
+
+## 1237
+Riconoscimento vocale non riuscito. Puoi ricominciare.
+  - lib/screens/quick_add_page.dart:1831
+
+## 1238
+Ricorda i soldi ancora da ricevere o restituire.
+  - lib/screens/notification_settings_screen.dart:131
+
+## 1239
+Ricorrenti
+  - lib/screens/planning_screens.dart:1019
+  - lib/screens/planning_screens.dart:44
+
+## 1240
+Ricorrenti di spesa ≈ ${moneyFor(state, recurringMonthly)}/mese.
+  - lib/screens/account_context_analytics_screen.dart:340
+  - lib/screens/canonical_shell.dart:977
+
+## 1241
+Ricorrenza attiva
+  - lib/screens/planning_screens.dart:1435
+
+## 1242
+Ricorrenza mensile creata. Puoi modificarla in Pianifica.
+  - lib/screens/transaction_screens.dart:239
+
+## 1243
+Riepilogo
+  - lib/screens/android_widgets_screen.dart:105
+
+## 1244
+Righe valide
+  - lib/screens/data_management_screen.dart:370
+
+## 1245
+Rileva ricorrenze
+  - lib/screens/settings_screen.dart:103
+
+## 1246
+Rilevate dalle tue abitudini
+  - lib/screens/planning_screens.dart:1034
+
+## 1247
+Rimane qui. Se continui a parlare, aggiorno la frase; usa ↻ per ricominciare da zero.
+  - lib/screens/quick_add_page.dart:1892
+
+## 1248
+Rimborsato ${moneyFor(state, refunded)}
+  - lib/screens/transaction_screens.dart:428
+
+## 1249
+Rimborso
+  - lib/widgets/ui_helpers.dart:519
+
+## 1250
+Rimborso collegato
+  - lib/screens/transaction_screens.dart:412
+
+## 1251
+Rimborso da ${person?.name ?? 
+  - lib/screens/root_screen.dart:1410
+
+## 1252
+Rimborso del movimento #${refundOf.id}
+  - lib/screens/transaction_screens.dart:413
+
+## 1253
+Rimborso non trovato.
+  - lib/services/advance_service.dart:466
+
+## 1254
+Rimuovi
+  - lib/screens/category_management_screen.dart:304
+  - lib/screens/transaction_screens.dart:540
+
+## 1255
+Rimuovi dai preferiti
+  - lib/widgets/transaction_metadata_fields.dart:524
+
+## 1256
+Rimuovi data
+  - lib/screens/planning_screens.dart:921
+
+## 1257
+Rimuovi data fine
+  - lib/screens/planning_screens.dart:1451
+
+## 1258
+Rimuovi date
+  - lib/screens/advances_screen.dart:694
+
+## 1259
+Rimuovi preferita
+  - lib/screens/category_management_screen.dart:231
+
+## 1260
+Rimuovi ricevuta
+  - lib/screens/quick_add_page.dart:799
+
+## 1261
+Rimuovi tag $value
+  - lib/widgets/transaction_metadata_fields.dart:307
+
+## 1262
+Riparazioni
+  - lib/widgets/ui_helpers.dart:482
+
+## 1263
+Ripeti
+  - lib/screens/quick_add_page.dart:1179
+
+## 1264
+Ripristina
+  - lib/screens/advances_screen.dart:1372
+  - lib/screens/data_management_screen.dart:209
+  - lib/screens/settings_screen.dart:400
+
+## 1265
+Ripristina backup
+  - lib/screens/data_management_screen.dart:36
+
+## 1266
+Ripristina conto
+  - lib/screens/account_management_screen.dart:253
+  - lib/screens/account_screens.dart:276
+
+## 1267
+Ripristino non riuscito: $error
+  - lib/screens/data_management_screen.dart:159
+
+## 1268
+Risparmio
+  - lib/models/models.dart:27
+  - lib/screens/account_context_analytics_screen.dart:284
+  - lib/screens/canonical_shell.dart:954
+  - lib/widgets/ui_helpers.dart:526
+  - lib/widgets/ui_helpers.dart:632
+
+## 1269
+Risparmio e investimenti
+  - lib/widgets/ui_helpers.dart:633
+  - lib/widgets/ui_helpers.dart:639
+  - lib/widgets/ui_helpers.dart:645
+  - lib/widgets/ui_helpers.dart:651
+  - lib/widgets/ui_helpers.dart:657
+  - lib/widgets/ui_helpers.dart:663
+
+## 1270
+rispetto al mese precedente
+  - lib/screens/canonical_shell.dart:630
+
+## 1271
+Ristorante
+  - lib/widgets/ui_helpers.dart:62
+
+## 1272
+Risultati
+  - lib/widgets/transaction_metadata_fields.dart:442
+
+## 1273
+Ritira
+  - lib/screens/planning_screens.dart:551
+
+## 1274
+Saldato
+  - lib/screens/advances_screen.dart:615
+
+## 1275
+Saldato su ${moneyFor(state, advance.originalAmount)}
+  - lib/screens/advances_screen.dart:478
+
+## 1276
+SALDO
+  - lib/screens/account_management_screen.dart:161
+
+## 1277
+Saldo
+  - lib/screens/android_widgets_screen.dart:75
+
+## 1278
+Saldo / riconciliazione
+  - lib/screens/account_screens.dart:585
+
+## 1279
+Saldo alle ${DateFormat(
+  - lib/screens/account_context_analytics_screen.dart:1062
+
+## 1280
+Saldo attuale: ${moneyFor(state, account.balance)}\nSaldo reale: ${moneyFor(state, actual)}\nDifferenza: ${moneyFor(state, difference, signed: true)}\n\nLa differenza sarà registrata come rettifica fuori dalle statistiche.
+  - lib/screens/account_management_screen.dart:362
+
+## 1281
+Saldo DadaFinanza: ${moneyFor(state, account.balance)}
+  - lib/screens/account_management_screen.dart:322
+
+## 1282
+Saldo finale ${DateFormat(
+  - lib/screens/account_context_analytics_screen.dart:1063
+
+## 1283
+Saldo iniziale
+  - lib/screens/account_screens.dart:584
+
+## 1284
+SALDO NETTO ANTICIPI
+  - lib/screens/advances_screen.dart:101
+
+## 1285
+Saldo previsto basso
+  - lib/screens/notification_settings_screen.dart:138
+  - lib/services/notification_service.dart:288
+
+## 1286
+Saldo reale
+  - lib/screens/account_management_screen.dart:332
+
+## 1287
+Saldo stimato tra ${forecast.days} giorni · ${forecast.historyWeeks} settimane di storico utile
+  - lib/screens/planning_screens.dart:124
+
+## 1288
+Saldo stimato tra 30 giorni: ${moneyFor(state, forecast.endingBalance)}
+  - lib/screens/polished_shell.dart:636
+
+## 1289
+Saldo stimato tra 30 giorni: ••••
+  - lib/screens/polished_shell.dart:635
+
+## 1290
+Saldo totale
+  - lib/models/models.dart:72
+
+## 1291
+Saldo, Quick Capture, importi rapidi e riepilogo configurabili
+  - lib/screens/personal_settings_screen.dart:176
+
+## 1292
+Salute
+  - lib/widgets/ui_helpers.dart:200
+
+## 1293
+Salute e persona
+  - lib/widgets/ui_helpers.dart:201
+  - lib/widgets/ui_helpers.dart:207
+  - lib/widgets/ui_helpers.dart:213
+  - lib/widgets/ui_helpers.dart:219
+  - lib/widgets/ui_helpers.dart:225
+  - lib/widgets/ui_helpers.dart:231
+  - lib/widgets/ui_helpers.dart:237
+  - lib/widgets/ui_helpers.dart:239
+  - lib/widgets/ui_helpers.dart:244
+  - lib/widgets/ui_helpers.dart:250
+  - lib/widgets/ui_helpers.dart:256
+
+## 1294
+Salva
+  - lib/screens/advances_screen.dart:1268
+  - lib/screens/advances_screen.dart:699
+
+## 1295
+Salva anticipo
+  - lib/screens/advances_screen.dart:995
+
+## 1296
+Salva backup DadaFinanza
+  - lib/screens/data_management_screen.dart:95
+
+## 1297
+Salva divisione
+  - lib/screens/transaction_screens.dart:596
+
+## 1298
+Salva modifiche
+  - lib/screens/account_management_screen.dart:573
+  - lib/screens/account_screens.dart:734
+  - lib/screens/advances_screen.dart:1103
+  - lib/screens/advances_screen.dart:1656
+  - lib/screens/category_management_screen.dart:123
+  - lib/screens/planning_screens.dart:1538
+  - lib/screens/planning_screens.dart:515
+  - lib/screens/planning_screens.dart:981
+  - lib/screens/quick_add_page.dart:1633
+  - lib/screens/rules_management_screen.dart:470
+
+## 1299
+Salva PIN
+  - lib/screens/local_privacy_screen.dart:128
+
+## 1300
+Salva preset
+  - lib/screens/preset_management_screen.dart:330
+
+## 1301
+Salva quick slot
+  - lib/screens/category_management_screen.dart:335
+
+## 1302
+Salva soglia
+  - lib/screens/notification_settings_screen.dart:164
+
+## 1303
+Salva un movimento ricorrente come scorciatoia
+  - lib/screens/app_shell.dart:363
+
+## 1304
+Sblocca
+  - lib/widgets/app_lock_gate.dart:156
+  - lib/widgets/app_lock_gate.dart:165
+
+## 1305
+Sblocca conto
+  - lib/screens/account_screens.dart:270
+
+## 1306
+Sblocca DadaFinanza per vedere i tuoi dati finanziari
+  - lib/services/security_service.dart:91
+
+## 1307
+Scadenza
+  - lib/screens/advances_screen.dart:1062
+  - lib/screens/advances_screen.dart:493
+  - lib/screens/advances_screen.dart:647
+  - lib/screens/advances_screen.dart:900
+
+## 1308
+Scadenza ${due.day}/${due.month}/${due.year}
+  - lib/services/notification_service.dart:257
+
+## 1309
+Scadenza domani
+  - lib/services/notification_service.dart:117
+
+## 1310
+Scadenze
+  - lib/services/notification_service.dart:125
+
+## 1311
+Scadenze ricorrenti
+  - lib/screens/notification_settings_screen.dart:106
+
+## 1312
+Scadenze, anticipi, budget, obiettivi e cash-flow
+  - lib/screens/personal_settings_screen.dart:119
+
+## 1313
+Scaduto
+  - lib/screens/advances_screen.dart:614
+
+## 1314
+Scaduto · da restituire
+  - lib/screens/advances_screen.dart:320
+
+## 1315
+Scaduto · da saldare
+  - lib/screens/advances_screen.dart:319
+
+## 1316
+Scatta foto
+  - lib/screens/quick_add_page.dart:782
+
+## 1317
+Scegli
+  - lib/screens/advances_screen.dart:1049
+  - lib/screens/planning_screens.dart:452
+
+## 1318
+Scegli categoria
+  - lib/screens/quick_add_page.dart:1349
+
+## 1319
+Scegli conto
+  - lib/screens/advances_screen.dart:1191
+  - lib/screens/advances_screen.dart:884
+  - lib/screens/quick_add_page.dart:1363
+  - lib/screens/quick_add_page.dart:1461
+
+## 1320
+Scegli dalla galleria
+  - lib/screens/quick_add_page.dart:788
+
+## 1321
+Scegli destinazione
+  - lib/screens/quick_add_page.dart:1469
+
+## 1322
+Scegli due conti diversi.
+  - lib/screens/quick_add_page.dart:845
+
+## 1323
+Scegli e ordina fino a quattro categorie.
+  - lib/screens/category_management_screen.dart:284
+
+## 1324
+Scegli fino a quattro categorie di spesa.
+  - lib/screens/category_management_screen.dart:159
+
+## 1325
+Scegli i widget che vuoi vedere nella Home.
+  - lib/screens/root_screen.dart:153
+
+## 1326
+Scegli icona
+  - lib/widgets/ui_helpers.dart:898
+
+## 1327
+Scegli la persona a cui hai anticipato i soldi.
+  - lib/screens/quick_add_page.dart:864
+
+## 1328
+Scegli l’icona del conto
+  - lib/screens/account_management_screen.dart:491
+
+## 1329
+Scegli l’icona della persona
+  - lib/screens/advances_screen.dart:1574
+  - lib/screens/advances_screen.dart:1905
+
+## 1330
+Scegli nel Quick Add
+  - lib/screens/preset_management_screen.dart:248
+  - lib/screens/preset_management_screen.dart:270
+
+## 1331
+Scegli o crea
+  - lib/screens/advances_screen.dart:864
+
+## 1332
+Scegli o crea una categoria.
+  - lib/screens/quick_add_page.dart:850
+
+## 1333
+Scegli o crea una persona
+  - lib/screens/quick_add_page.dart:1398
+
+## 1334
+Scegli per categoria
+  - lib/screens/account_screens.dart:593
+
+## 1335
+Scegli un conto o usa Non assegnato.
+  - lib/screens/quick_add_page.dart:841
+
+## 1336
+Scegli un conto per l’aggiustamento analitico.
+  - lib/services/advance_service.dart:660
+
+## 1337
+Scegli una categoria di spesa valida.
+  - lib/services/advance_service.dart:330
+
+## 1338
+Scegli una categoria.
+  - lib/services/advance_service.dart:662
+
+## 1339
+scenario atteso · dati locali
+  - lib/screens/canonical_shell.dart:757
+
+## 1340
+Schema
+  - lib/screens/data_management_screen.dart:188
+
+## 1341
+Schermata recenti
+  - lib/screens/local_privacy_screen.dart:207
+
+## 1342
+Scopo
+  - lib/widgets/ui_helpers.dart:666
+  - lib/widgets/ui_helpers.dart:671
+  - lib/widgets/ui_helpers.dart:673
+  - lib/widgets/ui_helpers.dart:678
+  - lib/widgets/ui_helpers.dart:684
+  - lib/widgets/ui_helpers.dart:690
+
+## 1343
+Scorciatoie
+  - lib/screens/app_shell.dart:336
+
+## 1344
+Scuola
+  - lib/widgets/ui_helpers.dart:341
+
+## 1345
+Scuro
+  - lib/screens/personal_settings_screen.dart:384
+  - lib/screens/personal_settings_screen.dart:42
+
+## 1346
+Se contiene storico potrai archiviarlo invece di eliminarlo
+  - lib/screens/account_management_screen.dart:280
+
+## 1347
+Se è un anticipo puro, il movimento di cassa originale verrà annullato. Le spese miste restano come acquisto personale.
+  - lib/screens/advances_screen.dart:436
+
+## 1348
+segna 
+  - lib/services/voice_transaction_parser.dart:241
+
+## 1349
+Segnali
+  - lib/screens/settings_screen.dart:64
+
+## 1350
+Segnali deboli: rafforzano una previsione, non la creano da soli.
+  - lib/screens/settings_screen.dart:93
+
+## 1351
+Seleziona 
+  - lib/screens/advances_screen.dart:1796
+
+## 1352
+Seleziona conto
+  - lib/widgets/account_context_selector.dart:25
+
+## 1353
+Seleziona ora
+  - lib/screens/quick_add_page.dart:1544
+
+## 1354
+Sensibilità
+  - lib/screens/settings_screen.dart:132
+  - lib/screens/settings_screen.dart:171
+
+## 1355
+Senza categoria
+  - lib/screens/data_management_screen.dart:496
+  - lib/screens/root_screen.dart:1439
+  - lib/screens/transaction_screens.dart:323
+  - lib/screens/transaction_screens.dart:49
+  - lib/services/account_context_service.dart:145
+  - lib/services/account_context_service.dart:154
+
+## 1356
+Separata dall’app
+  - lib/screens/android_widgets_screen.dart:117
+
+## 1357
+Servizi cloud
+  - lib/widgets/ui_helpers.dart:567
+
+## 1358
+Servono almeno 3 settimane di storico utile per un consiglio realistico.
+  - lib/screens/planning_screens.dart:765
+
+## 1359
+Servono almeno due categorie di spesa per dividere il movimento.
+  - lib/screens/transaction_screens.dart:450
+
+## 1360
+Servono più dati
+  - lib/screens/canonical_shell.dart:628
+
+## 1361
+Servono più dati per confrontare il periodo precedente.
+  - lib/screens/account_context_analytics_screen.dart:324
+  - lib/screens/canonical_shell.dart:970
+  - lib/screens/polished_shell.dart:927
+
+## 1362
+Servono più giorni di storico
+  - lib/screens/canonical_shell.dart:714
+
+## 1363
+Settimana
+  - lib/screens/account_context_analytics_screen.dart:41
+  - lib/screens/canonical_shell.dart:885
+  - lib/screens/polished_shell.dart:879
+  - lib/screens/root_screen.dart:1567
+  - lib/widgets/home_dashboard_widget.dart:376
+
+## 1364
+Settimanale
+  - lib/screens/account_context_analytics_screen.dart:229
+  - lib/screens/canonical_shell.dart:866
+  - lib/screens/planning_screens.dart:1385
+  - lib/screens/planning_screens.dart:339
+  - lib/services/recurring_execution_service.dart:123
+  - lib/services/smart_finance_engine.dart:336
+  - lib/services/smart_finance_engine.dart:558
+  - lib/services/smart_finance_engine.dart:625
+
+## 1365
+Shopping
+  - lib/widgets/ui_helpers.dart:262
+
+## 1366
+Shopping e tempo libero
+  - lib/widgets/ui_helpers.dart:263
+  - lib/widgets/ui_helpers.dart:269
+  - lib/widgets/ui_helpers.dart:275
+  - lib/widgets/ui_helpers.dart:281
+  - lib/widgets/ui_helpers.dart:287
+  - lib/widgets/ui_helpers.dart:293
+  - lib/widgets/ui_helpers.dart:299
+  - lib/widgets/ui_helpers.dart:305
+  - lib/widgets/ui_helpers.dart:311
+  - lib/widgets/ui_helpers.dart:317
+  - lib/widgets/ui_helpers.dart:323
+  - lib/widgets/ui_helpers.dart:329
+  - lib/widgets/ui_helpers.dart:335
+
+## 1367
+Sicurezza
+  - lib/widgets/ui_helpers.dart:494
+
+## 1368
+signature = ?
+  - lib/data/app_database.dart:1633
+  - lib/data/app_database.dart:1643
+  - lib/data/app_database.dart:1685
+  - lib/data/app_database.dart:1695
+
+## 1369
+Sistema
+  - lib/screens/personal_settings_screen.dart:382
+  - lib/screens/personal_settings_screen.dart:40
+  - lib/widgets/ui_helpers.dart:704
+
+## 1370
+Smart Suggestions
+  - lib/screens/personal_settings_screen.dart:132
+  - lib/screens/settings_screen.dart:41
+
+## 1371
+Soglia saldo previsto
+  - lib/screens/notification_settings_screen.dart:154
+
+## 1372
+Soglia salvata.
+  - lib/screens/notification_settings_screen.dart:209
+
+## 1373
+Soglie budget
+  - lib/screens/notification_settings_screen.dart:114
+
+## 1374
+Soglie dei budget personali
+  - lib/services/notification_service.dart:161
+
+## 1375
+Soldi da ricevere o da restituire
+  - lib/screens/app_shell.dart:378
+
+## 1376
+Solo Anticipi
+  - lib/screens/root_screen.dart:1286
+
+## 1377
+Solo con ricevuta
+  - lib/screens/root_screen.dart:1278
+
+## 1378
+Solo Non assegnati
+  - lib/screens/root_screen.dart:1296
+
+## 1379
+Solo quando la situazione cambia materialmente.
+  - lib/screens/notification_settings_screen.dart:123
+
+## 1380
+Solo sul dispositivo
+  - lib/screens/voice_settings_screen.dart:73
+
+## 1381
+Solo una spesa può ricevere un rimborso.
+  - lib/services/data_integrity_service.dart:124
+
+## 1382
+Sorriso
+  - lib/widgets/ui_helpers.dart:714
+
+## 1383
+source_account_id = ?
+  - lib/data/app_database.dart:1035
+  - lib/services/data_integrity_service.dart:215
+
+## 1384
+spazio privato dell’app; eventuali backup o CSV esportati restano 
+  - lib/screens/privacy_policy_screen.dart:71
+
+## 1385
+Spesa
+  - lib/models/models.dart:10
+  - lib/screens/account_context_home_screen.dart:508
+  - lib/screens/account_screens.dart:384
+  - lib/screens/canonical_shell.dart:144
+  - lib/screens/canonical_shell.dart:303
+  - lib/screens/home_screen.dart:133
+  - lib/screens/planning_screens.dart:1292
+  - lib/screens/polished_shell.dart:235
+  - lib/screens/quick_add_page.dart:1292
+  - lib/services/widget_service.dart:36
+  - lib/widgets/ui_helpers.dart:1059
+  - lib/widgets/ui_helpers.dart:52
+
+## 1386
+Spesa comportamentale stimata
+  - lib/screens/planning_screens.dart:137
+
+## 1387
+Spesa effettiva ${moneyFor(state, state.effectiveExpense(item))}
+  - lib/screens/transaction_screens.dart:430
+
+## 1388
+Spesa registrata.
+  - lib/screens/quick_add_page.dart:965
+
+## 1389
+Spese
+  - lib/screens/account_context_analytics_screen.dart:275
+  - lib/screens/account_context_home_screen.dart:478
+  - lib/screens/account_context_home_screen.dart:573
+  - lib/screens/account_screens.dart:446
+  - lib/screens/canonical_shell.dart:278
+  - lib/screens/canonical_shell.dart:946
+  - lib/screens/category_management_screen.dart:164
+  - lib/screens/polished_shell.dart:211
+  - lib/screens/polished_shell.dart:912
+  - lib/screens/root_screen.dart:1622
+
+## 1390
+Spese ${delta.abs().toStringAsFixed(0)}% 
+  - lib/screens/account_context_analytics_screen.dart:325
+
+## 1391
+Spese ${delta.abs().toStringAsFixed(0)}% ${delta <= 0 ? 
+  - lib/screens/canonical_shell.dart:971
+
+## 1392
+Spese del mese
+  - lib/models/models.dart:75
+
+## 1393
+Spese della settimana
+  - lib/models/models.dart:82
+
+## 1394
+Spese di oggi
+  - lib/models/models.dart:81
+
+## 1395
+Spese per conto
+  - lib/screens/root_screen.dart:1707
+
+## 1396
+Sport
+  - lib/widgets/ui_helpers.dart:740
+
+## 1397
+Sposta su conto
+  - lib/screens/root_screen.dart:878
+
+## 1398
+Stampa
+  - lib/widgets/ui_helpers.dart:383
+
+## 1399
+Statistiche
+  - lib/screens/rules_management_screen.dart:398
+  - lib/screens/transaction_screens.dart:355
+
+## 1400
+Stato
+  - lib/screens/advances_screen.dart:484
+
+## 1401
+Stima completamento: ${DateFormat(
+  - lib/screens/planning_screens.dart:777
+
+## 1402
+Stima fino a fine mese
+  - lib/screens/root_screen.dart:325
+  - lib/widgets/home_dashboard_widget.dart:66
+
+## 1403
+Stipendio
+  - lib/widgets/ui_helpers.dart:501
+
+## 1404
+Streaming
+  - lib/widgets/ui_helpers.dart:292
+
+## 1405
+Studio
+  - lib/widgets/ui_helpers.dart:689
+  - lib/widgets/ui_helpers.dart:734
+
+## 1406
+Su Android impedisce screenshot e anteprima dell’app nelle schermate recenti.
+  - lib/screens/local_privacy_screen.dart:213
+
+## 1407
+Suggerimenti automatici
+  - lib/screens/settings_screen.dart:53
+
+## 1408
+Suggerimenti obiettivi
+  - lib/screens/settings_screen.dart:117
+
+## 1409
+Supermercato
+  - lib/widgets/ui_helpers.dart:56
+
+## 1410
+Sviluppatore: DDone. Per richieste relative a privacy o supporto 
+  - lib/screens/privacy_policy_screen.dart:83
+
+## 1411
+Tag
+  - lib/screens/transaction_screens.dart:367
+  - lib/widgets/transaction_metadata_fields.dart:179
+  - lib/widgets/transaction_metadata_fields.dart:291
+
+## 1412
+Tag ${item.value}${item.favorite ? 
+  - lib/widgets/transaction_metadata_fields.dart:322
+
+## 1413
+Tasse
+  - lib/widgets/ui_helpers.dart:476
+
+## 1414
+Taxi
+  - lib/widgets/ui_helpers.dart:139
+
+## 1415
+Tecnologia
+  - lib/widgets/ui_helpers.dart:274
+
+## 1416
+Telefono
+  - lib/widgets/ui_helpers.dart:440
+
+## 1417
+Tema
+  - lib/screens/personal_settings_screen.dart:370
+  - lib/screens/personal_settings_screen.dart:38
+
+## 1418
+TEXT
+  - lib/data/app_database.dart:244
+  - lib/data/app_database.dart:294
+
+## 1419
+TEXT NOT NULL DEFAULT 'normal'
+  - lib/data/app_database.dart:395
+  - lib/services/finance_schema_service.dart:28
+
+## 1420
+TEXT NOT NULL DEFAULT 'other'
+  - lib/data/app_database.dart:212
+
+## 1421
+TEXT NOT NULL DEFAULT 'wallet'
+  - lib/data/app_database.dart:206
+
+## 1422
+Ti ascolto
+  - lib/screens/quick_add_page.dart:1842
+
+## 1423
+Ti suggerisco
+  - lib/screens/quick_add_page.dart:653
+
+## 1424
+Tipo
+  - lib/screens/account_context_transactions_screen.dart:331
+  - lib/screens/account_screens.dart:565
+  - lib/screens/preset_management_screen.dart:197
+  - lib/screens/root_screen.dart:1157
+  - lib/screens/rules_management_screen.dart:302
+
+## 1425
+to_account_id = ?
+  - lib/data/app_database.dart:1027
+  - lib/services/data_integrity_service.dart:209
+
+## 1426
+Tocca per creare un anticipo. Tieni premuto per le scorciatoie.
+  - lib/screens/app_shell.dart:111
+
+## 1427
+Tocca per una nuova spesa. Tieni premuto per preset e scorciatoie.
+  - lib/screens/app_shell.dart:112
+
+## 1428
+Tocca un preset per aprire il movimento già compilato.
+  - lib/screens/app_shell.dart:339
+
+## 1429
+Top tag
+  - lib/screens/root_screen.dart:1694
+
+## 1430
+Torta Spese/Entrate con periodo scorrevole e intervallo personalizzato.
+  - lib/screens/settings_screen.dart:432
+
+## 1431
+Totale
+  - lib/widgets/account_context_selector.dart:21
+  - lib/widgets/account_context_selector.dart:35
+
+## 1432
+transaction_id = ?
+  - lib/data/app_database.dart:1216
+  - lib/data/app_database.dart:1416
+
+## 1433
+Trasferimenti
+  - lib/services/account_context_service.dart:135
+
+## 1434
+Trasferimenti nelle statistiche
+  - lib/screens/personal_settings_screen.dart:203
+
+## 1435
+Trasferimento
+  - lib/models/models.dart:12
+  - lib/screens/planning_screens.dart:1300
+  - lib/screens/quick_add_page.dart:1303
+  - lib/screens/root_screen.dart:1438
+  - lib/screens/transaction_screens.dart:322
+  - lib/screens/transaction_screens.dart:48
+
+## 1436
+Trasferimento non trovato.
+  - lib/services/goal_ledger_service.dart:99
+
+## 1437
+Trasferimento registrato.
+  - lib/screens/quick_add_page.dart:967
+
+## 1438
+Trasferisci
+  - lib/screens/account_context_home_screen.dart:524
+  - lib/screens/account_screens.dart:420
+  - lib/screens/canonical_shell.dart:160
+  - lib/screens/canonical_shell.dart:319
+  - lib/screens/home_screen.dart:151
+  - lib/screens/polished_shell.dart:251
+
+## 1439
+Trasforma in entrata
+  - lib/screens/transaction_screens.dart:260
+
+## 1440
+Trasforma in spesa
+  - lib/screens/transaction_screens.dart:255
+
+## 1441
+Trasporti e viaggi
+  - lib/widgets/ui_helpers.dart:110
+  - lib/widgets/ui_helpers.dart:116
+  - lib/widgets/ui_helpers.dart:122
+  - lib/widgets/ui_helpers.dart:128
+  - lib/widgets/ui_helpers.dart:134
+  - lib/widgets/ui_helpers.dart:140
+  - lib/widgets/ui_helpers.dart:146
+  - lib/widgets/ui_helpers.dart:152
+  - lib/widgets/ui_helpers.dart:158
+  - lib/widgets/ui_helpers.dart:164
+  - lib/widgets/ui_helpers.dart:170
+  - lib/widgets/ui_helpers.dart:176
+  - lib/widgets/ui_helpers.dart:182
+  - lib/widgets/ui_helpers.dart:188
+  - lib/widgets/ui_helpers.dart:194
+
+## 1442
+Treno
+  - lib/widgets/ui_helpers.dart:127
+
+## 1443
+Trimestrale
+  - lib/screens/account_context_analytics_screen.dart:231
+  - lib/screens/canonical_shell.dart:868
+  - lib/screens/planning_screens.dart:1388
+  - lib/services/recurring_execution_service.dart:125
+  - lib/services/smart_finance_engine.dart:560
+  - lib/services/smart_finance_engine.dart:627
+
+## 1444
+Tutte
+  - lib/widgets/ui_helpers.dart:917
+
+## 1445
+Tutte le categorie
+  - lib/screens/account_context_transactions_screen.dart:358
+  - lib/screens/root_screen.dart:1199
+
+## 1446
+Tutte le spese
+  - lib/screens/planning_screens.dart:415
+
+## 1447
+Tutte locali e opt-in. Nessun dato lascia il dispositivo.
+  - lib/screens/notification_settings_screen.dart:98
+
+## 1448
+Tutti
+  - lib/screens/account_context_transactions_screen.dart:335
+  - lib/screens/canonical_shell.dart:340
+  - lib/screens/polished_shell.dart:327
+  - lib/screens/root_screen.dart:1161
+  - lib/screens/root_screen.dart:352
+  - lib/widgets/home_dashboard_widget.dart:176
+
+## 1449
+Tutti i conti
+  - lib/screens/root_screen.dart:1181
+
+## 1450
+Tutti i widget, grafici e personalizzazioni.
+  - lib/screens/polished_shell.dart:411
+
+## 1451
+Tutto l’importo
+  - lib/screens/quick_add_page.dart:1436
+
+## 1452
+type, CASE WHEN quick_order IS NULL THEN 999 ELSE quick_order END, name
+  - lib/data/app_database.dart:875
+
+## 1453
+Ultimi movimenti
+  - lib/models/models.dart:80
+  - lib/screens/account_context_home_screen.dart:288
+  - lib/screens/canonical_shell.dart:603
+  - lib/screens/polished_shell.dart:349
+
+## 1454
+Ultimo aggiornamento: 23 settembre 2026
+  - lib/screens/privacy_policy_screen.dart:15
+
+## 1455
+Ultimo controllo ${DateFormat(
+  - lib/screens/account_management_screen.dart:173
+
+## 1456
+Un promemoria il giorno prima.
+  - lib/screens/notification_settings_screen.dart:107
+
+## 1457
+Un trasferimento ricorrente richiede due conti diversi.
+  - lib/screens/planning_screens.dart:1483
+
+## 1458
+Una spesa condivisa richiede un conto reale.
+  - lib/screens/quick_add_page.dart:867
+
+## 1459
+Unire le categorie?
+  - lib/screens/category_management_screen.dart:392
+
+## 1460
+Unisci
+  - lib/screens/category_management_screen.dart:395
+
+## 1461
+Unisci categoria
+  - lib/screens/category_management_screen.dart:431
+
+## 1462
+Unisci in…
+  - lib/screens/category_management_screen.dart:238
+
+## 1463
+Unisci “${source.name}”
+  - lib/screens/category_management_screen.dart:366
+
+## 1464
+Università
+  - lib/widgets/ui_helpers.dart:347
+
+## 1465
+Usa da 4 a 8 cifre. Il PIN resta sul dispositivo.
+  - lib/screens/local_privacy_screen.dart:98
+
+## 1466
+Usa descrizione
+  - lib/screens/settings_screen.dart:67
+
+## 1467
+Usa esclusivamente il riconoscimento offline/on-device quando Android lo supporta.
+  - lib/screens/voice_settings_screen.dart:75
+
+## 1468
+Usa giorno e orario
+  - lib/screens/settings_screen.dart:91
+
+## 1469
+usa i contatti pubblicati su www.ddone.it.
+  - lib/screens/privacy_policy_screen.dart:84
+
+## 1470
+Usa i movimenti del conto nelle analytics
+  - lib/screens/account_management_screen.dart:204
+
+## 1471
+Usa il conto collegato all’obiettivo come destinazione.
+  - lib/screens/quick_add_page.dart:879
+
+## 1472
+Usa il pulsante + per registrare una spesa o un’entrata: analisi e previsioni nasceranno dai tuoi dati reali.
+  - lib/screens/polished_shell.dart:355
+
+## 1473
+Usa importo
+  - lib/screens/settings_screen.dart:79
+
+## 1474
+Usa impronta o biometria configurata nel dispositivo.
+  - lib/screens/local_privacy_screen.dart:164
+
+## 1475
+Usa la biometria del dispositivo per continuare.
+  - lib/widgets/app_lock_gate.dart:131
+
+## 1476
+Usa la previsione di fine mese e la tua soglia.
+  - lib/screens/notification_settings_screen.dart:139
+
+## 1477
+Usa nomi di conti e categorie, non ID SQLite.
+  - lib/screens/data_management_screen.dart:46
+
+## 1478
+Usa Non assegnato
+  - lib/screens/data_management_screen.dart:496
+  - lib/screens/data_management_screen.dart:509
+
+## 1479
+Usa questo
+  - lib/screens/quick_add_page.dart:1902
+
+## 1480
+Usa ultimo conto
+  - lib/screens/preset_management_screen.dart:223
+
+## 1481
+Usata per sbloccare l’app tramite le API di sistema. 
+  - lib/screens/privacy_policy_screen.dart:48
+
+## 1482
+Usata solo quando scegli di acquisire una foto o ricevuta da 
+  - lib/screens/privacy_policy_screen.dart:32
+
+## 1483
+Usate per promemoria e avvisi locali configurati da te. 
+  - lib/screens/privacy_policy_screen.dart:55
+
+## 1484
+Usato ${item.usageCount} volte
+  - lib/widgets/transaction_metadata_fields.dart:519
+
+## 1485
+Usato 1 volta
+  - lib/widgets/transaction_metadata_fields.dart:518
+
+## 1486
+Usato solo per l’inserimento vocale. Il parser DadaFinanza è 
+  - lib/screens/privacy_policy_screen.dart:39
+
+## 1487
+Uso quotidiano
+  - lib/widgets/ui_helpers.dart:577
+  - lib/widgets/ui_helpers.dart:583
+  - lib/widgets/ui_helpers.dart:589
+  - lib/widgets/ui_helpers.dart:595
+
+## 1488
+Utenze e casa
+  - lib/widgets/ui_helpers.dart:435
+  - lib/widgets/ui_helpers.dart:441
+  - lib/widgets/ui_helpers.dart:447
+  - lib/widgets/ui_helpers.dart:453
+  - lib/widgets/ui_helpers.dart:459
+  - lib/widgets/ui_helpers.dart:465
+  - lib/widgets/ui_helpers.dart:471
+  - lib/widgets/ui_helpers.dart:477
+  - lib/widgets/ui_helpers.dart:483
+  - lib/widgets/ui_helpers.dart:489
+  - lib/widgets/ui_helpers.dart:495
+
+## 1489
+v${preview.schemaVersion}
+  - lib/screens/data_management_screen.dart:188
+
+## 1490
+Valuta principale
+  - lib/screens/personal_settings_screen.dart:66
+
+## 1491
+Variazione
+  - lib/screens/account_context_analytics_screen.dart:285
+
+## 1492
+Vendita
+  - lib/widgets/ui_helpers.dart:522
+
+## 1493
+Verifica…
+  - lib/widgets/app_lock_gate.dart:165
+
+## 1494
+Verranno considerate ${skipDuplicates ? widget.preview.importable : widget.preview.rows.length} righe prima del mapping.
+  - lib/screens/data_management_screen.dart:427
+
+## 1495
+Verrà registrato come rimborso/restituzione, non come entrata o spesa.
+  - lib/screens/quick_add_page.dart:1191
+
+## 1496
+Vestiti
+  - lib/widgets/ui_helpers.dart:268
+
+## 1497
+Viaggio
+  - lib/widgets/ui_helpers.dart:163
+  - lib/widgets/ui_helpers.dart:673
+
+## 1498
+Vibrazione leggera su navigazione, azioni rapide e impostazioni.
+  - lib/screens/personal_settings_screen.dart:213
+
+## 1499
+Videogiochi
+  - lib/widgets/ui_helpers.dart:280
+
+## 1500
+Virgolette CSV non bilanciate.
+  - lib/services/csv_service.dart:439
+
+## 1501
+Viste
+  - lib/screens/polished_shell.dart:687
+
+## 1502
+Voce
+  - lib/screens/app_shell.dart:371
+  - lib/screens/voice_settings_screen.dart:58
+
+## 1503
+VoiceInputService non inizializzato.
+  - lib/services/voice_input_service.dart:142
+
+## 1504
+Volo
+  - lib/widgets/ui_helpers.dart:157
+
+## 1505
+Volto
+  - lib/widgets/ui_helpers.dart:710
+
+## 1506
+Widget Android
+  - lib/screens/android_widgets_screen.dart:59
+  - lib/screens/personal_settings_screen.dart:174
+  - lib/screens/polished_shell.dart:161
+
+## 1507
+Widget disponibili
+  - lib/screens/android_widgets_screen.dart:72
+
+## 1508
+} del periodo precedente.
+  - lib/screens/account_context_analytics_screen.dart:326
+  - lib/screens/canonical_shell.dart:971
+
+## 1509
+} deve ancora restituirti $amount
+  - lib/services/notification_service.dart:230
+
+## 1510
+} deve restituirti $amount
+  - lib/services/notification_service.dart:253
+
+## 1511
+} nel periodo
+  - lib/screens/polished_shell.dart:1054
+
+## 1512
+} rispetto al periodo precedente.
+  - lib/screens/polished_shell.dart:928
+
+## 1513
+} · ${DateFormat(
+  - lib/screens/transaction_screens.dart:53
+
+## 1514
+}$base
+  - lib/widgets/ui_helpers.dart:23
+
+## 1515
+}${change.toStringAsFixed(0)}% vs periodo precedente
+  - lib/screens/root_screen.dart:1643
+
+## 1516
+}${delta.toStringAsFixed(0)}%
+  - lib/screens/canonical_shell.dart:629
+  - lib/screens/root_screen.dart:408
+
+## 1517
+}${moneyFor(state, delta.abs())} dal primo snapshot
+  - lib/screens/root_screen.dart:1917
+
+## 1518
+}${moneyFor(state, value.abs())}
+  - lib/screens/planning_screens.dart:161
+
+## 1519
+},${t.categoryId ?? 
+  - lib/data/app_database.dart:1831
+
+## 1520
+},${t.date.toIso8601String()},${q(t.note)},${q(t.tags.join(
+  - lib/data/app_database.dart:1831
+
+## 1521
+àáâäãåèéêëìíîïòóôöõùúûüçñ
+  - lib/services/transaction_metadata_suggestions.dart:249
+
+## 1522
+àáâäèéêëìíîïòóôöùúûü
+  - lib/services/voice_transaction_parser.dart:794
+
+## 1523
+È il segnale principale del modello locale.
+  - lib/screens/settings_screen.dart:68
+
+## 1524
+È stato condonato
+  - lib/screens/advances_screen.dart:602
+
+## 1525
+È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.
+  - lib/screens/root_screen.dart:598
+
+## 1526
+“$partial”
+  - lib/screens/quick_add_page.dart:1885
+
+## 1527
+“${rule.containsText}”
+  - lib/screens/rules_management_screen.dart:149
+
+## 1528
+“${source.name}” confluirà in “${target.name}”. L’operazione aggiorna i collegamenti in modo transazionale.
+  - lib/screens/category_management_screen.dart:394
+
+## 1529
+•••• da ricevere · •••• da restituire
+  - lib/screens/account_context_home_screen.dart:194
+  - lib/screens/home_screen.dart:172
+
+## 1530
+€\s*(\d+(?:[\.,]\d{1,2})?)
+  - lib/services/voice_transaction_parser.dart:397
+
+## 1531
+→ $destination
+  - lib/screens/preset_management_screen.dart:146
+
+## 1532
+→ ${destination.name}
+  - lib/screens/quick_add_page.dart:672
+
+## 1533
+≤ ${moneyFor(state, rule.maxAmount!)}
+  - lib/screens/rules_management_screen.dart:156
+
+## 1534
+≥ ${moneyFor(state, rule.minAmount!)}
+  - lib/screens/rules_management_screen.dart:153
