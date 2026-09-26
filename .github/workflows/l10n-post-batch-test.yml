@@ -1,0 +1,44 @@
+name: L10n POST batch test
+
+on:
+  push:
+    branches:
+      - 'test/l10n-post-batch'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Test large POST translation batch
+        shell: python
+        run: |
+          from urllib.parse import urlencode
+          from urllib.request import Request, urlopen
+          import json
+
+          samples = [
+              f"Testo di prova numero {i}: movimento, conto, categoria, saldo e impostazioni."
+              for i in range(400)
+          ]
+          marker = "\n[DADA_SPLIT_9F3A]\n"
+          body = urlencode({"q": marker.join(samples)}).encode("utf-8")
+          url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=it&tl=en&dt=t"
+          req = Request(
+              url,
+              data=body,
+              headers={
+                  "User-Agent":"Mozilla/5.0",
+                  "Content-Type":"application/x-www-form-urlencoded",
+              },
+              method="POST",
+          )
+          with urlopen(req, timeout=60) as response:
+              payload = json.loads(response.read().decode())
+          translated = "".join(chunk[0] for chunk in payload[0] if chunk and chunk[0])
+          parts = translated.split(marker)
+          print("chars", len(marker.join(samples)))
+          print("parts", len(parts))
+          print("preserved", len(parts) == len(samples))
+          print("first", parts[0][:100])
+          print("last", parts[-1][:100])
