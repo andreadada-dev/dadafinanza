@@ -7,7 +7,7 @@ Documento operativo per la prima pubblicazione. Aggiornare questo file insieme a
 - **Nome app:** DadaFinanza
 - **Package:** `com.dadafinanza.app`
 - **Categoria suggerita:** Finanza
-- **Versione iniziale candidata:** `1.0.0`
+- **Versione candidata:** `1.7.0` (base build `+19`; il workflow production assegna un versionCode univoco)
 - **Target Android:** API 36
 - **Sviluppatore:** DDone
 
