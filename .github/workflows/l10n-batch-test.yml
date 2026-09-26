@@ -1,0 +1,41 @@
+name: L10n batch delimiter test
+
+on:
+  push:
+    branches:
+      - 'test/l10n-batch'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Test translation batching
+        shell: python
+        run: |
+          from urllib.parse import urlencode
+          from urllib.request import Request, urlopen
+          import json
+          samples = [
+              "Impostazioni",
+              "Nuovo movimento",
+              "Saldo totale",
+              "Premi di nuovo Indietro per chiudere.",
+              "Conferma eliminazioni",
+          ]
+          markers = [
+              " DADAFINANZAQQSPLITQQ ",
+              "\n__DADA_SPLIT_9F3A__\n",
+              "\n<<<DADA_SPLIT_9F3A>>>\n",
+              "\n[DADA_SPLIT_9F3A]\n",
+          ]
+          for marker in markers:
+              q = marker.join(samples)
+              query = urlencode({"client":"gtx","sl":"it","tl":"en","dt":"t","q":q})
+              req = Request("https://translate.googleapis.com/translate_a/single?" + query, headers={"User-Agent":"Mozilla/5.0"})
+              payload = json.loads(urlopen(req, timeout=30).read().decode())
+              translated = "".join(chunk[0] for chunk in payload[0] if chunk and chunk[0])
+              print("MARKER", repr(marker))
+              print("PRESERVED", marker in translated)
+              print("PARTS", len(translated.split(marker)))
+              print("OUTPUT", repr(translated))
