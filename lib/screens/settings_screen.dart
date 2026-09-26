@@ -212,7 +212,8 @@ class LearningManagementScreen extends StatelessWidget {
                 final confirmed = await confirmDestructiveAction(
                   context,
                   title: 'Cancellare l’apprendimento?',
-                  message: 'Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.',
+                  message:
+                      'Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.',
                   confirmLabel: 'Cancella apprendimento',
                 );
                 if (confirmed) await state.clearLearning();
@@ -242,7 +243,8 @@ class LearningManagementScreen extends StatelessWidget {
             const EmptyState(
               icon: Icons.school_outlined,
               title: 'Nessun pattern ancora',
-              subtitle: 'Dopo alcuni movimenti coerenti compariranno qui le abitudini riconosciute.',
+              subtitle:
+                  'Dopo alcuni movimenti coerenti compariranno qui le abitudini riconosciute.',
             )
           else
             ...state.learnedPatterns.map((pattern) {

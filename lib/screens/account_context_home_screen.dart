@@ -213,7 +213,8 @@ class AccountContextHomeScreen extends StatelessWidget {
                   EmptyState(
                     icon: Icons.dashboard_customize_outlined,
                     title: 'Nessuna sezione aggiuntiva',
-                    subtitle: 'Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.',
+                    subtitle:
+                        'Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.',
                     action: TextButton.icon(
                       onPressed: () => Navigator.push(
                         context,
@@ -645,8 +646,9 @@ class _Metric extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: Text(
           value,
-          style: Theme.of(context).textTheme.titleMedium
-              ?.copyWith(color: color),
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium?.copyWith(color: color),
         ),
       ),
     ],

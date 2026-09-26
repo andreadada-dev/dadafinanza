@@ -83,8 +83,9 @@ void main() {
     'voice commands are normalized back to the canonical parser language',
     () {
       AppI18n.use('en');
-      final canonical = AppI18n.voiceToItalian('expense 12 today note lunch')
-          .toLowerCase();
+      final canonical = AppI18n.voiceToItalian(
+        'expense 12 today note lunch',
+      ).toLowerCase();
 
       expect(canonical, contains('spesa'));
       expect(canonical, contains('oggi'));
