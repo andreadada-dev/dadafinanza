@@ -1,5 +1,5 @@
 name: One-off hosted multilingual validation
-# Final multilingual validation trigger
+# Final multilingual validation trigger · Kotlin widget fix
 
 on:
   push:
