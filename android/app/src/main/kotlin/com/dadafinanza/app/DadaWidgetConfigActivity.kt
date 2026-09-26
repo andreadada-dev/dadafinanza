@@ -95,7 +95,11 @@ class DadaWidgetConfigActivity : Activity() {
             adapter = ArrayAdapter(
                 this@DadaWidgetConfigActivity,
                 android.R.layout.simple_spinner_dropdown_item,
-                listOf(\n                    getString(R.string.widget_expense),\n                    getString(R.string.widget_income),\n                    getString(R.string.widget_transfer),\n                ),
+                listOf(
+                    getString(R.string.widget_expense),
+                    getString(R.string.widget_income),
+                    getString(R.string.widget_transfer),
+                ),
             )
             val saved = prefs.getString("widget_${appWidgetId}_type", "expense")
             setSelection(
