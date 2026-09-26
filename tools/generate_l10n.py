@@ -403,11 +403,11 @@ def transform_source() -> dict[str, int]:
         def wrap(match: re.Match[str]) -> str:
             nonlocal wrapped
             raw = match.group(0)
-            if "AppI18n.tr(" in raw:
+            value = match.group("value")
+            if "AppI18n.tr(" in raw or "$" in value:
                 return raw
             wrapped += 1
             q = match.group("q")
-            value = match.group("value")
             return f"{match.group('prefix')}AppI18n.tr({q}{value}{q})"
 
         text = UI_PROPERTY_RE.sub(wrap, text)
