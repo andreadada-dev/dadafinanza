@@ -7,6 +7,7 @@ import xml.etree.ElementTree as ET
 from xml.sax.saxutils import escape as xml_escape
 
 ROOT = Path(__file__).resolve().parents[1]
+# Resource generation is deterministic and does not contact external services.
 GENERATED = ROOT / "lib" / "l10n" / "generated_translations.dart"
 BASE = ROOT / "android" / "app" / "src" / "main" / "res" / "values" / "strings.xml"
 
