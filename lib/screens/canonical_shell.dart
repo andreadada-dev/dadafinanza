@@ -674,7 +674,7 @@ class CanonicalDashboardWidget extends StatelessWidget {
               ...items.map(
                 (item) => FlatMetric(
                   label:
-                      AppI18n.tr('${item.name} · ${DateFormat(')dd MMM', AppI18n.intlLocale).format(item.nextDate)}',
+                      '${item.name} · ${DateFormat('dd MMM', AppI18n.intlLocale).format(item.nextDate)}',
                   value: moneyFor(state, item.amount),
                   icon: Icons.repeat_rounded,
                 ),
