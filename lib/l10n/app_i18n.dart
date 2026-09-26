@@ -130,6 +130,161 @@ class AppI18n {
   static String _resolvedCode = 'it';
   static final Map<String, String> _runtimeCache = {};
   static final Map<String, List<String>> _orderedPhraseKeys = {};
+  static final Map<String, List<MapEntry<String, String>>> _reverseVoiceEntries =
+      {};
+
+  static const Map<String, Map<String, String>> _voiceAliases = {
+    'en': {
+      'expense': 'spesa',
+      'income': 'entrata',
+      'transfer': 'trasferimento',
+      'today': 'oggi',
+      'yesterday': 'ieri',
+      'tomorrow': 'domani',
+      'note': 'nota',
+      'description': 'nota',
+      'tag': 'tag',
+      'category': 'categoria',
+      'account': 'conto',
+      'advance': 'anticipo',
+      'iou': 'anticipo',
+    },
+    'es': {
+      'gasto': 'spesa',
+      'ingreso': 'entrata',
+      'transferencia': 'trasferimento',
+      'hoy': 'oggi',
+      'ayer': 'ieri',
+      'mañana': 'domani',
+      'nota': 'nota',
+      'etiqueta': 'tag',
+      'categoría': 'categoria',
+      'cuenta': 'conto',
+      'anticipo': 'anticipo',
+    },
+    'fr': {
+      'dépense': 'spesa',
+      'revenu': 'entrata',
+      'virement': 'trasferimento',
+      'transfert': 'trasferimento',
+      'aujourd’hui': 'oggi',
+      "aujourd'hui": 'oggi',
+      'hier': 'ieri',
+      'demain': 'domani',
+      'note': 'nota',
+      'étiquette': 'tag',
+      'catégorie': 'categoria',
+      'compte': 'conto',
+      'avance': 'anticipo',
+    },
+    'de': {
+      'ausgabe': 'spesa',
+      'einnahme': 'entrata',
+      'überweisung': 'trasferimento',
+      'heute': 'oggi',
+      'gestern': 'ieri',
+      'morgen': 'domani',
+      'notiz': 'nota',
+      'tag': 'tag',
+      'kategorie': 'categoria',
+      'konto': 'conto',
+      'vorschuss': 'anticipo',
+    },
+    'pt': {
+      'despesa': 'spesa',
+      'receita': 'entrata',
+      'rendimento': 'entrata',
+      'transferência': 'trasferimento',
+      'hoje': 'oggi',
+      'ontem': 'ieri',
+      'amanhã': 'domani',
+      'nota': 'nota',
+      'etiqueta': 'tag',
+      'categoria': 'categoria',
+      'conta': 'conto',
+      'adiantamento': 'anticipo',
+    },
+    'ru': {
+      'расход': 'spesa',
+      'доход': 'entrata',
+      'перевод': 'trasferimento',
+      'сегодня': 'oggi',
+      'вчера': 'ieri',
+      'завтра': 'domani',
+      'заметка': 'nota',
+      'тег': 'tag',
+      'категория': 'categoria',
+      'счёт': 'conto',
+      'счет': 'conto',
+      'аванс': 'anticipo',
+    },
+    'zh': {
+      '支出': 'spesa',
+      '收入': 'entrata',
+      '转账': 'trasferimento',
+      '今天': 'oggi',
+      '昨天': 'ieri',
+      '明天': 'domani',
+      '备注': 'nota',
+      '标签': 'tag',
+      '类别': 'categoria',
+      '账户': 'conto',
+      '垫付': 'anticipo',
+    },
+    'ja': {
+      '支出': 'spesa',
+      '収入': 'entrata',
+      '振替': 'trasferimento',
+      '送金': 'trasferimento',
+      '今日': 'oggi',
+      '昨日': 'ieri',
+      '明日': 'domani',
+      'メモ': 'nota',
+      'タグ': 'tag',
+      'カテゴリ': 'categoria',
+      '口座': 'conto',
+      '立替': 'anticipo',
+    },
+    'ko': {
+      '지출': 'spesa',
+      '수입': 'entrata',
+      '이체': 'trasferimento',
+      '오늘': 'oggi',
+      '어제': 'ieri',
+      '내일': 'domani',
+      '메모': 'nota',
+      '태그': 'tag',
+      '카테고리': 'categoria',
+      '계좌': 'conto',
+      '대납': 'anticipo',
+    },
+    'ar': {
+      'مصروف': 'spesa',
+      'دخل': 'entrata',
+      'تحويل': 'trasferimento',
+      'اليوم': 'oggi',
+      'أمس': 'ieri',
+      'غداً': 'domani',
+      'غدا': 'domani',
+      'ملاحظة': 'nota',
+      'وسم': 'tag',
+      'فئة': 'categoria',
+      'حساب': 'conto',
+      'سلفة': 'anticipo',
+    },
+    'hi': {
+      'खर्च': 'spesa',
+      'आय': 'entrata',
+      'ट्रांसफर': 'trasferimento',
+      'हस्तांतरण': 'trasferimento',
+      'आज': 'oggi',
+      'नोट': 'nota',
+      'टैग': 'tag',
+      'श्रेणी': 'categoria',
+      'खाता': 'conto',
+      'अग्रिम': 'anticipo',
+    },
+  };
 
   static String get preference => _preference;
   static String get currentCode => _resolvedCode;
@@ -190,12 +345,13 @@ class AppI18n {
     Intl.defaultLocale = intlLocale;
     if (changed) {
       _runtimeCache.clear();
+      _reverseVoiceEntries.clear();
     }
   }
 
   static String preferenceLabel(String preference) {
     if (preference == systemCode) {
-      return 'Sistema · ${currentLanguage.nativeName}';
+      return '${tr('Sistema')} · ${currentLanguage.nativeName}';
     }
     return languageForCode(preference).nativeName;
   }
@@ -237,5 +393,44 @@ class AppI18n {
 
     _runtimeCache[cacheKey] = translated;
     return translated;
+  }
+
+  static String voiceToItalian(String source) {
+    if (source.isEmpty || _resolvedCode == 'it') return source;
+
+    var canonical = source;
+    final reverse = _reverseVoiceEntries.putIfAbsent(_resolvedCode, () {
+      final values = <MapEntry<String, String>>[];
+      final exact = generatedTranslations[_resolvedCode] ?? const {};
+      final phrases =
+          generatedPhraseTranslations[_resolvedCode] ?? const {};
+      for (final entry in [...exact.entries, ...phrases.entries]) {
+        final translated = entry.value.trim();
+        if (translated.length < 2 || entry.key.trim().length < 2) continue;
+        values.add(MapEntry(translated, entry.key));
+      }
+      values.sort(
+        (left, right) => right.key.length.compareTo(left.key.length),
+      );
+      return values;
+    });
+
+    for (final entry in reverse) {
+      canonical = canonical.replaceAll(
+        RegExp(RegExp.escape(entry.key), caseSensitive: false, unicode: true),
+        entry.value,
+      );
+    }
+
+    final aliases = _voiceAliases[_resolvedCode] ?? const {};
+    final orderedAliases = aliases.entries.toList()
+      ..sort((left, right) => right.key.length.compareTo(left.key.length));
+    for (final entry in orderedAliases) {
+      canonical = canonical.replaceAll(
+        RegExp(RegExp.escape(entry.key), caseSensitive: false, unicode: true),
+        entry.value,
+      );
+    }
+    return canonical;
   }
 }
