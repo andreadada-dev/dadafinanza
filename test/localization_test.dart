@@ -5,7 +5,7 @@ import 'package:dadafinanza/l10n/generated_translations.dart';
 import 'package:dadafinanza/l10n/localized_material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' show Intl;
 
 void main() {
   tearDown(() => AppI18n.use('it'));
