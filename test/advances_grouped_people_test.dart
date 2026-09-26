@@ -119,7 +119,10 @@ void main() {
     await tester.enterText(find.byType(TextField), 'Anna');
     await tester.pumpAndSettle();
 
-    expect(find.text('Anna'), findsOneWidget);
+    expect(
+      find.descendant(of: find.byType(GridView), matching: find.text('Anna')),
+      findsOneWidget,
+    );
     expect(find.text('Dario'), findsNothing);
     expect(tester.takeException(), isNull);
   });
