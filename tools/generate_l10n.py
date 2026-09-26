@@ -205,10 +205,10 @@ def translate_many(values: list[str], source: str, target: str) -> list[str]:
     while index < len(values):
         chunk: list[str] = []
         chars = 0
-        while index < len(values) and len(chunk) < 18:
+        while index < len(values) and len(chunk) < 50:
             candidate = values[index]
             projected = chars + len(candidate) + len(marker)
-            if chunk and projected > 2800:
+            if chunk and projected > 6000:
                 break
             chunk.append(candidate)
             chars = projected
@@ -402,8 +402,8 @@ def main() -> None:
     exact, fragments = extract_phrases()
     exact_values = sorted(exact, key=str.casefold)
     fragment_values = sorted(fragments, key=str.casefold)
-    print(f"Exact UI phrases: {len(exact_values)}")
-    print(f"Dynamic fragments: {len(fragment_values)}")
+    print(f"Exact UI phrases: {len(exact_values)}", flush=True)
+    print(f"Dynamic fragments: {len(fragment_values)}", flush=True)
 
     exact_maps = build_maps(exact_values)
     phrase_maps = build_maps(fragment_values)
@@ -423,7 +423,7 @@ def main() -> None:
         json.dumps(stats, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    print(json.dumps(stats, ensure_ascii=False))
+    print(json.dumps(stats, ensure_ascii=False), flush=True)
 
 if __name__ == "__main__":
     main()
