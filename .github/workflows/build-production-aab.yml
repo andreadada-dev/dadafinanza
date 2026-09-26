@@ -2,6 +2,9 @@ name: Android Production APK + AAB
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - 'build/final-production-aab'
 
 permissions:
   contents: read
