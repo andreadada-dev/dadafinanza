@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 
 class FinanceQuickAction extends StatefulWidget {
   const FinanceQuickAction({

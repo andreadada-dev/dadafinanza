@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 
 import '../app_state.dart';
 import '../l10n/app_i18n.dart';

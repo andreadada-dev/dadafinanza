@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 
 import '../services/security_service.dart';
 import '../widgets/ui_helpers.dart';
@@ -102,14 +102,14 @@ class _LocalPrivacyScreenState extends State<LocalPrivacyScreen> {
                   obscureText: true,
                   keyboardType: TextInputType.number,
                   maxLength: 8,
-                  decoration: const InputDecoration(labelText: 'PIN'),
+                  decoration: InputDecoration(labelText: AppI18n.tr('PIN')),
                 ),
                 TextField(
                   controller: pinConfirm,
                   obscureText: true,
                   keyboardType: TextInputType.number,
                   maxLength: 8,
-                  decoration: const InputDecoration(labelText: 'Conferma PIN'),
+                  decoration: InputDecoration(labelText: AppI18n.tr('Conferma PIN')),
                 ),
                 const SizedBox(height: 16),
                 SizedBox(

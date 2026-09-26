@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -1140,7 +1140,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
               button: true,
               label: 'Compila con la voce',
               child: IconButton(
-                tooltip: 'Compila con la voce',
+                tooltip: AppI18n.tr('Compila con la voce'),
                 onPressed: _startVoice,
                 icon: const Icon(Icons.mic_none_rounded),
               ),
@@ -1150,7 +1150,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
       floatingActionButton: visibleSuggestion
           ? FloatingActionButton.extended(
               heroTag: 'smart-complete',
-              tooltip: 'Completa con il suggerimento',
+              tooltip: AppI18n.tr('Completa con il suggerimento'),
               onPressed: _previewSuggestion,
               backgroundColor: _suggestionColor(context),
               foregroundColor: Theme.of(context).colorScheme.surface,
@@ -1257,9 +1257,9 @@ class _QuickAddPageState extends State<QuickAddPage> {
                 context,
               ).textTheme.displaySmall?.copyWith(fontSize: 48),
               decoration: InputDecoration(
-                hintText: '0,00',
+                hintText: AppI18n.tr('0,00'),
                 suffixText: state.currency,
-                helperText: 'Calcoli rapidi: usa +  −  ×  ÷',
+                helperText: AppI18n.tr('Calcoli rapidi: usa +  −  ×  ÷'),
               ),
             ),
             const SizedBox(height: 4),
@@ -1414,10 +1414,10 @@ class _QuickAddPageState extends State<QuickAddPage> {
                       decimal: true,
                     ),
                     decoration: InputDecoration(
-                      labelText: 'Quota anticipata',
+                      labelText: AppI18n.tr('Quota anticipata'),
                       suffixText: state.currency,
                       helperText:
-                          'Inserisci una parte oppure usa tutto l’importo.',
+                          AppI18n.tr('Inserisci una parte oppure usa tutto l’importo.'),
                     ),
                   ),
                   Align(
@@ -1510,7 +1510,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
             _PickerRow(
               icon: Icons.calendar_today_outlined,
               label: 'Data',
-              value: DateFormat('dd MMM yyyy', 'it_IT').format(date),
+              value: DateFormat('dd MMM yyyy', AppI18n.intlLocale).format(date),
               onTap: () async {
                 final picked = await showDatePicker(
                   context: context,
@@ -1536,14 +1536,14 @@ class _QuickAddPageState extends State<QuickAddPage> {
             _PickerRow(
               icon: Icons.schedule_rounded,
               label: 'Ora',
-              value: DateFormat('HH:mm', 'it_IT').format(date),
+              value: DateFormat('HH:mm', AppI18n.intlLocale).format(date),
               onTap: () async {
                 final picked = await showTimePicker(
                   context: context,
                   initialTime: TimeOfDay.fromDateTime(date),
-                  helpText: 'Seleziona ora',
-                  hourLabelText: 'Ora',
-                  minuteLabelText: 'Minuti',
+                  helpText: AppI18n.tr('Seleziona ora'),
+                  hourLabelText: AppI18n.tr('Ora'),
+                  minuteLabelText: AppI18n.tr('Minuti'),
                 );
                 if (picked != null && mounted) {
                   setState(
@@ -1859,7 +1859,7 @@ class _VoiceListeningSheetState extends State<_VoiceListeningSheet> {
                 ),
               ),
               IconButton(
-                tooltip: 'Ricomincia',
+                tooltip: AppI18n.tr('Ricomincia'),
                 onPressed: restarting ? null : _restart,
                 icon: restarting
                     ? const SizedBox.square(
@@ -1869,7 +1869,7 @@ class _VoiceListeningSheetState extends State<_VoiceListeningSheet> {
                     : const Icon(Icons.restart_alt_rounded),
               ),
               IconButton(
-                tooltip: 'Chiudi',
+                tooltip: AppI18n.tr('Chiudi'),
                 onPressed: _close,
                 icon: const Icon(Icons.close_rounded),
               ),

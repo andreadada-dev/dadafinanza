@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -14,7 +14,7 @@ String moneyValue(
   bool signed = false,
 }) {
   final formatter = NumberFormat.currency(
-    locale: 'it_IT',
+    locale: AppI18n.intlLocale,
     name: currency,
     decimalDigits: showCents ? 2 : 0,
   );
@@ -901,9 +901,9 @@ Future<String?> showIconPicker(
                 const SizedBox(height: 8),
                 TextField(
                   controller: search,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     prefixIcon: Icon(Icons.search_rounded),
-                    hintText: 'Cerca icona o categoria',
+                    hintText: AppI18n.tr('Cerca icona o categoria'),
                   ),
                   onChanged: (value) => setState(() => query = value),
                 ),
@@ -1044,9 +1044,9 @@ Future<Category?> showCategoryCreator(
                 controller: controller,
                 autofocus: true,
                 textCapitalization: TextCapitalization.sentences,
-                decoration: const InputDecoration(
-                  labelText: 'Nome',
-                  hintText: 'Es. Benzina',
+                decoration: InputDecoration(
+                  labelText: AppI18n.tr('Nome'),
+                  hintText: AppI18n.tr('Es. Benzina'),
                 ),
               ),
               if (!lockType) ...[

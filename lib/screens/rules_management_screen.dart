@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 
 import '../app_state.dart';
 import '../main.dart';
@@ -30,7 +30,7 @@ class _RulesManagementScreenState extends State<RulesManagementScreen> {
         title: const Text('Regole automatiche'),
         actions: [
           IconButton(
-            tooltip: 'Nuova regola',
+            tooltip: AppI18n.tr('Nuova regola'),
             onPressed: () => _edit(context, state),
             icon: const Icon(Icons.add_rounded),
           ),
@@ -85,7 +85,7 @@ class _RulesManagementScreenState extends State<RulesManagementScreen> {
                   ),
                   isThreeLine: true,
                   trailing: PopupMenuButton<String>(
-                    tooltip: 'Azioni regola',
+                    tooltip: AppI18n.tr('Azioni regola'),
                     onSelected: (value) async {
                       if (value == 'edit') {
                         await _edit(context, state, existing: rule);
@@ -288,18 +288,18 @@ class _RulesManagementScreenState extends State<RulesManagementScreen> {
                 TextField(
                   controller: name,
                   autofocus: existing == null,
-                  decoration: const InputDecoration(labelText: 'Nome'),
+                  decoration: InputDecoration(labelText: AppI18n.tr('Nome')),
                 ),
                 TextField(
                   controller: contains,
-                  decoration: const InputDecoration(
-                    labelText: 'Descrizione contiene',
-                    hintText: 'Es. LIDL',
+                  decoration: InputDecoration(
+                    labelText: AppI18n.tr('Descrizione contiene'),
+                    hintText: AppI18n.tr('Es. LIDL'),
                   ),
                 ),
                 DropdownButtonFormField<TransactionType?>(
                   initialValue: type,
-                  decoration: const InputDecoration(labelText: 'Tipo'),
+                  decoration: InputDecoration(labelText: AppI18n.tr('Tipo')),
                   items: [
                     const DropdownMenuItem<TransactionType?>(
                       value: null,
@@ -325,8 +325,8 @@ class _RulesManagementScreenState extends State<RulesManagementScreen> {
                         keyboardType: const TextInputType.numberWithOptions(
                           decimal: true,
                         ),
-                        decoration: const InputDecoration(
-                          labelText: 'Importo min.',
+                        decoration: InputDecoration(
+                          labelText: AppI18n.tr('Importo min.'),
                         ),
                       ),
                     ),
@@ -337,8 +337,8 @@ class _RulesManagementScreenState extends State<RulesManagementScreen> {
                         keyboardType: const TextInputType.numberWithOptions(
                           decimal: true,
                         ),
-                        decoration: const InputDecoration(
-                          labelText: 'Importo max.',
+                        decoration: InputDecoration(
+                          labelText: AppI18n.tr('Importo max.'),
                         ),
                       ),
                     ),
@@ -347,7 +347,7 @@ class _RulesManagementScreenState extends State<RulesManagementScreen> {
                 if (type != null && type != TransactionType.transfer)
                   DropdownButtonFormField<int?>(
                     initialValue: categoryId,
-                    decoration: const InputDecoration(labelText: 'Categoria'),
+                    decoration: InputDecoration(labelText: AppI18n.tr('Categoria')),
                     items: [
                       const DropdownMenuItem<int?>(
                         value: null,
@@ -366,7 +366,7 @@ class _RulesManagementScreenState extends State<RulesManagementScreen> {
                   ),
                 DropdownButtonFormField<int?>(
                   initialValue: accountId,
-                  decoration: const InputDecoration(labelText: 'Conto'),
+                  decoration: InputDecoration(labelText: AppI18n.tr('Conto')),
                   items: [
                     const DropdownMenuItem<int?>(
                       value: null,
@@ -385,7 +385,7 @@ class _RulesManagementScreenState extends State<RulesManagementScreen> {
                 ),
                 TextField(
                   controller: tag,
-                  decoration: const InputDecoration(labelText: 'Aggiungi tag'),
+                  decoration: InputDecoration(labelText: AppI18n.tr('Aggiungi tag')),
                 ),
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,

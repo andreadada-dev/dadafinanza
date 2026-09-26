@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 
 import '../main.dart';
 import '../services/notification_service.dart';
@@ -151,9 +151,9 @@ class _NotificationSettingsScreenState
                     decimal: true,
                   ),
                   decoration: InputDecoration(
-                    labelText: 'Soglia saldo previsto',
+                    labelText: AppI18n.tr('Soglia saldo previsto'),
                     suffixText: AppScope.of(context).currency,
-                    helperText: '0 disattiva la soglia.',
+                    helperText: AppI18n.tr('0 disattiva la soglia.'),
                   ),
                   onSubmitted: (_) => _saveThreshold(),
                 ),

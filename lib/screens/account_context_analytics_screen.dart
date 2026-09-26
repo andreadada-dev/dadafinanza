@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -91,7 +91,7 @@ class _AccountContextAnalyticsScreenState
     final oneDay =
         from.year == end.year && from.month == end.month && from.day == end.day;
     final includeYear = from.year != now.year || end.year != now.year;
-    final format = DateFormat(includeYear ? 'd MMM yy' : 'd MMM', 'it_IT');
+    final format = DateFormat(includeYear ? 'd MMM yy' : 'd MMM', AppI18n.intlLocale);
     if (oneDay) return format.format(from);
     return '${format.format(from)} – ${format.format(end)}';
   }
@@ -578,34 +578,34 @@ class _BalanceTrendState extends State<_BalanceTrend>
     final sameYear = date.year == from.year;
 
     return switch (widget.period) {
-      _AnalyticsPeriod.today => DateFormat('HH', 'it_IT').format(date),
+      _AnalyticsPeriod.today => DateFormat('HH', AppI18n.intlLocale).format(date),
       _AnalyticsPeriod.week =>
         sameMonth
-            ? DateFormat('EEE dd', 'it_IT').format(date)
+            ? DateFormat('EEE dd', AppI18n.intlLocale).format(date)
             : sameYear
-            ? DateFormat('EEE dd MMM', 'it_IT').format(date)
-            : DateFormat('EEE dd MMM yy', 'it_IT').format(date),
+            ? DateFormat('EEE dd MMM', AppI18n.intlLocale).format(date)
+            : DateFormat('EEE dd MMM yy', AppI18n.intlLocale).format(date),
       _AnalyticsPeriod.month =>
         sameMonth
-            ? DateFormat('dd', 'it_IT').format(date)
+            ? DateFormat('dd', AppI18n.intlLocale).format(date)
             : sameYear
-            ? DateFormat('dd MMM', 'it_IT').format(date)
-            : DateFormat('dd MMM yy', 'it_IT').format(date),
-      _AnalyticsPeriod.year => DateFormat('MMM', 'it_IT').format(date),
+            ? DateFormat('dd MMM', AppI18n.intlLocale).format(date)
+            : DateFormat('dd MMM yy', AppI18n.intlLocale).format(date),
+      _AnalyticsPeriod.year => DateFormat('MMM', AppI18n.intlLocale).format(date),
       _AnalyticsPeriod.custom =>
         durationDays <= 8
             ? sameMonth
-                  ? DateFormat('EEE dd', 'it_IT').format(date)
+                  ? DateFormat('EEE dd', AppI18n.intlLocale).format(date)
                   : sameYear
-                  ? DateFormat('EEE dd MMM', 'it_IT').format(date)
-                  : DateFormat('EEE dd MMM yy', 'it_IT').format(date)
+                  ? DateFormat('EEE dd MMM', AppI18n.intlLocale).format(date)
+                  : DateFormat('EEE dd MMM yy', AppI18n.intlLocale).format(date)
             : durationDays <= 70
             ? sameMonth
-                  ? DateFormat('dd', 'it_IT').format(date)
+                  ? DateFormat('dd', AppI18n.intlLocale).format(date)
                   : sameYear
-                  ? DateFormat('dd MMM', 'it_IT').format(date)
-                  : DateFormat('dd MMM yy', 'it_IT').format(date)
-            : DateFormat('MMM yy', 'it_IT').format(date),
+                  ? DateFormat('dd MMM', AppI18n.intlLocale).format(date)
+                  : DateFormat('dd MMM yy', AppI18n.intlLocale).format(date)
+            : DateFormat('MMM yy', AppI18n.intlLocale).format(date),
     };
   }
 
@@ -613,7 +613,7 @@ class _BalanceTrendState extends State<_BalanceTrend>
     if (widget.state.hideBalance || (widget.account?.hideBalance ?? false)) {
       return '••';
     }
-    return NumberFormat.compact(locale: 'it_IT').format(value);
+    return NumberFormat.compact(locale: AppI18n.intlLocale).format(value);
   }
 
   double _niceStep(double raw) {
@@ -998,9 +998,9 @@ class _BalanceTrendState extends State<_BalanceTrend>
                           final dateLabel = isToday
                               ? DateFormat(
                                   'd MMM yyyy, HH:mm',
-                                  'it_IT',
+                                  AppI18n.intlLocale,
                                 ).format(date)
-                              : DateFormat('d MMM yyyy', 'it_IT').format(date);
+                              : DateFormat('d MMM yyyy', AppI18n.intlLocale).format(date);
                           return LineTooltipItem(
                             '$dateLabel\n'
                             '${hideValues ? '••••' : moneyFor(state, spot.y)}',
@@ -1059,8 +1059,8 @@ class _BalanceTrendState extends State<_BalanceTrend>
               Expanded(
                 child: Text(
                   isToday
-                      ? 'Saldo alle ${DateFormat('HH:mm', 'it_IT').format(selectedDate)}'
-                      : 'Saldo finale ${DateFormat('d MMM yyyy', 'it_IT').format(selectedDate)}',
+                      ? 'Saldo alle ${DateFormat('HH:mm', AppI18n.intlLocale).format(selectedDate)}'
+                      : 'Saldo finale ${DateFormat('d MMM yyyy', AppI18n.intlLocale).format(selectedDate)}',
                   style: theme.textTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
@@ -1120,7 +1120,7 @@ class _AnalyticsPeriodNavigator extends StatelessWidget {
           _AnalyticsSwipeChevron(
             direction: -1,
             animation: animation,
-            tooltip: 'Periodo precedente',
+            tooltip: AppI18n.tr('Periodo precedente'),
             onPressed: onPrevious,
           ),
           ConstrainedBox(
@@ -1137,7 +1137,7 @@ class _AnalyticsPeriodNavigator extends StatelessWidget {
           _AnalyticsSwipeChevron(
             direction: 1,
             animation: animation,
-            tooltip: 'Periodo successivo',
+            tooltip: AppI18n.tr('Periodo successivo'),
             onPressed: onNext,
           ),
         ],

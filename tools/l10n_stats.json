@@ -1,0 +1,22 @@
+{
+  "languages": [
+    "it",
+    "en",
+    "es",
+    "fr",
+    "de",
+    "pt",
+    "ru",
+    "zh",
+    "ja",
+    "ko",
+    "ar",
+    "hi"
+  ],
+  "exact_phrases": 1185,
+  "dynamic_fragments": 155,
+  "android_resource_files": 11,
+  "changed_files": 36,
+  "wrapped_properties": 137,
+  "locale_literals_replaced": 62
+}

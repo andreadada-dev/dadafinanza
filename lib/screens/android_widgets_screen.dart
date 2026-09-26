@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 import 'package:home_widget/home_widget.dart';
 
 import '../widgets/ui_helpers.dart';

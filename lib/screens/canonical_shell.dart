@@ -1,5 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -43,7 +43,7 @@ class _CanonicalRootScreenState extends State<CanonicalRootScreen> {
       floatingActionButton: GestureDetector(
         onLongPress: _showQuickMenu,
         child: FloatingActionButton(
-          tooltip: 'Nuovo movimento. Tieni premuto per preset e scorciatoie.',
+          tooltip: AppI18n.tr('Nuovo movimento. Tieni premuto per preset e scorciatoie.'),
           onPressed: () => _openQuick(TransactionType.expense),
           child: const Icon(Icons.add_rounded),
         ),
@@ -52,26 +52,26 @@ class _CanonicalRootScreenState extends State<CanonicalRootScreen> {
       bottomNavigationBar: NavigationBar(
         selectedIndex: index,
         onDestinationSelected: (value) => setState(() => index = value),
-        destinations: const [
+        destinations: [
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
             selectedIcon: Icon(Icons.home_rounded),
-            label: 'Home',
+            label: AppI18n.tr('Home'),
           ),
           NavigationDestination(
             icon: Icon(Icons.receipt_long_outlined),
             selectedIcon: Icon(Icons.receipt_long_rounded),
-            label: 'Movimenti',
+            label: AppI18n.tr('Movimenti'),
           ),
           NavigationDestination(
             icon: Icon(Icons.insights_outlined),
             selectedIcon: Icon(Icons.insights_rounded),
-            label: 'Analisi',
+            label: AppI18n.tr('Analisi'),
           ),
           NavigationDestination(
             icon: Icon(Icons.event_note_outlined),
             selectedIcon: Icon(Icons.event_note_rounded),
-            label: 'Pianifica',
+            label: AppI18n.tr('Pianifica'),
           ),
         ],
       ),
@@ -141,7 +141,7 @@ class _CanonicalRootScreenState extends State<CanonicalRootScreen> {
                 Expanded(
                   child: FinanceQuickAction(
                     icon: Icons.arrow_upward_rounded,
-                    label: 'Spesa',
+                    label: AppI18n.tr('Spesa'),
                     onTap: () =>
                         Navigator.pop(sheetContext, TransactionType.expense),
                   ),
@@ -149,7 +149,7 @@ class _CanonicalRootScreenState extends State<CanonicalRootScreen> {
                 Expanded(
                   child: FinanceQuickAction(
                     icon: Icons.arrow_downward_rounded,
-                    label: 'Entrata',
+                    label: AppI18n.tr('Entrata'),
                     onTap: () =>
                         Navigator.pop(sheetContext, TransactionType.income),
                   ),
@@ -157,7 +157,7 @@ class _CanonicalRootScreenState extends State<CanonicalRootScreen> {
                 Expanded(
                   child: FinanceQuickAction(
                     icon: Icons.swap_horiz_rounded,
-                    label: 'Trasferisci',
+                    label: AppI18n.tr('Trasferisci'),
                     onTap: () =>
                         Navigator.pop(sheetContext, TransactionType.transfer),
                   ),
@@ -210,7 +210,7 @@ class CanonicalHomeScreen extends StatelessWidget {
     final visibleWidgets = enabled
         .where((item) => item.enabled && !_fixedTypes.contains(item.type))
         .toList();
-    final month = DateFormat('MMMM yyyy', 'it_IT').format(DateTime.now());
+    final month = DateFormat('MMMM yyyy', AppI18n.intlLocale).format(DateTime.now());
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -233,7 +233,7 @@ class CanonicalHomeScreen extends StatelessWidget {
               ),
             ),
             IconButton(
-              tooltip: 'Impostazioni',
+              tooltip: AppI18n.tr('Impostazioni'),
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -264,7 +264,7 @@ class CanonicalHomeScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: _Metric(
-                      label: 'Entrate',
+                      label: AppI18n.tr('Entrate'),
                       value: moneyFor(
                         state,
                         state.monthTotal(TransactionType.income),
@@ -275,7 +275,7 @@ class CanonicalHomeScreen extends StatelessWidget {
                   const SizedBox(width: 16),
                   Expanded(
                     child: _Metric(
-                      label: 'Spese',
+                      label: AppI18n.tr('Spese'),
                       value: moneyFor(
                         state,
                         state.monthTotal(TransactionType.expense),
@@ -286,7 +286,7 @@ class CanonicalHomeScreen extends StatelessWidget {
                   const SizedBox(width: 16),
                   Expanded(
                     child: _Metric(
-                      label: 'Disponibile',
+                      label: AppI18n.tr('Disponibile'),
                       value: state.hideBalance
                           ? '••••'
                           : moneyFor(state, state.safeToSpend),
@@ -300,7 +300,7 @@ class CanonicalHomeScreen extends StatelessWidget {
                   Expanded(
                     child: FinanceQuickAction(
                       icon: Icons.arrow_upward_rounded,
-                      label: 'Spesa',
+                      label: AppI18n.tr('Spesa'),
                       color: context.financeColors.negative,
                       onTap: () => _open(context, TransactionType.expense),
                     ),
@@ -308,7 +308,7 @@ class CanonicalHomeScreen extends StatelessWidget {
                   Expanded(
                     child: FinanceQuickAction(
                       icon: Icons.arrow_downward_rounded,
-                      label: 'Entrata',
+                      label: AppI18n.tr('Entrata'),
                       color: context.financeColors.positive,
                       onTap: () => _open(context, TransactionType.income),
                     ),
@@ -316,7 +316,7 @@ class CanonicalHomeScreen extends StatelessWidget {
                   Expanded(
                     child: FinanceQuickAction(
                       icon: Icons.swap_horiz_rounded,
-                      label: 'Trasferisci',
+                      label: AppI18n.tr('Trasferisci'),
                       onTap: () => _open(context, TransactionType.transfer),
                     ),
                   ),
@@ -674,7 +674,7 @@ class CanonicalDashboardWidget extends StatelessWidget {
               ...items.map(
                 (item) => FlatMetric(
                   label:
-                      '${item.name} · ${DateFormat('dd MMM', 'it_IT').format(item.nextDate)}',
+                      AppI18n.tr('${item.name} · ${DateFormat(')dd MMM', AppI18n.intlLocale).format(item.nextDate)}',
                   value: moneyFor(state, item.amount),
                   icon: Icons.repeat_rounded,
                 ),
@@ -927,7 +927,7 @@ class _CanonicalAnalyticsScreenState extends State<CanonicalAnalyticsScreen> {
           ),
           const SizedBox(height: 24),
           Text(
-            '${DateFormat('d MMM', 'it_IT').format(from)} – ${DateFormat('d MMM', 'it_IT').format(to.subtract(const Duration(days: 1)))}',
+            '${DateFormat('d MMM', AppI18n.intlLocale).format(from)} – ${DateFormat('d MMM', AppI18n.intlLocale).format(to.subtract(const Duration(days: 1)))}',
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 12),
@@ -935,7 +935,7 @@ class _CanonicalAnalyticsScreenState extends State<CanonicalAnalyticsScreen> {
             children: [
               Expanded(
                 child: _Metric(
-                  label: 'Entrate',
+                  label: AppI18n.tr('Entrate'),
                   value: moneyFor(state, income),
                   color: context.financeColors.positive,
                 ),
@@ -943,7 +943,7 @@ class _CanonicalAnalyticsScreenState extends State<CanonicalAnalyticsScreen> {
               const SizedBox(width: 20),
               Expanded(
                 child: _Metric(
-                  label: 'Spese',
+                  label: AppI18n.tr('Spese'),
                   value: moneyFor(state, expense),
                   color: context.financeColors.negative,
                 ),
@@ -951,7 +951,7 @@ class _CanonicalAnalyticsScreenState extends State<CanonicalAnalyticsScreen> {
               const SizedBox(width: 20),
               Expanded(
                 child: _Metric(
-                  label: 'Risparmio',
+                  label: AppI18n.tr('Risparmio'),
                   value: savingsRate == null
                       ? '—'
                       : '${savingsRate.toStringAsFixed(0)}%',
@@ -991,7 +991,7 @@ class _CanonicalAnalyticsScreenState extends State<CanonicalAnalyticsScreen> {
             children: [
               Expanded(
                 child: _Metric(
-                  label: 'Da ricevere',
+                  label: AppI18n.tr('Da ricevere'),
                   value: moneyFor(
                     state,
                     Money.fromCents(state.advanceReceivableCents),
@@ -1001,7 +1001,7 @@ class _CanonicalAnalyticsScreenState extends State<CanonicalAnalyticsScreen> {
               const SizedBox(width: 20),
               Expanded(
                 child: _Metric(
-                  label: 'Da restituire',
+                  label: AppI18n.tr('Da restituire'),
                   value: moneyFor(
                     state,
                     Money.fromCents(state.advancePayableCents),
@@ -1011,7 +1011,7 @@ class _CanonicalAnalyticsScreenState extends State<CanonicalAnalyticsScreen> {
               const SizedBox(width: 20),
               Expanded(
                 child: _Metric(
-                  label: 'Regolati',
+                  label: AppI18n.tr('Regolati'),
                   value: moneyFor(state, Money.fromCents(advanceSettled)),
                 ),
               ),

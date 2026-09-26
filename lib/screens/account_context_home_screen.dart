@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -102,7 +102,7 @@ class AccountContextHomeScreen extends StatelessWidget {
                 onChanged: onAccountChanged,
               ),
               Text(
-                DateFormat('MMMM yyyy', 'it_IT').format(DateTime.now()),
+                DateFormat('MMMM yyyy', AppI18n.intlLocale).format(DateTime.now()),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
@@ -118,7 +118,7 @@ class AccountContextHomeScreen extends StatelessWidget {
               ),
             ),
             IconButton(
-              tooltip: 'Dashboard avanzata',
+              tooltip: AppI18n.tr('Dashboard avanzata'),
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -128,7 +128,7 @@ class AccountContextHomeScreen extends StatelessWidget {
               icon: const Icon(Icons.dashboard_customize_outlined),
             ),
             IconButton(
-              tooltip: 'Impostazioni',
+              tooltip: AppI18n.tr('Impostazioni'),
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -325,7 +325,7 @@ class AccountContextHomeScreen extends StatelessWidget {
                           subtitle: Text(
                             DateFormat(
                               'EEE d MMM',
-                              'it_IT',
+                              AppI18n.intlLocale,
                             ).format(item.nextDate),
                           ),
                           trailing: Text(

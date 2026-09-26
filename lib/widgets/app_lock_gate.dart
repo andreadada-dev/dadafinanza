@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 
 import '../services/security_service.dart';
 
@@ -142,8 +142,8 @@ class _AppLockGateState extends State<AppLockGate> with WidgetsBindingObserver {
                       keyboardType: TextInputType.number,
                       textInputAction: TextInputAction.done,
                       maxLength: 8,
-                      decoration: const InputDecoration(
-                        labelText: 'PIN',
+                      decoration: InputDecoration(
+                        labelText: AppI18n.tr('PIN'),
                         counterText: '',
                       ),
                       onSubmitted: (_) => _verifyPin(),

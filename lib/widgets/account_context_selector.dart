@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 
 import '../main.dart';
 import 'ui_helpers.dart';
@@ -22,7 +22,7 @@ class AccountContextSelector extends StatelessWidget {
         : selected.name;
 
     return PopupMenuButton<int>(
-      tooltip: 'Seleziona conto',
+      tooltip: AppI18n.tr('Seleziona conto'),
       initialValue: selected == null ? 0 : selected.id,
       onSelected: (value) => onChanged(value == 0 ? null : value),
       itemBuilder: (context) => [

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 
 import '../app_state.dart';
 import '../main.dart';
@@ -41,7 +41,7 @@ class _PresetManagementScreenState extends State<PresetManagementScreen> {
         title: const Text('Preset rapidi'),
         actions: [
           IconButton(
-            tooltip: 'Nuovo preset',
+            tooltip: AppI18n.tr('Nuovo preset'),
             onPressed: () async {
               await _edit(context, state);
               await _load();
@@ -90,7 +90,7 @@ class _PresetManagementScreenState extends State<PresetManagementScreen> {
                   ),
                   subtitle: Text(_summary(state, preset)),
                   trailing: PopupMenuButton<String>(
-                    tooltip: 'Azioni preset',
+                    tooltip: AppI18n.tr('Azioni preset'),
                     onSelected: (value) async {
                       if (value == 'edit') {
                         await _edit(context, state, existing: preset);
@@ -190,11 +190,11 @@ class _PresetManagementScreenState extends State<PresetManagementScreen> {
                 TextField(
                   controller: name,
                   autofocus: existing == null,
-                  decoration: const InputDecoration(labelText: 'Nome'),
+                  decoration: InputDecoration(labelText: AppI18n.tr('Nome')),
                 ),
                 DropdownButtonFormField<TransactionType>(
                   initialValue: type,
-                  decoration: const InputDecoration(labelText: 'Tipo'),
+                  decoration: InputDecoration(labelText: AppI18n.tr('Tipo')),
                   items: TransactionType.values
                       .map(
                         (item) => DropdownMenuItem(
@@ -214,8 +214,8 @@ class _PresetManagementScreenState extends State<PresetManagementScreen> {
                 ),
                 DropdownButtonFormField<int?>(
                   initialValue: accountId,
-                  decoration: const InputDecoration(
-                    labelText: 'Conto preferito',
+                  decoration: InputDecoration(
+                    labelText: AppI18n.tr('Conto preferito'),
                   ),
                   items: [
                     const DropdownMenuItem<int?>(
@@ -239,8 +239,8 @@ class _PresetManagementScreenState extends State<PresetManagementScreen> {
                 if (type == TransactionType.transfer)
                   DropdownButtonFormField<int?>(
                     initialValue: toAccountId,
-                    decoration: const InputDecoration(
-                      labelText: 'Destinazione',
+                    decoration: InputDecoration(
+                      labelText: AppI18n.tr('Destinazione'),
                     ),
                     items: [
                       const DropdownMenuItem<int?>(
@@ -263,7 +263,7 @@ class _PresetManagementScreenState extends State<PresetManagementScreen> {
                 else
                   DropdownButtonFormField<int?>(
                     initialValue: categoryId,
-                    decoration: const InputDecoration(labelText: 'Categoria'),
+                    decoration: InputDecoration(labelText: AppI18n.tr('Categoria')),
                     items: [
                       const DropdownMenuItem<int?>(
                         value: null,
@@ -286,14 +286,14 @@ class _PresetManagementScreenState extends State<PresetManagementScreen> {
                     decimal: true,
                   ),
                   decoration: InputDecoration(
-                    labelText: 'Importo opzionale',
+                    labelText: AppI18n.tr('Importo opzionale'),
                     suffixText: state.currency,
                   ),
                 ),
                 TextField(
                   controller: note,
-                  decoration: const InputDecoration(
-                    labelText: 'Nota opzionale',
+                  decoration: InputDecoration(
+                    labelText: AppI18n.tr('Nota opzionale'),
                   ),
                 ),
                 const SizedBox(height: 20),

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 
 import '../app_state.dart';
 import '../main.dart';
@@ -41,7 +41,7 @@ Future<void> showCategoryEditor(
               TextField(
                 controller: name,
                 textCapitalization: TextCapitalization.sentences,
-                decoration: const InputDecoration(labelText: 'Nome'),
+                decoration: InputDecoration(labelText: AppI18n.tr('Nome')),
               ),
               const SizedBox(height: 12),
               ListTile(
@@ -143,7 +143,7 @@ class CategoryManagementScreen extends StatelessWidget {
         title: const Text('Categorie'),
         actions: [
           IconButton(
-            tooltip: 'Nuova categoria',
+            tooltip: AppI18n.tr('Nuova categoria'),
             onPressed: () => showCategoryCreator(context, state),
             icon: const Icon(Icons.add_rounded),
           ),
@@ -206,7 +206,7 @@ class CategoryManagementScreen extends StatelessWidget {
                 ].join(' · '),
               ),
               trailing: PopupMenuButton<String>(
-                tooltip: 'Azioni categoria',
+                tooltip: AppI18n.tr('Azioni categoria'),
                 onSelected: (value) async {
                   if (value == 'edit') {
                     await showCategoryEditor(context, state, item);
@@ -301,7 +301,7 @@ class CategoryManagementScreen extends StatelessWidget {
                         leading: const Icon(Icons.drag_handle_rounded),
                         title: Text(item.name),
                         trailing: IconButton(
-                          tooltip: 'Rimuovi',
+                          tooltip: AppI18n.tr('Rimuovi'),
                           onPressed: () => setSheetState(
                             () => selected.removeWhere((c) => c.id == item.id),
                           ),
@@ -492,7 +492,7 @@ class CategoryDetailScreen extends StatelessWidget {
         title: Text(category.name),
         actions: [
           IconButton(
-            tooltip: 'Modifica categoria',
+            tooltip: AppI18n.tr('Modifica categoria'),
             onPressed: () => showCategoryEditor(context, state, category),
             icon: const Icon(Icons.edit_outlined),
           ),

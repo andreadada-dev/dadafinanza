@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 
 import '../app_state.dart';
 import '../main.dart';
@@ -206,7 +206,7 @@ class LearningManagementScreen extends StatelessWidget {
         title: const Text('Apprendimento'),
         actions: [
           PopupMenuButton<String>(
-            tooltip: 'Azioni apprendimento',
+            tooltip: AppI18n.tr('Azioni apprendimento'),
             onSelected: (value) async {
               if (value == 'clear') {
                 final confirmed = await confirmDestructiveAction(
@@ -275,7 +275,7 @@ class LearningManagementScreen extends StatelessWidget {
                       ].join(' · '),
                     ),
                     trailing: PopupMenuButton<String>(
-                      tooltip: 'Azioni pattern',
+                      tooltip: AppI18n.tr('Azioni pattern'),
                       onSelected: (value) async {
                         if (value == 'toggle') {
                           await state.setPatternEnabled(
