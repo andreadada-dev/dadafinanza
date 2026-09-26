@@ -1,3 +1,4 @@
+import '../l10n/app_i18n.dart';
 import '../models/advance_models.dart';
 import '../models/models.dart';
 import '../models/quick_capture_models.dart';
@@ -15,7 +16,11 @@ class VoiceTransactionParser {
     DateTime? now,
   }) {
     final reference = now ?? DateTime.now();
-    final explicit = _extractExplicitFields(transcript, knownTags: knownTags);
+    final canonicalTranscript = AppI18n.voiceToItalian(transcript);
+    final explicit = _extractExplicitFields(
+      canonicalTranscript,
+      knownTags: knownTags,
+    );
     final normalized = _normalize(explicit.remainingText);
     final issues = <VoiceParseIssue>[];
     final sources = <String, VoiceFieldSource>{};
@@ -786,7 +791,13 @@ class VoiceTransactionParser {
 
   String _normalize(String value) => _stripAccents(value.toLowerCase())
       .replaceAll('’', "'")
-      .replaceAll(RegExp(r"[^a-z0-9€'.,]+"), ' ')
+      .replaceAll(
+        RegExp(
+          r"[^a-z0-9À-ÿ\\u0400-\\u04FF\\u0600-\\u06FF\\u0900-\\u097F\\u3040-\\u30FF\\u3400-\\u9FFF\\uAC00-\\uD7AF€'.,]+",
+          unicode: true,
+        ),
+        ' ',
+      )
       .replaceAll(RegExp(r'\s+'), ' ')
       .trim();
 

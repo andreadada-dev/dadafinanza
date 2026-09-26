@@ -17,7 +17,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Saldo totale"
+            android:id="@+id/balance_widget_title"
+            android:text="@string/widget_balance_total"
             android:textColor="#A1A1AA"
             android:textSize="11sp"
             android:textStyle="bold" />
@@ -44,6 +45,6 @@
         android:textColor="#09090B"
         android:textSize="28sp"
         android:textStyle="bold"
-        android:contentDescription="Aggiungi spesa"
+        android:contentDescription="@string/widget_add_expense"
         android:background="@drawable/widget_add_background" />
 </LinearLayout>

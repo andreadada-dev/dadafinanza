@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 
 import '../app_state.dart';
+import '../l10n/app_i18n.dart';
 import '../main.dart';
 import '../models/models.dart';
 import '../services/haptic_service.dart';
@@ -42,6 +43,12 @@ class PersonalSettingsScreen extends StatelessWidget {
               AppThemePreference.dark => 'Scuro',
             },
             onTap: () => _pickTheme(context, state),
+          ),
+          _Link(
+            icon: Icons.language_rounded,
+            title: 'Lingua',
+            subtitle: AppI18n.preferenceLabel(state.languageCode),
+            onTap: () => _pickLanguage(context, state),
           ),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
@@ -241,6 +248,66 @@ class PersonalSettingsScreen extends StatelessWidget {
     // enabling, before persisting the new preference.
     await HapticService.medium(enabled: state.haptics || value);
     await state.setSetting('haptics', value ? '1' : '0');
+  }
+
+  Future<void> _pickLanguage(BuildContext context, AppState state) async {
+    final selected = await showModalBottomSheet<String>(
+      context: context,
+      useSafeArea: true,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (sheetContext) => SafeArea(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.sizeOf(sheetContext).height * .78,
+          ),
+          child: ListView(
+            shrinkWrap: true,
+            padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
+            children: [
+              Text(
+                'Lingua',
+                style: Theme.of(sheetContext).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 8),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Icon(
+                  state.languageCode == AppI18n.systemCode
+                      ? Icons.check_circle_rounded
+                      : Icons.circle_outlined,
+                ),
+                title: const Text('Sistema'),
+                subtitle: Text(
+                  'Segue la lingua del dispositivo · ${AppI18n.currentLanguage.nativeName}',
+                ),
+                onTap: () => Navigator.pop(sheetContext, AppI18n.systemCode),
+              ),
+              const Divider(height: 1),
+              ...AppI18n.languages.map(
+                (language) => ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Icon(
+                    state.languageCode == language.code
+                        ? Icons.check_circle_rounded
+                        : Icons.circle_outlined,
+                  ),
+                  title: Text(language.nativeName),
+                  subtitle: language.code == 'en'
+                      ? null
+                      : Text(language.englishName),
+                  onTap: () => Navigator.pop(sheetContext, language.code),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    if (selected != null && selected != state.languageCode) {
+      await HapticService.light(enabled: state.haptics);
+      await state.setLanguageCode(selected);
+    }
   }
 
   Future<void> _pickCurrency(BuildContext context, AppState state) async {

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" formatted="false">DadaFinanza</string>
+    <string name="widget_summary_name" formatted="false">DadaFinanza · सारांश</string>
+    <string name="widget_balance_name" formatted="false">DadaFinanza · संतुलन</string>
+    <string name="widget_quick_name" formatted="false">DadaFinanza · त्वरित कैप्चर</string>
+    <string name="widget_amounts_name" formatted="false">DadaFinanza · त्वरित मात्रा</string>
+    <string name="widget_description" formatted="false">लेन-देन रिकॉर्ड करने के लिए संतुलन और त्वरित श्रेणियां</string>
+    <string name="widget_balance_description" formatted="false">DadaFinanza तक त्वरित पहुंच के साथ संक्षिप्त कुल संतुलन</string>
+    <string name="widget_quick_description" formatted="false">होम स्क्रीन से व्यय, आय, स्थानांतरण और आय</string>
+    <string name="widget_amounts_description" formatted="false">खाता, श्रेणी और चार राशियाँ वॉयस एक्सेस के साथ कॉन्फ़िगर करने योग्य</string>
+    <string name="widget_balance_total" formatted="false">कुल शेष</string>
+    <string name="widget_add_expense" formatted="false">व्यय जोड़ें</string>
+    <string name="widget_quick_title" formatted="false">लेन-देन जोड़ें</string>
+    <string name="widget_expense" formatted="false">व्यय</string>
+    <string name="widget_income" formatted="false">आय</string>
+    <string name="widget_transfer" formatted="false">स्थानांतरण</string>
+    <string name="widget_voice" formatted="false">आवाज</string>
+    <string name="widget_new_expense" formatted="false">नया खर्च</string>
+    <string name="widget_new_income" formatted="false">नई आय</string>
+    <string name="widget_new_transfer" formatted="false">नया स्थानांतरण</string>
+    <string name="widget_voice_description" formatted="false">आवाज के साथ लेनदेन संकलित करें</string>
+    <string name="widget_fast_title" formatted="false">DadaFinanza · रैपिडो</string>
+    <string name="widget_account_category" formatted="false">खाता · श्रेणी</string>
+    <string name="widget_configure_account_category" formatted="false">खाता और श्रेणी कॉन्फ़िगर करें</string>
+    <string name="widget_config_title" formatted="false">विजेट कॉन्फ़िगर करें</string>
+    <string name="widget_config_subtitle" formatted="false">प्रत्येक विजेट अपनी स्वयं की सेटिंग्स बनाए रखता है। जब आप क्विक ऐड खोलते हैं तो ऐप द्वारा खाते और श्रेणी के नाम सत्यापित किए जाते हैं।</string>
+    <string name="widget_config_default_type" formatted="false">डिफ़ॉल्ट प्रकार</string>
+    <string name="widget_config_account_hint" formatted="false">खाता (उदा. Revolut)</string>
+    <string name="widget_config_category_hint" formatted="false">श्रेणी (उदा. बार)</string>
+    <string name="widget_config_destination_hint" formatted="false">स्थानांतरण गंतव्य (वैकल्पिक)</string>
+    <string name="widget_config_quick_amounts" formatted="false">त्वरित मात्रा</string>
+    <string name="widget_config_show_balance" formatted="false">विजेट में संतुलन दिखाएँ</string>
+    <string name="widget_config_show_amounts" formatted="false">त्वरित मात्राएँ दिखाएँ</string>
+    <string name="widget_config_save" formatted="false">विजेट सहेजें</string>
+</resources>

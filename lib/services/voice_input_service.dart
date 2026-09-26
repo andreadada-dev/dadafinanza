@@ -5,6 +5,8 @@ import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
+import '../l10n/app_i18n.dart';
+
 class VoiceInputStatus {
   const VoiceInputStatus({
     required this.available,
@@ -59,7 +61,13 @@ class VoiceTranscriptAccumulator {
 
   static String _comparable(String value) => value
       .toLowerCase()
-      .replaceAll(RegExp(r'[^a-z0-9àèéìòù:.,]+', unicode: true), ' ')
+      .replaceAll(
+        RegExp(
+          r'[^a-z0-9À-ÿ\\u0400-\\u04FF\\u0600-\\u06FF\\u0900-\\u097F\\u3040-\\u30FF\\u3400-\\u9FFF\\uAC00-\\uD7AF:.,]+',
+          unicode: true,
+        ),
+        ' ',
+      )
       .replaceAll(RegExp(r'\s+'), ' ')
       .trim();
 
@@ -137,7 +145,7 @@ class VoiceInputService {
     required bool onDevice,
     required void Function(String text, bool finalResult) onResult,
     void Function(double level)? onSoundLevel,
-    String localeId = 'it_IT',
+    String? localeId,
   }) async {
     if (!_initialized) throw StateError('VoiceInputService non inizializzato.');
     await _speech.listen(
@@ -154,7 +162,7 @@ class VoiceInputService {
         // without seeing a brand-new prompt.
         pauseFor: const Duration(seconds: 30),
         listenFor: const Duration(seconds: 90),
-        localeId: localeId,
+        localeId: localeId ?? AppI18n.speechLocaleId,
       ),
     );
   }

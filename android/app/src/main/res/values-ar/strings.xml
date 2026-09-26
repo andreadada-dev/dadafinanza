@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" formatted="false">DadaFinanza</string>
+    <string name="widget_summary_name" formatted="false">دادافينانزا · الملخص</string>
+    <string name="widget_balance_name" formatted="false">DadaFinanza · الرصيد</string>
+    <string name="widget_quick_name" formatted="false">DadaFinanza · الالتقاط السريع</string>
+    <string name="widget_amounts_name" formatted="false">DadaFinanza · المبالغ السريعة</string>
+    <string name="widget_description" formatted="false">الرصيد والفئات السريعة لتسجيل المعاملة</string>
+    <string name="widget_balance_description" formatted="false">رصيد إجمالي مدمج مع إمكانية الوصول السريع إلى DadaFinanza</string>
+    <string name="widget_quick_description" formatted="false">المصاريف والدخل والتحويل والدخل من الشاشة الرئيسية</string>
+    <string name="widget_amounts_description" formatted="false">الحساب والفئة وأربعة مبالغ قابلة للتكوين مع إمكانية الوصول الصوتي</string>
+    <string name="widget_balance_total" formatted="false">الرصيد الإجمالي</string>
+    <string name="widget_add_expense" formatted="false">أضف النفقات</string>
+    <string name="widget_quick_title" formatted="false">إضافة المعاملة</string>
+    <string name="widget_expense" formatted="false">حساب</string>
+    <string name="widget_income" formatted="false">الدخل</string>
+    <string name="widget_transfer" formatted="false">نقل</string>
+    <string name="widget_voice" formatted="false">صوت</string>
+    <string name="widget_new_expense" formatted="false">نفقة جديدة</string>
+    <string name="widget_new_income" formatted="false">دخل جديد</string>
+    <string name="widget_new_transfer" formatted="false">نقل جديد</string>
+    <string name="widget_voice_description" formatted="false">تجميع المعاملة بالصوت</string>
+    <string name="widget_fast_title" formatted="false">دادافينانزا · رابيدو</string>
+    <string name="widget_account_category" formatted="false">الحساب · الفئة</string>
+    <string name="widget_configure_account_category" formatted="false">تكوين الحساب والفئة</string>
+    <string name="widget_config_title" formatted="false">تكوين الحاجيات</string>
+    <string name="widget_config_subtitle" formatted="false">تحتفظ كل أداة بإعداداتها الخاصة. يتم التحقق من أسماء الحسابات والفئة بواسطة التطبيق عند فتح Quick Add.</string>
+    <string name="widget_config_default_type" formatted="false">النوع الافتراضي</string>
+    <string name="widget_config_account_hint" formatted="false">الحساب (على سبيل المثال Revolut)</string>
+    <string name="widget_config_category_hint" formatted="false">الفئة (مثل البار)</string>
+    <string name="widget_config_destination_hint" formatted="false">وجهة النقل (اختياري)</string>
+    <string name="widget_config_quick_amounts" formatted="false">مبالغ سريعة</string>
+    <string name="widget_config_show_balance" formatted="false">إظهار التوازن في القطعة</string>
+    <string name="widget_config_show_amounts" formatted="false">إظهار المبالغ السريعة</string>
+    <string name="widget_config_save" formatted="false">حفظ القطعة</string>
+</resources>

@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -198,7 +198,7 @@ class BudgetsScreen extends StatelessWidget {
         title: const Text('Budget'),
         actions: [
           IconButton(
-            tooltip: 'Nuovo budget',
+            tooltip: AppI18n.tr('Nuovo budget'),
             onPressed: () => showBudgetEditor(context),
             icon: const Icon(Icons.add_rounded),
           ),
@@ -268,7 +268,7 @@ class BudgetsScreen extends StatelessWidget {
                       ],
                     ),
                     trailing: PopupMenuButton<String>(
-                      tooltip: 'Azioni budget',
+                      tooltip: AppI18n.tr('Azioni budget'),
                       onSelected: (value) async {
                         if (value == 'edit') {
                           await showBudgetEditor(context, existing: budget);
@@ -379,7 +379,7 @@ Future<void> showBudgetEditor(BuildContext context, {Budget? existing}) async {
               TextField(
                 controller: name,
                 autofocus: existing == null,
-                decoration: InputDecoration(labelText: 'Nome'),
+                decoration: InputDecoration(labelText: AppI18n.tr('Nome')),
               ),
               TextField(
                 controller: limit,
@@ -387,13 +387,13 @@ Future<void> showBudgetEditor(BuildContext context, {Budget? existing}) async {
                   decimal: true,
                 ),
                 decoration: InputDecoration(
-                  labelText: 'Limite',
+                  labelText: AppI18n.tr('Limite'),
                   suffixText: state.currency,
                 ),
               ),
               DropdownButtonFormField<BudgetPeriod>(
                 initialValue: period,
-                decoration: InputDecoration(labelText: 'Periodo'),
+                decoration: InputDecoration(labelText: AppI18n.tr('Periodo')),
                 items: BudgetPeriod.values
                     .map(
                       (item) => DropdownMenuItem(
@@ -408,7 +408,7 @@ Future<void> showBudgetEditor(BuildContext context, {Budget? existing}) async {
               ),
               DropdownButtonFormField<int?>(
                 initialValue: categoryId,
-                decoration: InputDecoration(labelText: 'Categoria'),
+                decoration: InputDecoration(labelText: AppI18n.tr('Categoria')),
                 items: [
                   const DropdownMenuItem<int?>(
                     value: null,
@@ -561,7 +561,7 @@ class GoalsScreen extends StatelessWidget {
                   decimal: true,
                 ),
                 decoration: InputDecoration(
-                  labelText: 'Importo',
+                  labelText: AppI18n.tr('Importo'),
                   suffixText: state.currency,
                 ),
               ),
@@ -600,7 +600,7 @@ class GoalsScreen extends StatelessWidget {
         title: const Text('Obiettivi'),
         actions: [
           IconButton(
-            tooltip: 'Nuovo obiettivo',
+            tooltip: AppI18n.tr('Nuovo obiettivo'),
             onPressed: () => showGoalEditor(context),
             icon: const Icon(Icons.add_rounded),
           ),
@@ -651,10 +651,10 @@ class GoalsScreen extends StatelessWidget {
                       style: const TextStyle(fontWeight: FontWeight.w800),
                     ),
                     subtitle: Text(
-                      '${moneyFor(state, goal.currentAmount)} / ${moneyFor(state, goal.targetAmount)}${goal.targetDate == null ? '' : ' · ${DateFormat('d MMM yyyy', 'it_IT').format(goal.targetDate!)}'}',
+                      '${moneyFor(state, goal.currentAmount)} / ${moneyFor(state, goal.targetAmount)}${goal.targetDate == null ? '' : ' · ${DateFormat('d MMM yyyy', AppI18n.intlLocale).format(goal.targetDate!)}'}',
                     ),
                     trailing: PopupMenuButton<String>(
-                      tooltip: 'Azioni obiettivo',
+                      tooltip: AppI18n.tr('Azioni obiettivo'),
                       onSelected: (value) async {
                         if (value == 'edit') {
                           await showGoalEditor(context, existing: goal);
@@ -774,7 +774,7 @@ class _GoalPlanText extends StatelessWidget {
     };
     final estimated = plan.estimatedCompletion == null
         ? null
-        : 'Stima completamento: ${DateFormat('MMM yyyy', 'it_IT').format(plan.estimatedCompletion!)}.';
+        : 'Stima completamento: ${DateFormat('MMM yyyy', AppI18n.intlLocale).format(plan.estimatedCompletion!)}.';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -827,7 +827,7 @@ Future<void> showGoalEditor(BuildContext context, {Goal? existing}) async {
               TextField(
                 controller: name,
                 autofocus: existing == null,
-                decoration: InputDecoration(labelText: 'Nome'),
+                decoration: InputDecoration(labelText: AppI18n.tr('Nome')),
               ),
               TextField(
                 controller: target,
@@ -835,7 +835,7 @@ Future<void> showGoalEditor(BuildContext context, {Goal? existing}) async {
                   decimal: true,
                 ),
                 decoration: InputDecoration(
-                  labelText: 'Importo obiettivo',
+                  labelText: AppI18n.tr('Importo obiettivo'),
                   suffixText: state.currency,
                 ),
               ),
@@ -890,7 +890,7 @@ Future<void> showGoalEditor(BuildContext context, {Goal? existing}) async {
               DropdownButtonFormField<int?>(
                 initialValue: linkedAccountId,
                 decoration: InputDecoration(
-                  labelText: 'Conto risparmio collegato',
+                  labelText: AppI18n.tr('Conto risparmio collegato'),
                 ),
                 items: [
                   const DropdownMenuItem<int?>(
@@ -918,7 +918,7 @@ Future<void> showGoalEditor(BuildContext context, {Goal? existing}) async {
                 trailing: targetDate == null
                     ? const Icon(Icons.chevron_right_rounded)
                     : IconButton(
-                        tooltip: 'Rimuovi data',
+                        tooltip: AppI18n.tr('Rimuovi data'),
                         onPressed: () => setSheetState(() => targetDate = null),
                         icon: const Icon(Icons.close_rounded),
                       ),
@@ -1019,7 +1019,7 @@ class RecurringScreen extends StatelessWidget {
         title: const Text('Ricorrenti'),
         actions: [
           IconButton(
-            tooltip: 'Nuova ricorrenza',
+            tooltip: AppI18n.tr('Nuova ricorrenza'),
             onPressed: state.activeAccounts.isEmpty
                 ? null
                 : () => showRecurringEditor(context),
@@ -1088,10 +1088,10 @@ class RecurringScreen extends StatelessWidget {
                       style: const TextStyle(fontWeight: FontWeight.w800),
                     ),
                     subtitle: Text(
-                      '${DateFormat('d MMM yyyy', 'it_IT').format(item.nextDate)} · ${item.frequency}${invalid ? ' · Conto non disponibile' : ''}',
+                      '${DateFormat('d MMM yyyy', AppI18n.intlLocale).format(item.nextDate)} · ${item.frequency}${invalid ? ' · Conto non disponibile' : ''}',
                     ),
                     trailing: PopupMenuButton<String>(
-                      tooltip: 'Azioni ricorrenza',
+                      tooltip: AppI18n.tr('Azioni ricorrenza'),
                       onSelected: (value) async {
                         if (value == 'edit') {
                           await showRecurringEditor(context, existing: item);
@@ -1272,7 +1272,7 @@ Future<void> showRecurringEditor(
                 TextField(
                   controller: name,
                   autofocus: existing == null && detected == null,
-                  decoration: const InputDecoration(labelText: 'Nome'),
+                  decoration: InputDecoration(labelText: AppI18n.tr('Nome')),
                 ),
                 TextField(
                   controller: amount,
@@ -1280,7 +1280,7 @@ Future<void> showRecurringEditor(
                     decimal: true,
                   ),
                   decoration: InputDecoration(
-                    labelText: 'Importo',
+                    labelText: AppI18n.tr('Importo'),
                     suffixText: state.currency,
                   ),
                 ),
@@ -1343,8 +1343,8 @@ Future<void> showRecurringEditor(
                       'recurring-destination-$accountId-$toAccountId',
                     ),
                     initialValue: toAccountId,
-                    decoration: const InputDecoration(
-                      labelText: 'Conto destinazione',
+                    decoration: InputDecoration(
+                      labelText: AppI18n.tr('Conto destinazione'),
                     ),
                     items: destinations
                         .map(
@@ -1362,7 +1362,9 @@ Future<void> showRecurringEditor(
                   DropdownButtonFormField<int?>(
                     key: ValueKey('recurring-category-$type-$categoryId'),
                     initialValue: categoryId,
-                    decoration: const InputDecoration(labelText: 'Categoria'),
+                    decoration: InputDecoration(
+                      labelText: AppI18n.tr('Categoria'),
+                    ),
                     items: [
                       const DropdownMenuItem<int?>(
                         value: null,
@@ -1379,7 +1381,9 @@ Future<void> showRecurringEditor(
                   ),
                 DropdownButtonFormField<String>(
                   initialValue: frequency,
-                  decoration: const InputDecoration(labelText: 'Frequenza'),
+                  decoration: InputDecoration(
+                    labelText: AppI18n.tr('Frequenza'),
+                  ),
                   items:
                       const [
                             'Settimanale',
@@ -1418,7 +1422,9 @@ Future<void> showRecurringEditor(
                 ),
                 TextField(
                   controller: note,
-                  decoration: const InputDecoration(labelText: 'Descrizione'),
+                  decoration: InputDecoration(
+                    labelText: AppI18n.tr('Descrizione'),
+                  ),
                 ),
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
@@ -1448,7 +1454,7 @@ Future<void> showRecurringEditor(
                   trailing: endDate == null
                       ? const Icon(Icons.chevron_right_rounded)
                       : IconButton(
-                          tooltip: 'Rimuovi data fine',
+                          tooltip: AppI18n.tr('Rimuovi data fine'),
                           onPressed: () => setSheetState(() => endDate = null),
                           icon: const Icon(Icons.close_rounded),
                         ),
@@ -1637,7 +1643,7 @@ class _FinanceCalendarScreenState extends State<FinanceCalendarScreen> {
                 ),
                 title: Text(event.label),
                 subtitle: Text(
-                  '${event.source} · ${DateFormat('EEE d MMM', 'it_IT').format(event.date)}',
+                  '${event.source} · ${DateFormat('EEE d MMM', AppI18n.intlLocale).format(event.date)}',
                 ),
                 trailing: Text(
                   '${event.type == TransactionType.expense

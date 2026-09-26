@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -24,7 +24,7 @@ class AccountManagementScreen extends StatelessWidget {
         title: const Text('Conti'),
         actions: [
           IconButton(
-            tooltip: 'Nuovo conto',
+            tooltip: AppI18n.tr('Nuovo conto'),
             onPressed: () => showAccountEditor(context),
             icon: const Icon(Icons.add_rounded),
           ),
@@ -170,7 +170,7 @@ class SafeAccountDetailScreen extends StatelessWidget {
           Text(
             account.lastReconciledAt == null
                 ? 'Mai riconciliato'
-                : 'Ultimo controllo ${DateFormat('dd MMM yyyy', 'it_IT').format(account.lastReconciledAt!)}',
+                : 'Ultimo controllo ${DateFormat('dd MMM yyyy', AppI18n.intlLocale).format(account.lastReconciledAt!)}',
             style: Theme.of(context).textTheme.bodySmall,
           ),
           if (account.note?.trim().isNotEmpty == true) ...[
@@ -329,7 +329,7 @@ class SafeAccountDetailScreen extends StatelessWidget {
                 signed: true,
               ),
               decoration: InputDecoration(
-                labelText: 'Saldo reale',
+                labelText: AppI18n.tr('Saldo reale'),
                 suffixText: state.currency,
               ),
             ),
@@ -435,7 +435,7 @@ class SafeAccountDetailScreen extends StatelessWidget {
     final output = await FilePicker.saveFile(
       dialogTitle: 'Esporta ${account.name}',
       fileName:
-          '${account.name.replaceAll(RegExp(r'[^A-Za-z0-9_-]+'), '-')}.csv',
+          '${account.name.replaceAll(RegExp(r'[^A-Za-z0-9À-ÿ\\u0400-\\u04FF\\u0600-\\u06FF\\u0900-\\u097F\\u3040-\\u30FF\\u3400-\\u9FFF\\uAC00-\\uD7AF_-]+', unicode: true), '-')}.csv',
       type: FileType.custom,
       allowedExtensions: const ['csv'],
       bytes: Uint8List.fromList(utf8.encode(csv)),
@@ -481,7 +481,7 @@ class SafeAccountDetailScreen extends StatelessWidget {
                 ),
                 TextField(
                   controller: name,
-                  decoration: const InputDecoration(labelText: 'Nome'),
+                  decoration: InputDecoration(labelText: AppI18n.tr('Nome')),
                 ),
                 const SizedBox(height: 12),
                 ListTile(
@@ -548,8 +548,8 @@ class SafeAccountDetailScreen extends StatelessWidget {
                 TextField(
                   controller: note,
                   maxLines: 2,
-                  decoration: const InputDecoration(
-                    labelText: 'Nota opzionale',
+                  decoration: InputDecoration(
+                    labelText: AppI18n.tr('Nota opzionale'),
                   ),
                 ),
                 const SizedBox(height: 20),

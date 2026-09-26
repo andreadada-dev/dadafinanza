@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -20,7 +20,7 @@ class AccountsScreen extends StatelessWidget {
         title: const Text('Conti'),
         actions: [
           IconButton(
-            tooltip: 'Nuovo conto',
+            tooltip: AppI18n.tr('Nuovo conto'),
             onPressed: () => showAccountEditor(context),
             icon: const Icon(Icons.add_rounded),
           ),
@@ -227,7 +227,7 @@ class AccountDetailPage extends StatelessWidget {
         title: Text(account.name),
         actions: [
           PopupMenuButton<String>(
-            tooltip: 'Azioni conto',
+            tooltip: AppI18n.tr('Azioni conto'),
             onSelected: (value) async {
               if (value == 'edit')
                 await showAccountEditor(context, existing: account);
@@ -476,7 +476,7 @@ class AccountDetailPage extends StatelessWidget {
                 leading: const Icon(Icons.repeat_rounded),
                 title: Text(r.name),
                 subtitle: Text(
-                  DateFormat('dd MMM', 'it_IT').format(r.nextDate),
+                  DateFormat('dd MMM', AppI18n.intlLocale).format(r.nextDate),
                 ),
                 trailing: Text(moneyFor(state, r.amount)),
               ),
@@ -558,11 +558,11 @@ Future<Account?> showAccountEditor(
                 controller: name,
                 autofocus: existing == null,
                 textCapitalization: TextCapitalization.sentences,
-                decoration: InputDecoration(labelText: 'Nome'),
+                decoration: InputDecoration(labelText: AppI18n.tr('Nome')),
               ),
               DropdownButtonFormField<AccountType>(
                 initialValue: type,
-                decoration: InputDecoration(labelText: 'Tipo'),
+                decoration: InputDecoration(labelText: AppI18n.tr('Tipo')),
                 items: AccountType.values
                     .map(
                       (item) => DropdownMenuItem(
@@ -680,7 +680,7 @@ Future<Account?> showAccountEditor(
                             controller: note,
                             maxLines: 2,
                             decoration: InputDecoration(
-                              labelText: 'Nota opzionale',
+                              labelText: AppI18n.tr('Nota opzionale'),
                             ),
                           ),
                         ],

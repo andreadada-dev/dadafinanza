@@ -1,5 +1,6 @@
 import 'package:home_widget/home_widget.dart';
 
+import '../l10n/app_i18n.dart';
 import '../models/models.dart';
 
 class WidgetService {
@@ -21,6 +22,10 @@ class WidgetService {
       balance.toStringAsFixed(2),
     );
     await HomeWidget.saveWidgetData<String>('currency', currency);
+    await HomeWidget.saveWidgetData<String>(
+      'language_code',
+      AppI18n.currentCode,
+    );
     final ordered = [...expenseCategories]
       ..sort((a, b) {
         final quickA = a.quickOrder ?? 999;
@@ -29,11 +34,16 @@ class WidgetService {
         if (a.isFavorite != b.isFavorite) return a.isFavorite ? -1 : 1;
         return a.name.compareTo(b.name);
       });
-    final quick = ordered.take(4).map((item) => item.name).toList();
+    final quick = ordered.take(4).toList(growable: false);
     for (var index = 0; index < 4; index++) {
+      final canonical = index < quick.length ? quick[index].name : 'Spesa';
       await HomeWidget.saveWidgetData<String>(
         'quick_category_$index',
-        index < quick.length ? quick[index] : 'Spesa',
+        canonical,
+      );
+      await HomeWidget.saveWidgetData<String>(
+        'quick_category_label_$index',
+        AppI18n.tr(canonical),
       );
     }
 

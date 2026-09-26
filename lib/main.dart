@@ -1,11 +1,13 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:home_widget/home_widget.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'app_state.dart';
 import 'data/app_database.dart';
+import 'l10n/app_i18n.dart';
 import 'models/models.dart';
 import 'screens/app_shell.dart';
 import 'screens/quick_add_page.dart';
@@ -21,6 +23,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting();
   final database = AppDatabase();
   await database.init();
   await FinanceSchemaService(database).ensure();
@@ -38,7 +41,8 @@ class DadaFinanzaApp extends StatefulWidget {
   State<DadaFinanzaApp> createState() => _DadaFinanzaAppState();
 }
 
-class _DadaFinanzaAppState extends State<DadaFinanzaApp> {
+class _DadaFinanzaAppState extends State<DadaFinanzaApp>
+    with WidgetsBindingObserver {
   final security = SecurityService();
   final notificationService = NotificationService();
   final deepLinks = QuickCaptureDeepLinkService();
@@ -49,6 +53,7 @@ class _DadaFinanzaAppState extends State<DadaFinanzaApp> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _widgetSubscription = HomeWidget.widgetClicked.listen(
       (uri) => unawaited(_handleWidgetUri(uri)),
     );
@@ -109,7 +114,15 @@ class _DadaFinanzaAppState extends State<DadaFinanzaApp> {
   }
 
   @override
+  void didChangeLocales(List<Locale>? locales) {
+    if (widget.state.languageCode != AppI18n.systemCode) return;
+    AppI18n.use(widget.state.languageCode, platformLocale: locales?.first);
+    if (mounted) setState(() {});
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     widget.state.removeListener(_handleStateChanged);
     _notificationDebounce?.cancel();
     _widgetSubscription?.cancel();
@@ -123,27 +136,34 @@ class _DadaFinanzaAppState extends State<DadaFinanzaApp> {
   };
 
   @override
-  Widget build(BuildContext context) => AppScope(
-    notifier: widget.state,
-    child: AnimatedBuilder(
-      animation: widget.state,
-      builder: (context, _) => MaterialApp(
-        title: 'DadaFinanza',
-        navigatorKey: navigatorKey,
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.light(),
-        darkTheme: AppTheme.dark(),
-        themeMode: _themeMode,
-        supportedLocales: const [Locale('it', 'IT')],
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        home: AppLockGate(security: security, child: const DadaAppShell()),
+  Widget build(BuildContext context) {
+    AppI18n.use(widget.state.languageCode);
+    return AppScope(
+      notifier: widget.state,
+      child: AnimatedBuilder(
+        animation: widget.state,
+        builder: (context, _) {
+          AppI18n.use(widget.state.languageCode);
+          return MaterialApp(
+            title: 'DadaFinanza',
+            navigatorKey: navigatorKey,
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.light(),
+            darkTheme: AppTheme.dark(),
+            themeMode: _themeMode,
+            locale: AppI18n.locale,
+            supportedLocales: AppI18n.supportedLocales,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            home: AppLockGate(security: security, child: const DadaAppShell()),
+          );
+        },
       ),
-    ),
-  );
+    );
+  }
 }
 
 class AppScope extends InheritedNotifier<AppState> {

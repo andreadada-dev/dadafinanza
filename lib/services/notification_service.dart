@@ -6,6 +6,7 @@ import 'package:timezone/data/latest.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
 
 import '../app_state.dart';
+import '../l10n/app_i18n.dart';
 import '../models/models.dart';
 
 class NotificationService {
@@ -114,16 +115,18 @@ class NotificationService {
           : null;
       await plugin.zonedSchedule(
         id: 100000 + item.id,
-        title: 'Scadenza domani',
-        body: item.type == TransactionType.transfer && destination != null
-            ? '${item.name}: $amount verso $destination'
-            : '${item.name}: $amount',
+        title: _t('Scadenza domani'),
+        body: _t(
+          item.type == TransactionType.transfer && destination != null
+              ? '${item.name}: $amount verso $destination'
+              : '${item.name}: $amount',
+        ),
         scheduledDate: tz.TZDateTime.from(reminder.toUtc(), tz.UTC),
-        notificationDetails: const NotificationDetails(
+        notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(
             'finance_due',
-            'Scadenze',
-            channelDescription: 'Promemoria per movimenti ricorrenti',
+            _t('Scadenze'),
+            channelDescription: _t('Promemoria per movimenti ricorrenti'),
             importance: Importance.defaultImportance,
             priority: Priority.defaultPriority,
           ),
@@ -152,13 +155,15 @@ class NotificationService {
       if (level <= previous) continue;
       await plugin.show(
         id: 200000 + budget.id,
-        title: level == 100 ? 'Budget raggiunto' : 'Budget all’80%',
-        body: '${budget.name}: ${(progress * 100).round()}% del limite usato.',
-        notificationDetails: const NotificationDetails(
+        title: _t(level == 100 ? 'Budget raggiunto' : 'Budget all’80%'),
+        body: _t(
+          '${budget.name}: ${(progress * 100).round()}% del limite usato.',
+        ),
+        notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(
             'finance_budget',
-            'Budget',
-            channelDescription: 'Soglie dei budget personali',
+            _t('Budget'),
+            channelDescription: _t('Soglie dei budget personali'),
             importance: Importance.defaultImportance,
             priority: Priority.defaultPriority,
           ),
@@ -182,14 +187,17 @@ class NotificationService {
       if (await state.database.getSetting(key) == plan.status.name) continue;
       await plugin.show(
         id: 300000 + goal.id,
-        title: 'Obiettivo da rivedere',
-        body:
-            '${goal.name}: con il ritmo attuale la scadenza potrebbe richiedere un aggiustamento.',
-        notificationDetails: const NotificationDetails(
+        title: _t('Obiettivo da rivedere'),
+        body: _t(
+          '${goal.name}: con il ritmo attuale la scadenza potrebbe richiedere un aggiustamento.',
+        ),
+        notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(
             'finance_goals',
-            'Obiettivi',
-            channelDescription: 'Aggiornamenti non invasivi sugli obiettivi',
+            _t('Obiettivi'),
+            channelDescription: _t(
+              'Aggiornamenti non invasivi sugli obiettivi',
+            ),
             importance: Importance.low,
             priority: Priority.low,
           ),
@@ -226,17 +234,21 @@ class NotificationService {
         final amount = _money(state, remainingCents / 100);
         await plugin.show(
           id: 500000 + advance.id,
-          title: advance.direction.name == 'receivable'
-              ? '${person?.name ?? 'Qualcuno'} deve ancora restituirti $amount'
-              : 'Devi ancora restituire $amount a ${person?.name ?? 'qualcuno'}',
-          body:
-              'Apri Anticipi per registrare un rimborso o aggiornare il promemoria.',
-          notificationDetails: const NotificationDetails(
+          title: _t(
+            advance.direction.name == 'receivable'
+                ? '${person?.name ?? 'Qualcuno'} deve ancora restituirti $amount'
+                : 'Devi ancora restituire $amount a ${person?.name ?? 'qualcuno'}',
+          ),
+          body: _t(
+            'Apri Anticipi per registrare un rimborso o aggiornare il promemoria.',
+          ),
+          notificationDetails: NotificationDetails(
             android: AndroidNotificationDetails(
               'finance_advances',
-              'Anticipi',
-              channelDescription:
-                  'Promemoria locali per soldi da ricevere o restituire',
+              _t('Anticipi'),
+              channelDescription: _t(
+                'Promemoria locali per soldi da ricevere o restituire',
+              ),
               importance: Importance.defaultImportance,
               priority: Priority.defaultPriority,
             ),
@@ -249,19 +261,24 @@ class NotificationService {
       final amount = _money(state, remainingCents / 100);
       await plugin.zonedSchedule(
         id: 500000 + advance.id,
-        title: advance.direction.name == 'receivable'
-            ? '${person?.name ?? 'Qualcuno'} deve restituirti $amount'
-            : 'Devi restituire $amount a ${person?.name ?? 'qualcuno'}',
-        body: due == null
-            ? 'Promemoria Anticipi'
-            : 'Scadenza ${due.day}/${due.month}/${due.year}',
+        title: _t(
+          advance.direction.name == 'receivable'
+              ? '${person?.name ?? 'Qualcuno'} deve restituirti $amount'
+              : 'Devi restituire $amount a ${person?.name ?? 'qualcuno'}',
+        ),
+        body: _t(
+          due == null
+              ? 'Promemoria Anticipi'
+              : 'Scadenza ${due.day}/${due.month}/${due.year}',
+        ),
         scheduledDate: tz.TZDateTime.from(reminder.toUtc(), tz.UTC),
-        notificationDetails: const NotificationDetails(
+        notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(
             'finance_advances',
-            'Anticipi',
-            channelDescription:
-                'Promemoria locali per soldi da ricevere o restituire',
+            _t('Anticipi'),
+            channelDescription: _t(
+              'Promemoria locali per soldi da ricevere o restituire',
+            ),
             importance: Importance.defaultImportance,
             priority: Priority.defaultPriority,
           ),
@@ -285,14 +302,15 @@ class NotificationService {
     }
     await plugin.show(
       id: 400001,
-      title: 'Saldo previsto basso',
-      body:
-          'La previsione di fine mese è sotto la soglia che hai impostato. Apri Pianifica per i dettagli.',
-      notificationDetails: const NotificationDetails(
+      title: _t('Saldo previsto basso'),
+      body: _t(
+        'La previsione di fine mese è sotto la soglia che hai impostato. Apri Pianifica per i dettagli.',
+      ),
+      notificationDetails: NotificationDetails(
         android: AndroidNotificationDetails(
           'finance_forecast',
-          'Previsioni',
-          channelDescription: 'Avvisi locali sul cash-flow previsto',
+          _t('Previsioni'),
+          channelDescription: _t('Avvisi locali sul cash-flow previsto'),
           importance: Importance.low,
           priority: Priority.low,
         ),
@@ -302,8 +320,10 @@ class NotificationService {
     await state.database.setSetting('notification_forecast_month', month);
   }
 
+  String _t(String value) => AppI18n.tr(value);
+
   String _money(AppState state, double value) => NumberFormat.currency(
-    locale: 'it_IT',
+    locale: AppI18n.intlLocale,
     name: state.currency,
     decimalDigits: state.showCents ? 2 : 0,
   ).format(value);

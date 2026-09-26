@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -50,7 +50,7 @@ class TransactionListTile extends StatelessWidget {
         style: const TextStyle(fontWeight: FontWeight.w700),
       ),
       subtitle: Text(
-        '${unassigned ? 'Non assegnato' : account?.name ?? 'Conto'} · ${DateFormat('dd MMM, HH:mm', 'it_IT').format(item.date)}${item.note?.isNotEmpty == true ? ' · ${item.note}' : ''}',
+        '${unassigned ? 'Non assegnato' : account?.name ?? 'Conto'} · ${DateFormat('dd MMM, HH:mm', AppI18n.intlLocale).format(item.date)}${item.note?.isNotEmpty == true ? ' · ${item.note}' : ''}',
       ),
       trailing: Text(
         item.type == TransactionType.expense
@@ -138,7 +138,7 @@ class TransactionDetailPage extends StatelessWidget {
         title: const Text('Movimento'),
         actions: [
           PopupMenuButton<String>(
-            tooltip: 'Azioni movimento',
+            tooltip: AppI18n.tr('Azioni movimento'),
             onSelected: (value) async {
               if (value == 'edit')
                 await Navigator.push(
@@ -346,7 +346,10 @@ class TransactionDetailPage extends StatelessWidget {
           const Divider(height: 1),
           FlatMetric(
             label: 'Data',
-            value: DateFormat('dd MMMM yyyy, HH:mm', 'it_IT').format(item.date),
+            value: DateFormat(
+              'dd MMMM yyyy, HH:mm',
+              AppI18n.intlLocale,
+            ).format(item.date),
             icon: Icons.calendar_today_outlined,
           ),
           if (!item.includeInAnalytics) ...[
@@ -508,7 +511,9 @@ Future<void> showSplitEditor(
                     Expanded(
                       child: DropdownButtonFormField<int>(
                         initialValue: row.categoryId,
-                        decoration: InputDecoration(labelText: 'Categoria'),
+                        decoration: InputDecoration(
+                          labelText: AppI18n.tr('Categoria'),
+                        ),
                         items: expenseCategories
                             .map(
                               (c) => DropdownMenuItem(
@@ -530,14 +535,14 @@ Future<void> showSplitEditor(
                           decimal: true,
                         ),
                         decoration: InputDecoration(
-                          labelText: 'Importo',
+                          labelText: AppI18n.tr('Importo'),
                           suffixText: state.currency,
                         ),
                       ),
                     ),
                     if (rows.length > 2)
                       IconButton(
-                        tooltip: 'Rimuovi',
+                        tooltip: AppI18n.tr('Rimuovi'),
                         onPressed: () => setSheetState(() {
                           rows[index].controller.dispose();
                           rows.removeAt(index);

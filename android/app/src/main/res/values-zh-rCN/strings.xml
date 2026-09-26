@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" formatted="false">DadaFinanza</string>
+    <string name="widget_summary_name" formatted="false">达达财经 · 概要</string>
+    <string name="widget_balance_name" formatted="false">达达财经 · 余额</string>
+    <string name="widget_quick_name" formatted="false">DadaFinanza · 快速捕捉</string>
+    <string name="widget_amounts_name" formatted="false">DadaFinanza · 快速金额</string>
+    <string name="widget_description" formatted="false">用于记录交易的余额和快速类别</string>
+    <string name="widget_balance_description" formatted="false">紧凑的总余额，可快速访问 DadaFinanza</string>
+    <string name="widget_quick_description" formatted="false">主屏幕上的费用、收入、转账和收入</string>
+    <string name="widget_amounts_description" formatted="false">可通过语音访问配置帐户、类别和四种金额</string>
+    <string name="widget_balance_total" formatted="false">总余额</string>
+    <string name="widget_add_expense" formatted="false">添加费用</string>
+    <string name="widget_quick_title" formatted="false">添加交易</string>
+    <string name="widget_expense" formatted="false">费用</string>
+    <string name="widget_income" formatted="false">收入</string>
+    <string name="widget_transfer" formatted="false">转乘</string>
+    <string name="widget_voice" formatted="false">语音</string>
+    <string name="widget_new_expense" formatted="false">新费用</string>
+    <string name="widget_new_income" formatted="false">新收入</string>
+    <string name="widget_new_transfer" formatted="false">新转让</string>
+    <string name="widget_voice_description" formatted="false">用语音编译交易</string>
+    <string name="widget_fast_title" formatted="false">达达金融·拉皮多</string>
+    <string name="widget_account_category" formatted="false">账户·类别</string>
+    <string name="widget_configure_account_category" formatted="false">配置帐户和类别</string>
+    <string name="widget_config_title" formatted="false">配置小部件</string>
+    <string name="widget_config_subtitle" formatted="false">每个小部件都维护自己的设置。当您打开“快速添加”时，应用程序会验证帐户和类别名称。</string>
+    <string name="widget_config_default_type" formatted="false">默认类型</string>
+    <string name="widget_config_account_hint" formatted="false">帐户（例如 Revolut）</string>
+    <string name="widget_config_category_hint" formatted="false">类别（例如酒吧）</string>
+    <string name="widget_config_destination_hint" formatted="false">转移目的地（可选）</string>
+    <string name="widget_config_quick_amounts" formatted="false">快速金额</string>
+    <string name="widget_config_show_balance" formatted="false">在小部件中显示余额</string>
+    <string name="widget_config_show_amounts" formatted="false">显示快速金额</string>
+    <string name="widget_config_save" formatted="false">保存小部件</string>
+</resources>

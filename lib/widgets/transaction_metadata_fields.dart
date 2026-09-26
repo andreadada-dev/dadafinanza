@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 import 'package:flutter/services.dart';
 
 import '../data/app_database.dart';
@@ -279,9 +279,9 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
             controller: widget.noteController,
             textCapitalization: TextCapitalization.sentences,
             textInputAction: TextInputAction.done,
-            decoration: const InputDecoration(
-              labelText: 'Descrizione opzionale',
-              hintText: 'Es. LIDL, Spotify, stipendio…',
+            decoration: InputDecoration(
+              labelText: AppI18n.tr('Descrizione opzionale'),
+              hintText: AppI18n.tr('Es. LIDL, Spotify, stipendio…'),
               prefixIcon: Icon(Icons.notes_rounded),
             ),
             onSubmitted: (_) => _completeFirstNoteSuggestion(),
@@ -330,9 +330,9 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
         TextField(
           controller: tagController,
           textInputAction: TextInputAction.done,
-          decoration: const InputDecoration(
-            labelText: 'Cerca o aggiungi tag',
-            hintText: 'Es. Università',
+          decoration: InputDecoration(
+            labelText: AppI18n.tr('Cerca o aggiungi tag'),
+            hintText: AppI18n.tr('Es. Università'),
             prefixIcon: Icon(Icons.tag_rounded),
           ),
           onSubmitted: _submitTag,

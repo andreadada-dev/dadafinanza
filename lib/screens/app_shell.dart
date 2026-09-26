@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 
 import '../app_state.dart';
 import '../main.dart';
@@ -137,31 +137,31 @@ class _DadaAppShellState extends State<DadaAppShell> {
         bottomNavigationBar: NavigationBar(
           selectedIndex: index,
           onDestinationSelected: _selectTab,
-          destinations: const [
+          destinations: [
             NavigationDestination(
               icon: Icon(Icons.home_outlined),
               selectedIcon: Icon(Icons.home_rounded),
-              label: 'Home',
+              label: AppI18n.tr('Home'),
             ),
             NavigationDestination(
               icon: Icon(Icons.receipt_long_outlined),
               selectedIcon: Icon(Icons.receipt_long_rounded),
-              label: 'Movimenti',
+              label: AppI18n.tr('Movimenti'),
             ),
             NavigationDestination(
               icon: Icon(Icons.insights_outlined),
               selectedIcon: Icon(Icons.insights_rounded),
-              label: 'Analisi',
+              label: AppI18n.tr('Analisi'),
             ),
             NavigationDestination(
               icon: Icon(Icons.handshake_outlined),
               selectedIcon: Icon(Icons.handshake_rounded),
-              label: 'Anticipi',
+              label: AppI18n.tr('Anticipi'),
             ),
             NavigationDestination(
               icon: Icon(Icons.event_note_outlined),
               selectedIcon: Icon(Icons.event_note_rounded),
-              label: 'Pianifica',
+              label: AppI18n.tr('Pianifica'),
             ),
           ],
         ),
@@ -234,7 +234,7 @@ class _DadaAppShellState extends State<DadaAppShell> {
     final choice = await showGeneralDialog<Object>(
       context: context,
       barrierDismissible: true,
-      barrierLabel: 'Chiudi scorciatoie',
+      barrierLabel: AppI18n.tr('Chiudi scorciatoie'),
       barrierColor: Theme.of(context).colorScheme.scrim.withOpacity(0.32),
       transitionDuration: const Duration(milliseconds: 180),
       pageBuilder: (dialogContext, _, __) => SafeArea(

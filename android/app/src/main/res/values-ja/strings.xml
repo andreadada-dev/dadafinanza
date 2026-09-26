@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" formatted="false">DadaFinanza</string>
+    <string name="widget_summary_name" formatted="false">DadaFinanza · 概要</string>
+    <string name="widget_balance_name" formatted="false">DadaFinanza · バランス</string>
+    <string name="widget_quick_name" formatted="false">DadaFinanza · クイックキャプチャ</string>
+    <string name="widget_amounts_name" formatted="false">DadaFinanza · クイック金額</string>
+    <string name="widget_description" formatted="false">取引を記録するための残高およびクイック カテゴリ</string>
+    <string name="widget_balance_description" formatted="false">DadaFinanza に素早くアクセスできるコンパクトなトータルバランス</string>
+    <string name="widget_quick_description" formatted="false">ホーム画面からの支出、収入、振込、収入</string>
+    <string name="widget_amounts_description" formatted="false">音声アクセスでアカウント、カテゴリ、および 4 つの金額を設定可能</string>
+    <string name="widget_balance_total" formatted="false">合計残高</string>
+    <string name="widget_add_expense" formatted="false">経費を追加する</string>
+    <string name="widget_quick_title" formatted="false">トランザクションの追加</string>
+    <string name="widget_expense" formatted="false">経費</string>
+    <string name="widget_income" formatted="false">収入</string>
+    <string name="widget_transfer" formatted="false">転送</string>
+    <string name="widget_voice" formatted="false">声</string>
+    <string name="widget_new_expense" formatted="false">新たな出費</string>
+    <string name="widget_new_income" formatted="false">新たな収入</string>
+    <string name="widget_new_transfer" formatted="false">新規転送</string>
+    <string name="widget_voice_description" formatted="false">音声でトランザクションをコンパイルする</string>
+    <string name="widget_fast_title" formatted="false">ダダフィナンザ・ラピド</string>
+    <string name="widget_account_category" formatted="false">アカウント・カテゴリー</string>
+    <string name="widget_configure_account_category" formatted="false">アカウントとカテゴリを設定する</string>
+    <string name="widget_config_title" formatted="false">ウィジェットを構成する</string>
+    <string name="widget_config_subtitle" formatted="false">各ウィジェットは独自の設定を維持します。アカウント名とカテゴリ名は、クイック追加を開くときにアプリによって確認されます。</string>
+    <string name="widget_config_default_type" formatted="false">デフォルトのタイプ</string>
+    <string name="widget_config_account_hint" formatted="false">アカウント (例: Revolut)</string>
+    <string name="widget_config_category_hint" formatted="false">カテゴリ (例: バー)</string>
+    <string name="widget_config_destination_hint" formatted="false">転送先（任意）</string>
+    <string name="widget_config_quick_amounts" formatted="false">クイック金額</string>
+    <string name="widget_config_show_balance" formatted="false">ウィジェットに残高を表示</string>
+    <string name="widget_config_show_amounts" formatted="false">簡単な金額を表示</string>
+    <string name="widget_config_save" formatted="false">ウィジェットの保存</string>
+</resources>

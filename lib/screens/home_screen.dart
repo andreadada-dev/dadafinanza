@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -66,7 +66,10 @@ class DadaHomeScreen extends StatelessWidget {
             children: [
               const Text('DadaFinanza'),
               Text(
-                DateFormat('MMMM yyyy', 'it_IT').format(DateTime.now()),
+                DateFormat(
+                  'MMMM yyyy',
+                  AppI18n.intlLocale,
+                ).format(DateTime.now()),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
@@ -82,7 +85,7 @@ class DadaHomeScreen extends StatelessWidget {
               ),
             ),
             IconButton(
-              tooltip: 'Dashboard avanzata',
+              tooltip: AppI18n.tr('Dashboard avanzata'),
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -92,7 +95,7 @@ class DadaHomeScreen extends StatelessWidget {
               icon: const Icon(Icons.dashboard_customize_outlined),
             ),
             IconButton(
-              tooltip: 'Impostazioni',
+              tooltip: AppI18n.tr('Impostazioni'),
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -415,7 +418,7 @@ class _IvyFinanceOverview extends StatelessWidget {
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
-                  DateFormat('MMM', 'it_IT').format(DateTime.now()),
+                  DateFormat('MMM', AppI18n.intlLocale).format(DateTime.now()),
                   style: theme.textTheme.labelMedium?.copyWith(
                     color: scheme.primary,
                     fontWeight: FontWeight.w800,

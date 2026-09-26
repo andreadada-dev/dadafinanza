@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" formatted="false">DadaFinanza</string>
+    <string name="widget_summary_name" formatted="false">DadaFinanza · 요약</string>
+    <string name="widget_balance_name" formatted="false">DadaFinanza · 잔액</string>
+    <string name="widget_quick_name" formatted="false">DadaFinanza · 빠른 캡처</string>
+    <string name="widget_amounts_name" formatted="false">DadaFinanza · 빠른 금액</string>
+    <string name="widget_description" formatted="false">거래를 기록하기 위한 잔액 및 빠른 카테고리</string>
+    <string name="widget_balance_description" formatted="false">DadaFinanza에 빠르게 액세스할 수 있는 컴팩트한 총 잔액</string>
+    <string name="widget_quick_description" formatted="false">홈 화면의 비용, 수입, 이체 및 수입</string>
+    <string name="widget_amounts_description" formatted="false">음성 액세스로 구성 가능한 계정, 카테고리 및 4가지 금액</string>
+    <string name="widget_balance_total" formatted="false">총 잔액</string>
+    <string name="widget_add_expense" formatted="false">비용 추가</string>
+    <string name="widget_quick_title" formatted="false">거래 추가</string>
+    <string name="widget_expense" formatted="false">비용</string>
+    <string name="widget_income" formatted="false">소득</string>
+    <string name="widget_transfer" formatted="false">환승</string>
+    <string name="widget_voice" formatted="false">음성</string>
+    <string name="widget_new_expense" formatted="false">새로운 비용</string>
+    <string name="widget_new_income" formatted="false">새로운 수입</string>
+    <string name="widget_new_transfer" formatted="false">새로운 이체</string>
+    <string name="widget_voice_description" formatted="false">음성으로 거래 컴파일</string>
+    <string name="widget_fast_title" formatted="false">DadaFinanza · Rapido</string>
+    <string name="widget_account_category" formatted="false">계정 · 카테고리</string>
+    <string name="widget_configure_account_category" formatted="false">계정 및 카테고리 구성</string>
+    <string name="widget_config_title" formatted="false">위젯 구성</string>
+    <string name="widget_config_subtitle" formatted="false">각 위젯은 자체 설정을 유지합니다. 빠른 추가를 열면 앱에서 계정 및 카테고리 이름을 확인합니다.</string>
+    <string name="widget_config_default_type" formatted="false">기본 유형</string>
+    <string name="widget_config_account_hint" formatted="false">계정(예: Revolut)</string>
+    <string name="widget_config_category_hint" formatted="false">카테고리(예: 바)</string>
+    <string name="widget_config_destination_hint" formatted="false">환승 대상(선택)</string>
+    <string name="widget_config_quick_amounts" formatted="false">빠른 금액</string>
+    <string name="widget_config_show_balance" formatted="false">위젯에 잔액 표시</string>
+    <string name="widget_config_show_amounts" formatted="false">빠른 금액 표시</string>
+    <string name="widget_config_save" formatted="false">위젯 저장</string>
+</resources>

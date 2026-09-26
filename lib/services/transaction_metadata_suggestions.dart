@@ -193,7 +193,13 @@ class TransactionMetadataSuggestions {
     final cleaned = cleanTag(input).toLowerCase();
     final withoutAccents = _stripAccents(cleaned);
     return withoutAccents
-        .replaceAll(RegExp(r'[^a-z0-9]+'), ' ')
+        .replaceAll(
+          RegExp(
+            r'[^a-z0-9À-ÿ\\u0400-\\u04FF\\u0600-\\u06FF\\u0900-\\u097F\\u3040-\\u30FF\\u3400-\\u9FFF\\uAC00-\\uD7AF]+',
+            unicode: true,
+          ),
+          ' ',
+        )
         .replaceAll(RegExp(r'\s+'), ' ')
         .trim();
   }

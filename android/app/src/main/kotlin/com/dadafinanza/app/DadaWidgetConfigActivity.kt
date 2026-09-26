@@ -2,7 +2,9 @@ package com.dadafinanza.app
 
 import android.app.Activity
 import android.appwidget.AppWidgetManager
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.text.InputType
@@ -15,8 +17,39 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.Spinner
 import android.widget.TextView
+import es.antonborri.home_widget.HomeWidgetPlugin
+import java.util.Locale
 
 class DadaWidgetConfigActivity : Activity() {
+    override fun attachBaseContext(newBase: Context) {
+        val widgetData = HomeWidgetPlugin.getData(newBase)
+        val code = widgetData.getString("language_code", "it") ?: "it"
+        if (code == "system") {
+            super.attachBaseContext(newBase)
+            return
+        }
+        val configuration = Configuration(newBase.resources.configuration)
+        configuration.setLocale(Locale.forLanguageTag(localeTag(code)))
+        super.attachBaseContext(newBase.createConfigurationContext(configuration))
+    }
+
+    private fun localeTag(code: String): String =
+        when (code) {
+            "it" -> "it-IT"
+            "en" -> "en-US"
+            "es" -> "es-ES"
+            "fr" -> "fr-FR"
+            "de" -> "de-DE"
+            "pt" -> "pt-BR"
+            "ru" -> "ru-RU"
+            "zh" -> "zh-CN"
+            "ja" -> "ja-JP"
+            "ko" -> "ko-KR"
+            "ar" -> "ar"
+            "hi" -> "hi-IN"
+            else -> code
+        }
+
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     private val prefs by lazy {
         getSharedPreferences("dada_widget_config", MODE_PRIVATE)
@@ -46,13 +79,13 @@ class DadaWidgetConfigActivity : Activity() {
             setBackgroundColor(Color.rgb(9, 9, 11))
         }
         root.addView(TextView(this).apply {
-            text = "Configura widget"
+            text = getString(R.string.widget_config_title)
             textSize = 26f
             setTextColor(Color.WHITE)
             setPadding(0, 0, 0, dp(8))
         })
         root.addView(TextView(this).apply {
-            text = "Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add."
+            text = getString(R.string.widget_config_subtitle)
             textSize = 14f
             setTextColor(Color.LTGRAY)
             setPadding(0, 0, 0, dp(24))
@@ -62,7 +95,11 @@ class DadaWidgetConfigActivity : Activity() {
             adapter = ArrayAdapter(
                 this@DadaWidgetConfigActivity,
                 android.R.layout.simple_spinner_dropdown_item,
-                listOf("Spesa", "Entrata", "Trasferimento"),
+                listOf(
+                    getString(R.string.widget_expense),
+                    getString(R.string.widget_income),
+                    getString(R.string.widget_transfer),
+                ),
             )
             val saved = prefs.getString("widget_${appWidgetId}_type", "expense")
             setSelection(
@@ -73,26 +110,26 @@ class DadaWidgetConfigActivity : Activity() {
                 },
             )
         }
-        addLabel(root, "Tipo predefinito")
+        addLabel(root, getString(R.string.widget_config_default_type))
         root.addView(typeSpinner, matchWidth())
 
         val account = edit(
-            "Conto (es. Revolut)",
+            getString(R.string.widget_config_account_hint),
             prefs.getString("widget_${appWidgetId}_account", "") ?: "",
         )
         root.addView(account, matchWidth())
         val category = edit(
-            "Categoria (es. Bar)",
+            getString(R.string.widget_config_category_hint),
             prefs.getString("widget_${appWidgetId}_category", "") ?: "",
         )
         root.addView(category, matchWidth())
         val destination = edit(
-            "Destinazione trasferimento (opzionale)",
+            getString(R.string.widget_config_destination_hint),
             prefs.getString("widget_${appWidgetId}_destination", "") ?: "",
         )
         root.addView(destination, matchWidth())
 
-        addLabel(root, "Importi rapidi")
+        addLabel(root, getString(R.string.widget_config_quick_amounts))
         val amountRow = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
         }
@@ -123,20 +160,20 @@ class DadaWidgetConfigActivity : Activity() {
         root.addView(amountRow, matchWidth())
 
         val showBalance = CheckBox(this).apply {
-            text = "Mostra saldo nel widget"
+            text = getString(R.string.widget_config_show_balance)
             setTextColor(Color.WHITE)
             isChecked = prefs.getBoolean("widget_${appWidgetId}_show_balance", false)
         }
         root.addView(showBalance, matchWidth())
         val showAmounts = CheckBox(this).apply {
-            text = "Mostra importi rapidi"
+            text = getString(R.string.widget_config_show_amounts)
             setTextColor(Color.WHITE)
             isChecked = prefs.getBoolean("widget_${appWidgetId}_show_amounts", true)
         }
         root.addView(showAmounts, matchWidth())
 
         root.addView(Button(this).apply {
-            text = "Salva widget"
+            text = getString(R.string.widget_config_save)
             isAllCaps = false
             setOnClickListener {
                 val type = when (typeSpinner.selectedItemPosition) {

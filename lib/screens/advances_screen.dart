@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -58,7 +58,7 @@ class _AdvancesScreenState extends State<AdvancesScreen> {
         title: const Text('Anticipi'),
         actions: [
           IconButton(
-            tooltip: 'Gestisci persone',
+            tooltip: AppI18n.tr('Gestisci persone'),
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => const FinancePeopleScreen()),
@@ -111,12 +111,12 @@ class _AdvancesScreenState extends State<AdvancesScreen> {
             controller: _searchController,
             textInputAction: TextInputAction.search,
             decoration: InputDecoration(
-              hintText: 'Cerca persona',
+              hintText: AppI18n.tr('Cerca persona'),
               prefixIcon: const Icon(Icons.search_rounded),
               suffixIcon: _query.isEmpty
                   ? null
                   : IconButton(
-                      tooltip: 'Cancella ricerca',
+                      tooltip: AppI18n.tr('Cancella ricerca'),
                       onPressed: () {
                         _searchController.clear();
                         setState(() => _query = '');
@@ -199,7 +199,7 @@ String _notificationLabel(DateTime? reminder) {
   if (days < 0) return 'Notifica scaduta';
   if (days == 0) return 'Notifica oggi';
   if (days == 1) return 'Notifica domani';
-  return 'Notifica ${DateFormat('d MMM', 'it_IT').format(reminder)}';
+  return 'Notifica ${DateFormat('d MMM', AppI18n.intlLocale).format(reminder)}';
 }
 
 String _gridPersonSubtitle(DateTime? reminder) =>
@@ -338,7 +338,7 @@ class _AdvanceRow extends StatelessWidget {
                 : Icons.call_made_rounded,
           ),
           title: Text(
-            '${DateFormat('d MMM yyyy', 'it_IT').format(advance.createdAt)} · '
+            '${DateFormat('d MMM yyyy', AppI18n.intlLocale).format(advance.createdAt)} · '
             '${state.hideBalance ? '••••' : moneyFor(state, advance.originalAmount)}',
             style: const TextStyle(fontWeight: FontWeight.w700),
           ),
@@ -417,13 +417,13 @@ class AdvanceDetailScreen extends StatelessWidget {
         title: Text(person?.name ?? 'Anticipo'),
         actions: [
           IconButton(
-            tooltip: 'Promemoria e scadenza',
+            tooltip: AppI18n.tr('Promemoria e scadenza'),
             onPressed: canSettle ? () => _editDates(context, advance) : null,
             icon: const Icon(Icons.notifications_none_rounded),
           ),
           if (advance.closedKind == null)
             PopupMenuButton<String>(
-              tooltip: 'Azioni anticipo',
+              tooltip: AppI18n.tr('Azioni anticipo'),
               onSelected: (value) async {
                 if (value == 'edit') {
                   await showAdvanceMetadataEditor(context, advance);
@@ -493,7 +493,7 @@ class AdvanceDetailScreen extends StatelessWidget {
               label: 'Scadenza',
               value: DateFormat(
                 'd MMMM yyyy',
-                'it_IT',
+                AppI18n.intlLocale,
               ).format(advance.dueDate!),
               icon: Icons.event_outlined,
             ),
@@ -504,7 +504,7 @@ class AdvanceDetailScreen extends StatelessWidget {
               label: 'Promemoria',
               value: DateFormat(
                 'd MMMM yyyy',
-                'it_IT',
+                AppI18n.intlLocale,
               ).format(advance.reminderDate!),
               icon: Icons.notifications_none_rounded,
             ),
@@ -521,7 +521,10 @@ class AdvanceDetailScreen extends StatelessWidget {
             ),
             subtitle: Text(
               [
-                DateFormat('d MMM yyyy', 'it_IT').format(advance.createdAt),
+                DateFormat(
+                  'd MMM yyyy',
+                  AppI18n.intlLocale,
+                ).format(advance.createdAt),
                 if (sourceAccount != null) sourceAccount.name,
               ].join(' · '),
             ),
@@ -538,14 +541,17 @@ class AdvanceDetailScreen extends StatelessWidget {
               ),
               subtitle: Text(
                 [
-                  DateFormat('d MMM yyyy', 'it_IT').format(settlement.date),
+                  DateFormat(
+                    'd MMM yyyy',
+                    AppI18n.intlLocale,
+                  ).format(settlement.date),
                   if (account != null) account.name,
                   if (settlement.note?.isNotEmpty == true) settlement.note!,
                 ].join(' · '),
               ),
               trailing: advance.closedKind == null
                   ? PopupMenuButton<String>(
-                      tooltip: 'Azioni rimborso',
+                      tooltip: AppI18n.tr('Azioni rimborso'),
                       onSelected: (value) async {
                         if (value == 'edit') {
                           await showSettlementEditor(
@@ -648,7 +654,10 @@ class AdvanceDetailScreen extends StatelessWidget {
                 subtitle: Text(
                   due == null
                       ? 'Nessuna'
-                      : DateFormat('d MMM yyyy', 'it_IT').format(due!),
+                      : DateFormat(
+                          'd MMM yyyy',
+                          AppI18n.intlLocale,
+                        ).format(due!),
                 ),
                 onTap: () async {
                   final picked = await showDatePicker(
@@ -668,7 +677,10 @@ class AdvanceDetailScreen extends StatelessWidget {
                 subtitle: Text(
                   reminder == null
                       ? 'Nessuna'
-                      : DateFormat('d MMM yyyy', 'it_IT').format(reminder!),
+                      : DateFormat(
+                          'd MMM yyyy',
+                          AppI18n.intlLocale,
+                        ).format(reminder!),
                 ),
                 onTap: () async {
                   final picked = await showDatePicker(
@@ -851,7 +863,7 @@ Future<void> showAdvanceEditor(
                   decimal: true,
                 ),
                 decoration: InputDecoration(
-                  labelText: 'Importo',
+                  labelText: AppI18n.tr('Importo'),
                   suffixText: state.currency,
                 ),
               ),
@@ -901,7 +913,10 @@ Future<void> showAdvanceEditor(
                     subtitle: Text(
                       dueDate == null
                           ? 'Nessuna'
-                          : DateFormat('d MMM yyyy', 'it_IT').format(dueDate!),
+                          : DateFormat(
+                              'd MMM yyyy',
+                              AppI18n.intlLocale,
+                            ).format(dueDate!),
                     ),
                     onTap: () async {
                       final picked = await showDatePicker(
@@ -926,7 +941,7 @@ Future<void> showAdvanceEditor(
                           ? 'Nessuno'
                           : DateFormat(
                               'd MMM yyyy',
-                              'it_IT',
+                              AppI18n.intlLocale,
                             ).format(reminderDate!),
                     ),
                     onTap: () async {
@@ -947,7 +962,9 @@ Future<void> showAdvanceEditor(
                   ),
                   TextField(
                     controller: note,
-                    decoration: InputDecoration(labelText: 'Nota opzionale'),
+                    decoration: InputDecoration(
+                      labelText: AppI18n.tr('Nota opzionale'),
+                    ),
                   ),
                 ],
               ),
@@ -1054,7 +1071,9 @@ Future<void> showAdvanceMetadataEditor(
               ),
               TextField(
                 controller: note,
-                decoration: InputDecoration(labelText: 'Nota opzionale'),
+                decoration: InputDecoration(
+                  labelText: AppI18n.tr('Nota opzionale'),
+                ),
               ),
               ListTile(
                 contentPadding: EdgeInsets.zero,
@@ -1063,7 +1082,10 @@ Future<void> showAdvanceMetadataEditor(
                 subtitle: Text(
                   dueDate == null
                       ? 'Nessuna'
-                      : DateFormat('d MMM yyyy', 'it_IT').format(dueDate!),
+                      : DateFormat(
+                          'd MMM yyyy',
+                          AppI18n.intlLocale,
+                        ).format(dueDate!),
                 ),
                 onTap: () async {
                   final picked = await showDatePicker(
@@ -1082,7 +1104,10 @@ Future<void> showAdvanceMetadataEditor(
                 subtitle: Text(
                   reminderDate == null
                       ? 'Nessuno'
-                      : DateFormat('d MMM yyyy', 'it_IT').format(reminderDate!),
+                      : DateFormat(
+                          'd MMM yyyy',
+                          AppI18n.intlLocale,
+                        ).format(reminderDate!),
                 ),
                 onTap: () async {
                   final picked = await showDatePicker(
@@ -1200,7 +1225,9 @@ Future<void> showSettlementEditor(
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.calendar_today_outlined),
                 title: const Text('Data'),
-                subtitle: Text(DateFormat('d MMM yyyy', 'it_IT').format(date)),
+                subtitle: Text(
+                  DateFormat('d MMM yyyy', AppI18n.intlLocale).format(date),
+                ),
                 onTap: () async {
                   final picked = await showDatePicker(
                     context: context,
@@ -1213,7 +1240,9 @@ Future<void> showSettlementEditor(
               ),
               TextField(
                 controller: note,
-                decoration: InputDecoration(labelText: 'Nota opzionale'),
+                decoration: InputDecoration(
+                  labelText: AppI18n.tr('Nota opzionale'),
+                ),
               ),
               const SizedBox(height: 20),
               SizedBox(
@@ -1335,7 +1364,7 @@ class FinancePeopleScreen extends StatelessWidget {
                     ),
                   ),
                   trailing: PopupMenuButton<String>(
-                    tooltip: 'Azioni persona',
+                    tooltip: AppI18n.tr('Azioni persona'),
                     onSelected: (value) async {
                       if (value == 'edit') {
                         await showFinancePersonEditor(context, person);
@@ -1416,7 +1445,7 @@ class FinancePersonDetailScreen extends StatelessWidget {
         title: Text(person.name),
         actions: [
           IconButton(
-            tooltip: 'Modifica persona',
+            tooltip: AppI18n.tr('Modifica persona'),
             onPressed: () => showFinancePersonEditor(context, person),
             icon: const Icon(Icons.edit_outlined),
           ),
@@ -1564,7 +1593,7 @@ Future<void> showFinancePersonEditor(
                 controller: name,
                 autofocus: true,
                 textCapitalization: TextCapitalization.words,
-                decoration: const InputDecoration(labelText: 'Nome'),
+                decoration: InputDecoration(labelText: AppI18n.tr('Nome')),
               ),
               const SizedBox(height: 12),
               ListTile(
@@ -1734,12 +1763,12 @@ class _FinancePersonPickerSheetState extends State<_FinancePersonPickerSheet> {
               controller: _searchController,
               textInputAction: TextInputAction.search,
               decoration: InputDecoration(
-                hintText: 'Cerca persona',
+                hintText: AppI18n.tr('Cerca persona'),
                 prefixIcon: const Icon(Icons.search_rounded),
                 suffixIcon: _query.isEmpty
                     ? null
                     : IconButton(
-                        tooltip: 'Cancella ricerca',
+                        tooltip: AppI18n.tr('Cancella ricerca'),
                         onPressed: () {
                           _searchController.clear();
                           setState(() => _query = '');
@@ -1778,7 +1807,7 @@ class _FinancePersonPickerSheetState extends State<_FinancePersonPickerSheet> {
                         return _PersonPickerTile(
                           icon: Icons.person_add_alt_1_rounded,
                           label: 'Nuova',
-                          semanticLabel: 'Crea nuova persona',
+                          semanticLabel: AppI18n.tr('Crea nuova persona'),
                           onTap: () async {
                             final id = await showFinancePersonCreator(context);
                             if (id != null && context.mounted) {
@@ -1793,7 +1822,7 @@ class _FinancePersonPickerSheetState extends State<_FinancePersonPickerSheet> {
                       return _PersonPickerTile(
                         icon: personIcon(person.iconKey),
                         label: person.name,
-                        semanticLabel: 'Seleziona ' + person.name,
+                        semanticLabel: AppI18n.tr('Seleziona ') + person.name,
                         color: Color(person.colorValue),
                         onTap: () => Navigator.pop(context, person.id),
                       );
@@ -1895,7 +1924,7 @@ Future<int?> showFinancePersonCreator(BuildContext context) async {
                 controller: name,
                 autofocus: true,
                 textCapitalization: TextCapitalization.words,
-                decoration: const InputDecoration(labelText: 'Nome'),
+                decoration: InputDecoration(labelText: AppI18n.tr('Nome')),
               ),
               const SizedBox(height: 12),
               ListTile(

@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -40,7 +40,7 @@ class _RootScreenState extends State<RootScreen> {
         child: IndexedStack(index: index, children: pages),
       ),
       floatingActionButton: FloatingActionButton(
-        tooltip: 'Nuovo movimento',
+        tooltip: AppI18n.tr('Nuovo movimento'),
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute(builder: (_) => const QuickAddPage()),
@@ -51,26 +51,26 @@ class _RootScreenState extends State<RootScreen> {
       bottomNavigationBar: NavigationBar(
         selectedIndex: index,
         onDestinationSelected: (value) => setState(() => index = value),
-        destinations: const [
+        destinations: [
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
             selectedIcon: Icon(Icons.home_rounded),
-            label: 'Home',
+            label: AppI18n.tr('Home'),
           ),
           NavigationDestination(
             icon: Icon(Icons.receipt_long_outlined),
             selectedIcon: Icon(Icons.receipt_long_rounded),
-            label: 'Movimenti',
+            label: AppI18n.tr('Movimenti'),
           ),
           NavigationDestination(
             icon: Icon(Icons.bar_chart_outlined),
             selectedIcon: Icon(Icons.bar_chart_rounded),
-            label: 'Analisi',
+            label: AppI18n.tr('Analisi'),
           ),
           NavigationDestination(
             icon: Icon(Icons.event_note_outlined),
             selectedIcon: Icon(Icons.event_note_rounded),
-            label: 'Pianifica',
+            label: AppI18n.tr('Pianifica'),
           ),
         ],
       ),
@@ -87,7 +87,10 @@ class HomeScreen extends StatelessWidget {
     final widgets =
         state.dashboardWidgets.where((item) => item.enabled).toList()
           ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
-    final month = DateFormat('MMMM yyyy', 'it_IT').format(DateTime.now());
+    final month = DateFormat(
+      'MMMM yyyy',
+      AppI18n.intlLocale,
+    ).format(DateTime.now());
 
     return CustomScrollView(
       slivers: [
@@ -111,7 +114,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             IconButton(
-              tooltip: 'Personalizza dashboard',
+              tooltip: AppI18n.tr('Personalizza dashboard'),
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -121,7 +124,7 @@ class HomeScreen extends StatelessWidget {
               icon: const Icon(Icons.dashboard_customize_outlined),
             ),
             IconButton(
-              tooltip: 'Impostazioni',
+              tooltip: AppI18n.tr('Impostazioni'),
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -479,7 +482,7 @@ class _DashboardWidget extends StatelessWidget {
               ...upcoming.map(
                 (item) => FlatMetric(
                   label:
-                      '${item.name} · ${DateFormat('dd MMM', 'it_IT').format(item.nextDate)}',
+                      '${item.name} · ${DateFormat('dd MMM', AppI18n.intlLocale).format(item.nextDate)}',
                   value:
                       '${item.type == TransactionType.expense
                           ? '-'
@@ -497,7 +500,7 @@ class _DashboardWidget extends StatelessWidget {
         return metric(
           next == null
               ? 'Nessuna scadenza'
-              : DateFormat('dd MMM', 'it_IT').format(next.nextDate),
+              : DateFormat('dd MMM', AppI18n.intlLocale).format(next.nextDate),
           subtitle: next?.name,
           icon: Icons.calendar_month_outlined,
           onTap: () => Navigator.push(
@@ -934,14 +937,14 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
         leading: selected.isEmpty
             ? null
             : IconButton(
-                tooltip: 'Annulla selezione',
+                tooltip: AppI18n.tr('Annulla selezione'),
                 onPressed: () => setState(selected.clear),
                 icon: const Icon(Icons.close_rounded),
               ),
         actions: selected.isEmpty
             ? [
                 IconButton(
-                  tooltip: 'Filtri',
+                  tooltip: AppI18n.tr('Filtri'),
                   onPressed: () => _showFilters(context, state),
                   icon: Badge(
                     isLabelVisible: hasFilters,
@@ -951,7 +954,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
               ]
             : [
                 PopupMenuButton<String>(
-                  tooltip: 'Azioni multiple',
+                  tooltip: AppI18n.tr('Azioni multiple'),
                   onSelected: (value) async {
                     if (value == 'category') await _bulkCategory(state);
                     if (value == 'account') await _bulkAccount(state);
@@ -997,12 +1000,12 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
               controller: search,
               textInputAction: TextInputAction.search,
               decoration: InputDecoration(
-                hintText: 'Cerca nota, conto, categoria o tag',
+                hintText: AppI18n.tr('Cerca nota, conto, categoria o tag'),
                 prefixIcon: const Icon(Icons.search_rounded),
                 suffixIcon: query.isEmpty
                     ? null
                     : IconButton(
-                        tooltip: 'Cancella ricerca',
+                        tooltip: AppI18n.tr('Cancella ricerca'),
                         onPressed: () {
                           search.clear();
                           setState(() => query = '');
@@ -1154,7 +1157,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                   ),
                   DropdownButtonFormField<TransactionType?>(
                     initialValue: draftType,
-                    decoration: const InputDecoration(labelText: 'Tipo'),
+                    decoration: InputDecoration(labelText: AppI18n.tr('Tipo')),
                     items: [
                       const DropdownMenuItem<TransactionType?>(
                         value: null,
@@ -1174,7 +1177,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                   ),
                   DropdownButtonFormField<int?>(
                     initialValue: draftAccount,
-                    decoration: const InputDecoration(labelText: 'Conto'),
+                    decoration: InputDecoration(labelText: AppI18n.tr('Conto')),
                     items: [
                       const DropdownMenuItem<int?>(
                         value: null,
@@ -1192,7 +1195,9 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                   DropdownButtonFormField<int?>(
                     key: ValueKey('filter-category-$draftType-$draftCategory'),
                     initialValue: draftCategory,
-                    decoration: const InputDecoration(labelText: 'Categoria'),
+                    decoration: InputDecoration(
+                      labelText: AppI18n.tr('Categoria'),
+                    ),
                     items: [
                       const DropdownMenuItem<int?>(
                         value: null,
@@ -1215,8 +1220,8 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                           keyboardType: const TextInputType.numberWithOptions(
                             decimal: true,
                           ),
-                          decoration: const InputDecoration(
-                            labelText: 'Importo min.',
+                          decoration: InputDecoration(
+                            labelText: AppI18n.tr('Importo min.'),
                           ),
                         ),
                       ),
@@ -1227,8 +1232,8 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                           keyboardType: const TextInputType.numberWithOptions(
                             decimal: true,
                           ),
-                          decoration: const InputDecoration(
-                            labelText: 'Importo max.',
+                          decoration: InputDecoration(
+                            labelText: AppI18n.tr('Importo max.'),
                           ),
                         ),
                       ),
@@ -1300,7 +1305,9 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                   ),
                   DropdownButtonFormField<_TransactionSort>(
                     initialValue: draftSort,
-                    decoration: const InputDecoration(labelText: 'Ordina'),
+                    decoration: InputDecoration(
+                      labelText: AppI18n.tr('Ordina'),
+                    ),
                     items: const [
                       DropdownMenuItem(
                         value: _TransactionSort.newest,
@@ -1444,7 +1451,7 @@ class _SelectableTransactionTile extends StatelessWidget {
           account?.isSystem == true
               ? 'Non assegnato'
               : account?.name ?? 'Conto',
-          DateFormat('dd MMM, HH:mm', 'it_IT').format(item.date),
+          DateFormat('dd MMM, HH:mm', AppI18n.intlLocale).format(item.date),
           if (item.kind == 'mixed_advance' && sourceAdvance != null)
             'Include ${moneyFor(state, Money.fromCents(sourceAdvance.originalAmountCents))} anticipati a ${person?.name ?? 'persona'}',
           if (linkedAdvance != null && item.kind == 'advance_settlement')
@@ -1611,7 +1618,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
             children: [
               Expanded(
                 child: _AnalyticsMetric(
-                  label: 'Entrate',
+                  label: AppI18n.tr('Entrate'),
                   value: moneyFor(state, income),
                   color: context.financeColors.positive,
                 ),
@@ -1619,7 +1626,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
               const SizedBox(width: 14),
               Expanded(
                 child: _AnalyticsMetric(
-                  label: 'Spese',
+                  label: AppI18n.tr('Spese'),
                   value: moneyFor(state, expense),
                   color: context.financeColors.negative,
                 ),
@@ -1628,7 +1635,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           ),
           const SizedBox(height: 14),
           _AnalyticsMetric(
-            label: 'Netto',
+            label: AppI18n.tr('Netto'),
             value: moneyFor(state, net, signed: true),
             color: net >= 0
                 ? context.financeColors.positive
@@ -1665,26 +1672,26 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           const SizedBox(height: 28),
           const SectionTitle('Indicatori'),
           FlatMetric(
-            label: 'Media spesa giornaliera',
+            label: AppI18n.tr('Media spesa giornaliera'),
             value: moneyFor(state, expense / days),
             icon: Icons.av_timer_rounded,
           ),
           const Divider(height: 1),
           FlatMetric(
-            label: 'Giorni senza spese',
+            label: AppI18n.tr('Giorni senza spese'),
             value: '${math.max(0, days - spentDays)}',
             icon: Icons.event_available_outlined,
           ),
           const Divider(height: 1),
           FlatMetric(
-            label: 'Numero movimenti',
+            label: AppI18n.tr('Numero movimenti'),
             value: '${transactions.length}',
             icon: Icons.receipt_long_outlined,
           ),
           if (largest != null) ...[
             const Divider(height: 1),
             FlatMetric(
-              label: 'Movimento maggiore',
+              label: AppI18n.tr('Movimento maggiore'),
               value: moneyFor(state, largest.amount),
               icon: Icons.north_east_rounded,
             ),
@@ -1696,7 +1703,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                 .take(5)
                 .map(
                   (entry) => FlatMetric(
-                    label: '#${entry.$1}',
+                    label: AppI18n.tr('#${entry.$1}'),
                     value: moneyFor(state, entry.$2),
                     icon: Icons.tag_rounded,
                   ),

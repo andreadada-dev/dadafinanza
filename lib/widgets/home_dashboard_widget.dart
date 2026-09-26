@@ -1,5 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 
 import '../app_state.dart';
 import '../main.dart';
@@ -905,7 +905,7 @@ class _DonutPeriodCenter extends StatelessWidget {
             children: [
               _DonutRangeArrow(
                 icon: Icons.chevron_left_rounded,
-                tooltip: 'Periodo precedente',
+                tooltip: AppI18n.tr('Periodo precedente'),
                 onPressed: onPreviousRange,
               ),
               Semantics(
@@ -939,7 +939,7 @@ class _DonutPeriodCenter extends StatelessWidget {
               ),
               _DonutRangeArrow(
                 icon: Icons.chevron_right_rounded,
-                tooltip: 'Periodo successivo',
+                tooltip: AppI18n.tr('Periodo successivo'),
                 onPressed: onNextRange,
               ),
             ],

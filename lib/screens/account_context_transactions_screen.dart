@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -131,7 +131,7 @@ class _AccountContextTransactionsScreenState
         ),
         actions: [
           IconButton(
-            tooltip: 'Filtri',
+            tooltip: AppI18n.tr('Filtri'),
             onPressed: () => _showFilters(context, state),
             icon: Badge(
               isLabelVisible: hasFilters,
@@ -148,12 +148,12 @@ class _AccountContextTransactionsScreenState
               controller: search,
               textInputAction: TextInputAction.search,
               decoration: InputDecoration(
-                hintText: 'Cerca nota, conto, categoria o tag',
+                hintText: AppI18n.tr('Cerca nota, conto, categoria o tag'),
                 prefixIcon: const Icon(Icons.search_rounded),
                 suffixIcon: query.isEmpty
                     ? null
                     : IconButton(
-                        tooltip: 'Cancella ricerca',
+                        tooltip: AppI18n.tr('Cancella ricerca'),
                         onPressed: () {
                           search.clear();
                           setState(() => query = '');
@@ -328,7 +328,7 @@ class _AccountContextTransactionsScreenState
                   const SizedBox(height: 8),
                   DropdownButtonFormField<TransactionType?>(
                     initialValue: draftType,
-                    decoration: const InputDecoration(labelText: 'Tipo'),
+                    decoration: InputDecoration(labelText: AppI18n.tr('Tipo')),
                     items: [
                       const DropdownMenuItem<TransactionType?>(
                         value: null,
@@ -351,7 +351,9 @@ class _AccountContextTransactionsScreenState
                       'movement-category-$draftType-$draftCategory',
                     ),
                     initialValue: draftCategory,
-                    decoration: const InputDecoration(labelText: 'Categoria'),
+                    decoration: InputDecoration(
+                      labelText: AppI18n.tr('Categoria'),
+                    ),
                     items: [
                       const DropdownMenuItem<int?>(
                         value: null,
@@ -408,7 +410,9 @@ class _AccountContextTransactionsScreenState
                   ),
                   DropdownButtonFormField<_MovementSort>(
                     initialValue: draftSort,
-                    decoration: const InputDecoration(labelText: 'Ordina'),
+                    decoration: InputDecoration(
+                      labelText: AppI18n.tr('Ordina'),
+                    ),
                     items: const [
                       DropdownMenuItem(
                         value: _MovementSort.newest,

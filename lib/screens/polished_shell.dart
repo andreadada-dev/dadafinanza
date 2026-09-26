@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
+import 'package:dadafinanza/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -41,7 +41,7 @@ class _PolishedRootScreenState extends State<PolishedRootScreen> {
         child: IndexedStack(index: index, children: pages),
       ),
       floatingActionButton: FloatingActionButton(
-        tooltip: 'Nuovo movimento',
+        tooltip: AppI18n.tr('Nuovo movimento'),
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute(builder: (_) => const QuickAddPage()),
@@ -52,26 +52,26 @@ class _PolishedRootScreenState extends State<PolishedRootScreen> {
       bottomNavigationBar: NavigationBar(
         selectedIndex: index,
         onDestinationSelected: (value) => setState(() => index = value),
-        destinations: const [
+        destinations: [
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
             selectedIcon: Icon(Icons.home_rounded),
-            label: 'Home',
+            label: AppI18n.tr('Home'),
           ),
           NavigationDestination(
             icon: Icon(Icons.receipt_long_outlined),
             selectedIcon: Icon(Icons.receipt_long_rounded),
-            label: 'Movimenti',
+            label: AppI18n.tr('Movimenti'),
           ),
           NavigationDestination(
             icon: Icon(Icons.insights_outlined),
             selectedIcon: Icon(Icons.insights_rounded),
-            label: 'Analisi',
+            label: AppI18n.tr('Analisi'),
           ),
           NavigationDestination(
             icon: Icon(Icons.event_note_outlined),
             selectedIcon: Icon(Icons.event_note_rounded),
-            label: 'Pianifica',
+            label: AppI18n.tr('Pianifica'),
           ),
         ],
       ),
@@ -129,7 +129,10 @@ class PolishedHomeScreen extends StatelessWidget {
             children: [
               const Text('DadaFinanza'),
               Text(
-                DateFormat('MMMM yyyy', 'it_IT').format(DateTime.now()),
+                DateFormat(
+                  'MMMM yyyy',
+                  AppI18n.intlLocale,
+                ).format(DateTime.now()),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
@@ -145,7 +148,7 @@ class PolishedHomeScreen extends StatelessWidget {
               ),
             ),
             PopupMenuButton<String>(
-              tooltip: 'Altre opzioni',
+              tooltip: AppI18n.tr('Altre opzioni'),
               onSelected: (value) {
                 final page = switch (value) {
                   'widgets' => const AndroidWidgetsScreen(),
@@ -198,7 +201,7 @@ class PolishedHomeScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: _Metric(
-                      label: 'Entrate',
+                      label: AppI18n.tr('Entrate'),
                       value: state.hideBalance
                           ? '••••'
                           : moneyFor(state, income),
@@ -208,7 +211,7 @@ class PolishedHomeScreen extends StatelessWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: _Metric(
-                      label: 'Spese',
+                      label: AppI18n.tr('Spese'),
                       value: state.hideBalance
                           ? '••••'
                           : moneyFor(state, expense),
@@ -218,7 +221,7 @@ class PolishedHomeScreen extends StatelessWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: _Metric(
-                      label: 'Disponibile',
+                      label: AppI18n.tr('Disponibile'),
                       value: state.hideBalance
                           ? '••••'
                           : moneyFor(state, state.safeToSpend),
@@ -232,7 +235,7 @@ class PolishedHomeScreen extends StatelessWidget {
                   Expanded(
                     child: FinanceQuickAction(
                       icon: Icons.arrow_upward_rounded,
-                      label: 'Spesa',
+                      label: AppI18n.tr('Spesa'),
                       color: context.financeColors.negative,
                       onTap: () => _quick(context, 'expense'),
                     ),
@@ -240,7 +243,7 @@ class PolishedHomeScreen extends StatelessWidget {
                   Expanded(
                     child: FinanceQuickAction(
                       icon: Icons.arrow_downward_rounded,
-                      label: 'Entrata',
+                      label: AppI18n.tr('Entrata'),
                       color: context.financeColors.positive,
                       onTap: () => _quick(context, 'income'),
                     ),
@@ -248,7 +251,7 @@ class PolishedHomeScreen extends StatelessWidget {
                   Expanded(
                     child: FinanceQuickAction(
                       icon: Icons.swap_horiz_rounded,
-                      label: 'Trasferisci',
+                      label: AppI18n.tr('Trasferisci'),
                       color: Theme.of(context).colorScheme.onSurface,
                       onTap: () => _quick(context, 'transfer'),
                     ),
@@ -393,7 +396,7 @@ class PolishedHomeScreen extends StatelessWidget {
                         subtitle: Text(
                           DateFormat(
                             'EEE d MMM',
-                            'it_IT',
+                            AppI18n.intlLocale,
                           ).format(item.nextDate),
                         ),
                         trailing: Text(
@@ -661,7 +664,10 @@ class PolishedPlanningScreen extends StatelessWidget {
             title: 'Prossime scadenze',
             value: recurring.isEmpty
                 ? 'Nessuna'
-                : DateFormat('d MMM', 'it_IT').format(recurring.first.nextDate),
+                : DateFormat(
+                    'd MMM',
+                    AppI18n.intlLocale,
+                  ).format(recurring.first.nextDate),
             detail: recurring.isEmpty
                 ? '${state.detectedRecurringPatterns.length} pattern ricorrenti rilevati.'
                 : '${recurring.first.name} · ${moneyFor(state, recurring.first.amount)}',
@@ -893,7 +899,7 @@ class _PolishedAnalyticsScreenState extends State<PolishedAnalyticsScreen> {
           ),
           const SizedBox(height: 24),
           Text(
-            '${DateFormat('d MMM', 'it_IT').format(from)} – ${DateFormat('d MMM', 'it_IT').format(to.subtract(const Duration(days: 1)))}',
+            '${DateFormat('d MMM', AppI18n.intlLocale).format(from)} – ${DateFormat('d MMM', AppI18n.intlLocale).format(to.subtract(const Duration(days: 1)))}',
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 8),
@@ -901,7 +907,7 @@ class _PolishedAnalyticsScreenState extends State<PolishedAnalyticsScreen> {
             children: [
               Expanded(
                 child: _Metric(
-                  label: 'Entrate',
+                  label: AppI18n.tr('Entrate'),
                   value: moneyFor(state, income),
                   color: context.financeColors.positive,
                 ),
@@ -909,7 +915,7 @@ class _PolishedAnalyticsScreenState extends State<PolishedAnalyticsScreen> {
               const SizedBox(width: 20),
               Expanded(
                 child: _Metric(
-                  label: 'Spese',
+                  label: AppI18n.tr('Spese'),
                   value: moneyFor(state, expense),
                   color: context.financeColors.negative,
                 ),
