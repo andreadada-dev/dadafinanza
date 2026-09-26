@@ -1,0 +1,64 @@
+name: One-off Play Store formatting
+
+on:
+  push:
+    branches:
+      - 'build/playstore-ready'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dadafinanza-oneoff-format
+  cancel-in-progress: true
+
+jobs:
+  format:
+    runs-on: [self-hosted, linux, x64, local-pc, general]
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Repair incomplete Flutter SDK cache
+        shell: bash
+        run: |
+          cache_root="${RUNNER_TOOL_CACHE:-/opt/hostedtoolcache}/flutter/stable-3.47.2-x64"
+          if [ -d "$cache_root" ] && [ ! -f "$cache_root/flutter/bin/internal/shared.sh" ]; then
+            rm -rf "$cache_root"
+          fi
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.2'
+          channel: stable
+          cache: false
+
+      - name: Trust Flutter SDK
+        shell: bash
+        run: |
+          if ! git config --global --get-all safe.directory | grep --fixed-strings --line-regexp --quiet "$FLUTTER_ROOT"; then
+            git config --global --add safe.directory "$FLUTTER_ROOT"
+          fi
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Apply canonical Dart formatting
+        run: dart format lib test
+
+      - name: Commit formatter output
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet; then
+            echo "No formatting changes required."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lib test
+          git commit -m "Apply canonical Dart formatting"
+          git push origin HEAD:"${GITHUB_REF_NAME}"
