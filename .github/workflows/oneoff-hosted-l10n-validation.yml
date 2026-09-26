@@ -1,4 +1,5 @@
 name: One-off hosted multilingual validation
+# Final multilingual validation trigger
 
 on:
   push:
