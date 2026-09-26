@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: dadafinanza-generate-l10n
+  group: dadafinanza-generate-l10n-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
