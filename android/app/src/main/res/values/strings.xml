@@ -9,4 +9,30 @@
     <string name="widget_balance_description">Saldo totale compatto con accesso rapido a DadaFinanza</string>
     <string name="widget_quick_description">Spesa, entrata, trasferimento e voce dalla schermata Home</string>
     <string name="widget_amounts_description">Conto, categoria e quattro importi configurabili con accesso vocale</string>
+
+    <string name="widget_balance_total">Saldo totale</string>
+    <string name="widget_add_expense">Aggiungi spesa</string>
+    <string name="widget_quick_title">Aggiungi movimento</string>
+    <string name="widget_expense">Spesa</string>
+    <string name="widget_income">Entrata</string>
+    <string name="widget_transfer">Trasferisci</string>
+    <string name="widget_voice">Voce</string>
+    <string name="widget_new_expense">Nuova spesa</string>
+    <string name="widget_new_income">Nuova entrata</string>
+    <string name="widget_new_transfer">Nuovo trasferimento</string>
+    <string name="widget_voice_description">Compila movimento con la voce</string>
+    <string name="widget_fast_title">DadaFinanza · Rapido</string>
+    <string name="widget_account_category">Conto · Categoria</string>
+    <string name="widget_configure_account_category">Configura conto e categoria</string>
+
+    <string name="widget_config_title">Configura widget</string>
+    <string name="widget_config_subtitle">Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add.</string>
+    <string name="widget_config_default_type">Tipo predefinito</string>
+    <string name="widget_config_account_hint">Conto (es. Revolut)</string>
+    <string name="widget_config_category_hint">Categoria (es. Bar)</string>
+    <string name="widget_config_destination_hint">Destinazione trasferimento (opzionale)</string>
+    <string name="widget_config_quick_amounts">Importi rapidi</string>
+    <string name="widget_config_show_balance">Mostra saldo nel widget</string>
+    <string name="widget_config_show_amounts">Mostra importi rapidi</string>
+    <string name="widget_config_save">Salva widget</string>
 </resources>
