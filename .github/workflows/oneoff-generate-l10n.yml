@@ -1,0 +1,40 @@
+name: One-off generate multilingual app
+
+on:
+  push:
+    branches:
+      - 'feature/multilanguage'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dadafinanza-generate-l10n
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate translations and wire localization
+        run: python3 tools/generate_l10n.py
+
+      - name: Commit generated localization
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lib tools/l10n_stats.json
+          if git diff --cached --quiet; then
+            echo "Localization is already up to date."
+            exit 0
+          fi
+          git commit -m "Generate multilingual UI translations"
+          git push origin HEAD:"${GITHUB_REF_NAME}"
