@@ -91,7 +91,10 @@ class _AccountContextAnalyticsScreenState
     final oneDay =
         from.year == end.year && from.month == end.month && from.day == end.day;
     final includeYear = from.year != now.year || end.year != now.year;
-    final format = DateFormat(includeYear ? 'd MMM yy' : 'd MMM', AppI18n.intlLocale);
+    final format = DateFormat(
+      includeYear ? 'd MMM yy' : 'd MMM',
+      AppI18n.intlLocale,
+    );
     if (oneDay) return format.format(from);
     return '${format.format(from)} – ${format.format(end)}';
   }
@@ -578,7 +581,10 @@ class _BalanceTrendState extends State<_BalanceTrend>
     final sameYear = date.year == from.year;
 
     return switch (widget.period) {
-      _AnalyticsPeriod.today => DateFormat('HH', AppI18n.intlLocale).format(date),
+      _AnalyticsPeriod.today => DateFormat(
+        'HH',
+        AppI18n.intlLocale,
+      ).format(date),
       _AnalyticsPeriod.week =>
         sameMonth
             ? DateFormat('EEE dd', AppI18n.intlLocale).format(date)
@@ -591,7 +597,10 @@ class _BalanceTrendState extends State<_BalanceTrend>
             : sameYear
             ? DateFormat('dd MMM', AppI18n.intlLocale).format(date)
             : DateFormat('dd MMM yy', AppI18n.intlLocale).format(date),
-      _AnalyticsPeriod.year => DateFormat('MMM', AppI18n.intlLocale).format(date),
+      _AnalyticsPeriod.year => DateFormat(
+        'MMM',
+        AppI18n.intlLocale,
+      ).format(date),
       _AnalyticsPeriod.custom =>
         durationDays <= 8
             ? sameMonth
@@ -1000,7 +1009,10 @@ class _BalanceTrendState extends State<_BalanceTrend>
                                   'd MMM yyyy, HH:mm',
                                   AppI18n.intlLocale,
                                 ).format(date)
-                              : DateFormat('d MMM yyyy', AppI18n.intlLocale).format(date);
+                              : DateFormat(
+                                  'd MMM yyyy',
+                                  AppI18n.intlLocale,
+                                ).format(date);
                           return LineTooltipItem(
                             '$dateLabel\n'
                             '${hideValues ? '••••' : moneyFor(state, spot.y)}',
@@ -1250,9 +1262,8 @@ class _Metric extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: Text(
           value,
-          style: Theme.of(
-            context,
-          ).textTheme.titleMedium?.copyWith(color: color),
+          style: Theme.of(context).textTheme.titleMedium
+              ?.copyWith(color: color),
         ),
       ),
     ],

@@ -344,9 +344,8 @@ class VoiceTransactionParser {
       return _AdvanceParse(amountScanInput: input);
     }
 
-    final partialCue = RegExp(
-      r'\b(?:di cui|una parte|in parte|parte)\b',
-    ).hasMatch(input);
+    final partialCue = RegExp(r'\b(?:di cui|una parte|in parte|parte)\b')
+        .hasMatch(input);
     var amountScanInput = input;
     int? advanceAmountCents;
     final partialPatterns = [
@@ -602,9 +601,9 @@ class VoiceTransactionParser {
   }
 
   _TransferMatch _matchTransferAccounts(String input, List<Account> accounts) {
-    final fromPart = RegExp(
-      r'\bda\s+(.+?)(?=\s+a\s+|\s+verso\s+|$)',
-    ).firstMatch(input)?.group(1);
+    final fromPart = RegExp(r'\bda\s+(.+?)(?=\s+a\s+|\s+verso\s+|$)')
+        .firstMatch(input)
+        ?.group(1);
     final toPart = RegExp(
       r'\b(?:a|verso)\s+(.+?)(?=\s+(?:oggi|ieri|domani|lunedi|martedi|mercoledi|giovedi|venerdi|sabato|domenica)|$)',
     ).firstMatch(input)?.group(1);
@@ -680,9 +679,8 @@ class VoiceTransactionParser {
       'dicembre': 12,
     };
     for (final entry in months.entries) {
-      final match = RegExp(
-        r'\b(?:il\s+)?(\d{1,2})\s+' + entry.key + r'\b',
-      ).firstMatch(input);
+      final match = RegExp(r'\b(?:il\s+)?(\d{1,2})\s+' + entry.key + r'\b')
+          .firstMatch(input);
       if (match == null) continue;
       final day = int.parse(match.group(1)!);
       if (day < 1 || day > 31) continue;
@@ -791,7 +789,13 @@ class VoiceTransactionParser {
 
   String _normalize(String value) => _stripAccents(value.toLowerCase())
       .replaceAll('’', "'")
-      .replaceAll(RegExp(r"[^a-z0-9À-ÿ\\u0400-\\u04FF\\u0600-\\u06FF\\u0900-\\u097F\\u3040-\\u30FF\\u3400-\\u9FFF\\uAC00-\\uD7AF€'.,]+", unicode: true), ' ')
+      .replaceAll(
+        RegExp(
+          r"[^a-z0-9À-ÿ\\u0400-\\u04FF\\u0600-\\u06FF\\u0900-\\u097F\\u3040-\\u30FF\\u3400-\\u9FFF\\uAC00-\\uD7AF€'.,]+",
+          unicode: true,
+        ),
+        ' ',
+      )
       .replaceAll(RegExp(r'\s+'), ' ')
       .trim();
 

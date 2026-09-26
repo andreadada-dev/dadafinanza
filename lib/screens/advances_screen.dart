@@ -521,7 +521,10 @@ class AdvanceDetailScreen extends StatelessWidget {
             ),
             subtitle: Text(
               [
-                DateFormat('d MMM yyyy', AppI18n.intlLocale).format(advance.createdAt),
+                DateFormat(
+                  'd MMM yyyy',
+                  AppI18n.intlLocale,
+                ).format(advance.createdAt),
                 if (sourceAccount != null) sourceAccount.name,
               ].join(' · '),
             ),
@@ -538,7 +541,10 @@ class AdvanceDetailScreen extends StatelessWidget {
               ),
               subtitle: Text(
                 [
-                  DateFormat('d MMM yyyy', AppI18n.intlLocale).format(settlement.date),
+                  DateFormat(
+                    'd MMM yyyy',
+                    AppI18n.intlLocale,
+                  ).format(settlement.date),
                   if (account != null) account.name,
                   if (settlement.note?.isNotEmpty == true) settlement.note!,
                 ].join(' · '),
@@ -557,8 +563,7 @@ class AdvanceDetailScreen extends StatelessWidget {
                           final confirmed = await confirmDestructiveAction(
                             context,
                             title: 'Eliminare questo rimborso?',
-                            message:
-                                'Il saldo del conto e il residuo dell’anticipo verranno ripristinati automaticamente.',
+                            message: 'Il saldo del conto e il residuo dell’anticipo verranno ripristinati automaticamente.',
                           );
                           if (confirmed) {
                             await state.deleteAdvanceSettlement(settlement.id);
@@ -648,7 +653,10 @@ class AdvanceDetailScreen extends StatelessWidget {
                 subtitle: Text(
                   due == null
                       ? 'Nessuna'
-                      : DateFormat('d MMM yyyy', AppI18n.intlLocale).format(due!),
+                      : DateFormat(
+                          'd MMM yyyy',
+                          AppI18n.intlLocale,
+                        ).format(due!),
                 ),
                 onTap: () async {
                   final picked = await showDatePicker(
@@ -668,7 +676,10 @@ class AdvanceDetailScreen extends StatelessWidget {
                 subtitle: Text(
                   reminder == null
                       ? 'Nessuna'
-                      : DateFormat('d MMM yyyy', AppI18n.intlLocale).format(reminder!),
+                      : DateFormat(
+                          'd MMM yyyy',
+                          AppI18n.intlLocale,
+                        ).format(reminder!),
                 ),
                 onTap: () async {
                   final picked = await showDatePicker(
@@ -901,7 +912,10 @@ Future<void> showAdvanceEditor(
                     subtitle: Text(
                       dueDate == null
                           ? 'Nessuna'
-                          : DateFormat('d MMM yyyy', AppI18n.intlLocale).format(dueDate!),
+                          : DateFormat(
+                              'd MMM yyyy',
+                              AppI18n.intlLocale,
+                            ).format(dueDate!),
                     ),
                     onTap: () async {
                       final picked = await showDatePicker(
@@ -947,7 +961,9 @@ Future<void> showAdvanceEditor(
                   ),
                   TextField(
                     controller: note,
-                    decoration: InputDecoration(labelText: AppI18n.tr('Nota opzionale')),
+                    decoration: InputDecoration(
+                      labelText: AppI18n.tr('Nota opzionale'),
+                    ),
                   ),
                 ],
               ),
@@ -1004,9 +1020,8 @@ Future<void> showAdvanceEditor(
   amount.dispose();
   note.dispose();
   if (saved == true && context.mounted) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Anticipo registrato.')));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text('Anticipo registrato.')));
   }
 }
 
@@ -1054,7 +1069,9 @@ Future<void> showAdvanceMetadataEditor(
               ),
               TextField(
                 controller: note,
-                decoration: InputDecoration(labelText: AppI18n.tr('Nota opzionale')),
+                decoration: InputDecoration(
+                  labelText: AppI18n.tr('Nota opzionale'),
+                ),
               ),
               ListTile(
                 contentPadding: EdgeInsets.zero,
@@ -1063,7 +1080,10 @@ Future<void> showAdvanceMetadataEditor(
                 subtitle: Text(
                   dueDate == null
                       ? 'Nessuna'
-                      : DateFormat('d MMM yyyy', AppI18n.intlLocale).format(dueDate!),
+                      : DateFormat(
+                          'd MMM yyyy',
+                          AppI18n.intlLocale,
+                        ).format(dueDate!),
                 ),
                 onTap: () async {
                   final picked = await showDatePicker(
@@ -1082,7 +1102,10 @@ Future<void> showAdvanceMetadataEditor(
                 subtitle: Text(
                   reminderDate == null
                       ? 'Nessuno'
-                      : DateFormat('d MMM yyyy', AppI18n.intlLocale).format(reminderDate!),
+                      : DateFormat(
+                          'd MMM yyyy',
+                          AppI18n.intlLocale,
+                        ).format(reminderDate!),
                 ),
                 onTap: () async {
                   final picked = await showDatePicker(
@@ -1200,7 +1223,9 @@ Future<void> showSettlementEditor(
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.calendar_today_outlined),
                 title: const Text('Data'),
-                subtitle: Text(DateFormat('d MMM yyyy', AppI18n.intlLocale).format(date)),
+                subtitle: Text(
+                  DateFormat('d MMM yyyy', AppI18n.intlLocale).format(date),
+                ),
                 onTap: () async {
                   final picked = await showDatePicker(
                     context: context,
@@ -1213,7 +1238,9 @@ Future<void> showSettlementEditor(
               ),
               TextField(
                 controller: note,
-                decoration: InputDecoration(labelText: AppI18n.tr('Nota opzionale')),
+                decoration: InputDecoration(
+                  labelText: AppI18n.tr('Nota opzionale'),
+                ),
               ),
               const SizedBox(height: 20),
               SizedBox(
@@ -1277,9 +1304,8 @@ Future<void> showSettlementEditor(
   amount.dispose();
   note.dispose();
   if (saved == true && context.mounted) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Anticipo aggiornato.')));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text('Anticipo aggiornato.')));
   }
 }
 
@@ -1301,8 +1327,7 @@ class FinancePeopleScreen extends StatelessWidget {
           ? const EmptyState(
               icon: Icons.people_outline_rounded,
               title: 'Nessuna persona',
-              subtitle:
-                  'Le persone servono solo per organizzare gli anticipi e restano sul dispositivo.',
+              subtitle: 'Le persone servono solo per organizzare gli anticipi e restano sul dispositivo.',
             )
           : ListView(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 100),

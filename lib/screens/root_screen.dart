@@ -87,7 +87,10 @@ class HomeScreen extends StatelessWidget {
     final widgets =
         state.dashboardWidgets.where((item) => item.enabled).toList()
           ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
-    final month = DateFormat('MMMM yyyy', AppI18n.intlLocale).format(DateTime.now());
+    final month = DateFormat(
+      'MMMM yyyy',
+      AppI18n.intlLocale,
+    ).format(DateTime.now());
 
     return CustomScrollView(
       slivers: [
@@ -1192,7 +1195,9 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                   DropdownButtonFormField<int?>(
                     key: ValueKey('filter-category-$draftType-$draftCategory'),
                     initialValue: draftCategory,
-                    decoration: InputDecoration(labelText: AppI18n.tr('Categoria')),
+                    decoration: InputDecoration(
+                      labelText: AppI18n.tr('Categoria'),
+                    ),
                     items: [
                       const DropdownMenuItem<int?>(
                         value: null,
@@ -1300,7 +1305,9 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                   ),
                   DropdownButtonFormField<_TransactionSort>(
                     initialValue: draftSort,
-                    decoration: InputDecoration(labelText: AppI18n.tr('Ordina')),
+                    decoration: InputDecoration(
+                      labelText: AppI18n.tr('Ordina'),
+                    ),
                     items: const [
                       DropdownMenuItem(
                         value: _TransactionSort.newest,
@@ -1747,9 +1754,8 @@ class _AnalyticsMetric extends StatelessWidget {
       const SizedBox(height: 4),
       Text(
         value,
-        style: Theme.of(
-          context,
-        ).textTheme.headlineMedium?.copyWith(color: color),
+        style: Theme.of(context).textTheme.headlineMedium
+            ?.copyWith(color: color),
       ),
     ],
   );
@@ -1902,9 +1908,8 @@ class NetWorthScreen extends StatelessWidget {
         children: [
           Text(
             'PATRIMONIO ATTUALE',
-            style: Theme.of(
-              context,
-            ).textTheme.labelMedium?.copyWith(letterSpacing: 1.1),
+            style: Theme.of(context).textTheme.labelMedium
+                ?.copyWith(letterSpacing: 1.1),
           ),
           const SizedBox(height: 6),
           Text(

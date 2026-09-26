@@ -119,17 +119,14 @@ void main() {
   });
 
   test('canonical settings and contextual donut periods stay wired', () {
-    final settings = File(
-      'lib/screens/personal_settings_screen.dart',
-    ).readAsStringSync();
-    final legacySettings = File(
-      'lib/screens/settings_screen.dart',
-    ).readAsStringSync();
+    final settings = File('lib/screens/personal_settings_screen.dart')
+        .readAsStringSync();
+    final legacySettings = File('lib/screens/settings_screen.dart')
+        .readAsStringSync();
     final root = File('lib/screens/root_screen.dart').readAsStringSync();
     final polished = File('lib/screens/polished_shell.dart').readAsStringSync();
-    final donut = File(
-      'lib/widgets/home_dashboard_widget.dart',
-    ).readAsStringSync();
+    final donut = File('lib/widgets/home_dashboard_widget.dart')
+        .readAsStringSync();
 
     for (final label in const [
       'Valuta principale',

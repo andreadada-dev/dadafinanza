@@ -116,10 +116,7 @@ class _DadaFinanzaAppState extends State<DadaFinanzaApp>
   @override
   void didChangeLocales(List<Locale>? locales) {
     if (widget.state.languageCode != AppI18n.systemCode) return;
-    AppI18n.use(
-      widget.state.languageCode,
-      platformLocale: locales?.first,
-    );
+    AppI18n.use(widget.state.languageCode, platformLocale: locales?.first);
     if (mounted) setState(() {});
   }
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart' as material;
 import 'app_i18n.dart';
 
 export 'package:flutter/material.dart' hide Text;
+
 export 'app_i18n.dart';
 
 class Text extends material.StatelessWidget {

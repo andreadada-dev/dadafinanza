@@ -66,7 +66,10 @@ class DadaHomeScreen extends StatelessWidget {
             children: [
               const Text('DadaFinanza'),
               Text(
-                DateFormat('MMMM yyyy', AppI18n.intlLocale).format(DateTime.now()),
+                DateFormat(
+                  'MMMM yyyy',
+                  AppI18n.intlLocale,
+                ).format(DateTime.now()),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
@@ -187,8 +190,7 @@ class DadaHomeScreen extends StatelessWidget {
                 EmptyState(
                   icon: Icons.dashboard_customize_outlined,
                   title: 'Home essenziale',
-                  subtitle:
-                      'Le metriche principali restano in alto. Riattiva altri widget dalla personalizzazione Home.',
+                  subtitle: 'Le metriche principali restano in alto. Riattiva altri widget dalla personalizzazione Home.',
                   action: TextButton.icon(
                     onPressed: () => Navigator.push(
                       context,
@@ -371,9 +373,8 @@ class _IvyFinanceOverview extends StatelessWidget {
       );
     }
 
-    final balanceSize = switch (_configFor(
-      DashboardWidgetType.totalBalance,
-    )?.size) {
+    final balanceSize = switch (_configFor(DashboardWidgetType.totalBalance)
+        ?.size) {
       DashboardWidgetSize.small => theme.textTheme.headlineMedium,
       DashboardWidgetSize.large => theme.textTheme.displaySmall,
       _ => theme.textTheme.headlineLarge,

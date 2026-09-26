@@ -347,7 +347,9 @@ class _RulesManagementScreenState extends State<RulesManagementScreen> {
                 if (type != null && type != TransactionType.transfer)
                   DropdownButtonFormField<int?>(
                     initialValue: categoryId,
-                    decoration: InputDecoration(labelText: AppI18n.tr('Categoria')),
+                    decoration: InputDecoration(
+                      labelText: AppI18n.tr('Categoria'),
+                    ),
                     items: [
                       const DropdownMenuItem<int?>(
                         value: null,
@@ -385,7 +387,9 @@ class _RulesManagementScreenState extends State<RulesManagementScreen> {
                 ),
                 TextField(
                   controller: tag,
-                  decoration: InputDecoration(labelText: AppI18n.tr('Aggiungi tag')),
+                  decoration: InputDecoration(
+                    labelText: AppI18n.tr('Aggiungi tag'),
+                  ),
                 ),
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,

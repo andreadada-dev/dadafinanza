@@ -156,7 +156,9 @@ class NotificationService {
       await plugin.show(
         id: 200000 + budget.id,
         title: _t(level == 100 ? 'Budget raggiunto' : 'Budget all’80%'),
-        body: _t('${budget.name}: ${(progress * 100).round()}% del limite usato.'),
+        body: _t(
+          '${budget.name}: ${(progress * 100).round()}% del limite usato.',
+        ),
         notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(
             'finance_budget',
@@ -193,7 +195,9 @@ class NotificationService {
           android: AndroidNotificationDetails(
             'finance_goals',
             _t('Obiettivi'),
-            channelDescription: _t('Aggiornamenti non invasivi sugli obiettivi'),
+            channelDescription: _t(
+              'Aggiornamenti non invasivi sugli obiettivi',
+            ),
             importance: Importance.low,
             priority: Priority.low,
           ),

@@ -351,7 +351,9 @@ class _AccountContextTransactionsScreenState
                       'movement-category-$draftType-$draftCategory',
                     ),
                     initialValue: draftCategory,
-                    decoration: InputDecoration(labelText: AppI18n.tr('Categoria')),
+                    decoration: InputDecoration(
+                      labelText: AppI18n.tr('Categoria'),
+                    ),
                     items: [
                       const DropdownMenuItem<int?>(
                         value: null,
@@ -408,7 +410,9 @@ class _AccountContextTransactionsScreenState
                   ),
                   DropdownButtonFormField<_MovementSort>(
                     initialValue: draftSort,
-                    decoration: InputDecoration(labelText: AppI18n.tr('Ordina')),
+                    decoration: InputDecoration(
+                      labelText: AppI18n.tr('Ordina'),
+                    ),
                     items: const [
                       DropdownMenuItem(
                         value: _MovementSort.newest,
@@ -559,19 +563,16 @@ class _GroupedCategoryTile extends StatelessWidget {
               title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(
-                context,
-              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
+              style: Theme.of(context).textTheme.titleMedium
+                  ?.copyWith(fontWeight: FontWeight.w800),
             ),
             const Spacer(),
             Text(
               amount,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: color,
-                fontWeight: FontWeight.w800,
-              ),
+              style: Theme.of(context).textTheme.titleSmall
+                  ?.copyWith(color: color, fontWeight: FontWeight.w800),
             ),
             const SizedBox(height: 2),
             Text(

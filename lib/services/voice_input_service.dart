@@ -61,7 +61,13 @@ class VoiceTranscriptAccumulator {
 
   static String _comparable(String value) => value
       .toLowerCase()
-      .replaceAll(RegExp(r'[^a-z0-9À-ÿ\\u0400-\\u04FF\\u0600-\\u06FF\\u0900-\\u097F\\u3040-\\u30FF\\u3400-\\u9FFF\\uAC00-\\uD7AF:.,]+', unicode: true), ' ')
+      .replaceAll(
+        RegExp(
+          r'[^a-z0-9À-ÿ\\u0400-\\u04FF\\u0600-\\u06FF\\u0900-\\u097F\\u3040-\\u30FF\\u3400-\\u9FFF\\uAC00-\\uD7AF:.,]+',
+          unicode: true,
+        ),
+        ' ',
+      )
       .replaceAll(RegExp(r'\s+'), ' ')
       .trim();
 
@@ -109,8 +115,7 @@ class VoiceInputService {
       return const VoiceInputStatus(
         available: false,
         onDevice: false,
-        message:
-            'Il riconoscimento vocale offline non è disponibile su questo dispositivo.',
+        message: 'Il riconoscimento vocale offline non è disponibile su questo dispositivo.',
       );
     }
     if (!onDevice && !await isSystemRecognizerAvailable()) {

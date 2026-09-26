@@ -43,7 +43,9 @@ class _CanonicalRootScreenState extends State<CanonicalRootScreen> {
       floatingActionButton: GestureDetector(
         onLongPress: _showQuickMenu,
         child: FloatingActionButton(
-          tooltip: AppI18n.tr('Nuovo movimento. Tieni premuto per preset e scorciatoie.'),
+          tooltip: AppI18n.tr(
+            'Nuovo movimento. Tieni premuto per preset e scorciatoie.',
+          ),
           onPressed: () => _openQuick(TransactionType.expense),
           child: const Icon(Icons.add_rounded),
         ),
@@ -117,9 +119,8 @@ class _CanonicalRootScreenState extends State<CanonicalRootScreen> {
 
   Future<void> _showQuickMenu() async {
     final state = AppScope.of(context);
-    final presets = await QuickPresetService(
-      state.database,
-    ).all(enabledOnly: true);
+    final presets = await QuickPresetService(state.database)
+        .all(enabledOnly: true);
     if (!mounted) return;
     final choice = await showModalBottomSheet<Object>(
       context: context,
@@ -210,7 +211,10 @@ class CanonicalHomeScreen extends StatelessWidget {
     final visibleWidgets = enabled
         .where((item) => item.enabled && !_fixedTypes.contains(item.type))
         .toList();
-    final month = DateFormat('MMMM yyyy', AppI18n.intlLocale).format(DateTime.now());
+    final month = DateFormat(
+      'MMMM yyyy',
+      AppI18n.intlLocale,
+    ).format(DateTime.now());
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -504,9 +508,8 @@ class _Metric extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: Text(
           value,
-          style: Theme.of(
-            context,
-          ).textTheme.titleMedium?.copyWith(color: color),
+          style: Theme.of(context).textTheme.titleMedium
+              ?.copyWith(color: color),
         ),
       ),
     ],

@@ -11,23 +11,20 @@ void main() {
   tearDown(() => AppI18n.use('it'));
 
   test('DadaFinanza exposes the supported language catalog', () {
-    expect(
-      AppI18n.languages.map((item) => item.code).toList(),
-      const [
-        'it',
-        'en',
-        'es',
-        'fr',
-        'de',
-        'pt',
-        'ru',
-        'zh',
-        'ja',
-        'ko',
-        'ar',
-        'hi',
-      ],
-    );
+    expect(AppI18n.languages.map((item) => item.code).toList(), const [
+      'it',
+      'en',
+      'es',
+      'fr',
+      'de',
+      'pt',
+      'ru',
+      'zh',
+      'ja',
+      'ko',
+      'ar',
+      'hi',
+    ]);
     expect(AppI18n.supportedLocales, hasLength(12));
   });
 
@@ -50,10 +47,7 @@ void main() {
 
     expect(generatedTranslations['en']?['Impostazioni'], 'Settings');
     expect(generatedTranslations['en']?['Nuovo movimento'], 'New transaction');
-    expect(
-      generatedTranslations['es']?['Impostazioni'],
-      isNot('Impostazioni'),
-    );
+    expect(generatedTranslations['es']?['Impostazioni'], isNot('Impostazioni'));
   });
 
   test('selected language updates Intl and translated runtime text', () {
@@ -65,41 +59,44 @@ void main() {
     expect(AppI18n.tr('Impostazioni'), 'Settings');
   });
 
-  test('system locale resolves to a supported language or English fallback', () {
-    expect(
-      AppI18n.resolvedCodeFor(
-        AppI18n.systemCode,
-        platformLocale: const Locale('fr', 'CA'),
-      ),
-      'fr',
-    );
-    expect(
-      AppI18n.resolvedCodeFor(
-        AppI18n.systemCode,
-        platformLocale: const Locale('nl', 'NL'),
-      ),
-      'en',
-    );
-  });
+  test(
+    'system locale resolves to a supported language or English fallback',
+    () {
+      expect(
+        AppI18n.resolvedCodeFor(
+          AppI18n.systemCode,
+          platformLocale: const Locale('fr', 'CA'),
+        ),
+        'fr',
+      );
+      expect(
+        AppI18n.resolvedCodeFor(
+          AppI18n.systemCode,
+          platformLocale: const Locale('nl', 'NL'),
+        ),
+        'en',
+      );
+    },
+  );
 
-  test('voice commands are normalized back to the canonical parser language', () {
-    AppI18n.use('en');
-    final canonical = AppI18n.voiceToItalian(
-      'expense 12 today note lunch',
-    ).toLowerCase();
+  test(
+    'voice commands are normalized back to the canonical parser language',
+    () {
+      AppI18n.use('en');
+      final canonical = AppI18n.voiceToItalian('expense 12 today note lunch')
+          .toLowerCase();
 
-    expect(canonical, contains('spesa'));
-    expect(canonical, contains('oggi'));
-    expect(canonical, contains('nota'));
-  });
+      expect(canonical, contains('spesa'));
+      expect(canonical, contains('oggi'));
+      expect(canonical, contains('nota'));
+    },
+  );
 
   testWidgets('localized Text renders translated strings', (tester) async {
     AppI18n.use('en');
 
     await tester.pumpWidget(
-      const MaterialApp(
-        home: Scaffold(body: Text('Impostazioni')),
-      ),
+      const MaterialApp(home: Scaffold(body: Text('Impostazioni'))),
     );
 
     expect(find.text('Settings'), findsOneWidget);
@@ -160,27 +157,34 @@ void main() {
     }
   });
 
-  test('Android localized string resources exist for every translated locale', () {
-    const folders = [
-      'values-en',
-      'values-es',
-      'values-fr',
-      'values-de',
-      'values-pt-rBR',
-      'values-ru',
-      'values-zh-rCN',
-      'values-ja',
-      'values-ko',
-      'values-ar',
-      'values-hi',
-    ];
+  test(
+    'Android localized string resources exist for every translated locale',
+    () {
+      const folders = [
+        'values-en',
+        'values-es',
+        'values-fr',
+        'values-de',
+        'values-pt-rBR',
+        'values-ru',
+        'values-zh-rCN',
+        'values-ja',
+        'values-ko',
+        'values-ar',
+        'values-hi',
+      ];
 
-    for (final folder in folders) {
-      final file = File('android/app/src/main/res/$folder/strings.xml');
-      expect(file.existsSync(), isTrue, reason: 'Missing $folder strings.xml');
-      final contents = file.readAsStringSync();
-      expect(contents, contains('widget_config_title'));
-      expect(contents, contains('widget_balance_total'));
-    }
-  });
+      for (final folder in folders) {
+        final file = File('android/app/src/main/res/$folder/strings.xml');
+        expect(
+          file.existsSync(),
+          isTrue,
+          reason: 'Missing $folder strings.xml',
+        );
+        final contents = file.readAsStringSync();
+        expect(contents, contains('widget_config_title'));
+        expect(contents, contains('widget_balance_total'));
+      }
+    },
+  );
 }

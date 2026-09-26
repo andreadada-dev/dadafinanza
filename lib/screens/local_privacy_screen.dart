@@ -109,7 +109,9 @@ class _LocalPrivacyScreenState extends State<LocalPrivacyScreen> {
                   obscureText: true,
                   keyboardType: TextInputType.number,
                   maxLength: 8,
-                  decoration: InputDecoration(labelText: AppI18n.tr('Conferma PIN')),
+                  decoration: InputDecoration(
+                    labelText: AppI18n.tr('Conferma PIN'),
+                  ),
                 ),
                 const SizedBox(height: 16),
                 SizedBox(

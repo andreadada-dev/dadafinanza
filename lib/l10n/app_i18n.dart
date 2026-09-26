@@ -130,8 +130,8 @@ class AppI18n {
   static String _resolvedCode = 'it';
   static final Map<String, String> _runtimeCache = {};
   static final Map<String, List<String>> _orderedPhraseKeys = {};
-  static final Map<String, List<MapEntry<String, String>>> _reverseVoiceEntries =
-      {};
+  static final Map<String, List<MapEntry<String, String>>>
+  _reverseVoiceEntries = {};
 
   static const Map<String, Map<String, String>> _voiceAliases = {
     'en': {
@@ -309,18 +309,14 @@ class AppI18n {
     orElse: () => languages.first,
   );
 
-  static String resolvedCodeFor(
-    String preference, {
-    Locale? platformLocale,
-  }) {
+  static String resolvedCodeFor(String preference, {Locale? platformLocale}) {
     if (preference != systemCode) {
       return languages.any((item) => item.code == preference)
           ? preference
           : 'it';
     }
 
-    final device =
-        platformLocale ?? PlatformDispatcher.instance.locale;
+    final device = platformLocale ?? PlatformDispatcher.instance.locale;
     final languageCode = device.languageCode.toLowerCase();
     if (languages.any((item) => item.code == languageCode)) {
       return languageCode;
@@ -328,10 +324,7 @@ class AppI18n {
     return 'en';
   }
 
-  static void use(
-    String preference, {
-    Locale? platformLocale,
-  }) {
+  static void use(String preference, {Locale? platformLocale}) {
     final safePreference = isSupportedPreference(preference)
         ? preference
         : 'it';
@@ -374,16 +367,13 @@ class AppI18n {
     var translated = source;
     final phrases = generatedPhraseTranslations[_resolvedCode];
     if (phrases != null && phrases.isNotEmpty) {
-      final keys = _orderedPhraseKeys.putIfAbsent(
-        _resolvedCode,
-        () {
-          final values = phrases.keys
-              .where((key) => key.trim().length >= 3)
-              .toList(growable: false);
-          values.sort((left, right) => right.length.compareTo(left.length));
-          return values;
-        },
-      );
+      final keys = _orderedPhraseKeys.putIfAbsent(_resolvedCode, () {
+        final values = phrases.keys
+            .where((key) => key.trim().length >= 3)
+            .toList(growable: false);
+        values.sort((left, right) => right.length.compareTo(left.length));
+        return values;
+      });
       for (final key in keys) {
         if (translated.contains(key)) {
           translated = translated.replaceAll(key, phrases[key]!);
@@ -402,16 +392,13 @@ class AppI18n {
     final reverse = _reverseVoiceEntries.putIfAbsent(_resolvedCode, () {
       final values = <MapEntry<String, String>>[];
       final exact = generatedTranslations[_resolvedCode] ?? const {};
-      final phrases =
-          generatedPhraseTranslations[_resolvedCode] ?? const {};
+      final phrases = generatedPhraseTranslations[_resolvedCode] ?? const {};
       for (final entry in [...exact.entries, ...phrases.entries]) {
         final translated = entry.value.trim();
         if (translated.length < 2 || entry.key.trim().length < 2) continue;
         values.add(MapEntry(translated, entry.key));
       }
-      values.sort(
-        (left, right) => right.key.length.compareTo(left.key.length),
-      );
+      values.sort((left, right) => right.key.length.compareTo(left.key.length));
       return values;
     });
 

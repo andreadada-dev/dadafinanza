@@ -483,9 +483,8 @@ class _QuickAddPageState extends State<QuickAddPage> {
             draft.advanceAmountCents ??
             (draft.advanceWholeAmount ? draft.amountCents : null);
         if (voiceAdvanceCents != null && voiceAdvanceCents > 0) {
-          advanceShare.text = Money.fromCents(
-            voiceAdvanceCents,
-          ).toStringAsFixed(2);
+          advanceShare.text = Money.fromCents(voiceAdvanceCents)
+              .toStringAsFixed(2);
         }
       }
       _mergeCanonicalTags(draft.tags, state);
@@ -980,9 +979,9 @@ class _QuickAddPageState extends State<QuickAddPage> {
     }
   }
 
-  void _error(String message) => ScaffoldMessenger.of(
-    context,
-  ).showSnackBar(SnackBar(content: Text(message)));
+  void _error(String message) =>
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
 
   Future<void> _chooseCategory() async {
     final state = AppScope.of(context);
@@ -1238,9 +1237,8 @@ class _QuickAddPageState extends State<QuickAddPage> {
             ],
             Text(
               'IMPORTO',
-              style: Theme.of(
-                context,
-              ).textTheme.labelMedium?.copyWith(letterSpacing: 1.2),
+              style: Theme.of(context).textTheme.labelMedium
+                  ?.copyWith(letterSpacing: 1.2),
             ),
             TextField(
               controller: amount,
@@ -1253,9 +1251,8 @@ class _QuickAddPageState extends State<QuickAddPage> {
                 decimal: true,
               ),
               textAlign: TextAlign.center,
-              style: Theme.of(
-                context,
-              ).textTheme.displaySmall?.copyWith(fontSize: 48),
+              style: Theme.of(context).textTheme.displaySmall
+                  ?.copyWith(fontSize: 48),
               decoration: InputDecoration(
                 hintText: AppI18n.tr('0,00'),
                 suffixText: state.currency,
@@ -1416,8 +1413,9 @@ class _QuickAddPageState extends State<QuickAddPage> {
                     decoration: InputDecoration(
                       labelText: AppI18n.tr('Quota anticipata'),
                       suffixText: state.currency,
-                      helperText:
-                          AppI18n.tr('Inserisci una parte oppure usa tutto l’importo.'),
+                      helperText: AppI18n.tr(
+                        'Inserisci una parte oppure usa tutto l’importo.',
+                      ),
                     ),
                   ),
                   Align(

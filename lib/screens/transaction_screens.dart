@@ -298,9 +298,8 @@ class TransactionDetailPage extends StatelessWidget {
         children: [
           Text(
             item.type.label.toUpperCase(),
-            style: Theme.of(
-              context,
-            ).textTheme.labelMedium?.copyWith(letterSpacing: 1.1),
+            style: Theme.of(context).textTheme.labelMedium
+                ?.copyWith(letterSpacing: 1.1),
           ),
           const SizedBox(height: 6),
           Text(
@@ -309,9 +308,8 @@ class TransactionDetailPage extends StatelessWidget {
                 : item.type == TransactionType.income
                 ? '+${moneyFor(state, item.amount)}'
                 : moneyFor(state, item.amount),
-            style: Theme.of(context).textTheme.displaySmall?.copyWith(
-              color: transactionColor(context, item.type),
-            ),
+            style: Theme.of(context).textTheme.displaySmall
+                ?.copyWith(color: transactionColor(context, item.type)),
           ),
           const SizedBox(height: 22),
           FlatMetric(
@@ -346,7 +344,10 @@ class TransactionDetailPage extends StatelessWidget {
           const Divider(height: 1),
           FlatMetric(
             label: 'Data',
-            value: DateFormat('dd MMMM yyyy, HH:mm', AppI18n.intlLocale).format(item.date),
+            value: DateFormat(
+              'dd MMMM yyyy, HH:mm',
+              AppI18n.intlLocale,
+            ).format(item.date),
             icon: Icons.calendar_today_outlined,
           ),
           if (!item.includeInAnalytics) ...[
@@ -508,7 +509,9 @@ Future<void> showSplitEditor(
                     Expanded(
                       child: DropdownButtonFormField<int>(
                         initialValue: row.categoryId,
-                        decoration: InputDecoration(labelText: AppI18n.tr('Categoria')),
+                        decoration: InputDecoration(
+                          labelText: AppI18n.tr('Categoria'),
+                        ),
                         items: expenseCategories
                             .map(
                               (c) => DropdownMenuItem(

@@ -179,8 +179,7 @@ class PersonalSettingsScreen extends StatelessWidget {
           _Link(
             icon: Icons.widgets_outlined,
             title: 'Widget Android',
-            subtitle:
-                'Saldo, Quick Capture, importi rapidi e riepilogo configurabili',
+            subtitle: 'Saldo, Quick Capture, importi rapidi e riepilogo configurabili',
             onTap: () => _open(context, const AndroidWidgetsScreen()),
           ),
           const SizedBox(height: 32),
@@ -281,8 +280,7 @@ class PersonalSettingsScreen extends StatelessWidget {
                 subtitle: Text(
                   'Segue la lingua del dispositivo · ${AppI18n.currentLanguage.nativeName}',
                 ),
-                onTap: () =>
-                    Navigator.pop(sheetContext, AppI18n.systemCode),
+                onTap: () => Navigator.pop(sheetContext, AppI18n.systemCode),
               ),
               const Divider(height: 1),
               ...AppI18n.languages.map(

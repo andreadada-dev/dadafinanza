@@ -22,7 +22,13 @@ class SmartFinanceEngine {
   static String normalizeText(String? input) {
     if (input == null || input.trim().isEmpty) return '';
     var text = input.toLowerCase().trim();
-    text = text.replaceAll(RegExp(r'[^a-z0-9À-ÿ\\u0400-\\u04FF\\u0600-\\u06FF\\u0900-\\u097F\\u3040-\\u30FF\\u3400-\\u9FFF\\uAC00-\\uD7AF]+', unicode: true), ' ');
+    text = text.replaceAll(
+      RegExp(
+        r'[^a-z0-9À-ÿ\\u0400-\\u04FF\\u0600-\\u06FF\\u0900-\\u097F\\u3040-\\u30FF\\u3400-\\u9FFF\\uAC00-\\uD7AF]+',
+        unicode: true,
+      ),
+      ' ',
+    );
     text = text.replaceAll(RegExp(r'\b\d{3,}\b'), ' ');
     final values = text
         .split(RegExp(r'\s+'))
