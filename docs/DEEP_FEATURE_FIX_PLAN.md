@@ -108,7 +108,7 @@ Audit tecnico del 24/09/2026. Questo documento è il piano operativo per elimina
 Implementazione completata sul branch `build/deep-feature-hardening`.
 
 - Schema database: `6`.
-- Versione app: `1.6.0+17`.
+- Versione app: `1.7.0+19`.
 - Settings canonica e test responsive a 320/360/390/430 dp + testo grande.
 - Test dedicati a migration, regole, ricorrenti transfer e fine mese, allegati, preset, CSV, Android widget e persistenza Settings.
 - Android widget aggiornati per rispettare la valuta configurata.
