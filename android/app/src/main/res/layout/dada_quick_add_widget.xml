@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Aggiungi movimento"
+        android:text="@string/widget_quick_title"
         android:textColor="#F7F7F8"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -37,15 +37,15 @@
             style="@style/WidgetQuickButton"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:contentDescription="Nuova spesa"
-            android:text="Spesa" />
+            android:contentDescription="@string/widget_new_expense"
+            android:text="@string/widget_expense" />
         <TextView
             android:id="@+id/quick_widget_income"
             style="@style/WidgetQuickButton"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:contentDescription="Nuova entrata"
-            android:text="Entrata" />
+            android:contentDescription="@string/widget_new_income"
+            android:text="@string/widget_income" />
     </LinearLayout>
 
     <LinearLayout
@@ -59,14 +59,14 @@
             style="@style/WidgetQuickButton"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:contentDescription="Nuovo trasferimento"
-            android:text="Trasferisci" />
+            android:contentDescription="@string/widget_new_transfer"
+            android:text="@string/widget_transfer" />
         <TextView
             android:id="@+id/quick_widget_voice"
             style="@style/WidgetQuickButton"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:contentDescription="Compila movimento con la voce"
-            android:text="🎙 Voce" />
+            android:contentDescription="@string/widget_voice_description"
+            android:text="@string/widget_voice" />
     </LinearLayout>
 </LinearLayout>
