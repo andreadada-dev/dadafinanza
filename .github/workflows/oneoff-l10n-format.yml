@@ -4,11 +4,13 @@ on:
   push:
     branches:
       - 'feature/multilanguage-post'
-    paths:
-      - '.github/workflows/oneoff-l10n-format.yml'
 
 permissions:
   contents: write
+
+concurrency:
+  group: dadafinanza-l10n-format-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   format:
