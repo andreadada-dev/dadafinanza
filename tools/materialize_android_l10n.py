@@ -25,189 +25,10 @@ RESOURCE_DIRS = {
     "hi": "values-hi",
 }
 
-LANGUAGE_RE = re.compile(r'^  "([a-z]{2})": <String, String>\{\s*
-
-def decode_dart_string(value: str) -> str:
-    # Generated strings are JSON-compatible except Dart's escaped dollar.
-    return json.loads('"' + value.replace(r"\$", "$") + '"')
-
-
-def generated_maps() -> dict[str, dict[str, str]]:
-    text = GENERATED.read_text(encoding="utf-8")
-    exact_marker = "generatedTranslations"
-    phrase_marker = "generatedPhraseTranslations"
-    exact_start = text.find(exact_marker)
-    phrase_start = text.find(phrase_marker)
-    if exact_start < 0 or phrase_start < 0 or phrase_start <= exact_start:
-        raise RuntimeError("Generated translation maps are malformed")
-
-    section = text[exact_start:phrase_start]
-    languages = list(LANGUAGE_RE.finditer(section))
-    result: dict[str, dict[str, str]] = {}
-
-    for index, language in enumerate(languages):
-        code = language.group(1)
-        block_start = language.end()
-        block_end = (
-            languages[index + 1].start()
-            if index + 1 < len(languages)
-            else len(section)
-        )
-        block = section[block_start:block_end]
-        mapping: dict[str, str] = {}
-        for entry in ENTRY_RE.finditer(block):
-            source = decode_dart_string(entry.group(1))
-            target = decode_dart_string(entry.group(2))
-            mapping[source] = target
-        result[code] = mapping
-
-    return result
-
-
-def base_strings() -> list[tuple[str, str]]:
-    root = ET.parse(BASE).getroot()
-    result: list[tuple[str, str]] = []
-    for node in root.findall("string"):
-        name = node.attrib.get("name")
-        if not name:
-            continue
-        result.append((name, "".join(node.itertext()).strip()))
-    return result
-
-
-def android_text(value: str) -> str:
-    # aapt treats ASCII apostrophes/backslashes specially even though XML does not.
-    escaped = value.replace("\\", "\\\\").replace("'", "\\'")
-    return xml_escape(escaped, {'"': "&quot;"})
-
-
-def main() -> None:
-    maps = generated_maps()
-    base = base_strings()
-    res_root = BASE.parent.parent
-
-    for code, folder in RESOURCE_DIRS.items():
-        mapping = maps.get(code)
-        if mapping is None:
-            raise RuntimeError(f"Missing generated translation map for {code}")
-
-        lines = ['<?xml version="1.0" encoding="utf-8"?>', "<resources>"]
-        for name, source in base:
-            target = source if name == "app_name" else mapping.get(source, source)
-            lines.append(
-                f'    <string name="{name}" formatted="false">'
-                f'{android_text(target)}</string>'
-            )
-        lines.extend(["</resources>", ""])
-
-        target_dir = res_root / folder
-        target_dir.mkdir(parents=True, exist_ok=True)
-        (target_dir / "strings.xml").write_text(
-            "\n".join(lines),
-            encoding="utf-8",
-        )
-
-    print(f"Generated {len(RESOURCE_DIRS)} Android locale resource files.")
-
-
-if __name__ == "__main__":
-    main()
-, re.MULTILINE)
+LANGUAGE_RE = re.compile(r'^  "([a-z]{2})": <String, String>\{$')
 ENTRY_RE = re.compile(
-    r'^\s{4}"((?:\\.|[^"\\])*)":\s*'
-    r'"((?:\\.|[^"\\])*)",\s*
-
-def decode_dart_string(value: str) -> str:
-    # Generated strings are JSON-compatible except Dart's escaped dollar.
-    return json.loads('"' + value.replace(r"\$", "$") + '"')
-
-
-def generated_maps() -> dict[str, dict[str, str]]:
-    result: dict[str, dict[str, str]] = {}
-    current: str | None = None
-    in_exact_map = False
-
-    for line in GENERATED.read_text(encoding="utf-8").splitlines():
-        if line.startswith("const Map<String, Map<String, String>> generatedTranslations"):
-            in_exact_map = True
-            continue
-        if line.startswith("const Map<String, Map<String, String>> generatedPhraseTranslations"):
-            break
-        if not in_exact_map:
-            continue
-
-        language = LANGUAGE_RE.match(line)
-        if language:
-            current = language.group(1)
-            result[current] = {}
-            continue
-
-        if current is not None and line.strip() == "},":
-            current = None
-            continue
-
-        if current is None:
-            continue
-        entry = ENTRY_RE.match(line)
-        if entry is None:
-            continue
-        source = decode_dart_string(entry.group(1))
-        target = decode_dart_string(entry.group(2))
-        result[current][source] = target
-
-    return result
-
-
-def base_strings() -> list[tuple[str, str]]:
-    root = ET.parse(BASE).getroot()
-    result: list[tuple[str, str]] = []
-    for node in root.findall("string"):
-        name = node.attrib.get("name")
-        if not name:
-            continue
-        result.append((name, "".join(node.itertext()).strip()))
-    return result
-
-
-def android_text(value: str) -> str:
-    # aapt treats ASCII apostrophes/backslashes specially even though XML does not.
-    escaped = value.replace("\\", "\\\\").replace("'", "\\'")
-    return xml_escape(escaped, {'"': "&quot;"})
-
-
-def main() -> None:
-    maps = generated_maps()
-    base = base_strings()
-    res_root = BASE.parent.parent
-
-    for code, folder in RESOURCE_DIRS.items():
-        mapping = maps.get(code)
-        if mapping is None:
-            raise RuntimeError(f"Missing generated translation map for {code}")
-
-        lines = ['<?xml version="1.0" encoding="utf-8"?>', "<resources>"]
-        for name, source in base:
-            target = source if name == "app_name" else mapping.get(source, source)
-            lines.append(
-                f'    <string name="{name}" formatted="false">'
-                f'{android_text(target)}</string>'
-            )
-        lines.extend(["</resources>", ""])
-
-        target_dir = res_root / folder
-        target_dir.mkdir(parents=True, exist_ok=True)
-        (target_dir / "strings.xml").write_text(
-            "\n".join(lines),
-            encoding="utf-8",
-        )
-
-    print(f"Generated {len(RESOURCE_DIRS)} Android locale resource files.")
-
-
-if __name__ == "__main__":
-    main()
-,
-    re.MULTILINE,
+    r'^\s*"((?:\\.|[^"\\])*)":\s*"((?:\\.|[^"\\])*)",\s*$',
+    re.DOTALL,
 )
 
 
@@ -219,14 +40,15 @@ def decode_dart_string(value: str) -> str:
 def generated_maps() -> dict[str, dict[str, str]]:
     result: dict[str, dict[str, str]] = {}
     current: str | None = None
+    statement: list[str] = []
     in_exact_map = False
 
     for line in GENERATED.read_text(encoding="utf-8").splitlines():
-        if line.startswith("const Map<String, Map<String, String>> generatedTranslations"):
+        if "generatedPhraseTranslations =" in line:
+            break
+        if "generatedTranslations =" in line:
             in_exact_map = True
             continue
-        if line.startswith("const Map<String, Map<String, String>> generatedPhraseTranslations"):
-            break
         if not in_exact_map:
             continue
 
@@ -234,17 +56,27 @@ def generated_maps() -> dict[str, dict[str, str]]:
         if language:
             current = language.group(1)
             result[current] = {}
-            continue
-
-        if current is not None and line.strip() == "},":
-            current = None
+            statement.clear()
             continue
 
         if current is None:
             continue
-        entry = ENTRY_RE.match(line)
+
+        if line == "  },":
+            statement.clear()
+            current = None
+            continue
+
+        statement.append(line)
+        if not line.rstrip().endswith(","):
+            continue
+
+        candidate = "\n".join(statement)
+        statement.clear()
+        entry = ENTRY_RE.match(candidate)
         if entry is None:
             continue
+
         source = decode_dart_string(entry.group(1))
         target = decode_dart_string(entry.group(2))
         result[current][source] = target
