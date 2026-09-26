@@ -134,10 +134,13 @@ class _AdvancesScreenState extends State<AdvancesScreen> {
           else
             LayoutBuilder(
               builder: (context, constraints) {
+                final textScale = MediaQuery.textScalerOf(context).scale(1);
                 final columns = constraints.maxWidth >= 700
                     ? 5
                     : constraints.maxWidth >= 500
                     ? 4
+                    : textScale > 1.2
+                    ? 2
                     : 3;
 
                 return GridView.builder(
