@@ -435,7 +435,7 @@ class SafeAccountDetailScreen extends StatelessWidget {
     final output = await FilePicker.saveFile(
       dialogTitle: 'Esporta ${account.name}',
       fileName:
-          '${account.name.replaceAll(RegExp(r'[^A-Za-z0-9_-]+'), '-')}.csv',
+          '${account.name.replaceAll(RegExp(r'[^A-Za-z0-9À-ÿ\\u0400-\\u04FF\\u0600-\\u06FF\\u0900-\\u097F\\u3040-\\u30FF\\u3400-\\u9FFF\\uAC00-\\uD7AF_-]+', unicode: true), '-')}.csv',
       type: FileType.custom,
       allowedExtensions: const ['csv'],
       bytes: Uint8List.fromList(utf8.encode(csv)),
