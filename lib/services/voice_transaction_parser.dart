@@ -1,3 +1,4 @@
+import '../l10n/app_i18n.dart';
 import '../models/advance_models.dart';
 import '../models/models.dart';
 import '../models/quick_capture_models.dart';
@@ -15,7 +16,11 @@ class VoiceTransactionParser {
     DateTime? now,
   }) {
     final reference = now ?? DateTime.now();
-    final explicit = _extractExplicitFields(transcript, knownTags: knownTags);
+    final canonicalTranscript = AppI18n.voiceToItalian(transcript);
+    final explicit = _extractExplicitFields(
+      canonicalTranscript,
+      knownTags: knownTags,
+    );
     final normalized = _normalize(explicit.remainingText);
     final issues = <VoiceParseIssue>[];
     final sources = <String, VoiceFieldSource>{};
