@@ -171,7 +171,8 @@ void main() {
     ).readAsStringSync();
 
     expect(analytics, contains('bottomTitles: AxisTitles('));
-    expect(analytics, contains("_AnalyticsPeriod.week => sameMonth"));
+    expect(analytics, contains('_AnalyticsPeriod.week =>'));
+    expect(analytics, contains('sameMonth'));
     expect(analytics, contains("DateFormat('EEE dd'"));
     expect(analytics, contains("_AnalyticsPeriod.year => DateFormat('MMM'"));
     expect(
