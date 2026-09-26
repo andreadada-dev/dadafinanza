@@ -1,0 +1,41 @@
+name: L10n multi-q test
+
+on:
+  push:
+    branches:
+      - 'test/l10n-multiq'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Test multiple q parameters
+        shell: python
+        run: |
+          from urllib.parse import urlencode
+          from urllib.request import Request, urlopen
+          import json
+          samples = [
+              "Impostazioni",
+              "Nuovo movimento",
+              "Saldo totale",
+              "Conferma eliminazioni",
+              "Backup, CSV e ripristino",
+          ]
+          query = urlencode({"client":"gtx","sl":"it","tl":"en","dt":"t"})
+          body = urlencode([("q", item) for item in samples]).encode("utf-8")
+          req = Request(
+              "https://translate.googleapis.com/translate_a/single?" + query,
+              data=body,
+              headers={
+                  "User-Agent":"Mozilla/5.0",
+                  "Content-Type":"application/x-www-form-urlencoded",
+              },
+              method="POST",
+          )
+          raw = urlopen(req, timeout=30).read().decode()
+          print(raw)
+          payload = json.loads(raw)
+          print("TYPE", type(payload[0]).__name__)
+          print("LEN", len(payload[0]))
