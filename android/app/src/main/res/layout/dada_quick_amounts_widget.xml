@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="DadaFinanza · Rapido"
+                android:text="@string/widget_fast_title"
                 android:textColor="#F7F7F8"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Conto · Categoria"
+                android:text="@string/widget_account_category"
                 android:textColor="#B9BBC2"
                 android:textSize="11sp" />
         </LinearLayout>
@@ -42,7 +42,7 @@
             style="@style/WidgetQuickButton"
             android:layout_width="56dp"
             android:layout_height="48dp"
-            android:contentDescription="Compila con la voce"
+            android:contentDescription="@string/widget_voice_description"
             android:gravity="center"
             android:text="🎙" />
     </LinearLayout>
@@ -90,13 +90,13 @@
             style="@style/WidgetQuickButton"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="Spesa" />
+            android:text="@string/widget_expense" />
         <TextView
             android:id="@+id/amount_widget_income"
             style="@style/WidgetQuickButton"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="Entrata" />
+            android:text="@string/widget_income" />
         <TextView
             android:id="@+id/amount_widget_transfer"
             style="@style/WidgetQuickButton"
