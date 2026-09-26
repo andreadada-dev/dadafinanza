@@ -174,7 +174,9 @@ void main() {
     expect(analytics, contains('_AnalyticsPeriod.week =>'));
     expect(analytics, contains('sameMonth'));
     expect(analytics, contains("DateFormat('EEE dd'"));
-    expect(analytics, contains("_AnalyticsPeriod.year => DateFormat('MMM'"));
+    expect(analytics, contains('_AnalyticsPeriod.year => DateFormat('));
+    expect(analytics, contains("'MMM'"));
+    expect(analytics, contains('AppI18n.intlLocale'));
     expect(
       analytics,
       contains('account: effectiveAccountId == null ? null : selected'),
