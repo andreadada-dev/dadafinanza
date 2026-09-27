@@ -26,27 +26,40 @@ class _BrandHeader extends StatelessWidget {
   const _BrandHeader();
 
   @override
-  Widget build(BuildContext context) => Column(
-    children: [
-      ExcludeSemantics(
-        child: Image.asset(
-          'assets/branding/dadafinanza_logo_only.png',
-          width: 88,
-          height: 88,
-          fit: BoxFit.contain,
-          color: Theme.of(context).colorScheme.onSurface,
-          colorBlendMode: BlendMode.srcIn,
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final logo = Image.asset(
+      'assets/branding/dadafinanza_logo_only.png',
+      width: 88,
+      height: 88,
+      fit: BoxFit.contain,
+      filterQuality: FilterQuality.high,
+      isAntiAlias: true,
+    );
+
+    return Column(
+      children: [
+        ExcludeSemantics(
+          child: isDark
+              ? logo
+              : ColorFiltered(
+                  colorFilter: const ColorFilter.mode(
+                    Colors.black87,
+                    BlendMode.srcIn,
+                  ),
+                  child: logo,
+                ),
         ),
-      ),
-      const SizedBox(height: 10),
-      Text(
-        'DadaFinanza',
-        style: Theme.of(
-          context,
-        ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
-      ),
-    ],
-  );
+        const SizedBox(height: 10),
+        Text(
+          'DadaFinanza',
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+        ),
+      ],
+    );
+  }
 }
 
 class PersonalSettingsScreen extends StatelessWidget {
