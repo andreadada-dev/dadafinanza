@@ -46,10 +46,7 @@ class _BrandHeader extends StatelessWidget {
 }
 
 class _DadaFinanzaMark extends StatelessWidget {
-  const _DadaFinanzaMark({
-    required this.color,
-    required this.backgroundColor,
-  });
+  const _DadaFinanzaMark({required this.color, required this.backgroundColor});
 
   final Color color;
   final Color backgroundColor;
@@ -117,11 +114,7 @@ class _DadaFinanzaMarkPainter extends CustomPainter {
       ),
       cutoutPaint,
     );
-    canvas.drawCircle(
-      const Offset(343.063, 304.31),
-      54.465,
-      cutoutPaint,
-    );
+    canvas.drawCircle(const Offset(343.063, 304.31), 54.465, cutoutPaint);
     canvas.drawLine(
       const Offset(280.166, 245.307),
       const Offset(405.961, 363.313),
