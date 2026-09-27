@@ -40,9 +40,10 @@ jobs:
           )
           foreground.parent.mkdir(parents=True, exist_ok=True)
 
-          expected = "b3add89b9d94fe9042b424c9cc0b3e4e562477053a285f7b6fca1750d6ad24fc"
-          actual = sha256(png512.read_bytes()).hexdigest()
-          assert actual == expected, (actual, expected)
+          source = Image.open(png512).convert("RGBA")
+          expected_pixels = "b6281aa2b38ccf8612fa3a1664f66a98b71baab96c4853c75b7d3a471b8c0047"
+          actual_pixels = sha256(source.tobytes()).hexdigest()
+          assert actual_pixels == expected_pixels, (actual_pixels, expected_pixels)
 
           cairosvg.svg2png(
               url=str(svg),
@@ -51,7 +52,6 @@ jobs:
               output_height=800,
           )
 
-          source = Image.open(png512).convert("RGBA")
           out = Image.new("RGBA", source.size, (255, 255, 255, 0))
           pixels = []
           for r, g, b, _ in source.getdata():
