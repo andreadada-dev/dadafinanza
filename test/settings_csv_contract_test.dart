@@ -144,6 +144,8 @@ void main() {
     expect(root, contains('PersonalSettingsScreen()'));
     expect(polished, contains('PersonalSettingsScreen()'));
     expect(legacySettings, isNot(contains('class SettingsScreen')));
+    expect(settings, contains("assets/branding/dadafinanza_logo_only.png"));
+    expect(settings, isNot(contains('_DadaFinanzaMarkPainter')));
 
     expect(
       donut,
@@ -205,6 +207,6 @@ void main() {
     expect(plan, isNot(contains('- [ ]')));
     expect(plan, contains('Oggi · Settimana · Mese · Anno'));
     expect(plan, contains('Custom'));
-    expect(pubspec, contains('version: 1.7.3+22'));
+    expect(pubspec, contains('version: 1.7.4+23'));
   });
 }

@@ -29,9 +29,18 @@ class _BrandHeader extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     children: [
       ExcludeSemantics(
-        child: _DadaFinanzaMark(
-          color: Theme.of(context).colorScheme.onSurface,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        child: Image.asset(
+          'assets/branding/dadafinanza_logo_only.png',
+          width: 88,
+          height: 88,
+          fit: BoxFit.contain,
+          filterQuality: FilterQuality.high,
+          isAntiAlias: true,
+          errorBuilder: (context, error, stackTrace) => Icon(
+            Icons.account_balance_wallet_rounded,
+            size: 72,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
         ),
       ),
       const SizedBox(height: 10),
@@ -43,96 +52,6 @@ class _BrandHeader extends StatelessWidget {
       ),
     ],
   );
-}
-
-class _DadaFinanzaMark extends StatelessWidget {
-  const _DadaFinanzaMark({required this.color, required this.backgroundColor});
-
-  final Color color;
-  final Color backgroundColor;
-
-  @override
-  Widget build(BuildContext context) => SizedBox.square(
-    dimension: 88,
-    child: CustomPaint(
-      painter: _DadaFinanzaMarkPainter(
-        color: color,
-        backgroundColor: backgroundColor,
-      ),
-    ),
-  );
-}
-
-class _DadaFinanzaMarkPainter extends CustomPainter {
-  const _DadaFinanzaMarkPainter({
-    required this.color,
-    required this.backgroundColor,
-  });
-
-  final Color color;
-  final Color backgroundColor;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final markPaint = Paint()
-      ..color = color
-      ..style = PaintingStyle.fill
-      ..isAntiAlias = true;
-    final cutoutPaint = Paint()
-      ..color = backgroundColor
-      ..style = PaintingStyle.fill
-      ..isAntiAlias = true;
-    final cutoutStroke = Paint()
-      ..color = backgroundColor
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 29
-      ..strokeCap = StrokeCap.round
-      ..isAntiAlias = true;
-
-    canvas.save();
-    canvas.scale(size.width / 512, size.height / 512);
-
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        const Rect.fromLTRB(14, 62, 401.22, 352.104),
-        const Radius.circular(72),
-      ),
-      markPaint,
-    );
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        const Rect.fromLTRB(110.826, 159.071, 497.888, 449.549),
-        const Radius.circular(68),
-      ),
-      markPaint,
-    );
-
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        const Rect.fromLTRB(168.885, 213.536, 197.915, 395.085),
-        const Radius.circular(14.515),
-      ),
-      cutoutPaint,
-    );
-    canvas.drawCircle(const Offset(343.063, 304.31), 54.465, cutoutPaint);
-    canvas.drawLine(
-      const Offset(280.166, 245.307),
-      const Offset(405.961, 363.313),
-      cutoutStroke,
-    );
-    canvas.drawLine(
-      const Offset(405.961, 245.307),
-      const Offset(280.166, 363.313),
-      cutoutStroke,
-    );
-
-    canvas.restore();
-  }
-
-  @override
-  bool shouldRepaint(covariant _DadaFinanzaMarkPainter oldDelegate) =>
-      oldDelegate.color != color ||
-      oldDelegate.backgroundColor != backgroundColor;
 }
 
 class PersonalSettingsScreen extends StatelessWidget {
