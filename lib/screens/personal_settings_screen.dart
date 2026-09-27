@@ -26,40 +26,141 @@ class _BrandHeader extends StatelessWidget {
   const _BrandHeader();
 
   @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final logo = Image.asset(
-      'assets/branding/dadafinanza_logo_only.png',
-      width: 88,
-      height: 88,
-      fit: BoxFit.contain,
-      filterQuality: FilterQuality.high,
-      isAntiAlias: true,
-    );
+  Widget build(BuildContext context) => Column(
+    children: [
+      ExcludeSemantics(
+        child: _DadaFinanzaMark(
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
+      ),
+      const SizedBox(height: 10),
+      Text(
+        'DadaFinanza',
+        style: Theme.of(
+          context,
+        ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+      ),
+    ],
+  );
+}
 
-    return Column(
-      children: [
-        ExcludeSemantics(
-          child: isDark
-              ? logo
-              : ColorFiltered(
-                  colorFilter: const ColorFilter.mode(
-                    Colors.black87,
-                    BlendMode.srcIn,
-                  ),
-                  child: logo,
-                ),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          'DadaFinanza',
-          style: Theme.of(
-            context,
-          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
-        ),
-      ],
-    );
+class _DadaFinanzaMark extends StatelessWidget {
+  const _DadaFinanzaMark({required this.color});
+
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) => SizedBox.square(
+    dimension: 88,
+    child: CustomPaint(
+      painter: _DadaFinanzaMarkPainter(color),
+    ),
+  );
+}
+
+class _DadaFinanzaMarkPainter extends CustomPainter {
+  const _DadaFinanzaMarkPainter(this.color);
+
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final scale = size.shortestSide / 512;
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill
+      ..isAntiAlias = true;
+
+    canvas.save();
+    canvas.scale(scale, scale);
+
+    final back = Path()
+      ..moveTo(401.22, 134.717)
+      ..cubicTo(394.292, 134.621, 387.17, 134.622, 379.976, 134.623)
+      ..lineTo(228.985, 134.623)
+      ..cubicTo(208.562, 134.621, 188.715, 134.618, 172.288, 136.827)
+      ..cubicTo(153.752, 139.319, 132.573, 145.391, 114.982, 162.982)
+      ..cubicTo(97.3898, 180.574, 91.3183, 201.753, 88.8263, 220.289)
+      ..cubicTo(86.6177, 236.716, 86.6196, 256.563, 86.6218, 276.988)
+      ..lineTo(86.6218, 331.148)
+      ..cubicTo(86.6211, 338.243, 86.6203, 345.268, 86.7123, 352.104)
+      ..cubicTo(85.1447, 352.026, 83.6289, 351.934, 82.1663, 351.82)
+      ..cubicTo(73.132, 351.123, 64.1279, 349.586, 55.3809, 345.418)
+      ..cubicTo(40.3443, 338.253, 28.2279, 326.137, 21.0628, 311.1)
+      ..cubicTo(16.8944, 302.352, 15.3576, 293.349, 14.6604, 284.316)
+      ..cubicTo(13.9996, 275.749, 13.9998, 265.364, 14.0003, 253.329)
+      ..lineTo(14.0001, 181.442)
+      ..cubicTo(13.9988, 159.983, 13.9979, 141.494, 15.9886, 126.687)
+      ..cubicTo(18.1219, 110.82, 22.9327, 95.6096, 35.2701, 83.2723)
+      ..cubicTo(47.6072, 70.9352, 62.8173, 66.1244, 78.6849, 63.991)
+      ..cubicTo(93.4911, 62.0003, 111.981, 62.0013, 133.439, 62.0025)
+      ..lineTo(317.526, 62.0013)
+      ..cubicTo(327.736, 61.9923, 336.532, 61.9846, 344.358, 63.7141)
+      ..cubicTo(371.947, 69.8125, 393.495, 91.3597, 399.593, 118.949)
+      ..cubicTo(400.665, 123.797, 401.069, 129.018, 401.22, 134.717)
+      ..close();
+
+    final frontOuter = Path()
+      ..moveTo(110.826, 227.152)
+      ..cubicTo(110.826, 189.552, 143.319, 159.071, 183.4, 159.071)
+      ..lineTo(425.314, 159.071)
+      ..cubicTo(465.396, 159.071, 497.888, 189.552, 497.888, 227.152)
+      ..lineTo(497.888, 381.468)
+      ..cubicTo(497.888, 419.069, 465.396, 449.549, 425.314, 449.549)
+      ..lineTo(183.4, 449.549)
+      ..cubicTo(143.319, 449.549, 110.826, 419.069, 110.826, 381.468)
+      ..lineTo(110.826, 227.152)
+      ..close();
+
+    final slot = Path()
+      ..moveTo(183.4, 213.536)
+      ..cubicTo(175.384, 213.536, 168.885, 219.632, 168.885, 227.152)
+      ..lineTo(168.885, 381.468)
+      ..cubicTo(168.885, 388.988, 175.384, 395.085, 183.4, 395.085)
+      ..cubicTo(191.417, 395.085, 197.915, 388.988, 197.915, 381.468)
+      ..lineTo(197.915, 227.152)
+      ..cubicTo(197.915, 219.632, 191.417, 213.536, 183.4, 213.536)
+      ..close();
+
+    final bug = Path()
+      ..moveTo(290.429, 235.679)
+      ..cubicTo(284.76, 230.361, 275.571, 230.361, 269.903, 235.679)
+      ..cubicTo(264.234, 240.996, 264.234, 249.618, 269.903, 254.935)
+      ..lineTo(293.043, 276.642)
+      ..cubicTo(287.934, 284.752, 285.004, 294.209, 285.004, 304.31)
+      ..cubicTo(285.004, 314.412, 287.934, 323.868, 293.043, 331.978)
+      ..lineTo(269.903, 353.686)
+      ..cubicTo(264.234, 359.004, 264.234, 367.624, 269.903, 372.941)
+      ..cubicTo(275.571, 378.259, 284.76, 378.259, 290.429, 372.941)
+      ..lineTo(313.569, 351.233)
+      ..cubicTo(322.214, 356.026, 332.295, 358.775, 343.063, 358.775)
+      ..cubicTo(353.832, 358.775, 363.913, 356.026, 372.558, 351.233)
+      ..lineTo(395.698, 372.941)
+      ..cubicTo(401.367, 378.259, 410.555, 378.259, 416.224, 372.941)
+      ..cubicTo(421.893, 367.624, 421.893, 359.004, 416.224, 353.686)
+      ..lineTo(393.084, 331.978)
+      ..cubicTo(398.193, 323.868, 401.123, 314.412, 401.123, 304.31)
+      ..cubicTo(401.123, 294.209, 398.193, 284.752, 393.084, 276.642)
+      ..lineTo(416.224, 254.935)
+      ..cubicTo(421.893, 249.618, 421.893, 240.996, 416.224, 235.679)
+      ..cubicTo(410.555, 230.361, 401.367, 230.361, 395.698, 235.679)
+      ..lineTo(372.558, 257.386)
+      ..cubicTo(363.913, 252.595, 353.832, 249.846, 343.063, 249.846)
+      ..cubicTo(332.295, 249.846, 322.214, 252.595, 313.569, 257.386)
+      ..lineTo(290.429, 235.679)
+      ..close();
+
+    final holes = Path.combine(PathOperation.union, slot, bug);
+    final front = Path.combine(PathOperation.difference, frontOuter, holes);
+
+    canvas.drawPath(back, paint);
+    canvas.drawPath(front, paint);
+    canvas.restore();
   }
+
+  @override
+  bool shouldRepaint(covariant _DadaFinanzaMarkPainter oldDelegate) =>
+      oldDelegate.color != color;
 }
 
 class PersonalSettingsScreen extends StatelessWidget {
