@@ -30,10 +30,12 @@ class _BrandHeader extends StatelessWidget {
     children: [
       ExcludeSemantics(
         child: Image.asset(
-          'assets/branding/dadafinanza_logo_512.png',
+          'assets/branding/dadafinanza_logo_only.png',
           width: 88,
           height: 88,
           fit: BoxFit.contain,
+          color: Theme.of(context).colorScheme.onSurface,
+          colorBlendMode: BlendMode.srcIn,
         ),
       ),
       const SizedBox(height: 10),
