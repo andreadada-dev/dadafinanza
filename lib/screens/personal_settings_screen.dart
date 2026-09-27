@@ -22,6 +22,31 @@ import 'settings_screen.dart'
     show DashboardCustomizerScreen, SmartSuggestionsSettingsScreen;
 import 'voice_settings_screen.dart';
 
+class _BrandHeader extends StatelessWidget {
+  const _BrandHeader();
+
+  @override
+  Widget build(BuildContext context) => Column(
+    children: [
+      ExcludeSemantics(
+        child: Image.asset(
+          'assets/branding/dadafinanza_logo_512.png',
+          width: 88,
+          height: 88,
+          fit: BoxFit.contain,
+        ),
+      ),
+      const SizedBox(height: 10),
+      Text(
+        'DadaFinanza',
+        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    ],
+  );
+}
+
 class PersonalSettingsScreen extends StatelessWidget {
   const PersonalSettingsScreen({super.key});
 
@@ -33,6 +58,8 @@ class PersonalSettingsScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 100),
         children: [
+          const _BrandHeader(),
+          const SizedBox(height: 28),
           const SectionTitle('Aspetto'),
           _Link(
             icon: Icons.contrast_rounded,
