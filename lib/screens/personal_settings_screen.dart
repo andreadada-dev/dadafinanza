@@ -39,9 +39,9 @@ class _BrandHeader extends StatelessWidget {
       const SizedBox(height: 10),
       Text(
         'DadaFinanza',
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-          fontWeight: FontWeight.w700,
-        ),
+        style: Theme.of(
+          context,
+        ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
       ),
     ],
   );
