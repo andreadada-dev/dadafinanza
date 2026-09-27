@@ -1,0 +1,61 @@
+name: One-off branding asset render
+
+on:
+  push:
+    branches:
+      - 'feature/branding-logo'
+    paths:
+      - '.github/workflows/oneoff-branding-assets.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install SVG renderer
+        run: python3 -m pip install --disable-pip-version-check cairosvg pillow
+
+      - name: Render PNG assets from master SVG
+        shell: python
+        run: |
+          from pathlib import Path
+          import cairosvg
+          from PIL import Image
+
+          root = Path("assets/branding")
+          svg = root / "dadafinanza_logo.svg"
+
+          for size in (800, 512):
+              target = root / f"dadafinanza_logo_{size}.png"
+              cairosvg.svg2png(
+                  url=str(svg),
+                  write_to=str(target),
+                  output_width=size,
+                  output_height=size,
+              )
+              image = Image.open(target)
+              image.load()
+              assert image.size == (size, size), image.size
+              assert image.mode in {"RGBA", "RGB"}, image.mode
+              print(target, image.size, image.mode)
+
+      - name: Commit rendered branding
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/branding/dadafinanza_logo_800.png assets/branding/dadafinanza_logo_512.png
+          if git diff --cached --quiet; then
+            echo "Brand PNGs already match the SVG."
+            exit 0
+          fi
+          git commit -m "Render official branding PNG assets"
+          git push origin HEAD:"${GITHUB_REF_NAME}"
