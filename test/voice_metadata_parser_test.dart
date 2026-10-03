@@ -1,6 +1,6 @@
-import 'package:dadafinanza/models/models.dart';
-import 'package:dadafinanza/models/quick_capture_models.dart';
-import 'package:dadafinanza/services/voice_transaction_parser.dart';
+import 'package:balyn/models/models.dart';
+import 'package:balyn/models/quick_capture_models.dart';
+import 'package:balyn/services/voice_transaction_parser.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

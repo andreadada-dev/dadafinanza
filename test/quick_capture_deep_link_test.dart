@@ -1,8 +1,8 @@
-import 'package:dadafinanza/app_state.dart';
-import 'package:dadafinanza/data/app_database.dart';
-import 'package:dadafinanza/models/models.dart';
-import 'package:dadafinanza/models/quick_capture_models.dart';
-import 'package:dadafinanza/services/quick_capture_deep_link_service.dart';
+import 'package:balyn/app_state.dart';
+import 'package:balyn/data/app_database.dart';
+import 'package:balyn/models/models.dart';
+import 'package:balyn/models/quick_capture_models.dart';
+import 'package:balyn/services/quick_capture_deep_link_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -15,7 +15,7 @@ void main() {
       final draft = await service.fromUri(
         state,
         Uri.parse(
-          'dadafinanza://quick-add?type=expense&amount=1.80&category=Uscite&account=Revolut&note=Caffe',
+          'balyn://quick-add?type=expense&amount=1.80&category=Uscite&account=Revolut&note=Caffe',
         ),
       );
       expect(draft, isNotNull);
@@ -33,7 +33,7 @@ void main() {
     final state = _state();
     final draft = await service.fromUri(
       state,
-      Uri.parse('dadafinanza://quick-add?voice=1&account=Revolut'),
+      Uri.parse('balyn://quick-add?voice=1&account=Revolut'),
     );
     expect(draft?.startVoice, isTrue);
     expect(draft?.accountId, 1);
@@ -45,7 +45,7 @@ void main() {
     final draft = await service.fromUri(
       state,
       Uri.parse(
-        'dadafinanza://quick-add?type=transfer&amount=50&account=Revolut&toAccount=Risparmio&category=Uscite',
+        'balyn://quick-add?type=transfer&amount=50&account=Revolut&toAccount=Risparmio&category=Uscite',
       ),
     );
     expect(draft?.type, TransactionType.transfer);
@@ -60,7 +60,7 @@ void main() {
     final draft = await service.fromUri(
       state,
       Uri.parse(
-        'dadafinanza://quick-add?type=expense&amount=3&account=Missing&category=Missing',
+        'balyn://quick-add?type=expense&amount=3&account=Missing&category=Missing',
       ),
     );
     expect(draft?.accountId, isNull);
@@ -72,7 +72,7 @@ void main() {
     final draft = await service.fromUri(
       state,
       Uri.parse(
-        'dadafinanza://quick-add?type=transfer&account=Revolut&toAccount=Revolut',
+        'balyn://quick-add?type=transfer&account=Revolut&toAccount=Revolut',
       ),
     );
     expect(draft?.accountId, 1);
