@@ -104,14 +104,14 @@ generatedTranslations = <String, Map<String, String>>{
     "Applica allo storico": "Apply to history",
     "Applicare allo storico?": "Apply to the historian?",
     "Apprendimento": "Learning",
-    "Apre DadaFinanza senza autenticazione.":
-        "Opens DadaFinanza without authentication.",
+    "Apre Balyn senza autenticazione.":
+        "Opens Balyn without authentication.",
     "Apri": "Open",
     "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
         "Open Down Payments to record a refund or update your reminder.",
     "Apri conto": "Open account",
-    "Apri il selettore widget del launcher e cerca DadaFinanza.":
-        "Open the launcher widget selector and search for DadaFinanza.",
+    "Apri il selettore widget del launcher e cerca Balyn.":
+        "Open the launcher widget selector and search for Balyn.",
     "Apri per vedere residuo e ritmo di spesa.":
         "Open to see residual and spending rate.",
     "Apri Storico": "Open History",
@@ -159,8 +159,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Backup completo con allegati · import portabile":
         "Full backup with attachments · portable import",
     "Backup completo salvato.": "Full backup saved.",
-    "Backup DadaFinanza non riconosciuto.":
-        "DadaFinanza backup not recognized.",
+    "Backup Balyn non riconosciuto.":
+        "Balyn backup not recognized.",
     "Backup non trovato.": "Backup not found.",
     "Backup ripristinato e verificato.": "Backup restored and verified.",
     "Backup, CSV e allegati vengono esportati solo quando avvii ":
@@ -289,7 +289,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Confirmed = recurrence configured. Expected = high confidence historical pattern. Estimated = aggregate behavior, not a certain event.",
     "Configura": "Configure",
     "Configura conto e categoria": "Configure account and category",
-    "Configura DadaFinanza": "Configure DadaFinanza",
+    "Configura Balyn": "Configure Balyn",
     "Configura widget": "Configure widgets",
     "Configurate": "Configure",
     "Configurazione per istanza": "Per-instance configuration",
@@ -373,21 +373,21 @@ generatedTranslations = <String, Map<String, String>>{
     "Da restituire": "To be returned",
     "Da ricevere": "To be received",
     "Da saldare": "To be paid",
-    "DadaFinanza non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
-        "DadaFinanza does not send transactions, receipts, descriptions or patterns to external services.",
-    "DadaFinanza non riceve né memorizza dati biometrici.":
-        "DadaFinanza does not receive or store biometric data.",
-    "DadaFinanza non richiede un account e non integra pubblicità, ":
-        "DadaFinanza does not require an account and does not integrate advertising,",
-    "DadaFinanza sulla Home": "DadaFinanza on Home",
-    "DadaFinanza usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
-        "DadaFinanza uses local scheduling and limits duplicates. Automatic recurrences are still reconciled when the app is opened.",
-    "DadaFinanza · Importi rapidi": "DadaFinanza · Quick amounts",
-    "DadaFinanza · Riepilogo": "DadaFinanza · Summary",
-    "DadaFinanza · Saldo": "DadaFinanza · Balance",
-    "DadaFinanza è bloccata": "DadaFinanza is blocked",
-    "DadaFinanza è progettata local-first. Movimenti, conti, categorie, ":
-        "DadaFinanza is designed local-first. transactions, accounts, categories,",
+    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
+        "Balyn does not send transactions, receipts, descriptions or patterns to external services.",
+    "Balyn non riceve né memorizza dati biometrici.":
+        "Balyn does not receive or store biometric data.",
+    "Balyn non richiede un account e non integra pubblicità, ":
+        "Balyn does not require an account and does not integrate advertising,",
+    "Balyn sulla Home": "Balyn on Home",
+    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
+        "Balyn uses local scheduling and limits duplicates. Automatic recurrences are still reconciled when the app is opened.",
+    "Balyn · Importi rapidi": "Balyn · Quick amounts",
+    "Balyn · Riepilogo": "Balyn · Summary",
+    "Balyn · Saldo": "Balyn · Balance",
+    "Balyn è bloccata": "Balyn is blocked",
+    "Balyn è progettata local-first. Movimenti, conti, categorie, ":
+        "Balyn is designed local-first. transactions, accounts, categories,",
     "Dai un nome ai risparmi che vuoi costruire.":
         "Name the savings you want to build.",
     "Dal": "From",
@@ -408,8 +408,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Dati sul dispositivo": "Data on the device",
     "Dati, PIN e preferenze restano locali. Nessun account o server è coinvolto.":
         "Data, PIN and preferences remain local. No accounts or servers are affected.",
-    "Definisci una cifra e, se vuoi, una data: DadaFinanza stimerà un ritmo sostenibile.":
-        "Define a figure and, if you want, a date: DadaFinanza will estimate a sustainable pace.",
+    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.":
+        "Define a figure and, if you want, a date: Balyn will estimate a sustainable pace.",
     "dei trasferimenti": "of transfers",
     "delle entrate": "of revenue",
     "delle spese": "of expenses",
@@ -563,8 +563,8 @@ generatedTranslations = <String, Map<String, String>>{
         "The CSV must contain at least type, amount, date and account.",
     "Il database ripristinato non supera il controllo integrità.":
         "The restored database fails the integrity check.",
-    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → DadaFinanza.":
-        "The launcher does not support automatic adding. Press and hold on Home → Widget → DadaFinanza.",
+    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.":
+        "The launcher does not support automatic adding. Press and hold on Home → Widget → Balyn.",
     "Il microfono compila Nuovo movimento ma non salva mai automaticamente.":
         "The microphone compiles New transaction but never saves automatically.",
     "Il movimento ha una direzione incompatibile.":
@@ -591,8 +591,8 @@ generatedTranslations = <String, Map<String, String>>{
         "Your account balance will be recalculated automatically.",
     "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.":
         "The system recognizes habits with local statistics and explainable rules. It doesn't use AI or cloud.",
-    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server DadaFinanza.":
-        "The recognized text is interpreted locally by a deterministic parser. It is not sent to the DadaFinanza server.",
+    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.":
+        "The recognized text is interpreted locally by a deterministic parser. It is not sent to the Balyn server.",
     "Il trasferimento deve arrivare al conto collegato all’obiettivo.":
         "The transfer must arrive at the account linked to the goal.",
     "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.":
@@ -788,7 +788,7 @@ generatedTranslations = <String, Map<String, String>>{
         "No advance compatible with this transaction.",
     "Nessun anticipo con questa persona.": "No advance with this person.",
     "Nessun anticipo registrato.": "No advance recorded.",
-    "Nessun assistente cloud DadaFinanza": "No DadaFinanza cloud assistant",
+    "Nessun assistente cloud Balyn": "No Balyn cloud assistant",
     "Nessun budget": "No budget",
     "Nessun budget attivo": "No active budget",
     "Nessun confronto": "No comparison",
@@ -907,8 +907,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Parzialmente regolato": "Partially regulated",
     "Password": "Passwords",
     "Password opzionale": "Password optional",
-    "password, il file non è cifrato da DadaFinanza.":
-        "password, the file is not encrypted by DadaFinanza.",
+    "password, il file non è cifrato da Balyn.":
+        "password, the file is not encrypted by Balyn.",
     "Patrimonio corrente": "Current assets",
     "Patrimonio incluso nel totale": "Heritage included in the total",
     "Patrimonio netto": "Net worth",
@@ -1121,15 +1121,15 @@ generatedTranslations = <String, Map<String, String>>{
     "Saldo reale": "Real balance",
     "Saldo stimato tra 30 giorni: ••••": "Estimated balance in 30 days: ••••",
     "Saldo totale": "Total balance",
-    "Saldo totale compatto con accesso rapido a DadaFinanza":
-        "Compact total balance with quick access to DadaFinanza",
+    "Saldo totale compatto con accesso rapido a Balyn":
+        "Compact total balance with quick access to Balyn",
     "Saldo, Quick Capture, importi rapidi e riepilogo configurabili":
         "Configurable Balance, Quick Capture, Quick Amounts and Summary",
     "Salute": "Health",
     "Salute e persona": "Health and person",
     "Salva": "Save",
     "Salva anticipo": "Save advance",
-    "Salva backup DadaFinanza": "Save DadaFinanza backup",
+    "Salva backup Balyn": "Save Balyn backup",
     "Salva divisione": "Save division",
     "Salva modifiche": "Save changes",
     "Salva PIN": "Save PIN",
@@ -1141,8 +1141,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Salva widget": "Save widget",
     "Sblocca": "Unlock",
     "Sblocca conto": "Unlock account",
-    "Sblocca DadaFinanza per vedere i tuoi dati finanziari":
-        "Unlock DadaFinanza to see your financial data",
+    "Sblocca Balyn per vedere i tuoi dati finanziari":
+        "Unlock Balyn to see your financial data",
     "Scadenza": "Expiration",
     "Scadenza domani": "Due tomorrow",
     "Scadenze": "Deadlines",
@@ -1252,8 +1252,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "Automatic suggestions",
     "Suggerimenti obiettivi": "Objective suggestions",
     "Supermercato": "Supermarket",
-    "Sviluppatore: DDone. Per richieste relative a privacy o supporto ":
-        "Developer: DDone. For privacy or support requests",
+    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
+        "Developer: Andrea Dada. For privacy or support requests",
     "Tag": "Tags",
     "Tasse": "Taxes",
     "Taxi": "Taxis",
@@ -1341,8 +1341,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Usate per promemoria e avvisi locali configurati da te. ":
         "Used for local reminders and alerts that you set up.",
     "Usato 1 volta": "Used 1 time",
-    "Usato solo per l’inserimento vocale. Il parser DadaFinanza è ":
-        "Used for voice input only. The DadaFinanza parser is",
+    "Usato solo per l’inserimento vocale. Il parser Balyn è ":
+        "Used for voice input only. The Balyn parser is",
     "Uso quotidiano": "Daily use",
     "Utenze e casa": "Utilities and home",
     "Valuta principale": "Primary currency",
@@ -1484,14 +1484,14 @@ generatedTranslations = <String, Map<String, String>>{
     "Applicare allo storico?": "¿Aplicar al historiador?",
     "Apprendimento": "Aprendizaje",
     "AppScope not found": "AppScope no encontrado",
-    "Apre DadaFinanza senza autenticazione.":
-        "Abre DadaFinanza sin autenticación.",
+    "Apre Balyn senza autenticazione.":
+        "Abre Balyn sin autenticación.",
     "Apri": "Abierto",
     "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
         "Abra Pagos iniciales para registrar un reembolso o actualizar su recordatorio.",
     "Apri conto": "abrir cuenta",
-    "Apri il selettore widget del launcher e cerca DadaFinanza.":
-        "Abra el selector de widgets del iniciador y busque DadaFinanza.",
+    "Apri il selettore widget del launcher e cerca Balyn.":
+        "Abra el selector de widgets del iniciador y busque Balyn.",
     "Apri per vedere residuo e ritmo di spesa.":
         "Abrir para ver la tasa residual y de gasto.",
     "Apri Storico": "Historia Abierta",
@@ -1541,8 +1541,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Backup completo con allegati · import portabile":
         "Copia de seguridad completa con archivos adjuntos · importación portátil",
     "Backup completo salvato.": "Copia de seguridad completa guardada.",
-    "Backup DadaFinanza non riconosciuto.":
-        "Copia de seguridad de DadaFinanza no reconocida.",
+    "Backup Balyn non riconosciuto.":
+        "Copia de seguridad de Balyn no reconocida.",
     "Backup non trovato.": "Copia de seguridad no encontrada.",
     "Backup ripristinato e verificato.":
         "Copia de seguridad restaurada y verificada.",
@@ -1677,7 +1677,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Confirmado = recurrencia configurada. Esperado = patrón histórico de alta confianza. Estimado = comportamiento agregado, no un evento determinado.",
     "Configura": "Configurar",
     "Configura conto e categoria": "Configurar cuenta y categoría",
-    "Configura DadaFinanza": "Configurar DadaFinanza",
+    "Configura Balyn": "Configurar Balyn",
     "Configura widget": "Configurar widgets",
     "Configurate": "Configurar",
     "Configurazione per istanza": "Configuración por instancia",
@@ -1769,23 +1769,23 @@ generatedTranslations = <String, Map<String, String>>{
     "Da ricevere": "Para ser recibido",
     "Da saldare": "a pagar",
     "DadaBalanceWidgetProvider": "Proveedor de widgets de DadaBalance",
-    "DadaFinanza non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
-        "DadaFinanza no envía transacciones, recibos, descripciones o patrones a servicios externos.",
-    "DadaFinanza non riceve né memorizza dati biometrici.":
-        "DadaFinanza no recibe ni almacena datos biométricos.",
-    "DadaFinanza non richiede un account e non integra pubblicità, ":
-        "DadaFinanza no requiere una cuenta y no integra publicidad,",
-    "DadaFinanza sulla Home": "DadaFinanza en Inicio",
-    "DadaFinanza usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
-        "DadaFinanza utiliza programación local y limita los duplicados. Las recurrencias automáticas aún se concilian cuando se abre la aplicación.",
-    "DadaFinanza · Importi rapidi": "DadaFinanza · Montos rápidos",
-    "DadaFinanza · Quick Capture": "DadaFinanza · Captura Rápida",
-    "DadaFinanza · Rapido": "DadaFinanza · Rápido",
-    "DadaFinanza · Riepilogo": "DadaFinanza · Resumen",
-    "DadaFinanza è bloccata": "DadaFinanza está bloqueado",
-    "DadaFinanza è progettata local-first. Movimenti, conti, categorie, ":
-        "DadaFinanza está diseñado pensando primero en lo local. transacciones, cuentas, categorías,",
-    "DadaFinanzaBackup": "DadaFinanzaCopia de seguridad",
+    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
+        "Balyn no envía transacciones, recibos, descripciones o patrones a servicios externos.",
+    "Balyn non riceve né memorizza dati biometrici.":
+        "Balyn no recibe ni almacena datos biométricos.",
+    "Balyn non richiede un account e non integra pubblicità, ":
+        "Balyn no requiere una cuenta y no integra publicidad,",
+    "Balyn sulla Home": "Balyn en Inicio",
+    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
+        "Balyn utiliza programación local y limita los duplicados. Las recurrencias automáticas aún se concilian cuando se abre la aplicación.",
+    "Balyn · Importi rapidi": "Balyn · Montos rápidos",
+    "Balyn · Quick Capture": "Balyn · Captura Rápida",
+    "Balyn · Rapido": "Balyn · Rápido",
+    "Balyn · Riepilogo": "Balyn · Resumen",
+    "Balyn è bloccata": "Balyn está bloqueado",
+    "Balyn è progettata local-first. Movimenti, conti, categorie, ":
+        "Balyn está diseñado pensando primero en lo local. transacciones, cuentas, categorías,",
+    "BalynBackup": "BalynCopia de seguridad",
     "Dai un nome ai risparmi che vuoi costruire.":
         "Nombra los ahorros que deseas generar.",
     "Dal": "De",
@@ -1813,8 +1813,8 @@ generatedTranslations = <String, Map<String, String>>{
     "dd MMM yyyy": "dd MMM aaaa",
     "dd MMMM yyyy, HH:mm": "dd MMMM aaaa, HH:mm",
     "dd/MM/yyyy HH:mm": "dd/MM/aaaa HH:mm",
-    "Definisci una cifra e, se vuoi, una data: DadaFinanza stimerà un ritmo sostenibile.":
-        "Defina una cifra y, si quiere, una fecha: DadaFinanza estimará un ritmo sostenible.",
+    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.":
+        "Defina una cifra y, si quiere, una fecha: Balyn estimará un ritmo sostenible.",
     "dei trasferimenti": "de transferencias",
     "delle entrate": "de ingresos",
     "delle spese": "de gastos",
@@ -1978,8 +1978,8 @@ generatedTranslations = <String, Map<String, String>>{
         "El CSV debe contener al menos tipo, monto, fecha y cuenta.",
     "Il database ripristinato non supera il controllo integrità.":
         "La base de datos restaurada no pasa la verificación de integridad.",
-    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → DadaFinanza.":
-        "El iniciador no admite la adición automática. Mantenga presionado Inicio → Widget → DadaFinanza.",
+    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.":
+        "El iniciador no admite la adición automática. Mantenga presionado Inicio → Widget → Balyn.",
     "Il microfono compila Nuovo movimento ma non salva mai automaticamente.":
         "El micrófono compila una nueva transacción pero nunca la guarda automáticamente.",
     "Il movimento ha una direzione incompatibile.":
@@ -2006,8 +2006,8 @@ generatedTranslations = <String, Map<String, String>>{
         "El saldo de su cuenta se volverá a calcular automáticamente.",
     "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.":
         "El sistema reconoce hábitos con estadísticas locales y reglas explicables. No utiliza IA ni nube.",
-    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server DadaFinanza.":
-        "El texto reconocido es interpretado localmente por un analizador determinista. No se envía al servidor de DadaFinanza.",
+    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.":
+        "El texto reconocido es interpretado localmente por un analizador determinista. No se envía al servidor de Balyn.",
     "Il trasferimento deve arrivare al conto collegato all’obiettivo.":
         "La transferencia debe llegar a la cuenta vinculada a la meta.",
     "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.":
@@ -2206,8 +2206,8 @@ generatedTranslations = <String, Map<String, String>>{
         "No hay anticipo compatible con esta transacción.",
     "Nessun anticipo con questa persona.": "No hay avances con esta persona.",
     "Nessun anticipo registrato.": "No se registró ningún avance.",
-    "Nessun assistente cloud DadaFinanza":
-        "Sin asistente en la nube de DadaFinanza",
+    "Nessun assistente cloud Balyn":
+        "Sin asistente en la nube de Balyn",
     "Nessun budget": "Sin presupuesto",
     "Nessun budget attivo": "Sin presupuesto activo",
     "Nessun confronto": "Sin comparación",
@@ -2329,8 +2329,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Password": "Contraseñas",
     "Password backup": "Copia de seguridad de contraseña",
     "Password opzionale": "Contraseña opcional",
-    "password, il file non è cifrato da DadaFinanza.":
-        "contraseña, el archivo no está cifrado por DadaFinanza.",
+    "password, il file non è cifrato da Balyn.":
+        "contraseña, el archivo no está cifrado por Balyn.",
     "Patrimonio corrente": "Activos corrientes",
     "Patrimonio incluso nel totale": "Patrimonio incluido en el total",
     "Patrimonio netto": "patrimonio neto",
@@ -2549,15 +2549,15 @@ generatedTranslations = <String, Map<String, String>>{
     "Saldo reale": "saldo real",
     "Saldo stimato tra 30 giorni: ••••": "Saldo estimado en 30 días: ••••",
     "Saldo totale": "saldo total",
-    "Saldo totale compatto con accesso rapido a DadaFinanza":
-        "Saldo total compacto con acceso rápido a DadaFinanza",
+    "Saldo totale compatto con accesso rapido a Balyn":
+        "Saldo total compacto con acceso rápido a Balyn",
     "Saldo, Quick Capture, importi rapidi e riepilogo configurabili":
         "Saldo Configurable, Captura Rápida, Montos Rápidos y Resumen",
     "Salute": "Salud",
     "Salute e persona": "salud y persona",
     "Salva": "Guardar",
     "Salva anticipo": "Guardar avance",
-    "Salva backup DadaFinanza": "Guardar copia de seguridad de DadaFinanza",
+    "Salva backup Balyn": "Guardar copia de seguridad de Balyn",
     "Salva divisione": "guardar división",
     "Salva modifiche": "Guardar cambios",
     "Salva PIN": "Guardar PIN",
@@ -2569,8 +2569,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Salva widget": "Guardar widget",
     "Sblocca": "Desbloquear",
     "Sblocca conto": "Desbloquear cuenta",
-    "Sblocca DadaFinanza per vedere i tuoi dati finanziari":
-        "Desbloquea DadaFinanza para ver tus datos financieros",
+    "Sblocca Balyn per vedere i tuoi dati finanziari":
+        "Desbloquea Balyn para ver tus datos financieros",
     "Scadenza": "Caducidad",
     "Scadenza domani": "Vencimiento mañana",
     "Scadenze": "Plazos",
@@ -2683,8 +2683,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "Sugerencias automáticas",
     "Suggerimenti obiettivi": "Sugerencias objetivas",
     "Supermercato": "supermercado",
-    "Sviluppatore: DDone. Per richieste relative a privacy o supporto ":
-        "Desarrollador: DDone. Para solicitudes de privacidad o soporte",
+    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
+        "Desarrollador: Andrea Dada. Para solicitudes de privacidad o soporte",
     "Tag": "Etiquetas",
     "Tasse": "Impuestos",
     "Taxi": "Taxis",
@@ -2771,8 +2771,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Usate per promemoria e avvisi locali configurati da te. ":
         "Se utiliza para recordatorios y alertas locales que usted configura.",
     "Usato 1 volta": "Usado 1 vez",
-    "Usato solo per l’inserimento vocale. Il parser DadaFinanza è ":
-        "Se utiliza únicamente para entrada de voz. El analizador DadaFinanza es",
+    "Usato solo per l’inserimento vocale. Il parser Balyn è ":
+        "Se utiliza únicamente para entrada de voz. El analizador Balyn es",
     "Uso quotidiano": "Uso diario",
     "Utenze e casa": "Utilidades y hogar",
     "Valuta principale": "Moneda primaria",
@@ -2912,14 +2912,14 @@ generatedTranslations = <String, Map<String, String>>{
     "Applicare allo storico?": "S'adresser à l'historien ?",
     "Apprendimento": "Apprentissage",
     "AppScope not found": "AppScope introuvable",
-    "Apre DadaFinanza senza autenticazione.":
-        "Ouvre DadaFinanza sans authentification.",
+    "Apre Balyn senza autenticazione.":
+        "Ouvre Balyn sans authentification.",
     "Apri": "Ouvert",
     "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
         "Ouvrez les acomptes pour enregistrer un remboursement ou mettre à jour votre rappel.",
     "Apri conto": "Ouvrir un compte",
-    "Apri il selettore widget del launcher e cerca DadaFinanza.":
-        "Ouvrez le sélecteur de widget du lanceur et recherchez DadaFinanza.",
+    "Apri il selettore widget del launcher e cerca Balyn.":
+        "Ouvrez le sélecteur de widget du lanceur et recherchez Balyn.",
     "Apri per vedere residuo e ritmo di spesa.":
         "Ouvrir pour voir le taux résiduel et de dépenses.",
     "Apri Storico": "Ouvrir l'historique",
@@ -2968,8 +2968,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Backup completo con allegati · import portabile":
         "Sauvegarde complète avec pièces jointes · importation portable",
     "Backup completo salvato.": "Sauvegarde complète enregistrée.",
-    "Backup DadaFinanza non riconosciuto.":
-        "Sauvegarde DadaFinanza non reconnue.",
+    "Backup Balyn non riconosciuto.":
+        "Sauvegarde Balyn non reconnue.",
     "Backup non trovato.": "Sauvegarde introuvable.",
     "Backup ripristinato e verificato.": "Sauvegarde restaurée et vérifiée.",
     "Backup, CSV e allegati vengono esportati solo quando avvii ":
@@ -3103,7 +3103,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Confirmé = récurrence configurée. Attendu = modèle historique de confiance élevée. Estimé = comportement global, pas un certain événement.",
     "Configura": "Configurer",
     "Configura conto e categoria": "Configurer le compte et la catégorie",
-    "Configura DadaFinanza": "Configurer DadaFinanza",
+    "Configura Balyn": "Configurer Balyn",
     "Configura widget": "Configurer les widgets",
     "Configurate": "Configurer",
     "Configurazione per istanza": "Configuration par instance",
@@ -3194,24 +3194,24 @@ generatedTranslations = <String, Map<String, String>>{
     "Da restituire": "A retourner",
     "Da ricevere": "A recevoir",
     "Da saldare": "Être payé",
-    "DadaFinanza non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
-        "DadaFinanza n'envoie pas de transactions, reçus, descriptions ou modèles à des services externes.",
-    "DadaFinanza non riceve né memorizza dati biometrici.":
-        "DadaFinanza ne reçoit ni ne stocke de données biométriques.",
-    "DadaFinanza non richiede un account e non integra pubblicità, ":
-        "DadaFinanza ne nécessite pas de compte et n'intègre pas de publicité,",
-    "DadaFinanza sulla Home": "DadaFinanza à la maison",
-    "DadaFinanza usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
-        "DadaFinanza utilise une planification locale et limite les doublons. Les récurrences automatiques sont toujours réconciliées à l'ouverture de l'application.",
-    "DadaFinanza · Importi rapidi": "DadaFinanza · Montants rapides",
-    "DadaFinanza · Quick Capture": "DadaFinanza · Capture rapide",
-    "DadaFinanza · Riepilogo": "DadaFinanza · Résumé",
-    "DadaFinanza · Saldo": "DadaFinanza · Solde",
-    "DadaFinanza è bloccata": "DadaFinanza est bloqué",
-    "DadaFinanza è progettata local-first. Movimenti, conti, categorie, ":
-        "DadaFinanza est conçu d'abord localement. transactions, comptes, catégories,",
-    "DadaFinanza.": "Dada Finance.",
-    "DadaFinanzaBackup": "DadaFinanzaSauvegarde",
+    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
+        "Balyn n'envoie pas de transactions, reçus, descriptions ou modèles à des services externes.",
+    "Balyn non riceve né memorizza dati biometrici.":
+        "Balyn ne reçoit ni ne stocke de données biométriques.",
+    "Balyn non richiede un account e non integra pubblicità, ":
+        "Balyn ne nécessite pas de compte et n'intègre pas de publicité,",
+    "Balyn sulla Home": "Balyn à la maison",
+    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
+        "Balyn utilise une planification locale et limite les doublons. Les récurrences automatiques sont toujours réconciliées à l'ouverture de l'application.",
+    "Balyn · Importi rapidi": "Balyn · Montants rapides",
+    "Balyn · Quick Capture": "Balyn · Capture rapide",
+    "Balyn · Riepilogo": "Balyn · Résumé",
+    "Balyn · Saldo": "Balyn · Solde",
+    "Balyn è bloccata": "Balyn est bloqué",
+    "Balyn è progettata local-first. Movimenti, conti, categorie, ":
+        "Balyn est conçu d'abord localement. transactions, comptes, catégories,",
+    "Balyn.": "Dada Finance.",
+    "BalynBackup": "BalynSauvegarde",
     "Dai un nome ai risparmi che vuoi costruire.":
         "Nommez les économies que vous souhaitez constituer.",
     "Dal": "De",
@@ -3240,8 +3240,8 @@ generatedTranslations = <String, Map<String, String>>{
     "dd MMM, HH:mm": "jj MMM, HH:mm",
     "dd MMMM yyyy, HH:mm": "jj MMMM aaaa, HH:mm",
     "dd/MM/yyyy HH:mm": "jj/MM/aaaa HH:mm",
-    "Definisci una cifra e, se vuoi, una data: DadaFinanza stimerà un ritmo sostenibile.":
-        "Définissez un chiffre et, si vous le souhaitez, une date : DadaFinanza estimera un rythme soutenable.",
+    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.":
+        "Définissez un chiffre et, si vous le souhaitez, une date : Balyn estimera un rythme soutenable.",
     "dei trasferimenti": "des transferts",
     "delle entrate": "de revenus",
     "delle spese": "des dépenses",
@@ -3407,8 +3407,8 @@ generatedTranslations = <String, Map<String, String>>{
         "Le CSV doit contenir au moins le type, le montant, la date et le compte.",
     "Il database ripristinato non supera il controllo integrità.":
         "La base de données restaurée échoue au contrôle d'intégrité.",
-    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → DadaFinanza.":
-        "Le lanceur ne prend pas en charge l'ajout automatique. Appuyez et maintenez sur Accueil → Widget → DadaFinanza.",
+    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.":
+        "Le lanceur ne prend pas en charge l'ajout automatique. Appuyez et maintenez sur Accueil → Widget → Balyn.",
     "Il microfono compila Nuovo movimento ma non salva mai automaticamente.":
         "Le microphone compile la nouvelle transaction mais ne l'enregistre jamais automatiquement.",
     "Il movimento ha una direzione incompatibile.":
@@ -3435,8 +3435,8 @@ generatedTranslations = <String, Map<String, String>>{
         "Le solde de votre compte sera recalculé automatiquement.",
     "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.":
         "Le système reconnaît les habitudes grâce à des statistiques locales et des règles explicables. Il n'utilise ni l'IA ni le cloud.",
-    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server DadaFinanza.":
-        "Le texte reconnu est interprété localement par un analyseur déterministe. Il n'est pas envoyé au serveur DadaFinanza.",
+    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.":
+        "Le texte reconnu est interprété localement par un analyseur déterministe. Il n'est pas envoyé au serveur Balyn.",
     "Il trasferimento deve arrivare al conto collegato all’obiettivo.":
         "Le virement doit arriver sur le compte lié à l'objectif.",
     "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.":
@@ -3636,7 +3636,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Aucune avance compatible avec cette transaction.",
     "Nessun anticipo con questa persona.": "Aucune avance avec cette personne.",
     "Nessun anticipo registrato.": "Aucune avance enregistrée.",
-    "Nessun assistente cloud DadaFinanza": "Pas d'assistant cloud DadaFinanza",
+    "Nessun assistente cloud Balyn": "Pas d'assistant cloud Balyn",
     "Nessun budget": "Pas de budget",
     "Nessun budget attivo": "Aucun budget actif",
     "Nessun confronto": "Aucune comparaison",
@@ -3757,8 +3757,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Password": "Mots de passe",
     "Password backup": "Sauvegarde du mot de passe",
     "Password opzionale": "Mot de passe facultatif",
-    "password, il file non è cifrato da DadaFinanza.":
-        "mot de passe, le fichier n'est pas crypté par DadaFinanza.",
+    "password, il file non è cifrato da Balyn.":
+        "mot de passe, le fichier n'est pas crypté par Balyn.",
     "Patrimonio corrente": "Actifs courants",
     "Patrimonio incluso nel totale": "Patrimoine inclus dans le total",
     "Patrimonio netto": "Valeur nette",
@@ -3980,15 +3980,15 @@ generatedTranslations = <String, Map<String, String>>{
     "Saldo reale": "Solde réel",
     "Saldo stimato tra 30 giorni: ••••": "Solde estimé à 30 jours : ••••",
     "Saldo totale": "Solde total",
-    "Saldo totale compatto con accesso rapido a DadaFinanza":
-        "Solde total compact avec accès rapide à DadaFinanza",
+    "Saldo totale compatto con accesso rapido a Balyn":
+        "Solde total compact avec accès rapide à Balyn",
     "Saldo, Quick Capture, importi rapidi e riepilogo configurabili":
         "Solde configurable, capture rapide, montants rapides et résumé",
     "Salute": "Santé",
     "Salute e persona": "Santé et personne",
     "Salva": "Enregistrer",
     "Salva anticipo": "Enregistrer l'avance",
-    "Salva backup DadaFinanza": "Enregistrer la sauvegarde de DadaFinanza",
+    "Salva backup Balyn": "Enregistrer la sauvegarde de Balyn",
     "Salva divisione": "Enregistrer la division",
     "Salva modifiche": "Enregistrer les modifications",
     "Salva PIN": "Enregistrer le code PIN",
@@ -4000,8 +4000,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Salva widget": "Enregistrer le widget",
     "Sblocca": "Déverrouiller",
     "Sblocca conto": "Débloquer le compte",
-    "Sblocca DadaFinanza per vedere i tuoi dati finanziari":
-        "Débloquez DadaFinanza pour voir vos données financières",
+    "Sblocca Balyn per vedere i tuoi dati finanziari":
+        "Débloquez Balyn pour voir vos données financières",
     "Scadenza": "Expiration",
     "Scadenza domani": "À rendre demain",
     "Scadenze": "Délais",
@@ -4115,8 +4115,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "Suggestions automatiques",
     "Suggerimenti obiettivi": "Suggestions objectives",
     "Supermercato": "Supermarché",
-    "Sviluppatore: DDone. Per richieste relative a privacy o supporto ":
-        "Développeur : DDone. Pour les demandes de confidentialité ou d’assistance",
+    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
+        "Développeur : Andrea Dada. Pour les demandes de confidentialité ou d’assistance",
     "Tag": "Balises",
     "Tasse": "Impôts",
     "Taxi": "Taxis",
@@ -4204,8 +4204,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Usate per promemoria e avvisi locali configurati da te. ":
         "Utilisé pour les rappels et alertes locales que vous configurez.",
     "Usato 1 volta": "Utilisé 1 fois",
-    "Usato solo per l’inserimento vocale. Il parser DadaFinanza è ":
-        "Utilisé uniquement pour la saisie vocale. L'analyseur DadaFinanza est",
+    "Usato solo per l’inserimento vocale. Il parser Balyn è ":
+        "Utilisé uniquement pour la saisie vocale. L'analyseur Balyn est",
     "Uso quotidiano": "Utilisation quotidienne",
     "Utenze e casa": "Utilitaires et maison",
     "Valuta principale": "Devise principale",
@@ -4343,14 +4343,14 @@ generatedTranslations = <String, Map<String, String>>{
     "Applicare allo storico?": "Beim Historiker bewerben?",
     "Apprendimento": "Lernen",
     "AppScope not found": "AppScope nicht gefunden",
-    "Apre DadaFinanza senza autenticazione.":
-        "Öffnet DadaFinanza ohne Authentifizierung.",
+    "Apre Balyn senza autenticazione.":
+        "Öffnet Balyn ohne Authentifizierung.",
     "Apri": "Offen",
     "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
         "Öffnen Sie Anzahlungen, um eine Rückerstattung zu erfassen oder Ihre Erinnerung zu aktualisieren.",
     "Apri conto": "Konto eröffnen",
-    "Apri il selettore widget del launcher e cerca DadaFinanza.":
-        "Öffnen Sie die Widget-Auswahl des Launchers und suchen Sie nach DadaFinanza.",
+    "Apri il selettore widget del launcher e cerca Balyn.":
+        "Öffnen Sie die Widget-Auswahl des Launchers und suchen Sie nach Balyn.",
     "Apri per vedere residuo e ritmo di spesa.":
         "Öffnen Sie, um die Rest- und Ausgabenrate anzuzeigen.",
     "Apri Storico": "Öffnen Sie den Verlauf",
@@ -4399,8 +4399,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Backup completo con allegati · import portabile":
         "Vollständige Sicherung mit Anhängen · Tragbarer Import",
     "Backup completo salvato.": "Vollständiges Backup gespeichert.",
-    "Backup DadaFinanza non riconosciuto.":
-        "DadaFinanza-Backup wird nicht erkannt.",
+    "Backup Balyn non riconosciuto.":
+        "Balyn-Backup wird nicht erkannt.",
     "Backup non trovato.": "Sicherung nicht gefunden.",
     "Backup ripristinato e verificato.":
         "Backup wiederhergestellt und überprüft.",
@@ -4540,7 +4540,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Bestätigt = Wiederholung konfiguriert. Erwartet = historisches Muster mit hohem Vertrauen. Geschätzte = Gesamtverhalten, kein bestimmtes Ereignis.",
     "Configura": "Konfigurieren",
     "Configura conto e categoria": "Konto und Kategorie konfigurieren",
-    "Configura DadaFinanza": "Konfigurieren Sie DadaFinanza",
+    "Configura Balyn": "Konfigurieren Sie Balyn",
     "Configura widget": "Widgets konfigurieren",
     "Configurate": "Konfigurieren",
     "Configurazione per istanza": "Konfiguration pro Instanz",
@@ -4629,22 +4629,22 @@ generatedTranslations = <String, Map<String, String>>{
     "Da restituire": "Zurückzugeben",
     "Da ricevere": "Zu empfangen",
     "Da saldare": "Zu bezahlen",
-    "DadaFinanza non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
-        "DadaFinanza sendet keine Transaktionen, Belege, Beschreibungen oder Muster an externe Dienste.",
-    "DadaFinanza non riceve né memorizza dati biometrici.":
-        "DadaFinanza empfängt oder speichert keine biometrischen Daten.",
-    "DadaFinanza non richiede un account e non integra pubblicità, ":
-        "DadaFinanza erfordert kein Konto und integriert keine Werbung,",
-    "DadaFinanza sulla Home": "DadaFinanza auf Home",
-    "DadaFinanza usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
-        "DadaFinanza nutzt lokale Planung und begrenzt Duplikate. Automatische Wiederholungen werden beim Öffnen der App weiterhin abgeglichen.",
-    "DadaFinanza · Importi rapidi": "DadaFinanza · Schnelle Beträge",
-    "DadaFinanza · Quick Capture": "DadaFinanza · Schnelle Erfassung",
-    "DadaFinanza · Riepilogo": "DadaFinanza · Zusammenfassung",
-    "DadaFinanza · Saldo": "DadaFinanza · Balance",
-    "DadaFinanza è bloccata": "DadaFinanza ist gesperrt",
-    "DadaFinanza è progettata local-first. Movimenti, conti, categorie, ":
-        "DadaFinanza ist lokal konzipiert. Transaktionen, Konten, Kategorien,",
+    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
+        "Balyn sendet keine Transaktionen, Belege, Beschreibungen oder Muster an externe Dienste.",
+    "Balyn non riceve né memorizza dati biometrici.":
+        "Balyn empfängt oder speichert keine biometrischen Daten.",
+    "Balyn non richiede un account e non integra pubblicità, ":
+        "Balyn erfordert kein Konto und integriert keine Werbung,",
+    "Balyn sulla Home": "Balyn auf Home",
+    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
+        "Balyn nutzt lokale Planung und begrenzt Duplikate. Automatische Wiederholungen werden beim Öffnen der App weiterhin abgeglichen.",
+    "Balyn · Importi rapidi": "Balyn · Schnelle Beträge",
+    "Balyn · Quick Capture": "Balyn · Schnelle Erfassung",
+    "Balyn · Riepilogo": "Balyn · Zusammenfassung",
+    "Balyn · Saldo": "Balyn · Balance",
+    "Balyn è bloccata": "Balyn ist gesperrt",
+    "Balyn è progettata local-first. Movimenti, conti, categorie, ":
+        "Balyn ist lokal konzipiert. Transaktionen, Konten, Kategorien,",
     "Dai un nome ai risparmi che vuoi costruire.":
         "Nennen Sie die Ersparnisse, die Sie aufbauen möchten.",
     "Dal": "Von",
@@ -4669,8 +4669,8 @@ generatedTranslations = <String, Map<String, String>>{
     "dd MMM yy": "TT MMM jj",
     "dd MMM yyyy": "tt MMM jjjj",
     "dd/MM/yyyy HH:mm": "TT/MM/JJJJ HH:mm",
-    "Definisci una cifra e, se vuoi, una data: DadaFinanza stimerà un ritmo sostenibile.":
-        "Definieren Sie eine Zahl und, wenn Sie möchten, ein Datum: DadaFinanza schätzt ein nachhaltiges Tempo ein.",
+    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.":
+        "Definieren Sie eine Zahl und, wenn Sie möchten, ein Datum: Balyn schätzt ein nachhaltiges Tempo ein.",
     "dei trasferimenti": "von Überweisungen",
     "delle entrate": "der Einnahmen",
     "delle spese": "der Ausgaben",
@@ -4834,8 +4834,8 @@ generatedTranslations = <String, Map<String, String>>{
         "Die CSV muss mindestens Typ, Betrag, Datum und Konto enthalten.",
     "Il database ripristinato non supera il controllo integrità.":
         "Die wiederhergestellte Datenbank besteht die Integritätsprüfung nicht.",
-    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → DadaFinanza.":
-        "Der Launcher unterstützt kein automatisches Hinzufügen. Halten Sie Home → Widget → DadaFinanza gedrückt.",
+    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.":
+        "Der Launcher unterstützt kein automatisches Hinzufügen. Halten Sie Home → Widget → Balyn gedrückt.",
     "Il microfono compila Nuovo movimento ma non salva mai automaticamente.":
         "Das Mikrofon erstellt eine neue Transaktion, speichert sie jedoch nie automatisch.",
     "Il movimento ha una direzione incompatibile.":
@@ -4862,8 +4862,8 @@ generatedTranslations = <String, Map<String, String>>{
         "Ihr Kontostand wird automatisch neu berechnet.",
     "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.":
         "Das System erkennt Gewohnheiten mit lokalen Statistiken und erklärbaren Regeln. Es verwendet keine KI oder Cloud.",
-    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server DadaFinanza.":
-        "Der erkannte Text wird lokal von einem deterministischen Parser interpretiert. Es wird nicht an den DadaFinanza-Server gesendet.",
+    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.":
+        "Der erkannte Text wird lokal von einem deterministischen Parser interpretiert. Es wird nicht an den Balyn-Server gesendet.",
     "Il trasferimento deve arrivare al conto collegato all’obiettivo.":
         "Die Überweisung muss auf dem mit dem Ziel verknüpften Konto eingehen.",
     "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.":
@@ -5066,7 +5066,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Mit dieser Transaktion ist kein Vorschuss vereinbar.",
     "Nessun anticipo con questa persona.": "Kein Vorschuss mit dieser Person.",
     "Nessun anticipo registrato.": "Kein Vorschuss verzeichnet.",
-    "Nessun assistente cloud DadaFinanza": "Kein DadaFinanza-Cloud-Assistent",
+    "Nessun assistente cloud Balyn": "Kein Balyn-Cloud-Assistent",
     "Nessun budget": "Kein Budget",
     "Nessun budget attivo": "Kein aktives Budget",
     "Nessun confronto": "Kein Vergleich",
@@ -5189,8 +5189,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Password": "Passwörter",
     "Password backup": "Passwortsicherung",
     "Password opzionale": "Passwort optional",
-    "password, il file non è cifrato da DadaFinanza.":
-        "Passwort, die Datei wird von DadaFinanza nicht verschlüsselt.",
+    "password, il file non è cifrato da Balyn.":
+        "Passwort, die Datei wird von Balyn nicht verschlüsselt.",
     "Patrimonio corrente": "Umlaufvermögen",
     "Patrimonio incluso nel totale": "Kulturerbe im Gesamtpreis enthalten",
     "Patrimonio netto": "Nettovermögen",
@@ -5412,15 +5412,15 @@ generatedTranslations = <String, Map<String, String>>{
     "Saldo reale": "Echtes Gleichgewicht",
     "Saldo stimato tra 30 giorni: ••••": "Geschätzter Saldo in 30 Tagen: ••••",
     "Saldo totale": "Gesamtbilanz",
-    "Saldo totale compatto con accesso rapido a DadaFinanza":
-        "Kompakter Gesamtsaldo mit schnellem Zugriff auf DadaFinanza",
+    "Saldo totale compatto con accesso rapido a Balyn":
+        "Kompakter Gesamtsaldo mit schnellem Zugriff auf Balyn",
     "Saldo, Quick Capture, importi rapidi e riepilogo configurabili":
         "Konfigurierbarer Kontostand, Schnellerfassung, Schnellbeträge und Zusammenfassung",
     "Salute": "Gesundheit",
     "Salute e persona": "Gesundheit und Mensch",
     "Salva": "Speichern",
     "Salva anticipo": "Vorab sparen",
-    "Salva backup DadaFinanza": "Speichern Sie das DadaFinanza-Backup",
+    "Salva backup Balyn": "Speichern Sie das Balyn-Backup",
     "Salva divisione": "Abteilung speichern",
     "Salva modifiche": "Änderungen speichern",
     "Salva PIN": "PIN speichern",
@@ -5432,8 +5432,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Salva widget": "Widget speichern",
     "Sblocca": "Entsperren",
     "Sblocca conto": "Konto entsperren",
-    "Sblocca DadaFinanza per vedere i tuoi dati finanziari":
-        "Schalten Sie DadaFinanza frei, um Ihre Finanzdaten anzuzeigen",
+    "Sblocca Balyn per vedere i tuoi dati finanziari":
+        "Schalten Sie Balyn frei, um Ihre Finanzdaten anzuzeigen",
     "Scadenza": "Ablauf",
     "Scadenza domani": "Fällig morgen",
     "Scadenze": "Fristen",
@@ -5545,8 +5545,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "Automatische Vorschläge",
     "Suggerimenti obiettivi": "Objektive Vorschläge",
     "Supermercato": "Supermarkt",
-    "Sviluppatore: DDone. Per richieste relative a privacy o supporto ":
-        "Entwickler: DDone. Für Datenschutz- oder Supportanfragen",
+    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
+        "Entwickler: Andrea Dada. Für Datenschutz- oder Supportanfragen",
     "Tag": "Schlagworte",
     "Tasse": "Steuern",
     "Taxi": "Taxis",
@@ -5634,8 +5634,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Usate per promemoria e avvisi locali configurati da te. ":
         "Wird für lokale Erinnerungen und Warnungen verwendet, die Sie einrichten.",
     "Usato 1 volta": "1 Mal verwendet",
-    "Usato solo per l’inserimento vocale. Il parser DadaFinanza è ":
-        "Wird nur für die Spracheingabe verwendet. Der DadaFinanza-Parser ist",
+    "Usato solo per l’inserimento vocale. Il parser Balyn è ":
+        "Wird nur für die Spracheingabe verwendet. Der Balyn-Parser ist",
     "Uso quotidiano": "Täglicher Gebrauch",
     "Utenze e casa": "Versorgungsunternehmen und Zuhause",
     "Valuta principale": "Primärwährung",
@@ -5775,14 +5775,14 @@ generatedTranslations = <String, Map<String, String>>{
     "Applicare allo storico?": "Aplicar ao historiador?",
     "Apprendimento": "Aprendizagem",
     "AppScope not found": "AppScope não encontrado",
-    "Apre DadaFinanza senza autenticazione.":
-        "Abre DadaFinanza sem autenticação.",
+    "Apre Balyn senza autenticazione.":
+        "Abre Balyn sem autenticação.",
     "Apri": "Abrir",
     "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
         "Abra Adiantamentos para registrar um reembolso ou atualizar seu lembrete.",
     "Apri conto": "Abrir conta",
-    "Apri il selettore widget del launcher e cerca DadaFinanza.":
-        "Abra o seletor de widget do iniciador e pesquise DadaFinanza.",
+    "Apri il selettore widget del launcher e cerca Balyn.":
+        "Abra o seletor de widget do iniciador e pesquise Balyn.",
     "Apri per vedere residuo e ritmo di spesa.":
         "Abra para ver a taxa residual e de gastos.",
     "Apri Storico": "Abrir histórico",
@@ -5830,8 +5830,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Backup completo con allegati · import portabile":
         "Backup completo com anexos · importação portátil",
     "Backup completo salvato.": "Backup completo salvo.",
-    "Backup DadaFinanza non riconosciuto.":
-        "Backup do DadaFinanza não reconhecido.",
+    "Backup Balyn non riconosciuto.":
+        "Backup do Balyn não reconhecido.",
     "Backup non trovato.": "Backup não encontrado.",
     "Backup ripristinato e verificato.": "Backup restaurado e verificado.",
     "Backup, CSV e allegati vengono esportati solo quando avvii ":
@@ -5962,7 +5962,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Confirmado = recorrência configurada. Esperado = padrão histórico de alta confiança. Estimado = comportamento agregado, não um determinado evento.",
     "Configura": "Configurar",
     "Configura conto e categoria": "Configurar conta e categoria",
-    "Configura DadaFinanza": "Configurar o DadaFinanza",
+    "Configura Balyn": "Configurar o Balyn",
     "Configura widget": "Configurar widgets",
     "Configurate": "Configurar",
     "Configurazione per istanza": "Configuração por instância",
@@ -6050,21 +6050,21 @@ generatedTranslations = <String, Map<String, String>>{
     "Da restituire": "Para ser devolvido",
     "Da ricevere": "Para ser recebido",
     "Da saldare": "A ser pago",
-    "DadaFinanza non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
-        "DadaFinanza não envia transações, recibos, descrições ou padrões para serviços externos.",
-    "DadaFinanza non riceve né memorizza dati biometrici.":
-        "DadaFinanza não recebe nem armazena dados biométricos.",
-    "DadaFinanza non richiede un account e non integra pubblicità, ":
-        "DadaFinanza não requer conta e não integra publicidade,",
-    "DadaFinanza sulla Home": "DadaFinanza em casa",
-    "DadaFinanza usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
-        "DadaFinanza usa agendamento local e limita duplicatas. As recorrências automáticas ainda são reconciliadas quando o aplicativo é aberto.",
-    "DadaFinanza · Importi rapidi": "DadaFinanza · Montantes rápidos",
-    "DadaFinanza · Quick Capture": "DadaFinanza · Captura Rápida",
-    "DadaFinanza · Riepilogo": "DadaFinanza · Resumo",
-    "DadaFinanza è bloccata": "DadaFinanza está bloqueado",
-    "DadaFinanza è progettata local-first. Movimenti, conti, categorie, ":
-        "DadaFinanza foi projetado primeiro no local. transações, contas, categorias,",
+    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
+        "Balyn não envia transações, recibos, descrições ou padrões para serviços externos.",
+    "Balyn non riceve né memorizza dati biometrici.":
+        "Balyn não recebe nem armazena dados biométricos.",
+    "Balyn non richiede un account e non integra pubblicità, ":
+        "Balyn não requer conta e não integra publicidade,",
+    "Balyn sulla Home": "Balyn em casa",
+    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
+        "Balyn usa agendamento local e limita duplicatas. As recorrências automáticas ainda são reconciliadas quando o aplicativo é aberto.",
+    "Balyn · Importi rapidi": "Balyn · Montantes rápidos",
+    "Balyn · Quick Capture": "Balyn · Captura Rápida",
+    "Balyn · Riepilogo": "Balyn · Resumo",
+    "Balyn è bloccata": "Balyn está bloqueado",
+    "Balyn è progettata local-first. Movimenti, conti, categorie, ":
+        "Balyn foi projetado primeiro no local. transações, contas, categorias,",
     "Dai un nome ai risparmi che vuoi costruire.":
         "Nomeie as economias que você deseja construir.",
     "Dal": "De",
@@ -6089,8 +6089,8 @@ generatedTranslations = <String, Map<String, String>>{
     "dd MMM yyyy": "dd MMM aaaa",
     "dd MMMM yyyy, HH:mm": "dd MMMM aaaa, HH:mm",
     "dd/MM/yyyy HH:mm": "dd/MM/aaaa HH:mm",
-    "Definisci una cifra e, se vuoi, una data: DadaFinanza stimerà un ritmo sostenibile.":
-        "Defina um valor e, se quiser, uma data: o DadaFinanza estimará um ritmo sustentável.",
+    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.":
+        "Defina um valor e, se quiser, uma data: o Balyn estimará um ritmo sustentável.",
     "dei trasferimenti": "de transferências",
     "delle entrate": "de receita",
     "delle spese": "de despesas",
@@ -6251,8 +6251,8 @@ generatedTranslations = <String, Map<String, String>>{
         "O CSV deve conter pelo menos tipo, valor, data e conta.",
     "Il database ripristinato non supera il controllo integrità.":
         "O banco de dados restaurado falha na verificação de integridade.",
-    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → DadaFinanza.":
-        "O iniciador não suporta adição automática. Pressione e segure Home → Widget → DadaFinanza.",
+    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.":
+        "O iniciador não suporta adição automática. Pressione e segure Home → Widget → Balyn.",
     "Il microfono compila Nuovo movimento ma non salva mai automaticamente.":
         "O microfone compila a nova transação, mas nunca salva automaticamente.",
     "Il movimento ha una direzione incompatibile.":
@@ -6279,8 +6279,8 @@ generatedTranslations = <String, Map<String, String>>{
         "O saldo da sua conta será recalculado automaticamente.",
     "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.":
         "O sistema reconhece hábitos com estatísticas locais e regras explicáveis. Não usa IA ou nuvem.",
-    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server DadaFinanza.":
-        "O texto reconhecido é interpretado localmente por um analisador determinístico. Não é enviado para o servidor DadaFinanza.",
+    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.":
+        "O texto reconhecido é interpretado localmente por um analisador determinístico. Não é enviado para o servidor Balyn.",
     "Il trasferimento deve arrivare al conto collegato all’obiettivo.":
         "A transferência deverá chegar na conta vinculada ao gol.",
     "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.":
@@ -6475,8 +6475,8 @@ generatedTranslations = <String, Map<String, String>>{
         "Não há adiantamento compatível com esta transação.",
     "Nessun anticipo con questa persona.": "Nenhum avanço com essa pessoa.",
     "Nessun anticipo registrato.": "Nenhum adiantamento registrado.",
-    "Nessun assistente cloud DadaFinanza":
-        "Nenhum assistente de nuvem DadaFinanza",
+    "Nessun assistente cloud Balyn":
+        "Nenhum assistente de nuvem Balyn",
     "Nessun budget": "Sem orçamento",
     "Nessun budget attivo": "Nenhum orçamento ativo",
     "Nessun confronto": "Sem comparação",
@@ -6595,8 +6595,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Password": "Senhas",
     "Password backup": "Backup de senha",
     "Password opzionale": "Senha opcional",
-    "password, il file non è cifrato da DadaFinanza.":
-        "senha, o arquivo não é criptografado pelo DadaFinanza.",
+    "password, il file non è cifrato da Balyn.":
+        "senha, o arquivo não é criptografado pelo Balyn.",
     "Patrimonio corrente": "Ativos circulantes",
     "Patrimonio incluso nel totale": "Patrimônio incluído no total",
     "Patrimonio netto": "Patrimônio líquido",
@@ -6817,15 +6817,15 @@ generatedTranslations = <String, Map<String, String>>{
     "Saldo reale": "Equilíbrio real",
     "Saldo stimato tra 30 giorni: ••••": "Saldo estimado em 30 dias: ••••",
     "Saldo totale": "Saldo total",
-    "Saldo totale compatto con accesso rapido a DadaFinanza":
-        "Saldo total compacto com acesso rápido ao DadaFinanza",
+    "Saldo totale compatto con accesso rapido a Balyn":
+        "Saldo total compacto com acesso rápido ao Balyn",
     "Saldo, Quick Capture, importi rapidi e riepilogo configurabili":
         "Saldo Configurável, Captura Rápida, Valores Rápidos e Resumo",
     "Salute": "Saúde",
     "Salute e persona": "Saúde e pessoa",
     "Salva": "Salvar",
     "Salva anticipo": "Economize antecipadamente",
-    "Salva backup DadaFinanza": "Salvar backup do DadaFinanza",
+    "Salva backup Balyn": "Salvar backup do Balyn",
     "Salva divisione": "Salvar divisão",
     "Salva modifiche": "Salvar alterações",
     "Salva PIN": "Salvar PIN",
@@ -6837,8 +6837,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Salva widget": "Salvar widget",
     "Sblocca": "Desbloquear",
     "Sblocca conto": "Desbloquear conta",
-    "Sblocca DadaFinanza per vedere i tuoi dati finanziari":
-        "Desbloqueie o DadaFinanza para ver seus dados financeiros",
+    "Sblocca Balyn per vedere i tuoi dati finanziari":
+        "Desbloqueie o Balyn para ver seus dados financeiros",
     "Scadenza": "Expiração",
     "Scadenza domani": "Vencimento amanhã",
     "Scadenze": "Prazos",
@@ -6951,8 +6951,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "Sugestões automáticas",
     "Suggerimenti obiettivi": "Sugestões objetivas",
     "Supermercato": "Supermercado",
-    "Sviluppatore: DDone. Per richieste relative a privacy o supporto ":
-        "Desenvolvedor: DDone. Para solicitações de privacidade ou suporte",
+    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
+        "Desenvolvedor: Andrea Dada. Para solicitações de privacidade ou suporte",
     "Tag": "Etiquetas",
     "Tasse": "Impostos",
     "Taxi": "Táxis",
@@ -7038,8 +7038,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Usate per promemoria e avvisi locali configurati da te. ":
         "Usado para lembretes e alertas locais que você configurou.",
     "Usato 1 volta": "Usado 1 vez",
-    "Usato solo per l’inserimento vocale. Il parser DadaFinanza è ":
-        "Usado apenas para entrada de voz. O analisador DadaFinanza é",
+    "Usato solo per l’inserimento vocale. Il parser Balyn è ":
+        "Usado apenas para entrada de voz. O analisador Balyn é",
     "Uso quotidiano": "Uso diário",
     "Utenze e casa": "Utilitários e casa",
     "Valuta principale": "Moeda primária",
@@ -7182,14 +7182,14 @@ generatedTranslations = <String, Map<String, String>>{
     "Applicare allo storico?": "Обратиться к историку?",
     "Apprendimento": "Обучение",
     "AppScope not found": "AppScope не найден",
-    "Apre DadaFinanza senza autenticazione.":
-        "Открывает DadaFinanza без аутентификации.",
+    "Apre Balyn senza autenticazione.":
+        "Открывает Balyn без аутентификации.",
     "Apri": "Открыть",
     "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
         "Откройте «Авансовые платежи», чтобы записать возврат средств или обновить напоминание.",
     "Apri conto": "Открыть счет",
-    "Apri il selettore widget del launcher e cerca DadaFinanza.":
-        "Откройте селектор виджетов запуска и найдите DadaFinanza.",
+    "Apri il selettore widget del launcher e cerca Balyn.":
+        "Откройте селектор виджетов запуска и найдите Balyn.",
     "Apri per vedere residuo e ritmo di spesa.":
         "Откройте, чтобы увидеть остаток и уровень расходов.",
     "Apri Storico": "Открыть историю",
@@ -7239,8 +7239,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Backup completo con allegati · import portabile":
         "Полная резервная копия с вложениями · переносимый импорт",
     "Backup completo salvato.": "Полная резервная копия сохранена.",
-    "Backup DadaFinanza non riconosciuto.":
-        "Резервная копия DadaFinanza не распознана.",
+    "Backup Balyn non riconosciuto.":
+        "Резервная копия Balyn не распознана.",
     "Backup non trovato.": "Резервная копия не найдена.",
     "Backup ripristinato e verificato.":
         "Резервная копия восстановлена и проверена.",
@@ -7377,7 +7377,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Подтверждено = повторение настроено. Ожидаемый = историческая закономерность с высокой степенью достоверности. Предполагаемое = совокупное поведение, а не определенное событие.",
     "Configura": "Настроить",
     "Configura conto e categoria": "Настройте учетную запись и категорию",
-    "Configura DadaFinanza": "Настроить ДадаФинанса",
+    "Configura Balyn": "Настроить ДадаФинанса",
     "Configura widget": "Настройка виджетов",
     "Configurate": "Настроить",
     "Configurazione per istanza": "Конфигурация для каждого экземпляра",
@@ -7470,26 +7470,26 @@ generatedTranslations = <String, Map<String, String>>{
     "Da saldare": "Платить",
     "DadaBalanceWidgetProvider": "ДадаБалансВиджетПровайдер",
     "DadaFinanceWidgetProvider": "ДадаФинансВиджетПровайдер",
-    "DadaFinanza": "ДадаФинанса",
-    "DadaFinanza non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
-        "DadaFinanza не отправляет транзакции, квитанции, описания или шаблоны во внешние службы.",
-    "DadaFinanza non riceve né memorizza dati biometrici.":
-        "DadaFinanza не получает и не хранит биометрические данные.",
-    "DadaFinanza non richiede un account e non integra pubblicità, ":
-        "DadaFinanza не требует учетной записи и не интегрирует рекламу.",
-    "DadaFinanza sulla Home": "DadaFinanza на дому",
-    "DadaFinanza usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
-        "DadaFinanza использует локальное планирование и ограничивает дублирование. Автоматические повторения по-прежнему согласовываются при открытии приложения.",
-    "DadaFinanza · Importi rapidi": "DadaFinanza · Быстрые суммы",
-    "DadaFinanza · Quick Capture": "DadaFinanza · Быстрый захват",
-    "DadaFinanza · Rapido": "ДадаФинанса · Рапидо",
-    "DadaFinanza · Riepilogo": "ДадаФинанса · Резюме",
-    "DadaFinanza · Saldo": "ДадаФинанса · Баланс",
-    "DadaFinanza è bloccata": "ДадаФинанса заблокирована",
-    "DadaFinanza è progettata local-first. Movimenti, conti, categorie, ":
-        "DadaFinanza ориентирована прежде всего на местное население. транзакции, счета, категории,",
-    "DadaFinanza.": "ДадаФинанса.",
-    "DadaFinanzaBackup": "DadaFinanzaРезервное копирование",
+    "Balyn": "ДадаФинанса",
+    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
+        "Balyn не отправляет транзакции, квитанции, описания или шаблоны во внешние службы.",
+    "Balyn non riceve né memorizza dati biometrici.":
+        "Balyn не получает и не хранит биометрические данные.",
+    "Balyn non richiede un account e non integra pubblicità, ":
+        "Balyn не требует учетной записи и не интегрирует рекламу.",
+    "Balyn sulla Home": "Balyn на дому",
+    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
+        "Balyn использует локальное планирование и ограничивает дублирование. Автоматические повторения по-прежнему согласовываются при открытии приложения.",
+    "Balyn · Importi rapidi": "Balyn · Быстрые суммы",
+    "Balyn · Quick Capture": "Balyn · Быстрый захват",
+    "Balyn · Rapido": "ДадаФинанса · Рапидо",
+    "Balyn · Riepilogo": "ДадаФинанса · Резюме",
+    "Balyn · Saldo": "ДадаФинанса · Баланс",
+    "Balyn è bloccata": "ДадаФинанса заблокирована",
+    "Balyn è progettata local-first. Movimenti, conti, categorie, ":
+        "Balyn ориентирована прежде всего на местное население. транзакции, счета, категории,",
+    "Balyn.": "ДадаФинанса.",
+    "BalynBackup": "BalynРезервное копирование",
     "DadaQuickAddWidgetProvider": "ДадаQuickAddWidgetProvider",
     "Dai un nome ai risparmi che vuoi costruire.":
         "Назовите сбережения, которые вы хотите накопить.",
@@ -7519,8 +7519,8 @@ generatedTranslations = <String, Map<String, String>>{
     "dd MMM, HH:mm": "дд МММ, ЧЧ:мм",
     "dd MMMM yyyy, HH:mm": "дд ММММ гггг, ЧЧ:мм",
     "dd/MM/yyyy HH:mm": "дд/ММ/гггг ЧЧ:мм",
-    "Definisci una cifra e, se vuoi, una data: DadaFinanza stimerà un ritmo sostenibile.":
-        "Определите цифру и, если хотите, дату: DadaFinanza оценит устойчивые темпы.",
+    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.":
+        "Определите цифру и, если хотите, дату: Balyn оценит устойчивые темпы.",
     "dei trasferimenti": "трансферов",
     "delle entrate": "доходов",
     "delle spese": "расходов",
@@ -7689,8 +7689,8 @@ generatedTranslations = <String, Map<String, String>>{
         "CSV-файл должен содержать как минимум тип, сумму, дату и счет.",
     "Il database ripristinato non supera il controllo integrità.":
         "Восстановленная база данных не проходит проверку целостности.",
-    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → DadaFinanza.":
-        "Лаунчер не поддерживает автоматическое добавление. Нажмите и удерживайте Главная → Виджет → DadaFinanza.",
+    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.":
+        "Лаунчер не поддерживает автоматическое добавление. Нажмите и удерживайте Главная → Виджет → Balyn.",
     "Il microfono compila Nuovo movimento ma non salva mai automaticamente.":
         "Микрофон компилирует новую транзакцию, но никогда не сохраняет ее автоматически.",
     "Il movimento ha una direzione incompatibile.":
@@ -7717,8 +7717,8 @@ generatedTranslations = <String, Map<String, String>>{
         "Баланс вашего счета будет пересчитан автоматически.",
     "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.":
         "Система распознает привычки с помощью местной статистики и объяснимых правил. Он не использует искусственный интеллект или облако.",
-    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server DadaFinanza.":
-        "Распознанный текст интерпретируется локально детерминированным анализатором. Он не отправляется на сервер DadaFinanza.",
+    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.":
+        "Распознанный текст интерпретируется локально детерминированным анализатором. Он не отправляется на сервер Balyn.",
     "Il trasferimento deve arrivare al conto collegato all’obiettivo.":
         "Перевод должен поступить на счет, привязанный к цели.",
     "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.":
@@ -7919,8 +7919,8 @@ generatedTranslations = <String, Map<String, String>>{
         "Никакой аванс, совместимый с этой транзакцией.",
     "Nessun anticipo con questa persona.": "Никакого аванса с этим человеком.",
     "Nessun anticipo registrato.": "Предоплата не записана.",
-    "Nessun assistente cloud DadaFinanza":
-        "Нет облачного помощника DadaFinanza",
+    "Nessun assistente cloud Balyn":
+        "Нет облачного помощника Balyn",
     "Nessun budget": "Нет бюджета",
     "Nessun budget attivo": "Нет активного бюджета",
     "Nessun confronto": "Нет сравнения",
@@ -8043,8 +8043,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Password": "Пароли",
     "Password backup": "Резервное копирование пароля",
     "Password opzionale": "Пароль необязателен",
-    "password, il file non è cifrato da DadaFinanza.":
-        "пароль, файл не зашифрован DadaFinanza.",
+    "password, il file non è cifrato da Balyn.":
+        "пароль, файл не зашифрован Balyn.",
     "Patrimonio corrente": "Оборотные активы",
     "Patrimonio incluso nel totale": "Наследие включено в общую сумму",
     "Patrimonio netto": "Чистая стоимость",
@@ -8267,15 +8267,15 @@ generatedTranslations = <String, Map<String, String>>{
     "Saldo stimato tra 30 giorni: ••••":
         "Предполагаемый баланс через 30 дней: ••••",
     "Saldo totale": "Общий баланс",
-    "Saldo totale compatto con accesso rapido a DadaFinanza":
-        "Компактный общий баланс с быстрым доступом к DadaFinanza",
+    "Saldo totale compatto con accesso rapido a Balyn":
+        "Компактный общий баланс с быстрым доступом к Balyn",
     "Saldo, Quick Capture, importi rapidi e riepilogo configurabili":
         "Настраиваемый баланс, быстрый захват, быстрые суммы и сводка",
     "Salute": "Здоровье",
     "Salute e persona": "Здоровье и человек",
     "Salva": "Сохранить",
     "Salva anticipo": "Сохранить заранее",
-    "Salva backup DadaFinanza": "Сохранить резервную копию DadaFinanza",
+    "Salva backup Balyn": "Сохранить резервную копию Balyn",
     "Salva divisione": "Сохранить подразделение",
     "Salva modifiche": "Сохранить изменения",
     "Salva PIN": "Сохранить PIN-код",
@@ -8287,8 +8287,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Salva widget": "Сохранить виджет",
     "Sblocca": "Разблокировать",
     "Sblocca conto": "Разблокировать аккаунт",
-    "Sblocca DadaFinanza per vedere i tuoi dati finanziari":
-        "Разблокируйте DadaFinanza, чтобы увидеть свои финансовые данные",
+    "Sblocca Balyn per vedere i tuoi dati finanziari":
+        "Разблокируйте Balyn, чтобы увидеть свои финансовые данные",
     "Scadenza": "Срок действия",
     "Scadenza domani": "Срок завтра",
     "Scadenze": "Сроки",
@@ -8403,8 +8403,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "Автоматические предложения",
     "Suggerimenti obiettivi": "Объективные предложения",
     "Supermercato": "Супермаркет",
-    "Sviluppatore: DDone. Per richieste relative a privacy o supporto ":
-        "Разработчик: DDone. Для запросов на конфиденциальность или поддержку",
+    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
+        "Разработчик: Andrea Dada. Для запросов на конфиденциальность или поддержку",
     "Tag": "Теги",
     "Tasse": "Налоги",
     "Taxi": "Такси",
@@ -8492,8 +8492,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Usate per promemoria e avvisi locali configurati da te. ":
         "Используется для локальных напоминаний и оповещений, которые вы настроили.",
     "Usato 1 volta": "Использовалось 1 раз",
-    "Usato solo per l’inserimento vocale. Il parser DadaFinanza è ":
-        "Используется только для голосового ввода. Парсер DadaFinanza",
+    "Usato solo per l’inserimento vocale. Il parser Balyn è ":
+        "Используется только для голосового ввода. Парсер Balyn",
     "Uso quotidiano": "Ежедневное использование",
     "Utenze e casa": "Коммунальные услуги и дом",
     "Valuta principale": "Основная валюта",
@@ -8632,13 +8632,13 @@ generatedTranslations = <String, Map<String, String>>{
     "Applicare allo storico?": "申请历史学家？",
     "Apprendimento": "学习",
     "AppScope not found": "未找到 AppScope",
-    "Apre DadaFinanza senza autenticazione.": "无需身份验证即可打开 DadaFinanza。",
+    "Apre Balyn senza autenticazione.": "无需身份验证即可打开 Balyn。",
     "Apri": "打开",
     "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
         "打开预付款以记录退款或更新您的提醒。",
     "Apri conto": "开设账户",
-    "Apri il selettore widget del launcher e cerca DadaFinanza.":
-        "打开启动器小部件选择器并搜索 DadaFinanza。",
+    "Apri il selettore widget del launcher e cerca Balyn.":
+        "打开启动器小部件选择器并搜索 Balyn。",
     "Apri per vedere residuo e ritmo di spesa.": "打开可以看到剩余率和消费率。",
     "Apri Storico": "开放历史",
     "archived = 0": "已存档 = 0",
@@ -8683,7 +8683,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Backup completo": "完整备份",
     "Backup completo con allegati · import portabile": "带附件全备份·便携式导入",
     "Backup completo salvato.": "已保存完整备份。",
-    "Backup DadaFinanza non riconosciuto.": "DadaFinanza 备份无法识别。",
+    "Backup Balyn non riconosciuto.": "Balyn 备份无法识别。",
     "Backup non trovato.": "找不到备份。",
     "Backup ripristinato e verificato.": "备份已恢复并已验证。",
     "Backup, CSV e allegati vengono esportati solo quando avvii ":
@@ -8813,7 +8813,7 @@ generatedTranslations = <String, Map<String, String>>{
         "已确认 = 重复配置。预期 = 高可信度历史模式。估计 = 总体行为，而不是某个事件。",
     "Configura": "配置",
     "Configura conto e categoria": "配置帐户和类别",
-    "Configura DadaFinanza": "配置 DadaFinanza",
+    "Configura Balyn": "配置 Balyn",
     "Configura widget": "配置小部件",
     "Configurate": "配置",
     "Configurazione per istanza": "每个实例的配置",
@@ -8893,26 +8893,26 @@ generatedTranslations = <String, Map<String, String>>{
     "Da restituire": "待退回",
     "Da ricevere": "待收到",
     "Da saldare": "待付款",
-    "DadaFinanza": "达达财经",
-    "DadaFinanza non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
-        "DadaFinanza 不会向外部服务发送交易、收据、描述或模式。",
-    "DadaFinanza non riceve né memorizza dati biometrici.":
-        "DadaFinanza 不接收或存储生物识别数据。",
-    "DadaFinanza non richiede un account e non integra pubblicità, ":
-        "DadaFinanza 不需要账户，也不集成广告，",
-    "DadaFinanza sulla Home": "达达金融首页",
-    "DadaFinanza usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
-        "DadaFinanza 使用本地调度并限制重复。打开应用程序时，自动重复仍会进行协调。",
-    "DadaFinanza · Importi rapidi": "DadaFinanza · 快速金额",
-    "DadaFinanza · Quick Capture": "DadaFinanza · 快速捕捉",
-    "DadaFinanza · Rapido": "达达金融·拉皮多",
-    "DadaFinanza · Riepilogo": "达达财经 · 概要",
-    "DadaFinanza · Saldo": "达达财经 · 余额",
-    "DadaFinanza è bloccata": "DadaFinanza 被封锁",
-    "DadaFinanza è progettata local-first. Movimenti, conti, categorie, ":
-        "DadaFinanza 的设计以本地为先。交易、账户、类别、",
-    "DadaFinanza.": "达达金融。",
-    "DadaFinanzaBackup": "达达金融备份",
+    "Balyn": "达达财经",
+    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
+        "Balyn 不会向外部服务发送交易、收据、描述或模式。",
+    "Balyn non riceve né memorizza dati biometrici.":
+        "Balyn 不接收或存储生物识别数据。",
+    "Balyn non richiede un account e non integra pubblicità, ":
+        "Balyn 不需要账户，也不集成广告，",
+    "Balyn sulla Home": "达达金融首页",
+    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
+        "Balyn 使用本地调度并限制重复。打开应用程序时，自动重复仍会进行协调。",
+    "Balyn · Importi rapidi": "Balyn · 快速金额",
+    "Balyn · Quick Capture": "Balyn · 快速捕捉",
+    "Balyn · Rapido": "达达金融·拉皮多",
+    "Balyn · Riepilogo": "达达财经 · 概要",
+    "Balyn · Saldo": "达达财经 · 余额",
+    "Balyn è bloccata": "Balyn 被封锁",
+    "Balyn è progettata local-first. Movimenti, conti, categorie, ":
+        "Balyn 的设计以本地为先。交易、账户、类别、",
+    "Balyn.": "达达金融。",
+    "BalynBackup": "达达金融备份",
     "Dai un nome ai risparmi che vuoi costruire.": "说出您想要节省的费用。",
     "Dal": "来自",
     "Dashboard avanzata": "高级仪表板",
@@ -8937,8 +8937,8 @@ generatedTranslations = <String, Map<String, String>>{
     "dd MMM, HH:mm": "日 MMM，HH：mm",
     "dd MMMM yyyy, HH:mm": "日 MMMM 年，HH:mm",
     "dd/MM/yyyy HH:mm": "日/月/年 时:分",
-    "Definisci una cifra e, se vuoi, una data: DadaFinanza stimerà un ritmo sostenibile.":
-        "定义一个数字，如果需要，还可以定义一个日期：DadaFinanza 将估算可持续的速度。",
+    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.":
+        "定义一个数字，如果需要，还可以定义一个日期：Balyn 将估算可持续的速度。",
     "dei trasferimenti": "转会次数",
     "delle entrate": "的收入",
     "delle spese": "开支",
@@ -9089,8 +9089,8 @@ generatedTranslations = <String, Map<String, String>>{
         "CSV 必须至少包含类型、金额、日期和帐户。",
     "Il database ripristinato non supera il controllo integrità.":
         "恢复的数据库未通过完整性检查。",
-    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → DadaFinanza.":
-        "启动器不支持自动添加。按住主页 → 小部件 → DadaFinanza。",
+    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.":
+        "启动器不支持自动添加。按住主页 → 小部件 → Balyn。",
     "Il microfono compila Nuovo movimento ma non salva mai automaticamente.":
         "麦克风编译新交易但从不自动保存。",
     "Il movimento ha una direzione incompatibile.": "交易方向不兼容。",
@@ -9110,8 +9110,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Il saldo del conto verrà ricalcolato automaticamente.": "您的帐户余额将自动重新计算。",
     "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.":
         "该系统通过当地统计数据和可解释的规则来识别习惯。它不使用人工智能或云。",
-    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server DadaFinanza.":
-        "识别出的文本由确定性解析器在本地进行解释。它不会发送到 DadaFinanza 服务器。",
+    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.":
+        "识别出的文本由确定性解析器在本地进行解释。它不会发送到 Balyn 服务器。",
     "Il trasferimento deve arrivare al conto collegato all’obiettivo.":
         "转账必须到达与目标关联的帐户。",
     "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.":
@@ -9291,7 +9291,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Nessun anticipo compatibile con questo movimento.": "没有与此交易兼容的预付款。",
     "Nessun anticipo con questa persona.": "与此人没有任何进展。",
     "Nessun anticipo registrato.": "没有预付款记录。",
-    "Nessun assistente cloud DadaFinanza": "没有 DadaFinanza 云助手",
+    "Nessun assistente cloud Balyn": "没有 Balyn 云助手",
     "Nessun budget": "无预算",
     "Nessun budget attivo": "没有有效预算",
     "Nessun confronto": "没有比较",
@@ -9402,8 +9402,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Password": "密码",
     "Password backup": "密码备份",
     "Password opzionale": "密码可选",
-    "password, il file non è cifrato da DadaFinanza.":
-        "密码，该文件未由 DadaFinanza 加密。",
+    "password, il file non è cifrato da Balyn.":
+        "密码，该文件未由 Balyn 加密。",
     "Patrimonio corrente": "流动资产",
     "Patrimonio incluso nel totale": "遗产包含在总数中",
     "Patrimonio netto": "净资产",
@@ -9603,15 +9603,15 @@ generatedTranslations = <String, Map<String, String>>{
     "Saldo reale": "实际余额",
     "Saldo stimato tra 30 giorni: ••••": "30 天内预计余额：••••",
     "Saldo totale": "总余额",
-    "Saldo totale compatto con accesso rapido a DadaFinanza":
-        "紧凑的总余额，可快速访问 DadaFinanza",
+    "Saldo totale compatto con accesso rapido a Balyn":
+        "紧凑的总余额，可快速访问 Balyn",
     "Saldo, Quick Capture, importi rapidi e riepilogo configurabili":
         "可配置余额、快速捕获、快速金额和摘要",
     "Salute": "健康",
     "Salute e persona": "健康与人",
     "Salva": "保存",
     "Salva anticipo": "节省预付款",
-    "Salva backup DadaFinanza": "保存 DadaFinanza 备份",
+    "Salva backup Balyn": "保存 Balyn 备份",
     "Salva divisione": "保存师",
     "Salva modifiche": "保存更改",
     "Salva PIN": "保存密码",
@@ -9622,8 +9622,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Salva widget": "保存小部件",
     "Sblocca": "解锁",
     "Sblocca conto": "解锁账户",
-    "Sblocca DadaFinanza per vedere i tuoi dati finanziari":
-        "解锁 DadaFinanza 查看您的财务数据",
+    "Sblocca Balyn per vedere i tuoi dati finanziari":
+        "解锁 Balyn 查看您的财务数据",
     "Scadenza": "到期日",
     "Scadenza domani": "明天到期",
     "Scadenze": "截止日期",
@@ -9727,8 +9727,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "自动建议",
     "Suggerimenti obiettivi": "客观建议",
     "Supermercato": "超市",
-    "Sviluppatore: DDone. Per richieste relative a privacy o supporto ":
-        "开发商：DDone。对于隐私或支持请求",
+    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
+        "开发商：Andrea Dada。对于隐私或支持请求",
     "Tag": "标签",
     "Tasse": "税收",
     "Taxi": "出租车",
@@ -9805,8 +9805,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Usate per promemoria e avvisi locali configurati da te. ":
         "用于您设置的本地提醒和警报。",
     "Usato 1 volta": "使用过1次",
-    "Usato solo per l’inserimento vocale. Il parser DadaFinanza è ":
-        "仅用于语音输入。 DadaFinanza 解析器是",
+    "Usato solo per l’inserimento vocale. Il parser Balyn è ":
+        "仅用于语音输入。 Balyn 解析器是",
     "Uso quotidiano": "日常使用",
     "Utenze e casa": "公用事业和家庭",
     "Valuta principale": "主要货币",
@@ -9942,13 +9942,13 @@ generatedTranslations = <String, Map<String, String>>{
     "Applicare allo storico?": "歴史家に応募しますか？",
     "Apprendimento": "学習",
     "AppScope not found": "AppScopeが見つかりません",
-    "Apre DadaFinanza senza autenticazione.": "認証なしで DadaFinanza を開きます。",
+    "Apre Balyn senza autenticazione.": "認証なしで Balyn を開きます。",
     "Apri": "開く",
     "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
         "「頭金」を開いて払い戻しを記録するか、リマインダーを更新します。",
     "Apri conto": "口座開設",
-    "Apri il selettore widget del launcher e cerca DadaFinanza.":
-        "ランチャー ウィジェット セレクターを開き、DadaFinanza を検索します。",
+    "Apri il selettore widget del launcher e cerca Balyn.":
+        "ランチャー ウィジェット セレクターを開き、Balyn を検索します。",
     "Apri per vedere residuo e ritmo di spesa.": "開くと残存率と支出率が表示されます。",
     "Apri Storico": "履歴を開く",
     "archived = 0": "アーカイブ済み = 0",
@@ -9995,7 +9995,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Backup completo con allegati · import portabile":
         "添付ファイル付きの完全バックアップ・ポータブルインポート",
     "Backup completo salvato.": "完全なバックアップが保存されました。",
-    "Backup DadaFinanza non riconosciuto.": "DadaFinanza バックアップが認識されません。",
+    "Backup Balyn non riconosciuto.": "Balyn バックアップが認識されません。",
     "Backup non trovato.": "バックアップが見つかりません。",
     "Backup ripristinato e verificato.": "バックアップが復元され、検証されました。",
     "Backup, CSV e allegati vengono esportati solo quando avvii ":
@@ -10127,7 +10127,7 @@ generatedTranslations = <String, Map<String, String>>{
         "確認済み = 繰り返しが設定されています。予想される = 信頼性の高い過去のパターン。推定 = 集合的な動作であり、特定のイベントではありません。",
     "Configura": "設定する",
     "Configura conto e categoria": "アカウントとカテゴリを設定する",
-    "Configura DadaFinanza": "DadaFinanza の構成",
+    "Configura Balyn": "Balyn の構成",
     "Configura widget": "ウィジェットを構成する",
     "Configurate": "設定する",
     "Configurazione per istanza": "インスタンスごとの構成",
@@ -10208,26 +10208,26 @@ generatedTranslations = <String, Map<String, String>>{
     "Da ricevere": "受け取り予定",
     "Da saldare": "支払われるべきもの",
     "DadaFinanceWidgetProvider": "Dadaファイナンスウィジェットプロバイダー",
-    "DadaFinanza": "ダダフィナンザ",
-    "DadaFinanza non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
-        "DadaFinanza は、トランザクション、領収書、説明、またはパターンを外部サービスに送信しません。",
-    "DadaFinanza non riceve né memorizza dati biometrici.":
-        "DadaFinanza は生体認証データを受信または保存しません。",
-    "DadaFinanza non richiede un account e non integra pubblicità, ":
-        "DadaFinanza はアカウントを必要とせず、広告も統合しません。",
-    "DadaFinanza sulla Home": "DadaFinanza オン ホーム",
-    "DadaFinanza usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
-        "DadaFinanza はローカル スケジューリングを使用し、重複を制限します。自動繰り返しは、アプリを開いたときに引き続き調整されます。",
-    "DadaFinanza · Importi rapidi": "DadaFinanza · クイック金額",
-    "DadaFinanza · Quick Capture": "DadaFinanza · クイックキャプチャ",
-    "DadaFinanza · Rapido": "ダダフィナンザ・ラピド",
-    "DadaFinanza · Riepilogo": "DadaFinanza · 概要",
-    "DadaFinanza · Saldo": "DadaFinanza · バランス",
-    "DadaFinanza è bloccata": "DadaFinanzaさんはブロックされました",
-    "DadaFinanza è progettata local-first. Movimenti, conti, categorie, ":
-        "DadaFinanza はローカルファーストで設計されています。トランザクション、アカウント、カテゴリ、",
-    "DadaFinanza.": "ダダフィナンザ。",
-    "DadaFinanzaBackup": "DadaFinanzaバックアップ",
+    "Balyn": "ダダフィナンザ",
+    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
+        "Balyn は、トランザクション、領収書、説明、またはパターンを外部サービスに送信しません。",
+    "Balyn non riceve né memorizza dati biometrici.":
+        "Balyn は生体認証データを受信または保存しません。",
+    "Balyn non richiede un account e non integra pubblicità, ":
+        "Balyn はアカウントを必要とせず、広告も統合しません。",
+    "Balyn sulla Home": "Balyn オン ホーム",
+    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
+        "Balyn はローカル スケジューリングを使用し、重複を制限します。自動繰り返しは、アプリを開いたときに引き続き調整されます。",
+    "Balyn · Importi rapidi": "Balyn · クイック金額",
+    "Balyn · Quick Capture": "Balyn · クイックキャプチャ",
+    "Balyn · Rapido": "ダダフィナンザ・ラピド",
+    "Balyn · Riepilogo": "Balyn · 概要",
+    "Balyn · Saldo": "Balyn · バランス",
+    "Balyn è bloccata": "Balynさんはブロックされました",
+    "Balyn è progettata local-first. Movimenti, conti, categorie, ":
+        "Balyn はローカルファーストで設計されています。トランザクション、アカウント、カテゴリ、",
+    "Balyn.": "ダダフィナンザ。",
+    "BalynBackup": "Balynバックアップ",
     "DadaQuickAmountsWidgetProvider": "DadaQuickAmountsウィジェットプロバイダー",
     "Dai un nome ai risparmi che vuoi costruire.": "築きたい貯蓄に名前を付けてください。",
     "Dal": "から",
@@ -10251,8 +10251,8 @@ generatedTranslations = <String, Map<String, String>>{
         "データ、PIN、設定はローカルのままです。アカウントやサーバーは影響を受けません。",
     "dd MMM, HH:mm": "dd MMM、HH:mm",
     "dd MMMM yyyy, HH:mm": "dd MMMM yyyy、HH:mm",
-    "Definisci una cifra e, se vuoi, una data: DadaFinanza stimerà un ritmo sostenibile.":
-        "数字と、必要に応じて日付を定義します。DadaFinanza は持続可能なペースを推定します。",
+    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.":
+        "数字と、必要に応じて日付を定義します。Balyn は持続可能なペースを推定します。",
     "dei trasferimenti": "転送の",
     "delle entrate": "収益の",
     "delle spese": "経費の",
@@ -10408,8 +10408,8 @@ generatedTranslations = <String, Map<String, String>>{
         "CSV には、少なくとも種類、金額、日付、アカウントが含まれている必要があります。",
     "Il database ripristinato non supera il controllo integrità.":
         "復元されたデータベースは整合性チェックに失敗します。",
-    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → DadaFinanza.":
-        "ランチャーは自動追加をサポートしていません。ホーム→ウィジェット→DadaFinanzaを押し続けます。",
+    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.":
+        "ランチャーは自動追加をサポートしていません。ホーム→ウィジェット→Balynを押し続けます。",
     "Il microfono compila Nuovo movimento ma non salva mai automaticamente.":
         "マイクは新しいトランザクションをコンパイルしますが、自動的に保存することはありません。",
     "Il movimento ha una direzione incompatibile.": "トランザクションの方向が矛盾しています。",
@@ -10431,8 +10431,8 @@ generatedTranslations = <String, Map<String, String>>{
         "アカウント残高は自動的に再計算されます。",
     "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.":
         "システムは、ローカル統計と説明可能なルールを使用して習慣を認識します。 AIやクラウドは使いません。",
-    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server DadaFinanza.":
-        "認識されたテキストは、決定論的パーサーによってローカルに解釈されます。 DadaFinanza サーバーには送信されません。",
+    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.":
+        "認識されたテキストは、決定論的パーサーによってローカルに解釈されます。 Balyn サーバーには送信されません。",
     "Il trasferimento deve arrivare al conto collegato all’obiettivo.":
         "送金は、目標にリンクされたアカウントに到達する必要があります。",
     "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.":
@@ -10621,7 +10621,7 @@ generatedTranslations = <String, Map<String, String>>{
         "このトランザクションと互換性のある前払いはありません。",
     "Nessun anticipo con questa persona.": "この人とは進歩がない。",
     "Nessun anticipo registrato.": "事前の録音はありません。",
-    "Nessun assistente cloud DadaFinanza": "DadaFinanza クラウド アシスタントはありません",
+    "Nessun assistente cloud Balyn": "Balyn クラウド アシスタントはありません",
     "Nessun budget": "予算なし",
     "Nessun budget attivo": "有効な予算がありません",
     "Nessun confronto": "比較対象外",
@@ -10736,8 +10736,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Password": "パスワード",
     "Password backup": "パスワードのバックアップ",
     "Password opzionale": "パスワードは任意",
-    "password, il file non è cifrato da DadaFinanza.":
-        "パスワードが設定されている場合、ファイルは DadaFinanza によって暗号化されません。",
+    "password, il file non è cifrato da Balyn.":
+        "パスワードが設定されている場合、ファイルは Balyn によって暗号化されません。",
     "Patrimonio corrente": "流動資産",
     "Patrimonio incluso nel totale": "合計に含まれる遺産",
     "Patrimonio netto": "純資産",
@@ -10944,15 +10944,15 @@ generatedTranslations = <String, Map<String, String>>{
     "Saldo reale": "実質残高",
     "Saldo stimato tra 30 giorni: ••••": "30 日後の推定残高: ••••",
     "Saldo totale": "合計残高",
-    "Saldo totale compatto con accesso rapido a DadaFinanza":
-        "DadaFinanza に素早くアクセスできるコンパクトなトータルバランス",
+    "Saldo totale compatto con accesso rapido a Balyn":
+        "Balyn に素早くアクセスできるコンパクトなトータルバランス",
     "Saldo, Quick Capture, importi rapidi e riepilogo configurabili":
         "設定可能な残高、クイックキャプチャ、クイック金額および概要",
     "Salute": "健康",
     "Salute e persona": "健康と人",
     "Salva": "保存",
     "Salva anticipo": "事前保存",
-    "Salva backup DadaFinanza": "DadaFinanza のバックアップを保存する",
+    "Salva backup Balyn": "Balyn のバックアップを保存する",
     "Salva divisione": "分割の保存",
     "Salva modifiche": "変更を保存する",
     "Salva PIN": "PIN を保存する",
@@ -10964,8 +10964,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Salva widget": "ウィジェットの保存",
     "Sblocca": "ロックを解除する",
     "Sblocca conto": "アカウントのロックを解除する",
-    "Sblocca DadaFinanza per vedere i tuoi dati finanziari":
-        "DadaFinanza のロックを解除して財務データを確認します",
+    "Sblocca Balyn per vedere i tuoi dati finanziari":
+        "Balyn のロックを解除して財務データを確認します",
     "Scadenza": "有効期限",
     "Scadenza domani": "明日締め切り",
     "Scadenze": "締め切り",
@@ -11071,8 +11071,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "自動提案",
     "Suggerimenti obiettivi": "客観的な提案",
     "Supermercato": "スーパーマーケット",
-    "Sviluppatore: DDone. Per richieste relative a privacy o supporto ":
-        "開発者: DDone。プライバシーまたはサポートのリクエストについて",
+    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
+        "開発者: Andrea Dada。プライバシーまたはサポートのリクエストについて",
     "Tag": "タグ",
     "Tasse": "税金",
     "Taxi": "タクシー",
@@ -11155,8 +11155,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Usate per promemoria e avvisi locali configurati da te. ":
         "ローカルのリマインダーや設定したアラートに使用されます。",
     "Usato 1 volta": "1回使用しました",
-    "Usato solo per l’inserimento vocale. Il parser DadaFinanza è ":
-        "音声入力のみに使用します。 DadaFinanza パーサーは次のとおりです。",
+    "Usato solo per l’inserimento vocale. Il parser Balyn è ":
+        "音声入力のみに使用します。 Balyn パーサーは次のとおりです。",
     "Uso quotidiano": "日常使用",
     "Utenze e casa": "公共事業と家庭",
     "Valuta principale": "主要通貨",
@@ -11293,13 +11293,13 @@ generatedTranslations = <String, Map<String, String>>{
     "Applicare allo storico?": "역사가에게 지원하시겠습니까?",
     "Apprendimento": "학습",
     "AppScope not found": "AppScope를 찾을 수 없습니다.",
-    "Apre DadaFinanza senza autenticazione.": "인증 없이 DadaFinanza를 엽니다.",
+    "Apre Balyn senza autenticazione.": "인증 없이 Balyn를 엽니다.",
     "Apri": "열기",
     "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
         "계약금을 열어 환불을 기록하거나 알림을 업데이트하세요.",
     "Apri conto": "계좌 개설",
-    "Apri il selettore widget del launcher e cerca DadaFinanza.":
-        "런처 위젯 선택기를 열고 DadaFinanza를 검색하세요.",
+    "Apri il selettore widget del launcher e cerca Balyn.":
+        "런처 위젯 선택기를 열고 Balyn를 검색하세요.",
     "Apri per vedere residuo e ritmo di spesa.": "열어서 잔여 및 지출 비율을 확인하세요.",
     "Apri Storico": "오픈 히스토리",
     "archived = 0": "보관됨 = 0",
@@ -11346,7 +11346,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Backup completo con allegati · import portabile":
         "첨부파일을 포함한 전체 백업 · 휴대용 가져오기",
     "Backup completo salvato.": "전체 백업이 저장되었습니다.",
-    "Backup DadaFinanza non riconosciuto.": "DadaFinanza 백업이 인식되지 않습니다.",
+    "Backup Balyn non riconosciuto.": "Balyn 백업이 인식되지 않습니다.",
     "Backup non trovato.": "백업을 찾을 수 없습니다.",
     "Backup ripristinato e verificato.": "백업이 복원되고 확인되었습니다.",
     "Backup, CSV e allegati vengono esportati solo quando avvii ":
@@ -11478,7 +11478,7 @@ generatedTranslations = <String, Map<String, String>>{
         "확인됨 = 반복이 구성되었습니다. 예상 = 높은 신뢰도 과거 패턴. 예상 = 특정 이벤트가 아닌 집계된 동작입니다.",
     "Configura": "구성",
     "Configura conto e categoria": "계정 및 카테고리 구성",
-    "Configura DadaFinanza": "Dada 구성금융",
+    "Configura Balyn": "Dada 구성금융",
     "Configura widget": "위젯 구성",
     "Configurate": "구성",
     "Configurazione per istanza": "인스턴스별 구성",
@@ -11559,25 +11559,25 @@ generatedTranslations = <String, Map<String, String>>{
     "Da ricevere": "수신 예정",
     "Da saldare": "지불 예정",
     "DadaFinanceWidgetProvider": "Dada금융위젯공급자",
-    "DadaFinanza": "Dada금융",
-    "DadaFinanza non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
-        "DadaFinanza는 거래, 영수증, 설명 또는 패턴을 외부 서비스로 보내지 않습니다.",
-    "DadaFinanza non riceve né memorizza dati biometrici.":
-        "DadaFinanza는 생체 인식 데이터를 수신하거나 저장하지 않습니다.",
-    "DadaFinanza non richiede un account e non integra pubblicità, ":
-        "DadaFinanza는 계정이 필요하지 않으며 광고를 통합하지 않습니다.",
-    "DadaFinanza sulla Home": "DadaFinanza on Home",
-    "DadaFinanza usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
-        "DadaFinanza는 로컬 일정을 사용하고 중복을 제한합니다. 앱을 열면 자동 반복이 계속 조정됩니다.",
-    "DadaFinanza · Importi rapidi": "DadaFinanza · 빠른 금액",
-    "DadaFinanza · Quick Capture": "DadaFinanza · 빠른 캡처",
-    "DadaFinanza · Riepilogo": "DadaFinanza · 요약",
-    "DadaFinanza · Saldo": "DadaFinanza · 잔액",
-    "DadaFinanza è bloccata": "DadaFinanza가 차단되었습니다",
-    "DadaFinanza è progettata local-first. Movimenti, conti, categorie, ":
-        "DadaFinanza는 로컬 우선으로 설계되었습니다. 거래, 계정, 카테고리,",
-    "DadaFinanza.": "Dada금융.",
-    "DadaFinanzaBackup": "Dada금융백업",
+    "Balyn": "Dada금융",
+    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
+        "Balyn는 거래, 영수증, 설명 또는 패턴을 외부 서비스로 보내지 않습니다.",
+    "Balyn non riceve né memorizza dati biometrici.":
+        "Balyn는 생체 인식 데이터를 수신하거나 저장하지 않습니다.",
+    "Balyn non richiede un account e non integra pubblicità, ":
+        "Balyn는 계정이 필요하지 않으며 광고를 통합하지 않습니다.",
+    "Balyn sulla Home": "Balyn on Home",
+    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
+        "Balyn는 로컬 일정을 사용하고 중복을 제한합니다. 앱을 열면 자동 반복이 계속 조정됩니다.",
+    "Balyn · Importi rapidi": "Balyn · 빠른 금액",
+    "Balyn · Quick Capture": "Balyn · 빠른 캡처",
+    "Balyn · Riepilogo": "Balyn · 요약",
+    "Balyn · Saldo": "Balyn · 잔액",
+    "Balyn è bloccata": "Balyn가 차단되었습니다",
+    "Balyn è progettata local-first. Movimenti, conti, categorie, ":
+        "Balyn는 로컬 우선으로 설계되었습니다. 거래, 계정, 카테고리,",
+    "Balyn.": "Dada금융.",
+    "BalynBackup": "Dada금융백업",
     "Dai un nome ai risparmi che vuoi costruire.": "구축하고 싶은 저축의 이름을 지정하세요.",
     "Dal": "에서",
     "Dashboard avanzata": "고급 대시보드",
@@ -11600,8 +11600,8 @@ generatedTranslations = <String, Map<String, String>>{
         "데이터, PIN 및 기본 설정은 로컬로 유지됩니다. 계정이나 서버는 영향을 받지 않습니다.",
     "dd MMM": "dd 음",
     "dd MMM yyyy": "dd MMM 년",
-    "Definisci una cifra e, se vuoi, una data: DadaFinanza stimerà un ritmo sostenibile.":
-        "수치를 정의하고 원하는 경우 날짜를 정의하십시오. DadaFinanza는 지속 가능한 속도를 추정합니다.",
+    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.":
+        "수치를 정의하고 원하는 경우 날짜를 정의하십시오. Balyn는 지속 가능한 속도를 추정합니다.",
     "dei trasferimenti": "환승",
     "delle entrate": "수익의",
     "delle spese": "비용",
@@ -11755,8 +11755,8 @@ generatedTranslations = <String, Map<String, String>>{
         "CSV에는 최소한 유형, 금액, 날짜 및 계정이 포함되어야 합니다.",
     "Il database ripristinato non supera il controllo integrità.":
         "복원된 데이터베이스가 무결성 검사에 실패했습니다.",
-    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → DadaFinanza.":
-        "런처는 자동 추가를 지원하지 않습니다. 홈 → 위젯 → DadaFinanza를 길게 누르세요.",
+    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.":
+        "런처는 자동 추가를 지원하지 않습니다. 홈 → 위젯 → Balyn를 길게 누르세요.",
     "Il microfono compila Nuovo movimento ma non salva mai automaticamente.":
         "마이크는 새 트랜잭션을 컴파일하지만 자동으로 저장하지 않습니다.",
     "Il movimento ha una direzione incompatibile.": "트랜잭션의 방향이 호환되지 않습니다.",
@@ -11778,8 +11778,8 @@ generatedTranslations = <String, Map<String, String>>{
         "귀하의 계정 잔액은 자동으로 다시 계산됩니다.",
     "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.":
         "시스템은 지역 통계와 설명 가능한 규칙을 통해 습관을 인식합니다. AI나 클라우드를 사용하지 않습니다.",
-    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server DadaFinanza.":
-        "인식된 텍스트는 결정론적 파서에 의해 로컬로 해석됩니다. DadaFinanza 서버로 전송되지 않습니다.",
+    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.":
+        "인식된 텍스트는 결정론적 파서에 의해 로컬로 해석됩니다. Balyn 서버로 전송되지 않습니다.",
     "Il trasferimento deve arrivare al conto collegato all’obiettivo.":
         "이체는 목표에 연결된 계좌에 도착해야 합니다.",
     "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.":
@@ -11967,7 +11967,7 @@ generatedTranslations = <String, Map<String, String>>{
         "이 거래와 호환되는 사전 지원이 없습니다.",
     "Nessun anticipo con questa persona.": "이 사람에게는 사전 승인이 없습니다.",
     "Nessun anticipo registrato.": "사전 기록이 없습니다.",
-    "Nessun assistente cloud DadaFinanza": "DadaFinanza 클라우드 도우미 없음",
+    "Nessun assistente cloud Balyn": "Balyn 클라우드 도우미 없음",
     "Nessun budget": "예산 없음",
     "Nessun budget attivo": "활성 예산 없음",
     "Nessun confronto": "비교 불가",
@@ -12082,8 +12082,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Password": "비밀번호",
     "Password backup": "비밀번호 백업",
     "Password opzionale": "비밀번호는 선택사항",
-    "password, il file non è cifrato da DadaFinanza.":
-        "비밀번호를 입력하면 파일이 DadaFinanza에 의해 암호화되지 않습니다.",
+    "password, il file non è cifrato da Balyn.":
+        "비밀번호를 입력하면 파일이 Balyn에 의해 암호화되지 않습니다.",
     "Patrimonio corrente": "유동자산",
     "Patrimonio incluso nel totale": "총계에 포함된 유산",
     "Patrimonio netto": "순자산",
@@ -12292,15 +12292,15 @@ generatedTranslations = <String, Map<String, String>>{
     "Saldo reale": "실제 균형",
     "Saldo stimato tra 30 giorni: ••••": "30일 후 예상 잔액: ••••",
     "Saldo totale": "총 잔액",
-    "Saldo totale compatto con accesso rapido a DadaFinanza":
-        "DadaFinanza에 빠르게 액세스할 수 있는 컴팩트한 총 잔액",
+    "Saldo totale compatto con accesso rapido a Balyn":
+        "Balyn에 빠르게 액세스할 수 있는 컴팩트한 총 잔액",
     "Saldo, Quick Capture, importi rapidi e riepilogo configurabili":
         "구성 가능한 잔액, 빠른 캡처, 빠른 금액 및 요약",
     "Salute": "건강",
     "Salute e persona": "건강과 사람",
     "Salva": "저장",
     "Salva anticipo": "사전 저장",
-    "Salva backup DadaFinanza": "DadaFinanza 백업 저장",
+    "Salva backup Balyn": "Balyn 백업 저장",
     "Salva divisione": "구분 저장",
     "Salva modifiche": "변경사항 저장",
     "Salva PIN": "PIN 저장",
@@ -12311,8 +12311,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Salva widget": "위젯 저장",
     "Sblocca": "잠금 해제",
     "Sblocca conto": "계정 잠금 해제",
-    "Sblocca DadaFinanza per vedere i tuoi dati finanziari":
-        "DadaFinanza를 잠금해제하여 금융 데이터를 확인하세요",
+    "Sblocca Balyn per vedere i tuoi dati finanziari":
+        "Balyn를 잠금해제하여 금융 데이터를 확인하세요",
     "Scadenza": "만료",
     "Scadenza domani": "내일 마감",
     "Scadenze": "마감일",
@@ -12418,8 +12418,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "자동 제안",
     "Suggerimenti obiettivi": "객관적인 제안",
     "Supermercato": "슈퍼마켓",
-    "Sviluppatore: DDone. Per richieste relative a privacy o supporto ":
-        "개발자: DDone. 개인 정보 보호 또는 지원 요청의 경우",
+    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
+        "개발자: Andrea Dada. 개인 정보 보호 또는 지원 요청의 경우",
     "Tag": "태그",
     "Tasse": "세금",
     "Taxi": "택시",
@@ -12502,8 +12502,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Usate per promemoria e avvisi locali configurati da te. ":
         "귀하가 설정한 지역 알림 및 경고에 사용됩니다.",
     "Usato 1 volta": "1회 사용",
-    "Usato solo per l’inserimento vocale. Il parser DadaFinanza è ":
-        "음성 입력에만 사용됩니다. DadaFinanza 파서는 다음과 같습니다.",
+    "Usato solo per l’inserimento vocale. Il parser Balyn è ":
+        "음성 입력에만 사용됩니다. Balyn 파서는 다음과 같습니다.",
     "Uso quotidiano": "매일 사용",
     "Utenze e casa": "유틸리티 및 집",
     "Valuta principale": "기본 통화",
@@ -12646,13 +12646,13 @@ generatedTranslations = <String, Map<String, String>>{
     "Applicare allo storico?": "تنطبق على المؤرخ؟",
     "Apprendimento": "التعلم",
     "AppScope not found": "لم يتم العثور على AppScope",
-    "Apre DadaFinanza senza autenticazione.": "يفتح DadaFinanza بدون مصادقة.",
+    "Apre Balyn senza autenticazione.": "يفتح Balyn بدون مصادقة.",
     "Apri": "مفتوح",
     "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
         "افتح \"المدفوعات المقدمة\" لتسجيل استرداد أو تحديث التذكير الخاص بك.",
     "Apri conto": "افتح الحساب",
-    "Apri il selettore widget del launcher e cerca DadaFinanza.":
-        "افتح محدد عناصر واجهة المستخدم وابحث عن DadaFinanza.",
+    "Apri il selettore widget del launcher e cerca Balyn.":
+        "افتح محدد عناصر واجهة المستخدم وابحث عن Balyn.",
     "Apri per vedere residuo e ritmo di spesa.":
         "فتح لمعرفة المتبقية ومعدل الإنفاق.",
     "Apri Storico": "افتح التاريخ",
@@ -12702,8 +12702,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Backup completo con allegati · import portabile":
         "النسخ الاحتياطي الكامل مع المرفقات · استيراد المحمولة",
     "Backup completo salvato.": "تم حفظ النسخة الاحتياطية الكاملة.",
-    "Backup DadaFinanza non riconosciuto.":
-        "لم يتم التعرف على النسخة الاحتياطية لـ DadaFinanza.",
+    "Backup Balyn non riconosciuto.":
+        "لم يتم التعرف على النسخة الاحتياطية لـ Balyn.",
     "Backup non trovato.": "لم يتم العثور على النسخة الاحتياطية.",
     "Backup ripristinato e verificato.":
         "تمت استعادة النسخة الاحتياطية والتحقق منها.",
@@ -12839,7 +12839,7 @@ generatedTranslations = <String, Map<String, String>>{
         "تم التأكيد = تم تكوين التكرار. المتوقع = النمط التاريخي ذو الثقة العالية. المقدر = سلوك إجمالي، وليس حدث معين.",
     "Configura": "تكوين",
     "Configura conto e categoria": "تكوين الحساب والفئة",
-    "Configura DadaFinanza": "تكوين DadaFinanza",
+    "Configura Balyn": "تكوين Balyn",
     "Configura widget": "تكوين الحاجيات",
     "Configurate": "تكوين",
     "Configurazione per istanza": "التكوين لكل مثيل",
@@ -12927,23 +12927,23 @@ generatedTranslations = <String, Map<String, String>>{
     "Da restituire": "ليتم إعادتها",
     "Da ricevere": "ليتم استلامها",
     "Da saldare": "ليتم دفعها",
-    "DadaFinanza non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
-        "لا تقوم DadaFinanza بإرسال المعاملات أو الإيصالات أو الأوصاف أو الأنماط إلى الخدمات الخارجية.",
-    "DadaFinanza non riceve né memorizza dati biometrici.":
-        "لا تتلقى DadaFinanza أو تخزن البيانات البيومترية.",
-    "DadaFinanza non richiede un account e non integra pubblicità, ":
-        "DadaFinanza لا يتطلب حسابًا ولا يدمج الإعلانات،",
-    "DadaFinanza sulla Home": "DadaFinanza على الصفحة الرئيسية",
-    "DadaFinanza usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
-        "يستخدم DadaFinanza الجدولة المحلية ويحد من التكرارات. وتتم تسوية التكرارات التلقائية عند فتح التطبيق.",
-    "DadaFinanza · Importi rapidi": "DadaFinanza · المبالغ السريعة",
-    "DadaFinanza · Quick Capture": "DadaFinanza · الالتقاط السريع",
-    "DadaFinanza · Rapido": "دادافينانزا · رابيدو",
-    "DadaFinanza · Riepilogo": "دادافينانزا · الملخص",
-    "DadaFinanza · Saldo": "DadaFinanza · الرصيد",
-    "DadaFinanza è bloccata": "تم حظر DadaFinanza",
-    "DadaFinanza è progettata local-first. Movimenti, conti, categorie, ":
-        "تم تصميم DadaFinanza محليًا أولاً. المعاملات، الحسابات، الفئات،",
+    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
+        "لا تقوم Balyn بإرسال المعاملات أو الإيصالات أو الأوصاف أو الأنماط إلى الخدمات الخارجية.",
+    "Balyn non riceve né memorizza dati biometrici.":
+        "لا تتلقى Balyn أو تخزن البيانات البيومترية.",
+    "Balyn non richiede un account e non integra pubblicità, ":
+        "Balyn لا يتطلب حسابًا ولا يدمج الإعلانات،",
+    "Balyn sulla Home": "Balyn على الصفحة الرئيسية",
+    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
+        "يستخدم Balyn الجدولة المحلية ويحد من التكرارات. وتتم تسوية التكرارات التلقائية عند فتح التطبيق.",
+    "Balyn · Importi rapidi": "Balyn · المبالغ السريعة",
+    "Balyn · Quick Capture": "Balyn · الالتقاط السريع",
+    "Balyn · Rapido": "دادافينانزا · رابيدو",
+    "Balyn · Riepilogo": "دادافينانزا · الملخص",
+    "Balyn · Saldo": "Balyn · الرصيد",
+    "Balyn è bloccata": "تم حظر Balyn",
+    "Balyn è progettata local-first. Movimenti, conti, categorie, ":
+        "تم تصميم Balyn محليًا أولاً. المعاملات، الحسابات، الفئات،",
     "Dai un nome ai risparmi che vuoi costruire.":
         "قم بتسمية المدخرات التي تريد بناءها.",
     "Dal": "من",
@@ -12972,8 +12972,8 @@ generatedTranslations = <String, Map<String, String>>{
     "dd MMM, HH:mm": "ي د ط ط ط ط، سمو: ط ط ط",
     "dd MMMM yyyy, HH:mm": "يوم ش ش ش ش س س س س س س: مم",
     "dd/MM/yyyy HH:mm": "ي ي/ش ش/س س س س س: مم",
-    "Definisci una cifra e, se vuoi, una data: DadaFinanza stimerà un ritmo sostenibile.":
-        "حدد رقمًا وتاريخًا إذا أردت: ستقوم DadaFinanza بتقدير وتيرة مستدامة.",
+    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.":
+        "حدد رقمًا وتاريخًا إذا أردت: ستقوم Balyn بتقدير وتيرة مستدامة.",
     "dei trasferimenti": "من التحويلات",
     "delle entrate": "من الإيرادات",
     "delle spese": "من النفقات",
@@ -13137,8 +13137,8 @@ generatedTranslations = <String, Map<String, String>>{
         "يجب أن يحتوي ملف CSV على النوع والمبلغ والتاريخ والحساب على الأقل.",
     "Il database ripristinato non supera il controllo integrità.":
         "فشلت قاعدة البيانات المستعادة في التحقق من التكامل.",
-    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → DadaFinanza.":
-        "لا يدعم المشغل الإضافة التلقائية. اضغط مع الاستمرار على الصفحة الرئيسية → القطعة → DadaFinanza.",
+    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.":
+        "لا يدعم المشغل الإضافة التلقائية. اضغط مع الاستمرار على الصفحة الرئيسية → القطعة → Balyn.",
     "Il microfono compila Nuovo movimento ma non salva mai automaticamente.":
         "يقوم الميكروفون بتجميع معاملة جديدة ولكنه لا يحفظها تلقائيًا أبدًا.",
     "Il movimento ha una direzione incompatibile.":
@@ -13164,8 +13164,8 @@ generatedTranslations = <String, Map<String, String>>{
         "سيتم إعادة حساب رصيد حسابك تلقائيًا.",
     "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.":
         "يتعرف النظام على العادات من خلال الإحصائيات المحلية والقواعد القابلة للتفسير. لا يستخدم الذكاء الاصطناعي أو السحابة.",
-    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server DadaFinanza.":
-        "يتم تفسير النص الذي تم التعرف عليه محليًا بواسطة محلل حتمي. ولا يتم إرساله إلى خادم DadaFinanza.",
+    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.":
+        "يتم تفسير النص الذي تم التعرف عليه محليًا بواسطة محلل حتمي. ولا يتم إرساله إلى خادم Balyn.",
     "Il trasferimento deve arrivare al conto collegato all’obiettivo.":
         "يجب أن يصل التحويل إلى الحساب المرتبط بالهدف.",
     "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.":
@@ -13365,7 +13365,7 @@ generatedTranslations = <String, Map<String, String>>{
         "لا يوجد تقدم متوافق مع هذه المعاملة.",
     "Nessun anticipo con questa persona.": "لا تقدم مع هذا الشخص.",
     "Nessun anticipo registrato.": "لم يتم تسجيل أي تقدم.",
-    "Nessun assistente cloud DadaFinanza": "لا يوجد مساعد سحابي من DadaFinanza",
+    "Nessun assistente cloud Balyn": "لا يوجد مساعد سحابي من Balyn",
     "Nessun budget": "لا ميزانية",
     "Nessun budget attivo": "لا توجد ميزانية نشطة",
     "Nessun confronto": "لا مقارنة",
@@ -13486,8 +13486,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Password": "كلمات المرور",
     "Password backup": "النسخ الاحتياطي لكلمة المرور",
     "Password opzionale": "كلمة المرور اختيارية",
-    "password, il file non è cifrato da DadaFinanza.":
-        "كلمة المرور، الملف غير مشفر بواسطة DadaFinanza.",
+    "password, il file non è cifrato da Balyn.":
+        "كلمة المرور، الملف غير مشفر بواسطة Balyn.",
     "Patrimonio corrente": "الأصول الحالية",
     "Patrimonio incluso nel totale": "التراث المدرجة في المجموع",
     "Patrimonio netto": "صافي القيمة",
@@ -13703,15 +13703,15 @@ generatedTranslations = <String, Map<String, String>>{
     "Saldo reale": "التوازن الحقيقي",
     "Saldo stimato tra 30 giorni: ••••": "الرصيد المقدر خلال 30 يومًا: ••••",
     "Saldo totale": "الرصيد الإجمالي",
-    "Saldo totale compatto con accesso rapido a DadaFinanza":
-        "رصيد إجمالي مدمج مع إمكانية الوصول السريع إلى DadaFinanza",
+    "Saldo totale compatto con accesso rapido a Balyn":
+        "رصيد إجمالي مدمج مع إمكانية الوصول السريع إلى Balyn",
     "Saldo, Quick Capture, importi rapidi e riepilogo configurabili":
         "رصيد قابل للتكوين، والتقاط سريع، ومبالغ سريعة وملخص",
     "Salute": "الصحة",
     "Salute e persona": "الصحة والشخص",
     "Salva": "حفظ",
     "Salva anticipo": "حفظ مقدما",
-    "Salva backup DadaFinanza": "حفظ النسخة الاحتياطية لـ DadaFinanza",
+    "Salva backup Balyn": "حفظ النسخة الاحتياطية لـ Balyn",
     "Salva divisione": "حفظ القسمة",
     "Salva modifiche": "حفظ التغييرات",
     "Salva PIN": "حفظ رقم التعريف الشخصي",
@@ -13722,8 +13722,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Salva widget": "حفظ القطعة",
     "Sblocca": "فتح",
     "Sblocca conto": "فتح الحساب",
-    "Sblocca DadaFinanza per vedere i tuoi dati finanziari":
-        "افتح DadaFinanza لرؤية بياناتك المالية",
+    "Sblocca Balyn per vedere i tuoi dati finanziari":
+        "افتح Balyn لرؤية بياناتك المالية",
     "Scadenza": "انتهاء الصلاحية",
     "Scadenza domani": "المقرر غدا",
     "Scadenze": "المواعيد النهائية",
@@ -13836,8 +13836,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "الاقتراحات التلقائية",
     "Suggerimenti obiettivi": "اقتراحات موضوعية",
     "Supermercato": "سوبر ماركت",
-    "Sviluppatore: DDone. Per richieste relative a privacy o supporto ":
-        "المطور: DDone. لطلبات الخصوصية أو الدعم",
+    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
+        "المطور: Andrea Dada. لطلبات الخصوصية أو الدعم",
     "Tag": "العلامات",
     "Tasse": "الضرائب",
     "Taxi": "سيارات الأجرة",
@@ -13924,8 +13924,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Usate per promemoria e avvisi locali configurati da te. ":
         "يُستخدم للتذكيرات والتنبيهات المحلية التي قمت بإعدادها.",
     "Usato 1 volta": "يستخدم 1 مرة",
-    "Usato solo per l’inserimento vocale. Il parser DadaFinanza è ":
-        "يستخدم لإدخال الصوت فقط. المحلل اللغوي DadaFinanza هو",
+    "Usato solo per l’inserimento vocale. Il parser Balyn è ":
+        "يستخدم لإدخال الصوت فقط. المحلل اللغوي Balyn هو",
     "Uso quotidiano": "الاستخدام اليومي",
     "Utenze e casa": "المرافق والمنزل",
     "Valuta principale": "العملة الأساسية",
@@ -14072,14 +14072,14 @@ generatedTranslations = <String, Map<String, String>>{
     "Applicare allo storico?": "इतिहासकार पर लागू करें?",
     "Apprendimento": "सीखना",
     "AppScope not found": "ऐपस्कोप नहीं मिला",
-    "Apre DadaFinanza senza autenticazione.":
-        "प्रमाणीकरण के बिना DadaFinanza खोलता है।",
+    "Apre Balyn senza autenticazione.":
+        "प्रमाणीकरण के बिना Balyn खोलता है।",
     "Apri": "खुला",
     "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
         "रिफंड रिकॉर्ड करने या अपना रिमाइंडर अपडेट करने के लिए डाउन पेमेंट खोलें।",
     "Apri conto": "खाता खोलें",
-    "Apri il selettore widget del launcher e cerca DadaFinanza.":
-        "लॉन्चर विजेट चयनकर्ता खोलें और DadaFinanza खोजें।",
+    "Apri il selettore widget del launcher e cerca Balyn.":
+        "लॉन्चर विजेट चयनकर्ता खोलें और Balyn खोजें।",
     "Apri per vedere residuo e ritmo di spesa.":
         "अवशिष्ट और व्यय दर देखने के लिए खुला है।",
     "Apri Storico": "इतिहास खोलें",
@@ -14129,8 +14129,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Backup completo con allegati · import portabile":
         "अनुलग्नकों के साथ पूर्ण बैकअप · पोर्टेबल आयात",
     "Backup completo salvato.": "पूर्ण बैकअप सहेजा गया.",
-    "Backup DadaFinanza non riconosciuto.":
-        "DadaFinanza बैकअप पहचाना नहीं गया.",
+    "Backup Balyn non riconosciuto.":
+        "Balyn बैकअप पहचाना नहीं गया.",
     "Backup non trovato.": "बैकअप नहीं मिला.",
     "Backup ripristinato e verificato.":
         "बैकअप पुनर्स्थापित और सत्यापित किया गया.",
@@ -14265,7 +14265,7 @@ generatedTranslations = <String, Map<String, String>>{
         "पुष्टि की गई = पुनरावृत्ति कॉन्फ़िगर की गई। अपेक्षित = उच्च आत्मविश्वास वाला ऐतिहासिक पैटर्न। अनुमानित = समग्र व्यवहार, कोई निश्चित घटना नहीं।",
     "Configura": "कॉन्फ़िगर करें",
     "Configura conto e categoria": "खाता और श्रेणी कॉन्फ़िगर करें",
-    "Configura DadaFinanza": "DadaFinanza को कॉन्फ़िगर करें",
+    "Configura Balyn": "Balyn को कॉन्फ़िगर करें",
     "Configura widget": "विजेट कॉन्फ़िगर करें",
     "Configurate": "कॉन्फ़िगर करें",
     "Configurazione per istanza": "प्रति-आवृत्ति विन्यास",
@@ -14355,23 +14355,23 @@ generatedTranslations = <String, Map<String, String>>{
     "Da ricevere": "प्राप्त किया जाना है",
     "Da saldare": "भुगतान किया जाना है",
     "DadaBalanceWidgetProvider": "दादाबैलेंसविजेटप्रदाता",
-    "DadaFinanza non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
-        "DadaFinanza बाहरी सेवाओं को लेनदेन, रसीदें, विवरण या पैटर्न नहीं भेजता है।",
-    "DadaFinanza non riceve né memorizza dati biometrici.":
-        "DadaFinanza बायोमेट्रिक डेटा प्राप्त या संग्रहीत नहीं करता है।",
-    "DadaFinanza non richiede un account e non integra pubblicità, ":
-        "DadaFinanza को किसी खाते की आवश्यकता नहीं है और यह विज्ञापन को एकीकृत नहीं करता है,",
-    "DadaFinanza sulla Home": "घर पर DadaFinanza",
-    "DadaFinanza usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
-        "DadaFinanza स्थानीय शेड्यूलिंग का उपयोग करता है और डुप्लिकेट को सीमित करता है। ऐप खुलने पर भी स्वचालित पुनरावृत्ति का समाधान हो जाता है।",
-    "DadaFinanza · Importi rapidi": "DadaFinanza · त्वरित मात्रा",
-    "DadaFinanza · Quick Capture": "DadaFinanza · त्वरित कैप्चर",
-    "DadaFinanza · Rapido": "DadaFinanza · रैपिडो",
-    "DadaFinanza · Riepilogo": "DadaFinanza · सारांश",
-    "DadaFinanza · Saldo": "DadaFinanza · संतुलन",
-    "DadaFinanza è bloccata": "DadaFinanza अवरुद्ध है",
-    "DadaFinanza è progettata local-first. Movimenti, conti, categorie, ":
-        "DadaFinanza को स्थानीय स्तर पर पहले डिज़ाइन किया गया है। लेनदेन, खाते, श्रेणियां,",
+    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
+        "Balyn बाहरी सेवाओं को लेनदेन, रसीदें, विवरण या पैटर्न नहीं भेजता है।",
+    "Balyn non riceve né memorizza dati biometrici.":
+        "Balyn बायोमेट्रिक डेटा प्राप्त या संग्रहीत नहीं करता है।",
+    "Balyn non richiede un account e non integra pubblicità, ":
+        "Balyn को किसी खाते की आवश्यकता नहीं है और यह विज्ञापन को एकीकृत नहीं करता है,",
+    "Balyn sulla Home": "घर पर Balyn",
+    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
+        "Balyn स्थानीय शेड्यूलिंग का उपयोग करता है और डुप्लिकेट को सीमित करता है। ऐप खुलने पर भी स्वचालित पुनरावृत्ति का समाधान हो जाता है।",
+    "Balyn · Importi rapidi": "Balyn · त्वरित मात्रा",
+    "Balyn · Quick Capture": "Balyn · त्वरित कैप्चर",
+    "Balyn · Rapido": "Balyn · रैपिडो",
+    "Balyn · Riepilogo": "Balyn · सारांश",
+    "Balyn · Saldo": "Balyn · संतुलन",
+    "Balyn è bloccata": "Balyn अवरुद्ध है",
+    "Balyn è progettata local-first. Movimenti, conti, categorie, ":
+        "Balyn को स्थानीय स्तर पर पहले डिज़ाइन किया गया है। लेनदेन, खाते, श्रेणियां,",
     "Dai un nome ai risparmi che vuoi costruire.":
         "उस बचत का नाम बताएं जिसे आप बनाना चाहते हैं।",
     "Dal": "से",
@@ -14397,8 +14397,8 @@ generatedTranslations = <String, Map<String, String>>{
     "dd MMM yy": "dd एमएमएम yy",
     "dd MMM yyyy": "dd एमएमएम yyyy",
     "dd MMM, HH:mm": "डीडी एमएमएम, एचएच: मिमी",
-    "Definisci una cifra e, se vuoi, una data: DadaFinanza stimerà un ritmo sostenibile.":
-        "एक आंकड़ा परिभाषित करें और, यदि आप चाहें, तो एक तारीख: DadaFinanza एक स्थायी गति का अनुमान लगाएगा।",
+    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.":
+        "एक आंकड़ा परिभाषित करें और, यदि आप चाहें, तो एक तारीख: Balyn एक स्थायी गति का अनुमान लगाएगा।",
     "dei trasferimenti": "तबादलों का",
     "delle entrate": "राजस्व का",
     "delle spese": "खर्चों का",
@@ -14563,8 +14563,8 @@ generatedTranslations = <String, Map<String, String>>{
         "सीएसवी में कम से कम प्रकार, राशि, दिनांक और खाता अवश्य होना चाहिए।",
     "Il database ripristinato non supera il controllo integrità.":
         "पुनर्स्थापित डेटाबेस अखंडता जांच में विफल रहता है।",
-    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → DadaFinanza.":
-        "लॉन्चर स्वचालित जोड़ने का समर्थन नहीं करता है. होम → विजेट → DadaFinanza को दबाकर रखें।",
+    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.":
+        "लॉन्चर स्वचालित जोड़ने का समर्थन नहीं करता है. होम → विजेट → Balyn को दबाकर रखें।",
     "Il microfono compila Nuovo movimento ma non salva mai automaticamente.":
         "माइक्रोफ़ोन नए लेनदेन को संकलित करता है लेकिन कभी भी स्वचालित रूप से सहेजता नहीं है।",
     "Il movimento ha una direzione incompatibile.": "लेन-देन की दिशा असंगत है.",
@@ -14589,8 +14589,8 @@ generatedTranslations = <String, Map<String, String>>{
         "आपके खाते की शेष राशि स्वचालित रूप से पुनर्गणना की जाएगी।",
     "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.":
         "सिस्टम स्थानीय आँकड़ों और समझाने योग्य नियमों के साथ आदतों को पहचानता है। यह AI या क्लाउड का उपयोग नहीं करता है.",
-    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server DadaFinanza.":
-        "मान्यता प्राप्त पाठ की व्याख्या स्थानीय रूप से एक नियतात्मक पार्सर द्वारा की जाती है। इसे DadaFinanza सर्वर पर नहीं भेजा जाता है.",
+    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.":
+        "मान्यता प्राप्त पाठ की व्याख्या स्थानीय रूप से एक नियतात्मक पार्सर द्वारा की जाती है। इसे Balyn सर्वर पर नहीं भेजा जाता है.",
     "Il trasferimento deve arrivare al conto collegato all’obiettivo.":
         "स्थानांतरण लक्ष्य से जुड़े खाते में पहुंचना चाहिए।",
     "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.":
@@ -14787,8 +14787,8 @@ generatedTranslations = <String, Map<String, String>>{
         "इस लेनदेन के साथ कोई अग्रिम संगत नहीं है।",
     "Nessun anticipo con questa persona.": "इस व्यक्ति के साथ कोई प्रगति नहीं.",
     "Nessun anticipo registrato.": "कोई अग्रिम दर्ज नहीं किया गया.",
-    "Nessun assistente cloud DadaFinanza":
-        "कोई DadaFinanza क्लाउड असिस्टेंट नहीं",
+    "Nessun assistente cloud Balyn":
+        "कोई Balyn क्लाउड असिस्टेंट नहीं",
     "Nessun budget": "कोई बजट नहीं",
     "Nessun budget attivo": "कोई सक्रिय बजट नहीं",
     "Nessun confronto": "कोई तुलना नहीं",
@@ -14910,8 +14910,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Password": "पासवर्ड",
     "Password backup": "पासवर्ड बैकअप",
     "Password opzionale": "पासवर्ड वैकल्पिक",
-    "password, il file non è cifrato da DadaFinanza.":
-        "पासवर्ड, फ़ाइल DadaFinanza द्वारा एन्क्रिप्टेड नहीं है।",
+    "password, il file non è cifrato da Balyn.":
+        "पासवर्ड, फ़ाइल Balyn द्वारा एन्क्रिप्टेड नहीं है।",
     "Patrimonio corrente": "वर्तमान संपत्ति",
     "Patrimonio incluso nel totale": "कुल में विरासत शामिल",
     "Patrimonio netto": "निवल मूल्य",
@@ -15126,15 +15126,15 @@ generatedTranslations = <String, Map<String, String>>{
     "Saldo reale": "वास्तविक संतुलन",
     "Saldo stimato tra 30 giorni: ••••": "30 दिनों में अनुमानित शेष: ••••",
     "Saldo totale": "कुल शेष",
-    "Saldo totale compatto con accesso rapido a DadaFinanza":
-        "DadaFinanza तक त्वरित पहुंच के साथ संक्षिप्त कुल संतुलन",
+    "Saldo totale compatto con accesso rapido a Balyn":
+        "Balyn तक त्वरित पहुंच के साथ संक्षिप्त कुल संतुलन",
     "Saldo, Quick Capture, importi rapidi e riepilogo configurabili":
         "विन्यास योग्य शेष राशि, त्वरित कैप्चर, त्वरित मात्राएँ और सारांश",
     "Salute": "स्वास्थ्य",
     "Salute e persona": "स्वास्थ्य और व्यक्ति",
     "Salva": "सहेजें",
     "Salva anticipo": "अग्रिम बचत करें",
-    "Salva backup DadaFinanza": "DadaFinanza बैकअप सहेजें",
+    "Salva backup Balyn": "Balyn बैकअप सहेजें",
     "Salva divisione": "विभाजन सहेजें",
     "Salva modifiche": "परिवर्तन सहेजें",
     "Salva PIN": "पिन सहेजें",
@@ -15146,8 +15146,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Salva widget": "विजेट सहेजें",
     "Sblocca": "अनलॉक",
     "Sblocca conto": "खाता अनलॉक करें",
-    "Sblocca DadaFinanza per vedere i tuoi dati finanziari":
-        "अपना वित्तीय डेटा देखने के लिए DadaFinanza को अनलॉक करें",
+    "Sblocca Balyn per vedere i tuoi dati finanziari":
+        "अपना वित्तीय डेटा देखने के लिए Balyn को अनलॉक करें",
     "Scadenza": "समाप्ति",
     "Scadenza domani": "कल देय",
     "Scadenze": "समयसीमा",
@@ -15260,8 +15260,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "स्वचालित सुझाव",
     "Suggerimenti obiettivi": "वस्तुनिष्ठ सुझाव",
     "Supermercato": "सुपरमार्केट",
-    "Sviluppatore: DDone. Per richieste relative a privacy o supporto ":
-        "डेवलपर: DDone. गोपनीयता या समर्थन अनुरोधों के लिए",
+    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
+        "डेवलपर: Andrea Dada. गोपनीयता या समर्थन अनुरोधों के लिए",
     "Tag": "टैग",
     "Tasse": "कर",
     "Taxi": "टैक्सियाँ",
@@ -15348,8 +15348,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Usate per promemoria e avvisi locali configurati da te. ":
         "आपके द्वारा सेट किए गए स्थानीय अनुस्मारक और अलर्ट के लिए उपयोग किया जाता है।",
     "Usato 1 volta": "1 बार प्रयोग किया गया",
-    "Usato solo per l’inserimento vocale. Il parser DadaFinanza è ":
-        "केवल ध्वनि इनपुट के लिए उपयोग किया जाता है। DadaFinanza पार्सर है",
+    "Usato solo per l’inserimento vocale. Il parser Balyn è ":
+        "केवल ध्वनि इनपुट के लिए उपयोग किया जाता है। Balyn पार्सर है",
     "Uso quotidiano": "दैनिक उपयोग",
     "Utenze e casa": "उपयोगिताएँ और घर",
     "Valuta principale": "प्राथमिक मुद्रा",
@@ -15505,7 +15505,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Saldato su": "Soldered on",
     "Saldo alle \${DateFormat": "Balance at \${DateFormat",
     "Saldo attuale": "Current balance",
-    "Saldo DadaFinanza": "DadaFinanza balance",
+    "Saldo Balyn": "Balyn balance",
     "Saldo finale \${DateFormat": "Final balance \${DateFormat",
     "Saldo stimato tra": "Estimated balance between",
     "Saldo stimato tra 30 giorni": "Estimated balance in 30 days",
@@ -15682,7 +15682,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Saldato su": "Soldado",
     "Saldo alle \${DateFormat": "Saldo en \${DateFormat",
     "Saldo attuale": "Saldo actual",
-    "Saldo DadaFinanza": "Saldo de DadaFinanza",
+    "Saldo Balyn": "Saldo de Balyn",
     "Saldo finale \${DateFormat": "Saldo final \${DateFormat",
     "Saldo stimato tra": "Saldo estimado entre",
     "Saldo stimato tra 30 giorni": "Saldo estimado en 30 días",
@@ -15845,7 +15845,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Saldato su": "Soudé",
     "Saldo alle \${DateFormat": "Solde à \${DateFormat",
     "Saldo attuale": "Solde courant",
-    "Saldo DadaFinanza": "Solde DadaFinanza",
+    "Saldo Balyn": "Solde Balyn",
     "Saldo finale \${DateFormat": "Solde final \${DateFormat",
     "Saldo stimato tra": "Solde estimé entre",
     "Saldo stimato tra 30 giorni": "Solde estimé dans 30 jours",
@@ -16005,7 +16005,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Saldato su": "Angelötet",
     "Saldo alle \${DateFormat": "Saldo bei \${DateFormat",
     "Saldo attuale": "Aktueller Kontostand",
-    "Saldo DadaFinanza": "DadaFinanza-Guthaben",
+    "Saldo Balyn": "Balyn-Guthaben",
     "Saldo finale \${DateFormat": "Endsaldo \${DateFormat",
     "Saldo stimato tra": "Geschätztes Gleichgewicht zwischen",
     "Saldo stimato tra 30 giorni": "Geschätzter Restbetrag in 30 Tagen",
@@ -16348,7 +16348,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Saldato su": "Припаян",
     "Saldo alle \${DateFormat": "Баланс в \${DateFormat",
     "Saldo attuale": "Текущий баланс",
-    "Saldo DadaFinanza": "Баланс ДадаФинанса",
+    "Saldo Balyn": "Баланс ДадаФинанса",
     "Saldo finale \${DateFormat": "Итоговый баланс \${DateFormat",
     "Saldo stimato tra": "Предполагаемый баланс между",
     "Saldo stimato tra 30 giorni": "Предполагаемый баланс через 30 дней",
@@ -16515,7 +16515,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Saldato su": "焊接在",
     "Saldo alle \${DateFormat": "\${DateFormat 的余额",
     "Saldo attuale": "当前余额",
-    "Saldo DadaFinanza": "达达金融余额",
+    "Saldo Balyn": "达达金融余额",
     "Saldo finale \${DateFormat": "最终余额\${DateFormat",
     "Saldo stimato tra": "估计之间的平衡",
     "Saldo stimato tra 30 giorni": "预计 30 天内结余",
@@ -16671,7 +16671,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Saldato su": "はんだ付け済み",
     "Saldo alle \${DateFormat": "\${DateFormat の残高",
     "Saldo attuale": "現在の残高",
-    "Saldo DadaFinanza": "DadaFinanza バランス",
+    "Saldo Balyn": "Balyn バランス",
     "Saldo finale \${DateFormat": "最終残高 \${DateFormat",
     "Saldo stimato tra": "推定残高",
     "Saldo stimato tra 30 giorni": "30 日後の推定残高",
@@ -16825,7 +16825,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Saldato su": "납땜됨",
     "Saldo alle \${DateFormat": "\${DateFormat 잔액",
     "Saldo attuale": "현재 잔액",
-    "Saldo DadaFinanza": "DadaFinanza 잔액",
+    "Saldo Balyn": "Balyn 잔액",
     "Saldo finale \${DateFormat": "최종 잔액 \${DateFormat",
     "Saldo stimato tra": "다음 사이의 예상 잔액",
     "Saldo stimato tra 30 giorni": "30일 후 예상 잔액",
@@ -16997,7 +16997,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Saldato su": "ملحوم على",
     "Saldo alle \${DateFormat": "الرصيد في \${DateFormat",
     "Saldo attuale": "الرصيد الحالي",
-    "Saldo DadaFinanza": "رصيد دادافينانزا",
+    "Saldo Balyn": "رصيد دادافينانزا",
     "Saldo finale \${DateFormat": "الرصيد النهائي \${DateFormat",
     "Saldo stimato tra": "الرصيد المقدر بين",
     "Saldo stimato tra 30 giorni": "الرصيد المقدر في 30 يوما",
@@ -17167,7 +17167,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Saldato su": "टांका लगाया गया",
     "Saldo alle \${DateFormat": "\${DateFormat पर शेष",
     "Saldo attuale": "वर्तमान संतुलन",
-    "Saldo DadaFinanza": "DadaFinanza संतुलन",
+    "Saldo Balyn": "Balyn संतुलन",
     "Saldo finale \${DateFormat": "अंतिम शेष \${DateFormat",
     "Saldo stimato tra": "के बीच अनुमानित संतुलन",
     "Saldo stimato tra 30 giorni": "30 दिनों में अनुमानित शेष",
