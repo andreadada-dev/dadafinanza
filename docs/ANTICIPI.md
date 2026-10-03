@@ -1,10 +1,10 @@
-# DadaFinanza — Anticipi
+# Balyn — Anticipi
 
 `Anticipi` gestisce crediti e debiti informali tra persone senza confonderli con reddito e spesa personale.
 
 ## Modello mentale
 
-DadaFinanza separa tre concetti:
+Balyn separa tre concetti:
 
 1. **liquidità**: quanto denaro è realmente entrato o uscito dai conti;
 2. **analytics personali**: quanto ho realmente guadagnato o speso;
@@ -81,7 +81,7 @@ Categorie, budget, top categorie, medie e giorni senza spesa usano la quota pers
 
 ## Matching deterministico
 
-Per una normale entrata/spesa DadaFinanza può suggerire un anticipo aperto compatibile usando solo dati locali:
+Per una normale entrata/spesa Balyn può suggerire un anticipo aperto compatibile usando solo dati locali:
 
 - direzione compatibile;
 - importo <= residuo;
@@ -135,7 +135,7 @@ I reminder Anticipi riusano `NotificationService` e `flutter_local_notifications
 
 ## Backup e ripristino
 
-Il backup DadaFinanza copia l'intero SQLite: persone, Advances, settlement e collegamenti alle transazioni sono quindi parte dello stesso snapshot atomico. Il manifest espone inoltre conteggi diagnostici di persone/anticipi/settlement. Dopo il restore `FinanceSchemaService` riallinea lo schema senza creare un secondo formato dati.
+Il backup Balyn copia l'intero SQLite: persone, Advances, settlement e collegamenti alle transazioni sono quindi parte dello stesso snapshot atomico. Il manifest espone inoltre conteggi diagnostici di persone/anticipi/settlement. Dopo il restore `FinanceSchemaService` riallinea lo schema senza creare un secondo formato dati.
 
 ## Privacy
 

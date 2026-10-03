@@ -1,4 +1,4 @@
-# DadaFinanza — Deep feature hardening
+# Balyn — Deep feature hardening
 
 Audit tecnico del 24/09/2026. Questo documento è il piano operativo per eliminare divergenze tra feature vecchie e nuove, correggere bug reali e rendere le superfici principali coerenti e testabili.
 

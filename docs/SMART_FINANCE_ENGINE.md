@@ -1,8 +1,8 @@
-# DadaFinanza — Smart Finance Engine
+# Balyn — Smart Finance Engine
 
 ## Obiettivo
 
-Il motore Smart Finance rende DadaFinanza adattiva senza IA, cloud o classificatori remoti. Tutto resta locale e spiegabile.
+Il motore Smart Finance rende Balyn adattiva senza IA, cloud o classificatori remoti. Tutto resta locale e spiegabile.
 
 ## Architettura
 

@@ -1,10 +1,10 @@
-# DadaFinanza — Linee guida UI/UX
+# Balyn — Linee guida UI/UX
 
-Questo documento è il riferimento ufficiale per ogni modifica visiva di DadaFinanza. La UI deve sembrare progettata come un unico sistema, non come una somma di feature aggiunte nel tempo.
+Questo documento è il riferimento ufficiale per ogni modifica visiva di Balyn. La UI deve sembrare progettata come un unico sistema, non come una somma di feature aggiunte nel tempo.
 
 ## 1. Filosofia visiva
 
-DadaFinanza è clean, piatta, leggibile, professionale, moderna e accessibile. La gerarchia nasce prima da tipografia, spacing e allineamento; superfici, bordi ed elevation si usano solo quando aggiungono significato.
+Balyn è clean, piatta, leggibile, professionale, moderna e accessibile. La gerarchia nasce prima da tipografia, spacing e allineamento; superfici, bordi ed elevation si usano solo quando aggiungono significato.
 
 Default: **nessun container**. Non usare card per separare elementi che possono essere distinti da spazio, titoli o divider. Evitare card dentro card, rettangoli bordati decorativi e profondità artificiale.
 
@@ -241,7 +241,7 @@ Ogni istanza può avere conto/categoria/importi propri. La configurazione non de
 - dark/light funzionano?
 - font scaling non rompe il layout?
 - l'informazione resta chiara senza colore?
-- la schermata ha lo stesso ritmo delle altre sezioni DadaFinanza?
+- la schermata ha lo stesso ritmo delle altre sezioni Balyn?
 - widget/voce/preset passano tutti da `TransactionDraft` e Quick Add?
 - nessun input esterno salva un movimento senza conferma?
 - privacy widget e voice fallback sono conservativi di default?
