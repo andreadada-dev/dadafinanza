@@ -1,4 +1,4 @@
-import 'package:dadafinanza/l10n/localized_material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 
 import '../main.dart';
 import '../services/notification_service.dart';
@@ -167,7 +167,7 @@ class _NotificationSettingsScreenState
               ],
               const SizedBox(height: 24),
               Text(
-                'DadaFinanza usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.',
+                'Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
