@@ -1,4 +1,4 @@
-import 'package:dadafinanza/widgets/finance_quick_action.dart';
+import 'package:balyn/widgets/finance_quick_action.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

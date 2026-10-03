@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:dadafinanza/app_state.dart';
-import 'package:dadafinanza/data/app_database.dart';
-import 'package:dadafinanza/models/models.dart';
-import 'package:dadafinanza/services/csv_service.dart';
-import 'package:dadafinanza/services/finance_schema_service.dart';
-import 'package:dadafinanza/services/widget_service.dart';
+import 'package:balyn/app_state.dart';
+import 'package:balyn/data/app_database.dart';
+import 'package:balyn/models/models.dart';
+import 'package:balyn/services/csv_service.dart';
+import 'package:balyn/services/finance_schema_service.dart';
+import 'package:balyn/services/widget_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
@@ -144,8 +144,8 @@ void main() {
     expect(root, contains('PersonalSettingsScreen()'));
     expect(polished, contains('PersonalSettingsScreen()'));
     expect(legacySettings, isNot(contains('class SettingsScreen')));
-    expect(settings, contains("assets/branding/dadafinanza_logo_only.png"));
-    expect(settings, isNot(contains('_DadaFinanzaMarkPainter')));
+    expect(settings, contains("assets/branding/balyn_logo_only.png"));
+    expect(settings, isNot(contains('_BalynMarkPainter')));
 
     expect(
       donut,

@@ -1,8 +1,8 @@
-import 'package:dadafinanza/app_state.dart';
-import 'package:dadafinanza/data/app_database.dart';
-import 'package:dadafinanza/main.dart';
-import 'package:dadafinanza/screens/advances_screen.dart';
-import 'package:dadafinanza/theme/app_theme.dart';
+import 'package:balyn/app_state.dart';
+import 'package:balyn/data/app_database.dart';
+import 'package:balyn/main.dart';
+import 'package:balyn/screens/advances_screen.dart';
+import 'package:balyn/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
