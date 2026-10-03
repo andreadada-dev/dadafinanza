@@ -103,7 +103,7 @@ def human_candidate(s: str, *, dynamic_fragment: bool = False) -> bool:
         return False
     if not re.search(r"[A-Za-zÀ-ÿА-Яа-я]", value):
         return False
-    if any(token in value for token in (" = ?", "_id", "sqlite", "com.dadafinanza", "dadafinanza/")):
+    if any(token in value for token in (" = ?", "_id", "sqlite", "com.andreadada.balyn", "balyn/")):
         return False
     if dynamic_fragment and len(value) < 4:
         return False

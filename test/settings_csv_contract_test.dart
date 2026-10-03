@@ -27,7 +27,7 @@ void main() {
     ffi.sqfliteFfiInit();
     databaseFactory = ffi.databaseFactoryFfi;
     databaseRoot = await Directory.systemTemp.createTemp(
-      'dadafinanza-settings-db-',
+      'balyn-settings-db-',
     );
     await databaseFactory.setDatabasesPath(databaseRoot.path);
   });
@@ -207,6 +207,6 @@ void main() {
     expect(plan, isNot(contains('- [ ]')));
     expect(plan, contains('Oggi · Settimana · Mese · Anno'));
     expect(plan, contains('Custom'));
-    expect(pubspec, contains('version: 1.7.4+23'));
+    expect(pubspec, contains('version: 1.8.0+24'));
   });
 }

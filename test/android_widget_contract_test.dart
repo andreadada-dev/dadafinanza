@@ -3,27 +3,27 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('Android manifest publishes all DadaFinanza widget variants', () {
+  test('Android manifest publishes all Balyn widget variants', () {
     final manifest = File(
       'android/app/src/main/AndroidManifest.xml',
     ).readAsStringSync();
-    expect(manifest, contains('.DadaFinanceWidgetProvider'));
-    expect(manifest, contains('.DadaBalanceWidgetProvider'));
-    expect(manifest, contains('.DadaQuickAddWidgetProvider'));
-    expect(manifest, contains('@xml/dada_finance_widget_info'));
-    expect(manifest, contains('@xml/dada_balance_widget_info'));
-    expect(manifest, contains('@xml/dada_quick_add_widget_info'));
+    expect(manifest, contains('.BalynFinanceWidgetProvider'));
+    expect(manifest, contains('.BalynBalanceWidgetProvider'));
+    expect(manifest, contains('.BalynQuickAddWidgetProvider'));
+    expect(manifest, contains('@xml/balyn_finance_widget_info'));
+    expect(manifest, contains('@xml/balyn_balance_widget_info'));
+    expect(manifest, contains('@xml/balyn_quick_add_widget_info'));
   });
 
   test('Android widgets declare distinct target home-screen sizes', () {
     final balance = File(
-      'android/app/src/main/res/xml/dada_balance_widget_info.xml',
+      'android/app/src/main/res/xml/balyn_balance_widget_info.xml',
     ).readAsStringSync();
     final quick = File(
-      'android/app/src/main/res/xml/dada_quick_add_widget_info.xml',
+      'android/app/src/main/res/xml/balyn_quick_add_widget_info.xml',
     ).readAsStringSync();
     final summary = File(
-      'android/app/src/main/res/xml/dada_finance_widget_info.xml',
+      'android/app/src/main/res/xml/balyn_finance_widget_info.xml',
     ).readAsStringSync();
 
     expect(balance, contains('android:targetCellWidth="2"'));
@@ -36,16 +36,16 @@ void main() {
 
   test('Android widgets use the configured app currency', () {
     final provider = File(
-      'android/app/src/main/kotlin/com/dadafinanza/app/DadaFinanceWidgetProvider.kt',
+      'android/app/src/main/kotlin/com/andreadada/balyn/BalynFinanceWidgetProvider.kt',
     ).readAsStringSync();
     final widgetService = File(
       'lib/services/widget_service.dart',
     ).readAsStringSync();
     final balanceLayout = File(
-      'android/app/src/main/res/layout/dada_balance_widget.xml',
+      'android/app/src/main/res/layout/balyn_balance_widget.xml',
     ).readAsStringSync();
     final summaryLayout = File(
-      'android/app/src/main/res/layout/dada_finance_widget.xml',
+      'android/app/src/main/res/layout/balyn_finance_widget.xml',
     ).readAsStringSync();
 
     expect(widgetService, contains("'currency', currency"));

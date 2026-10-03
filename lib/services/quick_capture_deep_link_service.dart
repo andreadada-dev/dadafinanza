@@ -8,7 +8,7 @@ class QuickCaptureDeepLinkService {
   const QuickCaptureDeepLinkService();
 
   Future<TransactionDraft?> fromUri(AppState state, Uri uri) async {
-    if (uri.scheme != 'dadafinanza' || uri.host != 'quick-add') return null;
+    if (uri.scheme != 'balyn' || uri.host != 'quick-add') return null;
     final query = uri.queryParameters;
 
     var type = switch (query['type']?.toLowerCase()) {

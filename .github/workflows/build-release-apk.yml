@@ -35,8 +35,8 @@ jobs:
             echo "::error::/builds is not mounted on the Android release runner."
             exit 1
           fi
-          mkdir -p /builds/dadafinanza
-          test -w /builds/dadafinanza
+          mkdir -p /builds/balyn
+          test -w /builds/balyn
 
       - name: Show source
         run: |
@@ -88,8 +88,8 @@ jobs:
           set -euo pipefail
           source="build/app/outputs/flutter-apk/app-release.apk"
           test -f "$source"
-          destination="/builds/dadafinanza/DadaFinanza-internal-release-run${GITHUB_RUN_NUMBER}.apk"
-          latest="/builds/dadafinanza/DadaFinanza-internal-release-latest.apk"
+          destination="/builds/balyn/Balyn-internal-release-run${GITHUB_RUN_NUMBER}.apk"
+          latest="/builds/balyn/Balyn-internal-release-latest.apk"
           cp "$source" "$destination"
           cp "$source" "$latest"
           sha256sum "$destination" | tee "$destination.sha256"
