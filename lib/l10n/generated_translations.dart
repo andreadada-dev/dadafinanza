@@ -1250,8 +1250,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "Automatic suggestions",
     "Suggerimenti obiettivi": "Objective suggestions",
     "Supermercato": "Supermarket",
-    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
-        "Developer: Andrea Dada. For privacy or support requests",
+    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
+        "Developer: Andrea Balyn. For privacy or support requests",
     "Tag": "Tags",
     "Tasse": "Taxes",
     "Taxi": "Taxis",
@@ -1765,7 +1765,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Da restituire": "Para ser devuelto",
     "Da ricevere": "Para ser recibido",
     "Da saldare": "a pagar",
-    "DadaBalanceWidgetProvider": "Proveedor de widgets de DadaBalance",
+    "BalynBalanceWidgetProvider": "BalynBalanceWidgetProvider",
     "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
         "Balyn no envía transacciones, recibos, descripciones o patrones a servicios externos.",
     "Balyn non riceve né memorizza dati biometrici.":
@@ -1782,7 +1782,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Balyn è bloccata": "Balyn está bloqueado",
     "Balyn è progettata local-first. Movimenti, conti, categorie, ":
         "Balyn está diseñado pensando primero en lo local. transacciones, cuentas, categorías,",
-    "BalynBackup": "BalynCopia de seguridad",
+    "BalynBackup": "BalynBackup",
     "Dai un nome ai risparmi che vuoi costruire.":
         "Nombra los ahorros que deseas generar.",
     "Dal": "De",
@@ -2679,8 +2679,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "Sugerencias automáticas",
     "Suggerimenti obiettivi": "Sugerencias objetivas",
     "Supermercato": "supermercado",
-    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
-        "Desarrollador: Andrea Dada. Para solicitudes de privacidad o soporte",
+    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
+        "Desarrollador: Andrea Balyn. Para solicitudes de privacidad o soporte",
     "Tag": "Etiquetas",
     "Tasse": "Impuestos",
     "Taxi": "Taxis",
@@ -3204,8 +3204,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Balyn è bloccata": "Balyn est bloqué",
     "Balyn è progettata local-first. Movimenti, conti, categorie, ":
         "Balyn est conçu d'abord localement. transactions, comptes, catégories,",
-    "Balyn.": "Dada Finance.",
-    "BalynBackup": "BalynSauvegarde",
+    "Balyn.": "Balyn.",
+    "BalynBackup": "BalynBackup",
     "Dai un nome ai risparmi che vuoi costruire.":
         "Nommez les économies que vous souhaitez constituer.",
     "Dal": "De",
@@ -4109,8 +4109,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "Suggestions automatiques",
     "Suggerimenti obiettivi": "Suggestions objectives",
     "Supermercato": "Supermarché",
-    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
-        "Développeur : Andrea Dada. Pour les demandes de confidentialité ou d’assistance",
+    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
+        "Développeur : Andrea Balyn. Pour les demandes de confidentialité ou d’assistance",
     "Tag": "Balises",
     "Tasse": "Impôts",
     "Taxi": "Taxis",
@@ -5537,8 +5537,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "Automatische Vorschläge",
     "Suggerimenti obiettivi": "Objektive Vorschläge",
     "Supermercato": "Supermarkt",
-    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
-        "Entwickler: Andrea Dada. Für Datenschutz- oder Supportanfragen",
+    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
+        "Entwickler: Andrea Balyn. Für Datenschutz- oder Supportanfragen",
     "Tag": "Schlagworte",
     "Tasse": "Steuern",
     "Taxi": "Taxis",
@@ -6940,8 +6940,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "Sugestões automáticas",
     "Suggerimenti obiettivi": "Sugestões objetivas",
     "Supermercato": "Supermercado",
-    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
-        "Desenvolvedor: Andrea Dada. Para solicitações de privacidade ou suporte",
+    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
+        "Desenvolvedor: Andrea Balyn. Para solicitações de privacidade ou suporte",
     "Tag": "Etiquetas",
     "Tasse": "Impostos",
     "Taxi": "Táxis",
@@ -7364,7 +7364,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Подтверждено = повторение настроено. Ожидаемый = историческая закономерность с высокой степенью достоверности. Предполагаемое = совокупное поведение, а не определенное событие.",
     "Configura": "Настроить",
     "Configura conto e categoria": "Настройте учетную запись и категорию",
-    "Configura Balyn": "Настроить ДадаФинанса",
+    "Configura Balyn": "Настроить Balyn",
     "Configura widget": "Настройка виджетов",
     "Configurate": "Настроить",
     "Configurazione per istanza": "Конфигурация для каждого экземпляра",
@@ -7455,9 +7455,9 @@ generatedTranslations = <String, Map<String, String>>{
     "Da restituire": "Чтобы быть возвращенным",
     "Da ricevere": "Быть полученным",
     "Da saldare": "Платить",
-    "DadaBalanceWidgetProvider": "ДадаБалансВиджетПровайдер",
-    "DadaFinanceWidgetProvider": "ДадаФинансВиджетПровайдер",
-    "Balyn": "ДадаФинанса",
+    "BalynBalanceWidgetProvider": "BalynBalanceWidgetProvider",
+    "BalynFinanceWidgetProvider": "BalynFinanceWidgetProvider",
+    "Balyn": "Balyn",
     "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
         "Balyn не отправляет транзакции, квитанции, описания или шаблоны во внешние службы.",
     "Balyn non riceve né memorizza dati biometrici.":
@@ -7469,15 +7469,15 @@ generatedTranslations = <String, Map<String, String>>{
         "Balyn использует локальное планирование и ограничивает дублирование. Автоматические повторения по-прежнему согласовываются при открытии приложения.",
     "Balyn · Importi rapidi": "Balyn · Быстрые суммы",
     "Balyn · Quick Capture": "Balyn · Быстрый захват",
-    "Balyn · Rapido": "ДадаФинанса · Рапидо",
-    "Balyn · Riepilogo": "ДадаФинанса · Резюме",
-    "Balyn · Saldo": "ДадаФинанса · Баланс",
-    "Balyn è bloccata": "ДадаФинанса заблокирована",
+    "Balyn · Rapido": "Balyn · Рапидо",
+    "Balyn · Riepilogo": "Balyn · Резюме",
+    "Balyn · Saldo": "Balyn · Баланс",
+    "Balyn è bloccata": "Balyn заблокирована",
     "Balyn è progettata local-first. Movimenti, conti, categorie, ":
         "Balyn ориентирована прежде всего на местное население. транзакции, счета, категории,",
-    "Balyn.": "ДадаФинанса.",
-    "BalynBackup": "BalynРезервное копирование",
-    "DadaQuickAddWidgetProvider": "ДадаQuickAddWidgetProvider",
+    "Balyn.": "Balyn.",
+    "BalynBackup": "BalynBackup",
+    "BalynQuickAddWidgetProvider": "BalynQuickAddWidgetProvider",
     "Dai un nome ai risparmi che vuoi costruire.":
         "Назовите сбережения, которые вы хотите накопить.",
     "Dal": "От",
@@ -8389,8 +8389,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "Автоматические предложения",
     "Suggerimenti obiettivi": "Объективные предложения",
     "Supermercato": "Супермаркет",
-    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
-        "Разработчик: Andrea Dada. Для запросов на конфиденциальность или поддержку",
+    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
+        "Разработчик: Andrea Balyn. Для запросов на конфиденциальность или поддержку",
     "Tag": "Теги",
     "Tasse": "Налоги",
     "Taxi": "Такси",
@@ -8879,25 +8879,25 @@ generatedTranslations = <String, Map<String, String>>{
     "Da restituire": "待退回",
     "Da ricevere": "待收到",
     "Da saldare": "待付款",
-    "Balyn": "达达财经",
+    "Balyn": "Balyn",
     "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
         "Balyn 不会向外部服务发送交易、收据、描述或模式。",
     "Balyn non riceve né memorizza dati biometrici.": "Balyn 不接收或存储生物识别数据。",
     "Balyn non richiede un account e non integra pubblicità, ":
         "Balyn 不需要账户，也不集成广告，",
-    "Balyn sulla Home": "达达金融首页",
+    "Balyn sulla Home": "Balyn首页",
     "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
         "Balyn 使用本地调度并限制重复。打开应用程序时，自动重复仍会进行协调。",
     "Balyn · Importi rapidi": "Balyn · 快速金额",
     "Balyn · Quick Capture": "Balyn · 快速捕捉",
-    "Balyn · Rapido": "达达金融·拉皮多",
-    "Balyn · Riepilogo": "达达财经 · 概要",
-    "Balyn · Saldo": "达达财经 · 余额",
+    "Balyn · Rapido": "Balyn·拉皮多",
+    "Balyn · Riepilogo": "Balyn · 概要",
+    "Balyn · Saldo": "Balyn · 余额",
     "Balyn è bloccata": "Balyn 被封锁",
     "Balyn è progettata local-first. Movimenti, conti, categorie, ":
         "Balyn 的设计以本地为先。交易、账户、类别、",
-    "Balyn.": "达达金融。",
-    "BalynBackup": "达达金融备份",
+    "Balyn.": "Balyn.",
+    "BalynBackup": "BalynBackup",
     "Dai un nome ai risparmi che vuoi costruire.": "说出您想要节省的费用。",
     "Dal": "来自",
     "Dashboard avanzata": "高级仪表板",
@@ -9709,8 +9709,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "自动建议",
     "Suggerimenti obiettivi": "客观建议",
     "Supermercato": "超市",
-    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
-        "开发商：Andrea Dada。对于隐私或支持请求",
+    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
+        "开发商：Andrea Balyn。对于隐私或支持请求",
     "Tag": "标签",
     "Tasse": "税收",
     "Taxi": "出租车",
@@ -10189,8 +10189,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Da restituire": "返却予定",
     "Da ricevere": "受け取り予定",
     "Da saldare": "支払われるべきもの",
-    "DadaFinanceWidgetProvider": "Dadaファイナンスウィジェットプロバイダー",
-    "Balyn": "ダダフィナンザ",
+    "BalynFinanceWidgetProvider": "BalynFinanceWidgetProvider",
+    "Balyn": "Balyn",
     "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
         "Balyn は、トランザクション、領収書、説明、またはパターンを外部サービスに送信しません。",
     "Balyn non riceve né memorizza dati biometrici.":
@@ -10202,15 +10202,15 @@ generatedTranslations = <String, Map<String, String>>{
         "Balyn はローカル スケジューリングを使用し、重複を制限します。自動繰り返しは、アプリを開いたときに引き続き調整されます。",
     "Balyn · Importi rapidi": "Balyn · クイック金額",
     "Balyn · Quick Capture": "Balyn · クイックキャプチャ",
-    "Balyn · Rapido": "ダダフィナンザ・ラピド",
+    "Balyn · Rapido": "Balyn・ラピド",
     "Balyn · Riepilogo": "Balyn · 概要",
     "Balyn · Saldo": "Balyn · バランス",
     "Balyn è bloccata": "Balynさんはブロックされました",
     "Balyn è progettata local-first. Movimenti, conti, categorie, ":
         "Balyn はローカルファーストで設計されています。トランザクション、アカウント、カテゴリ、",
-    "Balyn.": "ダダフィナンザ。",
-    "BalynBackup": "Balynバックアップ",
-    "DadaQuickAmountsWidgetProvider": "DadaQuickAmountsウィジェットプロバイダー",
+    "Balyn.": "Balyn.",
+    "BalynBackup": "BalynBackup",
+    "BalynQuickAmountsWidgetProvider": "BalynQuickAmountsWidgetProvider",
     "Dai un nome ai risparmi che vuoi costruire.": "築きたい貯蓄に名前を付けてください。",
     "Dal": "から",
     "Dashboard avanzata": "高度なダッシュボード",
@@ -11053,8 +11053,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "自動提案",
     "Suggerimenti obiettivi": "客観的な提案",
     "Supermercato": "スーパーマーケット",
-    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
-        "開発者: Andrea Dada。プライバシーまたはサポートのリクエストについて",
+    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
+        "開発者: Andrea Balyn。プライバシーまたはサポートのリクエストについて",
     "Tag": "タグ",
     "Tasse": "税金",
     "Taxi": "タクシー",
@@ -11460,7 +11460,7 @@ generatedTranslations = <String, Map<String, String>>{
         "확인됨 = 반복이 구성되었습니다. 예상 = 높은 신뢰도 과거 패턴. 예상 = 특정 이벤트가 아닌 집계된 동작입니다.",
     "Configura": "구성",
     "Configura conto e categoria": "계정 및 카테고리 구성",
-    "Configura Balyn": "Dada 구성금융",
+    "Configura Balyn": "Balyn 구성금융",
     "Configura widget": "위젯 구성",
     "Configurate": "구성",
     "Configurazione per istanza": "인스턴스별 구성",
@@ -11540,8 +11540,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Da restituire": "반환 예정",
     "Da ricevere": "수신 예정",
     "Da saldare": "지불 예정",
-    "DadaFinanceWidgetProvider": "Dada금융위젯공급자",
-    "Balyn": "Dada금융",
+    "BalynFinanceWidgetProvider": "BalynFinanceWidgetProvider",
+    "Balyn": "Balyn",
     "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
         "Balyn는 거래, 영수증, 설명 또는 패턴을 외부 서비스로 보내지 않습니다.",
     "Balyn non riceve né memorizza dati biometrici.":
@@ -11558,8 +11558,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Balyn è bloccata": "Balyn가 차단되었습니다",
     "Balyn è progettata local-first. Movimenti, conti, categorie, ":
         "Balyn는 로컬 우선으로 설계되었습니다. 거래, 계정, 카테고리,",
-    "Balyn.": "Dada금융.",
-    "BalynBackup": "Dada금융백업",
+    "Balyn.": "Balyn.",
+    "BalynBackup": "BalynBackup",
     "Dai un nome ai risparmi che vuoi costruire.": "구축하고 싶은 저축의 이름을 지정하세요.",
     "Dal": "에서",
     "Dashboard avanzata": "고급 대시보드",
@@ -12400,8 +12400,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "자동 제안",
     "Suggerimenti obiettivi": "객관적인 제안",
     "Supermercato": "슈퍼마켓",
-    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
-        "개발자: Andrea Dada. 개인 정보 보호 또는 지원 요청의 경우",
+    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
+        "개발자: Andrea Balyn. 개인 정보 보호 또는 지원 요청의 경우",
     "Tag": "태그",
     "Tasse": "세금",
     "Taxi": "택시",
@@ -12920,8 +12920,8 @@ generatedTranslations = <String, Map<String, String>>{
         "يستخدم Balyn الجدولة المحلية ويحد من التكرارات. وتتم تسوية التكرارات التلقائية عند فتح التطبيق.",
     "Balyn · Importi rapidi": "Balyn · المبالغ السريعة",
     "Balyn · Quick Capture": "Balyn · الالتقاط السريع",
-    "Balyn · Rapido": "دادافينانزا · رابيدو",
-    "Balyn · Riepilogo": "دادافينانزا · الملخص",
+    "Balyn · Rapido": "Balyn · رابيدو",
+    "Balyn · Riepilogo": "Balyn · الملخص",
     "Balyn · Saldo": "Balyn · الرصيد",
     "Balyn è bloccata": "تم حظر Balyn",
     "Balyn è progettata local-first. Movimenti, conti, categorie, ":
@@ -13818,8 +13818,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "الاقتراحات التلقائية",
     "Suggerimenti obiettivi": "اقتراحات موضوعية",
     "Supermercato": "سوبر ماركت",
-    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
-        "المطور: Andrea Dada. لطلبات الخصوصية أو الدعم",
+    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
+        "المطور: Andrea Balyn. لطلبات الخصوصية أو الدعم",
     "Tag": "العلامات",
     "Tasse": "الضرائب",
     "Taxi": "سيارات الأجرة",
@@ -14334,7 +14334,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Da restituire": "लौटाया जाना है",
     "Da ricevere": "प्राप्त किया जाना है",
     "Da saldare": "भुगतान किया जाना है",
-    "DadaBalanceWidgetProvider": "दादाबैलेंसविजेटप्रदाता",
+    "BalynBalanceWidgetProvider": "BalynBalanceWidgetProvider",
     "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
         "Balyn बाहरी सेवाओं को लेनदेन, रसीदें, विवरण या पैटर्न नहीं भेजता है।",
     "Balyn non riceve né memorizza dati biometrici.":
@@ -15239,8 +15239,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "स्वचालित सुझाव",
     "Suggerimenti obiettivi": "वस्तुनिष्ठ सुझाव",
     "Supermercato": "सुपरमार्केट",
-    "Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto ":
-        "डेवलपर: Andrea Dada. गोपनीयता या समर्थन अनुरोधों के लिए",
+    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
+        "डेवलपर: Andrea Balyn. गोपनीयता या समर्थन अनुरोधों के लिए",
     "Tag": "टैग",
     "Tasse": "कर",
     "Taxi": "टैक्सियाँ",
@@ -16327,7 +16327,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Saldato su": "Припаян",
     "Saldo alle \${DateFormat": "Баланс в \${DateFormat",
     "Saldo attuale": "Текущий баланс",
-    "Saldo Balyn": "Баланс ДадаФинанса",
+    "Saldo Balyn": "Баланс Balyn",
     "Saldo finale \${DateFormat": "Итоговый баланс \${DateFormat",
     "Saldo stimato tra": "Предполагаемый баланс между",
     "Saldo stimato tra 30 giorni": "Предполагаемый баланс через 30 дней",
@@ -16494,7 +16494,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Saldato su": "焊接在",
     "Saldo alle \${DateFormat": "\${DateFormat 的余额",
     "Saldo attuale": "当前余额",
-    "Saldo Balyn": "达达金融余额",
+    "Saldo Balyn": "Balyn余额",
     "Saldo finale \${DateFormat": "最终余额\${DateFormat",
     "Saldo stimato tra": "估计之间的平衡",
     "Saldo stimato tra 30 giorni": "预计 30 天内结余",
@@ -16976,7 +16976,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Saldato su": "ملحوم على",
     "Saldo alle \${DateFormat": "الرصيد في \${DateFormat",
     "Saldo attuale": "الرصيد الحالي",
-    "Saldo Balyn": "رصيد دادافينانزا",
+    "Saldo Balyn": "رصيد Balyn",
     "Saldo finale \${DateFormat": "الرصيد النهائي \${DateFormat",
     "Saldo stimato tra": "الرصيد المقدر بين",
     "Saldo stimato tra 30 giorni": "الرصيد المقدر في 30 يوما",
