@@ -23,7 +23,7 @@
         android:layout_marginTop="2dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="DadaFinanza"
+        android:text="Balyn"
         android:textColor="#B9BBC2"
         android:textSize="11sp" />
 
