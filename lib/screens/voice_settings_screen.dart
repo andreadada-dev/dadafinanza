@@ -1,4 +1,4 @@
-import 'package:dadafinanza/l10n/localized_material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 
 import '../main.dart';
 import '../widgets/ui_helpers.dart';
@@ -117,9 +117,9 @@ class _VoiceSettingsScreenState extends State<VoiceSettingsScreen> {
               const ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: Icon(Icons.phonelink_lock_outlined),
-                title: Text('Nessun assistente cloud DadaFinanza'),
+                title: Text('Nessun assistente cloud Balyn'),
                 subtitle: Text(
-                  'Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server DadaFinanza.',
+                  'Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.',
                 ),
               ),
             ],

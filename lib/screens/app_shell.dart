@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dadafinanza/l10n/localized_material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 
 import '../app_state.dart';
 import '../main.dart';
@@ -17,7 +17,7 @@ import 'planning_screens.dart';
 import 'preset_management_screen.dart';
 import 'quick_add_page.dart';
 
-/// The single navigation shell exposed by DadaFinanza.
+/// The single navigation shell exposed by Balyn.
 ///
 /// Home, Movimenti and Analisi share one account context. `null` means Totale.
 class DadaAppShell extends StatefulWidget {

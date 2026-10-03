@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dadafinanza/l10n/localized_material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 import 'package:home_widget/home_widget.dart';
 
 import '../widgets/ui_helpers.dart';
@@ -40,14 +40,14 @@ class _AndroidWidgetsScreenState extends State<AndroidWidgetsScreen> {
     try {
       await HomeWidget.requestPinWidget(
         androidName: provider,
-        qualifiedAndroidName: 'com.dadafinanza.app.$provider',
+        qualifiedAndroidName: 'com.andreadada.balyn.$provider',
       );
     } catch (_) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-            'Apri il selettore widget del launcher e cerca DadaFinanza.',
+            'Apri il selettore widget del launcher e cerca Balyn.',
           ),
         ),
       );
@@ -61,7 +61,7 @@ class _AndroidWidgetsScreenState extends State<AndroidWidgetsScreen> {
       padding: const EdgeInsets.fromLTRB(20, 8, 20, 60),
       children: [
         Text(
-          'DadaFinanza sulla Home',
+          'Balyn sulla Home',
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         const SizedBox(height: 8),
@@ -133,7 +133,7 @@ class _AndroidWidgetsScreenState extends State<AndroidWidgetsScreen> {
         else if (!supported)
           Text(
             Platform.isAndroid
-                ? 'Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → DadaFinanza.'
+                ? 'Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.'
                 : 'I widget di questa sezione sono disponibili su Android.',
           )
         else

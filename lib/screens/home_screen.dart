@@ -1,11 +1,11 @@
-import 'package:dadafinanza/l10n/localized_material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
 import '../core/money.dart';
 import '../main.dart';
 import '../models/models.dart';
-import '../widgets/dada_motion.dart';
+import '../widgets/balyn_motion.dart';
 import '../widgets/finance_quick_action.dart';
 import '../widgets/home_dashboard_widget.dart';
 import '../widgets/ui_helpers.dart';
@@ -64,7 +64,7 @@ class DadaHomeScreen extends StatelessWidget {
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('DadaFinanza'),
+              const Text('Balyn'),
               Text(
                 DateFormat(
                   'MMMM yyyy',
@@ -551,7 +551,7 @@ class _SetupBlock extends StatelessWidget {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(
-        'Configura DadaFinanza',
+        'Configura Balyn',
         style: Theme.of(context).textTheme.headlineSmall,
       ),
       const SizedBox(height: 8),
