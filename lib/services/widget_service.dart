@@ -5,12 +5,12 @@ import '../models/models.dart';
 
 class WidgetService {
   static const summaryProvider =
-      'com.dadafinanza.app.DadaFinanceWidgetProvider';
+      'com.andreadada.balyn.BalynFinanceWidgetProvider';
   static const balanceProvider =
-      'com.dadafinanza.app.DadaBalanceWidgetProvider';
-  static const quickProvider = 'com.dadafinanza.app.DadaQuickAddWidgetProvider';
+      'com.andreadada.balyn.BalynBalanceWidgetProvider';
+  static const quickProvider = 'com.andreadada.balyn.BalynQuickAddWidgetProvider';
   static const amountsProvider =
-      'com.dadafinanza.app.DadaQuickAmountsWidgetProvider';
+      'com.andreadada.balyn.BalynQuickAmountsWidgetProvider';
 
   Future<void> sync({
     required double balance,
@@ -49,19 +49,19 @@ class WidgetService {
 
     await Future.wait([
       HomeWidget.updateWidget(
-        androidName: 'DadaFinanceWidgetProvider',
+        androidName: 'BalynFinanceWidgetProvider',
         qualifiedAndroidName: summaryProvider,
       ),
       HomeWidget.updateWidget(
-        androidName: 'DadaBalanceWidgetProvider',
+        androidName: 'BalynBalanceWidgetProvider',
         qualifiedAndroidName: balanceProvider,
       ),
       HomeWidget.updateWidget(
-        androidName: 'DadaQuickAddWidgetProvider',
+        androidName: 'BalynQuickAddWidgetProvider',
         qualifiedAndroidName: quickProvider,
       ),
       HomeWidget.updateWidget(
-        androidName: 'DadaQuickAmountsWidgetProvider',
+        androidName: 'BalynQuickAmountsWidgetProvider',
         qualifiedAndroidName: amountsProvider,
       ),
     ]);

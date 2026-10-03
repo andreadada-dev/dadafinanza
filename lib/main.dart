@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dadafinanza/l10n/localized_material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -30,18 +30,18 @@ Future<void> main() async {
   await const RecurringExecutionService().processDue(database);
   final state = AppState(database);
   await state.load();
-  runApp(DadaFinanzaApp(state: state));
+  runApp(BalynApp(state: state));
 }
 
-class DadaFinanzaApp extends StatefulWidget {
-  const DadaFinanzaApp({required this.state, super.key});
+class BalynApp extends StatefulWidget {
+  const BalynApp({required this.state, super.key});
   final AppState state;
 
   @override
-  State<DadaFinanzaApp> createState() => _DadaFinanzaAppState();
+  State<BalynApp> createState() => _BalynAppState();
 }
 
-class _DadaFinanzaAppState extends State<DadaFinanzaApp>
+class _BalynAppState extends State<BalynApp>
     with WidgetsBindingObserver {
   final security = SecurityService();
   final notificationService = NotificationService();
@@ -94,21 +94,21 @@ class _DadaFinanzaAppState extends State<DadaFinanzaApp>
     await HomeWidget.saveWidgetData<bool>('hide_balance', hidden);
     await Future.wait([
       HomeWidget.updateWidget(
-        androidName: 'DadaFinanceWidgetProvider',
-        qualifiedAndroidName: 'com.dadafinanza.app.DadaFinanceWidgetProvider',
+        androidName: 'BalynFinanceWidgetProvider',
+        qualifiedAndroidName: 'com.andreadada.balyn.BalynFinanceWidgetProvider',
       ),
       HomeWidget.updateWidget(
-        androidName: 'DadaBalanceWidgetProvider',
-        qualifiedAndroidName: 'com.dadafinanza.app.DadaBalanceWidgetProvider',
+        androidName: 'BalynBalanceWidgetProvider',
+        qualifiedAndroidName: 'com.andreadada.balyn.BalynBalanceWidgetProvider',
       ),
       HomeWidget.updateWidget(
-        androidName: 'DadaQuickAddWidgetProvider',
-        qualifiedAndroidName: 'com.dadafinanza.app.DadaQuickAddWidgetProvider',
+        androidName: 'BalynQuickAddWidgetProvider',
+        qualifiedAndroidName: 'com.andreadada.balyn.BalynQuickAddWidgetProvider',
       ),
       HomeWidget.updateWidget(
-        androidName: 'DadaQuickAmountsWidgetProvider',
+        androidName: 'BalynQuickAmountsWidgetProvider',
         qualifiedAndroidName:
-            'com.dadafinanza.app.DadaQuickAmountsWidgetProvider',
+            'com.andreadada.balyn.BalynQuickAmountsWidgetProvider',
       ),
     ]);
   }
@@ -145,7 +145,7 @@ class _DadaFinanzaAppState extends State<DadaFinanzaApp>
         builder: (context, _) {
           AppI18n.use(widget.state.languageCode);
           return MaterialApp(
-            title: 'DadaFinanza',
+            title: 'Balyn',
             navigatorKey: navigatorKey,
             debugShowCheckedModeBanner: false,
             theme: AppTheme.light(),

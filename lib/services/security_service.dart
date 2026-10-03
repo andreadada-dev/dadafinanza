@@ -20,7 +20,7 @@ class SecurityService {
     : storage = storage ?? const FlutterSecureStorage(),
       auth = auth ?? LocalAuthentication();
 
-  static const _privacyChannel = MethodChannel('dadafinanza/privacy');
+  static const _privacyChannel = MethodChannel('balyn/privacy');
   static const _modeKey = 'security.lock_mode';
   static const _pinKey = 'security.pin';
   static const _timeoutKey = 'security.timeout';
@@ -88,7 +88,7 @@ class SecurityService {
     try {
       return await auth.authenticate(
         localizedReason:
-            'Sblocca DadaFinanza per vedere i tuoi dati finanziari',
+            'Sblocca Balyn per vedere i tuoi dati finanziari',
         biometricOnly: true,
         sensitiveTransaction: true,
         persistAcrossBackgrounding: true,

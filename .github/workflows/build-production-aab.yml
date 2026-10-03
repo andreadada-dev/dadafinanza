@@ -7,7 +7,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: dadafinanza-production-release
+  group: balyn-production-release
   cancel-in-progress: true
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
       ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
       ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
       ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-      DADAFINANZA_REQUIRE_RELEASE_SIGNING: "1"
+      BALYN_REQUIRE_RELEASE_SIGNING: "1"
 
     steps:
       - name: Checkout main
@@ -35,8 +35,8 @@ jobs:
             echo "::error::/builds is not mounted on the Android release runner."
             exit 1
           fi
-          mkdir -p /builds/dadafinanza
-          test -w /builds/dadafinanza
+          mkdir -p /builds/balyn
+          test -w /builds/balyn
 
       - name: Setup Java 17
         uses: actions/setup-java@v5
@@ -49,10 +49,10 @@ jobs:
         run: |
           set -euo pipefail
 
-          temp_keystore="$RUNNER_TEMP/dadafinanza-upload.jks"
-          local_signing_dir="/builds/dadafinanza/signing"
-          local_keystore="$local_signing_dir/dadafinanza-upload.jks"
-          local_credentials="$local_signing_dir/dadafinanza-upload.env"
+          temp_keystore="$RUNNER_TEMP/balyn-upload.jks"
+          local_signing_dir="/builds/balyn/signing"
+          local_keystore="$local_signing_dir/balyn-upload.jks"
+          local_credentials="$local_signing_dir/balyn-upload.env"
 
           github_signing=1
           for name in ANDROID_KEYSTORE_BASE64 ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_ALIAS ANDROID_KEY_PASSWORD; do
@@ -81,13 +81,13 @@ jobs:
           chmod 700 "$local_signing_dir" || true
 
           if [ ! -f "$local_keystore" ] || [ ! -f "$local_credentials" ]; then
-            echo "No local upload key found. Generating the initial DadaFinanza upload key."
+            echo "No local upload key found. Generating the initial Balyn upload key."
 
             store_password="$(openssl rand -hex 24)"
             key_password="$(openssl rand -hex 24)"
-            key_alias="dadafinanza-upload"
+            key_alias="balyn-upload"
 
-            keytool -genkeypair               -v               -keystore "$local_keystore"               -alias "$key_alias"               -keyalg RSA               -keysize 4096               -validity 10000               -storepass "$store_password"               -keypass "$key_password"               -dname "CN=DadaFinanza, OU=Mobile, O=DDone, C=IT"
+            keytool -genkeypair               -v               -keystore "$local_keystore"               -alias "$key_alias"               -keyalg RSA               -keysize 4096               -validity 10000               -storepass "$store_password"               -keypass "$key_password"               -dname "CN=Balyn, OU=Mobile, O=Andrea Dada, C=IT"
 
             chmod 600 "$local_keystore" || true
             umask 077
@@ -99,9 +99,9 @@ jobs:
             chmod 600 "$local_credentials" || true
 
             cat > "$local_signing_dir/README.txt" <<'EOF'
-          DadaFinanza Android upload signing material.
+          Balyn Android upload signing material.
 
-          Keep BOTH dadafinanza-upload.jks and dadafinanza-upload.env backed up in a secure location.
+          Keep BOTH balyn-upload.jks and balyn-upload.env backed up in a secure location.
           Never commit these files to Git.
           The .env file contains the passwords required to sign future uploads.
           If Play App Signing is enabled, this is the upload key, not Google's app-signing key.
@@ -109,7 +109,7 @@ jobs:
 
             echo "Generated signing material in: $local_signing_dir"
           else
-            echo "Reusing existing local DadaFinanza upload key."
+            echo "Reusing existing local Balyn upload key."
           fi
 
           set -a
@@ -243,10 +243,10 @@ jobs:
           base_build="$(grep '^version:' pubspec.yaml | sed -E 's/.*\+([0-9]+).*/\1/')"
           build_number=$((base_build + GITHUB_RUN_NUMBER - 1))
 
-          aab_destination="/builds/dadafinanza/DadaFinanza-production-vc${build_number}-run${GITHUB_RUN_NUMBER}.aab"
-          aab_latest="/builds/dadafinanza/DadaFinanza-production-latest.aab"
-          apk_destination="/builds/dadafinanza/DadaFinanza-production-vc${build_number}-run${GITHUB_RUN_NUMBER}.apk"
-          apk_latest="/builds/dadafinanza/DadaFinanza-production-latest.apk"
+          aab_destination="/builds/balyn/Balyn-production-vc${build_number}-run${GITHUB_RUN_NUMBER}.aab"
+          aab_latest="/builds/balyn/Balyn-production-latest.aab"
+          apk_destination="/builds/balyn/Balyn-production-vc${build_number}-run${GITHUB_RUN_NUMBER}.apk"
+          apk_latest="/builds/balyn/Balyn-production-latest.apk"
 
           cp "$aab_source" "$aab_destination"
           cp "$aab_source" "$aab_latest"
@@ -261,9 +261,9 @@ jobs:
           echo "APK saved to: $apk_destination"
           echo "Latest AAB: $aab_latest"
           echo "Latest APK: $apk_latest"
-          echo "Signing backup: /builds/dadafinanza/signing"
+          echo "Signing backup: /builds/balyn/signing"
 
       - name: Remove temporary keystore
         if: ${{ always() }}
         shell: bash
-        run: rm -f "$RUNNER_TEMP/dadafinanza-upload.jks"
+        run: rm -f "$RUNNER_TEMP/balyn-upload.jks"

@@ -82,7 +82,7 @@ class VoiceInputService {
   VoiceInputService({SpeechToText? speech})
     : _speech = speech ?? SpeechToText();
 
-  static const _channel = MethodChannel('dadafinanza/speech');
+  static const _channel = MethodChannel('balyn/speech');
   final SpeechToText _speech;
   bool _initialized = false;
 
