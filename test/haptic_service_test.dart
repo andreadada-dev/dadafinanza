@@ -1,4 +1,4 @@
-import 'package:dadafinanza/services/haptic_service.dart';
+import 'package:balyn/services/haptic_service.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

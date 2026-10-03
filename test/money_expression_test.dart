@@ -1,4 +1,4 @@
-import 'package:dadafinanza/core/money.dart';
+import 'package:balyn/core/money.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

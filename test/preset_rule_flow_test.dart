@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:dadafinanza/core/money.dart';
-import 'package:dadafinanza/data/app_database.dart';
-import 'package:dadafinanza/models/models.dart';
-import 'package:dadafinanza/services/finance_schema_service.dart';
-import 'package:dadafinanza/services/quick_preset_service.dart';
+import 'package:balyn/core/money.dart';
+import 'package:balyn/data/app_database.dart';
+import 'package:balyn/models/models.dart';
+import 'package:balyn/services/finance_schema_service.dart';
+import 'package:balyn/services/quick_preset_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
