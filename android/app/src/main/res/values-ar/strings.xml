@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" formatted="false">DadaFinanza</string>
+    <string name="app_name" formatted="false">Balyn</string>
     <string name="widget_summary_name" formatted="false">دادافينانزا · الملخص</string>
-    <string name="widget_balance_name" formatted="false">DadaFinanza · الرصيد</string>
-    <string name="widget_quick_name" formatted="false">DadaFinanza · الالتقاط السريع</string>
-    <string name="widget_amounts_name" formatted="false">DadaFinanza · المبالغ السريعة</string>
+    <string name="widget_balance_name" formatted="false">Balyn · الرصيد</string>
+    <string name="widget_quick_name" formatted="false">Balyn · الالتقاط السريع</string>
+    <string name="widget_amounts_name" formatted="false">Balyn · المبالغ السريعة</string>
     <string name="widget_description" formatted="false">الرصيد والفئات السريعة لتسجيل المعاملة</string>
-    <string name="widget_balance_description" formatted="false">رصيد إجمالي مدمج مع إمكانية الوصول السريع إلى DadaFinanza</string>
+    <string name="widget_balance_description" formatted="false">رصيد إجمالي مدمج مع إمكانية الوصول السريع إلى Balyn</string>
     <string name="widget_quick_description" formatted="false">المصاريف والدخل والتحويل والدخل من الشاشة الرئيسية</string>
     <string name="widget_amounts_description" formatted="false">الحساب والفئة وأربعة مبالغ قابلة للتكوين مع إمكانية الوصول الصوتي</string>
     <string name="widget_balance_total" formatted="false">الرصيد الإجمالي</string>

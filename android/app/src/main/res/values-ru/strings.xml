@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" formatted="false">DadaFinanza</string>
+    <string name="app_name" formatted="false">Balyn</string>
     <string name="widget_summary_name" formatted="false">ДадаФинанса · Резюме</string>
     <string name="widget_balance_name" formatted="false">ДадаФинанса · Баланс</string>
-    <string name="widget_quick_name" formatted="false">DadaFinanza · Быстрый захват</string>
-    <string name="widget_amounts_name" formatted="false">DadaFinanza · Быстрые суммы</string>
+    <string name="widget_quick_name" formatted="false">Balyn · Быстрый захват</string>
+    <string name="widget_amounts_name" formatted="false">Balyn · Быстрые суммы</string>
     <string name="widget_description" formatted="false">Баланс и быстрые категории для записи транзакции</string>
-    <string name="widget_balance_description" formatted="false">Компактный общий баланс с быстрым доступом к DadaFinanza</string>
+    <string name="widget_balance_description" formatted="false">Компактный общий баланс с быстрым доступом к Balyn</string>
     <string name="widget_quick_description" formatted="false">Расходы, доходы, переводы и доходы с главного экрана</string>
     <string name="widget_amounts_description" formatted="false">Счет, категория и четыре суммы, настраиваемые с помощью голосового доступа</string>
     <string name="widget_balance_total" formatted="false">Общий баланс</string>
