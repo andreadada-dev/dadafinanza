@@ -88,6 +88,14 @@ def human_candidate(s: str, *, dynamic_fragment: bool = False) -> bool:
     value = s.strip()
     if len(value) < 2:
         return False
+    if value == "Balyn":
+        return False
+    if re.fullmatch(
+        r"Balyn(?:Balance|Finance|QuickAdd|QuickAmounts)WidgetProvider|"
+        r"BalynWidgetConfigActivity|BalynBackup",
+        value,
+    ):
+        return False
     if value.startswith(("package:", "dart:", "assets/", "android/", "http://", "https://")):
         return False
     if SQL_RE.match(value):
@@ -172,13 +180,15 @@ def extract_phrases() -> tuple[set[str], set[str]]:
 def request_translation(text: str, source: str, target: str) -> str:
     if not text:
         return text
+    brand_token = "XQZBALYN9F3A"
+    protected_text = text.replace("Balyn", brand_token)
     query = urlencode({
         "client": "gtx",
         "sl": source,
         "tl": target,
         "dt": "t",
     })
-    body = urlencode({"q": text}).encode("utf-8")
+    body = urlencode({"q": protected_text}).encode("utf-8")
     req = Request(
         "https://translate.googleapis.com/translate_a/single?" + query,
         data=body,
@@ -195,7 +205,7 @@ def request_translation(text: str, source: str, target: str) -> str:
             result = "".join(
                 chunk[0] for chunk in payload[0] if chunk and chunk[0]
             ).strip()
-            return result or text
+            return (result or protected_text).replace(brand_token, "Balyn")
         except HTTPError as error:
             if error.code != 429 or attempt == 6:
                 raise
