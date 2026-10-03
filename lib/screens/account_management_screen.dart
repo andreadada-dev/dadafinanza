@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:dadafinanza/l10n/localized_material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -319,7 +319,7 @@ class SafeAccountDetailScreen extends StatelessWidget {
               style: Theme.of(sheetContext).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
-            Text('Saldo DadaFinanza: ${moneyFor(state, account.balance)}'),
+            Text('Saldo Balyn: ${moneyFor(state, account.balance)}'),
             const SizedBox(height: 12),
             TextField(
               controller: controller,

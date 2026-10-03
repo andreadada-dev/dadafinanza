@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dadafinanza/l10n/localized_material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 
 import '../app_state.dart';
 import '../l10n/app_i18n.dart';
@@ -30,7 +30,7 @@ class _BrandHeader extends StatelessWidget {
     children: [
       ExcludeSemantics(
         child: Image.asset(
-          'assets/branding/dadafinanza_logo_only.png',
+          'assets/branding/balyn_logo_only.png',
           width: 88,
           height: 88,
           fit: BoxFit.contain,
@@ -45,7 +45,7 @@ class _BrandHeader extends StatelessWidget {
       ),
       const SizedBox(height: 10),
       Text(
-        'DadaFinanza',
+        'Balyn',
         style: Theme.of(
           context,
         ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),

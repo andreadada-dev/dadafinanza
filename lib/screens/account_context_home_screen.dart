@@ -1,4 +1,4 @@
-import 'package:dadafinanza/l10n/localized_material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -603,7 +603,7 @@ class _SetupBlock extends StatelessWidget {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(
-        'Configura DadaFinanza',
+        'Configura Balyn',
         style: Theme.of(context).textTheme.headlineSmall,
       ),
       const SizedBox(height: 8),
