@@ -104,8 +104,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Applica allo storico": "Apply to history",
     "Applicare allo storico?": "Apply to the historian?",
     "Apprendimento": "Learning",
-    "Apre Balyn senza autenticazione.":
-        "Opens Balyn without authentication.",
+    "Apre Balyn senza autenticazione.": "Opens Balyn without authentication.",
     "Apri": "Open",
     "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
         "Open Down Payments to record a refund or update your reminder.",
@@ -159,8 +158,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Backup completo con allegati · import portabile":
         "Full backup with attachments · portable import",
     "Backup completo salvato.": "Full backup saved.",
-    "Backup Balyn non riconosciuto.":
-        "Balyn backup not recognized.",
+    "Backup Balyn non riconosciuto.": "Balyn backup not recognized.",
     "Backup non trovato.": "Backup not found.",
     "Backup ripristinato e verificato.": "Backup restored and verified.",
     "Backup, CSV e allegati vengono esportati solo quando avvii ":
@@ -1484,8 +1482,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Applicare allo storico?": "¿Aplicar al historiador?",
     "Apprendimento": "Aprendizaje",
     "AppScope not found": "AppScope no encontrado",
-    "Apre Balyn senza autenticazione.":
-        "Abre Balyn sin autenticación.",
+    "Apre Balyn senza autenticazione.": "Abre Balyn sin autenticación.",
     "Apri": "Abierto",
     "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
         "Abra Pagos iniciales para registrar un reembolso o actualizar su recordatorio.",
@@ -2206,8 +2203,7 @@ generatedTranslations = <String, Map<String, String>>{
         "No hay anticipo compatible con esta transacción.",
     "Nessun anticipo con questa persona.": "No hay avances con esta persona.",
     "Nessun anticipo registrato.": "No se registró ningún avance.",
-    "Nessun assistente cloud Balyn":
-        "Sin asistente en la nube de Balyn",
+    "Nessun assistente cloud Balyn": "Sin asistente en la nube de Balyn",
     "Nessun budget": "Sin presupuesto",
     "Nessun budget attivo": "Sin presupuesto activo",
     "Nessun confronto": "Sin comparación",
@@ -2912,8 +2908,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Applicare allo storico?": "S'adresser à l'historien ?",
     "Apprendimento": "Apprentissage",
     "AppScope not found": "AppScope introuvable",
-    "Apre Balyn senza autenticazione.":
-        "Ouvre Balyn sans authentification.",
+    "Apre Balyn senza autenticazione.": "Ouvre Balyn sans authentification.",
     "Apri": "Ouvert",
     "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
         "Ouvrez les acomptes pour enregistrer un remboursement ou mettre à jour votre rappel.",
@@ -2968,8 +2963,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Backup completo con allegati · import portabile":
         "Sauvegarde complète avec pièces jointes · importation portable",
     "Backup completo salvato.": "Sauvegarde complète enregistrée.",
-    "Backup Balyn non riconosciuto.":
-        "Sauvegarde Balyn non reconnue.",
+    "Backup Balyn non riconosciuto.": "Sauvegarde Balyn non reconnue.",
     "Backup non trovato.": "Sauvegarde introuvable.",
     "Backup ripristinato e verificato.": "Sauvegarde restaurée et vérifiée.",
     "Backup, CSV e allegati vengono esportati solo quando avvii ":
@@ -4343,8 +4337,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Applicare allo storico?": "Beim Historiker bewerben?",
     "Apprendimento": "Lernen",
     "AppScope not found": "AppScope nicht gefunden",
-    "Apre Balyn senza autenticazione.":
-        "Öffnet Balyn ohne Authentifizierung.",
+    "Apre Balyn senza autenticazione.": "Öffnet Balyn ohne Authentifizierung.",
     "Apri": "Offen",
     "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
         "Öffnen Sie Anzahlungen, um eine Rückerstattung zu erfassen oder Ihre Erinnerung zu aktualisieren.",
@@ -4399,8 +4392,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Backup completo con allegati · import portabile":
         "Vollständige Sicherung mit Anhängen · Tragbarer Import",
     "Backup completo salvato.": "Vollständiges Backup gespeichert.",
-    "Backup Balyn non riconosciuto.":
-        "Balyn-Backup wird nicht erkannt.",
+    "Backup Balyn non riconosciuto.": "Balyn-Backup wird nicht erkannt.",
     "Backup non trovato.": "Sicherung nicht gefunden.",
     "Backup ripristinato e verificato.":
         "Backup wiederhergestellt und überprüft.",
@@ -5775,8 +5767,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Applicare allo storico?": "Aplicar ao historiador?",
     "Apprendimento": "Aprendizagem",
     "AppScope not found": "AppScope não encontrado",
-    "Apre Balyn senza autenticazione.":
-        "Abre Balyn sem autenticação.",
+    "Apre Balyn senza autenticazione.": "Abre Balyn sem autenticação.",
     "Apri": "Abrir",
     "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
         "Abra Adiantamentos para registrar um reembolso ou atualizar seu lembrete.",
@@ -5830,8 +5821,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Backup completo con allegati · import portabile":
         "Backup completo com anexos · importação portátil",
     "Backup completo salvato.": "Backup completo salvo.",
-    "Backup Balyn non riconosciuto.":
-        "Backup do Balyn não reconhecido.",
+    "Backup Balyn non riconosciuto.": "Backup do Balyn não reconhecido.",
     "Backup non trovato.": "Backup não encontrado.",
     "Backup ripristinato e verificato.": "Backup restaurado e verificado.",
     "Backup, CSV e allegati vengono esportati solo quando avvii ":
@@ -6475,8 +6465,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Não há adiantamento compatível com esta transação.",
     "Nessun anticipo con questa persona.": "Nenhum avanço com essa pessoa.",
     "Nessun anticipo registrato.": "Nenhum adiantamento registrado.",
-    "Nessun assistente cloud Balyn":
-        "Nenhum assistente de nuvem Balyn",
+    "Nessun assistente cloud Balyn": "Nenhum assistente de nuvem Balyn",
     "Nessun budget": "Sem orçamento",
     "Nessun budget attivo": "Nenhum orçamento ativo",
     "Nessun confronto": "Sem comparação",
@@ -7182,8 +7171,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Applicare allo storico?": "Обратиться к историку?",
     "Apprendimento": "Обучение",
     "AppScope not found": "AppScope не найден",
-    "Apre Balyn senza autenticazione.":
-        "Открывает Balyn без аутентификации.",
+    "Apre Balyn senza autenticazione.": "Открывает Balyn без аутентификации.",
     "Apri": "Открыть",
     "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
         "Откройте «Авансовые платежи», чтобы записать возврат средств или обновить напоминание.",
@@ -7239,8 +7227,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Backup completo con allegati · import portabile":
         "Полная резервная копия с вложениями · переносимый импорт",
     "Backup completo salvato.": "Полная резервная копия сохранена.",
-    "Backup Balyn non riconosciuto.":
-        "Резервная копия Balyn не распознана.",
+    "Backup Balyn non riconosciuto.": "Резервная копия Balyn не распознана.",
     "Backup non trovato.": "Резервная копия не найдена.",
     "Backup ripristinato e verificato.":
         "Резервная копия восстановлена и проверена.",
@@ -7919,8 +7906,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Никакой аванс, совместимый с этой транзакцией.",
     "Nessun anticipo con questa persona.": "Никакого аванса с этим человеком.",
     "Nessun anticipo registrato.": "Предоплата не записана.",
-    "Nessun assistente cloud Balyn":
-        "Нет облачного помощника Balyn",
+    "Nessun assistente cloud Balyn": "Нет облачного помощника Balyn",
     "Nessun budget": "Нет бюджета",
     "Nessun budget attivo": "Нет активного бюджета",
     "Nessun confronto": "Нет сравнения",
@@ -8896,8 +8882,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Balyn": "达达财经",
     "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
         "Balyn 不会向外部服务发送交易、收据、描述或模式。",
-    "Balyn non riceve né memorizza dati biometrici.":
-        "Balyn 不接收或存储生物识别数据。",
+    "Balyn non riceve né memorizza dati biometrici.": "Balyn 不接收或存储生物识别数据。",
     "Balyn non richiede un account e non integra pubblicità, ":
         "Balyn 不需要账户，也不集成广告，",
     "Balyn sulla Home": "达达金融首页",
@@ -9402,8 +9387,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Password": "密码",
     "Password backup": "密码备份",
     "Password opzionale": "密码可选",
-    "password, il file non è cifrato da Balyn.":
-        "密码，该文件未由 Balyn 加密。",
+    "password, il file non è cifrato da Balyn.": "密码，该文件未由 Balyn 加密。",
     "Patrimonio corrente": "流动资产",
     "Patrimonio incluso nel totale": "遗产包含在总数中",
     "Patrimonio netto": "净资产",
@@ -9603,8 +9587,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Saldo reale": "实际余额",
     "Saldo stimato tra 30 giorni: ••••": "30 天内预计余额：••••",
     "Saldo totale": "总余额",
-    "Saldo totale compatto con accesso rapido a Balyn":
-        "紧凑的总余额，可快速访问 Balyn",
+    "Saldo totale compatto con accesso rapido a Balyn": "紧凑的总余额，可快速访问 Balyn",
     "Saldo, Quick Capture, importi rapidi e riepilogo configurabili":
         "可配置余额、快速捕获、快速金额和摘要",
     "Salute": "健康",
@@ -9622,8 +9605,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Salva widget": "保存小部件",
     "Sblocca": "解锁",
     "Sblocca conto": "解锁账户",
-    "Sblocca Balyn per vedere i tuoi dati finanziari":
-        "解锁 Balyn 查看您的财务数据",
+    "Sblocca Balyn per vedere i tuoi dati finanziari": "解锁 Balyn 查看您的财务数据",
     "Scadenza": "到期日",
     "Scadenza domani": "明天到期",
     "Scadenze": "截止日期",
@@ -14072,8 +14054,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Applicare allo storico?": "इतिहासकार पर लागू करें?",
     "Apprendimento": "सीखना",
     "AppScope not found": "ऐपस्कोप नहीं मिला",
-    "Apre Balyn senza autenticazione.":
-        "प्रमाणीकरण के बिना Balyn खोलता है।",
+    "Apre Balyn senza autenticazione.": "प्रमाणीकरण के बिना Balyn खोलता है।",
     "Apri": "खुला",
     "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
         "रिफंड रिकॉर्ड करने या अपना रिमाइंडर अपडेट करने के लिए डाउन पेमेंट खोलें।",
@@ -14129,8 +14110,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Backup completo con allegati · import portabile":
         "अनुलग्नकों के साथ पूर्ण बैकअप · पोर्टेबल आयात",
     "Backup completo salvato.": "पूर्ण बैकअप सहेजा गया.",
-    "Backup Balyn non riconosciuto.":
-        "Balyn बैकअप पहचाना नहीं गया.",
+    "Backup Balyn non riconosciuto.": "Balyn बैकअप पहचाना नहीं गया.",
     "Backup non trovato.": "बैकअप नहीं मिला.",
     "Backup ripristinato e verificato.":
         "बैकअप पुनर्स्थापित और सत्यापित किया गया.",
@@ -14787,8 +14767,7 @@ generatedTranslations = <String, Map<String, String>>{
         "इस लेनदेन के साथ कोई अग्रिम संगत नहीं है।",
     "Nessun anticipo con questa persona.": "इस व्यक्ति के साथ कोई प्रगति नहीं.",
     "Nessun anticipo registrato.": "कोई अग्रिम दर्ज नहीं किया गया.",
-    "Nessun assistente cloud Balyn":
-        "कोई Balyn क्लाउड असिस्टेंट नहीं",
+    "Nessun assistente cloud Balyn": "कोई Balyn क्लाउड असिस्टेंट नहीं",
     "Nessun budget": "कोई बजट नहीं",
     "Nessun budget attivo": "कोई सक्रिय बजट नहीं",
     "Nessun confronto": "कोई तुलना नहीं",
