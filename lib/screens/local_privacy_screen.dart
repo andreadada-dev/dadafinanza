@@ -1,4 +1,4 @@
-import 'package:dadafinanza/l10n/localized_material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 
 import '../services/security_service.dart';
 import '../widgets/ui_helpers.dart';
@@ -155,7 +155,7 @@ class _LocalPrivacyScreenState extends State<LocalPrivacyScreen> {
                 _ModeTile(
                   icon: Icons.lock_open_rounded,
                   title: 'Disattivato',
-                  subtitle: 'Apre DadaFinanza senza autenticazione.',
+                  subtitle: 'Apre Balyn senza autenticazione.',
                   selected: mode == AppLockMode.off,
                   onTap: () => _setMode(AppLockMode.off),
                 ),

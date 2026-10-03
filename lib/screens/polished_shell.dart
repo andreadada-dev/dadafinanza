@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:dadafinanza/l10n/localized_material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -127,7 +127,7 @@ class PolishedHomeScreen extends StatelessWidget {
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('DadaFinanza'),
+              const Text('Balyn'),
               Text(
                 DateFormat(
                   'MMMM yyyy',
@@ -493,7 +493,7 @@ class _SetupBlock extends StatelessWidget {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(
-        'Configura DadaFinanza',
+        'Configura Balyn',
         style: Theme.of(context).textTheme.headlineSmall,
       ),
       const SizedBox(height: 8),
