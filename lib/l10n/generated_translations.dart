@@ -1250,8 +1250,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "Automatic suggestions",
     "Suggerimenti obiettivi": "Objective suggestions",
     "Supermercato": "Supermarket",
-    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
-        "Developer: Andrea Balyn. For privacy or support requests",
+    "Sviluppatore: andreadada. Per richieste relative a privacy o supporto ":
+        "Developer: andreadada. For privacy or support requests",
     "Tag": "Tags",
     "Tasse": "Taxes",
     "Taxi": "Taxis",
@@ -2679,8 +2679,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "Sugerencias automáticas",
     "Suggerimenti obiettivi": "Sugerencias objetivas",
     "Supermercato": "supermercado",
-    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
-        "Desarrollador: Andrea Balyn. Para solicitudes de privacidad o soporte",
+    "Sviluppatore: andreadada. Per richieste relative a privacy o supporto ":
+        "Desarrollador: andreadada. Para solicitudes de privacidad o soporte",
     "Tag": "Etiquetas",
     "Tasse": "Impuestos",
     "Taxi": "Taxis",
@@ -4109,8 +4109,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "Suggestions automatiques",
     "Suggerimenti obiettivi": "Suggestions objectives",
     "Supermercato": "Supermarché",
-    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
-        "Développeur : Andrea Balyn. Pour les demandes de confidentialité ou d’assistance",
+    "Sviluppatore: andreadada. Per richieste relative a privacy o supporto ":
+        "Développeur : andreadada. Pour les demandes de confidentialité ou d’assistance",
     "Tag": "Balises",
     "Tasse": "Impôts",
     "Taxi": "Taxis",
@@ -5537,8 +5537,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "Automatische Vorschläge",
     "Suggerimenti obiettivi": "Objektive Vorschläge",
     "Supermercato": "Supermarkt",
-    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
-        "Entwickler: Andrea Balyn. Für Datenschutz- oder Supportanfragen",
+    "Sviluppatore: andreadada. Per richieste relative a privacy o supporto ":
+        "Entwickler: andreadada. Für Datenschutz- oder Supportanfragen",
     "Tag": "Schlagworte",
     "Tasse": "Steuern",
     "Taxi": "Taxis",
@@ -6940,8 +6940,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "Sugestões automáticas",
     "Suggerimenti obiettivi": "Sugestões objetivas",
     "Supermercato": "Supermercado",
-    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
-        "Desenvolvedor: Andrea Balyn. Para solicitações de privacidade ou suporte",
+    "Sviluppatore: andreadada. Per richieste relative a privacy o supporto ":
+        "Desenvolvedor: andreadada. Para solicitações de privacidade ou suporte",
     "Tag": "Etiquetas",
     "Tasse": "Impostos",
     "Taxi": "Táxis",
@@ -8389,8 +8389,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "Автоматические предложения",
     "Suggerimenti obiettivi": "Объективные предложения",
     "Supermercato": "Супермаркет",
-    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
-        "Разработчик: Andrea Balyn. Для запросов на конфиденциальность или поддержку",
+    "Sviluppatore: andreadada. Per richieste relative a privacy o supporto ":
+        "Разработчик: andreadada. Для запросов на конфиденциальность или поддержку",
     "Tag": "Теги",
     "Tasse": "Налоги",
     "Taxi": "Такси",
@@ -9709,8 +9709,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "自动建议",
     "Suggerimenti obiettivi": "客观建议",
     "Supermercato": "超市",
-    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
-        "开发商：Andrea Balyn。对于隐私或支持请求",
+    "Sviluppatore: andreadada. Per richieste relative a privacy o supporto ":
+        "开发商：andreadada。对于隐私或支持请求",
     "Tag": "标签",
     "Tasse": "税收",
     "Taxi": "出租车",
@@ -11053,8 +11053,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "自動提案",
     "Suggerimenti obiettivi": "客観的な提案",
     "Supermercato": "スーパーマーケット",
-    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
-        "開発者: Andrea Balyn。プライバシーまたはサポートのリクエストについて",
+    "Sviluppatore: andreadada. Per richieste relative a privacy o supporto ":
+        "開発者: andreadada。プライバシーまたはサポートのリクエストについて",
     "Tag": "タグ",
     "Tasse": "税金",
     "Taxi": "タクシー",
@@ -12400,8 +12400,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "자동 제안",
     "Suggerimenti obiettivi": "객관적인 제안",
     "Supermercato": "슈퍼마켓",
-    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
-        "개발자: Andrea Balyn. 개인 정보 보호 또는 지원 요청의 경우",
+    "Sviluppatore: andreadada. Per richieste relative a privacy o supporto ":
+        "개발자: andreadada. 개인 정보 보호 또는 지원 요청의 경우",
     "Tag": "태그",
     "Tasse": "세금",
     "Taxi": "택시",
@@ -13818,8 +13818,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "الاقتراحات التلقائية",
     "Suggerimenti obiettivi": "اقتراحات موضوعية",
     "Supermercato": "سوبر ماركت",
-    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
-        "المطور: Andrea Balyn. لطلبات الخصوصية أو الدعم",
+    "Sviluppatore: andreadada. Per richieste relative a privacy o supporto ":
+        "المطور: andreadada. لطلبات الخصوصية أو الدعم",
     "Tag": "العلامات",
     "Tasse": "الضرائب",
     "Taxi": "سيارات الأجرة",
@@ -15239,8 +15239,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Suggerimenti automatici": "स्वचालित सुझाव",
     "Suggerimenti obiettivi": "वस्तुनिष्ठ सुझाव",
     "Supermercato": "सुपरमार्केट",
-    "Sviluppatore: Andrea Balyn. Per richieste relative a privacy o supporto ":
-        "डेवलपर: Andrea Balyn. गोपनीयता या समर्थन अनुरोधों के लिए",
+    "Sviluppatore: andreadada. Per richieste relative a privacy o supporto ":
+        "डेवलपर: andreadada. गोपनीयता या समर्थन अनुरोधों के लिए",
     "Tag": "टैग",
     "Tasse": "कर",
     "Taxi": "टैक्सियाँ",

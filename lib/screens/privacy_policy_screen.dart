@@ -80,7 +80,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
         const SizedBox(height: 24),
         const SectionTitle('Contatti'),
         const Text(
-          'Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto '
+          'Sviluppatore: andreadada. Per richieste relative a privacy o supporto '
           'usa i contatti pubblicati su www.ddone.it.',
         ),
       ],

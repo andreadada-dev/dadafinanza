@@ -181,7 +181,11 @@ def request_translation(text: str, source: str, target: str) -> str:
     if not text:
         return text
     brand_token = "XQZBALYN9F3A"
-    protected_text = text.replace("Balyn", brand_token)
+    developer_token = "XQZANDREADADA7C2B"
+    protected_text = text.replace("Balyn", brand_token).replace(
+        "andreadada",
+        developer_token,
+    )
     query = urlencode({
         "client": "gtx",
         "sl": source,
@@ -205,7 +209,11 @@ def request_translation(text: str, source: str, target: str) -> str:
             result = "".join(
                 chunk[0] for chunk in payload[0] if chunk and chunk[0]
             ).strip()
-            return (result or protected_text).replace(brand_token, "Balyn")
+            return (
+                (result or protected_text)
+                .replace(brand_token, "Balyn")
+                .replace(developer_token, "andreadada")
+            )
         except HTTPError as error:
             if error.code != 429 or attempt == 6:
                 raise
