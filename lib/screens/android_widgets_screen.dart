@@ -46,9 +46,7 @@ class _AndroidWidgetsScreenState extends State<AndroidWidgetsScreen> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text(
-            'Apri il selettore widget del launcher e cerca Balyn.',
-          ),
+          content: Text('Apri il selettore widget del launcher e cerca Balyn.'),
         ),
       );
     }

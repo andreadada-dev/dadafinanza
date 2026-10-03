@@ -53,7 +53,10 @@ class BackupService {
     await database.db.rawQuery('PRAGMA wal_checkpoint(FULL)');
     final temp = await _temporaryDirectory();
     final work = Directory(
-      p.join(temp.path, 'balyn-backup-${DateTime.now().microsecondsSinceEpoch}'),
+      p.join(
+        temp.path,
+        'balyn-backup-${DateTime.now().microsecondsSinceEpoch}',
+      ),
     );
     await work.create(recursive: true);
     final databaseCopy = File(p.join(work.path, 'balyn.db'));
@@ -111,37 +114,38 @@ class BackupService {
     return zip;
   }
 
-  Future<BackupPreview> inspect(String path, {String? password}) =>
-      _withArchive(path, (archive) async {
-        final manifestEntry = archive.files
-            .where((entry) => entry.name == 'manifest.json' && entry.isFile)
-            .firstOrNull;
-        if (manifestEntry == null) {
-          throw const FormatException('Backup Balyn non riconosciuto.');
-        }
-        final bytes = manifestEntry.readBytes();
-        if (bytes == null) {
-          throw const FormatException('Manifest backup non leggibile.');
-        }
-        final json = jsonDecode(utf8.decode(bytes));
-        if (json is! Map<String, dynamic> ||
-            !const {'BalynBackup', 'DadaFinanzaBackup'}.contains(json['format'])) {
-          throw const FormatException('Manifest backup non valido.');
-        }
-        return BackupPreview(
-          createdAt: DateTime.parse(json['createdAt'] as String).toLocal(),
-          schemaVersion: (json['schemaVersion'] as num?)?.toInt() ?? 0,
-          accounts: (json['accounts'] as num?)?.toInt() ?? 0,
-          transactions: (json['transactions'] as num?)?.toInt() ?? 0,
-          categories: (json['categories'] as num?)?.toInt() ?? 0,
-          people: (json['people'] as num?)?.toInt() ?? 0,
-          advances: (json['advances'] as num?)?.toInt() ?? 0,
-          advanceSettlements:
-              (json['advanceSettlements'] as num?)?.toInt() ?? 0,
-          attachments: (json['attachments'] as num?)?.toInt() ?? 0,
-          encrypted: json['encrypted'] == true,
-        );
-      }, password: password);
+  Future<BackupPreview> inspect(
+    String path, {
+    String? password,
+  }) => _withArchive(path, (archive) async {
+    final manifestEntry = archive.files
+        .where((entry) => entry.name == 'manifest.json' && entry.isFile)
+        .firstOrNull;
+    if (manifestEntry == null) {
+      throw const FormatException('Backup Balyn non riconosciuto.');
+    }
+    final bytes = manifestEntry.readBytes();
+    if (bytes == null) {
+      throw const FormatException('Manifest backup non leggibile.');
+    }
+    final json = jsonDecode(utf8.decode(bytes));
+    if (json is! Map<String, dynamic> ||
+        !const {'BalynBackup', 'DadaFinanzaBackup'}.contains(json['format'])) {
+      throw const FormatException('Manifest backup non valido.');
+    }
+    return BackupPreview(
+      createdAt: DateTime.parse(json['createdAt'] as String).toLocal(),
+      schemaVersion: (json['schemaVersion'] as num?)?.toInt() ?? 0,
+      accounts: (json['accounts'] as num?)?.toInt() ?? 0,
+      transactions: (json['transactions'] as num?)?.toInt() ?? 0,
+      categories: (json['categories'] as num?)?.toInt() ?? 0,
+      people: (json['people'] as num?)?.toInt() ?? 0,
+      advances: (json['advances'] as num?)?.toInt() ?? 0,
+      advanceSettlements: (json['advanceSettlements'] as num?)?.toInt() ?? 0,
+      attachments: (json['attachments'] as num?)?.toInt() ?? 0,
+      encrypted: json['encrypted'] == true,
+    );
+  }, password: password);
 
   Future<void> restore(String path, {String? password}) async {
     await inspect(path, password: password);
@@ -189,9 +193,7 @@ class BackupService {
         safety.path,
         (archive) => extractArchiveToDisk(archive, safetyExtract.path),
       );
-      final safetyDb = File(
-        p.join(safetyExtract.path, 'database', 'balyn.db'),
-      );
+      final safetyDb = File(p.join(safetyExtract.path, 'database', 'balyn.db'));
       if (await safetyDb.exists()) {
         await database.restoreDatabaseFrom(safetyDb.path);
         await FinanceSchemaService(database).ensure();

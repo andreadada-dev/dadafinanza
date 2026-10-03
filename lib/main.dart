@@ -41,8 +41,7 @@ class BalynApp extends StatefulWidget {
   State<BalynApp> createState() => _BalynAppState();
 }
 
-class _BalynAppState extends State<BalynApp>
-    with WidgetsBindingObserver {
+class _BalynAppState extends State<BalynApp> with WidgetsBindingObserver {
   final security = SecurityService();
   final notificationService = NotificationService();
   final deepLinks = QuickCaptureDeepLinkService();
@@ -103,7 +102,8 @@ class _BalynAppState extends State<BalynApp>
       ),
       HomeWidget.updateWidget(
         androidName: 'BalynQuickAddWidgetProvider',
-        qualifiedAndroidName: 'com.andreadada.balyn.BalynQuickAddWidgetProvider',
+        qualifiedAndroidName:
+            'com.andreadada.balyn.BalynQuickAddWidgetProvider',
       ),
       HomeWidget.updateWidget(
         androidName: 'BalynQuickAmountsWidgetProvider',

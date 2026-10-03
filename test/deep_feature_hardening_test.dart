@@ -27,9 +27,7 @@ void main() {
   setUpAll(() async {
     ffi.sqfliteFfiInit();
     databaseFactory = ffi.databaseFactoryFfi;
-    databaseRoot = await Directory.systemTemp.createTemp(
-      'balyn-hardening-db-',
-    );
+    databaseRoot = await Directory.systemTemp.createTemp('balyn-hardening-db-');
     await databaseFactory.setDatabasesPath(databaseRoot.path);
   });
 

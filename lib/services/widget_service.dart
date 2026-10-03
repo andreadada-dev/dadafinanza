@@ -8,7 +8,8 @@ class WidgetService {
       'com.andreadada.balyn.BalynFinanceWidgetProvider';
   static const balanceProvider =
       'com.andreadada.balyn.BalynBalanceWidgetProvider';
-  static const quickProvider = 'com.andreadada.balyn.BalynQuickAddWidgetProvider';
+  static const quickProvider =
+      'com.andreadada.balyn.BalynQuickAddWidgetProvider';
   static const amountsProvider =
       'com.andreadada.balyn.BalynQuickAmountsWidgetProvider';
 

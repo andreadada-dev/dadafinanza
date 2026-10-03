@@ -179,10 +179,7 @@ class _SetupGuide extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(
-        'Configura Balyn',
-        style: Theme.of(context).textTheme.titleLarge,
-      ),
+      Text('Configura Balyn', style: Theme.of(context).textTheme.titleLarge),
       const SizedBox(height: 6),
       Text(
         'Puoi creare il primo conto oppure registrare subito un movimento come Non assegnato.',

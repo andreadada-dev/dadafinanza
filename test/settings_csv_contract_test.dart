@@ -26,9 +26,7 @@ void main() {
   setUpAll(() async {
     ffi.sqfliteFfiInit();
     databaseFactory = ffi.databaseFactoryFfi;
-    databaseRoot = await Directory.systemTemp.createTemp(
-      'balyn-settings-db-',
-    );
+    databaseRoot = await Directory.systemTemp.createTemp('balyn-settings-db-');
     await databaseFactory.setDatabasesPath(databaseRoot.path);
   });
 

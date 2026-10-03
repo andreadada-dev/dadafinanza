@@ -87,8 +87,7 @@ class SecurityService {
   Future<bool> authenticateBiometric() async {
     try {
       return await auth.authenticate(
-        localizedReason:
-            'Sblocca Balyn per vedere i tuoi dati finanziari',
+        localizedReason: 'Sblocca Balyn per vedere i tuoi dati finanziari',
         biometricOnly: true,
         sensitiveTransaction: true,
         persistAcrossBackgrounding: true,

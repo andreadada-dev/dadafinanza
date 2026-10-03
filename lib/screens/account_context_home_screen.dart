@@ -602,10 +602,7 @@ class _SetupBlock extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(
-        'Configura Balyn',
-        style: Theme.of(context).textTheme.headlineSmall,
-      ),
+      Text('Configura Balyn', style: Theme.of(context).textTheme.headlineSmall),
       const SizedBox(height: 8),
       const Text('Parti dal primo conto oppure registra subito un movimento.'),
       const SizedBox(height: 16),
