@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:dadafinanza/l10n/app_i18n.dart';
-import 'package:dadafinanza/l10n/generated_translations.dart';
-import 'package:dadafinanza/l10n/localized_material.dart';
+import 'package:balyn/l10n/app_i18n.dart';
+import 'package:balyn/l10n/generated_translations.dart';
+import 'package:balyn/l10n/localized_material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart' show Intl;
@@ -10,7 +10,7 @@ import 'package:intl/intl.dart' show Intl;
 void main() {
   tearDown(() => AppI18n.use('it'));
 
-  test('DadaFinanza exposes the supported language catalog', () {
+  test('Balyn exposes the supported language catalog', () {
     expect(AppI18n.languages.map((item) => item.code).toList(), const [
       'it',
       'en',

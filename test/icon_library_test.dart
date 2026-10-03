@@ -1,4 +1,4 @@
-import 'package:dadafinanza/widgets/ui_helpers.dart';
+import 'package:balyn/widgets/ui_helpers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
