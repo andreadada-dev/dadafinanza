@@ -163,7 +163,7 @@ def extract_phrases() -> tuple[set[str], set[str]]:
                     if human_candidate(piece, dynamic_fragment=True):
                         fragments.add(piece)
     for value in android_base_strings().values():
-        if value != "DadaFinanza" and human_candidate(value):
+        if value != "Balyn" and human_candidate(value):
             exact.add(value)
 
     fragments.difference_update(exact)
@@ -183,7 +183,7 @@ def request_translation(text: str, source: str, target: str) -> str:
         "https://translate.googleapis.com/translate_a/single?" + query,
         data=body,
         headers={
-            "User-Agent": "Mozilla/5.0 DadaFinanza-l10n",
+            "User-Agent": "Mozilla/5.0 Balyn-l10n",
             "Content-Type": "application/x-www-form-urlencoded",
         },
         method="POST",
@@ -382,7 +382,7 @@ def transform_source() -> dict[str, int]:
 
         text = text.replace(
             "import 'package:flutter/material.dart';",
-            "import 'package:dadafinanza/l10n/localized_material.dart';",
+            "import 'package:balyn/l10n/localized_material.dart';",
         )
 
         if path.name == "voice_input_service.dart":
@@ -429,7 +429,7 @@ def transform_source() -> dict[str, int]:
             text = text.replace("const InputDecoration(", "InputDecoration(")
 
         if "AppI18n." in text and "localized_material.dart" not in text and "app_i18n.dart" not in text:
-            import_line = "import 'package:dadafinanza/l10n/app_i18n.dart';\n"
+            import_line = "import 'package:balyn/l10n/app_i18n.dart';\n"
             insert_at = 0
             import_matches = list(re.finditer(r"^(?:import|export) .+;\n", text, re.M))
             if import_matches:

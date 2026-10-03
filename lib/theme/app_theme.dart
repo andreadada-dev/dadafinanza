@@ -1,4 +1,4 @@
-import 'package:dadafinanza/l10n/localized_material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 
 @immutable
 class FinanceColors extends ThemeExtension<FinanceColors> {
@@ -40,7 +40,7 @@ class FinanceColors extends ThemeExtension<FinanceColors> {
 }
 
 class AppTheme {
-  // DadaFinanza keeps a neutral high-contrast shell. Semantic finance colors
+  // Balyn keeps a neutral high-contrast shell. Semantic finance colors
   // carry meaning; navigation and primary chrome stay black/white.
   static const purple = Color(0xFF5C3DF5);
   static const purpleDark = Color(0xFF7B62F5);

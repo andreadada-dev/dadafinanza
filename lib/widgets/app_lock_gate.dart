@@ -1,4 +1,4 @@
-import 'package:dadafinanza/l10n/localized_material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 
 import '../services/security_service.dart';
 
@@ -121,7 +121,7 @@ class _AppLockGateState extends State<AppLockGate> with WidgetsBindingObserver {
                   const Icon(Icons.lock_outline_rounded, size: 44),
                   const SizedBox(height: 16),
                   Text(
-                    'DadaFinanza è bloccata',
+                    'Balyn è bloccata',
                     style: Theme.of(context).textTheme.headlineSmall,
                     textAlign: TextAlign.center,
                   ),

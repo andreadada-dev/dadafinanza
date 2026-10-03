@@ -1,4 +1,4 @@
-import 'package:dadafinanza/l10n/localized_material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 
 import '../widgets/ui_helpers.dart';
 
@@ -18,10 +18,10 @@ class PrivacyPolicyScreen extends StatelessWidget {
         const SizedBox(height: 24),
         const SectionTitle('Principio di base'),
         const Text(
-          'DadaFinanza è progettata local-first. Movimenti, conti, categorie, '
+          'Balyn è progettata local-first. Movimenti, conti, categorie, '
           'note, obiettivi, budget, regole e Smart Suggestions vengono '
           'memorizzati sul dispositivo e non vengono inviati a server '
-          'DadaFinanza.',
+          'Balyn.',
         ),
         const SizedBox(height: 24),
         const SectionTitle('Permessi'),
@@ -36,7 +36,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
           icon: Icons.mic_none_rounded,
           title: 'Microfono',
           text:
-              'Usato solo per l’inserimento vocale. Il parser DadaFinanza è '
+              'Usato solo per l’inserimento vocale. Il parser Balyn è '
               'locale. Se abiliti il recognizer di sistema, audio o testo '
               'possono essere trattati dal servizio vocale configurato su '
               'Android secondo le regole di quel fornitore.',
@@ -46,7 +46,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
           title: 'Biometria',
           text:
               'Usata per sbloccare l’app tramite le API di sistema. '
-              'DadaFinanza non riceve né memorizza dati biometrici.',
+              'Balyn non riceve né memorizza dati biometrici.',
         ),
         const _PolicyItem(
           icon: Icons.notifications_none_rounded,
@@ -61,7 +61,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
           'Backup, CSV e allegati vengono esportati solo quando avvii '
           'esplicitamente l’operazione e scegli una destinazione. I backup '
           'possono essere protetti con password; se scegli un backup senza '
-          'password, il file non è cifrato da DadaFinanza.',
+          'password, il file non è cifrato da Balyn.',
         ),
         const SizedBox(height: 24),
         const SectionTitle('Eliminazione'),
@@ -74,13 +74,13 @@ class PrivacyPolicyScreen extends StatelessWidget {
         const SizedBox(height: 24),
         const SectionTitle('Account, pubblicità e tracciamento'),
         const Text(
-          'DadaFinanza non richiede un account e non integra pubblicità, '
+          'Balyn non richiede un account e non integra pubblicità, '
           'profilazione pubblicitaria o analytics di terze parti.',
         ),
         const SizedBox(height: 24),
         const SectionTitle('Contatti'),
         const Text(
-          'Sviluppatore: DDone. Per richieste relative a privacy o supporto '
+          'Sviluppatore: Andrea Dada. Per richieste relative a privacy o supporto '
           'usa i contatti pubblicati su www.ddone.it.',
         ),
       ],
