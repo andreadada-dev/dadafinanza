@@ -31,7 +31,7 @@ void main() {
             notifier: state,
             child: MaterialApp(
               theme: AppTheme.light(),
-              home: const Scaffold(body: DadaHomeScreen()),
+              home: const Scaffold(body: BalynHomeScreen()),
             ),
           ),
         );
@@ -76,7 +76,7 @@ void main() {
           data: const MediaQueryData(textScaler: TextScaler.linear(1.6)),
           child: MaterialApp(
             theme: AppTheme.dark(),
-            home: const Scaffold(body: DadaHomeScreen()),
+            home: const Scaffold(body: BalynHomeScreen()),
           ),
         ),
       ),

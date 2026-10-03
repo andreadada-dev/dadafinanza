@@ -13,7 +13,7 @@ import 'ui_helpers.dart';
 
 /// Renders a dashboard configuration on the canonical Home.
 ///
-/// Core metrics are rendered by the Ivy-style overview in DadaHomeScreen.
+/// Core metrics are rendered by the Ivy-style overview in BalynHomeScreen.
 /// Remaining widgets preserve "Personalizza Home" visibility, ordering and size.
 class HomeDashboardWidget extends StatelessWidget {
   const HomeDashboardWidget({required this.config, super.key});

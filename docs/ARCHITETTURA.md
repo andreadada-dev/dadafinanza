@@ -16,8 +16,8 @@ Balyn è un'app di finanza personale Android-first, local-first e private-first.
 
 ### UI
 
-- `DadaAppShell`: unico root di navigazione esposto all'utente;
-- `DadaHomeScreen`: Home canonica informativa e flat;
+- `BalynAppShell`: unico root di navigazione esposto all'utente;
+- `BalynHomeScreen`: Home canonica informativa e flat;
 - `CanonicalAnalyticsScreen`: analisi canonica;
 - `TransactionsScreen`: movimenti e filtri;
 - `QuickAddPage`: unica superficie di conferma e modifica del nuovo movimento;

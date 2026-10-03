@@ -34,7 +34,7 @@ void main() {
         notifier: state,
         child: MaterialApp(
           theme: AppTheme.light(),
-          home: const Scaffold(body: DadaHomeScreen()),
+          home: const Scaffold(body: BalynHomeScreen()),
         ),
       ),
     );
@@ -65,7 +65,7 @@ void main() {
         notifier: state,
         child: MaterialApp(
           theme: AppTheme.light(),
-          home: const Scaffold(body: DadaHomeScreen()),
+          home: const Scaffold(body: BalynHomeScreen()),
         ),
       ),
     );
