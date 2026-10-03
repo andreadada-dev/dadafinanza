@@ -1,8 +1,8 @@
-import 'package:dadafinanza/app_state.dart';
-import 'package:dadafinanza/data/app_database.dart';
-import 'package:dadafinanza/models/models.dart';
-import 'package:dadafinanza/models/smart_models.dart';
-import 'package:dadafinanza/services/smart_finance_engine.dart';
+import 'package:balyn/app_state.dart';
+import 'package:balyn/data/app_database.dart';
+import 'package:balyn/models/models.dart';
+import 'package:balyn/models/smart_models.dart';
+import 'package:balyn/services/smart_finance_engine.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 FinanceTransaction transaction({
