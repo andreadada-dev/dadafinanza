@@ -17,7 +17,7 @@ void main() {
     ffi.sqfliteFfiInit();
     databaseFactory = ffi.databaseFactoryFfi;
     databaseRoot = await Directory.systemTemp.createTemp(
-      'dadafinanza-preset-rule-db-',
+      'balyn-preset-rule-db-',
     );
     await databaseFactory.setDatabasesPath(databaseRoot.path);
   });
@@ -30,7 +30,7 @@ void main() {
 
   test('preset note and tags reach automation rules on save', () async {
     final root = await getDatabasesPath();
-    await databaseFactory.deleteDatabase(p.join(root, 'dadafinanza.db'));
+    await databaseFactory.deleteDatabase(p.join(root, 'balyn.db'));
 
     final database = AppDatabase();
     await database.init();

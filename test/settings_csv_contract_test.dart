@@ -40,7 +40,7 @@ void main() {
 
   Future<AppDatabase> openReadyDatabase() async {
     final root = await getDatabasesPath();
-    await databaseFactory.deleteDatabase(p.join(root, 'dadafinanza.db'));
+    await databaseFactory.deleteDatabase(p.join(root, 'balyn.db'));
     final database = AppDatabase();
     await database.init();
     await FinanceSchemaService(database).ensure();

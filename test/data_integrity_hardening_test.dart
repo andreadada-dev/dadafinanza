@@ -30,7 +30,7 @@ void main() {
     ffi.sqfliteFfiInit();
     databaseFactory = ffi.databaseFactoryFfi;
     databaseRoot = await Directory.systemTemp.createTemp(
-      'dadafinanza-integrity-db-',
+      'balyn-integrity-db-',
     );
     await databaseFactory.setDatabasesPath(databaseRoot.path);
   });
@@ -43,7 +43,7 @@ void main() {
 
   Future<AppDatabase> openReadyDatabase() async {
     final root = await getDatabasesPath();
-    await databaseFactory.deleteDatabase(p.join(root, 'dadafinanza.db'));
+    await databaseFactory.deleteDatabase(p.join(root, 'balyn.db'));
     final database = AppDatabase();
     await database.init();
     await FinanceSchemaService(database).ensure();

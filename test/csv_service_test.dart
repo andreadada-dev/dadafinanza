@@ -16,7 +16,7 @@ void main() {
   setUpAll(() async {
     ffi.sqfliteFfiInit();
     databaseFactory = ffi.databaseFactoryFfi;
-    databaseRoot = await Directory.systemTemp.createTemp('dadafinanza-csv-db-');
+    databaseRoot = await Directory.systemTemp.createTemp('balyn-csv-db-');
     await databaseFactory.setDatabasesPath(databaseRoot.path);
   });
 
@@ -26,7 +26,7 @@ void main() {
 
   setUp(() async {
     final root = await getDatabasesPath();
-    await databaseFactory.deleteDatabase(p.join(root, 'dadafinanza.db'));
+    await databaseFactory.deleteDatabase(p.join(root, 'balyn.db'));
     database = AppDatabase();
     await database.init();
   });
