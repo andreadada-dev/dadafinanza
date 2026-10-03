@@ -1,5 +1,5 @@
-import 'package:dadafinanza/models/models.dart';
-import 'package:dadafinanza/services/transaction_metadata_suggestions.dart';
+import 'package:balyn/models/models.dart';
+import 'package:balyn/services/transaction_metadata_suggestions.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
