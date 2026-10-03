@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
-        android:label="DadaFinanza"
+        android:label="Balyn"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -39,7 +39,7 @@
         </activity>
 
         <activity
-            android:name=".DadaWidgetConfigActivity"
+            android:name=".BalynWidgetConfigActivity"
             android:exported="true"
             android:theme="@style/NormalTheme">
             <intent-filter>
@@ -48,7 +48,7 @@
         </activity>
 
         <receiver
-            android:name=".DadaFinanceWidgetProvider"
+            android:name=".BalynFinanceWidgetProvider"
             android:label="@string/widget_summary_name"
             android:exported="true">
             <intent-filter>
@@ -56,11 +56,11 @@
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/dada_finance_widget_info" />
+                android:resource="@xml/balyn_finance_widget_info" />
         </receiver>
 
         <receiver
-            android:name=".DadaBalanceWidgetProvider"
+            android:name=".BalynBalanceWidgetProvider"
             android:label="@string/widget_balance_name"
             android:exported="true">
             <intent-filter>
@@ -68,11 +68,11 @@
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/dada_balance_widget_info" />
+                android:resource="@xml/balyn_balance_widget_info" />
         </receiver>
 
         <receiver
-            android:name=".DadaQuickAddWidgetProvider"
+            android:name=".BalynQuickAddWidgetProvider"
             android:label="@string/widget_quick_name"
             android:exported="true">
             <intent-filter>
@@ -80,11 +80,11 @@
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/dada_quick_add_widget_info" />
+                android:resource="@xml/balyn_quick_add_widget_info" />
         </receiver>
 
         <receiver
-            android:name=".DadaQuickAmountsWidgetProvider"
+            android:name=".BalynQuickAmountsWidgetProvider"
             android:label="@string/widget_amounts_name"
             android:exported="true">
             <intent-filter>
@@ -92,7 +92,7 @@
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/dada_quick_amounts_widget_info" />
+                android:resource="@xml/balyn_quick_amounts_widget_info" />
         </receiver>
 
         <receiver

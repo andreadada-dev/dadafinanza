@@ -1,7 +1,7 @@
-name: dadafinanza
-description: Private-first personal finance tracker by Dada.
+name: balyn
+description: Balyn — private-first personal finance tracker.
 publish_to: none
-version: 1.7.4+23
+version: 1.8.0+24
 
 environment:
   sdk: '>=3.12.0 <4.0.0'

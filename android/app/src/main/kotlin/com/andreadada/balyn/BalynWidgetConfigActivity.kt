@@ -1,4 +1,4 @@
-package com.dadafinanza.app
+package com.andreadada.balyn
 
 import android.app.Activity
 import android.appwidget.AppWidgetManager
@@ -20,7 +20,7 @@ import android.widget.TextView
 import es.antonborri.home_widget.HomeWidgetPlugin
 import java.util.Locale
 
-class DadaWidgetConfigActivity : Activity() {
+class BalynWidgetConfigActivity : Activity() {
     override fun attachBaseContext(newBase: Context) {
         val widgetData = HomeWidgetPlugin.getData(newBase)
         val code = widgetData.getString("language_code", "it") ?: "it"
@@ -52,7 +52,7 @@ class DadaWidgetConfigActivity : Activity() {
 
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     private val prefs by lazy {
-        getSharedPreferences("dada_widget_config", MODE_PRIVATE)
+        getSharedPreferences("balyn_widget_config", MODE_PRIVATE)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,7 +93,7 @@ class DadaWidgetConfigActivity : Activity() {
 
         val typeSpinner = Spinner(this).apply {
             adapter = ArrayAdapter(
-                this@DadaWidgetConfigActivity,
+                this@BalynWidgetConfigActivity,
                 android.R.layout.simple_spinner_dropdown_item,
                 listOf(
                     getString(R.string.widget_expense),

@@ -1,4 +1,4 @@
-package com.dadafinanza.app
+package com.andreadada.balyn
 
 import android.os.Build
 import android.speech.SpeechRecognizer
@@ -12,7 +12,7 @@ class MainActivity : FlutterFragmentActivity() {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
-            "dadafinanza/privacy"
+            "balyn/privacy"
         ).setMethodCallHandler { call, result ->
             when (call.method) {
                 "setSecure" -> {
@@ -30,7 +30,7 @@ class MainActivity : FlutterFragmentActivity() {
 
         MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger,
-            "dadafinanza/speech"
+            "balyn/speech"
         ).setMethodCallHandler { call, result ->
             when (call.method) {
                 "isOnDeviceAvailable" -> {

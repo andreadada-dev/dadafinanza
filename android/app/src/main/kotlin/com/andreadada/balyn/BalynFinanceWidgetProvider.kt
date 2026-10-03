@@ -1,4 +1,4 @@
-package com.dadafinanza.app
+package com.andreadada.balyn
 
 import android.appwidget.AppWidgetManager
 import android.content.Context
@@ -12,8 +12,8 @@ import java.util.Locale
 import es.antonborri.home_widget.HomeWidgetLaunchIntent
 import es.antonborri.home_widget.HomeWidgetProvider
 
-internal object DadaWidgetConfig {
-    private const val PREFS = "dada_widget_config"
+internal object BalynWidgetConfig {
+    private const val PREFS = "balyn_widget_config"
 
     private fun prefs(context: Context) =
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
@@ -51,7 +51,7 @@ internal object DadaWidgetConfig {
     }
 }
 
-private object DadaWidgetIntents {
+private object BalynWidgetIntents {
     fun openApp(context: Context) =
         HomeWidgetLaunchIntent.getActivity(context, MainActivity::class.java)
 
@@ -69,7 +69,7 @@ private object DadaWidgetIntents {
         context,
         MainActivity::class.java,
         Uri.Builder()
-            .scheme("dadafinanza")
+            .scheme("balyn")
             .authority("quick-add")
             .appendQueryParameter("type", type)
             .apply {
@@ -145,7 +145,7 @@ private object DadaWidgetIntents {
         return formatter.format(numeric)
     }
 }
-class DadaFinanceWidgetProvider : HomeWidgetProvider() {
+class BalynFinanceWidgetProvider : HomeWidgetProvider() {
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -153,7 +153,7 @@ class DadaFinanceWidgetProvider : HomeWidgetProvider() {
         widgetData: SharedPreferences,
     ) {
         appWidgetIds.forEach { widgetId ->
-            val localized = DadaWidgetIntents.localizedContext(context, widgetData)
+            val localized = BalynWidgetIntents.localizedContext(context, widgetData)
             val quick = List(4) { index ->
                 widgetData.getString("quick_category_$index", "Spesa") ?: "Spesa"
             }
@@ -166,11 +166,11 @@ class DadaFinanceWidgetProvider : HomeWidgetProvider() {
                         quick[index]
                     }
             }
-            val reveal = DadaWidgetConfig.showBalance(context, widgetId)
-            val views = RemoteViews(context.packageName, R.layout.dada_finance_widget).apply {
+            val reveal = BalynWidgetConfig.showBalance(context, widgetId)
+            val views = RemoteViews(context.packageName, R.layout.balyn_finance_widget).apply {
                 setTextViewText(
                     R.id.widget_balance,
-                    DadaWidgetIntents.balanceLabel(context, widgetData, reveal),
+                    BalynWidgetIntents.balanceLabel(context, widgetData, reveal),
                 )
                 setTextViewText(R.id.widget_quick_0, quickLabels[0])
                 setTextViewText(R.id.widget_quick_1, quickLabels[1])
@@ -180,10 +180,10 @@ class DadaFinanceWidgetProvider : HomeWidgetProvider() {
                     R.id.widget_add,
                     localized.getString(R.string.widget_add_expense),
                 )
-                setOnClickPendingIntent(R.id.widget_root, DadaWidgetIntents.openApp(context))
+                setOnClickPendingIntent(R.id.widget_root, BalynWidgetIntents.openApp(context))
                 setOnClickPendingIntent(
                     R.id.widget_add,
-                    DadaWidgetIntents.quickAddIntent(
+                    BalynWidgetIntents.quickAddIntent(
                         context,
                         requestCode = widgetId * 10,
                     ),
@@ -196,7 +196,7 @@ class DadaFinanceWidgetProvider : HomeWidgetProvider() {
                 ).forEachIndexed { index, viewId ->
                     setOnClickPendingIntent(
                         viewId,
-                        DadaWidgetIntents.quickAddIntent(
+                        BalynWidgetIntents.quickAddIntent(
                             context,
                             category = quick[index],
                             requestCode = widgetId * 10 + index + 1,
@@ -209,11 +209,11 @@ class DadaFinanceWidgetProvider : HomeWidgetProvider() {
     }
 
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
-        appWidgetIds.forEach { DadaWidgetConfig.clear(context, it) }
+        appWidgetIds.forEach { BalynWidgetConfig.clear(context, it) }
     }
 }
 
-class DadaBalanceWidgetProvider : HomeWidgetProvider() {
+class BalynBalanceWidgetProvider : HomeWidgetProvider() {
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -221,18 +221,18 @@ class DadaBalanceWidgetProvider : HomeWidgetProvider() {
         widgetData: SharedPreferences,
     ) {
         appWidgetIds.forEach { widgetId ->
-            val localized = DadaWidgetIntents.localizedContext(context, widgetData)
-            val views = RemoteViews(context.packageName, R.layout.dada_balance_widget).apply {
+            val localized = BalynWidgetIntents.localizedContext(context, widgetData)
+            val views = RemoteViews(context.packageName, R.layout.balyn_balance_widget).apply {
                 setTextViewText(
                     R.id.balance_widget_title,
                     localized.getString(R.string.widget_balance_total),
                 )
                 setTextViewText(
                     R.id.balance_widget_value,
-                    DadaWidgetIntents.balanceLabel(
+                    BalynWidgetIntents.balanceLabel(
                         context,
                         widgetData,
-                        DadaWidgetConfig.showBalance(context, widgetId),
+                        BalynWidgetConfig.showBalance(context, widgetId),
                     ),
                 )
                 setContentDescription(
@@ -241,11 +241,11 @@ class DadaBalanceWidgetProvider : HomeWidgetProvider() {
                 )
                 setOnClickPendingIntent(
                     R.id.balance_widget_root,
-                    DadaWidgetIntents.openApp(context),
+                    BalynWidgetIntents.openApp(context),
                 )
                 setOnClickPendingIntent(
                     R.id.balance_widget_add,
-                    DadaWidgetIntents.quickAddIntent(
+                    BalynWidgetIntents.quickAddIntent(
                         context,
                         requestCode = widgetId * 20 + 1,
                     ),
@@ -256,11 +256,11 @@ class DadaBalanceWidgetProvider : HomeWidgetProvider() {
     }
 
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
-        appWidgetIds.forEach { DadaWidgetConfig.clear(context, it) }
+        appWidgetIds.forEach { BalynWidgetConfig.clear(context, it) }
     }
 }
 
-class DadaQuickAddWidgetProvider : HomeWidgetProvider() {
+class BalynQuickAddWidgetProvider : HomeWidgetProvider() {
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -268,13 +268,13 @@ class DadaQuickAddWidgetProvider : HomeWidgetProvider() {
         widgetData: SharedPreferences,
     ) {
         appWidgetIds.forEach { widgetId ->
-            val localized = DadaWidgetIntents.localizedContext(context, widgetData)
-            val account = DadaWidgetConfig.account(context, widgetId)
-            val category = DadaWidgetConfig.category(context, widgetId)
-            val destination = DadaWidgetConfig.destination(context, widgetId)
+            val localized = BalynWidgetIntents.localizedContext(context, widgetData)
+            val account = BalynWidgetConfig.account(context, widgetId)
+            val category = BalynWidgetConfig.category(context, widgetId)
+            val destination = BalynWidgetConfig.destination(context, widgetId)
             val contextLabel = listOfNotNull(account, category).joinToString(" · ")
-                .ifBlank { "DadaFinanza" }
-            val views = RemoteViews(context.packageName, R.layout.dada_quick_add_widget).apply {
+                .ifBlank { "Balyn" }
+            val views = RemoteViews(context.packageName, R.layout.balyn_quick_add_widget).apply {
                 setTextViewText(
                     R.id.quick_widget_title,
                     localized.getString(R.string.widget_quick_title),
@@ -312,10 +312,10 @@ class DadaQuickAddWidgetProvider : HomeWidgetProvider() {
                     R.id.quick_widget_voice,
                     localized.getString(R.string.widget_voice_description),
                 )
-                setOnClickPendingIntent(R.id.quick_widget_root, DadaWidgetIntents.openApp(context))
+                setOnClickPendingIntent(R.id.quick_widget_root, BalynWidgetIntents.openApp(context))
                 setOnClickPendingIntent(
                     R.id.quick_widget_expense,
-                    DadaWidgetIntents.quickAddIntent(
+                    BalynWidgetIntents.quickAddIntent(
                         context,
                         type = "expense",
                         account = account,
@@ -325,7 +325,7 @@ class DadaQuickAddWidgetProvider : HomeWidgetProvider() {
                 )
                 setOnClickPendingIntent(
                     R.id.quick_widget_income,
-                    DadaWidgetIntents.quickAddIntent(
+                    BalynWidgetIntents.quickAddIntent(
                         context,
                         type = "income",
                         account = account,
@@ -334,7 +334,7 @@ class DadaQuickAddWidgetProvider : HomeWidgetProvider() {
                 )
                 setOnClickPendingIntent(
                     R.id.quick_widget_transfer,
-                    DadaWidgetIntents.quickAddIntent(
+                    BalynWidgetIntents.quickAddIntent(
                         context,
                         type = "transfer",
                         account = account,
@@ -344,9 +344,9 @@ class DadaQuickAddWidgetProvider : HomeWidgetProvider() {
                 )
                 setOnClickPendingIntent(
                     R.id.quick_widget_voice,
-                    DadaWidgetIntents.quickAddIntent(
+                    BalynWidgetIntents.quickAddIntent(
                         context,
-                        type = DadaWidgetConfig.type(context, widgetId),
+                        type = BalynWidgetConfig.type(context, widgetId),
                         account = account,
                         category = category,
                         toAccount = destination,
@@ -360,11 +360,11 @@ class DadaQuickAddWidgetProvider : HomeWidgetProvider() {
     }
 
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
-        appWidgetIds.forEach { DadaWidgetConfig.clear(context, it) }
+        appWidgetIds.forEach { BalynWidgetConfig.clear(context, it) }
     }
 }
 
-class DadaQuickAmountsWidgetProvider : HomeWidgetProvider() {
+class BalynQuickAmountsWidgetProvider : HomeWidgetProvider() {
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -372,18 +372,18 @@ class DadaQuickAmountsWidgetProvider : HomeWidgetProvider() {
         widgetData: SharedPreferences,
     ) {
         appWidgetIds.forEach { widgetId ->
-            val localized = DadaWidgetIntents.localizedContext(context, widgetData)
-            val widgetLocale = DadaWidgetIntents.locale(context, widgetData)
-            val type = DadaWidgetConfig.type(context, widgetId)
-            val account = DadaWidgetConfig.account(context, widgetId)
-            val category = DadaWidgetConfig.category(context, widgetId)
-            val destination = DadaWidgetConfig.destination(context, widgetId)
-            val showAmounts = DadaWidgetConfig.showAmounts(context, widgetId)
-            val amounts = List(4) { DadaWidgetConfig.amount(context, widgetId, it) }
+            val localized = BalynWidgetIntents.localizedContext(context, widgetData)
+            val widgetLocale = BalynWidgetIntents.locale(context, widgetData)
+            val type = BalynWidgetConfig.type(context, widgetId)
+            val account = BalynWidgetConfig.account(context, widgetId)
+            val category = BalynWidgetConfig.category(context, widgetId)
+            val destination = BalynWidgetConfig.destination(context, widgetId)
+            val showAmounts = BalynWidgetConfig.showAmounts(context, widgetId)
+            val amounts = List(4) { BalynWidgetConfig.amount(context, widgetId, it) }
             val contextLabel = listOfNotNull(account, category).joinToString(" · ")
                 .ifBlank { localized.getString(R.string.widget_configure_account_category) }
 
-            val views = RemoteViews(context.packageName, R.layout.dada_quick_amounts_widget).apply {
+            val views = RemoteViews(context.packageName, R.layout.balyn_quick_amounts_widget).apply {
                 setTextViewText(
                     R.id.amount_widget_title,
                     localized.getString(R.string.widget_fast_title),
@@ -401,7 +401,7 @@ class DadaQuickAmountsWidgetProvider : HomeWidgetProvider() {
                     R.id.amount_widget_voice,
                     localized.getString(R.string.widget_voice_description),
                 )
-                setOnClickPendingIntent(R.id.amount_widget_root, DadaWidgetIntents.openApp(context))
+                setOnClickPendingIntent(R.id.amount_widget_root, BalynWidgetIntents.openApp(context))
                 val amountViews = listOf(
                     R.id.amount_widget_0,
                     R.id.amount_widget_1,
@@ -413,7 +413,7 @@ class DadaQuickAmountsWidgetProvider : HomeWidgetProvider() {
                     setTextViewText(
                         viewId,
                         if (showAmounts) {
-                            DadaWidgetIntents.moneyLabel(
+                            BalynWidgetIntents.moneyLabel(
                                 amounts[index],
                                 currency,
                                 widgetLocale,
@@ -424,7 +424,7 @@ class DadaQuickAmountsWidgetProvider : HomeWidgetProvider() {
                     )
                     setOnClickPendingIntent(
                         viewId,
-                        DadaWidgetIntents.quickAddIntent(
+                        BalynWidgetIntents.quickAddIntent(
                             context,
                             type = type,
                             account = account,
@@ -437,7 +437,7 @@ class DadaQuickAmountsWidgetProvider : HomeWidgetProvider() {
                 }
                 setOnClickPendingIntent(
                     R.id.amount_widget_expense,
-                    DadaWidgetIntents.quickAddIntent(
+                    BalynWidgetIntents.quickAddIntent(
                         context,
                         type = "expense",
                         account = account,
@@ -447,7 +447,7 @@ class DadaQuickAmountsWidgetProvider : HomeWidgetProvider() {
                 )
                 setOnClickPendingIntent(
                     R.id.amount_widget_income,
-                    DadaWidgetIntents.quickAddIntent(
+                    BalynWidgetIntents.quickAddIntent(
                         context,
                         type = "income",
                         account = account,
@@ -456,7 +456,7 @@ class DadaQuickAmountsWidgetProvider : HomeWidgetProvider() {
                 )
                 setOnClickPendingIntent(
                     R.id.amount_widget_transfer,
-                    DadaWidgetIntents.quickAddIntent(
+                    BalynWidgetIntents.quickAddIntent(
                         context,
                         type = "transfer",
                         account = account,
@@ -466,7 +466,7 @@ class DadaQuickAmountsWidgetProvider : HomeWidgetProvider() {
                 )
                 setOnClickPendingIntent(
                     R.id.amount_widget_voice,
-                    DadaWidgetIntents.quickAddIntent(
+                    BalynWidgetIntents.quickAddIntent(
                         context,
                         type = type,
                         account = account,
@@ -482,6 +482,6 @@ class DadaQuickAmountsWidgetProvider : HomeWidgetProvider() {
     }
 
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
-        appWidgetIds.forEach { DadaWidgetConfig.clear(context, it) }
+        appWidgetIds.forEach { BalynWidgetConfig.clear(context, it) }
     }
 }

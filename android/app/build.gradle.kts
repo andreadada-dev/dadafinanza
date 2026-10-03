@@ -30,7 +30,7 @@ val hasReleaseSigning = listOf(
 ).all { !it.isNullOrBlank() }
 
 val requireReleaseSigning =
-    System.getenv("DADAFINANZA_REQUIRE_RELEASE_SIGNING") == "1"
+    System.getenv("BALYN_REQUIRE_RELEASE_SIGNING") == "1"
 
 if (requireReleaseSigning && !hasReleaseSigning) {
     throw GradleException(
@@ -39,7 +39,7 @@ if (requireReleaseSigning && !hasReleaseSigning) {
 }
 
 android {
-    namespace = "com.dadafinanza.app"
+    namespace = "com.andreadada.balyn"
     compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
@@ -54,7 +54,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.dadafinanza.app"
+        applicationId = "com.andreadada.balyn"
         minSdk = 24
         targetSdk = 36
         versionCode = flutter.versionCode
@@ -77,7 +77,7 @@ android {
         release {
             // Local/internal release builds may still use the debug key when no
             // production credentials are present. The Play Store workflow sets
-            // DADAFINANZA_REQUIRE_RELEASE_SIGNING=1, so it can never silently
+            // BALYN_REQUIRE_RELEASE_SIGNING=1, so it can never silently
             // produce a debug-signed bundle.
             signingConfig = if (hasReleaseSigning) {
                 signingConfigs.getByName("release")
