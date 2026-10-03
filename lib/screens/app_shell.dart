@@ -20,14 +20,14 @@ import 'quick_add_page.dart';
 /// The single navigation shell exposed by Balyn.
 ///
 /// Home, Movimenti and Analisi share one account context. `null` means Totale.
-class DadaAppShell extends StatefulWidget {
-  const DadaAppShell({super.key});
+class BalynAppShell extends StatefulWidget {
+  const BalynAppShell({super.key});
 
   @override
-  State<DadaAppShell> createState() => _DadaAppShellState();
+  State<BalynAppShell> createState() => _BalynAppShellState();
 }
 
-class _DadaAppShellState extends State<DadaAppShell> {
+class _BalynAppShellState extends State<BalynAppShell> {
   int index = 0;
   int? accountId;
   bool _allowExit = false;

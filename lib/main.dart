@@ -158,7 +158,7 @@ class _BalynAppState extends State<BalynApp>
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            home: AppLockGate(security: security, child: const DadaAppShell()),
+            home: AppLockGate(security: security, child: const BalynAppShell()),
           );
         },
       ),

@@ -21,8 +21,8 @@ import 'settings_screen.dart' show DashboardCustomizerScreen;
 ///
 /// The financial overview is intentionally kept above the primary actions,
 /// while visibility of each metric still follows "Personalizza Home".
-class DadaHomeScreen extends StatelessWidget {
-  const DadaHomeScreen({super.key});
+class BalynHomeScreen extends StatelessWidget {
+  const BalynHomeScreen({super.key});
 
   static const _fallbackTypes = <DashboardWidgetType>[
     DashboardWidgetType.totalBalance,
@@ -119,13 +119,13 @@ class DadaHomeScreen extends StatelessWidget {
                 const SizedBox(height: 24),
               ],
               if (overview.isNotEmpty) ...[
-                DadaReveal(
+                BalynReveal(
                   key: const ValueKey('home-overview'),
                   child: _IvyFinanceOverview(state: state, configs: overview),
                 ),
                 const SizedBox(height: 16),
               ],
-              DadaReveal(
+              BalynReveal(
                 key: const ValueKey('home-quick-actions'),
                 delay: const Duration(milliseconds: 55),
                 child: Row(
@@ -214,7 +214,7 @@ class DadaHomeScreen extends StatelessWidget {
                         DashboardWidgetSize.large => 36,
                       },
                     ),
-                    child: DadaReveal(
+                    child: BalynReveal(
                       delay: Duration(
                         milliseconds: 90 + (index.clamp(0, 6) * 35),
                       ),

@@ -6,8 +6,8 @@ import 'package:balyn/l10n/localized_material.dart';
 ///
 /// Inspired by the soft scale/fade language used by modern finance apps:
 /// content remains readable without motion and animation never blocks input.
-class DadaReveal extends StatefulWidget {
-  const DadaReveal({
+class BalynReveal extends StatefulWidget {
+  const BalynReveal({
     required this.child,
     this.delay = Duration.zero,
     this.duration = const Duration(milliseconds: 420),
@@ -21,10 +21,10 @@ class DadaReveal extends StatefulWidget {
   final Offset offset;
 
   @override
-  State<DadaReveal> createState() => _DadaRevealState();
+  State<BalynReveal> createState() => _BalynRevealState();
 }
 
-class _DadaRevealState extends State<DadaReveal> {
+class _BalynRevealState extends State<BalynReveal> {
   Timer? _timer;
   var _visible = false;
 
