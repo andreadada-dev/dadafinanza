@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:dadafinanza/l10n/localized_material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 
-/// Small, one-shot entrance motion used across DadaFinanza.
+/// Small, one-shot entrance motion used across Balyn.
 ///
 /// Inspired by the soft scale/fade language used by modern finance apps:
 /// content remains readable without motion and animation never blocks input.
