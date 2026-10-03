@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:dadafinanza/l10n/localized_material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -614,7 +614,7 @@ class GoalsScreen extends StatelessWidget {
               icon: Icons.flag_outlined,
               title: 'Nessun obiettivo',
               subtitle:
-                  'Definisci una cifra e, se vuoi, una data: DadaFinanza stimerà un ritmo sostenibile.',
+                  'Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.',
               action: FilledButton.icon(
                 onPressed: () => showGoalEditor(context),
                 icon: const Icon(Icons.add_rounded),

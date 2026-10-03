@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:dadafinanza/l10n/localized_material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -59,7 +59,7 @@ class DataManagementScreen extends StatelessWidget {
             leading: Icon(Icons.phonelink_lock_outlined),
             title: Text('Dati sul dispositivo'),
             subtitle: Text(
-              'DadaFinanza non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.',
+              'Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.',
             ),
           ),
           ListTile(
@@ -92,9 +92,9 @@ class DataManagementScreen extends StatelessWidget {
         state.database,
       ).create(password: password?.isEmpty == true ? null : password);
       final output = await FilePicker.saveFile(
-        dialogTitle: 'Salva backup DadaFinanza',
+        dialogTitle: 'Salva backup Balyn',
         fileName:
-            'DadaFinanzaBackup-${DateFormat('yyyy-MM-dd-HHmm').format(DateTime.now())}.zip',
+            'BalynBackup-${DateFormat('yyyy-MM-dd-HHmm').format(DateTime.now())}.zip',
         type: FileType.custom,
         allowedExtensions: const ['zip'],
         bytes: await file.readAsBytes(),

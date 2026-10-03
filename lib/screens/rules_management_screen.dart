@@ -1,4 +1,4 @@
-import 'package:dadafinanza/l10n/localized_material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 
 import '../app_state.dart';
 import '../main.dart';
