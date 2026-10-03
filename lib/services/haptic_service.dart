@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-/// Centralized haptic feedback for DadaFinanza.
+/// Centralized haptic feedback for Balyn.
 ///
 /// Keeping haptics behind one service makes the user preference effective
 /// everywhere and prevents unsupported platform feedback from crashing the app.

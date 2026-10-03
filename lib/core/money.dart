@@ -1,6 +1,6 @@
 /// Integer minor-unit helpers used at persistence and validation boundaries.
 ///
-/// DadaFinanza stores monetary values as cents in SQLite. Existing UI/domain
+/// Balyn stores monetary values as cents in SQLite. Existing UI/domain
 /// APIs still expose doubles for ergonomics, but every write is rounded once
 /// through this utility before entering the ledger.
 abstract final class Money {

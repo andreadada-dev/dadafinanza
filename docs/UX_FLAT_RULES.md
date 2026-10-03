@@ -1,4 +1,4 @@
-# DadaFinanza — regole UI/UX
+# Balyn — regole UI/UX
 
 - Gerarchia tramite tipografia, spaziatura e allineamento; non tramite card annidate.
 - Niente bordi decorativi su card, pulsanti, chip o selettori.

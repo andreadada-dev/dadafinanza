@@ -1,4 +1,4 @@
-# DadaFinanza — studio UX/UI e roadmap
+# Balyn — studio UX/UI e roadmap
 
 ## Cosa mostrano gli screenshot di riferimento
 
@@ -9,27 +9,27 @@ L'app di partenza ha già una buona base funzionale: inserimento separato di spe
 ### Navigazione troppo orientata alle sezioni
 Il drawer contiene molte destinazioni ma le azioni più frequenti — vedere la situazione e registrare un movimento — richiedono più attenzione del necessario.
 
-**DadaFinanza:** bottom navigation persistente con Home, Movimenti, Analisi, Conti e Altro, più un pulsante Aggiungi sempre raggiungibile.
+**Balyn:** bottom navigation persistente con Home, Movimenti, Analisi, Conti e Altro, più un pulsante Aggiungi sempre raggiungibile.
 
 ### Inserimento movimento troppo lungo
 Il riferimento mostra subito una grande griglia di categorie e poi conto, data, tag, commento e foto. È completo ma una spesa da cinque secondi sembra un form.
 
-**DadaFinanza:** importo per primo; conto e categoria subito dopo; oggi come data predefinita; nota, tag e ricevuta secondari. Il widget può preselezionare direttamente la categoria.
+**Balyn:** importo per primo; conto e categoria subito dopo; oggi come data predefinita; nota, tag e ricevuta secondari. Il widget può preselezionare direttamente la categoria.
 
 ### Ambiguità tra 246,12 € e 296,12 €
 Negli screenshot un conto da 50 € è escluso dal totale principale, quindi compaiono due valori senza una distinzione sufficientemente esplicita.
 
-**DadaFinanza:** `Saldo incluso nel totale` e `Patrimonio su tutti i conti` sono due metriche esplicitamente nominate. Nascondere un saldo e includere/escludere un conto sono due azioni diverse.
+**Balyn:** `Saldo incluso nel totale` e `Patrimonio su tutti i conti` sono due metriche esplicitamente nominate. Nascondere un saldo e includere/escludere un conto sono due azioni diverse.
 
 ### Categorie e tag diventano densi
 Una griglia grande funziona con poche categorie ma rallenta quando crescono. I tag globali diventano presto rumorosi.
 
-**DadaFinanza:** card categoria più compatte; in seguito preferiti, recenti, ricerca e suggerimenti contestuali per conto/merchant.
+**Balyn:** card categoria più compatte; in seguito preferiti, recenti, ricerca e suggerimenti contestuali per conto/merchant.
 
 ### I grafici descrivono ma non aiutano a decidere
 Il riferimento mostra bene i dati ma lascia quasi tutta l'interpretazione all'utente.
 
-**DadaFinanza:** confronto entrate/spese, consumo budget, top categorie e insight brevi direttamente nella dashboard.
+**Balyn:** confronto entrate/spese, consumo budget, top categorie e insight brevi direttamente nella dashboard.
 
 ## Architettura informativa
 
@@ -101,6 +101,6 @@ Material 3 scuro, un verde principale per azioni/positivo, rosso riservato a spe
 
 ## Privacy e framework
 
-DadaFinanza non importa `playpartygamesframework`: quel framework è correttamente dedicato alla piattaforma giochi e contiene dipendenze da ads, login e acquisti che non devono entrare nel perimetro dei dati finanziari privati. DadaFinanza usa lo stesso baseline Flutter moderno ma possiede un layer finance dedicato e locale.
+Balyn non importa `playpartygamesframework`: quel framework è correttamente dedicato alla piattaforma giochi e contiene dipendenze da ads, login e acquisti che non devono entrare nel perimetro dei dati finanziari privati. Balyn usa lo stesso baseline Flutter moderno ma possiede un layer finance dedicato e locale.
 
 Un eventuale cloud sync futuro dovrà essere facoltativo, cifrato e separato da analytics/pubblicità.
