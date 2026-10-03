@@ -17,7 +17,7 @@ class AppDatabase {
   Future<void> init() async {
     final root = await getDatabasesPath();
     _db = await openDatabase(
-      join(root, 'dadafinanza.db'),
+      join(root, 'balyn.db'),
       version: databaseVersion,
       onConfigure: (db) async => db.execute('PRAGMA foreign_keys = ON'),
       onCreate: _create,
@@ -1811,7 +1811,7 @@ class AppDatabase {
   }
 
   Future<String> databaseFilePath() async =>
-      join(await getDatabasesPath(), 'dadafinanza.db');
+      join(await getDatabasesPath(), 'balyn.db');
 
   Future<void> restoreDatabaseFrom(String sourcePath) async {
     await _db?.close();

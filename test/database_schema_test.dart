@@ -14,7 +14,7 @@ void main() {
     ffi.sqfliteFfiInit();
     databaseFactory = ffi.databaseFactoryFfi;
     databaseRoot = await Directory.systemTemp.createTemp(
-      'dadafinanza-schema-db-',
+      'balyn-schema-db-',
     );
     await databaseFactory.setDatabasesPath(databaseRoot.path);
   });
@@ -27,7 +27,7 @@ void main() {
 
   Future<void> resetDatabase() async {
     final root = await getDatabasesPath();
-    await databaseFactory.deleteDatabase(p.join(root, 'dadafinanza.db'));
+    await databaseFactory.deleteDatabase(p.join(root, 'balyn.db'));
   }
 
   test('fresh database includes transaction kind', () async {

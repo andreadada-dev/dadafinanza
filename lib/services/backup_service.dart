@@ -53,10 +53,10 @@ class BackupService {
     await database.db.rawQuery('PRAGMA wal_checkpoint(FULL)');
     final temp = await _temporaryDirectory();
     final work = Directory(
-      p.join(temp.path, 'dada-backup-${DateTime.now().microsecondsSinceEpoch}'),
+      p.join(temp.path, 'balyn-backup-${DateTime.now().microsecondsSinceEpoch}'),
     );
     await work.create(recursive: true);
-    final databaseCopy = File(p.join(work.path, 'dadafinanza.db'));
+    final databaseCopy = File(p.join(work.path, 'balyn.db'));
     await File(await database.databaseFilePath()).copy(databaseCopy.path);
 
     final transactions = await database.transactions();
@@ -72,7 +72,7 @@ class BackupService {
         .where((file) => referenced.contains(p.basename(file.path)))
         .toList(growable: false);
     final manifest = <String, Object?>{
-      'format': 'DadaFinanzaBackup',
+      'format': 'BalynBackup',
       'formatVersion': formatVersion,
       'createdAt': DateTime.now().toUtc().toIso8601String(),
       'schemaVersion': await _schemaVersion(database.db),
@@ -94,7 +94,7 @@ class BackupService {
     final zip = File(
       p.join(
         temp.path,
-        'DadaFinanzaBackup-${DateTime.now().millisecondsSinceEpoch}.zip',
+        'BalynBackup-${DateTime.now().millisecondsSinceEpoch}.zip',
       ),
     );
     final encoder = ZipFileEncoder(
@@ -117,7 +117,7 @@ class BackupService {
             .where((entry) => entry.name == 'manifest.json' && entry.isFile)
             .firstOrNull;
         if (manifestEntry == null) {
-          throw const FormatException('Backup DadaFinanza non riconosciuto.');
+          throw const FormatException('Backup Balyn non riconosciuto.');
         }
         final bytes = manifestEntry.readBytes();
         if (bytes == null) {
@@ -125,7 +125,7 @@ class BackupService {
         }
         final json = jsonDecode(utf8.decode(bytes));
         if (json is! Map<String, dynamic> ||
-            json['format'] != 'DadaFinanzaBackup') {
+            !const {'BalynBackup', 'DadaFinanzaBackup'}.contains(json['format'])) {
           throw const FormatException('Manifest backup non valido.');
         }
         return BackupPreview(
@@ -149,7 +149,7 @@ class BackupService {
     final extract = Directory(
       p.join(
         temp.path,
-        'dada-restore-${DateTime.now().microsecondsSinceEpoch}',
+        'balyn-restore-${DateTime.now().microsecondsSinceEpoch}',
       ),
     );
     await extract.create(recursive: true);
@@ -159,7 +159,10 @@ class BackupService {
       password: password,
     );
 
-    final restoredDb = File(p.join(extract.path, 'database', 'dadafinanza.db'));
+    var restoredDb = File(p.join(extract.path, 'database', 'balyn.db'));
+    if (!await restoredDb.exists()) {
+      restoredDb = File(p.join(extract.path, 'database', 'dadafinanza.db'));
+    }
     if (!await restoredDb.exists()) {
       await extract.delete(recursive: true);
       throw const FormatException('Database mancante nel backup.');
@@ -178,7 +181,7 @@ class BackupService {
       final safetyExtract = Directory(
         p.join(
           temp.path,
-          'dada-safety-${DateTime.now().microsecondsSinceEpoch}',
+          'balyn-safety-${DateTime.now().microsecondsSinceEpoch}',
         ),
       );
       await safetyExtract.create(recursive: true);
@@ -187,7 +190,7 @@ class BackupService {
         (archive) => extractArchiveToDisk(archive, safetyExtract.path),
       );
       final safetyDb = File(
-        p.join(safetyExtract.path, 'database', 'dadafinanza.db'),
+        p.join(safetyExtract.path, 'database', 'balyn.db'),
       );
       if (await safetyDb.exists()) {
         await database.restoreDatabaseFrom(safetyDb.path);
