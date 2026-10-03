@@ -1,4 +1,4 @@
-# DadaFinanza
+# Balyn
 
 Private-first personal finance app built with Flutter.
 
@@ -13,7 +13,7 @@ Private-first personal finance app built with Flutter.
 
 ## UX direction
 
-DadaFinanza is dashboard-first: balance, cash flow, budget status, planning signals and recent transactions are visible without opening secondary menus. Quick Add is always one tap away. The UI uses a flat Material 3 hierarchy with neutral surfaces, restrained semantic colors and accessible touch targets.
+Balyn is dashboard-first: balance, cash flow, budget status, planning signals and recent transactions are visible without opening secondary menus. Quick Add is always one tap away. The UI uses a flat Material 3 hierarchy with neutral surfaces, restrained semantic colors and accessible touch targets.
 
 ## Smart planning
 
@@ -27,11 +27,11 @@ The Android widget displays the current total balance and shortcuts for common e
 
 ## Privacy
 
-DadaFinanza is local-first and does not require an account. The public privacy policy is available in [docs/PRIVACY_POLICY.md](docs/PRIVACY_POLICY.md).
+Balyn is local-first and does not require an account. The public privacy policy is available in [docs/PRIVACY_POLICY.md](docs/PRIVACY_POLICY.md).
 
 ## Release
 
-Validation runs on self-hosted runners without consuming GitHub artifact storage. Internal APK builds and signed Google Play AAB builds are exported to the local `/builds/dadafinanza` mount. Production AAB generation never falls back to debug signing. It prefers GitHub Actions release-signing secrets and, when they are not configured, uses the persistent local signing vault in `/builds/dadafinanza/signing` on the Android release runner.
+Validation runs on self-hosted runners without consuming GitHub artifact storage. Internal APK builds and signed Google Play AAB builds are exported to the local `/builds/balyn` mount. Production AAB generation never falls back to debug signing. It prefers GitHub Actions release-signing secrets and, when they are not configured, uses the persistent local signing vault in `/builds/balyn/signing` on the Android release runner.
 
 ## Status
 

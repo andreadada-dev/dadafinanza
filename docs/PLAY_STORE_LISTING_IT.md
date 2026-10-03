@@ -1,15 +1,19 @@
-# DadaFinanza — scheda Google Play
+# Balyn — scheda Google Play
 
 Documento operativo per la prima pubblicazione. Aggiornare questo file insieme alla release candidata.
 
 ## Identità
 
-- **Nome app:** DadaFinanza
-- **Package:** `com.dadafinanza.app`
+- **Nome app:** Balyn
+- **Package:** `com.andreadada.balyn`
 - **Categoria suggerita:** Finanza
-- **Versione candidata:** `1.7.0` (base build `+19`; il workflow production assegna un versionCode univoco)
+- **Versione candidata:** `1.8.0` (base build `+24`; il workflow production assegna un versionCode univoco)
 - **Target Android:** API 36
-- **Sviluppatore:** DDone
+- **Sviluppatore:** andreadada
+
+## Tagline
+
+Check your balance.
 
 ## Descrizione breve
 
@@ -17,7 +21,7 @@ Gestisci spese, entrate, conti e budget in modo semplice, privato e locale.
 
 ## Descrizione completa
 
-DadaFinanza è un'app di finanza personale pensata per registrare e capire le proprie spese senza trasformare ogni operazione in un processo complicato.
+Balyn è un'app di finanza personale pensata per registrare e capire le proprie spese senza trasformare ogni operazione in un processo complicato.
 
 Registra rapidamente entrate, spese e trasferimenti, organizza i movimenti con conti, categorie, tag e note e controlla il quadro generale dalla Home.
 
@@ -37,7 +41,7 @@ Funzioni principali:
 - blocco dell'app tramite biometria o PIN;
 - modalità per nascondere saldi e contenuti sensibili.
 
-DadaFinanza è progettata local-first: i dati finanziari vengono conservati sul dispositivo e non è necessario creare un account.
+Balyn è progettata local-first: i dati finanziari vengono conservati sul dispositivo e non è necessario creare un account.
 
 Il riconoscimento vocale preferisce l'elaborazione sul dispositivo quando supportata. Se viene abilitato il recognizer di sistema, la gestione di audio o testo può dipendere dal servizio vocale configurato su Android.
 
@@ -51,7 +55,7 @@ URL pubblico provvisorio:
 
 https://github.com/andreadada-dev/dadafinanza/blob/main/docs/PRIVACY_POLICY.md
 
-Per la pubblicazione definitiva è preferibile esporre la stessa informativa anche su una pagina web stabile del dominio DDone.
+Per la pubblicazione definitiva è preferibile esporre la stessa informativa anche su una pagina web stabile del dominio andreadada.
 
 ## Permessi Android — motivazione
 
@@ -70,8 +74,8 @@ I permessi devono essere richiesti in modo contestuale, quando la funzione viene
 
 In base all'implementazione corrente:
 
-- nessun account DadaFinanza;
-- nessun backend DadaFinanza;
+- nessun account Balyn;
+- nessun backend Balyn;
 - nessun SDK pubblicitario;
 - nessun SDK analytics di terze parti;
 - dati finanziari e allegati gestiti localmente;
@@ -99,4 +103,4 @@ Per Google Play usare esclusivamente l'AAB prodotto dal workflow:
 
 `.github/workflows/build-production-aab.yml`
 
-Il workflow richiede sempre una firma di produzione e non accetta un fallback alla chiave debug. Usa i secret GitHub quando presenti; altrimenti usa il signing vault persistente del runner in `/builds/dadafinanza/signing`, che deve essere conservato e sottoposto a backup sicuro.
+Il workflow richiede sempre una firma di produzione e non accetta un fallback alla chiave debug. Usa i secret GitHub quando presenti; altrimenti usa il signing vault persistente del runner in `/builds/balyn/signing`, che deve essere conservato e sottoposto a backup sicuro.

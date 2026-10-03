@@ -1,6 +1,6 @@
 # Check before pushing
 
-Questa checklist è il gate minimo prima di push, merge o release di DadaFinanza. Non considerare una modifica conclusa finché i controlli applicabili non sono verdi.
+Questa checklist è il gate minimo prima di push, merge o release di Balyn. Non considerare una modifica conclusa finché i controlli applicabili non sono verdi.
 
 ## 1. Base Git e scope
 
@@ -111,7 +111,7 @@ Testare almeno 320, 360, 390 e 430 dp e testo ingrandito quando la schermata è 
 - [ ] La versione in `pubspec.yaml` è stata incrementata e il `versionCode` non è mai stato usato su Play Console.
 - [ ] La release pubblica usa esclusivamente `.github/workflows/build-production-aab.yml`.
 - [ ] Il workflow production verifica la presenza delle credenziali di firma e non può produrre silenziosamente un bundle firmato con la chiave debug.
-- [ ] L'AAB viene verificato con `jarsigner`, copiato in `/builds/dadafinanza` e accompagnato da SHA-256.
+- [ ] L'AAB viene verificato con `jarsigner`, copiato in `/builds/balyn` e accompagnato da SHA-256.
 - [ ] Nessuna chiave `.jks`, password o `key.properties` è tracciata da Git.
 - [ ] Informativa privacy in-app e `docs/PRIVACY_POLICY.md` allineate alle funzioni effettive.
 - [ ] Riesaminare permessi Camera, Microfono, Biometria e Notifiche e richiederli solo nel contesto della funzione.

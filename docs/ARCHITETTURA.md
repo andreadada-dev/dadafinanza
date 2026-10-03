@@ -1,6 +1,6 @@
-# DadaFinanza — Architettura
+# Balyn — Architettura
 
-DadaFinanza è un'app di finanza personale Android-first, local-first e private-first. Non richiede account, backend o cloud per funzionare. I dati finanziari restano nel database SQLite locale e gli allegati vengono gestiti nella directory privata dell'app.
+Balyn è un'app di finanza personale Android-first, local-first e private-first. Non richiede account, backend o cloud per funzionare. I dati finanziari restano nel database SQLite locale e gli allegati vengono gestiti nella directory privata dell'app.
 
 ## 1. Principi
 
@@ -103,7 +103,7 @@ Default:
 - riconoscimento **on-device** quando Android lo rende disponibile;
 - fallback al recognizer di sistema disabilitato;
 - l'utente può abilitarlo esplicitamente;
-- nessun audio o testo viene inviato a server DadaFinanza.
+- nessun audio o testo viene inviato a server Balyn.
 
 Il risultato vocale produce soltanto un `TransactionDraft`: non salva mai da solo.
 
