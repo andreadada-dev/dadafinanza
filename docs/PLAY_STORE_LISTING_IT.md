@@ -55,7 +55,7 @@ URL pubblico provvisorio:
 
 https://github.com/andreadada-dev/dadafinanza/blob/main/docs/PRIVACY_POLICY.md
 
-Per la pubblicazione definitiva è preferibile esporre la stessa informativa anche su una pagina web stabile del dominio andreadada.
+Per la pubblicazione definitiva è preferibile esporre la stessa informativa anche su una pagina web stabile di Balyn.
 
 ## Permessi Android — motivazione
 

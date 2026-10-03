@@ -62,6 +62,6 @@ Questa informativa può essere aggiornata quando cambiano funzionalità, permess
 
 Sviluppatore: **andreadada**
 
-Per richieste relative a privacy o supporto, usa i contatti pubblicati sul sito ufficiale:
+Per richieste relative a privacy o supporto, usa i contatti pubblicati sul profilo pubblico dello sviluppatore:
 
-https://www.ddone.it/
+https://github.com/andreadada-dev

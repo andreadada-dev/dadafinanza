@@ -109,7 +109,7 @@ Il risultato vocale produce soltanto un `TransactionDraft`: non salva mai da sol
 
 ## 6. Deep link
 
-Schema canonico: `dadafinanza://quick-add`.
+Schema canonico: `balyn://quick-add`.
 
 Parametri validati: `type`, `amount`, `category`, `account`, `toAccount`, `date`, `note`, `voice`, `presetId`.
 
@@ -124,7 +124,7 @@ La famiglia widget resta basata su `HomeWidget` + `RemoteViews`:
 3. **Importi rapidi**;
 4. **Riepilogo**.
 
-`DadaWidgetConfigActivity` salva preferenze keyed per `appWidgetId`. `hideBalance` globale prevale sui singoli widget.
+`BalynWidgetConfigActivity` salva preferenze keyed per `appWidgetId`. `hideBalance` globale prevale sui singoli widget.
 
 ## 8. Allegati e backup
 

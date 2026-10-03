@@ -224,7 +224,7 @@ class DataManagementScreen extends StatelessWidget {
       final output = await FilePicker.saveFile(
         dialogTitle: 'Esporta movimenti',
         fileName:
-            'dadafinanza-${DateFormat('yyyy-MM-dd').format(DateTime.now())}.csv',
+            'balyn-${DateFormat('yyyy-MM-dd').format(DateTime.now())}.csv',
         type: FileType.custom,
         allowedExtensions: const ['csv'],
         bytes: Uint8List.fromList(utf8.encode(csv)),

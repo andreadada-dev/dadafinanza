@@ -102,7 +102,7 @@ class BackupService {
     );
     encoder.create(zip.path);
     await encoder.addFile(manifestFile, 'manifest.json');
-    await encoder.addFile(databaseCopy, 'database/dadafinanza.db');
+    await encoder.addFile(databaseCopy, 'database/balyn.db');
     for (final file in attachmentFiles) {
       await encoder.addFile(file, 'attachments/${p.basename(file.path)}');
     }

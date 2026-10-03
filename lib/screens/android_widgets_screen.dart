@@ -77,7 +77,7 @@ class _AndroidWidgetsScreenState extends State<AndroidWidgetsScreen> {
               'Circa 2×1 · saldo compatto e accesso a Nuovo movimento. La visibilità del saldo è configurabile per istanza.',
           buttonLabel: 'Aggiungi Saldo',
           enabled: !checking && supported,
-          onPressed: () => _pin('DadaBalanceWidgetProvider'),
+          onPressed: () => _pin('BalynBalanceWidgetProvider'),
         ),
         const Divider(height: 32),
         _WidgetChoice(
@@ -87,7 +87,7 @@ class _AndroidWidgetsScreenState extends State<AndroidWidgetsScreen> {
               'Circa 2×2 · Spesa, Entrata, Trasferisci e Voce. Conto e categoria possono essere preconfigurati.',
           buttonLabel: 'Aggiungi Quick Capture',
           enabled: !checking && supported,
-          onPressed: () => _pin('DadaQuickAddWidgetProvider'),
+          onPressed: () => _pin('BalynQuickAddWidgetProvider'),
         ),
         const Divider(height: 32),
         _WidgetChoice(
@@ -97,7 +97,7 @@ class _AndroidWidgetsScreenState extends State<AndroidWidgetsScreen> {
               'Circa 4×2 · quattro importi personalizzati, conto, categoria, trasferimento e microfono.',
           buttonLabel: 'Aggiungi Importi rapidi',
           enabled: !checking && supported,
-          onPressed: () => _pin('DadaQuickAmountsWidgetProvider'),
+          onPressed: () => _pin('BalynQuickAmountsWidgetProvider'),
         ),
         const Divider(height: 32),
         _WidgetChoice(
@@ -107,7 +107,7 @@ class _AndroidWidgetsScreenState extends State<AndroidWidgetsScreen> {
               'Circa 4×2 · saldo e quattro categorie rapide. Le categorie seguono prima i quick slot e poi le preferite.',
           buttonLabel: 'Aggiungi Riepilogo',
           enabled: !checking && supported,
-          onPressed: () => _pin('DadaFinanceWidgetProvider'),
+          onPressed: () => _pin('BalynFinanceWidgetProvider'),
         ),
         const SizedBox(height: 32),
         const SectionTitle('Privacy widget'),
