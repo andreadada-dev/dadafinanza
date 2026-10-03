@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DadaFinanza</string>
-    <string name="widget_summary_name">DadaFinanza · Riepilogo</string>
-    <string name="widget_balance_name">DadaFinanza · Saldo</string>
-    <string name="widget_quick_name">DadaFinanza · Quick Capture</string>
-    <string name="widget_amounts_name">DadaFinanza · Importi rapidi</string>
+    <string name="app_name">Balyn</string>
+    <string name="widget_summary_name">Balyn · Riepilogo</string>
+    <string name="widget_balance_name">Balyn · Saldo</string>
+    <string name="widget_quick_name">Balyn · Quick Capture</string>
+    <string name="widget_amounts_name">Balyn · Importi rapidi</string>
     <string name="widget_description">Saldo e categorie rapide per registrare un movimento</string>
-    <string name="widget_balance_description">Saldo totale compatto con accesso rapido a DadaFinanza</string>
+    <string name="widget_balance_description">Saldo totale compatto con accesso rapido a Balyn</string>
     <string name="widget_quick_description">Spesa, entrata, trasferimento e voce dalla schermata Home</string>
     <string name="widget_amounts_description">Conto, categoria e quattro importi configurabili con accesso vocale</string>
 
@@ -21,7 +21,7 @@
     <string name="widget_new_income">Nuova entrata</string>
     <string name="widget_new_transfer">Nuovo trasferimento</string>
     <string name="widget_voice_description">Compila movimento con la voce</string>
-    <string name="widget_fast_title">DadaFinanza · Rapido</string>
+    <string name="widget_fast_title">Balyn · Rapido</string>
     <string name="widget_account_category">Conto · Categoria</string>
     <string name="widget_configure_account_category">Configura conto e categoria</string>
 

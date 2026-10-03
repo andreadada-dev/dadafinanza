@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" formatted="false">DadaFinanza</string>
-    <string name="widget_summary_name" formatted="false">DadaFinanza · Zusammenfassung</string>
-    <string name="widget_balance_name" formatted="false">DadaFinanza · Balance</string>
-    <string name="widget_quick_name" formatted="false">DadaFinanza · Schnelle Erfassung</string>
-    <string name="widget_amounts_name" formatted="false">DadaFinanza · Schnelle Beträge</string>
+    <string name="app_name" formatted="false">Balyn</string>
+    <string name="widget_summary_name" formatted="false">Balyn · Zusammenfassung</string>
+    <string name="widget_balance_name" formatted="false">Balyn · Balance</string>
+    <string name="widget_quick_name" formatted="false">Balyn · Schnelle Erfassung</string>
+    <string name="widget_amounts_name" formatted="false">Balyn · Schnelle Beträge</string>
     <string name="widget_description" formatted="false">Kontostand und Schnellkategorien zum Aufzeichnen einer Transaktion</string>
-    <string name="widget_balance_description" formatted="false">Kompakter Gesamtsaldo mit schnellem Zugriff auf DadaFinanza</string>
+    <string name="widget_balance_description" formatted="false">Kompakter Gesamtsaldo mit schnellem Zugriff auf Balyn</string>
     <string name="widget_quick_description" formatted="false">Ausgaben, Einnahmen, Überweisungen und Einnahmen auf dem Startbildschirm</string>
     <string name="widget_amounts_description" formatted="false">Konto, Kategorie und vier Beträge konfigurierbar mit Sprachzugriff</string>
     <string name="widget_balance_total" formatted="false">Gesamtbilanz</string>
@@ -20,7 +20,7 @@
     <string name="widget_new_income" formatted="false">Neues Einkommen</string>
     <string name="widget_new_transfer" formatted="false">Neuer Transfer</string>
     <string name="widget_voice_description" formatted="false">Kompilieren Sie die Transaktion per Spracheingabe</string>
-    <string name="widget_fast_title" formatted="false">DadaFinanza · Rapido</string>
+    <string name="widget_fast_title" formatted="false">Balyn · Rapido</string>
     <string name="widget_account_category" formatted="false">Konto · Kategorie</string>
     <string name="widget_configure_account_category" formatted="false">Konto und Kategorie konfigurieren</string>
     <string name="widget_config_title" formatted="false">Widgets konfigurieren</string>

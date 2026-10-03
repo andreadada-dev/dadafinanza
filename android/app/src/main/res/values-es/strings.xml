@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" formatted="false">DadaFinanza</string>
-    <string name="widget_summary_name" formatted="false">DadaFinanza · Resumen</string>
-    <string name="widget_balance_name" formatted="false">DadaFinanza · Saldo</string>
-    <string name="widget_quick_name" formatted="false">DadaFinanza · Captura Rápida</string>
-    <string name="widget_amounts_name" formatted="false">DadaFinanza · Montos rápidos</string>
+    <string name="app_name" formatted="false">Balyn</string>
+    <string name="widget_summary_name" formatted="false">Balyn · Resumen</string>
+    <string name="widget_balance_name" formatted="false">Balyn · Saldo</string>
+    <string name="widget_quick_name" formatted="false">Balyn · Captura Rápida</string>
+    <string name="widget_amounts_name" formatted="false">Balyn · Montos rápidos</string>
     <string name="widget_description" formatted="false">Saldo y categorías rápidas para registrar una transacción</string>
-    <string name="widget_balance_description" formatted="false">Saldo total compacto con acceso rápido a DadaFinanza</string>
+    <string name="widget_balance_description" formatted="false">Saldo total compacto con acceso rápido a Balyn</string>
     <string name="widget_quick_description" formatted="false">Gastos, ingresos, transferencias e ingresos desde la pantalla de Inicio</string>
     <string name="widget_amounts_description" formatted="false">Cuenta, categoría y cuatro montos configurables con acceso por voz</string>
     <string name="widget_balance_total" formatted="false">saldo total</string>
@@ -20,7 +20,7 @@
     <string name="widget_new_income" formatted="false">Nuevos ingresos</string>
     <string name="widget_new_transfer" formatted="false">Nueva transferencia</string>
     <string name="widget_voice_description" formatted="false">Compilar transacción con voz</string>
-    <string name="widget_fast_title" formatted="false">DadaFinanza · Rápido</string>
+    <string name="widget_fast_title" formatted="false">Balyn · Rápido</string>
     <string name="widget_account_category" formatted="false">Cuenta · Categoría</string>
     <string name="widget_configure_account_category" formatted="false">Configurar cuenta y categoría</string>
     <string name="widget_config_title" formatted="false">Configurar widgets</string>
