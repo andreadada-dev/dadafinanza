@@ -9,6 +9,7 @@ import '../models/models.dart';
 import '../models/smart_models.dart';
 import '../services/goal_planning_service.dart';
 import '../services/smart_finance_engine.dart';
+import '../widgets/balyn_motion.dart';
 import '../widgets/ui_helpers.dart';
 import 'quick_add_page.dart';
 
@@ -25,7 +26,7 @@ class PlanningScreen extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 100),
         children: [
           const SectionTitle('Prossimi 30 giorni'),
-          _ForecastSummary(forecast: forecast),
+          BalynReveal(child: _ForecastSummary(forecast: forecast)),
           const SizedBox(height: 32),
           _PlanningLink(
             icon: Icons.pie_chart_outline_rounded,
@@ -110,34 +111,97 @@ class _ForecastSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          state.hideBalance
-              ? '••••••'
-              : moneyFor(state, forecast.endingBalance),
-          style: Theme.of(context).textTheme.headlineLarge,
+    final theme = Theme.of(context);
+    final accent = theme.colorScheme.tertiary;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 18),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            accent.withValues(
+              alpha: theme.brightness == Brightness.dark ? .15 : .09,
+            ),
+            theme.colorScheme.surfaceContainer.withValues(alpha: .72),
+          ],
         ),
-        const SizedBox(height: 4),
-        Text(
-          'Saldo stimato tra ${forecast.days} giorni · ${forecast.historyWeeks} settimane di storico utile',
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
-        const SizedBox(height: 16),
-        _ForecastLine(
-          label: 'Confermato',
-          value: forecast.confirmedIncome - forecast.confirmedExpense,
-        ),
-        _ForecastLine(
-          label: 'Previsto da abitudini',
-          value: forecast.predictedIncome - forecast.predictedExpense,
-        ),
-        _ForecastLine(
-          label: 'Spesa comportamentale stimata',
-          value: -forecast.estimatedExpense,
-        ),
-      ],
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 42,
+                height: 42,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: accent.withValues(alpha: .14),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.auto_graph_rounded,
+                  color: accent,
+                  size: 21,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                '${forecast.days} GIORNI',
+                style: theme.textTheme.labelMedium?.copyWith(
+                  color: accent,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: .3,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 18),
+          Text(
+            'SALDO STIMATO',
+            style: theme.textTheme.labelMedium?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.w700,
+              letterSpacing: .35,
+            ),
+          ),
+          const SizedBox(height: 3),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              state.hideBalance
+                  ? '••••••'
+                  : moneyFor(state, forecast.endingBalance),
+              style: theme.textTheme.displaySmall?.copyWith(
+                fontWeight: FontWeight.w900,
+                letterSpacing: -1.3,
+              ),
+            ),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            '${forecast.historyWeeks} settimane di storico utile',
+            style: theme.textTheme.bodySmall,
+          ),
+          const SizedBox(height: 18),
+          _ForecastLine(
+            label: 'Confermato',
+            value: forecast.confirmedIncome - forecast.confirmedExpense,
+          ),
+          _ForecastLine(
+            label: 'Previsto da abitudini',
+            value: forecast.predictedIncome - forecast.predictedExpense,
+          ),
+          _ForecastLine(
+            label: 'Spesa comportamentale stimata',
+            value: -forecast.estimatedExpense,
+          ),
+        ],
+      ),
     );
   }
 }
