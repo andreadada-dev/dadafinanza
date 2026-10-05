@@ -6,6 +6,7 @@ import '../core/money.dart';
 import '../main.dart';
 import '../models/advance_models.dart';
 import '../models/models.dart';
+import '../theme/app_theme.dart';
 import '../widgets/balyn_motion.dart';
 import '../widgets/ui_helpers.dart';
 
@@ -149,6 +150,9 @@ class _AdvancesOverview extends StatelessWidget {
     final state = AppScope.of(context);
     final theme = Theme.of(context);
     final accent = theme.colorScheme.tertiary;
+    final financeColors = theme.extension<FinanceColors>();
+    final positive = financeColors?.positive ?? const Color(0xFF12B880);
+    final negative = financeColors?.negative ?? const Color(0xFFF53D3D);
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 17),
@@ -227,7 +231,7 @@ class _AdvancesOverview extends StatelessWidget {
                           Money.fromCents(state.advanceReceivableCents),
                         ),
                   icon: Icons.call_received_rounded,
-                  color: context.financeColors.positive,
+                  color: positive,
                 ),
               ),
               const SizedBox(width: 14),
@@ -241,7 +245,7 @@ class _AdvancesOverview extends StatelessWidget {
                           Money.fromCents(state.advancePayableCents),
                         ),
                   icon: Icons.call_made_rounded,
-                  color: context.financeColors.negative,
+                  color: negative,
                 ),
               ),
             ],
