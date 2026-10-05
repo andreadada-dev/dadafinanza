@@ -270,21 +270,18 @@ class _AccountContextTransactionsScreenState
     final sections = <_CategoryGroupSection>[
       _CategoryGroupSection(
         title: 'Spese per categoria',
-        type: TransactionType.expense,
         groups: groups
             .where((item) => item.type == TransactionType.expense)
             .toList(growable: false),
       ),
       _CategoryGroupSection(
         title: 'Entrate per categoria',
-        type: TransactionType.income,
         groups: groups
             .where((item) => item.type == TransactionType.income)
             .toList(growable: false),
       ),
       _CategoryGroupSection(
         title: 'Trasferimenti',
-        type: TransactionType.transfer,
         groups: groups
             .where((item) => item.type == TransactionType.transfer)
             .toList(growable: false),
@@ -1125,12 +1122,10 @@ class _MovementTile extends StatelessWidget {
 class _CategoryGroupSection {
   const _CategoryGroupSection({
     required this.title,
-    required this.type,
     required this.groups,
   });
 
   final String title;
-  final TransactionType type;
   final List<AccountCategoryGroup> groups;
 }
 
@@ -1249,7 +1244,7 @@ class _CategoryRankRow extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(99),
                           child: LinearProgressIndicator(
-                            value: (group.percentage / 100).clamp(0.0, 1.0),
+                            value: (group.percentage / 100).clamp(0.0, 1.0).toDouble(),
                             minHeight: 4,
                             backgroundColor: theme.colorScheme.onSurface
                                 .withValues(alpha: .07),
