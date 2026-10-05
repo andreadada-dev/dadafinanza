@@ -290,5 +290,16 @@ class AppTheme {
 }
 
 extension FinanceThemeContext on BuildContext {
-  FinanceColors get financeColors => Theme.of(this).extension<FinanceColors>()!;
+  FinanceColors get financeColors {
+    final theme = Theme.of(this);
+    final configured = theme.extension<FinanceColors>();
+    if (configured != null) return configured;
+    final dark = theme.brightness == Brightness.dark;
+    return FinanceColors(
+      positive: dark ? const Color(0xFF38E0A8) : const Color(0xFF12B880),
+      negative: dark ? const Color(0xFFFF7373) : const Color(0xFFF53D3D),
+      warning: dark ? const Color(0xFFFFB86B) : const Color(0xFFF57A3D),
+      neutral: theme.colorScheme.onSurfaceVariant,
+    );
+  }
 }
