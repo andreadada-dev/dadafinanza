@@ -194,7 +194,7 @@ class AccountContextHomeScreen extends StatelessWidget {
                 ] else ...[
                   BalynReveal(
                     key: ValueKey(
-                      'context-home-account-${selectedAccount!.id}',
+                      'context-home-account-${selectedAccount.id}',
                     ),
                     child: _SelectedAccountSummary(
                       account: selectedAccount!,
@@ -801,33 +801,6 @@ class _SetupBlock extends StatelessWidget {
             label: const Text('Registra movimento'),
           ),
         ],
-      ),
-    ],
-  );
-}
-
-class _Metric extends StatelessWidget {
-  const _Metric({required this.label, required this.value, this.color});
-
-  final String label;
-  final String value;
-  final Color? color;
-
-  @override
-  Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(label, style: Theme.of(context).textTheme.bodySmall),
-      const SizedBox(height: 3),
-      FittedBox(
-        fit: BoxFit.scaleDown,
-        alignment: Alignment.centerLeft,
-        child: Text(
-          value,
-          style: Theme.of(
-            context,
-          ).textTheme.titleMedium?.copyWith(color: color),
-        ),
       ),
     ],
   );
