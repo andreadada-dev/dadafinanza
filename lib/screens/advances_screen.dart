@@ -388,15 +388,15 @@ class _AdvancePersonSummaryCard extends StatelessWidget {
               ),
               Positioned.fill(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(7, 14, 7, 9),
+                  padding: const EdgeInsets.fromLTRB(7, 9, 7, 6),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Center(
                         child: Container(
-                          width: 44,
-                          height: 44,
+                          width: 36,
+                          height: 36,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             color: Color(
@@ -407,11 +407,11 @@ class _AdvancePersonSummaryCard extends StatelessWidget {
                           child: Icon(
                             personIcon(person.iconKey),
                             color: Color(person.colorValue),
-                            size: 23,
+                            size: 20,
                           ),
                         ),
                       ),
-                      const SizedBox(height: 6),
+                      const SizedBox(height: 4),
                       Text(
                         person.name,
                         maxLines: 1,
@@ -421,7 +421,7 @@ class _AdvancePersonSummaryCard extends StatelessWidget {
                           fontWeight: FontWeight.w800,
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 2),
                       Text(
                         subtitle,
                         maxLines: 1,
