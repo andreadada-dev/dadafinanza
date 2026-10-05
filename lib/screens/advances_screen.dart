@@ -219,7 +219,7 @@ class _AdvancesOverview extends StatelessWidget {
             children: [
               Expanded(
                 child: _AdvanceOverviewValue(
-                  label: 'Da ricevere',
+                  label: 'DA RICEVERE',
                   value: state.hideBalance
                       ? '••••'
                       : moneyFor(
@@ -233,7 +233,7 @@ class _AdvancesOverview extends StatelessWidget {
               const SizedBox(width: 14),
               Expanded(
                 child: _AdvanceOverviewValue(
-                  label: 'Da restituire',
+                  label: 'DA RESTITUIRE',
                   value: state.hideBalance
                       ? '••••'
                       : moneyFor(
