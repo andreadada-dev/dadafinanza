@@ -1120,10 +1120,7 @@ class _MovementTile extends StatelessWidget {
 }
 
 class _CategoryGroupSection {
-  const _CategoryGroupSection({
-    required this.title,
-    required this.groups,
-  });
+  const _CategoryGroupSection({required this.title, required this.groups});
 
   final String title;
   final List<AccountCategoryGroup> groups;
@@ -1244,7 +1241,9 @@ class _CategoryRankRow extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(99),
                           child: LinearProgressIndicator(
-                            value: (group.percentage / 100).clamp(0.0, 1.0).toDouble(),
+                            value: (group.percentage / 100)
+                                .clamp(0.0, 1.0)
+                                .toDouble(),
                             minHeight: 4,
                             backgroundColor: theme.colorScheme.onSurface
                                 .withValues(alpha: .07),
