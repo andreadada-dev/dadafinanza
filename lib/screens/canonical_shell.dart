@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:balyn/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
@@ -7,6 +9,7 @@ import '../core/money.dart';
 import '../main.dart';
 import '../models/models.dart';
 import '../services/quick_preset_service.dart';
+import '../widgets/finance_charts.dart';
 import '../widgets/finance_quick_action.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_management_screen.dart';
@@ -821,6 +824,47 @@ class _CanonicalAnalyticsScreenState extends State<CanonicalAnalyticsScreen> {
     }
   }
 
+  List<FinanceTrendPoint> _trendPoints(
+    AppState state,
+    DateTime from,
+    DateTime to,
+  ) {
+    final totalDays = math.max(1, to.difference(from).inDays);
+    final targetBuckets = switch (period) {
+      _AnalyticsPeriod.week => math.min(7, totalDays),
+      _AnalyticsPeriod.month => math.min(14, totalDays),
+      _AnalyticsPeriod.year => 12,
+      _AnalyticsPeriod.custom => totalDays <= 31
+          ? math.min(14, totalDays)
+          : 12,
+    };
+    final bucketDays = math.max(1, (totalDays / targetBuckets).ceil());
+    final result = <FinanceTrendPoint>[];
+
+    var cursor = from;
+    while (cursor.isBefore(to)) {
+      var next = cursor.add(Duration(days: bucketDays));
+      if (next.isAfter(to)) next = to;
+      result.add(
+        FinanceTrendPoint(
+          date: cursor,
+          primary: state.periodTotal(
+            TransactionType.expense,
+            cursor,
+            next,
+          ),
+          secondary: state.periodTotal(
+            TransactionType.income,
+            cursor,
+            next,
+          ),
+        ),
+      );
+      cursor = next;
+    }
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
@@ -860,6 +904,30 @@ class _CanonicalAnalyticsScreenState extends State<CanonicalAnalyticsScreen> {
       if (total > 0) categories.add(MapEntry(category, total));
     }
     categories.sort((a, b) => b.value.compareTo(a.value));
+    final trendPoints = _trendPoints(state, from, to);
+    final donutEntries = categories.take(6).toList(growable: false);
+    final donutShown = donutEntries.fold<double>(
+      0,
+      (sum, entry) => sum + entry.value,
+    );
+    final categorySegments = <FinanceDonutSegment>[
+      for (final entry in donutEntries)
+        FinanceDonutSegment(
+          label: entry.key.name,
+          value: entry.value,
+          color: Color(entry.key.colorValue),
+          icon: categoryIcon(entry.key.iconKey),
+        ),
+      if (expense - donutShown > .01)
+        FinanceDonutSegment(
+          label: 'Altro',
+          value: expense - donutShown,
+          color: Theme.of(
+            context,
+          ).colorScheme.onSurfaceVariant.withValues(alpha: .36),
+          icon: Icons.more_horiz_rounded,
+        ),
+    ];
     final delta = previousExpense == 0
         ? null
         : (expense - previousExpense) / previousExpense * 100;
@@ -964,7 +1032,20 @@ class _CanonicalAnalyticsScreenState extends State<CanonicalAnalyticsScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 28),
+          const SectionTitle('Flusso del periodo'),
+          FinanceTrendChart(
+            points: trendPoints,
+            primaryLabel: AppI18n.tr('Spese'),
+            secondaryLabel: AppI18n.tr('Entrate'),
+            primaryColor: context.financeColors.negative,
+            secondaryColor: context.financeColors.positive,
+            valueFormatter: state.hideBalance
+                ? (_) => '••••'
+                : (value) => moneyFor(state, value),
+            height: 210,
+          ),
+          const SizedBox(height: 28),
           _AnalyticsLine(
             icon: delta == null
                 ? Icons.horizontal_rule_rounded
@@ -1026,7 +1107,18 @@ class _CanonicalAnalyticsScreenState extends State<CanonicalAnalyticsScreen> {
           const SectionTitle('Dove stai spendendo'),
           if (categories.isEmpty)
             const Text('Nessun dato nel periodo')
-          else
+          else ...[
+            FinanceDonutChart(
+              segments: categorySegments,
+              centerLabel: AppI18n.tr('Spese'),
+              centerValue: state.hideBalance
+                  ? '••••'
+                  : moneyFor(state, expense),
+              valueFormatter: state.hideBalance
+                  ? (_) => '••••'
+                  : (value) => moneyFor(state, value),
+            ),
+            const SizedBox(height: 18),
             ...categories
                 .take(8)
                 .map(
@@ -1055,6 +1147,7 @@ class _CanonicalAnalyticsScreenState extends State<CanonicalAnalyticsScreen> {
                     ),
                   ),
                 ),
+          ],
           const SizedBox(height: 28),
           const SectionTitle('Per conto'),
           ...state.activeAccounts.map(
