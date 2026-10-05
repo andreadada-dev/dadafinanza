@@ -158,9 +158,9 @@ class FinanceTrendChart extends StatelessWidget {
                   dashArray: const [3, 7],
                 ),
               ),
-              extraLinesData: minY <= 0 && maxY >= 0
-                  ? ExtraLinesData(
-                      horizontalLines: [
+              extraLinesData: ExtraLinesData(
+                horizontalLines: minY <= 0 && maxY >= 0
+                    ? [
                         HorizontalLine(
                           y: 0,
                           color: theme.colorScheme.onSurface.withValues(
@@ -168,9 +168,9 @@ class FinanceTrendChart extends StatelessWidget {
                           ),
                           strokeWidth: 1.2,
                         ),
-                      ],
-                    )
-                  : null,
+                      ]
+                    : const [],
+              ),
               titlesData: FlTitlesData(
                 topTitles: const AxisTitles(
                   sideTitles: SideTitles(showTitles: false),
@@ -198,10 +198,10 @@ class FinanceTrendChart extends StatelessWidget {
                   fitInsideVertically: true,
                   getTooltipItems: (spots) {
                     if (spots.isEmpty) return const [];
-                    final index = spots.first.x.round().clamp(
-                          0,
-                          points.length - 1,
-                        );
+                    final index = spots.first.x
+                        .round()
+                        .clamp(0, points.length - 1)
+                        .toInt();
                     final date = DateFormat(
                       'd MMM',
                       AppI18n.intlLocale,
