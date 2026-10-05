@@ -92,10 +92,31 @@ class AccountContextHomeScreen extends StatelessWidget {
         .where((config) => !_fixedSummaryTypes.contains(config.type))
         .toList(growable: false);
 
-    return CustomScrollView(
-      slivers: [
+    final vignetteColor = Color.lerp(
+      Theme.of(context).colorScheme.tertiary,
+      Colors.black,
+      .72,
+    )!;
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: RadialGradient(
+          center: const Alignment(0, -.18),
+          radius: 1.12,
+          colors: [
+            Colors.transparent,
+            vignetteColor.withValues(alpha: .018),
+            vignetteColor.withValues(alpha: .075),
+          ],
+          stops: const [0, .62, 1],
+        ),
+      ),
+      child: CustomScrollView(
+        slivers: [
         SliverAppBar(
           floating: true,
+          backgroundColor: Colors.transparent,
+          surfaceTintColor: Colors.transparent,
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -362,7 +383,8 @@ class AccountContextHomeScreen extends StatelessWidget {
             ],
           ),
         ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -616,22 +638,8 @@ class _OverviewSurface extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    return Container(
-      width: double.infinity,
+    return Padding(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            accent.withValues(
-              alpha: theme.brightness == Brightness.dark ? .15 : .09,
-            ),
-            scheme.surfaceContainer.withValues(alpha: .72),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(30),
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
