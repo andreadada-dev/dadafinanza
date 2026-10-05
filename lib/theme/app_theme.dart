@@ -64,6 +64,7 @@ class AppTheme {
         ? const Color(0xFFCBCBD6)
         : const Color(0xFF74747A);
     final primary = onSurface;
+    final accent = dark ? purpleDark : purple;
 
     final scheme =
         ColorScheme.fromSeed(
@@ -76,6 +77,8 @@ class AppTheme {
           onPrimary: background,
           secondary: dark ? const Color(0xFF38E0A8) : const Color(0xFF12B880),
           onSecondary: Colors.white,
+          tertiary: accent,
+          onTertiary: Colors.white,
           surface: background,
           surfaceContainer: raised,
           surfaceContainerHigh: raisedStrong,
@@ -167,11 +170,11 @@ class AppTheme {
         height: 72,
         elevation: 0,
         backgroundColor: background,
-        indicatorColor: Colors.transparent,
+        indicatorColor: accent.withValues(alpha: dark ? .18 : .11),
         labelTextStyle: WidgetStateProperty.resolveWith(
           (states) => TextStyle(
             color: states.contains(WidgetState.selected)
-                ? onSurface
+                ? accent
                 : secondaryText,
             fontSize: 11,
             fontWeight: states.contains(WidgetState.selected)
@@ -182,7 +185,7 @@ class AppTheme {
         iconTheme: WidgetStateProperty.resolveWith(
           (states) => IconThemeData(
             color: states.contains(WidgetState.selected)
-                ? onSurface
+                ? accent
                 : secondaryText,
           ),
         ),
@@ -190,8 +193,8 @@ class AppTheme {
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         elevation: 0,
         highlightElevation: 0,
-        backgroundColor: onSurface,
-        foregroundColor: background,
+        backgroundColor: accent,
+        foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -237,7 +240,7 @@ class AppTheme {
       ),
       chipTheme: ChipThemeData(
         backgroundColor: raised,
-        selectedColor: primary.withValues(alpha: dark ? .20 : .11),
+        selectedColor: accent.withValues(alpha: dark ? .20 : .11),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         side: BorderSide.none,
         labelStyle: const TextStyle(fontWeight: FontWeight.w700),
@@ -251,12 +254,12 @@ class AppTheme {
           ),
           backgroundColor: WidgetStateProperty.resolveWith(
             (states) => states.contains(WidgetState.selected)
-                ? primary.withValues(alpha: dark ? .20 : .11)
+                ? accent.withValues(alpha: dark ? .20 : .11)
                 : raised,
           ),
           foregroundColor: WidgetStateProperty.resolveWith(
             (states) =>
-                states.contains(WidgetState.selected) ? primary : onSurface,
+                states.contains(WidgetState.selected) ? accent : onSurface,
           ),
         ),
       ),
@@ -273,9 +276,9 @@ class AppTheme {
         ),
       ),
       progressIndicatorTheme: ProgressIndicatorThemeData(
-        color: primary,
-        linearTrackColor: primary.withValues(alpha: .10),
-        circularTrackColor: primary.withValues(alpha: .10),
+        color: accent,
+        linearTrackColor: accent.withValues(alpha: .10),
+        circularTrackColor: accent.withValues(alpha: .10),
       ),
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: {
