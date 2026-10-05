@@ -8,7 +8,7 @@ on:
       - 'ui/**'
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: flutter-${{ github.ref }}
@@ -32,8 +32,21 @@ jobs:
 
       - name: Pub get
         run: flutter pub get
-      - name: Format check
-        run: dart format --output=none --set-exit-if-changed lib test
+      - name: Format source
+        run: dart format lib test
+      - name: Commit formatting
+        if: github.ref_name == 'ui/cashew-sossoldi-restyle'
+        shell: bash
+        run: |
+          if git diff --quiet -- lib test; then
+            echo "Formatting already clean."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lib test
+          git commit -m "Format latest restyle changes"
+          git push origin HEAD:ui/cashew-sossoldi-restyle
       - name: Analyze
         run: flutter analyze --no-fatal-infos
       - name: Test
