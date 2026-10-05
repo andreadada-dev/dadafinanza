@@ -6,6 +6,7 @@ import '../core/money.dart';
 import '../main.dart';
 import '../models/advance_models.dart';
 import '../models/models.dart';
+import '../widgets/balyn_motion.dart';
 import '../widgets/ui_helpers.dart';
 
 class AdvancesScreen extends StatefulWidget {
@@ -78,32 +79,7 @@ class _AdvancesScreenState extends State<AdvancesScreen> {
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 120),
         children: [
-          FlatMetric(
-            label: 'DA RICEVERE',
-            value: state.hideBalance
-                ? '••••'
-                : moneyFor(
-                    state,
-                    Money.fromCents(state.advanceReceivableCents),
-                  ),
-            icon: Icons.call_received_rounded,
-          ),
-          const SizedBox(height: 12),
-          FlatMetric(
-            label: 'DA RESTITUIRE',
-            value: state.hideBalance
-                ? '••••'
-                : moneyFor(state, Money.fromCents(state.advancePayableCents)),
-            icon: Icons.call_made_rounded,
-          ),
-          const SizedBox(height: 16),
-          FlatMetric(
-            label: 'SALDO NETTO ANTICIPI',
-            value: state.hideBalance
-                ? '••••'
-                : moneyFor(state, Money.fromCents(state.advanceNetCents)),
-            icon: Icons.balance_rounded,
-          ),
+          const BalynReveal(child: _AdvancesOverview()),
           const SizedBox(height: 32),
           const SectionTitle('Persone'),
           const SizedBox(height: 8),
@@ -161,6 +137,164 @@ class _AdvancesScreenState extends State<AdvancesScreen> {
             ),
         ],
       ),
+    );
+  }
+}
+
+class _AdvancesOverview extends StatelessWidget {
+  const _AdvancesOverview();
+
+  @override
+  Widget build(BuildContext context) {
+    final state = AppScope.of(context);
+    final theme = Theme.of(context);
+    final accent = theme.colorScheme.tertiary;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 17),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            accent.withValues(
+              alpha: theme.brightness == Brightness.dark ? .15 : .09,
+            ),
+            theme.colorScheme.surfaceContainer.withValues(alpha: .72),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 42,
+                height: 42,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: accent.withValues(alpha: .14),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(Icons.handshake_rounded, color: accent, size: 21),
+              ),
+              const Spacer(),
+              Text(
+                'ANTICIPI',
+                style: theme.textTheme.labelMedium?.copyWith(
+                  color: accent,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: .35,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 18),
+          Text(
+            'SALDO NETTO',
+            style: theme.textTheme.labelMedium?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.w700,
+              letterSpacing: .35,
+            ),
+          ),
+          const SizedBox(height: 3),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              state.hideBalance
+                  ? '••••••'
+                  : moneyFor(state, Money.fromCents(state.advanceNetCents)),
+              style: theme.textTheme.displaySmall?.copyWith(
+                fontWeight: FontWeight.w900,
+                letterSpacing: -1.3,
+              ),
+            ),
+          ),
+          const SizedBox(height: 18),
+          Row(
+            children: [
+              Expanded(
+                child: _AdvanceOverviewValue(
+                  label: 'Da ricevere',
+                  value: state.hideBalance
+                      ? '••••'
+                      : moneyFor(
+                          state,
+                          Money.fromCents(state.advanceReceivableCents),
+                        ),
+                  icon: Icons.call_received_rounded,
+                  color: context.financeColors.positive,
+                ),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: _AdvanceOverviewValue(
+                  label: 'Da restituire',
+                  value: state.hideBalance
+                      ? '••••'
+                      : moneyFor(
+                          state,
+                          Money.fromCents(state.advancePayableCents),
+                        ),
+                  icon: Icons.call_made_rounded,
+                  color: context.financeColors.negative,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AdvanceOverviewValue extends StatelessWidget {
+  const _AdvanceOverviewValue({
+    required this.label,
+    required this.value,
+    required this.icon,
+    required this.color,
+  });
+
+  final String label;
+  final String value;
+  final IconData icon;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, size: 17, color: color),
+        const SizedBox(height: 7),
+        Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: theme.textTheme.labelSmall?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        const SizedBox(height: 2),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            value,
+            style: theme.textTheme.labelLarge?.copyWith(
+              color: color,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -225,8 +359,8 @@ class _AdvancePersonSummaryCard extends StatelessWidget {
       label:
           '${person.name}. $subtitle. $movementCount ${movementCount == 1 ? 'movimento' : 'movimenti'}.',
       child: Material(
-        color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: .5),
-        borderRadius: BorderRadius.circular(16),
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(18),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: () => Navigator.push(
@@ -256,10 +390,21 @@ class _AdvancePersonSummaryCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Center(
-                        child: Icon(
-                          personIcon(person.iconKey),
-                          color: Color(person.colorValue),
-                          size: 24,
+                        child: Container(
+                          width: 44,
+                          height: 44,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Color(
+                              person.colorValue,
+                            ).withValues(alpha: .12),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            personIcon(person.iconKey),
+                            color: Color(person.colorValue),
+                            size: 23,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 6),
