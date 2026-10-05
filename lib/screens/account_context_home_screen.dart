@@ -484,7 +484,7 @@ class _TotalOverviewSummary extends StatelessWidget {
     ];
     return _OverviewSurface(
       accent: Theme.of(context).colorScheme.tertiary,
-      eyebrow: 'PATRIMONIO',
+      eyebrow: const Text('PATRIMONIO'),
       value: state.hideBalance ? '••••••' : moneyFor(state, balance),
       trendValues: state.hideBalance ? const [] : trendValues,
       metrics: [
@@ -567,7 +567,11 @@ class _SelectedAccountSummary extends StatelessWidget {
     final accent = Color(account.colorValue);
     return _OverviewSurface(
       accent: accent,
-      eyebrow: account.name.toUpperCase(),
+      eyebrow: Text(
+        account.name.toUpperCase(),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
       value: hidden ? '••••••' : moneyFor(state, balance),
       metrics: [
         _OverviewValue(
@@ -603,7 +607,7 @@ class _OverviewSurface extends StatelessWidget {
   });
 
   final Color accent;
-  final String eyebrow;
+  final Widget eyebrow;
   final String value;
   final List<_OverviewValue> metrics;
   final List<double> trendValues;
@@ -658,15 +662,13 @@ class _OverviewSurface extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 18),
-          Text(
-            eyebrow,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: theme.textTheme.labelMedium?.copyWith(
+          DefaultTextStyle(
+            style: theme.textTheme.labelMedium!.copyWith(
               color: scheme.onSurfaceVariant,
               fontWeight: FontWeight.w700,
               letterSpacing: .35,
             ),
+            child: eyebrow,
           ),
           const SizedBox(height: 3),
           AnimatedSwitcher(
