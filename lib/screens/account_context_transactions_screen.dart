@@ -190,10 +190,7 @@ class _AccountContextTransactionsScreenState
                     alignment: Alignment.centerLeft,
                     child: TextButton.icon(
                       onPressed: _clearFilters,
-                      icon: const Icon(
-                        Icons.filter_alt_off_outlined,
-                        size: 18,
-                      ),
+                      icon: const Icon(Icons.filter_alt_off_outlined, size: 18),
                       label: Text(
                         activeFilterCount == 1
                             ? 'Azzera filtro'
@@ -223,8 +220,7 @@ class _AccountContextTransactionsScreenState
                     ? 'Aggiungi una spesa o un’entrata.'
                     : 'Prova a modificare ricerca o filtri.',
                 action: FilledButton.icon(
-                  onPressed: () =>
-                      _openNew(context, TransactionType.expense),
+                  onPressed: () => _openNew(context, TransactionType.expense),
                   icon: const Icon(Icons.add_rounded),
                   label: const Text('Nuovo movimento'),
                 ),
@@ -240,12 +236,8 @@ class _AccountContextTransactionsScreenState
     );
   }
 
-  Widget _buildTimelineSliver(
-    AppState state,
-    List<FinanceTransaction> items,
-  ) {
-    if (sort == _MovementSort.amountDesc ||
-        sort == _MovementSort.amountAsc) {
+  Widget _buildTimelineSliver(AppState state, List<FinanceTransaction> items) {
+    if (sort == _MovementSort.amountDesc || sort == _MovementSort.amountAsc) {
       return SliverPadding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         sliver: SliverList.builder(
@@ -264,10 +256,7 @@ class _AccountContextTransactionsScreenState
           final day = days[index];
           return Padding(
             padding: EdgeInsets.only(bottom: index == days.length - 1 ? 0 : 24),
-            child: _MovementDaySection(
-              day: day,
-              hideValues: state.hideBalance,
-            ),
+            child: _MovementDaySection(day: day, hideValues: state.hideBalance),
           );
         },
       ),
@@ -557,10 +546,7 @@ class _AccountContextTransactionsScreenState
 }
 
 class _MovementTotals {
-  const _MovementTotals({
-    required this.income,
-    required this.expense,
-  });
+  const _MovementTotals({required this.income, required this.expense});
 
   factory _MovementTotals.from(
     AppState state,
@@ -789,10 +775,7 @@ class _MovementSearch extends StatelessWidget {
 }
 
 class _TypeFilters extends StatelessWidget {
-  const _TypeFilters({
-    required this.selected,
-    required this.onChanged,
-  });
+  const _TypeFilters({required this.selected, required this.onChanged});
 
   final TransactionType? selected;
   final ValueChanged<TransactionType?> onChanged;
@@ -884,10 +867,7 @@ class _TypeChip extends StatelessWidget {
 }
 
 class _MovementViewSwitch extends StatelessWidget {
-  const _MovementViewSwitch({
-    required this.value,
-    required this.onChanged,
-  });
+  const _MovementViewSwitch({required this.value, required this.onChanged});
 
   final _MovementView value;
   final ValueChanged<_MovementView> onChanged;
@@ -947,20 +927,14 @@ class _MovementViewSwitch extends StatelessWidget {
 }
 
 class _MovementDay {
-  const _MovementDay({
-    required this.day,
-    required this.items,
-  });
+  const _MovementDay({required this.day, required this.items});
 
   final DateTime day;
   final List<FinanceTransaction> items;
 }
 
 class _MovementDaySection extends StatelessWidget {
-  const _MovementDaySection({
-    required this.day,
-    required this.hideValues,
-  });
+  const _MovementDaySection({required this.day, required this.hideValues});
 
   final _MovementDay day;
   final bool hideValues;
@@ -1004,9 +978,9 @@ class _MovementDaySection extends StatelessWidget {
             Expanded(
               child: Text(
                 _label(),
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w900,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w900),
               ),
             ),
             Text(
@@ -1309,10 +1283,7 @@ class _CategoryRankRow extends StatelessWidget {
 }
 
 class _GroupedMovementsPage extends StatelessWidget {
-  const _GroupedMovementsPage({
-    required this.title,
-    required this.ids,
-  });
+  const _GroupedMovementsPage({required this.title, required this.ids});
 
   final String title;
   final Set<int> ids;
@@ -1330,7 +1301,8 @@ class _GroupedMovementsPage extends StatelessWidget {
           : ListView.builder(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
               itemCount: items.length,
-              itemBuilder: (context, index) => _MovementTile(item: items[index]),
+              itemBuilder: (context, index) =>
+                  _MovementTile(item: items[index]),
             ),
     );
   }

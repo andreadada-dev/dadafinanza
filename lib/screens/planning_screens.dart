@@ -142,11 +142,7 @@ class _ForecastSummary extends StatelessWidget {
                   color: accent.withValues(alpha: .14),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
-                  Icons.auto_graph_rounded,
-                  color: accent,
-                  size: 21,
-                ),
+                child: Icon(Icons.auto_graph_rounded, color: accent, size: 21),
               ),
               const Spacer(),
               Text(

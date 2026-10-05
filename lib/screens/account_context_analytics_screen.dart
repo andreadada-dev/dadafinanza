@@ -163,9 +163,7 @@ class _AccountContextAnalyticsScreenState
       _AnalyticsPeriod.week => math.min(7, totalDays),
       _AnalyticsPeriod.month => math.min(12, totalDays),
       _AnalyticsPeriod.year => 12,
-      _AnalyticsPeriod.custom => totalDays <= 31
-          ? math.min(12, totalDays)
-          : 12,
+      _AnalyticsPeriod.custom => totalDays <= 31 ? math.min(12, totalDays) : 12,
     };
     if (targetBuckets < 2) return const [];
 
@@ -272,12 +270,7 @@ class _AccountContextAnalyticsScreenState
     }
     final categories = categoryTotals.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
-    final cashFlowPoints = _cashFlowPoints(
-      state,
-      effectiveAccountId,
-      from,
-      to,
-    );
+    final cashFlowPoints = _cashFlowPoints(state, effectiveAccountId, from, to);
     final donutEntries = categories.take(6).toList(growable: false);
     final donutShown = donutEntries.fold<double>(
       0,

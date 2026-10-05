@@ -88,11 +88,8 @@ class FinanceTrendChart extends StatelessWidget {
       maxY += padding;
     }
 
-    final totalDays = points.last.date
-            .difference(points.first.date)
-            .inDays
-            .abs() +
-        1;
+    final totalDays =
+        points.last.date.difference(points.first.date).inDays.abs() + 1;
     final labelStep = math.max(1, (points.length / 4).ceil());
 
     Widget bottomTitle(double value, TitleMeta meta) {
@@ -105,8 +102,8 @@ class FinanceTrendChart extends StatelessWidget {
       final format = totalDays > 120
           ? DateFormat('MMM', AppI18n.intlLocale)
           : totalDays > 31
-              ? DateFormat('d MMM', AppI18n.intlLocale)
-              : DateFormat('d MMM', AppI18n.intlLocale);
+          ? DateFormat('d MMM', AppI18n.intlLocale)
+          : DateFormat('d MMM', AppI18n.intlLocale);
       return SideTitleWidget(
         meta: meta,
         space: 8,
@@ -219,8 +216,7 @@ class FinanceTrendChart extends StatelessWidget {
                               text:
                                   '${i == 0 ? primaryLabel : secondaryLabel}: ${valueFormatter(spots[i].y)}',
                               style: theme.textTheme.labelMedium?.copyWith(
-                                color:
-                                    i == 0 ? primaryColor : secondaryColor,
+                                color: i == 0 ? primaryColor : secondaryColor,
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
@@ -242,11 +238,11 @@ class FinanceTrendChart extends StatelessWidget {
                       FlDotData(
                         getDotPainter: (spot, percent, bar, itemIndex) =>
                             FlDotCirclePainter(
-                          radius: 4,
-                          color: bar.color ?? theme.colorScheme.tertiary,
-                          strokeWidth: 2,
-                          strokeColor: theme.colorScheme.surface,
-                        ),
+                              radius: 4,
+                              color: bar.color ?? theme.colorScheme.tertiary,
+                              strokeWidth: 2,
+                              strokeColor: theme.colorScheme.surface,
+                            ),
                       ),
                     ),
                 ],
@@ -360,9 +356,7 @@ class _FinanceDonutChartState extends State<FinanceDonutChart> {
                   ),
                   sections: hasData
                       ? [
-                          for (var i = 0;
-                              i < widget.segments.length;
-                              i++)
+                          for (var i = 0; i < widget.segments.length; i++)
                             PieChartSectionData(
                               color: _selected == -1 || _selected == i
                                   ? widget.segments[i].color
@@ -372,8 +366,8 @@ class _FinanceDonutChartState extends State<FinanceDonutChart> {
                               value: widget.segments[i].value.abs(),
                               title: '',
                               showTitle: false,
-                              radius: widget.size *
-                                  (_selected == i ? .155 : .132),
+                              radius:
+                                  widget.size * (_selected == i ? .155 : .132),
                             ),
                         ]
                       : [
@@ -437,8 +431,10 @@ class _FinanceDonutChartState extends State<FinanceDonutChart> {
                     _selected = _selected == i ? -1 : i;
                   }),
                   child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 4,
+                      vertical: 4,
+                    ),
                     child: _LegendDot(
                       label: widget.segments[i].label,
                       color: widget.segments[i].color,

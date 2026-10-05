@@ -834,9 +834,7 @@ class _CanonicalAnalyticsScreenState extends State<CanonicalAnalyticsScreen> {
       _AnalyticsPeriod.week => math.min(7, totalDays),
       _AnalyticsPeriod.month => math.min(14, totalDays),
       _AnalyticsPeriod.year => 12,
-      _AnalyticsPeriod.custom => totalDays <= 31
-          ? math.min(14, totalDays)
-          : 12,
+      _AnalyticsPeriod.custom => totalDays <= 31 ? math.min(14, totalDays) : 12,
     };
     final bucketDays = math.max(1, (totalDays / targetBuckets).ceil());
     final result = <FinanceTrendPoint>[];
@@ -848,16 +846,8 @@ class _CanonicalAnalyticsScreenState extends State<CanonicalAnalyticsScreen> {
       result.add(
         FinanceTrendPoint(
           date: cursor,
-          primary: state.periodTotal(
-            TransactionType.expense,
-            cursor,
-            next,
-          ),
-          secondary: state.periodTotal(
-            TransactionType.income,
-            cursor,
-            next,
-          ),
+          primary: state.periodTotal(TransactionType.expense, cursor, next),
+          secondary: state.periodTotal(TransactionType.income, cursor, next),
         ),
       );
       cursor = next;

@@ -341,8 +341,7 @@ class _IvyFinanceOverview extends StatelessWidget {
         ? snapshots.sublist(snapshots.length - 24)
         : snapshots;
     final trendValues = [
-      for (final point in visibleSnapshots)
-        (point['amount'] as num).toDouble(),
+      for (final point in visibleSnapshots) (point['amount'] as num).toDouble(),
     ];
     final metrics = <Widget>[];
 
