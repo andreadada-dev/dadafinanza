@@ -209,14 +209,12 @@ class AccountContextHomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                 ],
-                _HomeFullBleed(
-                  child: BalynReveal(
-                    key: const ValueKey('context-home-quick-actions'),
-                    delay: const Duration(milliseconds: 55),
-                    child: _QuickActions(
-                      onOpen: (type) =>
-                          _openQuick(context, type, effectiveAccountId),
-                    ),
+                BalynReveal(
+                  key: const ValueKey('context-home-quick-actions'),
+                  delay: const Duration(milliseconds: 55),
+                  child: _QuickActions(
+                    onOpen: (type) =>
+                        _openQuick(context, type, effectiveAccountId),
                   ),
                 ),
                 if (isTotal) ...[
@@ -502,15 +500,12 @@ class _HomeFullBleed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) => OverflowBox(
-        alignment: Alignment.center,
-        minWidth: constraints.maxWidth + 40,
-        maxWidth: constraints.maxWidth + 40,
-        child: SizedBox(
-          width: constraints.maxWidth + 40,
-          child: child,
-        ),
+    return UnconstrainedBox(
+      constrainedAxis: Axis.vertical,
+      alignment: Alignment.center,
+      child: SizedBox(
+        width: MediaQuery.sizeOf(context).width,
+        child: child,
       ),
     );
   }
@@ -673,76 +668,98 @@ class _OverviewSurface extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
+
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
+      padding: const EdgeInsets.only(top: 20, bottom: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Container(
-                width: 42,
-                height: 42,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: accent.withValues(alpha: .14),
-                  shape: BoxShape.circle,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              children: [
+                Container(
+                  width: 42,
+                  height: 42,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: accent.withValues(alpha: .14),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.account_balance_wallet_rounded,
+                    color: accent,
+                    size: 21,
+                  ),
                 ),
-                child: Icon(
-                  Icons.account_balance_wallet_rounded,
-                  color: accent,
-                  size: 21,
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(right: 2),
+                  child: Text(
+                    DateFormat('MMM', AppI18n.intlLocale).format(DateTime.now()),
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      color: accent,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
                 ),
-              ),
-              const Spacer(),
-              Text(
-                DateFormat('MMM', AppI18n.intlLocale).format(DateTime.now()),
-                style: theme.textTheme.labelMedium?.copyWith(
-                  color: accent,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(height: 18),
-          DefaultTextStyle(
-            style: theme.textTheme.labelMedium!.copyWith(
-              color: scheme.onSurfaceVariant,
-              fontWeight: FontWeight.w700,
-              letterSpacing: .35,
-            ),
-            child: eyebrow,
-          ),
-          const SizedBox(height: 3),
-          AnimatedSwitcher(
-            duration: const Duration(milliseconds: 240),
-            switchInCurve: Curves.easeOutCubic,
-            child: FittedBox(
-              key: ValueKey(value),
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.centerLeft,
-              child: Text(
-                value,
-                style: theme.textTheme.displaySmall?.copyWith(
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: -1.3,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                DefaultTextStyle(
+                  style: theme.textTheme.labelMedium!.copyWith(
+                    color: scheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: .35,
+                  ),
+                  child: eyebrow,
                 ),
-              ),
+                const SizedBox(height: 3),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 240),
+                  switchInCurve: Curves.easeOutCubic,
+                  child: FittedBox(
+                    key: ValueKey(value),
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      value,
+                      style: theme.textTheme.displaySmall?.copyWith(
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: -1.3,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           if (trendValues.length >= 2) ...[
             const SizedBox(height: 10),
-            FinanceSparkline(values: trendValues, color: accent, height: 58),
+            FinanceSparkline(
+              values: trendValues,
+              color: accent,
+              height: 58,
+            ),
           ],
           const SizedBox(height: 15),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              for (var index = 0; index < metrics.length; index++) ...[
-                if (index > 0) const SizedBox(width: 10),
-                Expanded(child: metrics[index]),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (var index = 0; index < metrics.length; index++) ...[
+                  if (index > 0) const SizedBox(width: 10),
+                  Expanded(child: metrics[index]),
+                ],
               ],
-            ],
+            ),
           ),
         ],
       ),
