@@ -181,36 +181,42 @@ class AccountContextHomeScreen extends StatelessWidget {
                   const SizedBox(height: 32),
                 ],
                 if (isTotal) ...[
-                  BalynReveal(
-                    key: const ValueKey('context-home-total-summary'),
-                    child: _TotalOverviewSummary(
-                      balance: balance,
-                      income: income,
-                      expense: expense,
-                      available: state.safeToSpend,
+                  _HomeFullBleed(
+                    child: BalynReveal(
+                      key: const ValueKey('context-home-total-summary'),
+                      child: _TotalOverviewSummary(
+                        balance: balance,
+                        income: income,
+                        expense: expense,
+                        available: state.safeToSpend,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20),
                 ] else ...[
-                  BalynReveal(
-                    key: ValueKey(
-                      'context-home-account-${selectedAccount!.id}',
-                    ),
-                    child: _SelectedAccountSummary(
-                      account: selectedAccount,
-                      balance: balance,
-                      income: income,
-                      expense: expense,
+                  _HomeFullBleed(
+                    child: BalynReveal(
+                      key: ValueKey(
+                        'context-home-account-${selectedAccount!.id}',
+                      ),
+                      child: _SelectedAccountSummary(
+                        account: selectedAccount,
+                        balance: balance,
+                        income: income,
+                        expense: expense,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20),
                 ],
-                BalynReveal(
-                  key: const ValueKey('context-home-quick-actions'),
-                  delay: const Duration(milliseconds: 55),
-                  child: _QuickActions(
-                    onOpen: (type) =>
-                        _openQuick(context, type, effectiveAccountId),
+                _HomeFullBleed(
+                  child: BalynReveal(
+                    key: const ValueKey('context-home-quick-actions'),
+                    delay: const Duration(milliseconds: 55),
+                    child: _QuickActions(
+                      onOpen: (type) =>
+                          _openQuick(context, type, effectiveAccountId),
+                    ),
                   ),
                 ),
                 if (isTotal) ...[
@@ -483,6 +489,27 @@ class AccountContextHomeScreen extends StatelessWidget {
           initialTypeName: type.name,
           initialAccountId: account,
           initialToAccountId: destination,
+        ),
+      ),
+    );
+  }
+}
+
+class _HomeFullBleed extends StatelessWidget {
+  const _HomeFullBleed({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) => OverflowBox(
+        alignment: Alignment.center,
+        minWidth: constraints.maxWidth + 40,
+        maxWidth: constraints.maxWidth + 40,
+        child: SizedBox(
+          width: constraints.maxWidth + 40,
+          child: child,
         ),
       ),
     );
