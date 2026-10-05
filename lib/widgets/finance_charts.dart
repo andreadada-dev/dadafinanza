@@ -226,7 +226,7 @@ class FinanceTrendChart extends StatelessWidget {
                   },
                 ),
                 getTouchedSpotIndicator: (barData, indexes) => [
-                  for (final index in indexes)
+                  for (final _ in indexes)
                     TouchedSpotIndicatorData(
                       FlLine(
                         color: theme.colorScheme.onSurface.withValues(
