@@ -153,22 +153,8 @@ class _AdvancesOverview extends StatelessWidget {
     final financeColors = theme.extension<FinanceColors>();
     final positive = financeColors?.positive ?? const Color(0xFF12B880);
     final negative = financeColors?.negative ?? const Color(0xFFF53D3D);
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 17),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            accent.withValues(
-              alpha: theme.brightness == Brightness.dark ? .15 : .09,
-            ),
-            theme.colorScheme.surfaceContainer.withValues(alpha: .72),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(30),
-      ),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(4, 12, 4, 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
