@@ -174,7 +174,7 @@ class AccountContextHomeScreen extends StatelessWidget {
                 BalynReveal(
                   key: ValueKey('context-home-account-${selectedAccount!.id}'),
                   child: _SelectedAccountSummary(
-                    account: selectedAccount,
+                    account: selectedAccount!,
                     balance: balance,
                     income: income,
                     expense: expense,
