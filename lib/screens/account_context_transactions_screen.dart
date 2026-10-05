@@ -196,72 +196,96 @@ class _AccountContextTransactionsScreenState
             ),
           const SizedBox(height: 8),
           Expanded(
-            child: items.isEmpty
-                ? EmptyState(
-                    icon: Icons.receipt_long_outlined,
-                    title: state.transactions.isEmpty
-                        ? 'Nessun movimento'
-                        : 'Nessun risultato',
-                    subtitle: state.transactions.isEmpty
-                        ? 'Aggiungi una spesa o un’entrata.'
-                        : 'Prova a modificare ricerca o filtri.',
-                    action: FilledButton.icon(
-                      onPressed: () =>
-                          _openNew(context, TransactionType.expense),
-                      icon: const Icon(Icons.add_rounded),
-                      label: const Text('Nuovo movimento'),
-                    ),
-                  )
-                : view == _MovementView.list
-                ? ListView.separated(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 120),
-                    itemCount: items.length,
-                    separatorBuilder: (_, __) => const Divider(height: 1),
-                    itemBuilder: (context, index) =>
-                        TransactionListTile(item: items[index]),
-                  )
-                : GridView.builder(
-                    padding: const EdgeInsets.fromLTRB(20, 4, 20, 120),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 24,
-                          mainAxisSpacing: 18,
-                          childAspectRatio: 1.34,
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 260),
+              switchInCurve: Curves.easeOutCubic,
+              switchOutCurve: Curves.easeInCubic,
+              transitionBuilder: (child, animation) => FadeTransition(
+                opacity: animation,
+                child: SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(0, .018),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
+                ),
+              ),
+              child: items.isEmpty
+                  ? KeyedSubtree(
+                      key: const ValueKey('movements-empty'),
+                      child: EmptyState(
+                        icon: Icons.receipt_long_outlined,
+                        title: state.transactions.isEmpty
+                            ? 'Nessun movimento'
+                            : 'Nessun risultato',
+                        subtitle: state.transactions.isEmpty
+                            ? 'Aggiungi una spesa o un’entrata.'
+                            : 'Prova a modificare ricerca o filtri.',
+                        action: FilledButton.icon(
+                          onPressed: () =>
+                              _openNew(context, TransactionType.expense),
+                          icon: const Icon(Icons.add_rounded),
+                          label: const Text('Nuovo movimento'),
                         ),
-                    itemCount: groups.length,
-                    itemBuilder: (context, index) {
-                      final group = groups[index];
-                      final category = state.categoryById(group.categoryId);
-                      final color = category == null
-                          ? transactionColor(context, group.type)
-                          : Color(category.colorValue);
-                      final icon = group.type == TransactionType.transfer
-                          ? Icons.swap_horiz_rounded
-                          : category == null
-                          ? Icons.receipt_long_outlined
-                          : categoryIcon(category.iconKey);
-                      return _GroupedCategoryTile(
-                        title: group.title,
-                        icon: icon,
-                        color: color,
-                        amount: _groupAmount(state, group),
-                        percentage:
-                            '${group.percentage.toStringAsFixed(0)}% ${_typeShareLabel(group.type)}',
-                        count:
-                            '${group.count} ${group.count == 1 ? 'movimento' : 'movimenti'}',
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => _GroupedMovementsPage(
-                              title: group.title,
-                              ids: group.transactionIds,
+                      ),
+                    )
+                  : view == _MovementView.list
+                  ? KeyedSubtree(
+                      key: const ValueKey('movements-list'),
+                      child: ListView.separated(
+                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 120),
+                        itemCount: items.length,
+                        separatorBuilder: (_, __) => const Divider(height: 1),
+                        itemBuilder: (context, index) =>
+                            TransactionListTile(item: items[index]),
+                      ),
+                    )
+                  : KeyedSubtree(
+                      key: const ValueKey('movements-grouped'),
+                      child: GridView.builder(
+                        padding: const EdgeInsets.fromLTRB(20, 4, 20, 120),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 24,
+                              mainAxisSpacing: 18,
+                              childAspectRatio: 1.34,
                             ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                        itemCount: groups.length,
+                        itemBuilder: (context, index) {
+                          final group = groups[index];
+                          final category = state.categoryById(group.categoryId);
+                          final color = category == null
+                              ? transactionColor(context, group.type)
+                              : Color(category.colorValue);
+                          final icon = group.type == TransactionType.transfer
+                              ? Icons.swap_horiz_rounded
+                              : category == null
+                              ? Icons.receipt_long_outlined
+                              : categoryIcon(category.iconKey);
+                          return _GroupedCategoryTile(
+                            title: group.title,
+                            icon: icon,
+                            color: color,
+                            amount: _groupAmount(state, group),
+                            percentage:
+                                '${group.percentage.toStringAsFixed(0)}% ${_typeShareLabel(group.type)}',
+                            count:
+                                '${group.count} ${group.count == 1 ? 'movimento' : 'movimenti'}',
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => _GroupedMovementsPage(
+                                  title: group.title,
+                                  ids: group.transactionIds,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+            ),
           ),
         ],
       ),
@@ -487,7 +511,7 @@ class _ViewTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = selected
-        ? Theme.of(context).colorScheme.onSurface
+        ? Theme.of(context).colorScheme.tertiary
         : Theme.of(context).colorScheme.onSurfaceVariant;
     return Semantics(
       selected: selected,
