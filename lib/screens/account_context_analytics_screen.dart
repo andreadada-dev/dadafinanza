@@ -373,8 +373,24 @@ class _AccountContextAnalyticsScreenState
               ),
             ],
           ),
+          const SizedBox(height: 30),
+          SectionTitle(
+            effectiveAccountId == null
+                ? 'Andamento patrimonio'
+                : 'Andamento saldo',
+          ),
+          const SizedBox(height: 12),
+          _BalanceTrend(
+            state: state,
+            account: effectiveAccountId == null ? null : selected,
+            from: from,
+            to: to,
+            period: period,
+            rangeLabel: _visibleRangeLabel(from, to),
+            onShiftPeriod: _shiftPeriod,
+          ),
           if (cashFlowPoints.length >= 2) ...[
-            const SizedBox(height: 30),
+            const SizedBox(height: 32),
             const SectionTitle('Entrate e spese'),
             const SizedBox(height: 10),
             BalynReveal(
@@ -391,22 +407,6 @@ class _AccountContextAnalyticsScreenState
               ),
             ),
           ],
-          const SizedBox(height: 32),
-          SectionTitle(
-            effectiveAccountId == null
-                ? 'Andamento patrimonio'
-                : 'Andamento saldo',
-          ),
-          const SizedBox(height: 12),
-          _BalanceTrend(
-            state: state,
-            account: effectiveAccountId == null ? null : selected,
-            from: from,
-            to: to,
-            period: period,
-            rangeLabel: _visibleRangeLabel(from, to),
-            onShiftPeriod: _shiftPeriod,
-          ),
           const SizedBox(height: 24),
           _AnalyticsLine(
             icon: delta == null
