@@ -7,6 +7,8 @@ import '../main.dart';
 import '../models/models.dart';
 import '../services/account_context_service.dart';
 import '../widgets/account_context_selector.dart';
+import '../widgets/balyn_motion.dart';
+import '../widgets/finance_charts.dart';
 import '../widgets/finance_quick_action.dart';
 import '../widgets/home_dashboard_widget.dart';
 import '../widgets/ui_helpers.dart';
@@ -158,24 +160,35 @@ class AccountContextHomeScreen extends StatelessWidget {
                 const SizedBox(height: 32),
               ],
               if (isTotal) ...[
-                _TotalOverviewSummary(
-                  balance: balance,
-                  income: income,
-                  expense: expense,
-                  available: state.safeToSpend,
+                BalynReveal(
+                  key: const ValueKey('context-home-total-summary'),
+                  child: _TotalOverviewSummary(
+                    balance: balance,
+                    income: income,
+                    expense: expense,
+                    available: state.safeToSpend,
+                  ),
                 ),
                 const SizedBox(height: 20),
               ] else ...[
-                _SelectedAccountSummary(
-                  account: selectedAccount!,
-                  balance: balance,
-                  income: income,
-                  expense: expense,
+                BalynReveal(
+                  key: ValueKey('context-home-account-${selectedAccount!.id}'),
+                  child: _SelectedAccountSummary(
+                    account: selectedAccount,
+                    balance: balance,
+                    income: income,
+                    expense: expense,
+                  ),
                 ),
                 const SizedBox(height: 20),
               ],
-              _QuickActions(
-                onOpen: (type) => _openQuick(context, type, effectiveAccountId),
+              BalynReveal(
+                key: const ValueKey('context-home-quick-actions'),
+                delay: const Duration(milliseconds: 55),
+                child: _QuickActions(
+                  onOpen: (type) =>
+                      _openQuick(context, type, effectiveAccountId),
+                ),
               ),
               if (isTotal) ...[
                 if (state.advanceReceivableCents > 0 ||
@@ -237,7 +250,13 @@ class AccountContextHomeScreen extends StatelessWidget {
                           DashboardWidgetSize.large => 36,
                         },
                       ),
-                      child: HomeDashboardWidget(config: config),
+                      child: BalynReveal(
+                        delay: Duration(
+                          milliseconds:
+                              90 + (config.orderIndex.clamp(0, 6) * 30),
+                        ),
+                        child: HomeDashboardWidget(config: config),
+                      ),
                     ),
                   ),
               ] else ...[
@@ -455,42 +474,37 @@ class _TotalOverviewSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('PATRIMONIO', style: Theme.of(context).textTheme.labelMedium),
-        const SizedBox(height: 6),
-        Text(
-          state.hideBalance ? '••••••' : moneyFor(state, balance),
-          style: Theme.of(context).textTheme.displaySmall,
+    final snapshots = state.netWorthSnapshots;
+    final visibleSnapshots = snapshots.length > 24
+        ? snapshots.sublist(snapshots.length - 24)
+        : snapshots;
+    final trendValues = [
+      for (final point in visibleSnapshots)
+        (point['amount'] as num).toDouble(),
+    ];
+    return _OverviewSurface(
+      accent: Theme.of(context).colorScheme.tertiary,
+      eyebrow: 'PATRIMONIO',
+      value: state.hideBalance ? '••••••' : moneyFor(state, balance),
+      trendValues: state.hideBalance ? const [] : trendValues,
+      metrics: [
+        _OverviewValue(
+          label: 'Entrate',
+          value: state.hideBalance ? '••••' : moneyFor(state, income),
+          color: context.financeColors.positive,
+          icon: Icons.south_west_rounded,
         ),
-        const SizedBox(height: 20),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: _Metric(
-                label: 'Entrate',
-                value: state.hideBalance ? '••••' : moneyFor(state, income),
-                color: context.financeColors.positive,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: _Metric(
-                label: 'Spese',
-                value: state.hideBalance ? '••••' : moneyFor(state, expense),
-                color: context.financeColors.negative,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: _Metric(
-                label: 'Disponibile',
-                value: state.hideBalance ? '••••' : moneyFor(state, available),
-              ),
-            ),
-          ],
+        _OverviewValue(
+          label: 'Spese',
+          value: state.hideBalance ? '••••' : moneyFor(state, expense),
+          color: context.financeColors.negative,
+          icon: Icons.north_east_rounded,
+        ),
+        _OverviewValue(
+          label: 'Disponibile',
+          value: state.hideBalance ? '••••' : moneyFor(state, available),
+          color: Theme.of(context).colorScheme.tertiary,
+          icon: Icons.account_balance_wallet_outlined,
         ),
       ],
     );
@@ -525,6 +539,7 @@ class _QuickActions extends StatelessWidget {
         child: FinanceQuickAction(
           icon: Icons.swap_horiz_rounded,
           label: 'Trasferisci',
+          color: Theme.of(context).colorScheme.tertiary,
           onTap: () => onOpen(TransactionType.transfer),
         ),
       ),
@@ -548,46 +563,194 @@ class _SelectedAccountSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('PATRIMONIO', style: Theme.of(context).textTheme.labelMedium),
-        const SizedBox(height: 6),
-        Text(
-          state.hideBalance || account.hideBalance
-              ? '••••••'
-              : moneyFor(state, balance),
-          style: Theme.of(context).textTheme.displaySmall,
+    final hidden = state.hideBalance || account.hideBalance;
+    final accent = Color(account.colorValue);
+    return _OverviewSurface(
+      accent: accent,
+      eyebrow: account.name.toUpperCase(),
+      value: hidden ? '••••••' : moneyFor(state, balance),
+      metrics: [
+        _OverviewValue(
+          label: 'Entrate',
+          value: hidden ? '••••' : moneyFor(state, income),
+          color: context.financeColors.positive,
+          icon: Icons.south_west_rounded,
         ),
-        const SizedBox(height: 20),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: _Metric(
-                label: 'Entrate',
-                value: state.hideBalance ? '••••' : moneyFor(state, income),
-                color: context.financeColors.positive,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: _Metric(
-                label: 'Spese',
-                value: state.hideBalance ? '••••' : moneyFor(state, expense),
-                color: context.financeColors.negative,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: _Metric(
-                label: 'Disponibile',
-                value: state.hideBalance ? '••••' : moneyFor(state, balance),
-              ),
-            ),
-          ],
+        _OverviewValue(
+          label: 'Spese',
+          value: hidden ? '••••' : moneyFor(state, expense),
+          color: context.financeColors.negative,
+          icon: Icons.north_east_rounded,
+        ),
+        _OverviewValue(
+          label: 'Saldo',
+          value: hidden ? '••••' : moneyFor(state, balance),
+          color: accent,
+          icon: accountIcon(account.iconKey),
         ),
       ],
+    );
+  }
+}
+
+class _OverviewSurface extends StatelessWidget {
+  const _OverviewSurface({
+    required this.accent,
+    required this.eyebrow,
+    required this.value,
+    required this.metrics,
+    this.trendValues = const [],
+  });
+
+  final Color accent;
+  final String eyebrow;
+  final String value;
+  final List<_OverviewValue> metrics;
+  final List<double> trendValues;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            accent.withValues(
+              alpha: theme.brightness == Brightness.dark ? .15 : .09,
+            ),
+            scheme.surfaceContainer.withValues(alpha: .72),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 42,
+                height: 42,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: accent.withValues(alpha: .14),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.account_balance_wallet_rounded,
+                  color: accent,
+                  size: 21,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                DateFormat('MMM', AppI18n.intlLocale).format(DateTime.now()),
+                style: theme.textTheme.labelMedium?.copyWith(
+                  color: accent,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 18),
+          Text(
+            eyebrow,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: theme.textTheme.labelMedium?.copyWith(
+              color: scheme.onSurfaceVariant,
+              fontWeight: FontWeight.w700,
+              letterSpacing: .35,
+            ),
+          ),
+          const SizedBox(height: 3),
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 240),
+            switchInCurve: Curves.easeOutCubic,
+            child: FittedBox(
+              key: ValueKey(value),
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: Text(
+                value,
+                style: theme.textTheme.displaySmall?.copyWith(
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: -1.3,
+                ),
+              ),
+            ),
+          ),
+          if (trendValues.length >= 2) ...[
+            const SizedBox(height: 10),
+            FinanceSparkline(values: trendValues, color: accent, height: 58),
+          ],
+          const SizedBox(height: 15),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              for (var index = 0; index < metrics.length; index++) ...[
+                if (index > 0) const SizedBox(width: 10),
+                Expanded(child: metrics[index]),
+              ],
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _OverviewValue extends StatelessWidget {
+  const _OverviewValue({
+    required this.label,
+    required this.value,
+    required this.color,
+    required this.icon,
+  });
+
+  final String label;
+  final String value;
+  final Color color;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, size: 17, color: color),
+          const SizedBox(height: 7),
+          Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 2),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              value,
+              style: theme.textTheme.labelLarge?.copyWith(
+                color: color,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
