@@ -503,10 +503,7 @@ class _HomeFullBleed extends StatelessWidget {
     return UnconstrainedBox(
       constrainedAxis: Axis.vertical,
       alignment: Alignment.center,
-      child: SizedBox(
-        width: MediaQuery.sizeOf(context).width,
-        child: child,
-      ),
+      child: SizedBox(width: MediaQuery.sizeOf(context).width, child: child),
     );
   }
 }
@@ -696,7 +693,10 @@ class _OverviewSurface extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 2),
                   child: Text(
-                    DateFormat('MMM', AppI18n.intlLocale).format(DateTime.now()),
+                    DateFormat(
+                      'MMM',
+                      AppI18n.intlLocale,
+                    ).format(DateTime.now()),
                     style: theme.textTheme.labelMedium?.copyWith(
                       color: accent,
                       fontWeight: FontWeight.w800,
@@ -742,11 +742,7 @@ class _OverviewSurface extends StatelessWidget {
           ),
           if (trendValues.length >= 2) ...[
             const SizedBox(height: 10),
-            FinanceSparkline(
-              values: trendValues,
-              color: accent,
-              height: 58,
-            ),
+            FinanceSparkline(values: trendValues, color: accent, height: 58),
           ],
           const SizedBox(height: 15),
           Padding(
