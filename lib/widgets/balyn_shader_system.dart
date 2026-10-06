@@ -2,15 +2,23 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:balyn/l10n/localized_material.dart';
+import 'package:flutter/scheduler.dart';
 
 /// Shared clock and GPU programs for Balyn's living-color system.
 ///
 /// One slow clock drives the whole app so colored elements feel like the same
 /// material instead of dozens of unrelated animations.
 class BalynShaderScope extends StatefulWidget {
-  const BalynShaderScope({required this.child, super.key});
+  const BalynShaderScope({
+    required this.child,
+    this.loadPrograms = true,
+    super.key,
+  });
 
   final Widget child;
+
+  @visibleForTesting
+  final bool loadPrograms;
 
   static BalynShaderData? maybeOf(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<_BalynShaderInherited>()?.data;
@@ -27,7 +35,7 @@ class BalynShaderData {
     this.inkProgram,
   });
 
-  final Animation<double> clock;
+  final ValueListenable<double> clock;
   final bool motionEnabled;
   final ui.FragmentProgram? backgroundProgram;
   final ui.FragmentProgram? inkProgram;
@@ -35,21 +43,34 @@ class BalynShaderData {
 
 class _BalynShaderScopeState extends State<BalynShaderScope>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
-  late final AnimationController _clock;
+  static const _backgroundCycle = Duration(seconds: 72);
+  static const _frameInterval = Duration(milliseconds: 33);
+
+  final ValueNotifier<double> _clock = ValueNotifier<double>(0);
+  late final Ticker _ticker;
+  Duration _lastPublished = Duration.zero;
   ui.FragmentProgram? _backgroundProgram;
   ui.FragmentProgram? _inkProgram;
-  bool _reduceMotion = false;
   bool _appActive = true;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _clock = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 72),
-    )..repeat();
-    _loadPrograms();
+    _ticker = createTicker(_onTick)..start();
+    if (widget.loadPrograms) {
+      _loadPrograms();
+    }
+  }
+
+  void _onTick(Duration elapsed) {
+    if (!_appActive) return;
+    if (elapsed - _lastPublished < _frameInterval) return;
+    _lastPublished = elapsed;
+
+    final cycleMicros = _backgroundCycle.inMicroseconds;
+    final phaseMicros = elapsed.inMicroseconds % cycleMicros;
+    _clock.value = phaseMicros / cycleMicros;
   }
 
   Future<void> _loadPrograms() async {
@@ -65,33 +86,23 @@ class _BalynShaderScopeState extends State<BalynShaderScope>
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final reduce = MediaQuery.maybeOf(context)?.disableAnimations ?? false;
-    if (_reduceMotion != reduce) {
-      _reduceMotion = reduce;
-      _syncClock();
-    }
-  }
-
-  @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     _appActive = state == AppLifecycleState.resumed;
     _syncClock();
   }
 
   void _syncClock() {
-    final shouldAnimate = mounted && _appActive && !_reduceMotion;
-    if (shouldAnimate) {
-      if (!_clock.isAnimating) _clock.repeat();
-    } else {
-      _clock.stop();
+    if (_appActive) {
+      if (!_ticker.isActive) _ticker.start();
+    } else if (_ticker.isActive) {
+      _ticker.stop();
     }
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _ticker.dispose();
     _clock.dispose();
     super.dispose();
   }
@@ -100,7 +111,7 @@ class _BalynShaderScopeState extends State<BalynShaderScope>
   Widget build(BuildContext context) {
     final data = BalynShaderData(
       clock: _clock,
-      motionEnabled: !_reduceMotion && _appActive,
+      motionEnabled: _appActive,
       backgroundProgram: _backgroundProgram,
       inkProgram: _inkProgram,
     );
