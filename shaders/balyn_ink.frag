@@ -7,42 +7,46 @@ uniform float uTime;
 uniform vec4 uColorA;
 uniform vec4 uColorB;
 uniform vec4 uColorC;
+uniform float uStrength;
+uniform float uSheen;
 
 out vec4 fragColor;
-
-float hash21(vec2 p) {
-  p = fract(p * vec2(443.8975, 397.2973));
-  p += dot(p, p.yx + 19.19);
-  return fract(p.x * p.y);
-}
 
 void main() {
   vec2 frag = FlutterFragCoord().xy;
   vec2 size = max(uSize, vec2(1.0));
   vec2 uv = frag / size;
-  float aspect = size.x / size.y;
+
+  // Never let very wide/thin widgets multiply the shader frequency.
+  // This keeps 4 px progress bars and small text completely smooth.
+  float aspect = clamp(size.x / size.y, 0.75, 2.35);
   vec2 p = vec2(uv.x * aspect, uv.y);
   float t = uTime * 6.28318530718;
 
-  float waveA = sin(p.x * 4.4 + p.y * 2.2 + t * 0.74);
-  float waveB = cos(p.x * -2.3 + p.y * 5.2 - t * 0.53);
-  float flow = 0.5 + 0.5 * (waveA * 0.62 + waveB * 0.38);
-  flow = smoothstep(0.02, 0.98, flow);
+  float waveA = sin(p.x * 2.15 + p.y * 1.20 + t * 0.52);
+  float waveB = cos(p.x * -1.35 + p.y * 2.05 - t * 0.37);
+  float flow = 0.5 + 0.5 * (waveA * 0.58 + waveB * 0.42);
+  flow = smoothstep(0.06, 0.94, flow);
 
-  float band = 0.5 + 0.5 * sin((p.x + p.y * 0.45) * 5.4 - t * 0.42);
-  vec3 ab = mix(uColorA.rgb, uColorB.rgb, flow);
-  vec3 color = mix(ab, uColorC.rgb, smoothstep(0.46, 0.96, band) * 0.72);
-
-  float sheen = smoothstep(
-    0.76,
-    1.0,
-    sin((p.x * 0.92 + p.y * 0.25) * 8.0 - t * 0.58)
+  float band = 0.5 + 0.5 * sin((p.x + p.y * 0.32) * 2.45 - t * 0.31);
+  vec3 animatedColor = mix(uColorA.rgb, uColorB.rgb, flow);
+  animatedColor = mix(
+    animatedColor,
+    uColorC.rgb,
+    smoothstep(0.58, 0.98, band) * 0.42
   );
-  color += vec3(sheen * 0.095);
 
-  float glitterSeed = hash21(floor(frag * 0.62) + floor(t * 1.25));
-  float glitter = smoothstep(0.982, 1.0, glitterSeed) * 0.16;
-  color += vec3(glitter);
+  // Strength controls how far the material travels from the seed colour.
+  // Text uses a low value; larger icons/surfaces can stay more expressive.
+  vec3 color = mix(uColorB.rgb, animatedColor, clamp(uStrength, 0.0, 1.0));
+
+  // One broad soft reflection instead of per-pixel glitter/noise.
+  // This preserves the living/iridescent feel without dotted glyphs.
+  float sheenWave = 0.5 + 0.5 * sin(
+    (p.x * 0.82 + p.y * 0.22) * 3.15 - t * 0.34
+  );
+  float sheen = smoothstep(0.78, 1.0, sheenWave);
+  color += vec3(sheen * 0.055 * clamp(uSheen, 0.0, 1.0));
 
   fragColor = vec4(clamp(color, 0.0, 1.0), 1.0);
 }
