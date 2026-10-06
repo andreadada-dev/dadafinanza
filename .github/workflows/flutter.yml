@@ -30,11 +30,7 @@ jobs:
       - name: Pub get
         run: flutter pub get
       - name: Format check
-        run: |
-          dart format lib test
-          git diff --check
-          git diff
-          git diff --exit-code
+        run: dart format --output=none --set-exit-if-changed lib test
       - name: Analyze
         run: flutter analyze --no-fatal-infos
       - name: Test
