@@ -29,12 +29,12 @@ void main() {
   vec3 violet = vec3(0.20, 0.075, 0.42);
   vec3 indigo = vec3(0.055, 0.10, 0.30);
   vec3 darkColor = black;
-  darkColor += violet * (0.012 + field * 0.042);
-  darkColor += indigo * ribbon * 0.026;
+  darkColor += violet * (0.020 + field * 0.072);
+  darkColor += indigo * ribbon * 0.045;
 
   vec3 white = vec3(1.0);
   vec3 pearl = vec3(0.91, 0.90, 1.0);
-  vec3 lightColor = mix(white, pearl, field * 0.10 + ribbon * 0.035);
+  vec3 lightColor = mix(white, pearl, field * 0.14 + ribbon * 0.050);
 
   vec3 color = mix(lightColor, darkColor, clamp(uDark, 0.0, 1.0));
   fragColor = vec4(clamp(color, 0.0, 1.0), 1.0);
