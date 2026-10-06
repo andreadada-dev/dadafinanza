@@ -317,8 +317,7 @@ class BudgetsScreen extends StatelessWidget {
                         if (statusColor != null || category != null)
                           BalynShaderLinearProgress(
                             value: progress,
-                            seed:
-                                statusColor ?? Color(category!.colorValue),
+                            seed: statusColor ?? Color(category!.colorValue),
                           )
                         else
                           LinearProgressIndicator(
@@ -702,11 +701,10 @@ class GoalsScreen extends StatelessWidget {
                     contentPadding: EdgeInsets.zero,
                     minVerticalPadding: 12,
                     leading: CircleAvatar(
-                      backgroundColor: Theme.of(context)
-                          .colorScheme
-                          .onSurface
+                      backgroundColor: Theme.of(context).colorScheme.onSurface
                           .withValues(
-                            alpha: Theme.of(context).brightness == Brightness.dark
+                            alpha:
+                                Theme.of(context).brightness == Brightness.dark
                                 ? .07
                                 : .045,
                           ),
