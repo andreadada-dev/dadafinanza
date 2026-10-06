@@ -23,12 +23,12 @@ void main() {
   vec2 p = vec2(uv.x * aspect, uv.y);
   float t = uTime * 6.28318530718;
 
-  float waveA = sin(p.x * 2.15 + p.y * 1.20 + t * 0.52);
-  float waveB = cos(p.x * -1.35 + p.y * 2.05 - t * 0.37);
+  float waveA = sin(p.x * 2.15 + p.y * 1.20 + t);
+  float waveB = cos(p.x * -1.35 + p.y * 2.05 - t * 2.0);
   float flow = 0.5 + 0.5 * (waveA * 0.58 + waveB * 0.42);
   flow = smoothstep(0.06, 0.94, flow);
 
-  float band = 0.5 + 0.5 * sin((p.x + p.y * 0.32) * 2.45 - t * 0.31);
+  float band = 0.5 + 0.5 * sin((p.x + p.y * 0.32) * 2.45 - t);
   vec3 animatedColor = mix(uColorA.rgb, uColorB.rgb, flow);
   animatedColor = mix(
     animatedColor,
@@ -43,10 +43,10 @@ void main() {
   // One broad soft reflection instead of per-pixel glitter/noise.
   // This preserves the living/iridescent feel without dotted glyphs.
   float sheenWave = 0.5 + 0.5 * sin(
-    (p.x * 0.82 + p.y * 0.22) * 3.15 - t * 0.34
+    (p.x * 0.82 + p.y * 0.22) * 3.15 - t * 2.0
   );
   float sheen = smoothstep(0.78, 1.0, sheenWave);
-  color += vec3(sheen * 0.055 * clamp(uSheen, 0.0, 1.0));
+  color += vec3(sheen * 0.032 * clamp(uSheen, 0.0, 1.0));
 
   fragColor = vec4(clamp(color, 0.0, 1.0), 1.0);
 }
