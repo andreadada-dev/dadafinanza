@@ -290,9 +290,8 @@ class _AccountContextAnalyticsScreenState
         FinanceDonutSegment(
           label: 'Altro',
           value: expense - donutShown,
-          color: Theme.of(
-            context,
-          ).colorScheme.onSurfaceVariant.withValues(alpha: .36),
+          color: Theme.of(context).colorScheme.onSurfaceVariant
+              .withValues(alpha: .36),
           icon: Icons.more_horiz_rounded,
         ),
     ];

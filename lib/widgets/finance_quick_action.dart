@@ -74,16 +74,8 @@ class _FinanceQuickActionState extends State<FinanceQuickAction> {
                           shape: BoxShape.circle,
                         ),
                         child: shaderEnabled
-                            ? BalynShaderIcon(
-                                widget.icon,
-                                seed: base,
-                                size: 29,
-                              )
-                            : Icon(
-                                widget.icon,
-                                size: 29,
-                                color: resolvedColor,
-                              ),
+                            ? BalynShaderIcon(widget.icon, seed: base, size: 29)
+                            : Icon(widget.icon, size: 29, color: resolvedColor),
                       ),
                       const SizedBox(height: 8),
                       FittedBox(

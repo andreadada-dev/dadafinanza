@@ -142,10 +142,7 @@ class _BalynAppShellState extends State<BalynAppShell> {
           destinations: [
             NavigationDestination(
               icon: Icon(Icons.home_outlined),
-              selectedIcon: BalynShaderIcon(
-                Icons.home_rounded,
-                seed: accent,
-              ),
+              selectedIcon: BalynShaderIcon(Icons.home_rounded, seed: accent),
               label: AppI18n.tr('Home'),
             ),
             NavigationDestination(
@@ -243,9 +240,8 @@ class _BalynAppShellState extends State<BalynAppShell> {
   Future<void> _showQuickMenu() async {
     final state = AppScope.of(context);
     await HapticService.medium(enabled: state.haptics);
-    final presets = await QuickPresetService(
-      state.database,
-    ).all(enabledOnly: true);
+    final presets = await QuickPresetService(state.database)
+        .all(enabledOnly: true);
     if (!mounted) return;
 
     final choice = await showGeneralDialog<Object>(

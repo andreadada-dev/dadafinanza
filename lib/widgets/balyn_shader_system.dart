@@ -342,11 +342,7 @@ List<Color> balynShaderPalette(Color seed) {
     return HSLColor.fromAHSL(1, hue, saturation, lightness).toColor();
   }
 
-  return [
-    tone(-18, .10, -.03),
-    tone(5, .14, .10),
-    tone(24, .08, -.01),
-  ];
+  return [tone(-18, .10, -.03), tone(5, .14, .10), tone(24, .08, -.01)];
 }
 
 void _configureInkShader(

@@ -369,18 +369,18 @@ class _FinanceDonutChartState extends State<FinanceDonutChart> {
                           for (var i = 0; i < widget.segments.length; i++)
                             PieChartSectionData(
                               gradient: LinearGradient(
-                                colors: balynShaderPalette(
-                                  widget.segments[i].color,
-                                )
-                                    .map(
-                                      (color) => color.withValues(
-                                        alpha:
-                                            _selected == -1 || _selected == i
-                                            ? 1
-                                            : .22,
-                                      ),
-                                    )
-                                    .toList(),
+                                colors:
+                                    balynShaderPalette(widget.segments[i].color)
+                                        .map(
+                                          (color) => color.withValues(
+                                            alpha:
+                                                _selected == -1 ||
+                                                    _selected == i
+                                                ? 1
+                                                : .22,
+                                          ),
+                                        )
+                                        .toList(),
                               ),
                               value: widget.segments[i].value.abs(),
                               title: '',
@@ -516,9 +516,9 @@ class FinanceSparkline extends StatelessWidget {
               belowBarData: BarAreaData(
                 show: true,
                 gradient: LinearGradient(
-                  colors: balynShaderPalette(
-                    color,
-                  ).map((item) => item.withValues(alpha: .10)).toList(),
+                  colors: balynShaderPalette(color)
+                      .map((item) => item.withValues(alpha: .10))
+                      .toList(),
                 ),
               ),
             ),

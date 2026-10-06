@@ -39,10 +39,8 @@ generatedTranslations = <String, Map<String, String>>{
         "Add bills, subscriptions, installments or regular income.",
     "Aggiungi dettagli": "Add details",
     "Aggiungi entrata": "Add income",
-    "Aggiungi il conto che usi davvero o continua con movimenti Non assegnati.":
-        "Add the account you actually use or continue with Unassigned transactions.",
-    "Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.":
-        "Add the account you actually use or continue with Unassigned transactions.",
+    "Aggiungi il conto che usi davvero o continua con movimenti Non assegnati.": "Add the account you actually use or continue with Unassigned transactions.",
+    "Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.": "Add the account you actually use or continue with Unassigned transactions.",
     "Aggiungi Importi rapidi": "Add Quick Amounts",
     "Aggiungi movimento": "Add transaction",
     "Aggiungi parte": "Add part",
@@ -74,8 +72,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Asset performance in the selected period",
     "Andamento patrimonio": "Asset performance",
     "Andamento saldo": "Solid trend",
-    "Android può chiederti conferma e aprire la configurazione prima di posizionare il widget.":
-        "Android may ask you for confirmation and open the configuration before placing the widget.",
+    "Android può chiederti conferma e aprire la configurazione prima di posizionare il widget.": "Android may ask you for confirmation and open the configuration before placing the widget.",
     "Android secondo le regole di quel fornitore.":
         "Android according to that vendor's rules.",
     "Animali": "Animals",
@@ -218,8 +215,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Cancellare l’apprendimento?": "Cancel learning?",
     "Cancellare tutti i dati?": "Delete all data?",
     "Cancelleria": "Stationery",
-    "Carosello categorie. Scorri a destra o sinistra per passare tra Spese ed Entrate.":
-        "Carousel categories. Swipe left or right to switch between Expenses and Income.",
+    "Carosello categorie. Scorri a destra o sinistra per passare tra Spese ed Entrate.": "Carousel categories. Swipe left or right to switch between Expenses and Income.",
     "Carta": "Paper",
     "Casa": "Home",
     "Cash flow del mese": "Cash flow of the month",
@@ -244,14 +240,10 @@ generatedTranslations = <String, Map<String, String>>{
     "Chiudi": "Close",
     "Chiudi scorciatoie": "Close shortcuts",
     "Chiudi senza statistica": "Close without statistics",
-    "Circa 2×1 · saldo compatto e accesso a Nuovo movimento. La visibilità del saldo è configurabile per istanza.":
-        "Approximately 2×1 · compact balance and access to New transaction. Balance visibility is configurable per instance.",
-    "Circa 2×2 · Spesa, Entrata, Trasferisci e Voce. Conto e categoria possono essere preconfigurati.":
-        "About 2×2 · Expense, Income, Transfer and income. Account and category can be pre-configured.",
-    "Circa 4×2 · quattro importi personalizzati, conto, categoria, trasferimento e microfono.":
-        "About 4×2 · four custom amounts, account, category, transfer and microphone.",
-    "Circa 4×2 · saldo e quattro categorie rapide. Le categorie seguono prima i quick slot e poi le preferite.":
-        "About 4×2 · balance and four quick categories. The categories follow quick slots first and then favorites.",
+    "Circa 2×1 · saldo compatto e accesso a Nuovo movimento. La visibilità del saldo è configurabile per istanza.": "Approximately 2×1 · compact balance and access to New transaction. Balance visibility is configurable per instance.",
+    "Circa 2×2 · Spesa, Entrata, Trasferisci e Voce. Conto e categoria possono essere preconfigurati.": "About 2×2 · Expense, Income, Transfer and income. Account and category can be pre-configured.",
+    "Circa 4×2 · quattro importi personalizzati, conto, categoria, trasferimento e microfono.": "About 4×2 · four custom amounts, account, category, transfer and microphone.",
+    "Circa 4×2 · saldo e quattro categorie rapide. Le categorie seguono prima i quick slot e poi le preferite.": "About 4×2 · balance and four quick categories. The categories follow quick slots first and then favorites.",
     "Collega": "Connect",
     "Collega a un anticipo": "Link to an advance",
     "Collegamenti": "Connections",
@@ -283,8 +275,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Conferma PIN": "Confirm PIN",
     "Conferma riconciliazione": "Confirm reconciliation",
     "Confermato": "Confirmed",
-    "Confermato = ricorrenza configurata. Previsto = pattern storico ad alta confidenza. Stimato = comportamento aggregato, non un evento certo.":
-        "Confirmed = recurrence configured. Expected = high confidence historical pattern. Estimated = aggregate behavior, not a certain event.",
+    "Confermato = ricorrenza configurata. Previsto = pattern storico ad alta confidenza. Stimato = comportamento aggregato, non un evento certo.": "Confirmed = recurrence configured. Expected = high confidence historical pattern. Estimated = aggregate behavior, not a certain event.",
     "Configura": "Configure",
     "Configura conto e categoria": "Configure account and category",
     "Configura Balyn": "Configure Balyn",
@@ -304,8 +295,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Conti": "Accounts",
     "Conti inclusi": "Accounts included",
     "Conti non trovati": "Accounts not found",
-    "Conti, movimenti, categorie, budget, obiettivi, regole e apprendimento locale verranno eliminati. Crea prima un backup se vuoi conservarli.":
-        "Accounts, income, categories, budgets, goals, rules and local learning will be deleted. Create a backup first if you want to keep them.",
+    "Conti, movimenti, categorie, budget, obiettivi, regole e apprendimento locale verranno eliminati. Crea prima un backup se vuoi conservarli.": "Accounts, income, categories, budgets, goals, rules and local learning will be deleted. Create a backup first if you want to keep them.",
     "Continua": "Continue",
     "Conto": "Account",
     "Conto (es. Revolut)": "Account (e.g. Revolut)",
@@ -371,15 +361,13 @@ generatedTranslations = <String, Map<String, String>>{
     "Da restituire": "To be returned",
     "Da ricevere": "To be received",
     "Da saldare": "To be paid",
-    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
-        "Balyn does not send transactions, receipts, descriptions or patterns to external services.",
+    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.": "Balyn does not send transactions, receipts, descriptions or patterns to external services.",
     "Balyn non riceve né memorizza dati biometrici.":
         "Balyn does not receive or store biometric data.",
     "Balyn non richiede un account e non integra pubblicità, ":
         "Balyn does not require an account and does not integrate advertising,",
     "Balyn sulla Home": "Balyn on Home",
-    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
-        "Balyn uses local scheduling and limits duplicates. Automatic recurrences are still reconciled when the app is opened.",
+    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.": "Balyn uses local scheduling and limits duplicates. Automatic recurrences are still reconciled when the app is opened.",
     "Balyn · Importi rapidi": "Balyn · Quick amounts",
     "Balyn · Riepilogo": "Balyn · Summary",
     "Balyn · Saldo": "Balyn · Balance",
@@ -404,10 +392,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Dati locali, permessi, backup e servizi di sistema":
         "Local data, permissions, backups and system services",
     "Dati sul dispositivo": "Data on the device",
-    "Dati, PIN e preferenze restano locali. Nessun account o server è coinvolto.":
-        "Data, PIN and preferences remain local. No accounts or servers are affected.",
-    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.":
-        "Define a figure and, if you want, a date: Balyn will estimate a sustainable pace.",
+    "Dati, PIN e preferenze restano locali. Nessun account o server è coinvolto.": "Data, PIN and preferences remain local. No accounts or servers are affected.",
+    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.": "Define a figure and, if you want, a date: Balyn will estimate a sustainable pace.",
     "dei trasferimenti": "of transfers",
     "delle entrate": "of revenue",
     "delle spese": "of expenses",
@@ -424,8 +410,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Devo restituire dei soldi": "I have to pay back some money",
     "Devo ricevere dei soldi": "I have to get some money",
     "Disattiva": "Deactivate",
-    "Disattiva per movimenti eccezionali che non vuoi nelle analisi.":
-        "Turn off for exceptional transactions that you don't want in your analyses.",
+    "Disattiva per movimenti eccezionali che non vuoi nelle analisi.": "Turn off for exceptional transactions that you don't want in your analyses.",
     "Disattivate": "Deactivate",
     "Disattivato": "Deactivated",
     "Disinstallando l’app vengono rimossi i dati conservati nello ":
@@ -436,12 +421,10 @@ generatedTranslations = <String, Map<String, String>>{
     "Divisione": "Division",
     "Domenica": "Sunday",
     "Donazione": "Donation",
-    "Dopo alcuni movimenti coerenti compariranno qui le abitudini riconosciute.":
-        "After a few consistent transactions the recognized habits will appear here.",
+    "Dopo alcuni movimenti coerenti compariranno qui le abitudini riconosciute.": "After a few consistent transactions the recognized habits will appear here.",
     "Dove stai spendendo": "Where are you spending",
     "Duplica": "Duplicate",
-    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.":
-        "During setup you can choose whether to show balance and amounts. “Hide balances” in the app still prevails and obscures the widgets.",
+    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.": "During setup you can choose whether to show balance and amounts. “Hide balances” in the app still prevails and obscures the widgets.",
     "Elettricità": "Electricity",
     "Elimina": "Delete",
     "Elimina conto": "Delete account",
@@ -477,8 +460,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Esporta movimenti": "Export transactions",
     "Esporta movimenti CSV": "Export CSV transactions",
     "Evento": "Event",
-    "Fallback opzionale. La privacy dipende dal servizio vocale configurato sul dispositivo.":
-        "Optional fallback. Privacy depends on the voice service configured on your device.",
+    "Fallback opzionale. La privacy dipende dal servizio vocale configurato sul dispositivo.": "Optional fallback. Privacy depends on the voice service configured on your device.",
     "Fallback semplice da 4 a 8 cifre.": "Simple 4 to 8 digit fallback.",
     "Famiglia": "Family",
     "Famiglia e social": "Family and social",
@@ -536,8 +518,7 @@ generatedTranslations = <String, Map<String, String>>{
         "transactions already classified will not change.",
     "I movimenti già registrati resteranno invariati.":
         "transactions already recorded will remain unchanged.",
-    "I pattern sono ricavati dai tuoi movimenti. Puoi disattivarli, convertirli in regole esplicite o eliminarli senza modificare lo storico.":
-        "Patterns are derived from your transactions. You can deactivate them, convert them to explicit rules or delete them without changing the history.",
+    "I pattern sono ricavati dai tuoi movimenti. Puoi disattivarli, convertirli in regole esplicite o eliminarli senza modificare lo storico.": "Patterns are derived from your transactions. You can deactivate them, convert them to explicit rules or delete them without changing the history.",
     "I saldi dei conti verranno ricalcolati automaticamente.":
         "Account balances will be recalculated automatically.",
     "I widget di questa sezione sono disponibili su Android.":
@@ -555,16 +536,13 @@ generatedTranslations = <String, Map<String, String>>{
     "Il conto è bloccato.": "The account is blocked.",
     "Il conto è vuoto e può essere eliminato in sicurezza.":
         "The account is empty and can be safely deleted.",
-    "Il conto è vuoto. Eventuali riferimenti in preset e obiettivi verranno scollegati in sicurezza.":
-        "The account is empty. Any references in presets and targets will be safely disconnected.",
+    "Il conto è vuoto. Eventuali riferimenti in preset e obiettivi verranno scollegati in sicurezza.": "The account is empty. Any references in presets and targets will be safely disconnected.",
     "Il CSV deve contenere almeno type, amount, date e account.":
         "The CSV must contain at least type, amount, date and account.",
     "Il database ripristinato non supera il controllo integrità.":
         "The restored database fails the integrity check.",
-    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.":
-        "The launcher does not support automatic adding. Press and hold on Home → Widget → Balyn.",
-    "Il microfono compila Nuovo movimento ma non salva mai automaticamente.":
-        "The microphone compiles New transaction but never saves automatically.",
+    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.": "The launcher does not support automatic adding. Press and hold on Home → Widget → Balyn.",
+    "Il microfono compila Nuovo movimento ma non salva mai automaticamente.": "The microphone compiles New transaction but never saves automatically.",
     "Il movimento ha una direzione incompatibile.":
         "The transaction has an incompatible direction.",
     "Il movimento supera il residuo dell’anticipo.":
@@ -573,28 +551,22 @@ generatedTranslations = <String, Map<String, String>>{
         "Microphone permission is not available.",
     "Il PIN deve contenere da 4 a 8 cifre.":
         "The PIN must contain 4 to 8 digits.",
-    "Il preset verrà rimosso. I movimenti già registrati non cambieranno.":
-        "The preset will be removed. Already recorded transactions will not change.",
+    "Il preset verrà rimosso. I movimenti già registrati non cambieranno.": "The preset will be removed. Already recorded transactions will not change.",
     "Il recognizer di sistema non è disponibile offline.":
         "The system recognizer is not available offline.",
     "Il riconoscimento vocale offline non è disponibile su questo dispositivo.":
         "Offline voice recognition is not available on this device.",
-    "Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.":
-        "The main summary remains fixed at the top. Reactivate the sections you want to see here.",
+    "Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.": "The main summary remains fixed at the top. Reactivate the sections you want to see here.",
     "Il saldo contribuisce al patrimonio totale":
         "The balance contributes to the total assets",
-    "Il saldo del conto e il residuo dell’anticipo verranno ripristinati automaticamente.":
-        "The account balance and the balance of the advance will be automatically restored.",
+    "Il saldo del conto e il residuo dell’anticipo verranno ripristinati automaticamente.": "The account balance and the balance of the advance will be automatically restored.",
     "Il saldo del conto verrà ricalcolato automaticamente.":
         "Your account balance will be recalculated automatically.",
-    "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.":
-        "The system recognizes habits with local statistics and explainable rules. It doesn't use AI or cloud.",
-    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.":
-        "The recognized text is interpreted locally by a deterministic parser. It is not sent to the Balyn server.",
+    "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.": "The system recognizes habits with local statistics and explainable rules. It doesn't use AI or cloud.",
+    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.": "The recognized text is interpreted locally by a deterministic parser. It is not sent to the Balyn server.",
     "Il trasferimento deve arrivare al conto collegato all’obiettivo.":
         "The transfer must arrive at the account linked to the goal.",
-    "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.":
-        "The transfer requires two different active accounts before creating an occurrence.",
+    "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.": "The transfer requires two different active accounts before creating an occurrence.",
     "Immediato": "Immediate",
     "Impedisce nuovi movimenti sul conto":
         "Prevents new transactions on the account",
@@ -659,12 +631,9 @@ generatedTranslations = <String, Map<String, String>>{
     "La mia parte": "My share",
     "La posizione verrà chiusa come annullata.":
         "The position will be closed as cancelled.",
-    "La previsione di fine mese è sotto la soglia che hai impostato. Apri Pianifica per i dettagli.":
-        "The month-end forecast is below the threshold you set. Open Schedule for details.",
-    "La quota anticipata deve essere maggiore di 0 e minore o uguale al totale.":
-        "The advance fee must be greater than 0 and less than or equal to the total.",
-    "La stima comportamentale è comunque inclusa nel saldo previsto sopra.":
-        "The behavioral estimate is however included in the balance forecast above.",
+    "La previsione di fine mese è sotto la soglia che hai impostato. Apri Pianifica per i dettagli.": "The month-end forecast is below the threshold you set. Open Schedule for details.",
+    "La quota anticipata deve essere maggiore di 0 e minore o uguale al totale.": "The advance fee must be greater than 0 and less than or equal to the total.",
+    "La stima comportamentale è comunque inclusa nel saldo previsto sopra.": "The behavioral estimate is however included in the balance forecast above.",
     "La tua parte e la quota anticipata devono coincidere con il totale.":
         "Your share and the upfront fee must match the total.",
     "Lascia vuoto per un backup non cifrato.":
@@ -675,12 +644,10 @@ generatedTranslations = <String, Map<String, String>>{
     "Lavoro e formazione": "Work and training",
     "Le categorie compariranno qui quando registri movimenti.":
         "Categories will appear here when you record transactions.",
-    "Le metriche principali restano in alto. Riattiva altri widget dalla personalizzazione Home.":
-        "Key metrics remain at the top. Re-enable other widgets from the Home customizer.",
+    "Le metriche principali restano in alto. Riattiva altri widget dalla personalizzazione Home.": "Key metrics remain at the top. Re-enable other widgets from the Home customizer.",
     "Le notifiche possono essere disattivate in qualsiasi momento.":
         "Notifications can be turned off at any time.",
-    "Le persone servono solo per organizzare gli anticipi e restano sul dispositivo.":
-        "The people are only used to organize the advances and remain on the device.",
+    "Le persone servono solo per organizzare gli anticipi e restano sul dispositivo.": "The people are only used to organize the advances and remain on the device.",
     "Libri": "Books",
     "Limite": "Limit",
     "Lingua": "Language",
@@ -705,8 +672,7 @@ generatedTranslations = <String, Map<String, String>>{
         "The connected lens is no longer available.",
     "L’obiettivo non ha un conto collegato.":
         "The target does not have a linked account.",
-    "L’obiettivo verrà eliminato. Conti e movimenti non saranno modificati.":
-        "The target will be eliminated. Accounts and transactions will not be modified.",
+    "L’obiettivo verrà eliminato. Conti e movimenti non saranno modificati.": "The target will be eliminated. Accounts and transactions will not be modified.",
     "Mai riconciliato": "Never reconciled",
     "Manifest backup non leggibile.": "Manifest backup not readable.",
     "Manifest backup non valido.": "Invalid backup manifest.",
@@ -754,8 +720,7 @@ generatedTranslations = <String, Map<String, String>>{
     "movimenti da assegnare": "transactions to assign",
     "Movimenti del conto esportati.": "Exported account transactions.",
     "Movimenti recenti": "Recent transactions",
-    "Movimenti, split, budget, regole e apprendimento verranno spostati nella categoria scelta.":
-        "transactions, splits, budgets, rules and learning will be moved to the chosen category.",
+    "Movimenti, split, budget, regole e apprendimento verranno spostati nella categoria scelta.": "transactions, splits, budgets, rules and learning will be moved to the chosen category.",
     "Movimento": "Transaction",
     "Movimento aggiornato.": "Updated transaction.",
     "Movimento collegato non trovato.": "Linked motion not found.",
@@ -880,10 +845,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Obiettivo da rivedere": "Objective to be reviewed",
     "Obiettivo non trovato.": "Target not found.",
     "Oggi": "Today",
-    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.":
-        "Each instance can have its own settings. The widget always opens Quick Add: no tap registers money without your confirmation.",
-    "Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add.":
-        "Each widget maintains its own settings. The account and category names are verified by the app when you open Quick Add.",
+    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.": "Each instance can have its own settings. The widget always opens Quick Add: no tap registers money without your confirmation.",
+    "Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add.": "Each widget maintains its own settings. The account and category names are verified by the app when you open Quick Add.",
     "Operazione irreversibile dopo la conferma.":
         "Irreversible operation after confirmation.",
     "Ora": "Now",
@@ -898,8 +861,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Parrucchiere": "Hairdresser",
     "Parser locale · on-device quando disponibile":
         "Local parser · on-device when available",
-    "Parti dal primo conto oppure registra subito un movimento e assegnalo in seguito.":
-        "Start from the first account or record a transaction immediately and assign it later.",
+    "Parti dal primo conto oppure registra subito un movimento e assegnalo in seguito.": "Start from the first account or record a transaction immediately and assign it later.",
     "Parti dal primo conto oppure registra subito un movimento.":
         "Start from the first account or record a transaction immediately.",
     "Parzialmente regolato": "Partially regulated",
@@ -910,18 +872,15 @@ generatedTranslations = <String, Map<String, String>>{
     "Patrimonio corrente": "Current assets",
     "Patrimonio incluso nel totale": "Heritage included in the total",
     "Patrimonio netto": "Net worth",
-    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.":
-        "Assets, Income, Expenses and Available remain fixed at the top, above the quick actions. Here you can show, hide, resize and reorder subsequent sections.",
-    "Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.":
-        "Patterns, feedback and suppression will be eliminated. The transactions will remain unchanged and the system can learn again.",
+    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.": "Assets, Income, Expenses and Available remain fixed at the top, above the quick actions. Here you can show, hide, resize and reorder subsequent sections.",
+    "Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.": "Patterns, feedback and suppression will be eliminated. The transactions will remain unchanged and the system can learn again.",
     "Pedaggio": "Toll",
     "Per assegnare una categoria la regola deve avere un tipo compatibile.":
         "To assign a category the rule must have a compatible type.",
     "Per assegnare una categoria la regola deve avere un tipo Spesa o Entrata.":
         "To assign a category the rule must have a type of Expense or Income.",
     "Per conto": "On behalf",
-    "Per proteggere lo storico finanziario un conto con movimenti o ricorrenze non viene eliminato. Puoi archiviarlo e continuare a consultare i dati.":
-        "To protect the financial history, an account with transactions or recurrences is not deleted. You can archive it and continue to consult the data.",
+    "Per proteggere lo storico finanziario un conto con movimenti o ricorrenze non viene eliminato. Puoi archiviarlo e continuare a consultare i dati.": "To protect the financial history, an account with transactions or recurrences is not deleted. You can archive it and continue to consult the data.",
     "Per te": "For you",
     "Periodo": "Period",
     "Periodo precedente": "Previous period",
@@ -978,8 +937,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Previsioni e calendario": "Forecast and calendar",
     "Previsto": "Expected",
     "Previsto da abitudini": "Expected by habits",
-    "Prima del ripristino viene creato un safety backup temporaneo. Se il controllo integrità fallisce, i dati attuali vengono ripristinati.":
-        "Before the restore, a temporary safety backup is created. If the integrity check fails, the current data is restored.",
+    "Prima del ripristino viene creato un safety backup temporaneo. Se il controllo integrità fallisce, i dati attuali vengono ripristinati.": "Before the restore, a temporary safety backup is created. If the integrity check fails, the current data is restored.",
     "Primo giorno settimana": "First day of the week",
     "Principio di base": "Basic principle",
     "Privacy e dati": "Privacy and data",
@@ -1007,21 +965,17 @@ generatedTranslations = <String, Map<String, String>>{
         "Try changing your search or filters.",
     "Prova regola": "Try rule",
     "Pulizie": "Cleaning",
-    "Puoi avere, per esempio, un widget Revolut/Bar e un altro Contanti/Benzina con importi diversi.":
-        "You can have, for example, a Revolut/Bar widget and another Cash/Petrol with different amounts.",
+    "Puoi avere, per esempio, un widget Revolut/Bar e un altro Contanti/Benzina con importi diversi.": "You can have, for example, a Revolut/Bar widget and another Cash/Petrol with different amounts.",
     "Puoi cambiarla in qualsiasi momento": "You can change it at any time",
     "Puoi cancellare i dati finanziari locali dalle impostazioni. ":
         "You can clear local financial data from settings.",
-    "Puoi creare il primo conto oppure registrare subito un movimento come Non assegnato.":
-        "You can create your first account or immediately record a transaction as Unassigned.",
-    "Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.":
-        "It can be a part or all of the amount. Only your share will be counted in expenses, categories and budgets.",
+    "Puoi creare il primo conto oppure registrare subito un movimento come Non assegnato.": "You can create your first account or immediately record a transaction as Unassigned.",
+    "Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.": "It can be a part or all of the amount. Only your share will be counted in expenses, categories and budgets.",
     "Quale categoria intendevi?": "Which category did you mean?",
     "Quale conto intendevi?": "Which account did you mean?",
     "Qualsiasi": "Any",
     "Qualsiasi tipo": "Any kind",
-    "Questa categoria è usata in una divisione di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.":
-        "This category is used in an expense division. To avoid losing the classification, merge it into another category first.",
+    "Questa categoria è usata in una divisione di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.": "This category is used in an expense division. To avoid losing the classification, merge it into another category first.",
     "Questa persona ha anticipi ancora aperti. Chiudili prima di archiviarla.":
         "This person has advances still open. Close them before archiving it.",
     "Questa regola corrisponde a 1 movimento.":
@@ -1085,8 +1039,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Righe valide": "Valid rows",
     "Rileva ricorrenze": "Detect recurrences",
     "Rilevate dalle tue abitudini": "Detected by your habits",
-    "Rimane qui. Se continui a parlare, aggiorno la frase; usa ↻ per ricominciare da zero.":
-        "It stays here. If you keep talking, I'll update the sentence; use ↻ to start from scratch.",
+    "Rimane qui. Se continui a parlare, aggiorno la frase; usa ↻ per ricominciare da zero.": "It stays here. If you keep talking, I'll update the sentence; use ↻ to start from scratch.",
     "Rimborso": "Refund",
     "Rimborso collegato": "Refund linked",
     "Rimborso non trovato.": "Refund not found.",
@@ -1188,11 +1141,9 @@ generatedTranslations = <String, Map<String, String>>{
     "Scuro": "Dark",
     "Se contiene storico potrai archiviarlo invece di eliminarlo":
         "If it contains history you can archive it instead of deleting it",
-    "Se è un anticipo puro, il movimento di cassa originale verrà annullato. Le spese miste restano come acquisto personale.":
-        "If it is a pure advance, the original cash transaction will be canceled. Mixed expenses remain as personal purchases.",
+    "Se è un anticipo puro, il movimento di cassa originale verrà annullato. Le spese miste restano come acquisto personale.": "If it is a pure advance, the original cash transaction will be canceled. Mixed expenses remain as personal purchases.",
     "Segnali": "Signals",
-    "Segnali deboli: rafforzano una previsione, non la creano da soli.":
-        "Weak signals: They strengthen a prediction, they don't create it themselves.",
+    "Segnali deboli: rafforzano una previsione, non la creano da soli.": "Weak signals: They strengthen a prediction, they don't create it themselves.",
     "Seleziona ": "Select",
     "Seleziona conto": "Select account",
     "Seleziona ora": "Select now",
@@ -1202,8 +1153,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Servizi cloud": "Cloud services",
     "Servono almeno 3 settimane di storico utile per un consiglio realistico.":
         "At least 3 weeks of useful history are needed for realistic advice.",
-    "Servono almeno due categorie di spesa per dividere il movimento.":
-        "At least two spending categories are needed to divide the transaction.",
+    "Servono almeno due categorie di spesa per dividere il movimento.": "At least two spending categories are needed to divide the transaction.",
     "Servono più dati": "More data is needed",
     "Servono più dati per confrontare il periodo precedente.":
         "More data is needed to compare the previous period.",
@@ -1318,8 +1268,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Use account transactions in analytics",
     "Usa il conto collegato all’obiettivo come destinazione.":
         "Use the account linked to the goal as the destination.",
-    "Usa il pulsante + per registrare una spesa o un’entrata: analisi e previsioni nasceranno dai tuoi dati reali.":
-        "Use the + button to record an expense or income: analyzes and forecasts will arise from your real data.",
+    "Usa il pulsante + per registrare una spesa o un’entrata: analisi e previsioni nasceranno dai tuoi dati reali.": "Use the + button to record an expense or income: analyzes and forecasts will arise from your real data.",
     "Usa importo": "Use amount",
     "Usa impronta o biometria configurata nel dispositivo.":
         "Use fingerprint or biometrics configured on the device.",
@@ -1369,8 +1318,7 @@ generatedTranslations = <String, Map<String, String>>{
     "È il segnale principale del modello locale.":
         "It is the main signal of the local model.",
     "È stato condonato": "It was condoned",
-    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.":
-        "It is an estimate: it starts from the spendable assets, subtracts the recurring expenditure expected until the end of the month and maintains a prudential reserve for the objectives. It is not a guaranteed bank balance.",
+    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.": "It is an estimate: it starts from the spendable assets, subtracts the recurring expenditure expected until the end of the month and maintains a prudential reserve for the objectives. It is not a guaranteed bank balance.",
     "•••• da ricevere · •••• da restituire": "•••• to receive · •••• to return",
   },
   "es": <String, String>{
@@ -1409,16 +1357,13 @@ generatedTranslations = <String, Map<String, String>>{
         "Actualizaciones no invasivas sobre objetivos.",
     "Aggiungi": "Añadir",
     "Aggiungi ai preferiti": "Añadir a favoritos",
-    "Aggiungi bollette, abbonamenti o stipendio per prevedere il saldo futuro.":
-        "Agregue facturas, suscripciones o salario para predecir su saldo futuro.",
+    "Aggiungi bollette, abbonamenti o stipendio per prevedere il saldo futuro.": "Agregue facturas, suscripciones o salario para predecir su saldo futuro.",
     "Aggiungi bollette, abbonamenti, rate o entrate regolari.":
         "Añade facturas, suscripciones, cuotas o ingresos regulares.",
     "Aggiungi dettagli": "Agregar detalles",
     "Aggiungi entrata": "Agregar ingresos",
-    "Aggiungi il conto che usi davvero o continua con movimenti Non assegnati.":
-        "Agregue la cuenta que actualmente usa o continúe con transacciones no asignadas.",
-    "Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.":
-        "Agregue la cuenta que actualmente usa o continúe con transacciones no asignadas.",
+    "Aggiungi il conto che usi davvero o continua con movimenti Non assegnati.": "Agregue la cuenta que actualmente usa o continúe con transacciones no asignadas.",
+    "Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.": "Agregue la cuenta que actualmente usa o continúe con transacciones no asignadas.",
     "Aggiungi Importi rapidi": "Agregar cantidades rápidas",
     "Aggiungi movimento": "Agregar transacción",
     "Aggiungi parte": "Agregar parte",
@@ -1451,8 +1396,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Rendimiento de los activos en el período seleccionado",
     "Andamento patrimonio": "Rendimiento de los activos",
     "Andamento saldo": "Tendencia sólida",
-    "Android può chiederti conferma e aprire la configurazione prima di posizionare il widget.":
-        "Es posible que Android te pida confirmación y abra la configuración antes de colocar el widget.",
+    "Android può chiederti conferma e aprire la configurazione prima di posizionare il widget.": "Es posible que Android te pida confirmación y abra la configuración antes de colocar el widget.",
     "Android secondo le regole di quel fornitore.":
         "Android según las reglas de ese proveedor.",
     "Animali": "animales",
@@ -1484,8 +1428,7 @@ generatedTranslations = <String, Map<String, String>>{
     "AppScope not found": "AppScope no encontrado",
     "Apre Balyn senza autenticazione.": "Abre Balyn sin autenticación.",
     "Apri": "Abierto",
-    "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
-        "Abra Pagos iniciales para registrar un reembolso o actualizar su recordatorio.",
+    "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.": "Abra Pagos iniciales para registrar un reembolso o actualizar su recordatorio.",
     "Apri conto": "abrir cuenta",
     "Apri il selettore widget del launcher e cerca Balyn.":
         "Abra el selector de widgets del iniciador y busque Balyn.",
@@ -1535,16 +1478,14 @@ generatedTranslations = <String, Map<String, String>>{
     "Azzera": "Reiniciar",
     "Azzera filtri": "Limpiar filtros",
     "Backup completo": "Copia de seguridad completa",
-    "Backup completo con allegati · import portabile":
-        "Copia de seguridad completa con archivos adjuntos · importación portátil",
+    "Backup completo con allegati · import portabile": "Copia de seguridad completa con archivos adjuntos · importación portátil",
     "Backup completo salvato.": "Copia de seguridad completa guardada.",
     "Backup Balyn non riconosciuto.":
         "Copia de seguridad de Balyn no reconocida.",
     "Backup non trovato.": "Copia de seguridad no encontrada.",
     "Backup ripristinato e verificato.":
         "Copia de seguridad restaurada y verificada.",
-    "Backup, CSV e allegati vengono esportati solo quando avvii ":
-        "Las copias de seguridad, CSV y archivos adjuntos solo se exportan cuando inicias",
+    "Backup, CSV e allegati vengono esportati solo quando avvii ": "Las copias de seguridad, CSV y archivos adjuntos solo se exportan cuando inicias",
     "Backup, CSV e ripristino": "Copia de seguridad, CSV y restauración",
     "Backup, import ed export": "Copia de seguridad, importación y exportación",
     "Bad state: ": "Mal estado:",
@@ -1563,8 +1504,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Biometria": "Biometría",
     "Biometria non disponibile o non configurata sul dispositivo.":
         "Biometría no disponible o no configurada en el dispositivo.",
-    "Biometria o PIN · timeout · protezione screenshot":
-        "Biometría o PIN · tiempo de espera · protección de captura de pantalla",
+    "Biometria o PIN · timeout · protezione screenshot": "Biometría o PIN · tiempo de espera · protección de captura de pantalla",
     "Blocca conto": "Bloquear cuenta",
     "Blocca dopo": "Bloquear más tarde",
     "Bloccato": "Bloqueado",
@@ -1602,8 +1542,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Cancellare l’apprendimento?": "¿Cancelar el aprendizaje?",
     "Cancellare tutti i dati?": "¿Eliminar todos los datos?",
     "Cancelleria": "Papelería",
-    "Carosello categorie. Scorri a destra o sinistra per passare tra Spese ed Entrate.":
-        "Categorías de carrusel. Desliza el dedo hacia la izquierda o hacia la derecha para cambiar entre Gastos e Ingresos.",
+    "Carosello categorie. Scorri a destra o sinistra per passare tra Spese ed Entrate.": "Categorías de carrusel. Desliza el dedo hacia la izquierda o hacia la derecha para cambiar entre Gastos e Ingresos.",
     "Carta": "papel",
     "Casa": "Inicio",
     "Cash flow": "flujo de caja",
@@ -1630,14 +1569,10 @@ generatedTranslations = <String, Map<String, String>>{
     "Chiudi scorciatoie": "Cerrar atajos",
     "Chiudi senza statistica": "Cerrar sin estadísticas",
     "Cinema": "Cine",
-    "Circa 2×1 · saldo compatto e accesso a Nuovo movimento. La visibilità del saldo è configurabile per istanza.":
-        "Aproximadamente 2×1 · Saldo compacto y acceso a Nueva transacción. La visibilidad del saldo es configurable por instancia.",
-    "Circa 2×2 · Spesa, Entrata, Trasferisci e Voce. Conto e categoria possono essere preconfigurati.":
-        "Sobre 2×2 · Gastos, Ingresos, Transferencias e ingresos. La cuenta y la categoría se pueden preconfigurar.",
-    "Circa 4×2 · quattro importi personalizzati, conto, categoria, trasferimento e microfono.":
-        "Sobre 4×2 · cuatro importes personalizados, cuenta, categoría, transferencia y micrófono.",
-    "Circa 4×2 · saldo e quattro categorie rapide. Le categorie seguono prima i quick slot e poi le preferite.":
-        "Sobre 4×2 · equilibrio y cuatro categorías rápidas. Las categorías siguen primero los espacios rápidos y luego los favoritos.",
+    "Circa 2×1 · saldo compatto e accesso a Nuovo movimento. La visibilità del saldo è configurabile per istanza.": "Aproximadamente 2×1 · Saldo compacto y acceso a Nueva transacción. La visibilidad del saldo es configurable por instancia.",
+    "Circa 2×2 · Spesa, Entrata, Trasferisci e Voce. Conto e categoria possono essere preconfigurati.": "Sobre 2×2 · Gastos, Ingresos, Transferencias e ingresos. La cuenta y la categoría se pueden preconfigurar.",
+    "Circa 4×2 · quattro importi personalizzati, conto, categoria, trasferimento e microfono.": "Sobre 4×2 · cuatro importes personalizados, cuenta, categoría, transferencia y micrófono.",
+    "Circa 4×2 · saldo e quattro categorie rapide. Le categorie seguono prima i quick slot e poi le preferite.": "Sobre 4×2 · equilibrio y cuatro categorías rápidas. Las categorías siguen primero los espacios rápidos y luego los favoritos.",
     "closed_at IS NOT NULL, created_at DESC, id DESC":
         "close_at NO ES NULO, creado_at DESC, id DESC",
     "Collega": "Conectar",
@@ -1670,8 +1605,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Conferma PIN": "Confirmar PIN",
     "Conferma riconciliazione": "Confirmar conciliación",
     "Confermato": "Confirmado",
-    "Confermato = ricorrenza configurata. Previsto = pattern storico ad alta confidenza. Stimato = comportamento aggregato, non un evento certo.":
-        "Confirmado = recurrencia configurada. Esperado = patrón histórico de alta confianza. Estimado = comportamiento agregado, no un evento determinado.",
+    "Confermato = ricorrenza configurata. Previsto = pattern storico ad alta confidenza. Stimato = comportamento aggregato, non un evento certo.": "Confirmado = recurrencia configurada. Esperado = patrón histórico de alta confianza. Estimado = comportamiento agregado, no un evento determinado.",
     "Configura": "Configurar",
     "Configura conto e categoria": "Configurar cuenta y categoría",
     "Configura Balyn": "Configurar Balyn",
@@ -1691,8 +1625,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Conti": "Cuentas",
     "Conti inclusi": "Cuentas incluidas",
     "Conti non trovati": "Cuentas no encontradas",
-    "Conti, movimenti, categorie, budget, obiettivi, regole e apprendimento locale verranno eliminati. Crea prima un backup se vuoi conservarli.":
-        "Se eliminarán cuentas, ingresos, categorías, presupuestos, objetivos, reglas y aprendizaje local. Primero cree una copia de seguridad si desea conservarlas.",
+    "Conti, movimenti, categorie, budget, obiettivi, regole e apprendimento locale verranno eliminati. Crea prima un backup se vuoi conservarli.": "Se eliminarán cuentas, ingresos, categorías, presupuestos, objetivos, reglas y aprendizaje local. Primero cree una copia de seguridad si desea conservarlas.",
     "Continua": "Continuar",
     "Conto": "cuenta",
     "Conto (es. Revolut)": "Cuenta (por ejemplo, Revolut)",
@@ -1736,8 +1669,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Crea primo conto": "Crear primera cuenta",
     "Crea regola": "Crear regla",
     "Crea ricorrenza": "Crear aniversario",
-    "Crea scorciatoie per i movimenti che inserisci spesso.":
-        "Cree accesos directos para las transacciones que ingresa con frecuencia.",
+    "Crea scorciatoie per i movimenti che inserisci spesso.": "Cree accesos directos para las transacciones que ingresa con frecuencia.",
     "Crea un conto oppure registra un movimento come Non assegnato.":
         "Cree una cuenta o registre una transacción como No asignada.",
     "Crea un limite in Pianifica": "Crear un límite en Horario",
@@ -1766,22 +1698,19 @@ generatedTranslations = <String, Map<String, String>>{
     "Da ricevere": "Para ser recibido",
     "Da saldare": "a pagar",
     "BalynBalanceWidgetProvider": "BalynBalanceWidgetProvider",
-    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
-        "Balyn no envía transacciones, recibos, descripciones o patrones a servicios externos.",
+    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.": "Balyn no envía transacciones, recibos, descripciones o patrones a servicios externos.",
     "Balyn non riceve né memorizza dati biometrici.":
         "Balyn no recibe ni almacena datos biométricos.",
     "Balyn non richiede un account e non integra pubblicità, ":
         "Balyn no requiere una cuenta y no integra publicidad,",
     "Balyn sulla Home": "Balyn en Inicio",
-    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
-        "Balyn utiliza programación local y limita los duplicados. Las recurrencias automáticas aún se concilian cuando se abre la aplicación.",
+    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.": "Balyn utiliza programación local y limita los duplicados. Las recurrencias automáticas aún se concilian cuando se abre la aplicación.",
     "Balyn · Importi rapidi": "Balyn · Montos rápidos",
     "Balyn · Quick Capture": "Balyn · Captura Rápida",
     "Balyn · Rapido": "Balyn · Rápido",
     "Balyn · Riepilogo": "Balyn · Resumen",
     "Balyn è bloccata": "Balyn está bloqueado",
-    "Balyn è progettata local-first. Movimenti, conti, categorie, ":
-        "Balyn está diseñado pensando primero en lo local. transacciones, cuentas, categorías,",
+    "Balyn è progettata local-first. Movimenti, conti, categorie, ": "Balyn está diseñado pensando primero en lo local. transacciones, cuentas, categorías,",
     "BalynBackup": "BalynBackup",
     "Dai un nome ai risparmi che vuoi costruire.":
         "Nombra los ahorros que deseas generar.",
@@ -1803,15 +1732,13 @@ generatedTranslations = <String, Map<String, String>>{
     "Dati locali, permessi, backup e servizi di sistema":
         "Datos locales, permisos, copias de seguridad y servicios del sistema.",
     "Dati sul dispositivo": "Datos en el dispositivo",
-    "Dati, PIN e preferenze restano locali. Nessun account o server è coinvolto.":
-        "Los datos, el PIN y las preferencias siguen siendo locales. Ninguna cuenta ni servidor se ve afectado.",
+    "Dati, PIN e preferenze restano locali. Nessun account o server è coinvolto.": "Los datos, el PIN y las preferencias siguen siendo locales. Ninguna cuenta ni servidor se ve afectado.",
     "dd MMM": "mmmm",
     "dd MMM yy": "dd MMM aa",
     "dd MMM yyyy": "dd MMM aaaa",
     "dd MMMM yyyy, HH:mm": "dd MMMM aaaa, HH:mm",
     "dd/MM/yyyy HH:mm": "dd/MM/aaaa HH:mm",
-    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.":
-        "Defina una cifra y, si quiere, una fecha: Balyn estimará un ritmo sostenible.",
+    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.": "Defina una cifra y, si quiere, una fecha: Balyn estimará un ritmo sostenible.",
     "dei trasferimenti": "de transferencias",
     "delle entrate": "de ingresos",
     "delle spese": "de gastos",
@@ -1829,32 +1756,27 @@ generatedTranslations = <String, Map<String, String>>{
     "Devo restituire dei soldi": "tengo que devolver algo de dinero",
     "Devo ricevere dei soldi": "tengo que conseguir algo de dinero",
     "Disattiva": "Desactivar",
-    "Disattiva per movimenti eccezionali che non vuoi nelle analisi.":
-        "Desactívelo para transacciones excepcionales que no desee en sus análisis.",
+    "Disattiva per movimenti eccezionali che non vuoi nelle analisi.": "Desactívelo para transacciones excepcionales que no desee en sus análisis.",
     "Disattivate": "Desactivar",
     "Disattivato": "Desactivado",
-    "Disinstallando l’app vengono rimossi i dati conservati nello ":
-        "La desinstalación de la aplicación elimina los datos almacenados en ella.",
+    "Disinstallando l’app vengono rimossi i dati conservati nello ": "La desinstalación de la aplicación elimina los datos almacenados en ella.",
     "Disponibile": "Disponible",
     "Disponibile da spendere": "Disponible para gastar",
     "Dividi movimento": "Transacción dividida",
     "Divisione": "División",
     "Domenica": "domingo",
     "Donazione": "Donación",
-    "Dopo alcuni movimenti coerenti compariranno qui le abitudini riconosciute.":
-        "Después de algunas transacciones consistentes, los hábitos reconocidos aparecerán aquí.",
+    "Dopo alcuni movimenti coerenti compariranno qui le abitudini riconosciute.": "Después de algunas transacciones consistentes, los hábitos reconocidos aparecerán aquí.",
     "Dove stai spendendo": "donde estas gastando",
     "Duplica": "Duplicar",
-    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.":
-        "Durante la configuración, puede elegir si desea mostrar el saldo y los montos. \"Ocultar saldos\" en la aplicación todavía prevalece y oscurece los widgets.",
+    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.": "Durante la configuración, puede elegir si desea mostrar el saldo y los montos. \"Ocultar saldos\" en la aplicación todavía prevalece y oscurece los widgets.",
     "EEE d MMM": "EEE dMMM",
     "EEE dd MMM yy": "EEE dd MMM aa",
     "Elettricità": "Electricidad",
     "Elimina": "Eliminar",
     "Elimina conto": "Eliminar cuenta",
     "Elimina pattern": "Eliminar patrón",
-    "Elimina prima i rimborsi/restituzioni registrati per annullare l’anticipo.":
-        "Elimine primero los reembolsos/devoluciones publicados para cancelar el anticipo.",
+    "Elimina prima i rimborsi/restituzioni registrati per annullare l’anticipo.": "Elimine primero los reembolsos/devoluciones publicados para cancelar el anticipo.",
     "Elimina se vuoto": "Eliminar si está vacío",
     "Eliminare il movimento?": "¿Eliminar transacción?",
     "Eliminare questo rimborso?": "¿Eliminar este reembolso?",
@@ -1881,14 +1803,12 @@ generatedTranslations = <String, Map<String, String>>{
     "Escursione": "Excursión",
     "Esempio: descrizione contiene LIDL → Alimentari.":
         "Ejemplo: la descripción contiene LIDL → Comida.",
-    "esplicitamente l’operazione e scegli una destinazione. I backup ":
-        "la operación explícitamente y elegir un destino. las copias de seguridad",
+    "esplicitamente l’operazione e scegli una destinazione. I backup ": "la operación explícitamente y elegir un destino. las copias de seguridad",
     "Esporta lo storico di questo conto":
         "Exportar el historial de esta cuenta",
     "Esporta movimenti": "Transacciones de exportación",
     "Esporta movimenti CSV": "Exportar transacciones CSV",
-    "Fallback opzionale. La privacy dipende dal servizio vocale configurato sul dispositivo.":
-        "Respaldo opcional. La privacidad depende del servicio de voz configurado en su dispositivo.",
+    "Fallback opzionale. La privacy dipende dal servizio vocale configurato sul dispositivo.": "Respaldo opcional. La privacidad depende del servicio de voz configurado en su dispositivo.",
     "Fallback semplice da 4 a 8 cifre.": "Respaldo simple de 4 a 8 dígitos.",
     "Famiglia": "familia",
     "Famiglia e social": "Familiar y social",
@@ -1950,8 +1870,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Las transacciones ya clasificadas no cambiarán.",
     "I movimenti già registrati resteranno invariati.":
         "las transacciones ya registradas permanecerán sin cambios.",
-    "I pattern sono ricavati dai tuoi movimenti. Puoi disattivarli, convertirli in regole esplicite o eliminarli senza modificare lo storico.":
-        "Los patrones se derivan de sus transacciones. Puedes desactivarlas, convertirlas en reglas explícitas o eliminarlas sin cambiar el historial.",
+    "I pattern sono ricavati dai tuoi movimenti. Puoi disattivarli, convertirli in regole esplicite o eliminarli senza modificare lo storico.": "Los patrones se derivan de sus transacciones. Puedes desactivarlas, convertirlas en reglas explícitas o eliminarlas sin cambiar el historial.",
     "I saldi dei conti verranno ricalcolati automaticamente.":
         "Los saldos de las cuentas se recalcularán automáticamente.",
     "I widget di questa sezione sono disponibili su Android.":
@@ -1969,16 +1888,13 @@ generatedTranslations = <String, Map<String, String>>{
     "Il conto è bloccato.": "La cuenta está bloqueada.",
     "Il conto è vuoto e può essere eliminato in sicurezza.":
         "La cuenta está vacía y se puede eliminar de forma segura.",
-    "Il conto è vuoto. Eventuali riferimenti in preset e obiettivi verranno scollegati in sicurezza.":
-        "La cuenta está vacía. Cualquier referencia en ajustes preestablecidos y objetivos se desconectará de forma segura.",
+    "Il conto è vuoto. Eventuali riferimenti in preset e obiettivi verranno scollegati in sicurezza.": "La cuenta está vacía. Cualquier referencia en ajustes preestablecidos y objetivos se desconectará de forma segura.",
     "Il CSV deve contenere almeno type, amount, date e account.":
         "El CSV debe contener al menos tipo, monto, fecha y cuenta.",
     "Il database ripristinato non supera il controllo integrità.":
         "La base de datos restaurada no pasa la verificación de integridad.",
-    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.":
-        "El iniciador no admite la adición automática. Mantenga presionado Inicio → Widget → Balyn.",
-    "Il microfono compila Nuovo movimento ma non salva mai automaticamente.":
-        "El micrófono compila una nueva transacción pero nunca la guarda automáticamente.",
+    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.": "El iniciador no admite la adición automática. Mantenga presionado Inicio → Widget → Balyn.",
+    "Il microfono compila Nuovo movimento ma non salva mai automaticamente.": "El micrófono compila una nueva transacción pero nunca la guarda automáticamente.",
     "Il movimento ha una direzione incompatibile.":
         "La transacción tiene una dirección incompatible.",
     "Il movimento supera il residuo dell’anticipo.":
@@ -1987,28 +1903,21 @@ generatedTranslations = <String, Map<String, String>>{
         "El permiso de micrófono no está disponible.",
     "Il PIN deve contenere da 4 a 8 cifre.":
         "El PIN debe contener de 4 a 8 dígitos.",
-    "Il preset verrà rimosso. I movimenti già registrati non cambieranno.":
-        "Se eliminará el ajuste preestablecido. Las transacciones ya registradas no cambiarán.",
+    "Il preset verrà rimosso. I movimenti già registrati non cambieranno.": "Se eliminará el ajuste preestablecido. Las transacciones ya registradas no cambiarán.",
     "Il recognizer di sistema non è disponibile offline.":
         "El reconocedor del sistema no está disponible sin conexión.",
-    "Il riconoscimento vocale offline non è disponibile su questo dispositivo.":
-        "El reconocimiento de voz sin conexión no está disponible en este dispositivo.",
-    "Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.":
-        "El resumen principal permanece fijo en la parte superior. Reactiva las secciones que quieras ver aquí.",
+    "Il riconoscimento vocale offline non è disponibile su questo dispositivo.": "El reconocimiento de voz sin conexión no está disponible en este dispositivo.",
+    "Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.": "El resumen principal permanece fijo en la parte superior. Reactiva las secciones que quieras ver aquí.",
     "Il saldo contribuisce al patrimonio totale":
         "El saldo contribuye al activo total.",
-    "Il saldo del conto e il residuo dell’anticipo verranno ripristinati automaticamente.":
-        "El saldo de la cuenta y el saldo del anticipo se restablecerán automáticamente.",
+    "Il saldo del conto e il residuo dell’anticipo verranno ripristinati automaticamente.": "El saldo de la cuenta y el saldo del anticipo se restablecerán automáticamente.",
     "Il saldo del conto verrà ricalcolato automaticamente.":
         "El saldo de su cuenta se volverá a calcular automáticamente.",
-    "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.":
-        "El sistema reconoce hábitos con estadísticas locales y reglas explicables. No utiliza IA ni nube.",
-    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.":
-        "El texto reconocido es interpretado localmente por un analizador determinista. No se envía al servidor de Balyn.",
+    "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.": "El sistema reconoce hábitos con estadísticas locales y reglas explicables. No utiliza IA ni nube.",
+    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.": "El texto reconocido es interpretado localmente por un analizador determinista. No se envía al servidor de Balyn.",
     "Il trasferimento deve arrivare al conto collegato all’obiettivo.":
         "La transferencia debe llegar a la cuenta vinculada a la meta.",
-    "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.":
-        "La transferencia requiere dos cuentas activas diferentes antes de crear un suceso.",
+    "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.": "La transferencia requiere dos cuentas activas diferentes antes de crear un suceso.",
     "Immediato": "Inmediato",
     "Impedisce nuovi movimenti sul conto":
         "Evita nuevas transacciones en la cuenta.",
@@ -2030,8 +1939,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Imposta limiti giornalieri, settimanali, mensili o annuali.":
         "Establece límites diarios, semanales, mensuales o anuales.",
     "Imposta PIN locale": "Establecer PIN local",
-    "Imposta un limite per sapere quanto puoi ancora spendere nel periodo.":
-        "Establece un límite para ver cuánto puedes gastar todavía durante el período.",
+    "Imposta un limite per sapere quanto puoi ancora spendere nel periodo.": "Establece un límite para ver cuánto puedes gastar todavía durante el período.",
     "Imposta un limite per sapere quanto puoi ancora spendere.":
         "Establece un límite para ver cuánto puedes gastar todavía.",
     "Impostazioni": "Configuración",
@@ -2074,12 +1982,10 @@ generatedTranslations = <String, Map<String, String>>{
     "La mia parte": "mi parte",
     "La posizione verrà chiusa come annullata.":
         "La posición se cerrará como cancelada.",
-    "La previsione di fine mese è sotto la soglia che hai impostato. Apri Pianifica per i dettagli.":
-        "El pronóstico de fin de mes está por debajo del umbral que usted estableció. Horario abierto para más detalles.",
+    "La previsione di fine mese è sotto la soglia che hai impostato. Apri Pianifica per i dettagli.": "El pronóstico de fin de mes está por debajo del umbral que usted estableció. Horario abierto para más detalles.",
     "La quota anticipata deve essere maggiore di 0 e minore o uguale al totale.":
         "La cuota del anticipo debe ser mayor que 0 y menor o igual al total.",
-    "La stima comportamentale è comunque inclusa nel saldo previsto sopra.":
-        "Sin embargo, la estimación del comportamiento se incluye en la previsión de saldo anterior.",
+    "La stima comportamentale è comunque inclusa nel saldo previsto sopra.": "Sin embargo, la estimación del comportamiento se incluye en la previsión de saldo anterior.",
     "La tua parte e la quota anticipata devono coincidere con il totale.":
         "Su parte y la tarifa inicial deben coincidir con el total.",
     "Lascia vuoto per un backup non cifrato.":
@@ -2090,12 +1996,10 @@ generatedTranslations = <String, Map<String, String>>{
     "Lavoro e formazione": "Trabajo y formación",
     "Le categorie compariranno qui quando registri movimenti.":
         "Las categorías aparecerán aquí cuando registre transacciones.",
-    "Le metriche principali restano in alto. Riattiva altri widget dalla personalizzazione Home.":
-        "Las métricas clave permanecen en la cima. Vuelva a habilitar otros widgets desde el personalizador de Inicio.",
+    "Le metriche principali restano in alto. Riattiva altri widget dalla personalizzazione Home.": "Las métricas clave permanecen en la cima. Vuelva a habilitar otros widgets desde el personalizador de Inicio.",
     "Le notifiche possono essere disattivate in qualsiasi momento.":
         "Las notificaciones se pueden desactivar en cualquier momento.",
-    "Le persone servono solo per organizzare gli anticipi e restano sul dispositivo.":
-        "Las personas sólo sirven para organizar los avances y permanecer en el dispositivo.",
+    "Le persone servono solo per organizzare gli anticipi e restano sul dispositivo.": "Las personas sólo sirven para organizar los avances y permanecer en el dispositivo.",
     "Libri": "Libros",
     "Limite": "Límite",
     "Lingua": "Idioma",
@@ -2118,8 +2022,7 @@ generatedTranslations = <String, Map<String, String>>{
         "La lente conectada ya no está disponible.",
     "L’obiettivo non ha un conto collegato.":
         "El objetivo no tiene una cuenta vinculada.",
-    "L’obiettivo verrà eliminato. Conti e movimenti non saranno modificati.":
-        "El objetivo será eliminado. Las cuentas y transacciones no serán modificadas.",
+    "L’obiettivo verrà eliminato. Conti e movimenti non saranno modificati.": "El objetivo será eliminado. Las cuentas y transacciones no serán modificadas.",
     "Mai riconciliato": "Nunca reconciliado",
     "Manifest backup non leggibile.":
         "La copia de seguridad del manifiesto no se puede leer.",
@@ -2171,8 +2074,7 @@ generatedTranslations = <String, Map<String, String>>{
     "movimenti da assegnare": "transacciones para asignar",
     "Movimenti del conto esportati.": "Transacciones de cuentas exportadas.",
     "Movimenti recenti": "Transacciones recientes",
-    "Movimenti, split, budget, regole e apprendimento verranno spostati nella categoria scelta.":
-        "Las transacciones, divisiones, presupuestos, reglas y aprendizaje se moverán a la categoría elegida.",
+    "Movimenti, split, budget, regole e apprendimento verranno spostati nella categoria scelta.": "Las transacciones, divisiones, presupuestos, reglas y aprendizaje se moverán a la categoría elegida.",
     "Movimento": "Transacción",
     "Movimento aggiornato.": "Transacción actualizada.",
     "Movimento collegato non trovato.": "Movimiento vinculado no encontrado.",
@@ -2268,8 +2170,7 @@ generatedTranslations = <String, Map<String, String>>{
         "No está claro qué cuentas utilizar para la transferencia.",
     "Non è questo": "no es esto",
     "Nota opzionale": "Nota opcional",
-    "note, obiettivi, budget, regole e Smart Suggestions vengono ":
-        "notas, objetivos, presupuestos, reglas y sugerencias inteligentes vienen",
+    "note, obiettivi, budget, regole e Smart Suggestions vengono ": "notas, objetivos, presupuestos, reglas y sugerencias inteligentes vienen",
     "Notifica domani": "Notificación mañana",
     "Notifica oggi": "Notificar hoy",
     "Notifica scaduta": "Notificación caducada",
@@ -2287,8 +2188,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Nuovo budget": "Nuevo presupuesto",
     "Nuovo conto": "Nueva cuenta",
     "Nuovo movimento": "Nueva transacción",
-    "Nuovo movimento. Tieni premuto per preset e scorciatoie.":
-        "Nueva transacción. Mantenga presionado para acceder a ajustes preestablecidos y accesos directos.",
+    "Nuovo movimento. Tieni premuto per preset e scorciatoie.": "Nueva transacción. Mantenga presionado para acceder a ajustes preestablecidos y accesos directos.",
     "Nuovo obiettivo": "Nuevo objetivo",
     "Nuovo preset": "Nuevo preajuste",
     "Nuovo trasferimento": "Nueva transferencia",
@@ -2298,10 +2198,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Obiettivo da rivedere": "Objetivo a revisar",
     "Obiettivo non trovato.": "Objetivo no encontrado.",
     "Oggi": "hoy",
-    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.":
-        "Cada instancia puede tener su propia configuración. El widget siempre abre Quick Add: ningún toque registra dinero sin su confirmación.",
-    "Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add.":
-        "Cada widget mantiene su propia configuración. La aplicación verifica los nombres de cuenta y categoría cuando abre Quick Add.",
+    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.": "Cada instancia puede tener su propia configuración. El widget siempre abre Quick Add: ningún toque registra dinero sin su confirmación.",
+    "Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add.": "Cada widget mantiene su propia configuración. La aplicación verifica los nombres de cuenta y categoría cuando abre Quick Add.",
     "Operazione irreversibile dopo la conferma.":
         "Funcionamiento irreversible tras la confirmación.",
     "Ora": "Ahora",
@@ -2317,10 +2215,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Parrucchiere": "peluquero",
     "Parser locale · on-device quando disponibile":
         "Analizador local · en el dispositivo cuando esté disponible",
-    "Parti dal primo conto oppure registra subito un movimento e assegnalo in seguito.":
-        "Comience desde la primera cuenta o registre una transacción inmediatamente y asígnela más tarde.",
-    "Parti dal primo conto oppure registra subito un movimento.":
-        "Comience desde la primera cuenta o registre una transacción inmediatamente.",
+    "Parti dal primo conto oppure registra subito un movimento e assegnalo in seguito.": "Comience desde la primera cuenta o registre una transacción inmediatamente y asígnela más tarde.",
+    "Parti dal primo conto oppure registra subito un movimento.": "Comience desde la primera cuenta o registre una transacción inmediatamente.",
     "Parzialmente regolato": "Parcialmente regulado",
     "Password": "Contraseñas",
     "Password backup": "Copia de seguridad de contraseña",
@@ -2330,18 +2226,14 @@ generatedTranslations = <String, Map<String, String>>{
     "Patrimonio corrente": "Activos corrientes",
     "Patrimonio incluso nel totale": "Patrimonio incluido en el total",
     "Patrimonio netto": "patrimonio neto",
-    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.":
-        "Activos, Ingresos, Gastos y Disponibles permanecen fijos en la parte superior, por encima de las acciones rápidas. Aquí puede mostrar, ocultar, cambiar el tamaño y reordenar las secciones posteriores.",
-    "Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.":
-        "Se eliminarán patrones, retroalimentación y supresión. Las transacciones permanecerán sin cambios y el sistema podrá aprender nuevamente.",
+    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.": "Activos, Ingresos, Gastos y Disponibles permanecen fijos en la parte superior, por encima de las acciones rápidas. Aquí puede mostrar, ocultar, cambiar el tamaño y reordenar las secciones posteriores.",
+    "Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.": "Se eliminarán patrones, retroalimentación y supresión. Las transacciones permanecerán sin cambios y el sistema podrá aprender nuevamente.",
     "Pedaggio": "peaje",
     "Per assegnare una categoria la regola deve avere un tipo compatibile.":
         "Para asignar una categoría la regla debe tener un tipo compatible.",
-    "Per assegnare una categoria la regola deve avere un tipo Spesa o Entrata.":
-        "Para asignar una categoría la regla debe tener un tipo de Gasto o Ingreso.",
+    "Per assegnare una categoria la regola deve avere un tipo Spesa o Entrata.": "Para asignar una categoría la regla debe tener un tipo de Gasto o Ingreso.",
     "Per conto": "en nombre",
-    "Per proteggere lo storico finanziario un conto con movimenti o ricorrenze non viene eliminato. Puoi archiviarlo e continuare a consultare i dati.":
-        "Para proteger el historial financiero, una cuenta con transacciones o recurrencias no se elimina. Podrás archivarlo y seguir consultando los datos.",
+    "Per proteggere lo storico finanziario un conto con movimenti o ricorrenze non viene eliminato. Puoi archiviarlo e continuare a consultare i dati.": "Para proteger el historial financiero, una cuenta con transacciones o recurrencias no se elimina. Podrás archivarlo y seguir consultando los datos.",
     "Per te": "para ti",
     "Periodo precedente": "Periodo anterior",
     "Periodo successivo": "Período posterior",
@@ -2401,8 +2293,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Previsioni e calendario": "Previsión y calendario",
     "Previsto": "esperado",
     "Previsto da abitudini": "Esperado por hábitos",
-    "Prima del ripristino viene creato un safety backup temporaneo. Se il controllo integrità fallisce, i dati attuali vengono ripristinati.":
-        "Antes de la restauración, se crea una copia de seguridad temporal. Si la verificación de integridad falla, se restauran los datos actuales.",
+    "Prima del ripristino viene creato un safety backup temporaneo. Se il controllo integrità fallisce, i dati attuali vengono ripristinati.": "Antes de la restauración, se crea una copia de seguridad temporal. Si la verificación de integridad falla, se restauran los datos actuales.",
     "Primo giorno settimana": "Primer día de la semana",
     "Principio di base": "Principio básico",
     "Privacy": "Privacidad",
@@ -2432,24 +2323,19 @@ generatedTranslations = <String, Map<String, String>>{
         "Intente cambiar su búsqueda o filtros.",
     "Prova regola": "Pruebe la regla",
     "Pulizie": "limpieza",
-    "Puoi avere, per esempio, un widget Revolut/Bar e un altro Contanti/Benzina con importi diversi.":
-        "Puedes tener, por ejemplo, un widget de Revolut/Bar y otro de Cash/Petrol con diferentes importes.",
+    "Puoi avere, per esempio, un widget Revolut/Bar e un altro Contanti/Benzina con importi diversi.": "Puedes tener, por ejemplo, un widget de Revolut/Bar y otro de Cash/Petrol con diferentes importes.",
     "Puoi cambiarla in qualsiasi momento":
         "Puedes cambiarlo en cualquier momento.",
     "Puoi cancellare i dati finanziari locali dalle impostazioni. ":
         "Puede borrar los datos financieros locales desde la configuración.",
-    "Puoi creare il primo conto oppure registrare subito un movimento come Non assegnato.":
-        "Puede crear su primera cuenta o registrar inmediatamente una transacción como No asignada.",
-    "Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.":
-        "Puede ser una parte o la totalidad del importe. Sólo se contabilizará tu parte en gastos, categorías y presupuestos.",
+    "Puoi creare il primo conto oppure registrare subito un movimento come Non assegnato.": "Puede crear su primera cuenta o registrar inmediatamente una transacción como No asignada.",
+    "Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.": "Puede ser una parte o la totalidad del importe. Sólo se contabilizará tu parte en gastos, categorías y presupuestos.",
     "Quale categoria intendevi?": "¿A qué categoría te refieres?",
     "Quale conto intendevi?": "¿A qué cuenta te refieres?",
     "Qualsiasi": "Cualquiera",
     "Qualsiasi tipo": "cualquier tipo",
-    "Questa categoria è usata in una divisione di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.":
-        "Esta categoría se utiliza en una división de gastos. Para evitar perder la clasificación, combínela primero en otra categoría.",
-    "Questa persona ha anticipi ancora aperti. Chiudili prima di archiviarla.":
-        "Esta persona tiene avances aún abiertos. Ciérrelos antes de archivarlo.",
+    "Questa categoria è usata in una divisione di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.": "Esta categoría se utiliza en una división de gastos. Para evitar perder la clasificación, combínela primero en otra categoría.",
+    "Questa persona ha anticipi ancora aperti. Chiudili prima di archiviarla.": "Esta persona tiene avances aún abiertos. Ciérrelos antes de archivarlo.",
     "Questa regola corrisponde a 1 movimento.":
         "Esta regla corresponde a 1 transacción.",
     "Questa spesa include un anticipo": "Este gasto incluye un anticipo.",
@@ -2512,8 +2398,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Righe valide": "Filas válidas",
     "Rileva ricorrenze": "Detectar recurrencias",
     "Rilevate dalle tue abitudini": "Detectado por tus hábitos",
-    "Rimane qui. Se continui a parlare, aggiorno la frase; usa ↻ per ricominciare da zero.":
-        "Se queda aquí. Si sigues hablando, actualizaré la frase; use ↻ para comenzar desde cero.",
+    "Rimane qui. Se continui a parlare, aggiorno la frase; usa ↻ per ricominciare da zero.": "Se queda aquí. Si sigues hablando, actualizaré la frase; use ↻ para comenzar desde cero.",
     "Rimborso": "Reembolso",
     "Rimborso collegato": "Reembolso vinculado",
     "Rimborso non trovato.": "Reembolso no encontrado.",
@@ -2615,8 +2500,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Scuro": "oscuro",
     "Se contiene storico potrai archiviarlo invece di eliminarlo":
         "Si contiene historial, puedes archivarlo en lugar de eliminarlo.",
-    "Se è un anticipo puro, il movimento di cassa originale verrà annullato. Le spese miste restano come acquisto personale.":
-        "Si se trata de un adelanto puro, se cancelará la transacción en efectivo original. Los gastos mixtos quedan como compras personales.",
+    "Se è un anticipo puro, il movimento di cassa originale verrà annullato. Le spese miste restano come acquisto personale.": "Si se trata de un adelanto puro, se cancelará la transacción en efectivo original. Los gastos mixtos quedan como compras personales.",
     "Segnali": "Señales",
     "Segnali deboli: rafforzano una previsione, non la creano da soli.":
         "Señales débiles: refuerzan una predicción, no la crean ellos mismos.",
@@ -2627,10 +2511,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Senza categoria": "Sin categoría",
     "Separata dall’app": "Separado de la aplicación",
     "Servizi cloud": "Servicios en la nube",
-    "Servono almeno 3 settimane di storico utile per un consiglio realistico.":
-        "Se necesitan al menos 3 semanas de antecedentes útiles para obtener consejos realistas.",
-    "Servono almeno due categorie di spesa per dividere il movimento.":
-        "Se necesitan al menos dos categorías de gasto para dividir la transacción.",
+    "Servono almeno 3 settimane di storico utile per un consiglio realistico.": "Se necesitan al menos 3 semanas de antecedentes útiles para obtener consejos realistas.",
+    "Servono almeno due categorie di spesa per dividere il movimento.": "Se necesitan al menos dos categorías de gasto para dividir la transacción.",
     "Servono più dati": "Se necesitan más datos",
     "Servono più dati per confrontare il periodo precedente.":
         "Se necesitan más datos para comparar el período anterior.",
@@ -2653,13 +2535,11 @@ generatedTranslations = <String, Map<String, String>>{
         "Sólo cuando la situación cambie materialmente.",
     "Solo sul dispositivo": "Sólo en el dispositivo",
     "Sorriso": "Sonrisa",
-    "spazio privato dell’app; eventuali backup o CSV esportati restano ":
-        "espacio privado de la aplicación; cualquier copia de seguridad o CSV exportado permanece",
+    "spazio privato dell’app; eventuali backup o CSV esportati restano ": "espacio privado de la aplicación; cualquier copia de seguridad o CSV exportado permanece",
     "Spesa": "Gasto",
     "Spesa comportamentale stimata": "Gasto comportamental estimado",
     "Spesa registrata.": "Gasto registrado.",
-    "Spesa, entrata, trasferimento e voce dalla schermata Home":
-        "Gastos, ingresos, transferencias e ingresos desde la pantalla de Inicio",
+    "Spesa, entrata, trasferimento e voce dalla schermata Home": "Gastos, ingresos, transferencias e ingresos desde la pantalla de Inicio",
     "Spese": "Gastos",
     "Spese del mese": "gastos del mes",
     "Spese della settimana": "Gastos de la semana",
@@ -2674,8 +2554,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Stipendio": "Salario",
     "Streaming": "Transmisión",
     "Studio": "estudiar",
-    "Su Android impedisce screenshot e anteprima dell’app nelle schermate recenti.":
-        "En Android, evita capturas de pantalla y vistas previas de aplicaciones en pantallas recientes.",
+    "Su Android impedisce screenshot e anteprima dell’app nelle schermate recenti.": "En Android, evita capturas de pantalla y vistas previas de aplicaciones en pantallas recientes.",
     "Suggerimenti automatici": "Sugerencias automáticas",
     "Suggerimenti obiettivi": "Sugerencias objetivas",
     "Supermercato": "supermercado",
@@ -2690,15 +2569,11 @@ generatedTranslations = <String, Map<String, String>>{
     "Ti suggerisco": "te sugiero",
     "Tipo": "Me gusta",
     "Tipo predefinito": "Tipo predeterminado",
-    "Tocca per creare un anticipo. Tieni premuto per le scorciatoie.":
-        "Toque para crear un avance. Mantenga presionado para acceder a atajos.",
-    "Tocca per una nuova spesa. Tieni premuto per preset e scorciatoie.":
-        "Toca para ver un nuevo gasto. Mantenga presionado para acceder a ajustes preestablecidos y accesos directos.",
-    "Tocca un preset per aprire il movimento già compilato.":
-        "Toque un ajuste preestablecido para abrir la transacción ya compilada.",
+    "Tocca per creare un anticipo. Tieni premuto per le scorciatoie.": "Toque para crear un avance. Mantenga presionado para acceder a atajos.",
+    "Tocca per una nuova spesa. Tieni premuto per preset e scorciatoie.": "Toca para ver un nuevo gasto. Mantenga presionado para acceder a ajustes preestablecidos y accesos directos.",
+    "Tocca un preset per aprire il movimento già compilato.": "Toque un ajuste preestablecido para abrir la transacción ya compilada.",
     "Top tag": "Etiquetas principales",
-    "Torta Spese/Entrate con periodo scorrevole e intervallo personalizzato.":
-        "Pastel de gastos/ingresos con período móvil e intervalo personalizado.",
+    "Torta Spese/Entrate con periodo scorrevole e intervallo personalizzato.": "Pastel de gastos/ingresos con período móvil e intervalo personalizado.",
     "Totale": "totales",
     "Trasferimenti": "Transferencias",
     "Trasferimenti nelle statistiche": "Transferencias en estadísticas",
@@ -2737,8 +2612,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Usa da 4 a 8 cifre. Il PIN resta sul dispositivo.":
         "Utilice de 4 a 8 dígitos. El PIN permanece en el dispositivo.",
     "Usa descrizione": "Descripción de uso",
-    "Usa esclusivamente il riconoscimento offline/on-device quando Android lo supporta.":
-        "Utilice el reconocimiento en el dispositivo o sin conexión únicamente cuando Android lo admita.",
+    "Usa esclusivamente il riconoscimento offline/on-device quando Android lo supporta.": "Utilice el reconocimiento en el dispositivo o sin conexión únicamente cuando Android lo admita.",
     "Usa giorno e orario": "Usar día y hora",
     "usa i contatti pubblicati su www.ddone.it.":
         "utilizar los contactos publicados en www.ddone.it.",
@@ -2746,11 +2620,9 @@ generatedTranslations = <String, Map<String, String>>{
         "Utilice transacciones de cuentas en análisis",
     "Usa il conto collegato all’obiettivo come destinazione.":
         "Utilice la cuenta vinculada a la meta como destino.",
-    "Usa il pulsante + per registrare una spesa o un’entrata: analisi e previsioni nasceranno dai tuoi dati reali.":
-        "Utiliza el botón + para registrar un gasto o un ingreso: los análisis y previsiones surgirán de tus datos reales.",
+    "Usa il pulsante + per registrare una spesa o un’entrata: analisi e previsioni nasceranno dai tuoi dati reali.": "Utiliza el botón + para registrar un gasto o un ingreso: los análisis y previsiones surgirán de tus datos reales.",
     "Usa importo": "cantidad de uso",
-    "Usa impronta o biometria configurata nel dispositivo.":
-        "Utilice huella digital o datos biométricos configurados en el dispositivo.",
+    "Usa impronta o biometria configurata nel dispositivo.": "Utilice huella digital o datos biométricos configurados en el dispositivo.",
     "Usa la biometria del dispositivo per continuare.":
         "Utilice la biometría del dispositivo para continuar.",
     "Usa la previsione di fine mese e la tua soglia.":
@@ -2760,8 +2632,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Usa Non assegnato": "Usar no asignado",
     "Usa questo": "Usa esto",
     "Usa ultimo conto": "Usar la última cuenta",
-    "Usata per sbloccare l’app tramite le API di sistema. ":
-        "Se utiliza para desbloquear la aplicación a través de las API del sistema.",
+    "Usata per sbloccare l’app tramite le API di sistema. ": "Se utiliza para desbloquear la aplicación a través de las API del sistema.",
     "Usata solo quando scegli di acquisire una foto o ricevuta da ":
         "Se usa solo cuando eliges capturar una foto o recibirla de",
     "Usate per promemoria e avvisi locali configurati da te. ":
@@ -2775,8 +2646,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Variazione": "variación",
     "Vendita": "Venta",
     "Verifica…": "Comprobar…",
-    "Verrà registrato come rimborso/restituzione, non come entrata o spesa.":
-        "Se registrará como un reembolso/reembolso, no como un ingreso o gasto.",
+    "Verrà registrato come rimborso/restituzione, non come entrata o spesa.": "Se registrará como un reembolso/reembolso, no como un ingreso o gasto.",
     "Vestiti": "vestirse",
     "Viaggio": "viajar",
     "Vibrazione leggera su navigazione, azioni rapide e impostazioni.":
@@ -2798,8 +2668,7 @@ generatedTranslations = <String, Map<String, String>>{
     "È il segnale principale del modello locale.":
         "Es la principal señal del modelo local.",
     "È stato condonato": "fue tolerado",
-    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.":
-        "Es una estimación: parte de los activos gastables, resta los gastos recurrentes previstos hasta final de mes y mantiene una reserva prudencial para los objetivos. No es un saldo bancario garantizado.",
+    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.": "Es una estimación: parte de los activos gastables, resta los gastos recurrentes previstos hasta final de mes y mantiene una reserva prudencial para los objetivos. No es un saldo bancario garantizado.",
     "•••• da ricevere · •••• da restituire":
         "•••• para recibir · •••• para devolver",
   },
@@ -2836,16 +2705,12 @@ generatedTranslations = <String, Map<String, String>>{
         "Mises à jour non invasives des objectifs",
     "Aggiungi": "Ajouter",
     "Aggiungi ai preferiti": "Ajouter aux favoris",
-    "Aggiungi bollette, abbonamenti o stipendio per prevedere il saldo futuro.":
-        "Ajoutez des factures, des abonnements ou un salaire pour prédire votre solde futur.",
-    "Aggiungi bollette, abbonamenti, rate o entrate regolari.":
-        "Ajoutez des factures, des abonnements, des versements ou des revenus réguliers.",
+    "Aggiungi bollette, abbonamenti o stipendio per prevedere il saldo futuro.": "Ajoutez des factures, des abonnements ou un salaire pour prédire votre solde futur.",
+    "Aggiungi bollette, abbonamenti, rate o entrate regolari.": "Ajoutez des factures, des abonnements, des versements ou des revenus réguliers.",
     "Aggiungi dettagli": "Ajouter des détails",
     "Aggiungi entrata": "Ajouter un revenu",
-    "Aggiungi il conto che usi davvero o continua con movimenti Non assegnati.":
-        "Ajoutez le compte que vous utilisez réellement ou poursuivez les transactions non attribuées.",
-    "Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.":
-        "Ajoutez le compte que vous utilisez réellement ou poursuivez les transactions non attribuées.",
+    "Aggiungi il conto che usi davvero o continua con movimenti Non assegnati.": "Ajoutez le compte que vous utilisez réellement ou poursuivez les transactions non attribuées.",
+    "Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.": "Ajoutez le compte que vous utilisez réellement ou poursuivez les transactions non attribuées.",
     "Aggiungi Importi rapidi": "Ajouter des montants rapides",
     "Aggiungi movimento": "Ajouter une transaction",
     "Aggiungi parte": "Ajouter une pièce",
@@ -2877,8 +2742,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Performance des actifs sur la période sélectionnée",
     "Andamento patrimonio": "Performance des actifs",
     "Andamento saldo": "Tendance solide",
-    "Android può chiederti conferma e aprire la configurazione prima di posizionare il widget.":
-        "Android peut vous demander une confirmation et ouvrir la configuration avant de placer le widget.",
+    "Android può chiederti conferma e aprire la configurazione prima di posizionare il widget.": "Android peut vous demander une confirmation et ouvrir la configuration avant de placer le widget.",
     "Android secondo le regole di quel fornitore.":
         "Android selon les règles de ce fournisseur.",
     "Animali": "Animaux",
@@ -2910,8 +2774,7 @@ generatedTranslations = <String, Map<String, String>>{
     "AppScope not found": "AppScope introuvable",
     "Apre Balyn senza autenticazione.": "Ouvre Balyn sans authentification.",
     "Apri": "Ouvert",
-    "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
-        "Ouvrez les acomptes pour enregistrer un remboursement ou mettre à jour votre rappel.",
+    "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.": "Ouvrez les acomptes pour enregistrer un remboursement ou mettre à jour votre rappel.",
     "Apri conto": "Ouvrir un compte",
     "Apri il selettore widget del launcher e cerca Balyn.":
         "Ouvrez le sélecteur de widget du lanceur et recherchez Balyn.",
@@ -2966,8 +2829,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Backup Balyn non riconosciuto.": "Sauvegarde Balyn non reconnue.",
     "Backup non trovato.": "Sauvegarde introuvable.",
     "Backup ripristinato e verificato.": "Sauvegarde restaurée et vérifiée.",
-    "Backup, CSV e allegati vengono esportati solo quando avvii ":
-        "Les sauvegardes, CSV et pièces jointes ne sont exportées qu'au lancement",
+    "Backup, CSV e allegati vengono esportati solo quando avvii ": "Les sauvegardes, CSV et pièces jointes ne sont exportées qu'au lancement",
     "Backup, CSV e ripristino": "Sauvegarde, CSV et restauration",
     "Backup, import ed export": "Sauvegarde, importation et exportation",
     "Bad state: ": "Mauvais état :",
@@ -2986,8 +2848,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Biometria": "Biométrie",
     "Biometria non disponibile o non configurata sul dispositivo.":
         "Biométrie non disponible ou non configurée sur l'appareil.",
-    "Biometria o PIN · timeout · protezione screenshot":
-        "Biométrie ou code PIN · délai d'attente · protection contre les captures d'écran",
+    "Biometria o PIN · timeout · protezione screenshot": "Biométrie ou code PIN · délai d'attente · protection contre les captures d'écran",
     "Blocca conto": "Bloquer le compte",
     "Blocca dopo": "Bloquer plus tard",
     "Bloccato": "Bloqué",
@@ -3006,8 +2867,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Caffè, benzina, spesa e azioni personalizzate":
         "Café, essence, shopping et actions personnalisées",
     "Calcio": "Football",
-    "Calcola un ritmo realistico usando il tuo cash-flow storico.":
-        "Calculez un rythme réaliste en utilisant votre flux de trésorerie historique.",
+    "Calcola un ritmo realistico usando il tuo cash-flow storico.": "Calculez un rythme réaliste en utilisant votre flux de trésorerie historique.",
     "Calcoli rapidi: usa +  −  ×  ÷": "Calculs rapides : utilisez + − × ÷",
     "Calendario": "Calendrier",
     "Calendario finanziario": "Calendrier financier",
@@ -3024,8 +2884,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Cancellare l’apprendimento?": "Annuler l'apprentissage ?",
     "Cancellare tutti i dati?": "Supprimer toutes les données ?",
     "Cancelleria": "Papeterie",
-    "Carosello categorie. Scorri a destra o sinistra per passare tra Spese ed Entrate.":
-        "Catégories du carrousel. Faites glisser votre doigt vers la gauche ou la droite pour basculer entre les dépenses et les revenus.",
+    "Carosello categorie. Scorri a destra o sinistra per passare tra Spese ed Entrate.": "Catégories du carrousel. Faites glisser votre doigt vers la gauche ou la droite pour basculer entre les dépenses et les revenus.",
     "Carta": "Papier",
     "Casa": "Accueil",
     "Cash flow": "Flux de trésorerie",
@@ -3052,14 +2911,10 @@ generatedTranslations = <String, Map<String, String>>{
     "Chiudi scorciatoie": "Fermer les raccourcis",
     "Chiudi senza statistica": "Fermer sans statistiques",
     "Cinema": "Cinéma",
-    "Circa 2×1 · saldo compatto e accesso a Nuovo movimento. La visibilità del saldo è configurabile per istanza.":
-        "Environ 2 × 1 · solde compact et accès à une nouvelle transaction. La visibilité du solde est configurable par instance.",
-    "Circa 2×2 · Spesa, Entrata, Trasferisci e Voce. Conto e categoria possono essere preconfigurati.":
-        "Environ 2×2 · Dépenses, revenus, transferts et revenus. Le compte et la catégorie peuvent être préconfigurés.",
-    "Circa 4×2 · quattro importi personalizzati, conto, categoria, trasferimento e microfono.":
-        "Environ 4×2 · quatre montants personnalisés, compte, catégorie, virement et microphone.",
-    "Circa 4×2 · saldo e quattro categorie rapide. Le categorie seguono prima i quick slot e poi le preferite.":
-        "Environ 4×2 · équilibre et quatre catégories rapides. Les catégories suivent d'abord les machines à sous rapides, puis les favoris.",
+    "Circa 2×1 · saldo compatto e accesso a Nuovo movimento. La visibilità del saldo è configurabile per istanza.": "Environ 2 × 1 · solde compact et accès à une nouvelle transaction. La visibilité du solde est configurable par instance.",
+    "Circa 2×2 · Spesa, Entrata, Trasferisci e Voce. Conto e categoria possono essere preconfigurati.": "Environ 2×2 · Dépenses, revenus, transferts et revenus. Le compte et la catégorie peuvent être préconfigurés.",
+    "Circa 4×2 · quattro importi personalizzati, conto, categoria, trasferimento e microfono.": "Environ 4×2 · quatre montants personnalisés, compte, catégorie, virement et microphone.",
+    "Circa 4×2 · saldo e quattro categorie rapide. Le categorie seguono prima i quick slot e poi le preferite.": "Environ 4×2 · équilibre et quatre catégories rapides. Les catégories suivent d'abord les machines à sous rapides, puis les favoris.",
     "closed_at IS NOT NULL, created_at DESC, id DESC":
         "fermé_at N'EST PAS NULL, créé_at DESC, id DESC",
     "Collega": "Se connecter",
@@ -3093,8 +2948,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Conferma PIN": "Confirmer le code PIN",
     "Conferma riconciliazione": "Confirmer le rapprochement",
     "Confermato": "Confirmé",
-    "Confermato = ricorrenza configurata. Previsto = pattern storico ad alta confidenza. Stimato = comportamento aggregato, non un evento certo.":
-        "Confirmé = récurrence configurée. Attendu = modèle historique de confiance élevée. Estimé = comportement global, pas un certain événement.",
+    "Confermato = ricorrenza configurata. Previsto = pattern storico ad alta confidenza. Stimato = comportamento aggregato, non un evento certo.": "Confirmé = récurrence configurée. Attendu = modèle historique de confiance élevée. Estimé = comportement global, pas un certain événement.",
     "Configura": "Configurer",
     "Configura conto e categoria": "Configurer le compte et la catégorie",
     "Configura Balyn": "Configurer Balyn",
@@ -3115,8 +2969,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Conti": "Comptes",
     "Conti inclusi": "Comptes inclus",
     "Conti non trovati": "Comptes introuvables",
-    "Conti, movimenti, categorie, budget, obiettivi, regole e apprendimento locale verranno eliminati. Crea prima un backup se vuoi conservarli.":
-        "Les comptes, revenus, catégories, budgets, objectifs, règles et apprentissages locaux seront supprimés. Créez d’abord une sauvegarde si vous souhaitez les conserver.",
+    "Conti, movimenti, categorie, budget, obiettivi, regole e apprendimento locale verranno eliminati. Crea prima un backup se vuoi conservarli.": "Les comptes, revenus, catégories, budgets, objectifs, règles et apprentissages locaux seront supprimés. Créez d’abord une sauvegarde si vous souhaitez les conserver.",
     "Continua": "Continuer",
     "Conto": "Compte",
     "Conto (es. Revolut)": "Compte (par exemple Revolut)",
@@ -3160,8 +3013,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Crea primo conto": "Créer un premier compte",
     "Crea regola": "Créer une règle",
     "Crea ricorrenza": "Créer un anniversaire",
-    "Crea scorciatoie per i movimenti che inserisci spesso.":
-        "Créez des raccourcis pour les transactions que vous saisissez souvent.",
+    "Crea scorciatoie per i movimenti che inserisci spesso.": "Créez des raccourcis pour les transactions que vous saisissez souvent.",
     "Crea un conto oppure registra un movimento come Non assegnato.":
         "Créez un compte ou enregistrez une transaction comme Non attribuée.",
     "Crea un limite in Pianifica": "Créer une limite dans le planning",
@@ -3188,22 +3040,19 @@ generatedTranslations = <String, Map<String, String>>{
     "Da restituire": "A retourner",
     "Da ricevere": "A recevoir",
     "Da saldare": "Être payé",
-    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
-        "Balyn n'envoie pas de transactions, reçus, descriptions ou modèles à des services externes.",
+    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.": "Balyn n'envoie pas de transactions, reçus, descriptions ou modèles à des services externes.",
     "Balyn non riceve né memorizza dati biometrici.":
         "Balyn ne reçoit ni ne stocke de données biométriques.",
     "Balyn non richiede un account e non integra pubblicità, ":
         "Balyn ne nécessite pas de compte et n'intègre pas de publicité,",
     "Balyn sulla Home": "Balyn à la maison",
-    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
-        "Balyn utilise une planification locale et limite les doublons. Les récurrences automatiques sont toujours réconciliées à l'ouverture de l'application.",
+    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.": "Balyn utilise une planification locale et limite les doublons. Les récurrences automatiques sont toujours réconciliées à l'ouverture de l'application.",
     "Balyn · Importi rapidi": "Balyn · Montants rapides",
     "Balyn · Quick Capture": "Balyn · Capture rapide",
     "Balyn · Riepilogo": "Balyn · Résumé",
     "Balyn · Saldo": "Balyn · Solde",
     "Balyn è bloccata": "Balyn est bloqué",
-    "Balyn è progettata local-first. Movimenti, conti, categorie, ":
-        "Balyn est conçu d'abord localement. transactions, comptes, catégories,",
+    "Balyn è progettata local-first. Movimenti, conti, categorie, ": "Balyn est conçu d'abord localement. transactions, comptes, catégories,",
     "Balyn.": "Balyn.",
     "BalynBackup": "BalynBackup",
     "Dai un nome ai risparmi che vuoi costruire.":
@@ -3226,16 +3075,14 @@ generatedTranslations = <String, Map<String, String>>{
     "Dati locali, permessi, backup e servizi di sistema":
         "Données locales, autorisations, sauvegardes et services système",
     "Dati sul dispositivo": "Données sur l'appareil",
-    "Dati, PIN e preferenze restano locali. Nessun account o server è coinvolto.":
-        "Les données, le code PIN et les préférences restent locaux. Aucun compte ou serveur n'est affecté.",
+    "Dati, PIN e preferenze restano locali. Nessun account o server è coinvolto.": "Les données, le code PIN et les préférences restent locaux. Aucun compte ou serveur n'est affecté.",
     "dd MMM": "jj MMM",
     "dd MMM yy": "jj MMM aa",
     "dd MMM yyyy": "jj MMM aaaa",
     "dd MMM, HH:mm": "jj MMM, HH:mm",
     "dd MMMM yyyy, HH:mm": "jj MMMM aaaa, HH:mm",
     "dd/MM/yyyy HH:mm": "jj/MM/aaaa HH:mm",
-    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.":
-        "Définissez un chiffre et, si vous le souhaitez, une date : Balyn estimera un rythme soutenable.",
+    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.": "Définissez un chiffre et, si vous le souhaitez, une date : Balyn estimera un rythme soutenable.",
     "dei trasferimenti": "des transferts",
     "delle entrate": "de revenus",
     "delle spese": "des dépenses",
@@ -3253,24 +3100,20 @@ generatedTranslations = <String, Map<String, String>>{
     "Devo restituire dei soldi": "Je dois rembourser de l'argent",
     "Devo ricevere dei soldi": "Je dois gagner de l'argent",
     "Disattiva": "Désactiver",
-    "Disattiva per movimenti eccezionali che non vuoi nelle analisi.":
-        "Désactivez-la pour les transactions exceptionnelles que vous ne souhaitez pas dans vos analyses.",
+    "Disattiva per movimenti eccezionali che non vuoi nelle analisi.": "Désactivez-la pour les transactions exceptionnelles que vous ne souhaitez pas dans vos analyses.",
     "Disattivate": "Désactiver",
     "Disattivato": "Désactivé",
-    "Disinstallando l’app vengono rimossi i dati conservati nello ":
-        "La désinstallation de l'application supprime les données qui y sont stockées",
+    "Disinstallando l’app vengono rimossi i dati conservati nello ": "La désinstallation de l'application supprime les données qui y sont stockées",
     "Disponibile": "Disponible",
     "Disponibile da spendere": "Disponible à dépenser",
     "Dividi movimento": "Transaction fractionnée",
     "Divisione": "Division",
     "Domenica": "dimanche",
     "Donazione": "Don",
-    "Dopo alcuni movimenti coerenti compariranno qui le abitudini riconosciute.":
-        "Après quelques transactions cohérentes, les habitudes reconnues apparaîtront ici.",
+    "Dopo alcuni movimenti coerenti compariranno qui le abitudini riconosciute.": "Après quelques transactions cohérentes, les habitudes reconnues apparaîtront ici.",
     "Dove stai spendendo": "Où dépensez-vous",
     "Duplica": "Dupliquer",
-    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.":
-        "Lors de la configuration, vous pouvez choisir d'afficher ou non le solde et les montants. « Masquer les soldes » dans l'application prévaut toujours et masque les widgets.",
+    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.": "Lors de la configuration, vous pouvez choisir d'afficher ou non le solde et les montants. « Masquer les soldes » dans l'application prévaut toujours et masque les widgets.",
     "EEE dd": "EEE jj",
     "EEE dd MMM": "EEE jj MMM",
     "EEE dd MMM yy": "EEE jj MMM aa",
@@ -3278,8 +3121,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Elimina": "Supprimer",
     "Elimina conto": "Supprimer le compte",
     "Elimina pattern": "Supprimer le motif",
-    "Elimina prima i rimborsi/restituzioni registrati per annullare l’anticipo.":
-        "Supprimez d’abord les remboursements/retours publiés pour annuler l’avance.",
+    "Elimina prima i rimborsi/restituzioni registrati per annullare l’anticipo.": "Supprimez d’abord les remboursements/retours publiés pour annuler l’avance.",
     "Elimina se vuoto": "Supprimer si vide",
     "Eliminare il movimento?": "Supprimer la transaction ?",
     "Eliminare questo rimborso?": "Supprimer ce remboursement ?",
@@ -3306,14 +3148,12 @@ generatedTranslations = <String, Map<String, String>>{
     "Escursione": "Excursion",
     "Esempio: descrizione contiene LIDL → Alimentari.":
         "Exemple : la description contient LIDL → Food.",
-    "esplicitamente l’operazione e scegli una destinazione. I backup ":
-        "l'opération explicitement et choisissez une destination. Les sauvegardes",
+    "esplicitamente l’operazione e scegli una destinazione. I backup ": "l'opération explicitement et choisissez une destination. Les sauvegardes",
     "Esporta lo storico di questo conto": "Exporter l'historique de ce compte",
     "Esporta movimenti": "Opérations d'exportation",
     "Esporta movimenti CSV": "Exporter des transactions CSV",
     "Evento": "Événement",
-    "Fallback opzionale. La privacy dipende dal servizio vocale configurato sul dispositivo.":
-        "Solution de repli facultative. La confidentialité dépend du service vocal configuré sur votre appareil.",
+    "Fallback opzionale. La privacy dipende dal servizio vocale configurato sul dispositivo.": "Solution de repli facultative. La confidentialité dépend du service vocal configuré sur votre appareil.",
     "Fallback semplice da 4 a 8 cifre.": "Simple repli de 4 à 8 chiffres.",
     "Famiglia": "Famille",
     "Famiglia e social": "Familial et social",
@@ -3376,8 +3216,7 @@ generatedTranslations = <String, Map<String, String>>{
         "les transactions déjà classées ne changeront pas.",
     "I movimenti già registrati resteranno invariati.":
         "les transactions déjà enregistrées resteront inchangées.",
-    "I pattern sono ricavati dai tuoi movimenti. Puoi disattivarli, convertirli in regole esplicite o eliminarli senza modificare lo storico.":
-        "Les modèles sont dérivés de vos transactions. Vous pouvez les désactiver, les convertir en règles explicites ou les supprimer sans modifier l'historique.",
+    "I pattern sono ricavati dai tuoi movimenti. Puoi disattivarli, convertirli in regole esplicite o eliminarli senza modificare lo storico.": "Les modèles sont dérivés de vos transactions. Vous pouvez les désactiver, les convertir en règles explicites ou les supprimer sans modifier l'historique.",
     "I saldi dei conti verranno ricalcolati automaticamente.":
         "Les soldes des comptes seront recalculés automatiquement.",
     "I widget di questa sezione sono disponibili su Android.":
@@ -3395,16 +3234,12 @@ generatedTranslations = <String, Map<String, String>>{
     "Il conto è bloccato.": "Le compte est bloqué.",
     "Il conto è vuoto e può essere eliminato in sicurezza.":
         "Le compte est vide et peut être supprimé en toute sécurité.",
-    "Il conto è vuoto. Eventuali riferimenti in preset e obiettivi verranno scollegati in sicurezza.":
-        "Le compte est vide. Toutes les références dans les préréglages et les cibles seront déconnectées en toute sécurité.",
-    "Il CSV deve contenere almeno type, amount, date e account.":
-        "Le CSV doit contenir au moins le type, le montant, la date et le compte.",
+    "Il conto è vuoto. Eventuali riferimenti in preset e obiettivi verranno scollegati in sicurezza.": "Le compte est vide. Toutes les références dans les préréglages et les cibles seront déconnectées en toute sécurité.",
+    "Il CSV deve contenere almeno type, amount, date e account.": "Le CSV doit contenir au moins le type, le montant, la date et le compte.",
     "Il database ripristinato non supera il controllo integrità.":
         "La base de données restaurée échoue au contrôle d'intégrité.",
-    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.":
-        "Le lanceur ne prend pas en charge l'ajout automatique. Appuyez et maintenez sur Accueil → Widget → Balyn.",
-    "Il microfono compila Nuovo movimento ma non salva mai automaticamente.":
-        "Le microphone compile la nouvelle transaction mais ne l'enregistre jamais automatiquement.",
+    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.": "Le lanceur ne prend pas en charge l'ajout automatique. Appuyez et maintenez sur Accueil → Widget → Balyn.",
+    "Il microfono compila Nuovo movimento ma non salva mai automaticamente.": "Le microphone compile la nouvelle transaction mais ne l'enregistre jamais automatiquement.",
     "Il movimento ha una direzione incompatibile.":
         "La transaction a une direction incompatible.",
     "Il movimento supera il residuo dell’anticipo.":
@@ -3413,28 +3248,20 @@ generatedTranslations = <String, Map<String, String>>{
         "L'autorisation du microphone n'est pas disponible.",
     "Il PIN deve contenere da 4 a 8 cifre.":
         "Le code PIN doit contenir 4 à 8 chiffres.",
-    "Il preset verrà rimosso. I movimenti già registrati non cambieranno.":
-        "Le préréglage sera supprimé. Les transactions déjà enregistrées ne changeront pas.",
-    "Il recognizer di sistema non è disponibile offline.":
-        "Le système de reconnaissance du système n'est pas disponible hors ligne.",
-    "Il riconoscimento vocale offline non è disponibile su questo dispositivo.":
-        "La reconnaissance vocale hors ligne n'est pas disponible sur cet appareil.",
-    "Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.":
-        "Le résumé principal reste fixe en haut. Réactivez ici les sections que vous souhaitez voir.",
+    "Il preset verrà rimosso. I movimenti già registrati non cambieranno.": "Le préréglage sera supprimé. Les transactions déjà enregistrées ne changeront pas.",
+    "Il recognizer di sistema non è disponibile offline.": "Le système de reconnaissance du système n'est pas disponible hors ligne.",
+    "Il riconoscimento vocale offline non è disponibile su questo dispositivo.": "La reconnaissance vocale hors ligne n'est pas disponible sur cet appareil.",
+    "Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.": "Le résumé principal reste fixe en haut. Réactivez ici les sections que vous souhaitez voir.",
     "Il saldo contribuisce al patrimonio totale":
         "Le solde contribue au total de l'actif",
-    "Il saldo del conto e il residuo dell’anticipo verranno ripristinati automaticamente.":
-        "Le solde du compte et le solde de l'avance seront automatiquement rétablis.",
+    "Il saldo del conto e il residuo dell’anticipo verranno ripristinati automaticamente.": "Le solde du compte et le solde de l'avance seront automatiquement rétablis.",
     "Il saldo del conto verrà ricalcolato automaticamente.":
         "Le solde de votre compte sera recalculé automatiquement.",
-    "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.":
-        "Le système reconnaît les habitudes grâce à des statistiques locales et des règles explicables. Il n'utilise ni l'IA ni le cloud.",
-    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.":
-        "Le texte reconnu est interprété localement par un analyseur déterministe. Il n'est pas envoyé au serveur Balyn.",
+    "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.": "Le système reconnaît les habitudes grâce à des statistiques locales et des règles explicables. Il n'utilise ni l'IA ni le cloud.",
+    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.": "Le texte reconnu est interprété localement par un analyseur déterministe. Il n'est pas envoyé au serveur Balyn.",
     "Il trasferimento deve arrivare al conto collegato all’obiettivo.":
         "Le virement doit arriver sur le compte lié à l'objectif.",
-    "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.":
-        "Le transfert nécessite deux comptes actifs différents avant de créer une occurrence.",
+    "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.": "Le transfert nécessite deux comptes actifs différents avant de créer une occurrence.",
     "Immediato": "Immédiat",
     "Impedisce nuovi movimenti sul conto":
         "Empêche les nouvelles transactions sur le compte",
@@ -3453,11 +3280,9 @@ generatedTranslations = <String, Map<String, String>>{
     "Importo ricevuto": "Montant reçu",
     "importo uguale al residuo": "montant égal au solde résiduel",
     "importo vicino al residuo": "montant proche du résiduel",
-    "Imposta limiti giornalieri, settimanali, mensili o annuali.":
-        "Fixez des limites quotidiennes, hebdomadaires, mensuelles ou annuelles.",
+    "Imposta limiti giornalieri, settimanali, mensili o annuali.": "Fixez des limites quotidiennes, hebdomadaires, mensuelles ou annuelles.",
     "Imposta PIN locale": "Définir un code PIN local",
-    "Imposta un limite per sapere quanto puoi ancora spendere nel periodo.":
-        "Fixez une limite pour voir combien vous pouvez encore dépenser pendant la période.",
+    "Imposta un limite per sapere quanto puoi ancora spendere nel periodo.": "Fixez une limite pour voir combien vous pouvez encore dépenser pendant la période.",
     "Imposta un limite per sapere quanto puoi ancora spendere.":
         "Fixez une limite pour voir combien vous pouvez encore dépenser.",
     "Impostazioni": "Paramètres",
@@ -3502,12 +3327,10 @@ generatedTranslations = <String, Map<String, String>>{
     "La mia parte": "Ma part",
     "La posizione verrà chiusa come annullata.":
         "La position sera fermée comme annulée.",
-    "La previsione di fine mese è sotto la soglia che hai impostato. Apri Pianifica per i dettagli.":
-        "La prévision de fin de mois est inférieure au seuil que vous avez défini. Ouvrez le calendrier pour plus de détails.",
+    "La previsione di fine mese è sotto la soglia che hai impostato. Apri Pianifica per i dettagli.": "La prévision de fin de mois est inférieure au seuil que vous avez défini. Ouvrez le calendrier pour plus de détails.",
     "La quota anticipata deve essere maggiore di 0 e minore o uguale al totale.":
         "L'acompte doit être supérieur à 0 et inférieur ou égal au total.",
-    "La stima comportamentale è comunque inclusa nel saldo previsto sopra.":
-        "L'estimation comportementale est cependant incluse dans la prévision de bilan ci-dessus.",
+    "La stima comportamentale è comunque inclusa nel saldo previsto sopra.": "L'estimation comportementale est cependant incluse dans la prévision de bilan ci-dessus.",
     "La tua parte e la quota anticipata devono coincidere con il totale.":
         "Votre part et les frais initiaux doivent correspondre au total.",
     "Lascia vuoto per un backup non cifrato.":
@@ -3516,14 +3339,11 @@ generatedTranslations = <String, Map<String, String>>{
     "Lavori casa": "Travail à domicile",
     "Lavoro": "Travail",
     "Lavoro e formazione": "Travail et formation",
-    "Le categorie compariranno qui quando registri movimenti.":
-        "Les catégories apparaîtront ici lorsque vous enregistrerez des transactions.",
-    "Le metriche principali restano in alto. Riattiva altri widget dalla personalizzazione Home.":
-        "Les indicateurs clés restent au sommet. Réactivez les autres widgets à partir du personnalisateur d'accueil.",
+    "Le categorie compariranno qui quando registri movimenti.": "Les catégories apparaîtront ici lorsque vous enregistrerez des transactions.",
+    "Le metriche principali restano in alto. Riattiva altri widget dalla personalizzazione Home.": "Les indicateurs clés restent au sommet. Réactivez les autres widgets à partir du personnalisateur d'accueil.",
     "Le notifiche possono essere disattivate in qualsiasi momento.":
         "Les notifications peuvent être désactivées à tout moment.",
-    "Le persone servono solo per organizzare gli anticipi e restano sul dispositivo.":
-        "Les gens ne servent qu'à organiser les avancées et restent sur le dispositif.",
+    "Le persone servono solo per organizzare gli anticipi e restano sul dispositivo.": "Les gens ne servent qu'à organiser les avancées et restent sur le dispositif.",
     "Libri": "Livres",
     "Lingua": "Langue",
     "Lista": "Liste",
@@ -3533,8 +3353,7 @@ generatedTranslations = <String, Map<String, String>>{
         "L'historique d'une avance clôturée n'est pas modifiable.",
     "Lo storico si costruisce automaticamente durante l’uso.":
         "L'historique se construit automatiquement lors de l'utilisation.",
-    "locale. Se abiliti il recognizer di sistema, audio o testo ":
-        "locale. Si vous activez le système, la reconnaissance audio ou de texte",
+    "locale. Se abiliti il recognizer di sistema, audio o testo ": "locale. Si vous activez le système, la reconnaissance audio ou de texte",
     "Lunedì": "lundi",
     "L’importo deve essere maggiore di 0.":
         "Le montant doit être supérieur à 0.",
@@ -3545,8 +3364,7 @@ generatedTranslations = <String, Map<String, String>>{
     "L’obiettivo collegato non è più disponibile.":
         "L'objectif connecté n'est plus disponible.",
     "L’obiettivo non ha un conto collegato.": "La cible n'a pas de compte lié.",
-    "L’obiettivo verrà eliminato. Conti e movimenti non saranno modificati.":
-        "La cible sera éliminée. Les comptes et les transactions ne seront pas modifiés.",
+    "L’obiettivo verrà eliminato. Conti e movimenti non saranno modificati.": "La cible sera éliminée. Les comptes et les transactions ne seront pas modifiés.",
     "Mai riconciliato": "Jamais réconcilié",
     "Manifest backup non leggibile.": "Sauvegarde du manifeste illisible.",
     "Manifest backup non valido.": "Manifeste de sauvegarde invalide.",
@@ -3598,8 +3416,7 @@ generatedTranslations = <String, Map<String, String>>{
     "movimenti da assegnare": "opérations à affecter",
     "Movimenti del conto esportati.": "Opérations de compte exportées.",
     "Movimenti recenti": "Opérations récentes",
-    "Movimenti, split, budget, regole e apprendimento verranno spostati nella categoria scelta.":
-        "les transactions, les répartitions, les budgets, les règles et l'apprentissage seront déplacés vers la catégorie choisie.",
+    "Movimenti, split, budget, regole e apprendimento verranno spostati nella categoria scelta.": "les transactions, les répartitions, les budgets, les règles et l'apprentissage seront déplacés vers la catégorie choisie.",
     "Movimento": "Opération",
     "Movimento aggiornato.": "Transaction mise à jour.",
     "Movimento collegato non trovato.": "Mouvement lié introuvable.",
@@ -3695,8 +3512,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Non è questo": "Ce n'est pas ça",
     "Nota": "Remarque",
     "Nota opzionale": "Remarque facultative",
-    "note, obiettivi, budget, regole e Smart Suggestions vengono ":
-        "les notes, les objectifs, les budgets, les règles et les suggestions intelligentes viennent",
+    "note, obiettivi, budget, regole e Smart Suggestions vengono ": "les notes, les objectifs, les budgets, les règles et les suggestions intelligentes viennent",
     "Notifica domani": "Notification demain",
     "Notifica oggi": "Avertir aujourd'hui",
     "Notifica scaduta": "Notification expirée",
@@ -3714,8 +3530,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Nuovo budget": "Nouveau budget",
     "Nuovo conto": "Nouveau compte",
     "Nuovo movimento": "Nouvelle transaction",
-    "Nuovo movimento. Tieni premuto per preset e scorciatoie.":
-        "Nouvelle opération. Appuyez et maintenez enfoncé pour les préréglages et les raccourcis.",
+    "Nuovo movimento. Tieni premuto per preset e scorciatoie.": "Nouvelle opération. Appuyez et maintenez enfoncé pour les préréglages et les raccourcis.",
     "Nuovo obiettivo": "Nouvel objectif",
     "Nuovo preset": "Nouveau préréglage",
     "Nuovo trasferimento": "Nouveau transfert",
@@ -3725,10 +3540,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Obiettivo da rivedere": "Objectif à revoir",
     "Obiettivo non trovato.": "Cible introuvable.",
     "Oggi": "Aujourd'hui",
-    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.":
-        "Chaque instance peut avoir ses propres paramètres. Le widget s'ouvre toujours Quick Add : aucun clic n'enregistre l'argent sans votre confirmation.",
-    "Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add.":
-        "Chaque widget conserve ses propres paramètres. Les noms de compte et de catégorie sont vérifiés par l'application lorsque vous ouvrez l'ajout rapide.",
+    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.": "Chaque instance peut avoir ses propres paramètres. Le widget s'ouvre toujours Quick Add : aucun clic n'enregistre l'argent sans votre confirmation.",
+    "Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add.": "Chaque widget conserve ses propres paramètres. Les noms de compte et de catégorie sont vérifiés par l'application lorsque vous ouvrez l'ajout rapide.",
     "Operazione irreversibile dopo la conferma.":
         "Fonctionnement irréversible après confirmation.",
     "Ora": "Maintenant",
@@ -3743,10 +3556,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Parrucchiere": "Coiffeur",
     "Parser locale · on-device quando disponibile":
         "Analyseur local · sur l'appareil lorsqu'il est disponible",
-    "Parti dal primo conto oppure registra subito un movimento e assegnalo in seguito.":
-        "Commencez par le premier compte ou enregistrez une transaction immédiatement et attribuez-la plus tard.",
-    "Parti dal primo conto oppure registra subito un movimento.":
-        "Commencez par le premier compte ou enregistrez une transaction immédiatement.",
+    "Parti dal primo conto oppure registra subito un movimento e assegnalo in seguito.": "Commencez par le premier compte ou enregistrez une transaction immédiatement et attribuez-la plus tard.",
+    "Parti dal primo conto oppure registra subito un movimento.": "Commencez par le premier compte ou enregistrez une transaction immédiatement.",
     "Parzialmente regolato": "Partiellement réglementé",
     "Password": "Mots de passe",
     "Password backup": "Sauvegarde du mot de passe",
@@ -3756,18 +3567,14 @@ generatedTranslations = <String, Map<String, String>>{
     "Patrimonio corrente": "Actifs courants",
     "Patrimonio incluso nel totale": "Patrimoine inclus dans le total",
     "Patrimonio netto": "Valeur nette",
-    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.":
-        "Les actifs, revenus, dépenses et disponibles restent fixes en haut, au-dessus des actions rapides. Ici, vous pouvez afficher, masquer, redimensionner et réorganiser les sections suivantes.",
-    "Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.":
-        "Les modèles, les retours et la suppression seront éliminés. Les transactions resteront inchangées et le système pourra réapprendre.",
+    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.": "Les actifs, revenus, dépenses et disponibles restent fixes en haut, au-dessus des actions rapides. Ici, vous pouvez afficher, masquer, redimensionner et réorganiser les sections suivantes.",
+    "Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.": "Les modèles, les retours et la suppression seront éliminés. Les transactions resteront inchangées et le système pourra réapprendre.",
     "Pedaggio": "Péage",
     "Per assegnare una categoria la regola deve avere un tipo compatibile.":
         "Pour attribuer une catégorie, la règle doit avoir un type compatible.",
-    "Per assegnare una categoria la regola deve avere un tipo Spesa o Entrata.":
-        "Pour attribuer une catégorie, la règle doit avoir un type de Dépense ou de Revenu.",
+    "Per assegnare una categoria la regola deve avere un tipo Spesa o Entrata.": "Pour attribuer une catégorie, la règle doit avoir un type de Dépense ou de Revenu.",
     "Per conto": "Au nom",
-    "Per proteggere lo storico finanziario un conto con movimenti o ricorrenze non viene eliminato. Puoi archiviarlo e continuare a consultare i dati.":
-        "Pour protéger l'historique financier, un compte comportant des transactions ou des récurrences n'est pas supprimé. Vous pouvez l'archiver et continuer à consulter les données.",
+    "Per proteggere lo storico finanziario un conto con movimenti o ricorrenze non viene eliminato. Puoi archiviarlo e continuare a consultare i dati.": "Pour protéger l'historique financier, un compte comportant des transactions ou des récurrences n'est pas supprimé. Vous pouvez l'archiver et continuer à consulter les données.",
     "Per te": "Pour toi",
     "Periodo": "Période",
     "Periodo precedente": "Période précédente",
@@ -3805,8 +3612,7 @@ generatedTranslations = <String, Map<String, String>>{
     "position ASC, id ASC": "position ASC, identifiant ASC",
     "Possibile ricorrenza": "Récidive possible",
     "Possibili duplicati": "Doublons possibles",
-    "possono essere protetti con password; se scegli un backup senza ":
-        "peut être protégé par mot de passe ; si vous choisissez une sauvegarde sans",
+    "possono essere protetti con password; se scegli un backup senza ": "peut être protégé par mot de passe ; si vous choisissez une sauvegarde sans",
     "possono essere trattati dal servizio vocale configurato su ":
         "peut être géré par le service vocal configuré sur",
     "Potrai scegliere il conto in seguito":
@@ -3828,8 +3634,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Previsioni e calendario": "Prévisions et calendrier",
     "Previsto": "Attendu",
     "Previsto da abitudini": "Attendu par les habitudes",
-    "Prima del ripristino viene creato un safety backup temporaneo. Se il controllo integrità fallisce, i dati attuali vengono ripristinati.":
-        "Avant la restauration, une sauvegarde de sécurité temporaire est créée. Si le contrôle d'intégrité échoue, les données actuelles sont restaurées.",
+    "Prima del ripristino viene creato un safety backup temporaneo. Se il controllo integrità fallisce, i dati attuali vengono ripristinati.": "Avant la restauration, une sauvegarde de sécurité temporaire est créée. Si le contrôle d'intégrité échoue, les données actuelles sont restaurées.",
     "Primo giorno settimana": "Premier jour de la semaine",
     "Principio di base": "Principe de base",
     "Privacy": "Confidentialité",
@@ -3847,8 +3652,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Rappels locaux pour l'argent à recevoir ou à restituer",
     "Promemoria per movimenti ricorrenti":
         "Rappel pour les transactions récurrentes",
-    "Propone di configurare pattern settimanali, mensili o annuali.":
-        "Il propose de configurer des modèles hebdomadaires, mensuels ou annuels.",
+    "Propone di configurare pattern settimanali, mensili o annuali.": "Il propose de configurer des modèles hebdomadaires, mensuels ou annuels.",
     "Prossima data": "Prochain rendez-vous",
     "Prossime scadenze": "Échéances à venir",
     "Prossimi 30 giorni": "30 prochains jours",
@@ -3859,24 +3663,19 @@ generatedTranslations = <String, Map<String, String>>{
         "Essayez de modifier votre recherche ou vos filtres.",
     "Prova regola": "Essayez la règle",
     "Pulizie": "Nettoyage",
-    "Puoi avere, per esempio, un widget Revolut/Bar e un altro Contanti/Benzina con importi diversi.":
-        "Vous pouvez avoir par exemple un widget Revolut/Bar et un autre Cash/Petrol avec des montants différents.",
+    "Puoi avere, per esempio, un widget Revolut/Bar e un altro Contanti/Benzina con importi diversi.": "Vous pouvez avoir par exemple un widget Revolut/Bar et un autre Cash/Petrol avec des montants différents.",
     "Puoi cambiarla in qualsiasi momento":
         "Vous pouvez le modifier à tout moment",
     "Puoi cancellare i dati finanziari locali dalle impostazioni. ":
         "Vous pouvez effacer les données financières locales des paramètres.",
-    "Puoi creare il primo conto oppure registrare subito un movimento come Non assegnato.":
-        "Vous pouvez créer votre premier compte ou enregistrer immédiatement une transaction comme Non attribuée.",
-    "Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.":
-        "Il peut s'agir d'une partie ou de la totalité du montant. Seule votre part sera comptabilisée dans les dépenses, catégories et budgets.",
+    "Puoi creare il primo conto oppure registrare subito un movimento come Non assegnato.": "Vous pouvez créer votre premier compte ou enregistrer immédiatement une transaction comme Non attribuée.",
+    "Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.": "Il peut s'agir d'une partie ou de la totalité du montant. Seule votre part sera comptabilisée dans les dépenses, catégories et budgets.",
     "Quale categoria intendevi?": "De quelle catégorie parlez-vous ?",
     "Quale conto intendevi?": "De quel compte parlez-vous ?",
     "Qualsiasi": "N'importe lequel",
     "Qualsiasi tipo": "N'importe quel genre",
-    "Questa categoria è usata in una divisione di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.":
-        "Cette catégorie est utilisée dans une division de dépenses. Pour éviter de perdre le classement, fusionnez-le d'abord dans une autre catégorie.",
-    "Questa persona ha anticipi ancora aperti. Chiudili prima di archiviarla.":
-        "Cette personne a des avances encore ouvertes. Fermez-les avant de l'archiver.",
+    "Questa categoria è usata in una divisione di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.": "Cette catégorie est utilisée dans une division de dépenses. Pour éviter de perdre le classement, fusionnez-le d'abord dans une autre catégorie.",
+    "Questa persona ha anticipi ancora aperti. Chiudili prima di archiviarla.": "Cette personne a des avances encore ouvertes. Fermez-les avant de l'archiver.",
     "Questa regola corrisponde a 1 movimento.":
         "Cette règle correspond à 1 transaction.",
     "Questa spesa include un anticipo": "Cette dépense comprend une avance",
@@ -3940,8 +3739,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Righe valide": "Lignes valides",
     "Rileva ricorrenze": "Détecter les récidives",
     "Rilevate dalle tue abitudini": "Détecté par vos habitudes",
-    "Rimane qui. Se continui a parlare, aggiorno la frase; usa ↻ per ricominciare da zero.":
-        "Il reste ici. Si vous continuez à parler, je mettrai à jour la phrase ; utilisez ↻ pour repartir de zéro.",
+    "Rimane qui. Se continui a parlare, aggiorno la frase; usa ↻ per ricominciare da zero.": "Il reste ici. Si vous continuez à parler, je mettrai à jour la phrase ; utilisez ↻ pour repartir de zéro.",
     "Rimborso": "Remboursement",
     "Rimborso collegato": "Remboursement lié",
     "Rimborso non trovato.": "Remboursement introuvable.",
@@ -4042,13 +3840,10 @@ generatedTranslations = <String, Map<String, String>>{
     "Scorciatoie": "Raccourcis",
     "Scuola": "École",
     "Scuro": "Sombre",
-    "Se contiene storico potrai archiviarlo invece di eliminarlo":
-        "S'il contient un historique, vous pouvez l'archiver au lieu de le supprimer",
-    "Se è un anticipo puro, il movimento di cassa originale verrà annullato. Le spese miste restano come acquisto personale.":
-        "S'il s'agit d'une pure avance, la transaction en espèces initiale sera annulée. Les dépenses mixtes restent des achats personnels.",
+    "Se contiene storico potrai archiviarlo invece di eliminarlo": "S'il contient un historique, vous pouvez l'archiver au lieu de le supprimer",
+    "Se è un anticipo puro, il movimento di cassa originale verrà annullato. Le spese miste restano come acquisto personale.": "S'il s'agit d'une pure avance, la transaction en espèces initiale sera annulée. Les dépenses mixtes restent des achats personnels.",
     "Segnali": "Signaux",
-    "Segnali deboli: rafforzano una previsione, non la creano da soli.":
-        "Signaux faibles : ils renforcent une prédiction, ils ne la créent pas eux-mêmes.",
+    "Segnali deboli: rafforzano una previsione, non la creano da soli.": "Signaux faibles : ils renforcent une prédiction, ils ne la créent pas eux-mêmes.",
     "Seleziona ": "Sélectionnez",
     "Seleziona conto": "Sélectionnez un compte",
     "Seleziona ora": "Sélectionnez maintenant",
@@ -4056,10 +3851,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Senza categoria": "Non classé",
     "Separata dall’app": "Séparé de l'application",
     "Servizi cloud": "Services cloud",
-    "Servono almeno 3 settimane di storico utile per un consiglio realistico.":
-        "Au moins 3 semaines d’historique utile sont nécessaires pour obtenir des conseils réalistes.",
-    "Servono almeno due categorie di spesa per dividere il movimento.":
-        "Au moins deux catégories de dépenses sont nécessaires pour diviser la transaction.",
+    "Servono almeno 3 settimane di storico utile per un consiglio realistico.": "Au moins 3 semaines d’historique utile sont nécessaires pour obtenir des conseils réalistes.",
+    "Servono almeno due categorie di spesa per dividere il movimento.": "Au moins deux catégories de dépenses sont nécessaires pour diviser la transaction.",
     "Servono più dati": "Plus de données sont nécessaires",
     "Servono più dati per confrontare il periodo precedente.":
         "Plus de données sont nécessaires pour comparer la période précédente.",
@@ -4084,8 +3877,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Seulement lorsque la situation change sensiblement.",
     "Solo sul dispositivo": "Uniquement sur l'appareil",
     "Sorriso": "Sourire",
-    "spazio privato dell’app; eventuali backup o CSV esportati restano ":
-        "espace privé de l'application ; toutes les sauvegardes ou CSV exportés restent",
+    "spazio privato dell’app; eventuali backup o CSV esportati restano ": "espace privé de l'application ; toutes les sauvegardes ou CSV exportés restent",
     "Spesa": "Dépense",
     "Spesa comportamentale stimata": "Dépenses comportementales estimées",
     "Spesa registrata.": "Dépense enregistrée.",
@@ -4104,13 +3896,11 @@ generatedTranslations = <String, Map<String, String>>{
     "Stipendio": "Salaire",
     "Streaming": "Diffusion en continu",
     "Studio": "Étude",
-    "Su Android impedisce screenshot e anteprima dell’app nelle schermate recenti.":
-        "Sur Android, empêche les captures d'écran et les aperçus d'applications sur les écrans récents.",
+    "Su Android impedisce screenshot e anteprima dell’app nelle schermate recenti.": "Sur Android, empêche les captures d'écran et les aperçus d'applications sur les écrans récents.",
     "Suggerimenti automatici": "Suggestions automatiques",
     "Suggerimenti obiettivi": "Suggestions objectives",
     "Supermercato": "Supermarché",
-    "Sviluppatore: andreadada. Per richieste relative a privacy o supporto ":
-        "Développeur : andreadada. Pour les demandes de confidentialité ou d’assistance",
+    "Sviluppatore: andreadada. Per richieste relative a privacy o supporto ": "Développeur : andreadada. Pour les demandes de confidentialité ou d’assistance",
     "Tag": "Balises",
     "Tasse": "Impôts",
     "Taxi": "Taxis",
@@ -4121,15 +3911,12 @@ generatedTranslations = <String, Map<String, String>>{
     "Ti suggerisco": "je te propose",
     "Tipo": "Comme",
     "Tipo predefinito": "Type par défaut",
-    "Tocca per creare un anticipo. Tieni premuto per le scorciatoie.":
-        "Appuyez pour créer une avance. Appuyez et maintenez pour les raccourcis.",
-    "Tocca per una nuova spesa. Tieni premuto per preset e scorciatoie.":
-        "Appuyez pour une nouvelle dépense. Appuyez et maintenez enfoncé pour les préréglages et les raccourcis.",
+    "Tocca per creare un anticipo. Tieni premuto per le scorciatoie.": "Appuyez pour créer une avance. Appuyez et maintenez pour les raccourcis.",
+    "Tocca per una nuova spesa. Tieni premuto per preset e scorciatoie.": "Appuyez pour une nouvelle dépense. Appuyez et maintenez enfoncé pour les préréglages et les raccourcis.",
     "Tocca un preset per aprire il movimento già compilato.":
         "Appuyez sur un préréglage pour ouvrir la transaction déjà compilée.",
     "Top tag": "Balises principales",
-    "Torta Spese/Entrate con periodo scorrevole e intervallo personalizzato.":
-        "Tarte aux dépenses/revenus avec période mobile et intervalle personnalisé.",
+    "Torta Spese/Entrate con periodo scorrevole e intervallo personalizzato.": "Tarte aux dépenses/revenus avec période mobile et intervalle personnalisé.",
     "Totale": "Total",
     "Trasferimenti": "Transferts",
     "Trasferimenti nelle statistiche": "Transferts en statistiques",
@@ -4168,8 +3955,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Usa da 4 a 8 cifre. Il PIN resta sul dispositivo.":
         "Utilisez 4 à 8 chiffres. Le code PIN reste sur l'appareil.",
     "Usa descrizione": "Description de l'utilisation",
-    "Usa esclusivamente il riconoscimento offline/on-device quando Android lo supporta.":
-        "N'utilisez la reconnaissance hors ligne/sur l'appareil que lorsque Android la prend en charge.",
+    "Usa esclusivamente il riconoscimento offline/on-device quando Android lo supporta.": "N'utilisez la reconnaissance hors ligne/sur l'appareil que lorsque Android la prend en charge.",
     "Usa giorno e orario": "Utiliser le jour et l'heure",
     "usa i contatti pubblicati su www.ddone.it.":
         "utilisez les contacts publiés sur www.ddone.it.",
@@ -4177,24 +3963,20 @@ generatedTranslations = <String, Map<String, String>>{
         "Utiliser les transactions de compte dans l'analyse",
     "Usa il conto collegato all’obiettivo come destinazione.":
         "Utilisez le compte lié à l'objectif comme destination.",
-    "Usa il pulsante + per registrare una spesa o un’entrata: analisi e previsioni nasceranno dai tuoi dati reali.":
-        "Utilisez le bouton + pour enregistrer une dépense ou un revenu : analyses et prévisions naîtront de vos données réelles.",
+    "Usa il pulsante + per registrare una spesa o un’entrata: analisi e previsioni nasceranno dai tuoi dati reali.": "Utilisez le bouton + pour enregistrer une dépense ou un revenu : analyses et prévisions naîtront de vos données réelles.",
     "Usa importo": "Utiliser le montant",
-    "Usa impronta o biometria configurata nel dispositivo.":
-        "Utilisez l'empreinte digitale ou la biométrie configurée sur l'appareil.",
+    "Usa impronta o biometria configurata nel dispositivo.": "Utilisez l'empreinte digitale ou la biométrie configurée sur l'appareil.",
     "Usa la biometria del dispositivo per continuare.":
         "Utilisez la biométrie de l'appareil pour continuer.",
     "Usa la previsione di fine mese e la tua soglia.":
         "Utilisez les prévisions de fin de mois et votre seuil.",
-    "Usa nomi di conti e categorie, non ID SQLite.":
-        "Utilisez des noms de compte et de catégorie, pas des identifiants SQLite.",
+    "Usa nomi di conti e categorie, non ID SQLite.": "Utilisez des noms de compte et de catégorie, pas des identifiants SQLite.",
     "Usa Non assegnato": "Utiliser non attribué",
     "Usa questo": "Utilisez ceci",
     "Usa ultimo conto": "Utiliser le dernier compte",
     "Usata per sbloccare l’app tramite le API di sistema. ":
         "Utilisé pour déverrouiller l'application via les API du système.",
-    "Usata solo quando scegli di acquisire una foto o ricevuta da ":
-        "Utilisé uniquement lorsque vous choisissez de prendre une photo ou reçu de",
+    "Usata solo quando scegli di acquisire una foto o ricevuta da ": "Utilisé uniquement lorsque vous choisissez de prendre une photo ou reçu de",
     "Usate per promemoria e avvisi locali configurati da te. ":
         "Utilisé pour les rappels et alertes locales que vous configurez.",
     "Usato 1 volta": "Utilisé 1 fois",
@@ -4206,8 +3988,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Variazione": "Variante",
     "Vendita": "Vente",
     "Verifica…": "Vérifiez…",
-    "Verrà registrato come rimborso/restituzione, non come entrata o spesa.":
-        "Il sera enregistré comme un remboursement, et non comme un revenu ou une dépense.",
+    "Verrà registrato come rimborso/restituzione, non come entrata o spesa.": "Il sera enregistré comme un remboursement, et non comme un revenu ou une dépense.",
     "Vestiti": "Habillez-vous",
     "Viaggio": "Voyage",
     "Vibrazione leggera su navigazione, azioni rapide e impostazioni.":
@@ -4228,8 +4009,7 @@ generatedTranslations = <String, Map<String, String>>{
     "È il segnale principale del modello locale.":
         "C'est le signal principal du modèle local.",
     "È stato condonato": "C'était toléré",
-    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.":
-        "Il s'agit d'une estimation : elle part des actifs dépensables, soustrait les dépenses récurrentes attendues jusqu'à la fin du mois et maintient une réserve prudentielle pour les objectifs. Il ne s'agit pas d'un solde bancaire garanti.",
+    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.": "Il s'agit d'une estimation : elle part des actifs dépensables, soustrait les dépenses récurrentes attendues jusqu'à la fin du mois et maintient une réserve prudentielle pour les objectifs. Il ne s'agit pas d'un solde bancaire garanti.",
     "•••• da ricevere · •••• da restituire": "•••• recevoir · •••• retourner",
   },
   "de": <String, String>{
@@ -4263,16 +4043,12 @@ generatedTranslations = <String, Map<String, String>>{
         "Nicht-invasive Aktualisierungen der Ziele",
     "Aggiungi": "Hinzufügen",
     "Aggiungi ai preferiti": "Zu Favoriten hinzufügen",
-    "Aggiungi bollette, abbonamenti o stipendio per prevedere il saldo futuro.":
-        "Fügen Sie Rechnungen, Abonnements oder Gehälter hinzu, um Ihren zukünftigen Kontostand vorherzusagen.",
-    "Aggiungi bollette, abbonamenti, rate o entrate regolari.":
-        "Fügen Sie Rechnungen, Abonnements, Raten oder regelmäßige Einnahmen hinzu.",
+    "Aggiungi bollette, abbonamenti o stipendio per prevedere il saldo futuro.": "Fügen Sie Rechnungen, Abonnements oder Gehälter hinzu, um Ihren zukünftigen Kontostand vorherzusagen.",
+    "Aggiungi bollette, abbonamenti, rate o entrate regolari.": "Fügen Sie Rechnungen, Abonnements, Raten oder regelmäßige Einnahmen hinzu.",
     "Aggiungi dettagli": "Details hinzufügen",
     "Aggiungi entrata": "Einkommen hinzufügen",
-    "Aggiungi il conto che usi davvero o continua con movimenti Non assegnati.":
-        "Fügen Sie das Konto hinzu, das Sie tatsächlich verwenden, oder fahren Sie mit nicht zugewiesenen Transaktionen fort.",
-    "Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.":
-        "Fügen Sie das Konto hinzu, das Sie tatsächlich verwenden, oder fahren Sie mit nicht zugewiesenen Transaktionen fort.",
+    "Aggiungi il conto che usi davvero o continua con movimenti Non assegnati.": "Fügen Sie das Konto hinzu, das Sie tatsächlich verwenden, oder fahren Sie mit nicht zugewiesenen Transaktionen fort.",
+    "Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.": "Fügen Sie das Konto hinzu, das Sie tatsächlich verwenden, oder fahren Sie mit nicht zugewiesenen Transaktionen fort.",
     "Aggiungi Importi rapidi": "Fügen Sie Schnellbeträge hinzu",
     "Aggiungi movimento": "Transaktion hinzufügen",
     "Aggiungi parte": "Teil hinzufügen",
@@ -4306,8 +4082,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Vermögenswertentwicklung im ausgewählten Zeitraum",
     "Andamento patrimonio": "Vermögenswertentwicklung",
     "Andamento saldo": "Solider Trend",
-    "Android può chiederti conferma e aprire la configurazione prima di posizionare il widget.":
-        "Android bittet Sie möglicherweise um eine Bestätigung und öffnet die Konfiguration, bevor das Widget platziert wird.",
+    "Android può chiederti conferma e aprire la configurazione prima di posizionare il widget.": "Android bittet Sie möglicherweise um eine Bestätigung und öffnet die Konfiguration, bevor das Widget platziert wird.",
     "Android secondo le regole di quel fornitore.":
         "Android gemäß den Regeln dieses Anbieters.",
     "Animali": "Tiere",
@@ -4339,11 +4114,9 @@ generatedTranslations = <String, Map<String, String>>{
     "AppScope not found": "AppScope nicht gefunden",
     "Apre Balyn senza autenticazione.": "Öffnet Balyn ohne Authentifizierung.",
     "Apri": "Offen",
-    "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
-        "Öffnen Sie Anzahlungen, um eine Rückerstattung zu erfassen oder Ihre Erinnerung zu aktualisieren.",
+    "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.": "Öffnen Sie Anzahlungen, um eine Rückerstattung zu erfassen oder Ihre Erinnerung zu aktualisieren.",
     "Apri conto": "Konto eröffnen",
-    "Apri il selettore widget del launcher e cerca Balyn.":
-        "Öffnen Sie die Widget-Auswahl des Launchers und suchen Sie nach Balyn.",
+    "Apri il selettore widget del launcher e cerca Balyn.": "Öffnen Sie die Widget-Auswahl des Launchers und suchen Sie nach Balyn.",
     "Apri per vedere residuo e ritmo di spesa.":
         "Öffnen Sie, um die Rest- und Ausgabenrate anzuzeigen.",
     "Apri Storico": "Öffnen Sie den Verlauf",
@@ -4357,8 +4130,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Arredamento": "Einrichtungsgegenstände",
     "Arte": "Kunst",
     "Aspetto": "Ich warte",
-    "Assegna il movimento a un conto attivo prima di creare una ricorrenza.":
-        "Ordnen Sie die Einnahmen einem aktiven Konto zu, bevor Sie ein Ereignis erstellen.",
+    "Assegna il movimento a un conto attivo prima di creare una ricorrenza.": "Ordnen Sie die Einnahmen einem aktiven Konto zu, bevor Sie ein Ereignis erstellen.",
     "Asset digitale": "Digitaler Vermögenswert",
     "Assicurazione": "Versicherung",
     "Attiva": "Aktivieren",
@@ -4436,8 +4208,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Caffè, benzina, spesa e azioni personalizzate":
         "Kaffee, Benzin, Einkaufen und personalisierte Aktionen",
     "Calcio": "Fußball",
-    "Calcola un ritmo realistico usando il tuo cash-flow storico.":
-        "Berechnen Sie anhand Ihres historischen Cashflows ein realistisches Tempo.",
+    "Calcola un ritmo realistico usando il tuo cash-flow storico.": "Berechnen Sie anhand Ihres historischen Cashflows ein realistisches Tempo.",
     "Calcoli rapidi: usa +  −  ×  ÷":
         "Schnelle Berechnungen: Verwenden Sie + − × ÷",
     "Calendario": "Kalender",
@@ -4455,8 +4226,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Cancellare l’apprendimento?": "Lernen abbrechen?",
     "Cancellare tutti i dati?": "Alle Daten löschen?",
     "Cancelleria": "Schreibwaren",
-    "Carosello categorie. Scorri a destra o sinistra per passare tra Spese ed Entrate.":
-        "Karussellkategorien. Wischen Sie nach links oder rechts, um zwischen Ausgaben und Einnahmen zu wechseln.",
+    "Carosello categorie. Scorri a destra o sinistra per passare tra Spese ed Entrate.": "Karussellkategorien. Wischen Sie nach links oder rechts, um zwischen Ausgaben und Einnahmen zu wechseln.",
     "Carta": "Papier",
     "Casa": "Zuhause",
     "Cash flow": "Cashflow",
@@ -4485,14 +4255,10 @@ generatedTranslations = <String, Map<String, String>>{
     "Chiudi scorciatoie": "Schließen Sie Verknüpfungen",
     "Chiudi senza statistica": "Schließen ohne Statistik",
     "Cinema": "Kino",
-    "Circa 2×1 · saldo compatto e accesso a Nuovo movimento. La visibilità del saldo è configurabile per istanza.":
-        "Ungefähr 2×1 · kompaktes Guthaben und Zugriff auf neue Transaktionen. Die Sichtbarkeit des Guthabens ist pro Instanz konfigurierbar.",
-    "Circa 2×2 · Spesa, Entrata, Trasferisci e Voce. Conto e categoria possono essere preconfigurati.":
-        "Ungefähr 2×2 · Ausgaben, Einnahmen, Überweisungen und Einnahmen. Konto und Kategorie können vorkonfiguriert werden.",
-    "Circa 4×2 · quattro importi personalizzati, conto, categoria, trasferimento e microfono.":
-        "Über 4×2 · vier benutzerdefinierte Beträge, Konto, Kategorie, Überweisung und Mikrofon.",
-    "Circa 4×2 · saldo e quattro categorie rapide. Le categorie seguono prima i quick slot e poi le preferite.":
-        "Über 4×2 · Balance und vier Schnellkategorien. Die Kategorien folgen zuerst den Schnellslots und dann den Favoriten.",
+    "Circa 2×1 · saldo compatto e accesso a Nuovo movimento. La visibilità del saldo è configurabile per istanza.": "Ungefähr 2×1 · kompaktes Guthaben und Zugriff auf neue Transaktionen. Die Sichtbarkeit des Guthabens ist pro Instanz konfigurierbar.",
+    "Circa 2×2 · Spesa, Entrata, Trasferisci e Voce. Conto e categoria possono essere preconfigurati.": "Ungefähr 2×2 · Ausgaben, Einnahmen, Überweisungen und Einnahmen. Konto und Kategorie können vorkonfiguriert werden.",
+    "Circa 4×2 · quattro importi personalizzati, conto, categoria, trasferimento e microfono.": "Über 4×2 · vier benutzerdefinierte Beträge, Konto, Kategorie, Überweisung und Mikrofon.",
+    "Circa 4×2 · saldo e quattro categorie rapide. Le categorie seguono prima i quick slot e poi le preferite.": "Über 4×2 · Balance und vier Schnellkategorien. Die Kategorien folgen zuerst den Schnellslots und dann den Favoriten.",
     "closed_at IS NOT NULL, created_at DESC, id DESC":
         "geschlossenes_at ist NICHT NULL, erstelltes_at DESC, id DESC",
     "Collega": "Verbinden",
@@ -4528,8 +4294,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Conferma PIN": "PIN bestätigen",
     "Conferma riconciliazione": "Bestätigen Sie den Abgleich",
     "Confermato": "Bestätigt",
-    "Confermato = ricorrenza configurata. Previsto = pattern storico ad alta confidenza. Stimato = comportamento aggregato, non un evento certo.":
-        "Bestätigt = Wiederholung konfiguriert. Erwartet = historisches Muster mit hohem Vertrauen. Geschätzte = Gesamtverhalten, kein bestimmtes Ereignis.",
+    "Confermato = ricorrenza configurata. Previsto = pattern storico ad alta confidenza. Stimato = comportamento aggregato, non un evento certo.": "Bestätigt = Wiederholung konfiguriert. Erwartet = historisches Muster mit hohem Vertrauen. Geschätzte = Gesamtverhalten, kein bestimmtes Ereignis.",
     "Configura": "Konfigurieren",
     "Configura conto e categoria": "Konto und Kategorie konfigurieren",
     "Configura Balyn": "Konfigurieren Sie Balyn",
@@ -4549,8 +4314,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Conti": "Konten",
     "Conti inclusi": "Konten inklusive",
     "Conti non trovati": "Konten nicht gefunden",
-    "Conti, movimenti, categorie, budget, obiettivi, regole e apprendimento locale verranno eliminati. Crea prima un backup se vuoi conservarli.":
-        "Konten, Einnahmen, Kategorien, Budgets, Ziele, Regeln und lokales Lernen werden gelöscht. Erstellen Sie zunächst ein Backup, wenn Sie sie behalten möchten.",
+    "Conti, movimenti, categorie, budget, obiettivi, regole e apprendimento locale verranno eliminati. Crea prima un backup se vuoi conservarli.": "Konten, Einnahmen, Kategorien, Budgets, Ziele, Regeln und lokales Lernen werden gelöscht. Erstellen Sie zunächst ein Backup, wenn Sie sie behalten möchten.",
     "Continua": "Weiter",
     "Conto": "Konto",
     "Conto (es. Revolut)": "Konto (z. B. Revolut)",
@@ -4588,15 +4352,12 @@ generatedTranslations = <String, Map<String, String>>{
     "Crea obiettivo": "Ziel erstellen",
     "Crea persona": "Person erstellen",
     "Crea preset": "Erstellen Sie Voreinstellungen",
-    "Crea prima un conto per programmare movimenti ricorrenti.":
-        "Erstellen Sie zunächst ein Konto, um wiederkehrende Transaktionen zu planen.",
+    "Crea prima un conto per programmare movimenti ricorrenti.": "Erstellen Sie zunächst ein Konto, um wiederkehrende Transaktionen zu planen.",
     "Crea primo conto": "Erstellen Sie das erste Konto",
     "Crea regola": "Regel erstellen",
     "Crea ricorrenza": "Jubiläum erstellen",
-    "Crea scorciatoie per i movimenti che inserisci spesso.":
-        "Erstellen Sie Verknüpfungen für Transaktionen, die Sie häufig eingeben.",
-    "Crea un conto oppure registra un movimento come Non assegnato.":
-        "Erstellen Sie ein Konto oder erfassen Sie eine Transaktion als „Nicht zugewiesen“.",
+    "Crea scorciatoie per i movimenti che inserisci spesso.": "Erstellen Sie Verknüpfungen für Transaktionen, die Sie häufig eingeben.",
+    "Crea un conto oppure registra un movimento come Non assegnato.": "Erstellen Sie ein Konto oder erfassen Sie eine Transaktion als „Nicht zugewiesen“.",
     "Crea un limite in Pianifica": "Erstellen Sie im Zeitplan ein Limit",
     "Crea un obiettivo di risparmio realistico.":
         "Erstellen Sie ein realistisches Sparziel.",
@@ -4621,15 +4382,13 @@ generatedTranslations = <String, Map<String, String>>{
     "Da restituire": "Zurückzugeben",
     "Da ricevere": "Zu empfangen",
     "Da saldare": "Zu bezahlen",
-    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
-        "Balyn sendet keine Transaktionen, Belege, Beschreibungen oder Muster an externe Dienste.",
+    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.": "Balyn sendet keine Transaktionen, Belege, Beschreibungen oder Muster an externe Dienste.",
     "Balyn non riceve né memorizza dati biometrici.":
         "Balyn empfängt oder speichert keine biometrischen Daten.",
     "Balyn non richiede un account e non integra pubblicità, ":
         "Balyn erfordert kein Konto und integriert keine Werbung,",
     "Balyn sulla Home": "Balyn auf Home",
-    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
-        "Balyn nutzt lokale Planung und begrenzt Duplikate. Automatische Wiederholungen werden beim Öffnen der App weiterhin abgeglichen.",
+    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.": "Balyn nutzt lokale Planung und begrenzt Duplikate. Automatische Wiederholungen werden beim Öffnen der App weiterhin abgeglichen.",
     "Balyn · Importi rapidi": "Balyn · Schnelle Beträge",
     "Balyn · Quick Capture": "Balyn · Schnelle Erfassung",
     "Balyn · Riepilogo": "Balyn · Zusammenfassung",
@@ -4656,13 +4415,11 @@ generatedTranslations = <String, Map<String, String>>{
     "Dati locali, permessi, backup e servizi di sistema":
         "Lokale Daten, Berechtigungen, Backups und Systemdienste",
     "Dati sul dispositivo": "Daten auf dem Gerät",
-    "Dati, PIN e preferenze restano locali. Nessun account o server è coinvolto.":
-        "Daten, PIN und Präferenzen bleiben lokal. Es sind keine Konten oder Server betroffen.",
+    "Dati, PIN e preferenze restano locali. Nessun account o server è coinvolto.": "Daten, PIN und Präferenzen bleiben lokal. Es sind keine Konten oder Server betroffen.",
     "dd MMM yy": "TT MMM jj",
     "dd MMM yyyy": "tt MMM jjjj",
     "dd/MM/yyyy HH:mm": "TT/MM/JJJJ HH:mm",
-    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.":
-        "Definieren Sie eine Zahl und, wenn Sie möchten, ein Datum: Balyn schätzt ein nachhaltiges Tempo ein.",
+    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.": "Definieren Sie eine Zahl und, wenn Sie möchten, ein Datum: Balyn schätzt ein nachhaltiges Tempo ein.",
     "dei trasferimenti": "von Überweisungen",
     "delle entrate": "der Einnahmen",
     "delle spese": "der Ausgaben",
@@ -4679,31 +4436,26 @@ generatedTranslations = <String, Map<String, String>>{
     "Devo restituire dei soldi": "Ich muss etwas Geld zurückzahlen",
     "Devo ricevere dei soldi": "Ich muss etwas Geld besorgen",
     "Disattiva": "Deaktivieren",
-    "Disattiva per movimenti eccezionali che non vuoi nelle analisi.":
-        "Deaktivieren Sie die Option für außergewöhnliche Transaktionen, die Sie nicht in Ihren Analysen haben möchten.",
+    "Disattiva per movimenti eccezionali che non vuoi nelle analisi.": "Deaktivieren Sie die Option für außergewöhnliche Transaktionen, die Sie nicht in Ihren Analysen haben möchten.",
     "Disattivate": "Deaktivieren",
     "Disattivato": "Deaktiviert",
-    "Disinstallando l’app vengono rimossi i dati conservati nello ":
-        "Durch die Deinstallation der App werden die darin gespeicherten Daten entfernt",
+    "Disinstallando l’app vengono rimossi i dati conservati nello ": "Durch die Deinstallation der App werden die darin gespeicherten Daten entfernt",
     "Disponibile": "Verfügbar",
     "Disponibile da spendere": "Verfügbar zum Ausgeben",
     "Dividi movimento": "Geteilte Transaktion",
     "Divisione": "Abteilung",
     "Domenica": "Sonntag",
     "Donazione": "Spende",
-    "Dopo alcuni movimenti coerenti compariranno qui le abitudini riconosciute.":
-        "Nach einigen konsistenten Transaktionen werden hier die erkannten Gewohnheiten angezeigt.",
+    "Dopo alcuni movimenti coerenti compariranno qui le abitudini riconosciute.": "Nach einigen konsistenten Transaktionen werden hier die erkannten Gewohnheiten angezeigt.",
     "Dove stai spendendo": "Wo gibst du aus?",
     "Duplica": "Duplizieren",
-    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.":
-        "Während der Einrichtung können Sie auswählen, ob Saldo und Beträge angezeigt werden sollen. „Guthaben ausblenden“ ist in der App immer noch vorrangig und verdeckt die Widgets.",
+    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.": "Während der Einrichtung können Sie auswählen, ob Saldo und Beträge angezeigt werden sollen. „Guthaben ausblenden“ ist in der App immer noch vorrangig und verdeckt die Widgets.",
     "EEE dd MMM yy": "EEE TT MMM jj",
     "Elettricità": "Strom",
     "Elimina": "Löschen",
     "Elimina conto": "Konto löschen",
     "Elimina pattern": "Muster löschen",
-    "Elimina prima i rimborsi/restituzioni registrati per annullare l’anticipo.":
-        "Löschen Sie zunächst die gebuchten Rückerstattungen/Rückgaben, um den Vorschuss zu stornieren.",
+    "Elimina prima i rimborsi/restituzioni registrati per annullare l’anticipo.": "Löschen Sie zunächst die gebuchten Rückerstattungen/Rückgaben, um den Vorschuss zu stornieren.",
     "Elimina se vuoto": "Löschen, falls leer",
     "Eliminare il movimento?": "Transaktion eliminieren?",
     "Eliminare questo rimborso?": "Diese Rückerstattung löschen?",
@@ -4730,15 +4482,13 @@ generatedTranslations = <String, Map<String, String>>{
     "Escursione": "Ausflug",
     "Esempio: descrizione contiene LIDL → Alimentari.":
         "Beispiel: Beschreibung enthält LIDL → Essen.",
-    "esplicitamente l’operazione e scegli una destinazione. I backup ":
-        "Führen Sie den Vorgang explizit aus und wählen Sie ein Ziel aus. Die Backups",
+    "esplicitamente l’operazione e scegli una destinazione. I backup ": "Führen Sie den Vorgang explizit aus und wählen Sie ein Ziel aus. Die Backups",
     "Esporta lo storico di questo conto":
         "Exportieren Sie den Verlauf dieses Kontos",
     "Esporta movimenti": "Transaktionen exportieren",
     "Esporta movimenti CSV": "CSV-Transaktionen exportieren",
     "Evento": "Veranstaltung",
-    "Fallback opzionale. La privacy dipende dal servizio vocale configurato sul dispositivo.":
-        "Optionaler Fallback. Der Datenschutz hängt vom auf Ihrem Gerät konfigurierten Sprachdienst ab.",
+    "Fallback opzionale. La privacy dipende dal servizio vocale configurato sul dispositivo.": "Optionaler Fallback. Der Datenschutz hängt vom auf Ihrem Gerät konfigurierten Sprachdienst ab.",
     "Fallback semplice da 4 a 8 cifre.":
         "Einfaches 4- bis 8-stelliges Fallback.",
     "Famiglia": "Familie",
@@ -4801,8 +4551,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Bereits klassifizierte Transaktionen ändern sich nicht.",
     "I movimenti già registrati resteranno invariati.":
         "Bereits erfasste Transaktionen bleiben unverändert.",
-    "I pattern sono ricavati dai tuoi movimenti. Puoi disattivarli, convertirli in regole esplicite o eliminarli senza modificare lo storico.":
-        "Muster werden aus Ihren Transaktionen abgeleitet. Sie können sie deaktivieren, in explizite Regeln umwandeln oder löschen, ohne den Verlauf zu ändern.",
+    "I pattern sono ricavati dai tuoi movimenti. Puoi disattivarli, convertirli in regole esplicite o eliminarli senza modificare lo storico.": "Muster werden aus Ihren Transaktionen abgeleitet. Sie können sie deaktivieren, in explizite Regeln umwandeln oder löschen, ohne den Verlauf zu ändern.",
     "I saldi dei conti verranno ricalcolati automaticamente.":
         "Der Kontostand wird automatisch neu berechnet.",
     "I widget di questa sezione sono disponibili su Android.":
@@ -4811,8 +4560,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Ignora": "Ignorieren",
     "Ignora possibili duplicati": "Ignorieren Sie mögliche Duplikate",
     "Ignora riferimento": "Referenz ignorieren",
-    "Il budget verrà eliminato. I movimenti non saranno modificati.":
-        "Der Haushalt wird abgeschafft. Die Transaktionen werden nicht geändert.",
+    "Il budget verrà eliminato. I movimenti non saranno modificati.": "Der Haushalt wird abgeschafft. Die Transaktionen werden nicht geändert.",
     "Il cash-flow attuale non lascia ancora un margine stabile.":
         "Der aktuelle Cashflow lässt noch keine stabile Marge zu.",
     "Il conto contiene storico": "Das Konto enthält einen Verlauf",
@@ -4820,16 +4568,12 @@ generatedTranslations = <String, Map<String, String>>{
     "Il conto è bloccato.": "Das Konto ist gesperrt.",
     "Il conto è vuoto e può essere eliminato in sicurezza.":
         "Das Konto ist leer und kann bedenkenlos gelöscht werden.",
-    "Il conto è vuoto. Eventuali riferimenti in preset e obiettivi verranno scollegati in sicurezza.":
-        "Das Konto ist leer. Alle Referenzen in Voreinstellungen und Zielen werden sicher getrennt.",
+    "Il conto è vuoto. Eventuali riferimenti in preset e obiettivi verranno scollegati in sicurezza.": "Das Konto ist leer. Alle Referenzen in Voreinstellungen und Zielen werden sicher getrennt.",
     "Il CSV deve contenere almeno type, amount, date e account.":
         "Die CSV muss mindestens Typ, Betrag, Datum und Konto enthalten.",
-    "Il database ripristinato non supera il controllo integrità.":
-        "Die wiederhergestellte Datenbank besteht die Integritätsprüfung nicht.",
-    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.":
-        "Der Launcher unterstützt kein automatisches Hinzufügen. Halten Sie Home → Widget → Balyn gedrückt.",
-    "Il microfono compila Nuovo movimento ma non salva mai automaticamente.":
-        "Das Mikrofon erstellt eine neue Transaktion, speichert sie jedoch nie automatisch.",
+    "Il database ripristinato non supera il controllo integrità.": "Die wiederhergestellte Datenbank besteht die Integritätsprüfung nicht.",
+    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.": "Der Launcher unterstützt kein automatisches Hinzufügen. Halten Sie Home → Widget → Balyn gedrückt.",
+    "Il microfono compila Nuovo movimento ma non salva mai automaticamente.": "Das Mikrofon erstellt eine neue Transaktion, speichert sie jedoch nie automatisch.",
     "Il movimento ha una direzione incompatibile.":
         "Die Transaktion hat eine inkompatible Richtung.",
     "Il movimento supera il residuo dell’anticipo.":
@@ -4838,28 +4582,22 @@ generatedTranslations = <String, Map<String, String>>{
         "Die Mikrofonberechtigung ist nicht verfügbar.",
     "Il PIN deve contenere da 4 a 8 cifre.":
         "Die PIN muss 4 bis 8 Ziffern enthalten.",
-    "Il preset verrà rimosso. I movimenti già registrati non cambieranno.":
-        "Die Voreinstellung wird entfernt. Bereits erfasste Transaktionen ändern sich nicht.",
+    "Il preset verrà rimosso. I movimenti già registrati non cambieranno.": "Die Voreinstellung wird entfernt. Bereits erfasste Transaktionen ändern sich nicht.",
     "Il recognizer di sistema non è disponibile offline.":
         "Die Systemerkennung ist offline nicht verfügbar.",
     "Il riconoscimento vocale offline non è disponibile su questo dispositivo.":
         "Die Offline-Spracherkennung ist auf diesem Gerät nicht verfügbar.",
-    "Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.":
-        "Die Hauptzusammenfassung bleibt oben fixiert. Aktivieren Sie die Abschnitte, die Sie hier sehen möchten, erneut.",
+    "Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.": "Die Hauptzusammenfassung bleibt oben fixiert. Aktivieren Sie die Abschnitte, die Sie hier sehen möchten, erneut.",
     "Il saldo contribuisce al patrimonio totale":
         "Der Restbetrag zählt zum Gesamtvermögen",
-    "Il saldo del conto e il residuo dell’anticipo verranno ripristinati automaticamente.":
-        "Der Kontostand und der Vorschusssaldo werden automatisch wiederhergestellt.",
+    "Il saldo del conto e il residuo dell’anticipo verranno ripristinati automaticamente.": "Der Kontostand und der Vorschusssaldo werden automatisch wiederhergestellt.",
     "Il saldo del conto verrà ricalcolato automaticamente.":
         "Ihr Kontostand wird automatisch neu berechnet.",
-    "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.":
-        "Das System erkennt Gewohnheiten mit lokalen Statistiken und erklärbaren Regeln. Es verwendet keine KI oder Cloud.",
-    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.":
-        "Der erkannte Text wird lokal von einem deterministischen Parser interpretiert. Es wird nicht an den Balyn-Server gesendet.",
+    "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.": "Das System erkennt Gewohnheiten mit lokalen Statistiken und erklärbaren Regeln. Es verwendet keine KI oder Cloud.",
+    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.": "Der erkannte Text wird lokal von einem deterministischen Parser interpretiert. Es wird nicht an den Balyn-Server gesendet.",
     "Il trasferimento deve arrivare al conto collegato all’obiettivo.":
         "Die Überweisung muss auf dem mit dem Ziel verknüpften Konto eingehen.",
-    "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.":
-        "Für die Übertragung sind zwei verschiedene aktive Konten erforderlich, bevor ein Ereignis erstellt werden kann.",
+    "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.": "Für die Übertragung sind zwei verschiedene aktive Konten erforderlich, bevor ein Ereignis erstellt werden kann.",
     "Immediato": "Sofort",
     "Impedisce nuovi movimenti sul conto":
         "Verhindert neue Transaktionen auf dem Konto",
@@ -4878,13 +4616,10 @@ generatedTranslations = <String, Map<String, String>>{
     "Importo ricevuto": "Erhaltener Betrag",
     "importo uguale al residuo": "Betrag, der dem Rest entspricht",
     "importo vicino al residuo": "Betrag nahe am Restwert",
-    "Imposta limiti giornalieri, settimanali, mensili o annuali.":
-        "Legen Sie tägliche, wöchentliche, monatliche oder jährliche Limits fest.",
+    "Imposta limiti giornalieri, settimanali, mensili o annuali.": "Legen Sie tägliche, wöchentliche, monatliche oder jährliche Limits fest.",
     "Imposta PIN locale": "Lokale PIN festlegen",
-    "Imposta un limite per sapere quanto puoi ancora spendere nel periodo.":
-        "Legen Sie ein Limit fest, um zu sehen, wie viel Sie in diesem Zeitraum noch ausgeben können.",
-    "Imposta un limite per sapere quanto puoi ancora spendere.":
-        "Legen Sie ein Limit fest, um zu sehen, wie viel Sie noch ausgeben können.",
+    "Imposta un limite per sapere quanto puoi ancora spendere nel periodo.": "Legen Sie ein Limit fest, um zu sehen, wie viel Sie in diesem Zeitraum noch ausgeben können.",
+    "Imposta un limite per sapere quanto puoi ancora spendere.": "Legen Sie ein Limit fest, um zu sehen, wie viel Sie noch ausgeben können.",
     "Impostazioni": "Einstellungen",
     "Impostazioni conto": "Kontoeinstellungen",
     "In ascolto": "Zuhören",
@@ -4909,8 +4644,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Geben Sie zunächst den Gesamtbetrag ein.",
     "Inserisci un importo maggiore di 0.":
         "Geben Sie einen Betrag größer als 0 ein.",
-    "Inserisci un importo valido entro il residuo e scegli un conto.":
-        "Geben Sie einen gültigen Betrag innerhalb des Saldos ein und wählen Sie ein Konto.",
+    "Inserisci un importo valido entro il residuo e scegli un conto.": "Geben Sie einen gültigen Betrag innerhalb des Saldos ein und wählen Sie ein Konto.",
     "Inserisci una parte oppure usa tutto l’importo.":
         "Geben Sie eine Portion ein oder verwenden Sie die gesamte Menge.",
     "Interessi": "Interessen",
@@ -4926,14 +4660,10 @@ generatedTranslations = <String, Map<String, String>>{
     "La mia parte": "Mein Anteil",
     "La posizione verrà chiusa come annullata.":
         "Die Position wird als storniert geschlossen.",
-    "La previsione di fine mese è sotto la soglia che hai impostato. Apri Pianifica per i dettagli.":
-        "Die Monatsendprognose liegt unter dem von Ihnen festgelegten Schwellenwert. Weitere Informationen finden Sie im Zeitplan.",
-    "La quota anticipata deve essere maggiore di 0 e minore o uguale al totale.":
-        "Die Vorschussgebühr muss größer als 0 und kleiner oder gleich dem Gesamtbetrag sein.",
-    "La stima comportamentale è comunque inclusa nel saldo previsto sopra.":
-        "Die Verhaltensschätzung ist jedoch in der obigen Bilanzprognose enthalten.",
-    "La tua parte e la quota anticipata devono coincidere con il totale.":
-        "Ihr Anteil und die Vorabgebühr müssen mit der Gesamtsumme übereinstimmen.",
+    "La previsione di fine mese è sotto la soglia che hai impostato. Apri Pianifica per i dettagli.": "Die Monatsendprognose liegt unter dem von Ihnen festgelegten Schwellenwert. Weitere Informationen finden Sie im Zeitplan.",
+    "La quota anticipata deve essere maggiore di 0 e minore o uguale al totale.": "Die Vorschussgebühr muss größer als 0 und kleiner oder gleich dem Gesamtbetrag sein.",
+    "La stima comportamentale è comunque inclusa nel saldo previsto sopra.": "Die Verhaltensschätzung ist jedoch in der obigen Bilanzprognose enthalten.",
+    "La tua parte e la quota anticipata devono coincidere con il totale.": "Ihr Anteil und die Vorabgebühr müssen mit der Gesamtsumme übereinstimmen.",
     "Lascia vuoto per un backup non cifrato.":
         "Für ein unverschlüsseltes Backup leer lassen.",
     "Lavanderia": "Wäsche",
@@ -4942,20 +4672,17 @@ generatedTranslations = <String, Map<String, String>>{
     "Lavoro e formazione": "Arbeit und Ausbildung",
     "Le categorie compariranno qui quando registri movimenti.":
         "Kategorien werden hier angezeigt, wenn Sie Transaktionen aufzeichnen.",
-    "Le metriche principali restano in alto. Riattiva altri widget dalla personalizzazione Home.":
-        "Wichtige Kennzahlen bleiben an der Spitze. Aktivieren Sie andere Widgets über den Home-Customizer erneut.",
+    "Le metriche principali restano in alto. Riattiva altri widget dalla personalizzazione Home.": "Wichtige Kennzahlen bleiben an der Spitze. Aktivieren Sie andere Widgets über den Home-Customizer erneut.",
     "Le notifiche possono essere disattivate in qualsiasi momento.":
         "Benachrichtigungen können jederzeit deaktiviert werden.",
-    "Le persone servono solo per organizzare gli anticipi e restano sul dispositivo.":
-        "Die Personen dienen lediglich der Organisation der Vorschüsse und bleiben auf dem Gerät.",
+    "Le persone servono solo per organizzare gli anticipi e restano sul dispositivo.": "Die Personen dienen lediglich der Organisation der Vorschüsse und bleiben auf dem Gerät.",
     "Libri": "Bücher",
     "Limite": "Begrenzen",
     "Lingua": "Sprache",
     "Lista": "Liste",
     "Livello microfono attivo": "Aktiver Mikrofonpegel",
     "Livello microfono in pausa": "Mikrofonpegel angehalten",
-    "Lo storico di un anticipo chiuso non è modificabile.":
-        "Der Verlauf eines abgeschlossenen Vorschusses kann nicht geändert werden.",
+    "Lo storico di un anticipo chiuso non è modificabile.": "Der Verlauf eines abgeschlossenen Vorschusses kann nicht geändert werden.",
     "Lo storico si costruisce automaticamente durante l’uso.":
         "Der Verlauf wird während der Nutzung automatisch erstellt.",
     "Locale": "Lokal",
@@ -4972,8 +4699,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Das angeschlossene Objektiv ist nicht mehr verfügbar.",
     "L’obiettivo non ha un conto collegato.":
         "Das Ziel verfügt über kein verknüpftes Konto.",
-    "L’obiettivo verrà eliminato. Conti e movimenti non saranno modificati.":
-        "Das Ziel wird eliminiert. Konten und Transaktionen werden nicht geändert.",
+    "L’obiettivo verrà eliminato. Conti e movimenti non saranno modificati.": "Das Ziel wird eliminiert. Konten und Transaktionen werden nicht geändert.",
     "Mai riconciliato": "Nie versöhnt",
     "Manifest backup non leggibile.": "Manifest-Backup nicht lesbar.",
     "Manifest backup non valido.": "Ungültiges Backup-Manifest.",
@@ -5016,8 +4742,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Mostra saldo": "Gleichgewicht zeigen",
     "Mostra saldo nel widget": "Kontostand im Widget anzeigen",
     "Mostra tutte": "Alle anzeigen",
-    "Mostra “Completa” solo quando la confidenza è sufficiente.":
-        "Zeigen Sie „Abgeschlossen“ nur an, wenn die Zuverlässigkeit ausreichend ist.",
+    "Mostra “Completa” solo quando la confidenza è sufficiente.": "Zeigen Sie „Abgeschlossen“ nur an, wenn die Zuverlässigkeit ausreichend ist.",
     "Mostra, nascondi, ridimensiona e riordina i widget":
         "Widgets anzeigen, ausblenden, in der Größe ändern und neu anordnen",
     "Moto": "Motorrad",
@@ -5026,8 +4751,7 @@ generatedTranslations = <String, Map<String, String>>{
     "movimenti da assegnare": "zuzuordnende Transaktionen",
     "Movimenti del conto esportati.": "Exportierte Kontotransaktionen.",
     "Movimenti recenti": "Letzte Transaktionen",
-    "Movimenti, split, budget, regole e apprendimento verranno spostati nella categoria scelta.":
-        "Transaktionen, Aufteilungen, Budgets, Regeln und Lernen werden in die ausgewählte Kategorie verschoben.",
+    "Movimenti, split, budget, regole e apprendimento verranno spostati nella categoria scelta.": "Transaktionen, Aufteilungen, Budgets, Regeln und Lernen werden in die ausgewählte Kategorie verschoben.",
     "Movimento": "Transaktion",
     "Movimento aggiornato.": "Aktualisierte Transaktion.",
     "Movimento collegato non trovato.": "Verknüpfter Antrag nicht gefunden.",
@@ -5119,8 +4843,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Non valide": "Nicht gültig",
     "Non verrà restituito": "Es wird nicht zurückgegeben",
     "Non verrà restituito?": "Wird es nicht zurückgegeben?",
-    "Non è chiaro quali conti usare per il trasferimento.":
-        "Es ist unklar, welche Konten für die Überweisung verwendet werden sollen.",
+    "Non è chiaro quali conti usare per il trasferimento.": "Es ist unklar, welche Konten für die Überweisung verwendet werden sollen.",
     "Non è questo": "Das ist es nicht",
     "Nota": "Hinweis",
     "Nota opzionale": "Optionaler Hinweis",
@@ -5143,8 +4866,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Nuovo budget": "Neues Budget",
     "Nuovo conto": "Neues Konto",
     "Nuovo movimento": "Neue Transaktion",
-    "Nuovo movimento. Tieni premuto per preset e scorciatoie.":
-        "Neue Transaktion. Für Voreinstellungen und Verknüpfungen gedrückt halten.",
+    "Nuovo movimento. Tieni premuto per preset e scorciatoie.": "Neue Transaktion. Für Voreinstellungen und Verknüpfungen gedrückt halten.",
     "Nuovo obiettivo": "Neues Ziel",
     "Nuovo preset": "Neue Voreinstellung",
     "Nuovo trasferimento": "Neuer Transfer",
@@ -5154,10 +4876,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Obiettivo da rivedere": "Zu überprüfendes Ziel",
     "Obiettivo non trovato.": "Ziel nicht gefunden.",
     "Oggi": "Heute",
-    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.":
-        "Jede Instanz kann ihre eigenen Einstellungen haben. Das Widget öffnet sich immer „Quick Add“: Kein Tippen registriert Geld ohne Ihre Bestätigung.",
-    "Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add.":
-        "Jedes Widget verwaltet seine eigenen Einstellungen. Die Konto- und Kategorienamen werden von der App überprüft, wenn Sie Quick Add öffnen.",
+    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.": "Jede Instanz kann ihre eigenen Einstellungen haben. Das Widget öffnet sich immer „Quick Add“: Kein Tippen registriert Geld ohne Ihre Bestätigung.",
+    "Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add.": "Jedes Widget verwaltet seine eigenen Einstellungen. Die Konto- und Kategorienamen werden von der App überprüft, wenn Sie Quick Add öffnen.",
     "Operazione irreversibile dopo la conferma.":
         "Irreversibler Betrieb nach Bestätigung.",
     "Ora": "Jetzt",
@@ -5173,10 +4893,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Parrucchiere": "Friseur",
     "Parser locale · on-device quando disponibile":
         "Lokaler Parser · auf dem Gerät, sofern verfügbar",
-    "Parti dal primo conto oppure registra subito un movimento e assegnalo in seguito.":
-        "Beginnen Sie mit dem ersten Konto oder erfassen Sie eine Transaktion sofort und weisen Sie sie später zu.",
-    "Parti dal primo conto oppure registra subito un movimento.":
-        "Beginnen Sie mit dem ersten Konto oder erfassen Sie sofort eine Transaktion.",
+    "Parti dal primo conto oppure registra subito un movimento e assegnalo in seguito.": "Beginnen Sie mit dem ersten Konto oder erfassen Sie eine Transaktion sofort und weisen Sie sie später zu.",
+    "Parti dal primo conto oppure registra subito un movimento.": "Beginnen Sie mit dem ersten Konto oder erfassen Sie sofort eine Transaktion.",
     "Parzialmente regolato": "Teilweise reguliert",
     "Password": "Passwörter",
     "Password backup": "Passwortsicherung",
@@ -5186,18 +4904,13 @@ generatedTranslations = <String, Map<String, String>>{
     "Patrimonio corrente": "Umlaufvermögen",
     "Patrimonio incluso nel totale": "Kulturerbe im Gesamtpreis enthalten",
     "Patrimonio netto": "Nettovermögen",
-    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.":
-        "Vermögenswerte, Einnahmen, Ausgaben und Verfügbar bleiben oben über den Schnellaktionen fixiert. Hier können Sie nachfolgende Abschnitte ein- und ausblenden, ihre Größe ändern und sie neu anordnen.",
-    "Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.":
-        "Muster, Feedback und Unterdrückung werden beseitigt. Die Transaktionen bleiben unverändert und das System kann neu lernen.",
+    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.": "Vermögenswerte, Einnahmen, Ausgaben und Verfügbar bleiben oben über den Schnellaktionen fixiert. Hier können Sie nachfolgende Abschnitte ein- und ausblenden, ihre Größe ändern und sie neu anordnen.",
+    "Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.": "Muster, Feedback und Unterdrückung werden beseitigt. Die Transaktionen bleiben unverändert und das System kann neu lernen.",
     "Pedaggio": "Maut",
-    "Per assegnare una categoria la regola deve avere un tipo compatibile.":
-        "Um eine Kategorie zuzuweisen, muss die Regel einen kompatiblen Typ haben.",
-    "Per assegnare una categoria la regola deve avere un tipo Spesa o Entrata.":
-        "Um eine Kategorie zuzuweisen, muss die Regel den Typ „Ausgabe“ oder „Einkommen“ haben.",
+    "Per assegnare una categoria la regola deve avere un tipo compatibile.": "Um eine Kategorie zuzuweisen, muss die Regel einen kompatiblen Typ haben.",
+    "Per assegnare una categoria la regola deve avere un tipo Spesa o Entrata.": "Um eine Kategorie zuzuweisen, muss die Regel den Typ „Ausgabe“ oder „Einkommen“ haben.",
     "Per conto": "Im Namen",
-    "Per proteggere lo storico finanziario un conto con movimenti o ricorrenze non viene eliminato. Puoi archiviarlo e continuare a consultare i dati.":
-        "Um den Finanzverlauf zu schützen, wird ein Konto mit Transaktionen oder Wiederholungen nicht gelöscht. Sie können es archivieren und die Daten weiterhin einsehen.",
+    "Per proteggere lo storico finanziario un conto con movimenti o ricorrenze non viene eliminato. Puoi archiviarlo e continuare a consultare i dati.": "Um den Finanzverlauf zu schützen, wird ein Konto mit Transaktionen oder Wiederholungen nicht gelöscht. Sie können es archivieren und die Daten weiterhin einsehen.",
     "Per te": "Für dich",
     "Periodo": "Zeitraum",
     "Periodo precedente": "Vorheriger Zeitraum",
@@ -5258,8 +4971,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Previsioni e calendario": "Prognose und Kalender",
     "Previsto": "Erwartet",
     "Previsto da abitudini": "Von Gewohnheiten erwartet",
-    "Prima del ripristino viene creato un safety backup temporaneo. Se il controllo integrità fallisce, i dati attuali vengono ripristinati.":
-        "Vor der Wiederherstellung wird ein temporäres Sicherheitsbackup erstellt. Wenn die Integritätsprüfung fehlschlägt, werden die aktuellen Daten wiederhergestellt.",
+    "Prima del ripristino viene creato un safety backup temporaneo. Se il controllo integrità fallisce, i dati attuali vengono ripristinati.": "Vor der Wiederherstellung wird ein temporäres Sicherheitsbackup erstellt. Wenn die Integritätsprüfung fehlschlägt, werden die aktuellen Daten wiederhergestellt.",
     "Primo giorno settimana": "Erster Tag der Woche",
     "Principio di base": "Grundprinzip",
     "Privacy": "Privatsphäre",
@@ -5277,8 +4989,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Lokale Erinnerungen für den Erhalt oder die Rückgabe von Geldern",
     "Promemoria per movimenti ricorrenti":
         "Erinnerung für wiederkehrende Transaktionen",
-    "Propone di configurare pattern settimanali, mensili o annuali.":
-        "Es bietet die Möglichkeit, wöchentliche, monatliche oder jährliche Muster zu konfigurieren.",
+    "Propone di configurare pattern settimanali, mensili o annuali.": "Es bietet die Möglichkeit, wöchentliche, monatliche oder jährliche Muster zu konfigurieren.",
     "Prossima data": "Nächster Termin",
     "Prossime scadenze": "Kommende Fristen",
     "Prossimi 30 giorni": "Nächste 30 Tage",
@@ -5289,23 +5000,18 @@ generatedTranslations = <String, Map<String, String>>{
         "Versuchen Sie, Ihre Suche oder Filter zu ändern.",
     "Prova regola": "Versuchen Sie es mit der Regel",
     "Pulizie": "Reinigung",
-    "Puoi avere, per esempio, un widget Revolut/Bar e un altro Contanti/Benzina con importi diversi.":
-        "Sie können beispielsweise ein Revolut/Bar-Widget und ein anderes Cash/Benzin mit unterschiedlichen Beträgen haben.",
+    "Puoi avere, per esempio, un widget Revolut/Bar e un altro Contanti/Benzina con importi diversi.": "Sie können beispielsweise ein Revolut/Bar-Widget und ein anderes Cash/Benzin mit unterschiedlichen Beträgen haben.",
     "Puoi cambiarla in qualsiasi momento": "Sie können es jederzeit ändern",
     "Puoi cancellare i dati finanziari locali dalle impostazioni. ":
         "Sie können lokale Finanzdaten in den Einstellungen löschen.",
-    "Puoi creare il primo conto oppure registrare subito un movimento come Non assegnato.":
-        "Sie können Ihr erstes Konto erstellen oder eine Transaktion sofort als „Nicht zugewiesen“ erfassen.",
-    "Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.":
-        "Es kann sich um einen Teil oder den gesamten Betrag handeln. Bei Ausgaben, Kategorien und Budgets wird nur Ihr Anteil berücksichtigt.",
+    "Puoi creare il primo conto oppure registrare subito un movimento come Non assegnato.": "Sie können Ihr erstes Konto erstellen oder eine Transaktion sofort als „Nicht zugewiesen“ erfassen.",
+    "Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.": "Es kann sich um einen Teil oder den gesamten Betrag handeln. Bei Ausgaben, Kategorien und Budgets wird nur Ihr Anteil berücksichtigt.",
     "Quale categoria intendevi?": "Welche Kategorie meinten Sie?",
     "Quale conto intendevi?": "Welches Konto meinten Sie?",
     "Qualsiasi": "Irgendein",
     "Qualsiasi tipo": "Irgendeine Art",
-    "Questa categoria è usata in una divisione di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.":
-        "Diese Kategorie wird in einer Ausgabenabteilung verwendet. Um den Verlust der Klassifizierung zu vermeiden, führen Sie sie zunächst in einer anderen Kategorie zusammen.",
-    "Questa persona ha anticipi ancora aperti. Chiudili prima di archiviarla.":
-        "Für diese Person sind noch Vorschüsse offen. Schließen Sie sie, bevor Sie sie archivieren.",
+    "Questa categoria è usata in una divisione di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.": "Diese Kategorie wird in einer Ausgabenabteilung verwendet. Um den Verlust der Klassifizierung zu vermeiden, führen Sie sie zunächst in einer anderen Kategorie zusammen.",
+    "Questa persona ha anticipi ancora aperti. Chiudili prima di archiviarla.": "Für diese Person sind noch Vorschüsse offen. Schließen Sie sie, bevor Sie sie archivieren.",
     "Questa regola corrisponde a 1 movimento.":
         "Diese Regel entspricht 1 Transaktion.",
     "Questa spesa include un anticipo":
@@ -5313,8 +5019,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Questo anticipo è già chiuso.":
         "Dieser Vorschuss ist bereits abgeschlossen.",
     "Questo mese": "Diesen Monat",
-    "Questo movimento è un rimborso collegato":
-        "Bei dieser Transaktion handelt es sich um eine verknüpfte Rückerstattung",
+    "Questo movimento è un rimborso collegato": "Bei dieser Transaktion handelt es sich um eine verknüpfte Rückerstattung",
     "Questo trasferimento aggiornerà automaticamente il progresso.":
         "Bei dieser Übertragung wird der Fortschritt automatisch aktualisiert.",
     "Quick Capture": "Schnelle Aufnahme",
@@ -5360,8 +5065,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Spracherkennung nicht verfügbar.",
     "Riconoscimento vocale non riuscito. Puoi ricominciare.":
         "Die Spracherkennung ist fehlgeschlagen. Sie können erneut beginnen.",
-    "Ricorda i soldi ancora da ricevere o restituire.":
-        "Denken Sie an das Geld, das Sie noch erhalten oder zurückerhalten müssen.",
+    "Ricorda i soldi ancora da ricevere o restituire.": "Denken Sie an das Geld, das Sie noch erhalten oder zurückerhalten müssen.",
     "Ricorrenti": "Beschwerdeführer",
     "Ricorrenza attiva": "Aktive Wiederholung",
     "Ricorrenza mensile creata. Puoi modificarla in Pianifica.":
@@ -5370,8 +5074,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Righe valide": "Gültige Zeilen",
     "Rileva ricorrenze": "Erkennen Sie Wiederholungen",
     "Rilevate dalle tue abitudini": "Erkannt durch Ihre Gewohnheiten",
-    "Rimane qui. Se continui a parlare, aggiorno la frase; usa ↻ per ricominciare da zero.":
-        "Es bleibt hier. Wenn Sie weiter reden, werde ich den Satz aktualisieren; Verwenden Sie ↻, um von vorne zu beginnen.",
+    "Rimane qui. Se continui a parlare, aggiorno la frase; usa ↻ per ricominciare da zero.": "Es bleibt hier. Wenn Sie weiter reden, werde ich den Satz aktualisieren; Verwenden Sie ↻, um von vorne zu beginnen.",
     "Rimborso": "Rückerstattung",
     "Rimborso collegato": "Rückerstattung verknüpft",
     "Rimborso non trovato.": "Rückerstattung nicht gefunden.",
@@ -5406,8 +5109,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Saldo totale": "Gesamtbilanz",
     "Saldo totale compatto con accesso rapido a Balyn":
         "Kompakter Gesamtsaldo mit schnellem Zugriff auf Balyn",
-    "Saldo, Quick Capture, importi rapidi e riepilogo configurabili":
-        "Konfigurierbarer Kontostand, Schnellerfassung, Schnellbeträge und Zusammenfassung",
+    "Saldo, Quick Capture, importi rapidi e riepilogo configurabili": "Konfigurierbarer Kontostand, Schnellerfassung, Schnellbeträge und Zusammenfassung",
     "Salute": "Gesundheit",
     "Salute e persona": "Gesundheit und Mensch",
     "Salva": "Speichern",
@@ -5471,13 +5173,10 @@ generatedTranslations = <String, Map<String, String>>{
     "Scorciatoie": "Verknüpfungen",
     "Scuola": "Schule",
     "Scuro": "Dunkel",
-    "Se contiene storico potrai archiviarlo invece di eliminarlo":
-        "Wenn es einen Verlauf enthält, können Sie ihn archivieren, anstatt ihn zu löschen",
-    "Se è un anticipo puro, il movimento di cassa originale verrà annullato. Le spese miste restano come acquisto personale.":
-        "Handelt es sich um einen reinen Vorschuss, wird die ursprüngliche Bartransaktion storniert. Gemischte Ausgaben bleiben als persönliche Anschaffungen bestehen.",
+    "Se contiene storico potrai archiviarlo invece di eliminarlo": "Wenn es einen Verlauf enthält, können Sie ihn archivieren, anstatt ihn zu löschen",
+    "Se è un anticipo puro, il movimento di cassa originale verrà annullato. Le spese miste restano come acquisto personale.": "Handelt es sich um einen reinen Vorschuss, wird die ursprüngliche Bartransaktion storniert. Gemischte Ausgaben bleiben als persönliche Anschaffungen bestehen.",
     "Segnali": "Signale",
-    "Segnali deboli: rafforzano una previsione, non la creano da soli.":
-        "Schwache Signale: Sie verstärken eine Vorhersage, sie erstellen sie nicht selbst.",
+    "Segnali deboli: rafforzano una previsione, non la creano da soli.": "Schwache Signale: Sie verstärken eine Vorhersage, sie erstellen sie nicht selbst.",
     "Seleziona ": "Auswählen",
     "Seleziona conto": "Konto auswählen",
     "Seleziona ora": "Jetzt auswählen",
@@ -5485,10 +5184,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Senza categoria": "Nicht kategorisiert",
     "Separata dall’app": "Getrennt von der App",
     "Servizi cloud": "Cloud-Dienste",
-    "Servono almeno 3 settimane di storico utile per un consiglio realistico.":
-        "Für eine realistische Beratung sind mindestens 3 Wochen aussagekräftige Anamnese erforderlich.",
-    "Servono almeno due categorie di spesa per dividere il movimento.":
-        "Zur Aufteilung der Transaktion sind mindestens zwei Ausgabenkategorien erforderlich.",
+    "Servono almeno 3 settimane di storico utile per un consiglio realistico.": "Für eine realistische Beratung sind mindestens 3 Wochen aussagekräftige Anamnese erforderlich.",
+    "Servono almeno due categorie di spesa per dividere il movimento.": "Zur Aufteilung der Transaktion sind mindestens zwei Ausgabenkategorien erforderlich.",
     "Servono più dati": "Es werden mehr Daten benötigt",
     "Servono più dati per confrontare il periodo precedente.":
         "Für den Vergleich mit der Vorperiode sind weitere Daten erforderlich.",
@@ -5513,13 +5210,11 @@ generatedTranslations = <String, Map<String, String>>{
         "Erst wenn sich die Situation wesentlich ändert.",
     "Solo sul dispositivo": "Nur auf dem Gerät",
     "Sorriso": "Lächle",
-    "spazio privato dell’app; eventuali backup o CSV esportati restano ":
-        "privater Bereich der App; Alle Backups oder exportierten CSVs bleiben erhalten",
+    "spazio privato dell’app; eventuali backup o CSV esportati restano ": "privater Bereich der App; Alle Backups oder exportierten CSVs bleiben erhalten",
     "Spesa": "Kosten",
     "Spesa comportamentale stimata": "Geschätzter Verhaltensaufwand",
     "Spesa registrata.": "Erfasster Aufwand.",
-    "Spesa, entrata, trasferimento e voce dalla schermata Home":
-        "Ausgaben, Einnahmen, Überweisungen und Einnahmen auf dem Startbildschirm",
+    "Spesa, entrata, trasferimento e voce dalla schermata Home": "Ausgaben, Einnahmen, Überweisungen und Einnahmen auf dem Startbildschirm",
     "Spese": "Ausgaben",
     "Spese del mese": "Ausgaben des Monats",
     "Spese della settimana": "Ausgaben der Woche",
@@ -5532,8 +5227,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Stima fino a fine mese": "Voraussichtlich bis Ende des Monats",
     "Stipendio": "Gehalt",
     "Studio": "Studieren",
-    "Su Android impedisce screenshot e anteprima dell’app nelle schermate recenti.":
-        "Unter Android werden Screenshots und App-Vorschauen auf aktuellen Bildschirmen verhindert.",
+    "Su Android impedisce screenshot e anteprima dell’app nelle schermate recenti.": "Unter Android werden Screenshots und App-Vorschauen auf aktuellen Bildschirmen verhindert.",
     "Suggerimenti automatici": "Automatische Vorschläge",
     "Suggerimenti obiettivi": "Objektive Vorschläge",
     "Supermercato": "Supermarkt",
@@ -5549,15 +5243,11 @@ generatedTranslations = <String, Map<String, String>>{
     "Ti suggerisco": "Ich empfehle Ihnen",
     "Tipo": "Wie",
     "Tipo predefinito": "Standardtyp",
-    "Tocca per creare un anticipo. Tieni premuto per le scorciatoie.":
-        "Tippen Sie hier, um einen Vorschuss zu erstellen. Für Verknüpfungen gedrückt halten.",
-    "Tocca per una nuova spesa. Tieni premuto per preset e scorciatoie.":
-        "Tippen Sie auf für eine neue Ausgabe. Für Voreinstellungen und Verknüpfungen gedrückt halten.",
-    "Tocca un preset per aprire il movimento già compilato.":
-        "Tippen Sie auf eine Voreinstellung, um die bereits zusammengestellte Transaktion zu öffnen.",
+    "Tocca per creare un anticipo. Tieni premuto per le scorciatoie.": "Tippen Sie hier, um einen Vorschuss zu erstellen. Für Verknüpfungen gedrückt halten.",
+    "Tocca per una nuova spesa. Tieni premuto per preset e scorciatoie.": "Tippen Sie auf für eine neue Ausgabe. Für Voreinstellungen und Verknüpfungen gedrückt halten.",
+    "Tocca un preset per aprire il movimento già compilato.": "Tippen Sie auf eine Voreinstellung, um die bereits zusammengestellte Transaktion zu öffnen.",
     "Top tag": "Top-Tags",
-    "Torta Spese/Entrate con periodo scorrevole e intervallo personalizzato.":
-        "Aufwands-/Einnahmen-Kreis mit gleitendem Zeitraum und benutzerdefiniertem Intervall.",
+    "Torta Spese/Entrate con periodo scorrevole e intervallo personalizzato.": "Aufwands-/Einnahmen-Kreis mit gleitendem Zeitraum und benutzerdefiniertem Intervall.",
     "Totale": "Insgesamt",
     "Trasferimenti": "Überweisungen",
     "Trasferimenti nelle statistiche": "Transfers in der Statistik",
@@ -5584,8 +5274,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Ultimo aggiornamento: 23 settembre 2026":
         "Letzte Aktualisierung: 23. September 2026",
     "Un promemoria il giorno prima.": "Eine Erinnerung am Vortag.",
-    "Un trasferimento ricorrente richiede due conti diversi.":
-        "Für eine wiederkehrende Überweisung sind zwei verschiedene Konten erforderlich.",
+    "Un trasferimento ricorrente richiede due conti diversi.": "Für eine wiederkehrende Überweisung sind zwei verschiedene Konten erforderlich.",
     "Una spesa condivisa richiede un conto reale.":
         "Für eine geteilte Ausgabe ist ein echtes Konto erforderlich.",
     "Unire le categorie?": "Kategorien zusammenführen?",
@@ -5596,8 +5285,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Usa da 4 a 8 cifre. Il PIN resta sul dispositivo.":
         "Verwenden Sie 4 bis 8 Ziffern. Die PIN verbleibt auf dem Gerät.",
     "Usa descrizione": "Beschreibung verwenden",
-    "Usa esclusivamente il riconoscimento offline/on-device quando Android lo supporta.":
-        "Verwenden Sie die Offline-/Geräteerkennung nur, wenn Android dies unterstützt.",
+    "Usa esclusivamente il riconoscimento offline/on-device quando Android lo supporta.": "Verwenden Sie die Offline-/Geräteerkennung nur, wenn Android dies unterstützt.",
     "Usa giorno e orario": "Verwenden Sie Tag und Uhrzeit",
     "usa i contatti pubblicati su www.ddone.it.":
         "Nutzen Sie die auf www.ddone.it veröffentlichten Kontakte.",
@@ -5605,11 +5293,9 @@ generatedTranslations = <String, Map<String, String>>{
         "Verwenden Sie Kontotransaktionen in der Analyse",
     "Usa il conto collegato all’obiettivo come destinazione.":
         "Verwenden Sie als Ziel das mit dem Ziel verknüpfte Konto.",
-    "Usa il pulsante + per registrare una spesa o un’entrata: analisi e previsioni nasceranno dai tuoi dati reali.":
-        "Über den +-Button können Sie Ausgaben oder Einnahmen erfassen: Aus Ihren realen Daten entstehen Analysen und Prognosen.",
+    "Usa il pulsante + per registrare una spesa o un’entrata: analisi e previsioni nasceranno dai tuoi dati reali.": "Über den +-Button können Sie Ausgaben oder Einnahmen erfassen: Aus Ihren realen Daten entstehen Analysen und Prognosen.",
     "Usa importo": "Menge verwenden",
-    "Usa impronta o biometria configurata nel dispositivo.":
-        "Verwenden Sie Fingerabdrücke oder biometrische Daten, die auf dem Gerät konfiguriert sind.",
+    "Usa impronta o biometria configurata nel dispositivo.": "Verwenden Sie Fingerabdrücke oder biometrische Daten, die auf dem Gerät konfiguriert sind.",
     "Usa la biometria del dispositivo per continuare.":
         "Verwenden Sie die Gerätebiometrie, um fortzufahren.",
     "Usa la previsione di fine mese e la tua soglia.":
@@ -5621,10 +5307,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Usa ultimo conto": "Letztes Konto verwenden",
     "Usata per sbloccare l’app tramite le API di sistema. ":
         "Wird zum Entsperren der App über System-APIs verwendet.",
-    "Usata solo quando scegli di acquisire una foto o ricevuta da ":
-        "Wird nur verwendet, wenn Sie ein Foto aufnehmen oder von empfangen möchten",
-    "Usate per promemoria e avvisi locali configurati da te. ":
-        "Wird für lokale Erinnerungen und Warnungen verwendet, die Sie einrichten.",
+    "Usata solo quando scegli di acquisire una foto o ricevuta da ": "Wird nur verwendet, wenn Sie ein Foto aufnehmen oder von empfangen möchten",
+    "Usate per promemoria e avvisi locali configurati da te. ": "Wird für lokale Erinnerungen und Warnungen verwendet, die Sie einrichten.",
     "Usato 1 volta": "1 Mal verwendet",
     "Usato solo per l’inserimento vocale. Il parser Balyn è ":
         "Wird nur für die Spracheingabe verwendet. Der Balyn-Parser ist",
@@ -5634,12 +5318,10 @@ generatedTranslations = <String, Map<String, String>>{
     "Variazione": "Variation",
     "Vendita": "Verkauf",
     "Verifica…": "Überprüfen Sie…",
-    "Verrà registrato come rimborso/restituzione, non come entrata o spesa.":
-        "Es wird als Erstattung/Erstattung verbucht, nicht als Einnahmen oder Ausgaben.",
+    "Verrà registrato come rimborso/restituzione, non come entrata o spesa.": "Es wird als Erstattung/Erstattung verbucht, nicht als Einnahmen oder Ausgaben.",
     "Vestiti": "Zieh dich an",
     "Viaggio": "Reisen",
-    "Vibrazione leggera su navigazione, azioni rapide e impostazioni.":
-        "Leichte Vibration bei Navigation, schnellen Aktionen und Einstellungen.",
+    "Vibrazione leggera su navigazione, azioni rapide e impostazioni.": "Leichte Vibration bei Navigation, schnellen Aktionen und Einstellungen.",
     "Videogiochi": "Videospiele",
     "Virgolette CSV non bilanciate.": "Unausgeglichene CSV-Anführungszeichen.",
     "Viste": "Ansichten",
@@ -5656,8 +5338,7 @@ generatedTranslations = <String, Map<String, String>>{
     "È il segnale principale del modello locale.":
         "Es ist das Hauptsignal des lokalen Modells.",
     "È stato condonato": "Es wurde geduldet",
-    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.":
-        "Dabei handelt es sich um eine Schätzung: Man geht von den auszugebenden Vermögenswerten aus, subtrahiert die bis zum Monatsende erwarteten wiederkehrenden Ausgaben und hält eine Vorsichtsreserve für die Ziele vor. Es handelt sich nicht um ein garantiertes Bankguthaben.",
+    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.": "Dabei handelt es sich um eine Schätzung: Man geht von den auszugebenden Vermögenswerten aus, subtrahiert die bis zum Monatsende erwarteten wiederkehrenden Ausgaben und hält eine Vorsichtsreserve für die Ziele vor. Es handelt sich nicht um ein garantiertes Bankguthaben.",
     "•••• da ricevere · •••• da restituire":
         "•••• empfangen · •••• zurückgeben",
   },
@@ -5695,16 +5376,13 @@ generatedTranslations = <String, Map<String, String>>{
         "Atualizações não invasivas sobre objetivos",
     "Aggiungi": "Adicionar",
     "Aggiungi ai preferiti": "Adicionar aos favoritos",
-    "Aggiungi bollette, abbonamenti o stipendio per prevedere il saldo futuro.":
-        "Adicione contas, assinaturas ou salários para prever seu saldo futuro.",
+    "Aggiungi bollette, abbonamenti o stipendio per prevedere il saldo futuro.": "Adicione contas, assinaturas ou salários para prever seu saldo futuro.",
     "Aggiungi bollette, abbonamenti, rate o entrate regolari.":
         "Adicione contas, assinaturas, parcelas ou renda regular.",
     "Aggiungi dettagli": "Adicionar detalhes",
     "Aggiungi entrata": "Adicionar renda",
-    "Aggiungi il conto che usi davvero o continua con movimenti Non assegnati.":
-        "Adicione a conta que você realmente usa ou continue com Transações não atribuídas.",
-    "Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.":
-        "Adicione a conta que você realmente usa ou continue com Transações não atribuídas.",
+    "Aggiungi il conto che usi davvero o continua con movimenti Non assegnati.": "Adicione a conta que você realmente usa ou continue com Transações não atribuídas.",
+    "Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.": "Adicione a conta que você realmente usa ou continue com Transações não atribuídas.",
     "Aggiungi Importi rapidi": "Adicione valores rápidos",
     "Aggiungi movimento": "Adicionar transação",
     "Aggiungi parte": "Adicionar parte",
@@ -5736,8 +5414,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Desempenho dos ativos no período selecionado",
     "Andamento patrimonio": "Desempenho de ativos",
     "Andamento saldo": "Tendência sólida",
-    "Android può chiederti conferma e aprire la configurazione prima di posizionare il widget.":
-        "O Android pode pedir confirmação e abrir a configuração antes de colocar o widget.",
+    "Android può chiederti conferma e aprire la configurazione prima di posizionare il widget.": "O Android pode pedir confirmação e abrir a configuração antes de colocar o widget.",
     "Android secondo le regole di quel fornitore.":
         "Android de acordo com as regras desse fornecedor.",
     "Animali": "Animais",
@@ -5769,8 +5446,7 @@ generatedTranslations = <String, Map<String, String>>{
     "AppScope not found": "AppScope não encontrado",
     "Apre Balyn senza autenticazione.": "Abre Balyn sem autenticação.",
     "Apri": "Abrir",
-    "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
-        "Abra Adiantamentos para registrar um reembolso ou atualizar seu lembrete.",
+    "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.": "Abra Adiantamentos para registrar um reembolso ou atualizar seu lembrete.",
     "Apri conto": "Abrir conta",
     "Apri il selettore widget del launcher e cerca Balyn.":
         "Abra o seletor de widget do iniciador e pesquise Balyn.",
@@ -5883,8 +5559,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Cancellare l’apprendimento?": "Cancelar o aprendizado?",
     "Cancellare tutti i dati?": "Excluir todos os dados?",
     "Cancelleria": "Artigos de papelaria",
-    "Carosello categorie. Scorri a destra o sinistra per passare tra Spese ed Entrate.":
-        "Categorias de carrossel. Deslize para a esquerda ou direita para alternar entre Despesas e Receitas.",
+    "Carosello categorie. Scorri a destra o sinistra per passare tra Spese ed Entrate.": "Categorias de carrossel. Deslize para a esquerda ou direita para alternar entre Despesas e Receitas.",
     "Carta": "Papel",
     "Casa": "Página inicial",
     "Cash flow": "Fluxo de caixa",
@@ -5909,14 +5584,10 @@ generatedTranslations = <String, Map<String, String>>{
     "Chiudi": "Fechar",
     "Chiudi scorciatoie": "Fechar atalhos",
     "Chiudi senza statistica": "Fechar sem estatísticas",
-    "Circa 2×1 · saldo compatto e accesso a Nuovo movimento. La visibilità del saldo è configurabile per istanza.":
-        "Aproximadamente 2×1 · saldo compacto e acesso a Nova transação. A visibilidade do saldo é configurável por instância.",
-    "Circa 2×2 · Spesa, Entrata, Trasferisci e Voce. Conto e categoria possono essere preconfigurati.":
-        "Sobre 2×2 · Despesa, Receita, Transferência e rendimento. Conta e categoria podem ser pré-configuradas.",
-    "Circa 4×2 · quattro importi personalizzati, conto, categoria, trasferimento e microfono.":
-        "Cerca de 4×2 · quatro valores personalizados, conta, categoria, transferência e microfone.",
-    "Circa 4×2 · saldo e quattro categorie rapide. Le categorie seguono prima i quick slot e poi le preferite.":
-        "Cerca de equilíbrio 4×2 · e quatro categorias rápidas. As categorias seguem primeiro os slots rápidos e depois os favoritos.",
+    "Circa 2×1 · saldo compatto e accesso a Nuovo movimento. La visibilità del saldo è configurabile per istanza.": "Aproximadamente 2×1 · saldo compacto e acesso a Nova transação. A visibilidade do saldo é configurável por instância.",
+    "Circa 2×2 · Spesa, Entrata, Trasferisci e Voce. Conto e categoria possono essere preconfigurati.": "Sobre 2×2 · Despesa, Receita, Transferência e rendimento. Conta e categoria podem ser pré-configuradas.",
+    "Circa 4×2 · quattro importi personalizzati, conto, categoria, trasferimento e microfono.": "Cerca de 4×2 · quatro valores personalizados, conta, categoria, transferência e microfone.",
+    "Circa 4×2 · saldo e quattro categorie rapide. Le categorie seguono prima i quick slot e poi le preferite.": "Cerca de equilíbrio 4×2 · e quatro categorias rápidas. As categorias seguem primeiro os slots rápidos e depois os favoritos.",
     "closed_at IS NOT NULL, created_at DESC, id DESC":
         "fechado_at NÃO É NULO, criado_at DESC, id DESC",
     "Collega": "Conectar",
@@ -5948,8 +5619,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Conferma PIN": "Confirmar PIN",
     "Conferma riconciliazione": "Confirmar reconciliação",
     "Confermato": "Confirmado",
-    "Confermato = ricorrenza configurata. Previsto = pattern storico ad alta confidenza. Stimato = comportamento aggregato, non un evento certo.":
-        "Confirmado = recorrência configurada. Esperado = padrão histórico de alta confiança. Estimado = comportamento agregado, não um determinado evento.",
+    "Confermato = ricorrenza configurata. Previsto = pattern storico ad alta confidenza. Stimato = comportamento aggregato, non un evento certo.": "Confirmado = recorrência configurada. Esperado = padrão histórico de alta confiança. Estimado = comportamento agregado, não um determinado evento.",
     "Configura": "Configurar",
     "Configura conto e categoria": "Configurar conta e categoria",
     "Configura Balyn": "Configurar o Balyn",
@@ -5969,8 +5639,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Conti": "Contas",
     "Conti inclusi": "Contas incluídas",
     "Conti non trovati": "Contas não encontradas",
-    "Conti, movimenti, categorie, budget, obiettivi, regole e apprendimento locale verranno eliminati. Crea prima un backup se vuoi conservarli.":
-        "Contas, receitas, categorias, orçamentos, metas, regras e aprendizado local serão excluídos. Crie um backup primeiro se quiser mantê-los.",
+    "Conti, movimenti, categorie, budget, obiettivi, regole e apprendimento locale verranno eliminati. Crea prima un backup se vuoi conservarli.": "Contas, receitas, categorias, orçamentos, metas, regras e aprendizado local serão excluídos. Crie um backup primeiro se quiser mantê-los.",
     "Continua": "Continuar",
     "Conto": "Conta",
     "Conto (es. Revolut)": "Conta (por exemplo, Revolut)",
@@ -6040,21 +5709,18 @@ generatedTranslations = <String, Map<String, String>>{
     "Da restituire": "Para ser devolvido",
     "Da ricevere": "Para ser recebido",
     "Da saldare": "A ser pago",
-    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
-        "Balyn não envia transações, recibos, descrições ou padrões para serviços externos.",
+    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.": "Balyn não envia transações, recibos, descrições ou padrões para serviços externos.",
     "Balyn non riceve né memorizza dati biometrici.":
         "Balyn não recebe nem armazena dados biométricos.",
     "Balyn non richiede un account e non integra pubblicità, ":
         "Balyn não requer conta e não integra publicidade,",
     "Balyn sulla Home": "Balyn em casa",
-    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
-        "Balyn usa agendamento local e limita duplicatas. As recorrências automáticas ainda são reconciliadas quando o aplicativo é aberto.",
+    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.": "Balyn usa agendamento local e limita duplicatas. As recorrências automáticas ainda são reconciliadas quando o aplicativo é aberto.",
     "Balyn · Importi rapidi": "Balyn · Montantes rápidos",
     "Balyn · Quick Capture": "Balyn · Captura Rápida",
     "Balyn · Riepilogo": "Balyn · Resumo",
     "Balyn è bloccata": "Balyn está bloqueado",
-    "Balyn è progettata local-first. Movimenti, conti, categorie, ":
-        "Balyn foi projetado primeiro no local. transações, contas, categorias,",
+    "Balyn è progettata local-first. Movimenti, conti, categorie, ": "Balyn foi projetado primeiro no local. transações, contas, categorias,",
     "Dai un nome ai risparmi che vuoi costruire.":
         "Nomeie as economias que você deseja construir.",
     "Dal": "De",
@@ -6073,14 +5739,12 @@ generatedTranslations = <String, Map<String, String>>{
     "Dati locali, permessi, backup e servizi di sistema":
         "Dados locais, permissões, backups e serviços do sistema",
     "Dati sul dispositivo": "Dados no dispositivo",
-    "Dati, PIN e preferenze restano locali. Nessun account o server è coinvolto.":
-        "Dados, PIN e preferências permanecem locais. Nenhuma conta ou servidor é afetado.",
+    "Dati, PIN e preferenze restano locali. Nessun account o server è coinvolto.": "Dados, PIN e preferências permanecem locais. Nenhuma conta ou servidor é afetado.",
     "dd MMM yy": "dd MMM aa",
     "dd MMM yyyy": "dd MMM aaaa",
     "dd MMMM yyyy, HH:mm": "dd MMMM aaaa, HH:mm",
     "dd/MM/yyyy HH:mm": "dd/MM/aaaa HH:mm",
-    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.":
-        "Defina um valor e, se quiser, uma data: o Balyn estimará um ritmo sustentável.",
+    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.": "Defina um valor e, se quiser, uma data: o Balyn estimará um ritmo sustentável.",
     "dei trasferimenti": "de transferências",
     "delle entrate": "de receita",
     "delle spese": "de despesas",
@@ -6098,8 +5762,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Devo restituire dei soldi": "Eu tenho que devolver algum dinheiro",
     "Devo ricevere dei soldi": "Eu tenho que conseguir algum dinheiro",
     "Disattiva": "Desativar",
-    "Disattiva per movimenti eccezionali che non vuoi nelle analisi.":
-        "Desative para transações excepcionais que você não deseja em suas análises.",
+    "Disattiva per movimenti eccezionali che non vuoi nelle analisi.": "Desative para transações excepcionais que você não deseja em suas análises.",
     "Disattivate": "Desativar",
     "Disattivato": "Desativado",
     "Disinstallando l’app vengono rimossi i dati conservati nello ":
@@ -6110,19 +5773,16 @@ generatedTranslations = <String, Map<String, String>>{
     "Divisione": "Divisão",
     "Domenica": "Domingo",
     "Donazione": "Doação",
-    "Dopo alcuni movimenti coerenti compariranno qui le abitudini riconosciute.":
-        "Após algumas transações consistentes, os hábitos reconhecidos aparecerão aqui.",
+    "Dopo alcuni movimenti coerenti compariranno qui le abitudini riconosciute.": "Após algumas transações consistentes, os hábitos reconhecidos aparecerão aqui.",
     "Dove stai spendendo": "Onde você está gastando",
     "Duplica": "Duplicar",
-    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.":
-        "Durante a configuração, você pode escolher se deseja mostrar o saldo e os valores. “Ocultar saldos” no aplicativo ainda prevalece e obscurece os widgets.",
+    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.": "Durante a configuração, você pode escolher se deseja mostrar o saldo e os valores. “Ocultar saldos” no aplicativo ainda prevalece e obscurece os widgets.",
     "EEE dd MMM yy": "EEE dd MMM aa",
     "Elettricità": "Eletricidade",
     "Elimina": "Excluir",
     "Elimina conto": "Excluir conta",
     "Elimina pattern": "Excluir padrão",
-    "Elimina prima i rimborsi/restituzioni registrati per annullare l’anticipo.":
-        "Exclua primeiro os reembolsos/devoluções postados para cancelar o adiantamento.",
+    "Elimina prima i rimborsi/restituzioni registrati per annullare l’anticipo.": "Exclua primeiro os reembolsos/devoluções postados para cancelar o adiantamento.",
     "Elimina se vuoto": "Excluir se estiver vazio",
     "Eliminare il movimento?": "Eliminar transação?",
     "Eliminare questo rimborso?": "Excluir este reembolso?",
@@ -6154,8 +5814,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Esporta lo storico di questo conto": "Exportar o histórico desta conta",
     "Esporta movimenti": "Transações de exportação",
     "Esporta movimenti CSV": "Exportar transações CSV",
-    "Fallback opzionale. La privacy dipende dal servizio vocale configurato sul dispositivo.":
-        "Alternativa opcional. A privacidade depende do serviço de voz configurado no seu dispositivo.",
+    "Fallback opzionale. La privacy dipende dal servizio vocale configurato sul dispositivo.": "Alternativa opcional. A privacidade depende do serviço de voz configurado no seu dispositivo.",
     "Fallback semplice da 4 a 8 cifre.": "Fallback simples de 4 a 8 dígitos.",
     "Famiglia": "Família",
     "Famiglia e social": "Familiar e social",
@@ -6216,8 +5875,7 @@ generatedTranslations = <String, Map<String, String>>{
         "as transações já classificadas não serão alteradas.",
     "I movimenti già registrati resteranno invariati.":
         "as transações já registradas permanecerão inalteradas.",
-    "I pattern sono ricavati dai tuoi movimenti. Puoi disattivarli, convertirli in regole esplicite o eliminarli senza modificare lo storico.":
-        "Os padrões são derivados de suas transações. Você pode desativá-los, convertê-los em regras explícitas ou excluí-los sem alterar o histórico.",
+    "I pattern sono ricavati dai tuoi movimenti. Puoi disattivarli, convertirli in regole esplicite o eliminarli senza modificare lo storico.": "Os padrões são derivados de suas transações. Você pode desativá-los, convertê-los em regras explícitas ou excluí-los sem alterar o histórico.",
     "I saldi dei conti verranno ricalcolati automaticamente.":
         "Os saldos das contas serão recalculados automaticamente.",
     "I widget di questa sezione sono disponibili su Android.":
@@ -6235,16 +5893,13 @@ generatedTranslations = <String, Map<String, String>>{
     "Il conto è bloccato.": "A conta está bloqueada.",
     "Il conto è vuoto e può essere eliminato in sicurezza.":
         "A conta está vazia e pode ser excluída com segurança.",
-    "Il conto è vuoto. Eventuali riferimenti in preset e obiettivi verranno scollegati in sicurezza.":
-        "A conta está vazia. Quaisquer referências em presets e alvos serão desconectadas com segurança.",
+    "Il conto è vuoto. Eventuali riferimenti in preset e obiettivi verranno scollegati in sicurezza.": "A conta está vazia. Quaisquer referências em presets e alvos serão desconectadas com segurança.",
     "Il CSV deve contenere almeno type, amount, date e account.":
         "O CSV deve conter pelo menos tipo, valor, data e conta.",
     "Il database ripristinato non supera il controllo integrità.":
         "O banco de dados restaurado falha na verificação de integridade.",
-    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.":
-        "O iniciador não suporta adição automática. Pressione e segure Home → Widget → Balyn.",
-    "Il microfono compila Nuovo movimento ma non salva mai automaticamente.":
-        "O microfone compila a nova transação, mas nunca salva automaticamente.",
+    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.": "O iniciador não suporta adição automática. Pressione e segure Home → Widget → Balyn.",
+    "Il microfono compila Nuovo movimento ma non salva mai automaticamente.": "O microfone compila a nova transação, mas nunca salva automaticamente.",
     "Il movimento ha una direzione incompatibile.":
         "A transação tem uma direção incompatível.",
     "Il movimento supera il residuo dell’anticipo.":
@@ -6253,28 +5908,21 @@ generatedTranslations = <String, Map<String, String>>{
         "A permissão do microfone não está disponível.",
     "Il PIN deve contenere da 4 a 8 cifre.":
         "O PIN deve conter de 4 a 8 dígitos.",
-    "Il preset verrà rimosso. I movimenti già registrati non cambieranno.":
-        "A predefinição será removida. As transações já registradas não serão alteradas.",
+    "Il preset verrà rimosso. I movimenti già registrati non cambieranno.": "A predefinição será removida. As transações já registradas não serão alteradas.",
     "Il recognizer di sistema non è disponibile offline.":
         "O reconhecedor do sistema não está disponível offline.",
-    "Il riconoscimento vocale offline non è disponibile su questo dispositivo.":
-        "O reconhecimento de voz offline não está disponível neste dispositivo.",
-    "Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.":
-        "O resumo principal permanece fixo no topo. Reative as seções que deseja ver aqui.",
+    "Il riconoscimento vocale offline non è disponibile su questo dispositivo.": "O reconhecimento de voz offline não está disponível neste dispositivo.",
+    "Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.": "O resumo principal permanece fixo no topo. Reative as seções que deseja ver aqui.",
     "Il saldo contribuisce al patrimonio totale":
         "O saldo contribui para o ativo total",
-    "Il saldo del conto e il residuo dell’anticipo verranno ripristinati automaticamente.":
-        "O saldo da conta e o saldo do adiantamento serão restaurados automaticamente.",
+    "Il saldo del conto e il residuo dell’anticipo verranno ripristinati automaticamente.": "O saldo da conta e o saldo do adiantamento serão restaurados automaticamente.",
     "Il saldo del conto verrà ricalcolato automaticamente.":
         "O saldo da sua conta será recalculado automaticamente.",
-    "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.":
-        "O sistema reconhece hábitos com estatísticas locais e regras explicáveis. Não usa IA ou nuvem.",
-    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.":
-        "O texto reconhecido é interpretado localmente por um analisador determinístico. Não é enviado para o servidor Balyn.",
+    "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.": "O sistema reconhece hábitos com estatísticas locais e regras explicáveis. Não usa IA ou nuvem.",
+    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.": "O texto reconhecido é interpretado localmente por um analisador determinístico. Não é enviado para o servidor Balyn.",
     "Il trasferimento deve arrivare al conto collegato all’obiettivo.":
         "A transferência deverá chegar na conta vinculada ao gol.",
-    "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.":
-        "A transferência requer duas contas ativas diferentes antes de criar uma ocorrência.",
+    "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.": "A transferência requer duas contas ativas diferentes antes de criar uma ocorrência.",
     "Immediato": "Imediato",
     "Impedisce nuovi movimenti sul conto": "Impede novas transações na conta",
     "Importa CSV": "Importar CSV",
@@ -6295,8 +5943,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Imposta limiti giornalieri, settimanali, mensili o annuali.":
         "Defina limites diários, semanais, mensais ou anuais.",
     "Imposta PIN locale": "Definir PIN local",
-    "Imposta un limite per sapere quanto puoi ancora spendere nel periodo.":
-        "Defina um limite para ver quanto você ainda pode gastar durante o período.",
+    "Imposta un limite per sapere quanto puoi ancora spendere nel periodo.": "Defina um limite para ver quanto você ainda pode gastar durante o período.",
     "Imposta un limite per sapere quanto puoi ancora spendere.":
         "Defina um limite para ver quanto você ainda pode gastar.",
     "Impostazioni": "Configurações",
@@ -6339,12 +5986,9 @@ generatedTranslations = <String, Map<String, String>>{
     "La mia parte": "Minha parte",
     "La posizione verrà chiusa come annullata.":
         "A posição será encerrada como cancelada.",
-    "La previsione di fine mese è sotto la soglia che hai impostato. Apri Pianifica per i dettagli.":
-        "A previsão de final de mês está abaixo do limite definido. Abra Agenda para detalhes.",
-    "La quota anticipata deve essere maggiore di 0 e minore o uguale al totale.":
-        "A taxa de adiantamento deve ser maior que 0 e menor ou igual ao total.",
-    "La stima comportamentale è comunque inclusa nel saldo previsto sopra.":
-        "A estimativa comportamental está, no entanto, incluída na previsão de saldo acima.",
+    "La previsione di fine mese è sotto la soglia che hai impostato. Apri Pianifica per i dettagli.": "A previsão de final de mês está abaixo do limite definido. Abra Agenda para detalhes.",
+    "La quota anticipata deve essere maggiore di 0 e minore o uguale al totale.": "A taxa de adiantamento deve ser maior que 0 e menor ou igual ao total.",
+    "La stima comportamentale è comunque inclusa nel saldo previsto sopra.": "A estimativa comportamental está, no entanto, incluída na previsão de saldo acima.",
     "La tua parte e la quota anticipata devono coincidere con il totale.":
         "Sua parte e a taxa inicial devem corresponder ao total.",
     "Lascia vuoto per un backup non cifrato.":
@@ -6354,12 +5998,10 @@ generatedTranslations = <String, Map<String, String>>{
     "Lavoro e formazione": "Trabalho e treinamento",
     "Le categorie compariranno qui quando registri movimenti.":
         "As categorias aparecerão aqui quando você registrar transações.",
-    "Le metriche principali restano in alto. Riattiva altri widget dalla personalizzazione Home.":
-        "As principais métricas permanecem no topo. Reative outros widgets no personalizador Home.",
+    "Le metriche principali restano in alto. Riattiva altri widget dalla personalizzazione Home.": "As principais métricas permanecem no topo. Reative outros widgets no personalizador Home.",
     "Le notifiche possono essere disattivate in qualsiasi momento.":
         "As notificações podem ser desativadas a qualquer momento.",
-    "Le persone servono solo per organizzare gli anticipi e restano sul dispositivo.":
-        "As pessoas servem apenas para organizar os avanços e permanecer no aparelho.",
+    "Le persone servono solo per organizzare gli anticipi e restano sul dispositivo.": "As pessoas servem apenas para organizar os avanços e permanecer no aparelho.",
     "Libri": "Livros",
     "Lingua": "Idioma",
     "Livello microfono attivo": "Nível do microfone ativo",
@@ -6433,8 +6075,7 @@ generatedTranslations = <String, Map<String, String>>{
     "movimenti da assegnare": "transações para atribuir",
     "Movimenti del conto esportati.": "Transações de conta exportadas.",
     "Movimenti recenti": "Transações recentes",
-    "Movimenti, split, budget, regole e apprendimento verranno spostati nella categoria scelta.":
-        "transações, divisões, orçamentos, regras e aprendizado serão movidos para a categoria escolhida.",
+    "Movimenti, split, budget, regole e apprendimento verranno spostati nella categoria scelta.": "transações, divisões, orçamentos, regras e aprendizado serão movidos para a categoria escolhida.",
     "Movimento": "Transação",
     "Movimento aggiornato.": "Transação atualizada.",
     "Movimento collegato non trovato.": "Movimento vinculado não encontrado.",
@@ -6558,10 +6199,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Obiettivo da rivedere": "Objetivo a ser revisto",
     "Obiettivo non trovato.": "Destino não encontrado.",
     "Oggi": "Hoje",
-    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.":
-        "Cada instância pode ter suas próprias configurações. O widget sempre abre Quick Add: nenhum toque registra dinheiro sem a sua confirmação.",
-    "Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add.":
-        "Cada widget mantém suas próprias configurações. Os nomes da conta e da categoria são verificados pelo aplicativo quando você abre o Quick Add.",
+    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.": "Cada instância pode ter suas próprias configurações. O widget sempre abre Quick Add: nenhum toque registra dinheiro sem a sua confirmação.",
+    "Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add.": "Cada widget mantém suas próprias configurações. Os nomes da conta e da categoria são verificados pelo aplicativo quando você abre o Quick Add.",
     "Operazione irreversibile dopo la conferma.":
         "Funcionamento irreversível após confirmação.",
     "Ora": "Agora",
@@ -6576,8 +6215,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Parrucchiere": "Cabeleireiro",
     "Parser locale · on-device quando disponibile":
         "Analisador local · no dispositivo, quando disponível",
-    "Parti dal primo conto oppure registra subito un movimento e assegnalo in seguito.":
-        "Comece na primeira conta ou registre uma transação imediatamente e atribua-a posteriormente.",
+    "Parti dal primo conto oppure registra subito un movimento e assegnalo in seguito.": "Comece na primeira conta ou registre uma transação imediatamente e atribua-a posteriormente.",
     "Parti dal primo conto oppure registra subito un movimento.":
         "Comece na primeira conta ou registre uma transação imediatamente.",
     "Parzialmente regolato": "Parcialmente regulamentado",
@@ -6589,18 +6227,14 @@ generatedTranslations = <String, Map<String, String>>{
     "Patrimonio corrente": "Ativos circulantes",
     "Patrimonio incluso nel totale": "Patrimônio incluído no total",
     "Patrimonio netto": "Patrimônio líquido",
-    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.":
-        "Ativos, Receitas, Despesas e Disponíveis permanecem fixos no topo, acima das ações rápidas. Aqui você pode mostrar, ocultar, redimensionar e reordenar as seções subsequentes.",
-    "Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.":
-        "Padrões, feedback e supressão serão eliminados. As transações permanecerão inalteradas e o sistema poderá aprender novamente.",
+    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.": "Ativos, Receitas, Despesas e Disponíveis permanecem fixos no topo, acima das ações rápidas. Aqui você pode mostrar, ocultar, redimensionar e reordenar as seções subsequentes.",
+    "Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.": "Padrões, feedback e supressão serão eliminados. As transações permanecerão inalteradas e o sistema poderá aprender novamente.",
     "Pedaggio": "Pedágio",
     "Per assegnare una categoria la regola deve avere un tipo compatibile.":
         "Para atribuir uma categoria a regra deve ter um tipo compatível.",
-    "Per assegnare una categoria la regola deve avere un tipo Spesa o Entrata.":
-        "Para atribuir uma categoria a regra deve ter um tipo de Despesa ou Receita.",
+    "Per assegnare una categoria la regola deve avere un tipo Spesa o Entrata.": "Para atribuir uma categoria a regra deve ter um tipo de Despesa ou Receita.",
     "Per conto": "Em nome",
-    "Per proteggere lo storico finanziario un conto con movimenti o ricorrenze non viene eliminato. Puoi archiviarlo e continuare a consultare i dati.":
-        "Para proteger o histórico financeiro, uma conta com movimentações ou recorrências não é excluída. Você pode arquivá-lo e continuar consultando os dados.",
+    "Per proteggere lo storico finanziario un conto con movimenti o ricorrenze non viene eliminato. Puoi archiviarlo e continuare a consultare i dati.": "Para proteger o histórico financeiro, uma conta com movimentações ou recorrências não é excluída. Você pode arquivá-lo e continuar consultando os dados.",
     "Per te": "Para você",
     "Periodo": "Período",
     "Periodo precedente": "Período anterior",
@@ -6661,8 +6295,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Previsioni e calendario": "Previsão e calendário",
     "Previsto": "Esperado",
     "Previsto da abitudini": "Esperado pelos hábitos",
-    "Prima del ripristino viene creato un safety backup temporaneo. Se il controllo integrità fallisce, i dati attuali vengono ripristinati.":
-        "Antes da restauração, é criado um backup de segurança temporário. Se a verificação de integridade falhar, os dados atuais serão restaurados.",
+    "Prima del ripristino viene creato un safety backup temporaneo. Se il controllo integrità fallisce, i dati attuali vengono ripristinati.": "Antes da restauração, é criado um backup de segurança temporário. Se a verificação de integridade falhar, os dados atuais serão restaurados.",
     "Primo giorno settimana": "Primeiro dia da semana",
     "Principio di base": "Princípio básico",
     "Privacy": "Privacidade",
@@ -6692,24 +6325,19 @@ generatedTranslations = <String, Map<String, String>>{
         "Tente alterar sua pesquisa ou filtros.",
     "Prova regola": "Tente regra",
     "Pulizie": "Limpeza",
-    "Puoi avere, per esempio, un widget Revolut/Bar e un altro Contanti/Benzina con importi diversi.":
-        "Você pode ter, por exemplo, um widget Revolut/Bar e outro Cash/Gasolina com valores diferentes.",
+    "Puoi avere, per esempio, un widget Revolut/Bar e un altro Contanti/Benzina con importi diversi.": "Você pode ter, por exemplo, um widget Revolut/Bar e outro Cash/Gasolina com valores diferentes.",
     "Puoi cambiarla in qualsiasi momento":
         "Você pode alterá-lo a qualquer momento",
     "Puoi cancellare i dati finanziari locali dalle impostazioni. ":
         "Você pode limpar os dados financeiros locais das configurações.",
-    "Puoi creare il primo conto oppure registrare subito un movimento come Non assegnato.":
-        "Você pode criar sua primeira conta ou registrar imediatamente uma transação como Não atribuída.",
-    "Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.":
-        "Pode ser parte ou todo o valor. Apenas a sua parte será contabilizada nas despesas, categorias e orçamentos.",
+    "Puoi creare il primo conto oppure registrare subito un movimento come Non assegnato.": "Você pode criar sua primeira conta ou registrar imediatamente uma transação como Não atribuída.",
+    "Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.": "Pode ser parte ou todo o valor. Apenas a sua parte será contabilizada nas despesas, categorias e orçamentos.",
     "Quale categoria intendevi?": "Qual categoria você quis dizer?",
     "Quale conto intendevi?": "Qual conta você quis dizer?",
     "Qualsiasi": "Qualquer",
     "Qualsiasi tipo": "Qualquer tipo",
-    "Questa categoria è usata in una divisione di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.":
-        "Esta categoria é usada em uma divisão de despesas. Para evitar perder a classificação, primeiro mescle-a em outra categoria.",
-    "Questa persona ha anticipi ancora aperti. Chiudili prima di archiviarla.":
-        "Esta pessoa ainda tem adiantamentos em aberto. Feche-os antes de arquivá-los.",
+    "Questa categoria è usata in una divisione di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.": "Esta categoria é usada em uma divisão de despesas. Para evitar perder a classificação, primeiro mescle-a em outra categoria.",
+    "Questa persona ha anticipi ancora aperti. Chiudili prima di archiviarla.": "Esta pessoa ainda tem adiantamentos em aberto. Feche-os antes de arquivá-los.",
     "Questa regola corrisponde a 1 movimento.":
         "Esta regra corresponde a 1 transação.",
     "Questa spesa include un anticipo": "Esta despesa inclui um adiantamento",
@@ -6772,8 +6400,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Righe valide": "Linhas válidas",
     "Rileva ricorrenze": "Detectar recorrências",
     "Rilevate dalle tue abitudini": "Detectado por seus hábitos",
-    "Rimane qui. Se continui a parlare, aggiorno la frase; usa ↻ per ricominciare da zero.":
-        "Fica aqui. Se você continuar falando, atualizarei a frase; use ↻ para começar do zero.",
+    "Rimane qui. Se continui a parlare, aggiorno la frase; usa ↻ per ricominciare da zero.": "Fica aqui. Se você continuar falando, atualizarei a frase; use ↻ para começar do zero.",
     "Rimborso": "Reembolso",
     "Rimborso collegato": "Reembolso vinculado",
     "Rimborso non trovato.": "Reembolso não encontrado.",
@@ -6876,11 +6503,9 @@ generatedTranslations = <String, Map<String, String>>{
     "Scuro": "Escuro",
     "Se contiene storico potrai archiviarlo invece di eliminarlo":
         "Se contiver histórico, você poderá arquivá-lo em vez de excluí-lo",
-    "Se è un anticipo puro, il movimento di cassa originale verrà annullato. Le spese miste restano come acquisto personale.":
-        "Se for um adiantamento puro, a transação original em dinheiro será cancelada. As despesas mistas permanecem como compras pessoais.",
+    "Se è un anticipo puro, il movimento di cassa originale verrà annullato. Le spese miste restano come acquisto personale.": "Se for um adiantamento puro, a transação original em dinheiro será cancelada. As despesas mistas permanecem como compras pessoais.",
     "Segnali": "Sinais",
-    "Segnali deboli: rafforzano una previsione, non la creano da soli.":
-        "Sinais fracos: Eles fortalecem uma previsão, eles próprios não a criam.",
+    "Segnali deboli: rafforzano una previsione, non la creano da soli.": "Sinais fracos: Eles fortalecem uma previsão, eles próprios não a criam.",
     "Seleziona ": "Selecione",
     "Seleziona conto": "Selecione a conta",
     "Seleziona ora": "Selecione agora",
@@ -6888,10 +6513,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Senza categoria": "Sem categoria",
     "Separata dall’app": "Separado do aplicativo",
     "Servizi cloud": "Serviços em nuvem",
-    "Servono almeno 3 settimane di storico utile per un consiglio realistico.":
-        "São necessárias pelo menos 3 semanas de história útil para um aconselhamento realista.",
-    "Servono almeno due categorie di spesa per dividere il movimento.":
-        "São necessárias pelo menos duas categorias de gastos para dividir a transação.",
+    "Servono almeno 3 settimane di storico utile per un consiglio realistico.": "São necessárias pelo menos 3 semanas de história útil para um aconselhamento realista.",
+    "Servono almeno due categorie di spesa per dividere il movimento.": "São necessárias pelo menos duas categorias de gastos para dividir a transação.",
     "Servono più dati": "Mais dados são necessários",
     "Servono più dati per confrontare il periodo precedente.":
         "Mais dados são necessários para comparar o período anterior.",
@@ -6914,8 +6537,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Somente quando a situação mudar materialmente.",
     "Solo sul dispositivo": "Somente no dispositivo",
     "Sorriso": "Sorria",
-    "spazio privato dell’app; eventuali backup o CSV esportati restano ":
-        "espaço privado do app; quaisquer backups ou CSVs exportados permanecem",
+    "spazio privato dell’app; eventuali backup o CSV esportati restano ": "espaço privado do app; quaisquer backups ou CSVs exportados permanecem",
     "Spesa": "Despesa",
     "Spesa comportamentale stimata": "Despesas comportamentais estimadas",
     "Spesa registrata.": "Despesa registrada.",
@@ -6935,13 +6557,11 @@ generatedTranslations = <String, Map<String, String>>{
     "Stipendio": "Salário",
     "Streaming": "Transmissão",
     "Studio": "Estudo",
-    "Su Android impedisce screenshot e anteprima dell’app nelle schermate recenti.":
-        "No Android, evita capturas de tela e visualizações de aplicativos em telas recentes.",
+    "Su Android impedisce screenshot e anteprima dell’app nelle schermate recenti.": "No Android, evita capturas de tela e visualizações de aplicativos em telas recentes.",
     "Suggerimenti automatici": "Sugestões automáticas",
     "Suggerimenti obiettivi": "Sugestões objetivas",
     "Supermercato": "Supermercado",
-    "Sviluppatore: andreadada. Per richieste relative a privacy o supporto ":
-        "Desenvolvedor: andreadada. Para solicitações de privacidade ou suporte",
+    "Sviluppatore: andreadada. Per richieste relative a privacy o supporto ": "Desenvolvedor: andreadada. Para solicitações de privacidade ou suporte",
     "Tag": "Etiquetas",
     "Tasse": "Impostos",
     "Taxi": "Táxis",
@@ -6952,13 +6572,11 @@ generatedTranslations = <String, Map<String, String>>{
     "Tipo predefinito": "Tipo padrão",
     "Tocca per creare un anticipo. Tieni premuto per le scorciatoie.":
         "Toque para criar um adiantamento. Pressione e segure para atalhos.",
-    "Tocca per una nuova spesa. Tieni premuto per preset e scorciatoie.":
-        "Toque para uma nova despesa. Pressione e segure para predefinições e atalhos.",
+    "Tocca per una nuova spesa. Tieni premuto per preset e scorciatoie.": "Toque para uma nova despesa. Pressione e segure para predefinições e atalhos.",
     "Tocca un preset per aprire il movimento già compilato.":
         "Toque em uma predefinição para abrir a transação já compilada.",
     "Top tag": "Tags principais",
-    "Torta Spese/Entrate con periodo scorrevole e intervallo personalizzato.":
-        "Torta de Despesas/Receitas com período móvel e intervalo personalizado.",
+    "Torta Spese/Entrate con periodo scorrevole e intervallo personalizzato.": "Torta de Despesas/Receitas com período móvel e intervalo personalizado.",
     "Totale": "Total",
     "Trasferimenti": "Transferências",
     "Trasferimenti nelle statistiche": "Transferências em estatísticas",
@@ -6997,8 +6615,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Usa da 4 a 8 cifre. Il PIN resta sul dispositivo.":
         "Use de 4 a 8 dígitos. O PIN permanece no dispositivo.",
     "Usa descrizione": "Usar descrição",
-    "Usa esclusivamente il riconoscimento offline/on-device quando Android lo supporta.":
-        "Use o reconhecimento off-line/no dispositivo apenas quando o Android for compatível.",
+    "Usa esclusivamente il riconoscimento offline/on-device quando Android lo supporta.": "Use o reconhecimento off-line/no dispositivo apenas quando o Android for compatível.",
     "Usa giorno e orario": "Usar dia e hora",
     "usa i contatti pubblicati su www.ddone.it.":
         "utilize os contatos publicados em www.ddone.it.",
@@ -7006,8 +6623,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Use transações de conta em análises",
     "Usa il conto collegato all’obiettivo come destinazione.":
         "Use a conta vinculada à meta como destino.",
-    "Usa il pulsante + per registrare una spesa o un’entrata: analisi e previsioni nasceranno dai tuoi dati reali.":
-        "Utilize o botão + para registrar uma despesa ou receita: análises e previsões surgirão a partir de seus dados reais.",
+    "Usa il pulsante + per registrare una spesa o un’entrata: analisi e previsioni nasceranno dai tuoi dati reali.": "Utilize o botão + para registrar uma despesa ou receita: análises e previsões surgirão a partir de seus dados reais.",
     "Usa importo": "Usar quantidade",
     "Usa impronta o biometria configurata nel dispositivo.":
         "Use impressão digital ou biometria configurada no dispositivo.",
@@ -7035,8 +6651,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Variazione": "Variação",
     "Vendita": "Venda",
     "Verifica…": "Verifique…",
-    "Verrà registrato come rimborso/restituzione, non come entrata o spesa.":
-        "Será registrado como reembolso/reembolso, e não como receita ou despesa.",
+    "Verrà registrato come rimborso/restituzione, non come entrata o spesa.": "Será registrado como reembolso/reembolso, e não como receita ou despesa.",
     "Vestiti": "Vista-se",
     "Viaggio": "Viajar",
     "Vibrazione leggera su navigazione, azioni rapide e impostazioni.":
@@ -7059,8 +6674,7 @@ generatedTranslations = <String, Map<String, String>>{
     "È il segnale principale del modello locale.":
         "É o principal sinal do modelo local.",
     "È stato condonato": "Foi tolerado",
-    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.":
-        "É uma estimativa: parte dos ativos dispensáveis, subtrai as despesas recorrentes previstas até ao final do mês e mantém uma reserva prudencial para os objetivos. Não é um saldo bancário garantido.",
+    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.": "É uma estimativa: parte dos ativos dispensáveis, subtrai as despesas recorrentes previstas até ao final do mês e mantém uma reserva prudencial para os objetivos. Não é um saldo bancário garantido.",
     "•••• da ricevere · •••• da restituire": "•••• receber · •••• devolver",
   },
   "ru": <String, String>{
@@ -7098,16 +6712,13 @@ generatedTranslations = <String, Map<String, String>>{
         "Неинвазивное обновление целей",
     "Aggiungi": "Добавить",
     "Aggiungi ai preferiti": "Добавить в избранное",
-    "Aggiungi bollette, abbonamenti o stipendio per prevedere il saldo futuro.":
-        "Добавляйте счета, подписки или зарплату, чтобы спрогнозировать свой будущий баланс.",
+    "Aggiungi bollette, abbonamenti o stipendio per prevedere il saldo futuro.": "Добавляйте счета, подписки или зарплату, чтобы спрогнозировать свой будущий баланс.",
     "Aggiungi bollette, abbonamenti, rate o entrate regolari.":
         "Добавляйте счета, подписки, рассрочку или регулярный доход.",
     "Aggiungi dettagli": "Добавить детали",
     "Aggiungi entrata": "Добавить доход",
-    "Aggiungi il conto che usi davvero o continua con movimenti Non assegnati.":
-        "Добавьте учетную запись, которую вы фактически используете, или продолжите использовать неназначенные транзакции.",
-    "Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.":
-        "Добавьте учетную запись, которую вы фактически используете, или продолжите использовать неназначенные транзакции.",
+    "Aggiungi il conto che usi davvero o continua con movimenti Non assegnati.": "Добавьте учетную запись, которую вы фактически используете, или продолжите использовать неназначенные транзакции.",
+    "Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.": "Добавьте учетную запись, которую вы фактически используете, или продолжите использовать неназначенные транзакции.",
     "Aggiungi Importi rapidi": "Добавить быстрые суммы",
     "Aggiungi movimento": "Добавить транзакцию",
     "Aggiungi parte": "Добавить деталь",
@@ -7140,8 +6751,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Эффективность активов за выбранный период",
     "Andamento patrimonio": "Эффективность активов",
     "Andamento saldo": "Сплошной тренд",
-    "Android può chiederti conferma e aprire la configurazione prima di posizionare il widget.":
-        "Android может запросить у вас подтверждение и открыть конфигурацию перед размещением виджета.",
+    "Android può chiederti conferma e aprire la configurazione prima di posizionare il widget.": "Android может запросить у вас подтверждение и открыть конфигурацию перед размещением виджета.",
     "Android secondo le regole di quel fornitore.":
         "Android в соответствии с правилами этого производителя.",
     "Animali": "Животные",
@@ -7153,8 +6763,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Annullare questo anticipo?": "Отменить этот аванс?",
     "Annullato": "Отменено",
     "Anteprima": "Предварительный просмотр",
-    "Anteprima, mapping dei dati mancanti e duplicati.":
-        "Предварительный просмотр, сопоставление отсутствующих и повторяющихся данных.",
+    "Anteprima, mapping dei dati mancanti e duplicati.": "Предварительный просмотр, сопоставление отсутствующих и повторяющихся данных.",
     "Anticipato a": "Ожидается",
     "Anticipi": "долговые расписки",
     "Anticipo": "долговая расписка",
@@ -7173,8 +6782,7 @@ generatedTranslations = <String, Map<String, String>>{
     "AppScope not found": "AppScope не найден",
     "Apre Balyn senza autenticazione.": "Открывает Balyn без аутентификации.",
     "Apri": "Открыть",
-    "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
-        "Откройте «Авансовые платежи», чтобы записать возврат средств или обновить напоминание.",
+    "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.": "Откройте «Авансовые платежи», чтобы записать возврат средств или обновить напоминание.",
     "Apri conto": "Открыть счет",
     "Apri il selettore widget del launcher e cerca Balyn.":
         "Откройте селектор виджетов запуска и найдите Balyn.",
@@ -7291,8 +6899,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Cancellare l’apprendimento?": "Отменить обучение?",
     "Cancellare tutti i dati?": "Удалить все данные?",
     "Cancelleria": "Канцелярские товары",
-    "Carosello categorie. Scorri a destra o sinistra per passare tra Spese ed Entrate.":
-        "Категории карусели. Проведите пальцем влево или вправо, чтобы переключиться между расходами и доходами.",
+    "Carosello categorie. Scorri a destra o sinistra per passare tra Spese ed Entrate.": "Категории карусели. Проведите пальцем влево или вправо, чтобы переключиться между расходами и доходами.",
     "Carta": "Бумага",
     "Casa": "Главная",
     "Cash flow": "Денежный поток",
@@ -7319,14 +6926,10 @@ generatedTranslations = <String, Map<String, String>>{
     "Chiudi scorciatoie": "Закрыть ярлыки",
     "Chiudi senza statistica": "Закрыть без статистики",
     "Cinema": "Кино",
-    "Circa 2×1 · saldo compatto e accesso a Nuovo movimento. La visibilità del saldo è configurabile per istanza.":
-        "Примерно 2×1 · Компактный баланс и доступ к Новой транзакции. Видимость баланса настраивается для каждого экземпляра.",
-    "Circa 2×2 · Spesa, Entrata, Trasferisci e Voce. Conto e categoria possono essere preconfigurati.":
-        "Примерно 2×2 · Расходы, Доходы, Трансферы и доходы. Учетная запись и категория могут быть предварительно настроены.",
-    "Circa 4×2 · quattro importi personalizzati, conto, categoria, trasferimento e microfono.":
-        "О 4×2 · четыре настраиваемых суммы, учетная запись, категория, перевод и микрофон.",
-    "Circa 4×2 · saldo e quattro categorie rapide. Le categorie seguono prima i quick slot e poi le preferite.":
-        "О 4х2 · баланс и четыре быстрых категории. Категории следуют сначала за быстрыми слотами, а затем за избранными.",
+    "Circa 2×1 · saldo compatto e accesso a Nuovo movimento. La visibilità del saldo è configurabile per istanza.": "Примерно 2×1 · Компактный баланс и доступ к Новой транзакции. Видимость баланса настраивается для каждого экземпляра.",
+    "Circa 2×2 · Spesa, Entrata, Trasferisci e Voce. Conto e categoria possono essere preconfigurati.": "Примерно 2×2 · Расходы, Доходы, Трансферы и доходы. Учетная запись и категория могут быть предварительно настроены.",
+    "Circa 4×2 · quattro importi personalizzati, conto, categoria, trasferimento e microfono.": "О 4×2 · четыре настраиваемых суммы, учетная запись, категория, перевод и микрофон.",
+    "Circa 4×2 · saldo e quattro categorie rapide. Le categorie seguono prima i quick slot e poi le preferite.": "О 4х2 · баланс и четыре быстрых категории. Категории следуют сначала за быстрыми слотами, а затем за избранными.",
     "closed_at IS NOT NULL, created_at DESC, id DESC":
         "close_at НЕ NULL, созданный_at DESC, идентификатор DESC",
     "Collega": "Подключиться",
@@ -7360,8 +6963,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Conferma PIN": "Подтвердить PIN-код",
     "Conferma riconciliazione": "Подтвердить сверку",
     "Confermato": "Подтверждено",
-    "Confermato = ricorrenza configurata. Previsto = pattern storico ad alta confidenza. Stimato = comportamento aggregato, non un evento certo.":
-        "Подтверждено = повторение настроено. Ожидаемый = историческая закономерность с высокой степенью достоверности. Предполагаемое = совокупное поведение, а не определенное событие.",
+    "Confermato = ricorrenza configurata. Previsto = pattern storico ad alta confidenza. Stimato = comportamento aggregato, non un evento certo.": "Подтверждено = повторение настроено. Ожидаемый = историческая закономерность с высокой степенью достоверности. Предполагаемое = совокупное поведение, а не определенное событие.",
     "Configura": "Настроить",
     "Configura conto e categoria": "Настройте учетную запись и категорию",
     "Configura Balyn": "Настроить Balyn",
@@ -7381,8 +6983,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Conti": "Счета",
     "Conti inclusi": "Аккаунты включены",
     "Conti non trovati": "Аккаунты не найдены",
-    "Conti, movimenti, categorie, budget, obiettivi, regole e apprendimento locale verranno eliminati. Crea prima un backup se vuoi conservarli.":
-        "Счета, доходы, категории, бюджеты, цели, правила и местное обучение будут удалены. Сначала создайте резервную копию, если хотите сохранить их.",
+    "Conti, movimenti, categorie, budget, obiettivi, regole e apprendimento locale verranno eliminati. Crea prima un backup se vuoi conservarli.": "Счета, доходы, категории, бюджеты, цели, правила и местное обучение будут удалены. Сначала создайте резервную копию, если хотите сохранить их.",
     "Continua": "Продолжить",
     "Conto": "Аккаунт",
     "Conto (es. Revolut)": "Аккаунт (например, Revolut)",
@@ -7398,8 +6999,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Conto risparmio collegato": "Связанный сберегательный счет",
     "Conto selezionato": "Выбранный аккаунт",
     "Conto · Categoria": "Аккаунт · Категория",
-    "Conto, categoria e quattro importi configurabili con accesso vocale":
-        "Счет, категория и четыре суммы, настраиваемые с помощью голосового доступа",
+    "Conto, categoria e quattro importi configurabili con accesso vocale": "Счет, категория и четыре суммы, настраиваемые с помощью голосового доступа",
     "Contribuisce al saldo totale mostrato in Home.":
         "Вносит вклад в общий баланс, отображаемый на главной странице.",
     "Controlla il contenuto prima di sostituire i dati locali.":
@@ -7421,8 +7021,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Crea obiettivo": "Создать цель",
     "Crea persona": "Создать человека",
     "Crea preset": "Создание пресетов",
-    "Crea prima un conto per programmare movimenti ricorrenti.":
-        "Сначала создайте учетную запись, чтобы запланировать повторяющиеся транзакции.",
+    "Crea prima un conto per programmare movimenti ricorrenti.": "Сначала создайте учетную запись, чтобы запланировать повторяющиеся транзакции.",
     "Crea primo conto": "Создать первую учетную запись",
     "Crea regola": "Создать правило",
     "Crea ricorrenza": "Создать годовщину",
@@ -7458,23 +7057,20 @@ generatedTranslations = <String, Map<String, String>>{
     "BalynBalanceWidgetProvider": "BalynBalanceWidgetProvider",
     "BalynFinanceWidgetProvider": "BalynFinanceWidgetProvider",
     "Balyn": "Balyn",
-    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
-        "Balyn не отправляет транзакции, квитанции, описания или шаблоны во внешние службы.",
+    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.": "Balyn не отправляет транзакции, квитанции, описания или шаблоны во внешние службы.",
     "Balyn non riceve né memorizza dati biometrici.":
         "Balyn не получает и не хранит биометрические данные.",
     "Balyn non richiede un account e non integra pubblicità, ":
         "Balyn не требует учетной записи и не интегрирует рекламу.",
     "Balyn sulla Home": "Balyn на дому",
-    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
-        "Balyn использует локальное планирование и ограничивает дублирование. Автоматические повторения по-прежнему согласовываются при открытии приложения.",
+    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.": "Balyn использует локальное планирование и ограничивает дублирование. Автоматические повторения по-прежнему согласовываются при открытии приложения.",
     "Balyn · Importi rapidi": "Balyn · Быстрые суммы",
     "Balyn · Quick Capture": "Balyn · Быстрый захват",
     "Balyn · Rapido": "Balyn · Рапидо",
     "Balyn · Riepilogo": "Balyn · Резюме",
     "Balyn · Saldo": "Balyn · Баланс",
     "Balyn è bloccata": "Balyn заблокирована",
-    "Balyn è progettata local-first. Movimenti, conti, categorie, ":
-        "Balyn ориентирована прежде всего на местное население. транзакции, счета, категории,",
+    "Balyn è progettata local-first. Movimenti, conti, categorie, ": "Balyn ориентирована прежде всего на местное население. транзакции, счета, категории,",
     "Balyn.": "Balyn.",
     "BalynBackup": "BalynBackup",
     "BalynQuickAddWidgetProvider": "BalynQuickAddWidgetProvider",
@@ -7498,8 +7094,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Dati locali, permessi, backup e servizi di sistema":
         "Локальные данные, разрешения, резервные копии и системные службы",
     "Dati sul dispositivo": "Данные на устройстве",
-    "Dati, PIN e preferenze restano locali. Nessun account o server è coinvolto.":
-        "Данные, PIN-код и настройки остаются локальными. Никакие учетные записи или серверы не затронуты.",
+    "Dati, PIN e preferenze restano locali. Nessun account o server è coinvolto.": "Данные, PIN-код и настройки остаются локальными. Никакие учетные записи или серверы не затронуты.",
     "dd MMM": "дд МММ",
     "dd MMM yy": "дд МММ гг",
     "dd MMM yyyy": "дд МММ гггг",
@@ -7525,8 +7120,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Devo restituire dei soldi": "Я должен вернуть немного денег",
     "Devo ricevere dei soldi": "мне нужно получить немного денег",
     "Disattiva": "Деактивировать",
-    "Disattiva per movimenti eccezionali che non vuoi nelle analisi.":
-        "Отключите этот параметр для исключительных транзакций, которые вам не нужны в вашем анализе.",
+    "Disattiva per movimenti eccezionali che non vuoi nelle analisi.": "Отключите этот параметр для исключительных транзакций, которые вам не нужны в вашем анализе.",
     "Disattivate": "Деактивировать",
     "Disattivato": "Деактивирован",
     "Disinstallando l’app vengono rimossi i dati conservati nello ":
@@ -7537,12 +7131,10 @@ generatedTranslations = <String, Map<String, String>>{
     "Divisione": "Отдел",
     "Domenica": "воскресенье",
     "Donazione": "Пожертвование",
-    "Dopo alcuni movimenti coerenti compariranno qui le abitudini riconosciute.":
-        "После нескольких последовательных транзакций здесь появятся признанные привычки.",
+    "Dopo alcuni movimenti coerenti compariranno qui le abitudini riconosciute.": "После нескольких последовательных транзакций здесь появятся признанные привычки.",
     "Dove stai spendendo": "Где ты тратишь",
     "Duplica": "Дублировать",
-    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.":
-        "Во время настройки вы можете выбрать, показывать ли баланс и суммы. «Скрыть балансы» в приложении по-прежнему преобладает и скрывает виджеты.",
+    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.": "Во время настройки вы можете выбрать, показывать ли баланс и суммы. «Скрыть балансы» в приложении по-прежнему преобладает и скрывает виджеты.",
     "EEE d MMM": "ЭЭЭ д МММ",
     "EEE dd": "ЕЕЕ дд",
     "EEE dd MMM": "ЕЕЕ дд МММ",
@@ -7586,8 +7178,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Esporta movimenti": "Экспортные операции",
     "Esporta movimenti CSV": "Экспорт транзакций CSV",
     "Evento": "Событие",
-    "Fallback opzionale. La privacy dipende dal servizio vocale configurato sul dispositivo.":
-        "Необязательный резервный вариант. Конфиденциальность зависит от голосовой службы, настроенной на вашем устройстве.",
+    "Fallback opzionale. La privacy dipende dal servizio vocale configurato sul dispositivo.": "Необязательный резервный вариант. Конфиденциальность зависит от голосовой службы, настроенной на вашем устройстве.",
     "Fallback semplice da 4 a 8 cifre.":
         "Простой резервный вариант от 4 до 8 цифр.",
     "Famiglia": "Семья",
@@ -7651,8 +7242,7 @@ generatedTranslations = <String, Map<String, String>>{
         "уже классифицированные операции не изменятся.",
     "I movimenti già registrati resteranno invariati.":
         "уже зарегистрированные транзакции останутся неизменными.",
-    "I pattern sono ricavati dai tuoi movimenti. Puoi disattivarli, convertirli in regole esplicite o eliminarli senza modificare lo storico.":
-        "Шаблоны основаны на ваших транзакциях. Вы можете деактивировать их, преобразовать в явные правила или удалить без изменения истории.",
+    "I pattern sono ricavati dai tuoi movimenti. Puoi disattivarli, convertirli in regole esplicite o eliminarli senza modificare lo storico.": "Шаблоны основаны на ваших транзакциях. Вы можете деактивировать их, преобразовать в явные правила или удалить без изменения истории.",
     "I saldi dei conti verranno ricalcolati automaticamente.":
         "Остатки на счетах будут пересчитаны автоматически.",
     "I widget di questa sezione sono disponibili su Android.":
@@ -7670,16 +7260,13 @@ generatedTranslations = <String, Map<String, String>>{
     "Il conto è bloccato.": "Аккаунт заблокирован.",
     "Il conto è vuoto e può essere eliminato in sicurezza.":
         "Аккаунт пуст и может быть безопасно удален.",
-    "Il conto è vuoto. Eventuali riferimenti in preset e obiettivi verranno scollegati in sicurezza.":
-        "Аккаунт пуст. Любые ссылки в пресетах и ​​целях будут безопасно отключены.",
+    "Il conto è vuoto. Eventuali riferimenti in preset e obiettivi verranno scollegati in sicurezza.": "Аккаунт пуст. Любые ссылки в пресетах и ​​целях будут безопасно отключены.",
     "Il CSV deve contenere almeno type, amount, date e account.":
         "CSV-файл должен содержать как минимум тип, сумму, дату и счет.",
     "Il database ripristinato non supera il controllo integrità.":
         "Восстановленная база данных не проходит проверку целостности.",
-    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.":
-        "Лаунчер не поддерживает автоматическое добавление. Нажмите и удерживайте Главная → Виджет → Balyn.",
-    "Il microfono compila Nuovo movimento ma non salva mai automaticamente.":
-        "Микрофон компилирует новую транзакцию, но никогда не сохраняет ее автоматически.",
+    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.": "Лаунчер не поддерживает автоматическое добавление. Нажмите и удерживайте Главная → Виджет → Balyn.",
+    "Il microfono compila Nuovo movimento ma non salva mai automaticamente.": "Микрофон компилирует новую транзакцию, но никогда не сохраняет ее автоматически.",
     "Il movimento ha una direzione incompatibile.":
         "Транзакция имеет несовместимое направление.",
     "Il movimento supera il residuo dell’anticipo.":
@@ -7694,22 +7281,18 @@ generatedTranslations = <String, Map<String, String>>{
         "Распознаватель системы недоступен в автономном режиме.",
     "Il riconoscimento vocale offline non è disponibile su questo dispositivo.":
         "Офлайн-распознавание голоса недоступно на этом устройстве.",
-    "Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.":
-        "Основное резюме остается зафиксированным вверху. Повторно активируйте разделы, которые вы хотите видеть здесь.",
+    "Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.": "Основное резюме остается зафиксированным вверху. Повторно активируйте разделы, которые вы хотите видеть здесь.",
     "Il saldo contribuisce al patrimonio totale":
         "Остаток вносит вклад в общую сумму активов",
     "Il saldo del conto e il residuo dell’anticipo verranno ripristinati automaticamente.":
         "Баланс счета и остаток аванса будут автоматически восстановлены.",
     "Il saldo del conto verrà ricalcolato automaticamente.":
         "Баланс вашего счета будет пересчитан автоматически.",
-    "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.":
-        "Система распознает привычки с помощью местной статистики и объяснимых правил. Он не использует искусственный интеллект или облако.",
-    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.":
-        "Распознанный текст интерпретируется локально детерминированным анализатором. Он не отправляется на сервер Balyn.",
+    "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.": "Система распознает привычки с помощью местной статистики и объяснимых правил. Он не использует искусственный интеллект или облако.",
+    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.": "Распознанный текст интерпретируется локально детерминированным анализатором. Он не отправляется на сервер Balyn.",
     "Il trasferimento deve arrivare al conto collegato all’obiettivo.":
         "Перевод должен поступить на счет, привязанный к цели.",
-    "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.":
-        "Для передачи требуются две разные активные учетные записи, прежде чем создавать событие.",
+    "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.": "Для передачи требуются две разные активные учетные записи, прежде чем создавать событие.",
     "Immediato": "Немедленно",
     "Impedisce nuovi movimenti sul conto":
         "Предотвращает новые транзакции на счете",
@@ -7731,8 +7314,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Imposta limiti giornalieri, settimanali, mensili o annuali.":
         "Установите ежедневные, еженедельные, ежемесячные или годовые лимиты.",
     "Imposta PIN locale": "Установить локальный PIN-код",
-    "Imposta un limite per sapere quanto puoi ancora spendere nel periodo.":
-        "Установите лимит, чтобы увидеть, сколько вы еще можете потратить в течение этого периода.",
+    "Imposta un limite per sapere quanto puoi ancora spendere nel periodo.": "Установите лимит, чтобы увидеть, сколько вы еще можете потратить в течение этого периода.",
     "Imposta un limite per sapere quanto puoi ancora spendere.":
         "Установите лимит, чтобы увидеть, сколько вы еще можете потратить.",
     "Impostazioni": "Настройки",
@@ -7775,12 +7357,10 @@ generatedTranslations = <String, Map<String, String>>{
     "La mia parte": "Моя доля",
     "La posizione verrà chiusa come annullata.":
         "Позиция будет закрыта как отмененная.",
-    "La previsione di fine mese è sotto la soglia che hai impostato. Apri Pianifica per i dettagli.":
-        "Прогноз на конец месяца ниже установленного вами порога. Откройте расписание, чтобы узнать подробности.",
+    "La previsione di fine mese è sotto la soglia che hai impostato. Apri Pianifica per i dettagli.": "Прогноз на конец месяца ниже установленного вами порога. Откройте расписание, чтобы узнать подробности.",
     "La quota anticipata deve essere maggiore di 0 e minore o uguale al totale.":
         "Сумма аванса должна быть больше 0 и меньше или равна общей сумме.",
-    "La stima comportamentale è comunque inclusa nel saldo previsto sopra.":
-        "Однако поведенческая оценка включена в приведенный выше прогноз баланса.",
+    "La stima comportamentale è comunque inclusa nel saldo previsto sopra.": "Однако поведенческая оценка включена в приведенный выше прогноз баланса.",
     "La tua parte e la quota anticipata devono coincidere con il totale.":
         "Ваша доля и авансовый платеж должны соответствовать общей сумме.",
     "Lascia vuoto per un backup non cifrato.":
@@ -7791,8 +7371,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Lavoro e formazione": "Работа и обучение",
     "Le categorie compariranno qui quando registri movimenti.":
         "Категории будут появляться здесь, когда вы записываете транзакции.",
-    "Le metriche principali restano in alto. Riattiva altri widget dalla personalizzazione Home.":
-        "Ключевые показатели остаются наверху. Повторно включите другие виджеты из настройки Home.",
+    "Le metriche principali restano in alto. Riattiva altri widget dalla personalizzazione Home.": "Ключевые показатели остаются наверху. Повторно включите другие виджеты из настройки Home.",
     "Le notifiche possono essere disattivate in qualsiasi momento.":
         "Уведомления можно отключить в любой момент.",
     "Le persone servono solo per organizzare gli anticipi e restano sul dispositivo.":
@@ -7874,8 +7453,7 @@ generatedTranslations = <String, Map<String, String>>{
     "movimenti da assegnare": "транзакции для назначения",
     "Movimenti del conto esportati.": "Экспортированные транзакции по счету.",
     "Movimenti recenti": "Недавние транзакции",
-    "Movimenti, split, budget, regole e apprendimento verranno spostati nella categoria scelta.":
-        "транзакции, разделения, бюджеты, правила и обучение будут перемещены в выбранную категорию.",
+    "Movimenti, split, budget, regole e apprendimento verranno spostati nella categoria scelta.": "транзакции, разделения, бюджеты, правила и обучение будут перемещены в выбранную категорию.",
     "Movimento": "Транзакция",
     "Movimento aggiornato.": "Обновленная транзакция.",
     "Movimento collegato non trovato.": "Связанное движение не найдено.",
@@ -7991,8 +7569,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Nuovo budget": "Новый бюджет",
     "Nuovo conto": "Новый аккаунт",
     "Nuovo movimento": "Новая транзакция",
-    "Nuovo movimento. Tieni premuto per preset e scorciatoie.":
-        "Новая транзакция. Нажмите и удерживайте для доступа к пресетам и ярлыкам.",
+    "Nuovo movimento. Tieni premuto per preset e scorciatoie.": "Новая транзакция. Нажмите и удерживайте для доступа к пресетам и ярлыкам.",
     "Nuovo obiettivo": "Новая цель",
     "Nuovo preset": "Новый пресет",
     "Nuovo trasferimento": "Новый трансфер",
@@ -8002,10 +7579,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Obiettivo da rivedere": "Цель, требующая рассмотрения",
     "Obiettivo non trovato.": "Цель не найдена.",
     "Oggi": "Сегодня",
-    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.":
-        "Каждый экземпляр может иметь свои настройки. Виджет всегда открывается Быстрое добавление: ни один тап не зарегистрирует деньги без вашего подтверждения.",
-    "Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add.":
-        "Каждый виджет имеет свои собственные настройки. Имена учетных записей и категорий проверяются приложением при открытии быстрого добавления.",
+    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.": "Каждый экземпляр может иметь свои настройки. Виджет всегда открывается Быстрое добавление: ни один тап не зарегистрирует деньги без вашего подтверждения.",
+    "Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add.": "Каждый виджет имеет свои собственные настройки. Имена учетных записей и категорий проверяются приложением при открытии быстрого добавления.",
     "Operazione irreversibile dopo la conferma.":
         "Необратимая операция после подтверждения.",
     "Ora": "Сейчас",
@@ -8021,8 +7596,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Parrucchiere": "Парикмахер",
     "Parser locale · on-device quando disponibile":
         "Локальный парсер · на устройстве, если доступен",
-    "Parti dal primo conto oppure registra subito un movimento e assegnalo in seguito.":
-        "Начните с первого счета или сразу запишите транзакцию и назначьте ее позже.",
+    "Parti dal primo conto oppure registra subito un movimento e assegnalo in seguito.": "Начните с первого счета или сразу запишите транзакцию и назначьте ее позже.",
     "Parti dal primo conto oppure registra subito un movimento.":
         "Начните с первого аккаунта или сразу запишите транзакцию.",
     "Parzialmente regolato": "Частично регулируется",
@@ -8034,25 +7608,20 @@ generatedTranslations = <String, Map<String, String>>{
     "Patrimonio corrente": "Оборотные активы",
     "Patrimonio incluso nel totale": "Наследие включено в общую сумму",
     "Patrimonio netto": "Чистая стоимость",
-    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.":
-        "Активы, доходы, расходы и доступность остаются фиксированными вверху, над быстрыми действиями. Здесь вы можете показать, скрыть, изменить размер и порядок последующих разделов.",
-    "Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.":
-        "Шаблоны, обратная связь и подавление будут устранены. Транзакции останутся неизменными, и система сможет учиться снова.",
+    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.": "Активы, доходы, расходы и доступность остаются фиксированными вверху, над быстрыми действиями. Здесь вы можете показать, скрыть, изменить размер и порядок последующих разделов.",
+    "Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.": "Шаблоны, обратная связь и подавление будут устранены. Транзакции останутся неизменными, и система сможет учиться снова.",
     "Pedaggio": "Плата за проезд",
     "Per assegnare una categoria la regola deve avere un tipo compatibile.":
         "Чтобы назначить категорию, правило должно иметь совместимый тип.",
-    "Per assegnare una categoria la regola deve avere un tipo Spesa o Entrata.":
-        "Чтобы назначить категорию, правило должно иметь тип «Расход» или «Доход».",
+    "Per assegnare una categoria la regola deve avere un tipo Spesa o Entrata.": "Чтобы назначить категорию, правило должно иметь тип «Расход» или «Доход».",
     "Per conto": "От имени",
-    "Per proteggere lo storico finanziario un conto con movimenti o ricorrenze non viene eliminato. Puoi archiviarlo e continuare a consultare i dati.":
-        "Чтобы защитить финансовую историю, учетная запись с транзакциями или повторениями не удаляется. Вы можете заархивировать его и продолжить просмотр данных.",
+    "Per proteggere lo storico finanziario un conto con movimenti o ricorrenze non viene eliminato. Puoi archiviarlo e continuare a consultare i dati.": "Чтобы защитить финансовую историю, учетная запись с транзакциями или повторениями не удаляется. Вы можете заархивировать его и продолжить просмотр данных.",
     "Per te": "Для тебя",
     "Periodo": "Период",
     "Periodo precedente": "Предыдущий период",
     "Periodo successivo": "Последующий период",
     "Permessi": "Разрешения",
-    "Permesso microfono negato o riconoscimento non disponibile.":
-        "Разрешение на использование микрофона отклонено или распознавание недоступно.",
+    "Permesso microfono negato o riconoscimento non disponibile.": "Разрешение на использование микрофона отклонено или распознавание недоступно.",
     "Permesso notifiche non concesso.":
         "Разрешение на уведомления не предоставлено.",
     "Permetti “Non assegnato”": "Разрешить «Не назначено»",
@@ -8106,8 +7675,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Previsioni e calendario": "Прогноз и календарь",
     "Previsto": "Ожидается",
     "Previsto da abitudini": "Ожидается по привычкам",
-    "Prima del ripristino viene creato un safety backup temporaneo. Se il controllo integrità fallisce, i dati attuali vengono ripristinati.":
-        "Перед восстановлением создается временная резервная копия. Если проверка целостности не удалась, текущие данные восстанавливаются.",
+    "Prima del ripristino viene creato un safety backup temporaneo. Se il controllo integrità fallisce, i dati attuali vengono ripristinati.": "Перед восстановлением создается временная резервная копия. Если проверка целостности не удалась, текущие данные восстанавливаются.",
     "Primo giorno settimana": "Первый день недели",
     "Principio di base": "Основной принцип",
     "Privacy": "Конфиденциальность",
@@ -8125,8 +7693,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Местные напоминания о получении или возврате денег",
     "Promemoria per movimenti ricorrenti":
         "Напоминание о повторяющихся транзакциях",
-    "Propone di configurare pattern settimanali, mensili o annuali.":
-        "Он предлагает настроить еженедельные, ежемесячные или годовые шаблоны.",
+    "Propone di configurare pattern settimanali, mensili o annuali.": "Он предлагает настроить еженедельные, ежемесячные или годовые шаблоны.",
     "Prossima data": "Следующая дата",
     "Prossime scadenze": "Ближайшие сроки",
     "Prossimi 30 giorni": "Следующие 30 дней",
@@ -8137,22 +7704,18 @@ generatedTranslations = <String, Map<String, String>>{
         "Попробуйте изменить поиск или фильтры.",
     "Prova regola": "Попробуйте правило",
     "Pulizie": "Очистка",
-    "Puoi avere, per esempio, un widget Revolut/Bar e un altro Contanti/Benzina con importi diversi.":
-        "Например, у вас может быть виджет Revolut/Bar и другой виджет Cash/Petrol с разными суммами.",
+    "Puoi avere, per esempio, un widget Revolut/Bar e un altro Contanti/Benzina con importi diversi.": "Например, у вас может быть виджет Revolut/Bar и другой виджет Cash/Petrol с разными суммами.",
     "Puoi cambiarla in qualsiasi momento":
         "Вы можете изменить его в любое время",
     "Puoi cancellare i dati finanziari locali dalle impostazioni. ":
         "Вы можете удалить локальные финансовые данные из настроек.",
-    "Puoi creare il primo conto oppure registrare subito un movimento come Non assegnato.":
-        "Вы можете создать свою первую учетную запись или сразу записать транзакцию как неназначенную.",
-    "Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.":
-        "Это может быть часть или вся сумма. В расходах, категориях и бюджетах будет учитываться только ваша доля.",
+    "Puoi creare il primo conto oppure registrare subito un movimento come Non assegnato.": "Вы можете создать свою первую учетную запись или сразу записать транзакцию как неназначенную.",
+    "Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.": "Это может быть часть или вся сумма. В расходах, категориях и бюджетах будет учитываться только ваша доля.",
     "Quale categoria intendevi?": "Какую категорию вы имели в виду?",
     "Quale conto intendevi?": "Какой аккаунт вы имели в виду?",
     "Qualsiasi": "Любой",
     "Qualsiasi tipo": "Любой вид",
-    "Questa categoria è usata in una divisione di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.":
-        "Эта категория используется в разделе расходов. Чтобы не потерять классификацию, сначала объедините ее с другой категорией.",
+    "Questa categoria è usata in una divisione di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.": "Эта категория используется в разделе расходов. Чтобы не потерять классификацию, сначала объедините ее с другой категорией.",
     "Questa persona ha anticipi ancora aperti. Chiudili prima di archiviarla.":
         "У этого человека еще есть авансы. Закройте их перед архивированием.",
     "Questa regola corrisponde a 1 movimento.":
@@ -8218,8 +7781,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Righe valide": "Допустимые строки",
     "Rileva ricorrenze": "Обнаружение рецидивов",
     "Rilevate dalle tue abitudini": "Обнаружено по вашим привычкам",
-    "Rimane qui. Se continui a parlare, aggiorno la frase; usa ↻ per ricominciare da zero.":
-        "Оно останется здесь. Если вы продолжите говорить, я обновлю предложение; используйте ↻, чтобы начать с нуля.",
+    "Rimane qui. Se continui a parlare, aggiorno la frase; usa ↻ per ricominciare da zero.": "Оно останется здесь. Если вы продолжите говорить, я обновлю предложение; используйте ↻, чтобы начать с нуля.",
     "Rimborso": "Возврат",
     "Rimborso collegato": "Возврат связан",
     "Rimborso non trovato.": "Возврат не найден.",
@@ -8321,10 +7883,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Scorciatoie": "Ярлыки",
     "Scuola": "Школа",
     "Scuro": "Темный",
-    "Se contiene storico potrai archiviarlo invece di eliminarlo":
-        "Если он содержит историю, вы можете заархивировать ее вместо удаления.",
-    "Se è un anticipo puro, il movimento di cassa originale verrà annullato. Le spese miste restano come acquisto personale.":
-        "Если это чистый аванс, первоначальная транзакция с наличными будет отменена. Смешанные расходы остаются в виде личных покупок.",
+    "Se contiene storico potrai archiviarlo invece di eliminarlo": "Если он содержит историю, вы можете заархивировать ее вместо удаления.",
+    "Se è un anticipo puro, il movimento di cassa originale verrà annullato. Le spese miste restano come acquisto personale.": "Если это чистый аванс, первоначальная транзакция с наличными будет отменена. Смешанные расходы остаются в виде личных покупок.",
     "Segnali": "Сигналы",
     "Segnali deboli: rafforzano una previsione, non la creano da soli.":
         "Слабые сигналы: они усиливают прогноз, а не создают его сами.",
@@ -8335,10 +7895,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Senza categoria": "Без категории",
     "Separata dall’app": "Отдельно от приложения",
     "Servizi cloud": "Облачные сервисы",
-    "Servono almeno 3 settimane di storico utile per un consiglio realistico.":
-        "Для получения реалистичного совета необходимо как минимум 3 недели полезной истории.",
-    "Servono almeno due categorie di spesa per dividere il movimento.":
-        "Для разделения транзакции необходимы как минимум две категории расходов.",
+    "Servono almeno 3 settimane di storico utile per un consiglio realistico.": "Для получения реалистичного совета необходимо как минимум 3 недели полезной истории.",
+    "Servono almeno due categorie di spesa per dividere il movimento.": "Для разделения транзакции необходимы как минимум две категории расходов.",
     "Servono più dati": "Необходимо больше данных",
     "Servono più dati per confrontare il periodo precedente.":
         "Для сравнения предыдущего периода необходимы дополнительные данные.",
@@ -8363,8 +7921,7 @@ generatedTranslations = <String, Map<String, String>>{
         "Только тогда, когда ситуация изменится существенно.",
     "Solo sul dispositivo": "Только на устройстве",
     "Sorriso": "Улыбка",
-    "spazio privato dell’app; eventuali backup o CSV esportati restano ":
-        "личное пространство приложения; любые резервные копии или экспортированные CSV-файлы остаются",
+    "spazio privato dell’app; eventuali backup o CSV esportati restano ": "личное пространство приложения; любые резервные копии или экспортированные CSV-файлы остаются",
     "Spesa": "Расход",
     "Spesa comportamentale stimata": "Предполагаемые поведенческие расходы",
     "Spesa registrata.": "Учтенный расход.",
@@ -8384,13 +7941,11 @@ generatedTranslations = <String, Map<String, String>>{
     "Stipendio": "Зарплата",
     "Streaming": "Потоковое вещание",
     "Studio": "Исследование",
-    "Su Android impedisce screenshot e anteprima dell’app nelle schermate recenti.":
-        "На Android запрещает создание снимков экрана и предварительный просмотр приложений на последних экранах.",
+    "Su Android impedisce screenshot e anteprima dell’app nelle schermate recenti.": "На Android запрещает создание снимков экрана и предварительный просмотр приложений на последних экранах.",
     "Suggerimenti automatici": "Автоматические предложения",
     "Suggerimenti obiettivi": "Объективные предложения",
     "Supermercato": "Супермаркет",
-    "Sviluppatore: andreadada. Per richieste relative a privacy o supporto ":
-        "Разработчик: andreadada. Для запросов на конфиденциальность или поддержку",
+    "Sviluppatore: andreadada. Per richieste relative a privacy o supporto ": "Разработчик: andreadada. Для запросов на конфиденциальность или поддержку",
     "Tag": "Теги",
     "Tasse": "Налоги",
     "Taxi": "Такси",
@@ -8401,15 +7956,12 @@ generatedTranslations = <String, Map<String, String>>{
     "Ti suggerisco": "Я предлагаю вам",
     "Tipo": "Нравится",
     "Tipo predefinito": "Тип по умолчанию",
-    "Tocca per creare un anticipo. Tieni premuto per le scorciatoie.":
-        "Нажмите, чтобы создать аванс. Нажмите и удерживайте для доступа к ярлыкам.",
-    "Tocca per una nuova spesa. Tieni premuto per preset e scorciatoie.":
-        "Нажмите, чтобы увидеть новые расходы. Нажмите и удерживайте для доступа к пресетам и ярлыкам.",
+    "Tocca per creare un anticipo. Tieni premuto per le scorciatoie.": "Нажмите, чтобы создать аванс. Нажмите и удерживайте для доступа к ярлыкам.",
+    "Tocca per una nuova spesa. Tieni premuto per preset e scorciatoie.": "Нажмите, чтобы увидеть новые расходы. Нажмите и удерживайте для доступа к пресетам и ярлыкам.",
     "Tocca un preset per aprire il movimento già compilato.":
         "Нажмите на пресет, чтобы открыть уже скомпилированную транзакцию.",
     "Top tag": "Популярные теги",
-    "Torta Spese/Entrate con periodo scorrevole e intervallo personalizzato.":
-        "Диаграмма расходов/доходов со скользящим периодом и настраиваемым интервалом.",
+    "Torta Spese/Entrate con periodo scorrevole e intervallo personalizzato.": "Диаграмма расходов/доходов со скользящим периодом и настраиваемым интервалом.",
     "Totale": "Итого",
     "Trasferimenti": "Трансферы",
     "Trasferimenti nelle statistiche": "Трансферы в статистике",
@@ -8448,35 +8000,28 @@ generatedTranslations = <String, Map<String, String>>{
     "Usa da 4 a 8 cifre. Il PIN resta sul dispositivo.":
         "Используйте от 4 до 8 цифр. PIN-код остается на устройстве.",
     "Usa descrizione": "Использовать описание",
-    "Usa esclusivamente il riconoscimento offline/on-device quando Android lo supporta.":
-        "Используйте распознавание офлайн/на устройстве только в том случае, если Android его поддерживает.",
+    "Usa esclusivamente il riconoscimento offline/on-device quando Android lo supporta.": "Используйте распознавание офлайн/на устройстве только в том случае, если Android его поддерживает.",
     "Usa giorno e orario": "Используйте день и время",
     "usa i contatti pubblicati su www.ddone.it.":
         "используйте контакты, опубликованные на сайте www.ddone.it.",
     "Usa i movimenti del conto nelle analytics":
         "Используйте транзакции по счетам в аналитике",
-    "Usa il conto collegato all’obiettivo come destinazione.":
-        "Используйте учетную запись, связанную с целью, в качестве пункта назначения.",
-    "Usa il pulsante + per registrare una spesa o un’entrata: analisi e previsioni nasceranno dai tuoi dati reali.":
-        "Используйте кнопку +, чтобы записать расход или доход: анализ и прогнозы будут основаны на ваших реальных данных.",
+    "Usa il conto collegato all’obiettivo come destinazione.": "Используйте учетную запись, связанную с целью, в качестве пункта назначения.",
+    "Usa il pulsante + per registrare una spesa o un’entrata: analisi e previsioni nasceranno dai tuoi dati reali.": "Используйте кнопку +, чтобы записать расход или доход: анализ и прогнозы будут основаны на ваших реальных данных.",
     "Usa importo": "Сумма использования",
-    "Usa impronta o biometria configurata nel dispositivo.":
-        "Используйте отпечаток пальца или биометрию, настроенную на устройстве.",
+    "Usa impronta o biometria configurata nel dispositivo.": "Используйте отпечаток пальца или биометрию, настроенную на устройстве.",
     "Usa la biometria del dispositivo per continuare.":
         "Чтобы продолжить, используйте биометрические данные устройства.",
     "Usa la previsione di fine mese e la tua soglia.":
         "Используйте прогноз на конец месяца и свой порог.",
-    "Usa nomi di conti e categorie, non ID SQLite.":
-        "Используйте имена учетных записей и категорий, а не идентификаторы SQLite.",
+    "Usa nomi di conti e categorie, non ID SQLite.": "Используйте имена учетных записей и категорий, а не идентификаторы SQLite.",
     "Usa Non assegnato": "Использовать неназначенный",
     "Usa questo": "Используйте это",
     "Usa ultimo conto": "Использовать последний аккаунт",
     "Usata per sbloccare l’app tramite le API di sistema. ":
         "Используется для разблокировки приложения через системные API.",
-    "Usata solo quando scegli di acquisire una foto o ricevuta da ":
-        "Используется только в том случае, если вы решили сделать фотографию или получили от",
-    "Usate per promemoria e avvisi locali configurati da te. ":
-        "Используется для локальных напоминаний и оповещений, которые вы настроили.",
+    "Usata solo quando scegli di acquisire una foto o ricevuta da ": "Используется только в том случае, если вы решили сделать фотографию или получили от",
+    "Usate per promemoria e avvisi locali configurati da te. ": "Используется для локальных напоминаний и оповещений, которые вы настроили.",
     "Usato 1 volta": "Использовалось 1 раз",
     "Usato solo per l’inserimento vocale. Il parser Balyn è ":
         "Используется только для голосового ввода. Парсер Balyn",
@@ -8511,8 +8056,7 @@ generatedTranslations = <String, Map<String, String>>{
     "È il segnale principale del modello locale.":
         "Это основной сигнал локальной модели.",
     "È stato condonato": "Это было потворствовано",
-    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.":
-        "Это оценка: она начинается с расходуемых активов, вычитает текущие расходы, ожидаемые до конца месяца, и сохраняет пруденциальный резерв для достижения целей. Это не гарантированный банковский баланс.",
+    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.": "Это оценка: она начинается с расходуемых активов, вычитает текущие расходы, ожидаемые до конца месяца, и сохраняет пруденциальный резерв для достижения целей. Это не гарантированный банковский баланс.",
     "•••• da ricevere · •••• da restituire": "•••• получить · •••• вернуть",
   },
   "zh": <String, String>{
@@ -10105,8 +9649,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Conferma PIN": "PINの確認",
     "Conferma riconciliazione": "調整を確認する",
     "Confermato": "確認済み",
-    "Confermato = ricorrenza configurata. Previsto = pattern storico ad alta confidenza. Stimato = comportamento aggregato, non un evento certo.":
-        "確認済み = 繰り返しが設定されています。予想される = 信頼性の高い過去のパターン。推定 = 集合的な動作であり、特定のイベントではありません。",
+    "Confermato = ricorrenza configurata. Previsto = pattern storico ad alta confidenza. Stimato = comportamento aggregato, non un evento certo.": "確認済み = 繰り返しが設定されています。予想される = 信頼性の高い過去のパターン。推定 = 集合的な動作であり、特定のイベントではありません。",
     "Configura": "設定する",
     "Configura conto e categoria": "アカウントとカテゴリを設定する",
     "Configura Balyn": "Balyn の構成",
@@ -10267,8 +9810,7 @@ generatedTranslations = <String, Map<String, String>>{
         "いくつかの一貫したトランザクションの後、認識された習慣がここに表示されます。",
     "Dove stai spendendo": "どこで過ごしていますか",
     "Duplica": "重複",
-    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.":
-        "設定中に、残高と金額を表示するかどうかを選択できます。アプリ内の「残高を非表示にする」機能は依然として普及しており、ウィジェットが見えにくくなっています。",
+    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.": "設定中に、残高と金額を表示するかどうかを選択できます。アプリ内の「残高を非表示にする」機能は依然として普及しており、ウィジェットが見えにくくなっています。",
     "EEE dd": "EEEdd",
     "Elettricità": "電気",
     "Elimina": "削除",
@@ -10694,8 +10236,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Obiettivo da rivedere": "見直しの目的",
     "Obiettivo non trovato.": "ターゲットが見つかりません。",
     "Oggi": "今日",
-    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.":
-        "各インスタンスは独自の設定を持つことができます。ウィジェットは常に [クイック追加] を開きます。タップしないと、確認なしにお金が登録されます。",
+    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.": "各インスタンスは独自の設定を持つことができます。ウィジェットは常に [クイック追加] を開きます。タップしないと、確認なしにお金が登録されます。",
     "Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add.":
         "各ウィジェットは独自の設定を維持します。アカウント名とカテゴリ名は、クイック追加を開くときにアプリによって確認されます。",
     "Operazione irreversibile dopo la conferma.": "確認後は元に戻せません。",
@@ -10723,8 +10264,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Patrimonio corrente": "流動資産",
     "Patrimonio incluso nel totale": "合計に含まれる遺産",
     "Patrimonio netto": "純資産",
-    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.":
-        "資産、収入、支出、および利用可能額は、クイック アクションの上の上部に固定されたままになります。ここで、後続のセクションの表示、非表示、サイズ変更、並べ替えを行うことができます。",
+    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.": "資産、収入、支出、および利用可能額は、クイック アクションの上の上部に固定されたままになります。ここで、後続のセクションの表示、非表示、サイズ変更、並べ替えを行うことができます。",
     "Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.":
         "パターン、フィードバック、抑制が排除されます。トランザクションは変更されないままであり、システムは再び学習できます。",
     "Pedaggio": "料金所",
@@ -11167,8 +10707,7 @@ generatedTranslations = <String, Map<String, String>>{
     "àáâäèéêëìíîïòóôöùúûü": "àââäèéêëìíîïòóôöùúûü",
     "È il segnale principale del modello locale.": "ローカルモデルの主信号です。",
     "È stato condonato": "それは容認された",
-    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.":
-        "これは推定値です。支出可能な資産から開始し、月末までに予想される経常支出を差し引き、目標に向けた健全性準備金を維持します。銀行残高が保証されるものではありません。",
+    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.": "これは推定値です。支出可能な資産から開始し、月末までに予想される経常支出を差し引き、目標に向けた健全性準備金を維持します。銀行残高が保証されるものではありません。",
     "•••• da ricevere · •••• da restituire": "•••• 受け取る ••••• 返す",
   },
   "ko": <String, String>{
@@ -11616,8 +11155,7 @@ generatedTranslations = <String, Map<String, String>>{
         "몇 번의 일관된 거래 후에 인식된 습관이 여기에 나타납니다.",
     "Dove stai spendendo": "당신은 어디에 지출하고 있습니까?",
     "Duplica": "중복",
-    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.":
-        "설정하는 동안 잔액과 금액을 표시할지 여부를 선택할 수 있습니다. 앱의 \"잔액 숨기기\"가 여전히 널리 퍼져 위젯을 가립니다.",
+    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.": "설정하는 동안 잔액과 금액을 표시할지 여부를 선택할 수 있습니다. 앱의 \"잔액 숨기기\"가 여전히 널리 퍼져 위젯을 가립니다.",
     "Elettricità": "전기",
     "Elimina": "삭제",
     "Elimina conto": "계정 삭제",
@@ -12040,8 +11578,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Obiettivo da rivedere": "검토 대상",
     "Obiettivo non trovato.": "대상을 찾을 수 없습니다.",
     "Oggi": "오늘",
-    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.":
-        "각 인스턴스에는 고유한 설정이 있을 수 있습니다. 위젯은 항상 빠른 추가를 엽니다. 확인 없이 탭하면 금액이 등록되지 않습니다.",
+    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.": "각 인스턴스에는 고유한 설정이 있을 수 있습니다. 위젯은 항상 빠른 추가를 엽니다. 확인 없이 탭하면 금액이 등록되지 않습니다.",
     "Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add.":
         "각 위젯은 자체 설정을 유지합니다. 빠른 추가를 열면 앱에서 계정 및 카테고리 이름을 확인합니다.",
     "Operazione irreversibile dopo la conferma.": "확인 후 되돌릴 수 없는 작동입니다.",
@@ -12069,8 +11606,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Patrimonio corrente": "유동자산",
     "Patrimonio incluso nel totale": "총계에 포함된 유산",
     "Patrimonio netto": "순자산",
-    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.":
-        "자산, 수입, 비용 및 사용 가능 항목은 빠른 작업 위 상단에 고정된 상태로 유지됩니다. 여기서 후속 섹션을 표시하고, 숨기고, 크기를 조정하고, 순서를 변경할 수 있습니다.",
+    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.": "자산, 수입, 비용 및 사용 가능 항목은 빠른 작업 위 상단에 고정된 상태로 유지됩니다. 여기서 후속 섹션을 표시하고, 숨기고, 크기를 조정하고, 순서를 변경할 수 있습니다.",
     "Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.":
         "패턴, 피드백 및 억제가 제거됩니다. 트랜잭션은 변경되지 않고 유지되며 시스템은 다시 학습할 수 있습니다.",
     "Pedaggio": "통행료",
@@ -12079,8 +11615,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Per assegnare una categoria la regola deve avere un tipo Spesa o Entrata.":
         "범주를 할당하려면 규칙에 비용 또는 수입 유형이 있어야 합니다.",
     "Per conto": "대신하여",
-    "Per proteggere lo storico finanziario un conto con movimenti o ricorrenze non viene eliminato. Puoi archiviarlo e continuare a consultare i dati.":
-        "금융 내역을 보호하기 위해 거래나 반복이 발생한 계정은 삭제되지 않습니다. 이를 보관하고 계속해서 데이터를 참조할 수 있습니다.",
+    "Per proteggere lo storico finanziario un conto con movimenti o ricorrenze non viene eliminato. Puoi archiviarlo e continuare a consultare i dati.": "금융 내역을 보호하기 위해 거래나 반복이 발생한 계정은 삭제되지 않습니다. 이를 보관하고 계속해서 데이터를 참조할 수 있습니다.",
     "Per te": "당신을 위해",
     "Periodo": "기간",
     "Periodo precedente": "이전 기간",
@@ -12514,8 +12049,7 @@ generatedTranslations = <String, Map<String, String>>{
     "àáâäèéêëìíîïòóôöùúûü": "àáâäèéêëìíîîïòóôöùúûü",
     "È il segnale principale del modello locale.": "국내 모델의 주요 신호입니다.",
     "È stato condonato": "용납됐어요",
-    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.":
-        "추정치입니다. 지출 가능한 자산에서 시작하여 월말까지 예상되는 반복 지출을 차감하고 목표에 대한 건전성 적립금을 유지합니다. 이는 보장된 은행 잔고가 아닙니다.",
+    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.": "추정치입니다. 지출 가능한 자산에서 시작하여 월말까지 예상되는 반복 지출을 차감하고 목표에 대한 건전성 적립금을 유지합니다. 이는 보장된 은행 잔고가 아닙니다.",
     "•••• da ricevere · •••• da restituire": "•••• 받다 · •••• 돌려받다",
   },
   "ar": <String, String>{
@@ -12777,14 +12311,11 @@ generatedTranslations = <String, Map<String, String>>{
     "Chiudi scorciatoie": "إغلاق الاختصارات",
     "Chiudi senza statistica": "إغلاق بدون إحصائيات",
     "Cinema": "سينما",
-    "Circa 2×1 · saldo compatto e accesso a Nuovo movimento. La visibilità del saldo è configurabile per istanza.":
-        "ما يقرب من 2 × 1 · رصيد مدمج وإمكانية الوصول إلى معاملة جديدة. رؤية الرصيد قابلة للتكوين لكل مثيل.",
-    "Circa 2×2 · Spesa, Entrata, Trasferisci e Voce. Conto e categoria possono essere preconfigurati.":
-        "حوالي 2 × 2 · النفقات والدخل والتحويل والدخل. يمكن تكوين الحساب والفئة مسبقًا.",
+    "Circa 2×1 · saldo compatto e accesso a Nuovo movimento. La visibilità del saldo è configurabile per istanza.": "ما يقرب من 2 × 1 · رصيد مدمج وإمكانية الوصول إلى معاملة جديدة. رؤية الرصيد قابلة للتكوين لكل مثيل.",
+    "Circa 2×2 · Spesa, Entrata, Trasferisci e Voce. Conto e categoria possono essere preconfigurati.": "حوالي 2 × 2 · النفقات والدخل والتحويل والدخل. يمكن تكوين الحساب والفئة مسبقًا.",
     "Circa 4×2 · quattro importi personalizzati, conto, categoria, trasferimento e microfono.":
         "حوالي 4×2 · أربعة مبالغ مخصصة، الحساب، الفئة، النقل والميكروفون.",
-    "Circa 4×2 · saldo e quattro categorie rapide. Le categorie seguono prima i quick slot e poi le preferite.":
-        "حوالي 4 × 2 · التوازن وأربع فئات سريعة. تتبع الفئات الفتحات السريعة أولاً ثم المفضلة.",
+    "Circa 4×2 · saldo e quattro categorie rapide. Le categorie seguono prima i quick slot e poi le preferite.": "حوالي 4 × 2 · التوازن وأربع فئات سريعة. تتبع الفئات الفتحات السريعة أولاً ثم المفضلة.",
     "closed_at IS NOT NULL, created_at DESC, id DESC":
         "Close_at ليس فارغًا، create_at DESC، id DESC",
     "Collega": "الاتصال",
@@ -12817,8 +12348,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Conferma PIN": "تأكيد رقم التعريف الشخصي",
     "Conferma riconciliazione": "تأكيد المصالحة",
     "Confermato": "تم التأكيد",
-    "Confermato = ricorrenza configurata. Previsto = pattern storico ad alta confidenza. Stimato = comportamento aggregato, non un evento certo.":
-        "تم التأكيد = تم تكوين التكرار. المتوقع = النمط التاريخي ذو الثقة العالية. المقدر = سلوك إجمالي، وليس حدث معين.",
+    "Confermato = ricorrenza configurata. Previsto = pattern storico ad alta confidenza. Stimato = comportamento aggregato, non un evento certo.": "تم التأكيد = تم تكوين التكرار. المتوقع = النمط التاريخي ذو الثقة العالية. المقدر = سلوك إجمالي، وليس حدث معين.",
     "Configura": "تكوين",
     "Configura conto e categoria": "تكوين الحساب والفئة",
     "Configura Balyn": "تكوين Balyn",
@@ -12838,8 +12368,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Conti": "الحسابات",
     "Conti inclusi": "الحسابات متضمنة",
     "Conti non trovati": "لم يتم العثور على الحسابات",
-    "Conti, movimenti, categorie, budget, obiettivi, regole e apprendimento locale verranno eliminati. Crea prima un backup se vuoi conservarli.":
-        "سيتم حذف الحسابات والدخل والفئات والميزانيات والأهداف والقواعد والتعليم المحلي. قم بإنشاء نسخة احتياطية أولاً إذا كنت تريد الاحتفاظ بها.",
+    "Conti, movimenti, categorie, budget, obiettivi, regole e apprendimento locale verranno eliminati. Crea prima un backup se vuoi conservarli.": "سيتم حذف الحسابات والدخل والفئات والميزانيات والأهداف والقواعد والتعليم المحلي. قم بإنشاء نسخة احتياطية أولاً إذا كنت تريد الاحتفاظ بها.",
     "Continua": "متابعة",
     "Conto": "الحساب",
     "Conto (es. Revolut)": "الحساب (على سبيل المثال Revolut)",
@@ -12909,15 +12438,13 @@ generatedTranslations = <String, Map<String, String>>{
     "Da restituire": "ليتم إعادتها",
     "Da ricevere": "ليتم استلامها",
     "Da saldare": "ليتم دفعها",
-    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.":
-        "لا تقوم Balyn بإرسال المعاملات أو الإيصالات أو الأوصاف أو الأنماط إلى الخدمات الخارجية.",
+    "Balyn non invia movimenti, ricevute, descrizioni o pattern a servizi esterni.": "لا تقوم Balyn بإرسال المعاملات أو الإيصالات أو الأوصاف أو الأنماط إلى الخدمات الخارجية.",
     "Balyn non riceve né memorizza dati biometrici.":
         "لا تتلقى Balyn أو تخزن البيانات البيومترية.",
     "Balyn non richiede un account e non integra pubblicità, ":
         "Balyn لا يتطلب حسابًا ولا يدمج الإعلانات،",
     "Balyn sulla Home": "Balyn على الصفحة الرئيسية",
-    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
-        "يستخدم Balyn الجدولة المحلية ويحد من التكرارات. وتتم تسوية التكرارات التلقائية عند فتح التطبيق.",
+    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.": "يستخدم Balyn الجدولة المحلية ويحد من التكرارات. وتتم تسوية التكرارات التلقائية عند فتح التطبيق.",
     "Balyn · Importi rapidi": "Balyn · المبالغ السريعة",
     "Balyn · Quick Capture": "Balyn · الالتقاط السريع",
     "Balyn · Rapido": "Balyn · رابيدو",
@@ -12946,8 +12473,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Dati locali, permessi, backup e servizi di sistema":
         "البيانات المحلية والأذونات والنسخ الاحتياطية وخدمات النظام",
     "Dati sul dispositivo": "البيانات الموجودة على الجهاز",
-    "Dati, PIN e preferenze restano locali. Nessun account o server è coinvolto.":
-        "تظل البيانات ورقم التعريف الشخصي والتفضيلات محلية. لا تتأثر أي حسابات أو خوادم.",
+    "Dati, PIN e preferenze restano locali. Nessun account o server è coinvolto.": "تظل البيانات ورقم التعريف الشخصي والتفضيلات محلية. لا تتأثر أي حسابات أو خوادم.",
     "dd MMM": "د ط ط ط ط",
     "dd MMM yy": "ي ي ش ش ش س س",
     "dd MMM yyyy": "ي د ط ش ط س س س س",
@@ -12988,8 +12514,7 @@ generatedTranslations = <String, Map<String, String>>{
         "بعد إجراء بعض المعاملات المتسقة، ستظهر العادات المعترف بها هنا.",
     "Dove stai spendendo": "أين تنفق",
     "Duplica": "مكررة",
-    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.":
-        "أثناء الإعداد، يمكنك اختيار ما إذا كنت تريد إظهار الرصيد والمبالغ أم لا. لا يزال خيار \"إخفاء الأرصدة\" في التطبيق سائدًا ويحجب الأدوات.",
+    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.": "أثناء الإعداد، يمكنك اختيار ما إذا كنت تريد إظهار الرصيد والمبالغ أم لا. لا يزال خيار \"إخفاء الأرصدة\" في التطبيق سائدًا ويحجب الأدوات.",
     "EEE d MMM": "EEE د ط ط ط",
     "EEE dd": "إيي د",
     "EEE dd MMM": "EEE د ط ط ط ط",
@@ -13031,8 +12556,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Esporta movimenti": "معاملات التصدير",
     "Esporta movimenti CSV": "تصدير معاملات CSV",
     "Evento": "حدث",
-    "Fallback opzionale. La privacy dipende dal servizio vocale configurato sul dispositivo.":
-        "احتياطي اختياري. تعتمد الخصوصية على الخدمة الصوتية التي تم تكوينها على جهازك.",
+    "Fallback opzionale. La privacy dipende dal servizio vocale configurato sul dispositivo.": "احتياطي اختياري. تعتمد الخصوصية على الخدمة الصوتية التي تم تكوينها على جهازك.",
     "Fallback semplice da 4 a 8 cifre.": "احتياطي بسيط من 4 إلى 8 أرقام.",
     "Famiglia": "العائلة",
     "Famiglia e social": "عائلي واجتماعي",
@@ -13094,8 +12618,7 @@ generatedTranslations = <String, Map<String, String>>{
         "المعاملات المصنفة بالفعل لن تتغير.",
     "I movimenti già registrati resteranno invariati.":
         "المعاملات المسجلة بالفعل ستبقى دون تغيير.",
-    "I pattern sono ricavati dai tuoi movimenti. Puoi disattivarli, convertirli in regole esplicite o eliminarli senza modificare lo storico.":
-        "الأنماط مستمدة من معاملاتك. يمكنك إلغاء تنشيطها أو تحويلها إلى قواعد صريحة أو حذفها دون تغيير السجل.",
+    "I pattern sono ricavati dai tuoi movimenti. Puoi disattivarli, convertirli in regole esplicite o eliminarli senza modificare lo storico.": "الأنماط مستمدة من معاملاتك. يمكنك إلغاء تنشيطها أو تحويلها إلى قواعد صريحة أو حذفها دون تغيير السجل.",
     "I saldi dei conti verranno ricalcolati automaticamente.":
         "سيتم إعادة حساب أرصدة الحساب تلقائيا.",
     "I widget di questa sezione sono disponibili su Android.":
@@ -13119,8 +12642,7 @@ generatedTranslations = <String, Map<String, String>>{
         "يجب أن يحتوي ملف CSV على النوع والمبلغ والتاريخ والحساب على الأقل.",
     "Il database ripristinato non supera il controllo integrità.":
         "فشلت قاعدة البيانات المستعادة في التحقق من التكامل.",
-    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.":
-        "لا يدعم المشغل الإضافة التلقائية. اضغط مع الاستمرار على الصفحة الرئيسية → القطعة → Balyn.",
+    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.": "لا يدعم المشغل الإضافة التلقائية. اضغط مع الاستمرار على الصفحة الرئيسية → القطعة → Balyn.",
     "Il microfono compila Nuovo movimento ma non salva mai automaticamente.":
         "يقوم الميكروفون بتجميع معاملة جديدة ولكنه لا يحفظها تلقائيًا أبدًا.",
     "Il movimento ha una direzione incompatibile.":
@@ -13136,18 +12658,15 @@ generatedTranslations = <String, Map<String, String>>{
         "أداة التعرف على النظام غير متاحة في وضع عدم الاتصال.",
     "Il riconoscimento vocale offline non è disponibile su questo dispositivo.":
         "التعرف على الصوت في وضع عدم الاتصال غير متاح على هذا الجهاز.",
-    "Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.":
-        "يبقى الملخص الرئيسي ثابتًا في الأعلى. قم بإعادة تنشيط الأقسام التي تريد رؤيتها هنا.",
+    "Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.": "يبقى الملخص الرئيسي ثابتًا في الأعلى. قم بإعادة تنشيط الأقسام التي تريد رؤيتها هنا.",
     "Il saldo contribuisce al patrimonio totale":
         "ويساهم الرصيد في إجمالي الأصول",
     "Il saldo del conto e il residuo dell’anticipo verranno ripristinati automaticamente.":
         "سيتم استعادة رصيد الحساب ورصيد السلفة تلقائيًا.",
     "Il saldo del conto verrà ricalcolato automaticamente.":
         "سيتم إعادة حساب رصيد حسابك تلقائيًا.",
-    "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.":
-        "يتعرف النظام على العادات من خلال الإحصائيات المحلية والقواعد القابلة للتفسير. لا يستخدم الذكاء الاصطناعي أو السحابة.",
-    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.":
-        "يتم تفسير النص الذي تم التعرف عليه محليًا بواسطة محلل حتمي. ولا يتم إرساله إلى خادم Balyn.",
+    "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.": "يتعرف النظام على العادات من خلال الإحصائيات المحلية والقواعد القابلة للتفسير. لا يستخدم الذكاء الاصطناعي أو السحابة.",
+    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.": "يتم تفسير النص الذي تم التعرف عليه محليًا بواسطة محلل حتمي. ولا يتم إرساله إلى خادم Balyn.",
     "Il trasferimento deve arrivare al conto collegato all’obiettivo.":
         "يجب أن يصل التحويل إلى الحساب المرتبط بالهدف.",
     "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.":
@@ -13172,8 +12691,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Imposta limiti giornalieri, settimanali, mensili o annuali.":
         "تعيين حدود يومية أو أسبوعية أو شهرية أو سنوية.",
     "Imposta PIN locale": "قم بتعيين رقم التعريف الشخصي المحلي",
-    "Imposta un limite per sapere quanto puoi ancora spendere nel periodo.":
-        "قم بتعيين حد لمعرفة المبلغ الذي لا يزال بإمكانك إنفاقه خلال هذه الفترة.",
+    "Imposta un limite per sapere quanto puoi ancora spendere nel periodo.": "قم بتعيين حد لمعرفة المبلغ الذي لا يزال بإمكانك إنفاقه خلال هذه الفترة.",
     "Imposta un limite per sapere quanto puoi ancora spendere.":
         "قم بتعيين حد لمعرفة المبلغ الذي لا يزال بإمكانك إنفاقه.",
     "Impostazioni": "الإعدادات",
@@ -13218,8 +12736,7 @@ generatedTranslations = <String, Map<String, String>>{
     "La mia parte": "نصيبي",
     "La posizione verrà chiusa come annullata.":
         "سيتم إغلاق المركز باعتباره ملغى.",
-    "La previsione di fine mese è sotto la soglia che hai impostato. Apri Pianifica per i dettagli.":
-        "توقعات نهاية الشهر أقل من الحد الذي حددته. افتح الجدول الزمني للحصول على التفاصيل.",
+    "La previsione di fine mese è sotto la soglia che hai impostato. Apri Pianifica per i dettagli.": "توقعات نهاية الشهر أقل من الحد الذي حددته. افتح الجدول الزمني للحصول على التفاصيل.",
     "La quota anticipata deve essere maggiore di 0 e minore o uguale al totale.":
         "يجب أن تكون الرسوم المسبقة أكبر من 0 وأقل من أو تساوي الإجمالي.",
     "La stima comportamentale è comunque inclusa nel saldo previsto sopra.":
@@ -13234,8 +12751,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Lavoro e formazione": "العمل والتدريب",
     "Le categorie compariranno qui quando registri movimenti.":
         "ستظهر الفئات هنا عند تسجيل المعاملات.",
-    "Le metriche principali restano in alto. Riattiva altri widget dalla personalizzazione Home.":
-        "تبقى المقاييس الرئيسية في الأعلى. أعد تمكين الأدوات الأخرى من أداة تخصيص الصفحة الرئيسية.",
+    "Le metriche principali restano in alto. Riattiva altri widget dalla personalizzazione Home.": "تبقى المقاييس الرئيسية في الأعلى. أعد تمكين الأدوات الأخرى من أداة تخصيص الصفحة الرئيسية.",
     "Le notifiche possono essere disattivate in qualsiasi momento.":
         "يمكن إيقاف تشغيل الإشعارات في أي وقت.",
     "Le persone servono solo per organizzare gli anticipi e restano sul dispositivo.":
@@ -13315,8 +12831,7 @@ generatedTranslations = <String, Map<String, String>>{
     "movimenti da assegnare": "المعاملات لتعيين",
     "Movimenti del conto esportati.": "معاملات الحساب المصدرة.",
     "Movimenti recenti": "المعاملات الأخيرة",
-    "Movimenti, split, budget, regole e apprendimento verranno spostati nella categoria scelta.":
-        "سيتم نقل المعاملات والتقسيمات والميزانيات والقواعد والتعلم إلى الفئة المختارة.",
+    "Movimenti, split, budget, regole e apprendimento verranno spostati nella categoria scelta.": "سيتم نقل المعاملات والتقسيمات والميزانيات والقواعد والتعلم إلى الفئة المختارة.",
     "Movimento": "الصفقة",
     "Movimento aggiornato.": "المعاملة المحدثة.",
     "Movimento collegato non trovato.": "لم يتم العثور على الحركة المرتبطة.",
@@ -13442,10 +12957,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Obiettivo da rivedere": "الهدف المراد مراجعته",
     "Obiettivo non trovato.": "لم يتم العثور على الهدف.",
     "Oggi": "اليوم",
-    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.":
-        "يمكن أن يكون لكل مثيل إعداداته الخاصة. تفتح الأداة دائمًا الإضافة السريعة: لا يوجد نقرة تسجل الأموال دون تأكيدك.",
-    "Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add.":
-        "تحتفظ كل أداة بإعداداتها الخاصة. يتم التحقق من أسماء الحسابات والفئة بواسطة التطبيق عند فتح Quick Add.",
+    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.": "يمكن أن يكون لكل مثيل إعداداته الخاصة. تفتح الأداة دائمًا الإضافة السريعة: لا يوجد نقرة تسجل الأموال دون تأكيدك.",
+    "Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add.": "تحتفظ كل أداة بإعداداتها الخاصة. يتم التحقق من أسماء الحسابات والفئة بواسطة التطبيق عند فتح Quick Add.",
     "Operazione irreversibile dopo la conferma.":
         "عملية لا رجعة فيها بعد التأكيد.",
     "Ora": "الآن",
@@ -13473,18 +12986,15 @@ generatedTranslations = <String, Map<String, String>>{
     "Patrimonio corrente": "الأصول الحالية",
     "Patrimonio incluso nel totale": "التراث المدرجة في المجموع",
     "Patrimonio netto": "صافي القيمة",
-    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.":
-        "تظل الأصول والدخل والمصروفات والمتاحة ثابتة في الأعلى، فوق الإجراءات السريعة. هنا يمكنك إظهار الأقسام اللاحقة وإخفائها وتغيير حجمها وإعادة ترتيبها.",
-    "Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.":
-        "سيتم القضاء على الأنماط والتعليقات والقمع. ستبقى المعاملات دون تغيير ويمكن للنظام أن يتعلم مرة أخرى.",
+    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.": "تظل الأصول والدخل والمصروفات والمتاحة ثابتة في الأعلى، فوق الإجراءات السريعة. هنا يمكنك إظهار الأقسام اللاحقة وإخفائها وتغيير حجمها وإعادة ترتيبها.",
+    "Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.": "سيتم القضاء على الأنماط والتعليقات والقمع. ستبقى المعاملات دون تغيير ويمكن للنظام أن يتعلم مرة أخرى.",
     "Pedaggio": "حصيلة",
     "Per assegnare una categoria la regola deve avere un tipo compatibile.":
         "لتعيين فئة، يجب أن يكون للقاعدة نوع متوافق.",
     "Per assegnare una categoria la regola deve avere un tipo Spesa o Entrata.":
         "لتعيين فئة، يجب أن تحتوي القاعدة على نوع المصاريف أو الدخل.",
     "Per conto": "بالنيابة",
-    "Per proteggere lo storico finanziario un conto con movimenti o ricorrenze non viene eliminato. Puoi archiviarlo e continuare a consultare i dati.":
-        "لحماية التاريخ المالي، لا يتم حذف الحساب الذي يحتوي على معاملات أو تكرارات. يمكنك أرشفتها ومواصلة الرجوع إلى البيانات.",
+    "Per proteggere lo storico finanziario un conto con movimenti o ricorrenze non viene eliminato. Puoi archiviarlo e continuare a consultare i dati.": "لحماية التاريخ المالي، لا يتم حذف الحساب الذي يحتوي على معاملات أو تكرارات. يمكنك أرشفتها ومواصلة الرجوع إلى البيانات.",
     "Per te": "بالنسبة لك",
     "Periodo": "الفترة",
     "Periodo precedente": "الفترة السابقة",
@@ -13543,8 +13053,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Previsioni e calendario": "التوقعات والتقويم",
     "Previsto": "متوقع",
     "Previsto da abitudini": "متوقع بالعادات",
-    "Prima del ripristino viene creato un safety backup temporaneo. Se il controllo integrità fallisce, i dati attuali vengono ripristinati.":
-        "قبل الاستعادة، يتم إنشاء نسخة احتياطية أمان مؤقتة. إذا فشل التحقق من التكامل، تتم استعادة البيانات الحالية.",
+    "Prima del ripristino viene creato un safety backup temporaneo. Se il controllo integrità fallisce, i dati attuali vengono ripristinati.": "قبل الاستعادة، يتم إنشاء نسخة احتياطية أمان مؤقتة. إذا فشل التحقق من التكامل، تتم استعادة البيانات الحالية.",
     "Primo giorno settimana": "اليوم الأول من الأسبوع",
     "Principio di base": "المبدأ الأساسي",
     "Privacy": "الخصوصية",
@@ -13573,21 +13082,18 @@ generatedTranslations = <String, Map<String, String>>{
         "حاول تغيير البحث أو عوامل التصفية.",
     "Prova regola": "حاول القاعدة",
     "Pulizie": "التنظيف",
-    "Puoi avere, per esempio, un widget Revolut/Bar e un altro Contanti/Benzina con importi diversi.":
-        "يمكن أن يكون لديك، على سبيل المثال، عنصر واجهة مستخدم Revolut/Bar وآخر نقدًا/بنزين بمبالغ مختلفة.",
+    "Puoi avere, per esempio, un widget Revolut/Bar e un altro Contanti/Benzina con importi diversi.": "يمكن أن يكون لديك، على سبيل المثال، عنصر واجهة مستخدم Revolut/Bar وآخر نقدًا/بنزين بمبالغ مختلفة.",
     "Puoi cambiarla in qualsiasi momento": "يمكنك تغييره في أي وقت",
     "Puoi cancellare i dati finanziari locali dalle impostazioni. ":
         "يمكنك مسح البيانات المالية المحلية من الإعدادات.",
     "Puoi creare il primo conto oppure registrare subito un movimento come Non assegnato.":
         "يمكنك إنشاء حسابك الأول أو تسجيل معاملة على أنها غير مخصصة على الفور.",
-    "Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.":
-        "يمكن أن يكون جزءًا أو كل المبلغ. سيتم احتساب حصتك فقط في النفقات والفئات والميزانيات.",
+    "Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.": "يمكن أن يكون جزءًا أو كل المبلغ. سيتم احتساب حصتك فقط في النفقات والفئات والميزانيات.",
     "Quale categoria intendevi?": "أي فئة تقصد؟",
     "Quale conto intendevi?": "أي حساب تقصد؟",
     "Qualsiasi": "أي",
     "Qualsiasi tipo": "أي نوع",
-    "Questa categoria è usata in una divisione di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.":
-        "يتم استخدام هذه الفئة في قسم النفقات. لتجنب فقدان التصنيف، قم بدمجه في فئة أخرى أولاً.",
+    "Questa categoria è usata in una divisione di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.": "يتم استخدام هذه الفئة في قسم النفقات. لتجنب فقدان التصنيف، قم بدمجه في فئة أخرى أولاً.",
     "Questa persona ha anticipi ancora aperti. Chiudili prima di archiviarla.":
         "هذا الشخص لديه التقدم لا يزال مفتوحا. أغلقها قبل أرشفتها.",
     "Questa regola corrisponde a 1 movimento.":
@@ -13651,8 +13157,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Righe valide": "صفوف صالحة",
     "Rileva ricorrenze": "كشف التكرارات",
     "Rilevate dalle tue abitudini": "تم اكتشافها من خلال عاداتك",
-    "Rimane qui. Se continui a parlare, aggiorno la frase; usa ↻ per ricominciare da zero.":
-        "يبقى هنا. إذا واصلت الحديث، سأقوم بتحديث الجملة؛ استخدم ↻ للبدء من الصفر.",
+    "Rimane qui. Se continui a parlare, aggiorno la frase; usa ↻ per ricominciare da zero.": "يبقى هنا. إذا واصلت الحديث، سأقوم بتحديث الجملة؛ استخدم ↻ للبدء من الصفر.",
     "Rimborso": "استرداد",
     "Rimborso collegato": "تم ربط رد الأموال",
     "Rimborso non trovato.": "لم يتم العثور على المبلغ المسترد.",
@@ -13752,8 +13257,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Scuro": "الظلام",
     "Se contiene storico potrai archiviarlo invece di eliminarlo":
         "إذا كان يحتوي على سجل، فيمكنك أرشفته بدلاً من حذفه",
-    "Se è un anticipo puro, il movimento di cassa originale verrà annullato. Le spese miste restano come acquisto personale.":
-        "إذا كانت سلفة خالصة، فسيتم إلغاء المعاملة النقدية الأصلية. تبقى النفقات المختلطة بمثابة مشتريات شخصية.",
+    "Se è un anticipo puro, il movimento di cassa originale verrà annullato. Le spese miste restano come acquisto personale.": "إذا كانت سلفة خالصة، فسيتم إلغاء المعاملة النقدية الأصلية. تبقى النفقات المختلطة بمثابة مشتريات شخصية.",
     "Segnali": "إشارات",
     "Segnali deboli: rafforzano una previsione, non la creano da soli.":
         "الإشارات الضعيفة: تقوي التنبؤ، ولا تخلقه بنفسها.",
@@ -13764,8 +13268,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Senza categoria": "غير مصنف",
     "Separata dall’app": "منفصلة عن التطبيق",
     "Servizi cloud": "الخدمات السحابية",
-    "Servono almeno 3 settimane di storico utile per un consiglio realistico.":
-        "هناك حاجة إلى 3 أسابيع على الأقل من التاريخ المفيد للحصول على نصيحة واقعية.",
+    "Servono almeno 3 settimane di storico utile per un consiglio realistico.": "هناك حاجة إلى 3 أسابيع على الأقل من التاريخ المفيد للحصول على نصيحة واقعية.",
     "Servono almeno due categorie di spesa per dividere il movimento.":
         "هناك حاجة إلى فئتين للإنفاق على الأقل لتقسيم المعاملة.",
     "Servono più dati": "هناك حاجة إلى مزيد من البيانات",
@@ -13813,8 +13316,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Stipendio": "الراتب",
     "Streaming": "الجري",
     "Studio": "دراسة",
-    "Su Android impedisce screenshot e anteprima dell’app nelle schermate recenti.":
-        "على Android، يمنع لقطات الشاشة ومعاينات التطبيقات على الشاشات الحديثة.",
+    "Su Android impedisce screenshot e anteprima dell’app nelle schermate recenti.": "على Android، يمنع لقطات الشاشة ومعاينات التطبيقات على الشاشات الحديثة.",
     "Suggerimenti automatici": "الاقتراحات التلقائية",
     "Suggerimenti obiettivi": "اقتراحات موضوعية",
     "Supermercato": "سوبر ماركت",
@@ -13832,8 +13334,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Tipo predefinito": "النوع الافتراضي",
     "Tocca per creare un anticipo. Tieni premuto per le scorciatoie.":
         "انقر لإنشاء تقدم. اضغط مع الاستمرار على الاختصارات.",
-    "Tocca per una nuova spesa. Tieni premuto per preset e scorciatoie.":
-        "اضغط للحصول على حساب جديد. اضغط مع الاستمرار على الإعدادات المسبقة والاختصارات.",
+    "Tocca per una nuova spesa. Tieni premuto per preset e scorciatoie.": "اضغط للحصول على حساب جديد. اضغط مع الاستمرار على الإعدادات المسبقة والاختصارات.",
     "Tocca un preset per aprire il movimento già compilato.":
         "اضغط على إعداد مسبق لفتح المعاملة المترجمة بالفعل.",
     "Top tag": "أعلى العلامات",
@@ -13876,8 +13377,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Usa da 4 a 8 cifre. Il PIN resta sul dispositivo.":
         "استخدم 4 إلى 8 أرقام. يبقى رقم التعريف الشخصي على الجهاز.",
     "Usa descrizione": "استخدام الوصف",
-    "Usa esclusivamente il riconoscimento offline/on-device quando Android lo supporta.":
-        "استخدم ميزة التعرف على الجهاز دون الاتصال بالإنترنت/على الجهاز فقط عندما يدعمها Android.",
+    "Usa esclusivamente il riconoscimento offline/on-device quando Android lo supporta.": "استخدم ميزة التعرف على الجهاز دون الاتصال بالإنترنت/على الجهاز فقط عندما يدعمها Android.",
     "Usa giorno e orario": "استخدم اليوم والوقت",
     "usa i contatti pubblicati su www.ddone.it.":
         "استخدم جهات الاتصال المنشورة على www.ddone.it.",
@@ -13885,8 +13385,7 @@ generatedTranslations = <String, Map<String, String>>{
         "استخدم معاملات الحساب في التحليلات",
     "Usa il conto collegato all’obiettivo come destinazione.":
         "استخدم الحساب المرتبط بالهدف كوجهة.",
-    "Usa il pulsante + per registrare una spesa o un’entrata: analisi e previsioni nasceranno dai tuoi dati reali.":
-        "استخدم الزر + لتسجيل النفقات أو الدخل: ستنشأ التحليلات والتنبؤات من بياناتك الحقيقية.",
+    "Usa il pulsante + per registrare una spesa o un’entrata: analisi e previsioni nasceranno dai tuoi dati reali.": "استخدم الزر + لتسجيل النفقات أو الدخل: ستنشأ التحليلات والتنبؤات من بياناتك الحقيقية.",
     "Usa importo": "استخدام المبلغ",
     "Usa impronta o biometria configurata nel dispositivo.":
         "استخدم بصمة الإصبع أو القياسات الحيوية التي تم تكوينها على الجهاز.",
@@ -13932,15 +13431,12 @@ generatedTranslations = <String, Map<String, String>>{
     "} del periodo precedente.": "} الفترة السابقة.",
     "} nel periodo": "} في الفترة",
     "} rispetto al periodo precedente.": "}مقارنة بالفترة السابقة.",
-    "àáâäãåèéêëìíîïòóôöõùúûüçñ":
-        "آآآآمينهييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييين",
-    "àáâäèéêëìíîïòóôöùúûü":
-        "آآآينيييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييين",
+    "àáâäãåèéêëìíîïòóôöõùúûüçñ": "آآآآمينهييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييين",
+    "àáâäèéêëìíîïòóôöùúûü": "آآآينيييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييييين",
     "È il segnale principale del modello locale.":
         "إنها الإشارة الرئيسية للنموذج المحلي.",
     "È stato condonato": "لقد تم التغاضي عنه",
-    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.":
-        "وهو تقدير: يبدأ من الأصول القابلة للإنفاق، ويطرح منه النفقات المتكررة المتوقعة حتى نهاية الشهر، ويحتفظ باحتياطي احترازي للأهداف. إنه ليس رصيدًا بنكيًا مضمونًا.",
+    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.": "وهو تقدير: يبدأ من الأصول القابلة للإنفاق، ويطرح منه النفقات المتكررة المتوقعة حتى نهاية الشهر، ويحتفظ باحتياطي احترازي للأهداف. إنه ليس رصيدًا بنكيًا مضمونًا.",
     "•••• da ricevere · •••• da restituire": "•••• للإستلام · •••• للرجوع",
   },
   "hi": <String, String>{
@@ -13980,16 +13476,13 @@ generatedTranslations = <String, Map<String, String>>{
         "उद्देश्यों पर गैर-आक्रामक अद्यतन",
     "Aggiungi": "जोड़ें",
     "Aggiungi ai preferiti": "पसंदीदा में जोड़ें",
-    "Aggiungi bollette, abbonamenti o stipendio per prevedere il saldo futuro.":
-        "अपने भविष्य के शेष का अनुमान लगाने के लिए बिल, सदस्यता या वेतन जोड़ें।",
+    "Aggiungi bollette, abbonamenti o stipendio per prevedere il saldo futuro.": "अपने भविष्य के शेष का अनुमान लगाने के लिए बिल, सदस्यता या वेतन जोड़ें।",
     "Aggiungi bollette, abbonamenti, rate o entrate regolari.":
         "बिल, सदस्यताएँ, किश्तें या नियमित आय जोड़ें।",
     "Aggiungi dettagli": "विवरण जोड़ें",
     "Aggiungi entrata": "आय जोड़ें",
-    "Aggiungi il conto che usi davvero o continua con movimenti Non assegnati.":
-        "वह खाता जोड़ें जिसका आप वास्तव में उपयोग करते हैं या अनअसाइन्ड लेनदेन जारी रखें।",
-    "Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.":
-        "वह खाता जोड़ें जिसका आप वास्तव में उपयोग करते हैं या अनअसाइन्ड लेनदेन जारी रखें।",
+    "Aggiungi il conto che usi davvero o continua con movimenti Non assegnati.": "वह खाता जोड़ें जिसका आप वास्तव में उपयोग करते हैं या अनअसाइन्ड लेनदेन जारी रखें।",
+    "Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.": "वह खाता जोड़ें जिसका आप वास्तव में उपयोग करते हैं या अनअसाइन्ड लेनदेन जारी रखें।",
     "Aggiungi Importi rapidi": "त्वरित मात्राएँ जोड़ें",
     "Aggiungi movimento": "लेन-देन जोड़ें",
     "Aggiungi parte": "भाग जोड़ें",
@@ -14023,8 +13516,7 @@ generatedTranslations = <String, Map<String, String>>{
         "चयनित अवधि में परिसंपत्ति प्रदर्शन",
     "Andamento patrimonio": "परिसंपत्ति प्रदर्शन",
     "Andamento saldo": "ठोस प्रवृत्ति",
-    "Android può chiederti conferma e aprire la configurazione prima di posizionare il widget.":
-        "एंड्रॉइड आपसे पुष्टि मांग सकता है और विजेट रखने से पहले कॉन्फ़िगरेशन खोल सकता है।",
+    "Android può chiederti conferma e aprire la configurazione prima di posizionare il widget.": "एंड्रॉइड आपसे पुष्टि मांग सकता है और विजेट रखने से पहले कॉन्फ़िगरेशन खोल सकता है।",
     "Android secondo le regole di quel fornitore.":
         "एंड्रॉइड उस विक्रेता के नियमों के अनुसार।",
     "Animali": "पशु",
@@ -14056,8 +13548,7 @@ generatedTranslations = <String, Map<String, String>>{
     "AppScope not found": "ऐपस्कोप नहीं मिला",
     "Apre Balyn senza autenticazione.": "प्रमाणीकरण के बिना Balyn खोलता है।",
     "Apri": "खुला",
-    "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.":
-        "रिफंड रिकॉर्ड करने या अपना रिमाइंडर अपडेट करने के लिए डाउन पेमेंट खोलें।",
+    "Apri Anticipi per registrare un rimborso o aggiornare il promemoria.": "रिफंड रिकॉर्ड करने या अपना रिमाइंडर अपडेट करने के लिए डाउन पेमेंट खोलें।",
     "Apri conto": "खाता खोलें",
     "Apri il selettore widget del launcher e cerca Balyn.":
         "लॉन्चर विजेट चयनकर्ता खोलें और Balyn खोजें।",
@@ -14114,8 +13605,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Backup non trovato.": "बैकअप नहीं मिला.",
     "Backup ripristinato e verificato.":
         "बैकअप पुनर्स्थापित और सत्यापित किया गया.",
-    "Backup, CSV e allegati vengono esportati solo quando avvii ":
-        "बैकअप, सीएसवी और अटैचमेंट केवल आपके लॉन्च होने पर ही निर्यात किए जाते हैं",
+    "Backup, CSV e allegati vengono esportati solo quando avvii ": "बैकअप, सीएसवी और अटैचमेंट केवल आपके लॉन्च होने पर ही निर्यात किए जाते हैं",
     "Backup, CSV e ripristino": "बैकअप, सीएसवी और पुनर्स्थापना",
     "Backup, import ed export": "बैकअप, आयात और निर्यात",
     "Bad state: ": "ख़राब स्थिति:",
@@ -14174,8 +13664,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Cancellare l’apprendimento?": "सीखना रद्द करें?",
     "Cancellare tutti i dati?": "सारा डेटा मिटा दें?",
     "Cancelleria": "स्टेशनरी",
-    "Carosello categorie. Scorri a destra o sinistra per passare tra Spese ed Entrate.":
-        "हिंडोला श्रेणियाँ. व्यय और आय के बीच स्विच करने के लिए बाएँ या दाएँ स्वाइप करें।",
+    "Carosello categorie. Scorri a destra o sinistra per passare tra Spese ed Entrate.": "हिंडोला श्रेणियाँ. व्यय और आय के बीच स्विच करने के लिए बाएँ या दाएँ स्वाइप करें।",
     "Carta": "कागज",
     "Casa": "घर",
     "Cash flow": "नकदी प्रवाह",
@@ -14201,14 +13690,10 @@ generatedTranslations = <String, Map<String, String>>{
     "Chiudi scorciatoie": "शॉर्टकट बंद करें",
     "Chiudi senza statistica": "आंकड़ों के बिना बंद करें",
     "Cinema": "सिनेमा",
-    "Circa 2×1 · saldo compatto e accesso a Nuovo movimento. La visibilità del saldo è configurabile per istanza.":
-        "लगभग 2×1 · कॉम्पैक्ट बैलेंस और नए लेनदेन तक पहुंच। शेष दृश्यता प्रति उदाहरण कॉन्फ़िगर करने योग्य है।",
-    "Circa 2×2 · Spesa, Entrata, Trasferisci e Voce. Conto e categoria possono essere preconfigurati.":
-        "2×2 · व्यय, आय, स्थानांतरण और आय के बारे में। खाता और श्रेणी पूर्व-कॉन्फ़िगर किया जा सकता है.",
-    "Circa 4×2 · quattro importi personalizzati, conto, categoria, trasferimento e microfono.":
-        "लगभग 4×2 · चार कस्टम मात्राएँ, खाता, श्रेणी, स्थानांतरण और माइक्रोफ़ोन।",
-    "Circa 4×2 · saldo e quattro categorie rapide. Le categorie seguono prima i quick slot e poi le preferite.":
-        "लगभग 4×2 · संतुलन और चार त्वरित श्रेणियां। श्रेणियां पहले त्वरित स्लॉट और फिर पसंदीदा का अनुसरण करती हैं।",
+    "Circa 2×1 · saldo compatto e accesso a Nuovo movimento. La visibilità del saldo è configurabile per istanza.": "लगभग 2×1 · कॉम्पैक्ट बैलेंस और नए लेनदेन तक पहुंच। शेष दृश्यता प्रति उदाहरण कॉन्फ़िगर करने योग्य है।",
+    "Circa 2×2 · Spesa, Entrata, Trasferisci e Voce. Conto e categoria possono essere preconfigurati.": "2×2 · व्यय, आय, स्थानांतरण और आय के बारे में। खाता और श्रेणी पूर्व-कॉन्फ़िगर किया जा सकता है.",
+    "Circa 4×2 · quattro importi personalizzati, conto, categoria, trasferimento e microfono.": "लगभग 4×2 · चार कस्टम मात्राएँ, खाता, श्रेणी, स्थानांतरण और माइक्रोफ़ोन।",
+    "Circa 4×2 · saldo e quattro categorie rapide. Le categorie seguono prima i quick slot e poi le preferite.": "लगभग 4×2 · संतुलन और चार त्वरित श्रेणियां। श्रेणियां पहले त्वरित स्लॉट और फिर पसंदीदा का अनुसरण करती हैं।",
     "closed_at IS NOT NULL, created_at DESC, id DESC":
         "बंद_पर शून्य नहीं है, DESC पर बनाया गया, आईडी DESC",
     "Collega": "कनेक्ट करें",
@@ -14241,8 +13726,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Conferma PIN": "पिन की पुष्टि करें",
     "Conferma riconciliazione": "सुलह की पुष्टि करें",
     "Confermato": "पुष्टि की गई",
-    "Confermato = ricorrenza configurata. Previsto = pattern storico ad alta confidenza. Stimato = comportamento aggregato, non un evento certo.":
-        "पुष्टि की गई = पुनरावृत्ति कॉन्फ़िगर की गई। अपेक्षित = उच्च आत्मविश्वास वाला ऐतिहासिक पैटर्न। अनुमानित = समग्र व्यवहार, कोई निश्चित घटना नहीं।",
+    "Confermato = ricorrenza configurata. Previsto = pattern storico ad alta confidenza. Stimato = comportamento aggregato, non un evento certo.": "पुष्टि की गई = पुनरावृत्ति कॉन्फ़िगर की गई। अपेक्षित = उच्च आत्मविश्वास वाला ऐतिहासिक पैटर्न। अनुमानित = समग्र व्यवहार, कोई निश्चित घटना नहीं।",
     "Configura": "कॉन्फ़िगर करें",
     "Configura conto e categoria": "खाता और श्रेणी कॉन्फ़िगर करें",
     "Configura Balyn": "Balyn को कॉन्फ़िगर करें",
@@ -14262,8 +13746,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Conti": "लेखा",
     "Conti inclusi": "खाते शामिल हैं",
     "Conti non trovati": "खाते नहीं मिले",
-    "Conti, movimenti, categorie, budget, obiettivi, regole e apprendimento locale verranno eliminati. Crea prima un backup se vuoi conservarli.":
-        "खाते, आय, श्रेणियां, बजट, लक्ष्य, नियम और स्थानीय शिक्षा हटा दी जाएंगी। यदि आप उन्हें रखना चाहते हैं तो पहले एक बैकअप बनाएं।",
+    "Conti, movimenti, categorie, budget, obiettivi, regole e apprendimento locale verranno eliminati. Crea prima un backup se vuoi conservarli.": "खाते, आय, श्रेणियां, बजट, लक्ष्य, नियम और स्थानीय शिक्षा हटा दी जाएंगी। यदि आप उन्हें रखना चाहते हैं तो पहले एक बैकअप बनाएं।",
     "Continua": "जारी रखें",
     "Conto": "खाता",
     "Conto (es. Revolut)": "खाता (उदा. Revolut)",
@@ -14339,19 +13822,16 @@ generatedTranslations = <String, Map<String, String>>{
         "Balyn बाहरी सेवाओं को लेनदेन, रसीदें, विवरण या पैटर्न नहीं भेजता है।",
     "Balyn non riceve né memorizza dati biometrici.":
         "Balyn बायोमेट्रिक डेटा प्राप्त या संग्रहीत नहीं करता है।",
-    "Balyn non richiede un account e non integra pubblicità, ":
-        "Balyn को किसी खाते की आवश्यकता नहीं है और यह विज्ञापन को एकीकृत नहीं करता है,",
+    "Balyn non richiede un account e non integra pubblicità, ": "Balyn को किसी खाते की आवश्यकता नहीं है और यह विज्ञापन को एकीकृत नहीं करता है,",
     "Balyn sulla Home": "घर पर Balyn",
-    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.":
-        "Balyn स्थानीय शेड्यूलिंग का उपयोग करता है और डुप्लिकेट को सीमित करता है। ऐप खुलने पर भी स्वचालित पुनरावृत्ति का समाधान हो जाता है।",
+    "Balyn usa scheduling locale e limita i duplicati. Le ricorrenze automatiche vengono comunque riconciliate all’apertura dell’app.": "Balyn स्थानीय शेड्यूलिंग का उपयोग करता है और डुप्लिकेट को सीमित करता है। ऐप खुलने पर भी स्वचालित पुनरावृत्ति का समाधान हो जाता है।",
     "Balyn · Importi rapidi": "Balyn · त्वरित मात्रा",
     "Balyn · Quick Capture": "Balyn · त्वरित कैप्चर",
     "Balyn · Rapido": "Balyn · रैपिडो",
     "Balyn · Riepilogo": "Balyn · सारांश",
     "Balyn · Saldo": "Balyn · संतुलन",
     "Balyn è bloccata": "Balyn अवरुद्ध है",
-    "Balyn è progettata local-first. Movimenti, conti, categorie, ":
-        "Balyn को स्थानीय स्तर पर पहले डिज़ाइन किया गया है। लेनदेन, खाते, श्रेणियां,",
+    "Balyn è progettata local-first. Movimenti, conti, categorie, ": "Balyn को स्थानीय स्तर पर पहले डिज़ाइन किया गया है। लेनदेन, खाते, श्रेणियां,",
     "Dai un nome ai risparmi che vuoi costruire.":
         "उस बचत का नाम बताएं जिसे आप बनाना चाहते हैं।",
     "Dal": "से",
@@ -14371,14 +13851,12 @@ generatedTranslations = <String, Map<String, String>>{
     "Dati locali, permessi, backup e servizi di sistema":
         "स्थानीय डेटा, अनुमतियाँ, बैकअप और सिस्टम सेवाएँ",
     "Dati sul dispositivo": "डिवाइस पर डेटा",
-    "Dati, PIN e preferenze restano locali. Nessun account o server è coinvolto.":
-        "डेटा, पिन और प्राथमिकताएँ स्थानीय रहती हैं। कोई भी खाता या सर्वर प्रभावित नहीं होता.",
+    "Dati, PIN e preferenze restano locali. Nessun account o server è coinvolto.": "डेटा, पिन और प्राथमिकताएँ स्थानीय रहती हैं। कोई भी खाता या सर्वर प्रभावित नहीं होता.",
     "dd MMM": "डीडी एमएमएम",
     "dd MMM yy": "dd एमएमएम yy",
     "dd MMM yyyy": "dd एमएमएम yyyy",
     "dd MMM, HH:mm": "डीडी एमएमएम, एचएच: मिमी",
-    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.":
-        "एक आंकड़ा परिभाषित करें और, यदि आप चाहें, तो एक तारीख: Balyn एक स्थायी गति का अनुमान लगाएगा।",
+    "Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.": "एक आंकड़ा परिभाषित करें और, यदि आप चाहें, तो एक तारीख: Balyn एक स्थायी गति का अनुमान लगाएगा।",
     "dei trasferimenti": "तबादलों का",
     "delle entrate": "राजस्व का",
     "delle spese": "खर्चों का",
@@ -14395,8 +13873,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Devo restituire dei soldi": "मुझे कुछ पैसे लौटाने हैं",
     "Devo ricevere dei soldi": "मुझे कुछ पैसे लाने हैं",
     "Disattiva": "निष्क्रिय करें",
-    "Disattiva per movimenti eccezionali che non vuoi nelle analisi.":
-        "उन असाधारण लेनदेन को बंद करें जिन्हें आप अपने विश्लेषण में नहीं चाहते हैं।",
+    "Disattiva per movimenti eccezionali che non vuoi nelle analisi.": "उन असाधारण लेनदेन को बंद करें जिन्हें आप अपने विश्लेषण में नहीं चाहते हैं।",
     "Disattivate": "निष्क्रिय करें",
     "Disattivato": "निष्क्रिय",
     "Disinstallando l’app vengono rimossi i dati conservati nello ":
@@ -14411,8 +13888,7 @@ generatedTranslations = <String, Map<String, String>>{
         "कुछ लगातार लेन-देन के बाद मान्यता प्राप्त आदतें यहां दिखाई देंगी।",
     "Dove stai spendendo": "कहां खर्च कर रहे हो",
     "Duplica": "डुप्लिकेट",
-    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.":
-        "सेटअप के दौरान आप चुन सकते हैं कि शेष राशि और रकम दिखानी है या नहीं। ऐप में \"शेष राशि छुपाएं\" अभी भी कायम है और विजेट को अस्पष्ट कर देता है।",
+    "Durante la configurazione puoi scegliere se mostrare saldo e importi. “Nascondi saldi” nell’app prevale comunque e oscura i widget.": "सेटअप के दौरान आप चुन सकते हैं कि शेष राशि और रकम दिखानी है या नहीं। ऐप में \"शेष राशि छुपाएं\" अभी भी कायम है और विजेट को अस्पष्ट कर देता है।",
     "EEE d MMM": "ईईई डी एमएमएम",
     "EEE dd": "ईईई डीडी",
     "EEE dd MMM": "ईईई डीडी एमएमएम",
@@ -14454,8 +13930,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Esporta movimenti": "निर्यात लेनदेन",
     "Esporta movimenti CSV": "सीएसवी लेनदेन निर्यात करें",
     "Evento": "घटना",
-    "Fallback opzionale. La privacy dipende dal servizio vocale configurato sul dispositivo.":
-        "वैकल्पिक फ़ॉलबैक. गोपनीयता आपके डिवाइस पर कॉन्फ़िगर की गई वॉयस सेवा पर निर्भर करती है।",
+    "Fallback opzionale. La privacy dipende dal servizio vocale configurato sul dispositivo.": "वैकल्पिक फ़ॉलबैक. गोपनीयता आपके डिवाइस पर कॉन्फ़िगर की गई वॉयस सेवा पर निर्भर करती है।",
     "Fallback semplice da 4 a 8 cifre.": "सरल 4 से 8 अंकीय फ़ॉलबैक।",
     "Famiglia": "परिवार",
     "Famiglia e social": "पारिवारिक और सामाजिक",
@@ -14518,8 +13993,7 @@ generatedTranslations = <String, Map<String, String>>{
         "पहले से वर्गीकृत लेनदेन नहीं बदलेंगे।",
     "I movimenti già registrati resteranno invariati.":
         "पहले से दर्ज लेनदेन अपरिवर्तित रहेंगे।",
-    "I pattern sono ricavati dai tuoi movimenti. Puoi disattivarli, convertirli in regole esplicite o eliminarli senza modificare lo storico.":
-        "पैटर्न आपके लेनदेन से प्राप्त होते हैं। आप उन्हें निष्क्रिय कर सकते हैं, उन्हें स्पष्ट नियमों में बदल सकते हैं या इतिहास बदले बिना उन्हें हटा सकते हैं।",
+    "I pattern sono ricavati dai tuoi movimenti. Puoi disattivarli, convertirli in regole esplicite o eliminarli senza modificare lo storico.": "पैटर्न आपके लेनदेन से प्राप्त होते हैं। आप उन्हें निष्क्रिय कर सकते हैं, उन्हें स्पष्ट नियमों में बदल सकते हैं या इतिहास बदले बिना उन्हें हटा सकते हैं।",
     "I saldi dei conti verranno ricalcolati automaticamente.":
         "खाते की शेष राशि स्वचालित रूप से पुनर्गणना की जाएगी।",
     "I widget di questa sezione sono disponibili su Android.":
@@ -14537,16 +14011,13 @@ generatedTranslations = <String, Map<String, String>>{
     "Il conto è bloccato.": "खाता ब्लॉक कर दिया गया है.",
     "Il conto è vuoto e può essere eliminato in sicurezza.":
         "खाता खाली है और इसे सुरक्षित रूप से हटाया जा सकता है।",
-    "Il conto è vuoto. Eventuali riferimenti in preset e obiettivi verranno scollegati in sicurezza.":
-        "खाता खाली है. प्रीसेट और लक्ष्य में कोई भी संदर्भ सुरक्षित रूप से डिस्कनेक्ट हो जाएगा।",
+    "Il conto è vuoto. Eventuali riferimenti in preset e obiettivi verranno scollegati in sicurezza.": "खाता खाली है. प्रीसेट और लक्ष्य में कोई भी संदर्भ सुरक्षित रूप से डिस्कनेक्ट हो जाएगा।",
     "Il CSV deve contenere almeno type, amount, date e account.":
         "सीएसवी में कम से कम प्रकार, राशि, दिनांक और खाता अवश्य होना चाहिए।",
     "Il database ripristinato non supera il controllo integrità.":
         "पुनर्स्थापित डेटाबेस अखंडता जांच में विफल रहता है।",
-    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.":
-        "लॉन्चर स्वचालित जोड़ने का समर्थन नहीं करता है. होम → विजेट → Balyn को दबाकर रखें।",
-    "Il microfono compila Nuovo movimento ma non salva mai automaticamente.":
-        "माइक्रोफ़ोन नए लेनदेन को संकलित करता है लेकिन कभी भी स्वचालित रूप से सहेजता नहीं है।",
+    "Il launcher non supporta l’aggiunta automatica. Tieni premuto sulla Home → Widget → Balyn.": "लॉन्चर स्वचालित जोड़ने का समर्थन नहीं करता है. होम → विजेट → Balyn को दबाकर रखें।",
+    "Il microfono compila Nuovo movimento ma non salva mai automaticamente.": "माइक्रोफ़ोन नए लेनदेन को संकलित करता है लेकिन कभी भी स्वचालित रूप से सहेजता नहीं है।",
     "Il movimento ha una direzione incompatibile.": "लेन-देन की दिशा असंगत है.",
     "Il movimento supera il residuo dell’anticipo.":
         "लेन-देन अग्रिम के शेष से अधिक है।",
@@ -14559,22 +14030,18 @@ generatedTranslations = <String, Map<String, String>>{
         "सिस्टम पहचानकर्ता ऑफ़लाइन उपलब्ध नहीं है.",
     "Il riconoscimento vocale offline non è disponibile su questo dispositivo.":
         "इस डिवाइस पर ऑफ़लाइन ध्वनि पहचान उपलब्ध नहीं है.",
-    "Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.":
-        "मुख्य सारांश शीर्ष पर स्थिर रहता है। उन अनुभागों को पुनः सक्रिय करें जिन्हें आप यहां देखना चाहते हैं।",
+    "Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.": "मुख्य सारांश शीर्ष पर स्थिर रहता है। उन अनुभागों को पुनः सक्रिय करें जिन्हें आप यहां देखना चाहते हैं।",
     "Il saldo contribuisce al patrimonio totale":
         "शेष राशि कुल संपत्ति में योगदान करती है",
     "Il saldo del conto e il residuo dell’anticipo verranno ripristinati automaticamente.":
         "खाते की शेष राशि और अग्रिम की शेष राशि स्वचालित रूप से बहाल हो जाएगी।",
     "Il saldo del conto verrà ricalcolato automaticamente.":
         "आपके खाते की शेष राशि स्वचालित रूप से पुनर्गणना की जाएगी।",
-    "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.":
-        "सिस्टम स्थानीय आँकड़ों और समझाने योग्य नियमों के साथ आदतों को पहचानता है। यह AI या क्लाउड का उपयोग नहीं करता है.",
-    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.":
-        "मान्यता प्राप्त पाठ की व्याख्या स्थानीय रूप से एक नियतात्मक पार्सर द्वारा की जाती है। इसे Balyn सर्वर पर नहीं भेजा जाता है.",
+    "Il sistema riconosce abitudini con statistiche locali e regole spiegabili. Non usa IA né cloud.": "सिस्टम स्थानीय आँकड़ों और समझाने योग्य नियमों के साथ आदतों को पहचानता है। यह AI या क्लाउड का उपयोग नहीं करता है.",
+    "Il testo riconosciuto viene interpretato localmente da un parser deterministico. Non viene inviato a server Balyn.": "मान्यता प्राप्त पाठ की व्याख्या स्थानीय रूप से एक नियतात्मक पार्सर द्वारा की जाती है। इसे Balyn सर्वर पर नहीं भेजा जाता है.",
     "Il trasferimento deve arrivare al conto collegato all’obiettivo.":
         "स्थानांतरण लक्ष्य से जुड़े खाते में पहुंचना चाहिए।",
-    "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.":
-        "किसी घटना को बनाने से पहले स्थानांतरण के लिए दो अलग-अलग सक्रिय खातों की आवश्यकता होती है।",
+    "Il trasferimento richiede due conti attivi diversi prima di creare una ricorrenza.": "किसी घटना को बनाने से पहले स्थानांतरण के लिए दो अलग-अलग सक्रिय खातों की आवश्यकता होती है।",
     "Immediato": "तत्काल",
     "Impedisce nuovi movimenti sul conto": "खाते पर नए लेनदेन को रोकता है",
     "Importa CSV": "सीएसवी आयात करें",
@@ -14595,10 +14062,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Imposta limiti giornalieri, settimanali, mensili o annuali.":
         "दैनिक, साप्ताहिक, मासिक या वार्षिक सीमाएँ निर्धारित करें।",
     "Imposta PIN locale": "स्थानीय पिन सेट करें",
-    "Imposta un limite per sapere quanto puoi ancora spendere nel periodo.":
-        "यह देखने के लिए एक सीमा निर्धारित करें कि आप इस अवधि के दौरान अभी भी कितना खर्च कर सकते हैं।",
-    "Imposta un limite per sapere quanto puoi ancora spendere.":
-        "यह देखने के लिए एक सीमा निर्धारित करें कि आप अभी भी कितना खर्च कर सकते हैं।",
+    "Imposta un limite per sapere quanto puoi ancora spendere nel periodo.": "यह देखने के लिए एक सीमा निर्धारित करें कि आप इस अवधि के दौरान अभी भी कितना खर्च कर सकते हैं।",
+    "Imposta un limite per sapere quanto puoi ancora spendere.": "यह देखने के लिए एक सीमा निर्धारित करें कि आप अभी भी कितना खर्च कर सकते हैं।",
     "Impostazioni": "सेटिंग्स",
     "Impostazioni conto": "खाता सेटिंग",
     "In ascolto": "सुनना",
@@ -14639,8 +14104,7 @@ generatedTranslations = <String, Map<String, String>>{
     "La mia parte": "मेरा हिस्सा",
     "La posizione verrà chiusa come annullata.":
         "पद रद्द मानकर बंद कर दिया जाएगा.",
-    "La previsione di fine mese è sotto la soglia che hai impostato. Apri Pianifica per i dettagli.":
-        "माह के अंत का पूर्वानुमान आपके द्वारा निर्धारित सीमा से कम है। विवरण के लिए शेड्यूल खोलें.",
+    "La previsione di fine mese è sotto la soglia che hai impostato. Apri Pianifica per i dettagli.": "माह के अंत का पूर्वानुमान आपके द्वारा निर्धारित सीमा से कम है। विवरण के लिए शेड्यूल खोलें.",
     "La quota anticipata deve essere maggiore di 0 e minore o uguale al totale.":
         "अग्रिम शुल्क 0 से अधिक और कुल से कम या उसके बराबर होना चाहिए।",
     "La stima comportamentale è comunque inclusa nel saldo previsto sopra.":
@@ -14655,12 +14119,10 @@ generatedTranslations = <String, Map<String, String>>{
     "Lavoro e formazione": "कार्य एवं प्रशिक्षण",
     "Le categorie compariranno qui quando registri movimenti.":
         "जब आप लेनदेन रिकॉर्ड करेंगे तो श्रेणियां यहां दिखाई देंगी।",
-    "Le metriche principali restano in alto. Riattiva altri widget dalla personalizzazione Home.":
-        "प्रमुख मेट्रिक्स शीर्ष पर बने हुए हैं. होम कस्टमाइज़र से अन्य विजेट्स को पुनः सक्षम करें।",
+    "Le metriche principali restano in alto. Riattiva altri widget dalla personalizzazione Home.": "प्रमुख मेट्रिक्स शीर्ष पर बने हुए हैं. होम कस्टमाइज़र से अन्य विजेट्स को पुनः सक्षम करें।",
     "Le notifiche possono essere disattivate in qualsiasi momento.":
         "सूचनाएं किसी भी समय बंद की जा सकती हैं.",
-    "Le persone servono solo per organizzare gli anticipi e restano sul dispositivo.":
-        "लोगों का उपयोग केवल अग्रिमों को व्यवस्थित करने और डिवाइस पर बने रहने के लिए किया जाता है।",
+    "Le persone servono solo per organizzare gli anticipi e restano sul dispositivo.": "लोगों का उपयोग केवल अग्रिमों को व्यवस्थित करने और डिवाइस पर बने रहने के लिए किया जाता है।",
     "Libri": "किताबें",
     "Limite": "सीमा",
     "Lingua": "भाषा",
@@ -14735,8 +14197,7 @@ generatedTranslations = <String, Map<String, String>>{
     "movimenti da assegnare": "लेन-देन असाइन करने के लिए",
     "Movimenti del conto esportati.": "निर्यातित खाता लेनदेन.",
     "Movimenti recenti": "हाल के लेनदेन",
-    "Movimenti, split, budget, regole e apprendimento verranno spostati nella categoria scelta.":
-        "लेन-देन, विभाजन, बजट, नियम और शिक्षण को चुनी हुई श्रेणी में ले जाया जाएगा।",
+    "Movimenti, split, budget, regole e apprendimento verranno spostati nella categoria scelta.": "लेन-देन, विभाजन, बजट, नियम और शिक्षण को चुनी हुई श्रेणी में ले जाया जाएगा।",
     "Movimento": "लेन-देन",
     "Movimento aggiornato.": "अद्यतन लेनदेन.",
     "Movimento collegato non trovato.": "लिंक किया गया प्रस्ताव नहीं मिला.",
@@ -14862,10 +14323,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Obiettivo da rivedere": "उद्देश्य की समीक्षा की जानी है",
     "Obiettivo non trovato.": "लक्ष्य नहीं मिला.",
     "Oggi": "आज",
-    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.":
-        "प्रत्येक उदाहरण की अपनी सेटिंग्स हो सकती हैं। विजेट हमेशा त्वरित ऐड खोलता है: आपकी पुष्टि के बिना कोई भी टैप पैसे पंजीकृत नहीं करता है।",
-    "Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add.":
-        "प्रत्येक विजेट अपनी स्वयं की सेटिंग्स बनाए रखता है। जब आप क्विक ऐड खोलते हैं तो ऐप द्वारा खाते और श्रेणी के नाम सत्यापित किए जाते हैं।",
+    "Ogni istanza può avere impostazioni proprie. Il widget apre sempre Quick Add: nessun tap registra denaro senza la tua conferma.": "प्रत्येक उदाहरण की अपनी सेटिंग्स हो सकती हैं। विजेट हमेशा त्वरित ऐड खोलता है: आपकी पुष्टि के बिना कोई भी टैप पैसे पंजीकृत नहीं करता है।",
+    "Ogni widget mantiene impostazioni proprie. I nomi di conto e categoria vengono verificati dall’app quando apri Quick Add.": "प्रत्येक विजेट अपनी स्वयं की सेटिंग्स बनाए रखता है। जब आप क्विक ऐड खोलते हैं तो ऐप द्वारा खाते और श्रेणी के नाम सत्यापित किए जाते हैं।",
     "Operazione irreversibile dopo la conferma.":
         "पुष्टि के बाद अपरिवर्तनीय संचालन।",
     "Ora": "अभी",
@@ -14881,8 +14340,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Parrucchiere": "नाई",
     "Parser locale · on-device quando disponibile":
         "स्थानीय पार्सर · उपलब्ध होने पर डिवाइस पर",
-    "Parti dal primo conto oppure registra subito un movimento e assegnalo in seguito.":
-        "पहले खाते से प्रारंभ करें या किसी लेनदेन को तुरंत रिकॉर्ड करें और बाद में उसे असाइन करें।",
+    "Parti dal primo conto oppure registra subito un movimento e assegnalo in seguito.": "पहले खाते से प्रारंभ करें या किसी लेनदेन को तुरंत रिकॉर्ड करें और बाद में उसे असाइन करें।",
     "Parti dal primo conto oppure registra subito un movimento.":
         "पहले खाते से प्रारंभ करें या लेनदेन को तुरंत रिकॉर्ड करें।",
     "Parzialmente regolato": "आंशिक रूप से विनियमित",
@@ -14894,18 +14352,13 @@ generatedTranslations = <String, Map<String, String>>{
     "Patrimonio corrente": "वर्तमान संपत्ति",
     "Patrimonio incluso nel totale": "कुल में विरासत शामिल",
     "Patrimonio netto": "निवल मूल्य",
-    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.":
-        "संपत्ति, आय, व्यय और उपलब्धियां त्वरित कार्यों के ऊपर, शीर्ष पर तय रहती हैं। यहां आप बाद के अनुभागों को दिखा सकते हैं, छिपा सकते हैं, आकार बदल सकते हैं और पुन: व्यवस्थित कर सकते हैं।",
-    "Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.":
-        "पैटर्न, फीडबैक और दमन को खत्म किया जाएगा। लेन-देन अपरिवर्तित रहेगा और सिस्टम फिर से सीख सकता है।",
+    "Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.": "संपत्ति, आय, व्यय और उपलब्धियां त्वरित कार्यों के ऊपर, शीर्ष पर तय रहती हैं। यहां आप बाद के अनुभागों को दिखा सकते हैं, छिपा सकते हैं, आकार बदल सकते हैं और पुन: व्यवस्थित कर सकते हैं।",
+    "Pattern, feedback e soppressioni verranno eliminati. I movimenti resteranno invariati e il sistema potrà imparare di nuovo.": "पैटर्न, फीडबैक और दमन को खत्म किया जाएगा। लेन-देन अपरिवर्तित रहेगा और सिस्टम फिर से सीख सकता है।",
     "Pedaggio": "चुंगी",
-    "Per assegnare una categoria la regola deve avere un tipo compatibile.":
-        "किसी श्रेणी को निर्दिष्ट करने के लिए नियम का एक संगत प्रकार होना चाहिए।",
-    "Per assegnare una categoria la regola deve avere un tipo Spesa o Entrata.":
-        "किसी श्रेणी को निर्दिष्ट करने के लिए नियम में व्यय या आय का एक प्रकार होना चाहिए।",
+    "Per assegnare una categoria la regola deve avere un tipo compatibile.": "किसी श्रेणी को निर्दिष्ट करने के लिए नियम का एक संगत प्रकार होना चाहिए।",
+    "Per assegnare una categoria la regola deve avere un tipo Spesa o Entrata.": "किसी श्रेणी को निर्दिष्ट करने के लिए नियम में व्यय या आय का एक प्रकार होना चाहिए।",
     "Per conto": "ओर से",
-    "Per proteggere lo storico finanziario un conto con movimenti o ricorrenze non viene eliminato. Puoi archiviarlo e continuare a consultare i dati.":
-        "वित्तीय इतिहास की सुरक्षा के लिए, लेनदेन या पुनरावृत्ति वाला खाता हटाया नहीं जाता है। आप इसे संग्रहीत कर सकते हैं और डेटा से परामर्श करना जारी रख सकते हैं।",
+    "Per proteggere lo storico finanziario un conto con movimenti o ricorrenze non viene eliminato. Puoi archiviarlo e continuare a consultare i dati.": "वित्तीय इतिहास की सुरक्षा के लिए, लेनदेन या पुनरावृत्ति वाला खाता हटाया नहीं जाता है। आप इसे संग्रहीत कर सकते हैं और डेटा से परामर्श करना जारी रख सकते हैं।",
     "Per te": "आपके लिए",
     "Periodo": "अवधि",
     "Periodo precedente": "पिछली अवधि",
@@ -14964,8 +14417,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Previsioni e calendario": "पूर्वानुमान और कैलेंडर",
     "Previsto": "अपेक्षित",
     "Previsto da abitudini": "आदतों से अपेक्षित",
-    "Prima del ripristino viene creato un safety backup temporaneo. Se il controllo integrità fallisce, i dati attuali vengono ripristinati.":
-        "पुनर्स्थापना से पहले, एक अस्थायी सुरक्षा बैकअप बनाया जाता है। यदि अखंडता जांच विफल हो जाती है, तो वर्तमान डेटा पुनर्स्थापित हो जाता है।",
+    "Prima del ripristino viene creato un safety backup temporaneo. Se il controllo integrità fallisce, i dati attuali vengono ripristinati.": "पुनर्स्थापना से पहले, एक अस्थायी सुरक्षा बैकअप बनाया जाता है। यदि अखंडता जांच विफल हो जाती है, तो वर्तमान डेटा पुनर्स्थापित हो जाता है।",
     "Primo giorno settimana": "सप्ताह का पहला दिन",
     "Principio di base": "मूल सिद्धांत",
     "Privacy": "गोपनीयता",
@@ -14982,8 +14434,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Promemoria locali per soldi da ricevere o restituire":
         "धन प्राप्त करने या लौटाने के लिए स्थानीय अनुस्मारक",
     "Promemoria per movimenti ricorrenti": "आवर्ती लेनदेन के लिए अनुस्मारक",
-    "Propone di configurare pattern settimanali, mensili o annuali.":
-        "यह साप्ताहिक, मासिक या वार्षिक पैटर्न कॉन्फ़िगर करने की पेशकश करता है।",
+    "Propone di configurare pattern settimanali, mensili o annuali.": "यह साप्ताहिक, मासिक या वार्षिक पैटर्न कॉन्फ़िगर करने की पेशकश करता है।",
     "Prossima data": "अगली तारीख",
     "Prossime scadenze": "आगामी समय सीमा",
     "Prossimi 30 giorni": "अगले 30 दिन",
@@ -14994,23 +14445,18 @@ generatedTranslations = <String, Map<String, String>>{
         "अपनी खोज या फ़िल्टर बदलने का प्रयास करें.",
     "Prova regola": "नियम का प्रयास करें",
     "Pulizie": "सफ़ाई",
-    "Puoi avere, per esempio, un widget Revolut/Bar e un altro Contanti/Benzina con importi diversi.":
-        "उदाहरण के लिए, आपके पास एक रिवोल्यूट/बार विजेट और अलग-अलग मात्रा में दूसरा कैश/पेट्रोल हो सकता है।",
+    "Puoi avere, per esempio, un widget Revolut/Bar e un altro Contanti/Benzina con importi diversi.": "उदाहरण के लिए, आपके पास एक रिवोल्यूट/बार विजेट और अलग-अलग मात्रा में दूसरा कैश/पेट्रोल हो सकता है।",
     "Puoi cambiarla in qualsiasi momento": "आप इसे किसी भी समय बदल सकते हैं",
     "Puoi cancellare i dati finanziari locali dalle impostazioni. ":
         "आप सेटिंग से स्थानीय वित्तीय डेटा साफ़ कर सकते हैं.",
-    "Puoi creare il primo conto oppure registrare subito un movimento come Non assegnato.":
-        "आप अपना पहला खाता बना सकते हैं या तुरंत किसी लेनदेन को अनअसाइन्ड के रूप में रिकॉर्ड कर सकते हैं।",
-    "Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.":
-        "यह रकम का एक हिस्सा या पूरी राशि हो सकती है. खर्चों, श्रेणियों और बजट में केवल आपका हिस्सा गिना जाएगा।",
+    "Puoi creare il primo conto oppure registrare subito un movimento come Non assegnato.": "आप अपना पहला खाता बना सकते हैं या तुरंत किसी लेनदेन को अनअसाइन्ड के रूप में रिकॉर्ड कर सकते हैं।",
+    "Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.": "यह रकम का एक हिस्सा या पूरी राशि हो सकती है. खर्चों, श्रेणियों और बजट में केवल आपका हिस्सा गिना जाएगा।",
     "Quale categoria intendevi?": "आपका अभिप्राय किस श्रेणी से था?",
     "Quale conto intendevi?": "आपका अभिप्राय किस खाते से था?",
     "Qualsiasi": "कोई भी",
     "Qualsiasi tipo": "किसी भी प्रकार का",
-    "Questa categoria è usata in una divisione di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.":
-        "इस श्रेणी का उपयोग व्यय प्रभाग में किया जाता है। वर्गीकरण खोने से बचने के लिए, पहले इसे किसी अन्य श्रेणी में मर्ज करें।",
-    "Questa persona ha anticipi ancora aperti. Chiudili prima di archiviarla.":
-        "इस व्यक्ति के पास अग्रिम राशि अभी भी खुली है। इसे संग्रहित करने से पहले इन्हें बंद कर दें.",
+    "Questa categoria è usata in una divisione di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria.": "इस श्रेणी का उपयोग व्यय प्रभाग में किया जाता है। वर्गीकरण खोने से बचने के लिए, पहले इसे किसी अन्य श्रेणी में मर्ज करें।",
+    "Questa persona ha anticipi ancora aperti. Chiudili prima di archiviarla.": "इस व्यक्ति के पास अग्रिम राशि अभी भी खुली है। इसे संग्रहित करने से पहले इन्हें बंद कर दें.",
     "Questa regola corrisponde a 1 movimento.":
         "यह नियम 1 लेनदेन से मेल खाता है.",
     "Questa spesa include un anticipo": "इस खर्च में अग्रिम राशि भी शामिल है",
@@ -15071,8 +14517,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Righe valide": "मान्य पंक्तियाँ",
     "Rileva ricorrenze": "पुनरावृत्ति का पता लगाएं",
     "Rilevate dalle tue abitudini": "आपकी आदतों से पता चलता है",
-    "Rimane qui. Se continui a parlare, aggiorno la frase; usa ↻ per ricominciare da zero.":
-        "यह यहीं रहता है. यदि आप बात करते रहेंगे, तो मैं वाक्य को अद्यतन कर दूंगा; स्क्रैच से शुरू करने के लिए ↻ का उपयोग करें।",
+    "Rimane qui. Se continui a parlare, aggiorno la frase; usa ↻ per ricominciare da zero.": "यह यहीं रहता है. यदि आप बात करते रहेंगे, तो मैं वाक्य को अद्यतन कर दूंगा; स्क्रैच से शुरू करने के लिए ↻ का उपयोग करें।",
     "Rimborso": "वापसी",
     "Rimborso collegato": "रिफंड जुड़ा हुआ है",
     "Rimborso non trovato.": "रिफंड नहीं मिला.",
@@ -15174,11 +14619,9 @@ generatedTranslations = <String, Map<String, String>>{
     "Scuro": "अंधेरा",
     "Se contiene storico potrai archiviarlo invece di eliminarlo":
         "यदि इसमें इतिहास है तो आप इसे हटाने के बजाय इसे संग्रहीत कर सकते हैं",
-    "Se è un anticipo puro, il movimento di cassa originale verrà annullato. Le spese miste restano come acquisto personale.":
-        "यदि यह शुद्ध अग्रिम है, तो मूल नकद लेनदेन रद्द कर दिया जाएगा। व्यक्तिगत खरीदारी के रूप में मिश्रित व्यय बने रहते हैं।",
+    "Se è un anticipo puro, il movimento di cassa originale verrà annullato. Le spese miste restano come acquisto personale.": "यदि यह शुद्ध अग्रिम है, तो मूल नकद लेनदेन रद्द कर दिया जाएगा। व्यक्तिगत खरीदारी के रूप में मिश्रित व्यय बने रहते हैं।",
     "Segnali": "संकेत",
-    "Segnali deboli: rafforzano una previsione, non la creano da soli.":
-        "कमजोर संकेत: वे भविष्यवाणी को मजबूत करते हैं, वे इसे स्वयं नहीं बनाते हैं।",
+    "Segnali deboli: rafforzano una previsione, non la creano da soli.": "कमजोर संकेत: वे भविष्यवाणी को मजबूत करते हैं, वे इसे स्वयं नहीं बनाते हैं।",
     "Seleziona ": "चयन करें",
     "Seleziona conto": "खाता चुनें",
     "Seleziona ora": "अभी चुनें",
@@ -15188,8 +14631,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Servizi cloud": "क्लाउड सेवाएँ",
     "Servono almeno 3 settimane di storico utile per un consiglio realistico.":
         "यथार्थवादी सलाह के लिए कम से कम 3 सप्ताह का उपयोगी इतिहास आवश्यक है।",
-    "Servono almeno due categorie di spesa per dividere il movimento.":
-        "लेन-देन को विभाजित करने के लिए कम से कम दो व्यय श्रेणियों की आवश्यकता होती है।",
+    "Servono almeno due categorie di spesa per dividere il movimento.": "लेन-देन को विभाजित करने के लिए कम से कम दो व्यय श्रेणियों की आवश्यकता होती है।",
     "Servono più dati": "अधिक डेटा की आवश्यकता है",
     "Servono più dati per confrontare il periodo precedente.":
         "पिछली अवधि की तुलना करने के लिए अधिक डेटा की आवश्यकता है.",
@@ -15234,8 +14676,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Stipendio": "वेतन",
     "Streaming": "स्ट्रीमिंग",
     "Studio": "अध्ययन",
-    "Su Android impedisce screenshot e anteprima dell’app nelle schermate recenti.":
-        "एंड्रॉइड पर, हाल की स्क्रीन पर स्क्रीनशॉट और ऐप पूर्वावलोकन को रोकता है।",
+    "Su Android impedisce screenshot e anteprima dell’app nelle schermate recenti.": "एंड्रॉइड पर, हाल की स्क्रीन पर स्क्रीनशॉट और ऐप पूर्वावलोकन को रोकता है।",
     "Suggerimenti automatici": "स्वचालित सुझाव",
     "Suggerimenti obiettivi": "वस्तुनिष्ठ सुझाव",
     "Supermercato": "सुपरमार्केट",
@@ -15297,8 +14738,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Usa da 4 a 8 cifre. Il PIN resta sul dispositivo.":
         "4 से 8 अंकों का प्रयोग करें. पिन डिवाइस पर रहता है.",
     "Usa descrizione": "विवरण का प्रयोग करें",
-    "Usa esclusivamente il riconoscimento offline/on-device quando Android lo supporta.":
-        "ऑफ़लाइन/ऑन-डिवाइस पहचान का उपयोग केवल तभी करें जब Android इसका समर्थन करता हो।",
+    "Usa esclusivamente il riconoscimento offline/on-device quando Android lo supporta.": "ऑफ़लाइन/ऑन-डिवाइस पहचान का उपयोग केवल तभी करें जब Android इसका समर्थन करता हो।",
     "Usa giorno e orario": "दिन और समय का उपयोग करें",
     "usa i contatti pubblicati su www.ddone.it.":
         "www.ddone.it पर प्रकाशित संपर्कों का उपयोग करें।",
@@ -15306,11 +14746,9 @@ generatedTranslations = <String, Map<String, String>>{
         "एनालिटिक्स में खाता लेनदेन का उपयोग करें",
     "Usa il conto collegato all’obiettivo come destinazione.":
         "लक्ष्य से जुड़े खाते को गंतव्य के रूप में उपयोग करें।",
-    "Usa il pulsante + per registrare una spesa o un’entrata: analisi e previsioni nasceranno dai tuoi dati reali.":
-        "किसी व्यय या आय को रिकॉर्ड करने के लिए + बटन का उपयोग करें: विश्लेषण और पूर्वानुमान आपके वास्तविक डेटा से उत्पन्न होंगे।",
+    "Usa il pulsante + per registrare una spesa o un’entrata: analisi e previsioni nasceranno dai tuoi dati reali.": "किसी व्यय या आय को रिकॉर्ड करने के लिए + बटन का उपयोग करें: विश्लेषण और पूर्वानुमान आपके वास्तविक डेटा से उत्पन्न होंगे।",
     "Usa importo": "राशि का उपयोग करें",
-    "Usa impronta o biometria configurata nel dispositivo.":
-        "डिवाइस पर कॉन्फ़िगर किए गए फ़िंगरप्रिंट या बायोमेट्रिक्स का उपयोग करें।",
+    "Usa impronta o biometria configurata nel dispositivo.": "डिवाइस पर कॉन्फ़िगर किए गए फ़िंगरप्रिंट या बायोमेट्रिक्स का उपयोग करें।",
     "Usa la biometria del dispositivo per continuare.":
         "जारी रखने के लिए डिवाइस बायोमेट्रिक्स का उपयोग करें।",
     "Usa la previsione di fine mese e la tua soglia.":
@@ -15322,10 +14760,8 @@ generatedTranslations = <String, Map<String, String>>{
     "Usa ultimo conto": "अंतिम खाते का उपयोग करें",
     "Usata per sbloccare l’app tramite le API di sistema. ":
         "सिस्टम एपीआई के माध्यम से ऐप को अनलॉक करने के लिए उपयोग किया जाता है।",
-    "Usata solo quando scegli di acquisire una foto o ricevuta da ":
-        "इसका उपयोग केवल तभी किया जाता है जब आप कोई फोटो खींचना या प्राप्त करना चुनते हैं",
-    "Usate per promemoria e avvisi locali configurati da te. ":
-        "आपके द्वारा सेट किए गए स्थानीय अनुस्मारक और अलर्ट के लिए उपयोग किया जाता है।",
+    "Usata solo quando scegli di acquisire una foto o ricevuta da ": "इसका उपयोग केवल तभी किया जाता है जब आप कोई फोटो खींचना या प्राप्त करना चुनते हैं",
+    "Usate per promemoria e avvisi locali configurati da te. ": "आपके द्वारा सेट किए गए स्थानीय अनुस्मारक और अलर्ट के लिए उपयोग किया जाता है।",
     "Usato 1 volta": "1 बार प्रयोग किया गया",
     "Usato solo per l’inserimento vocale. Il parser Balyn è ":
         "केवल ध्वनि इनपुट के लिए उपयोग किया जाता है। Balyn पार्सर है",
@@ -15335,8 +14771,7 @@ generatedTranslations = <String, Map<String, String>>{
     "Variazione": "भिन्नता",
     "Vendita": "बिक्री",
     "Verifica…": "जांचें...",
-    "Verrà registrato come rimborso/restituzione, non come entrata o spesa.":
-        "इसे आय या व्यय के रूप में नहीं, बल्कि रिफंड/रिफंड के रूप में दर्ज किया जाएगा।",
+    "Verrà registrato come rimborso/restituzione, non come entrata o spesa.": "इसे आय या व्यय के रूप में नहीं, बल्कि रिफंड/रिफंड के रूप में दर्ज किया जाएगा।",
     "Vestiti": "तैयार हो जाओ",
     "Viaggio": "यात्रा",
     "Vibrazione leggera su navigazione, azioni rapide e impostazioni.":
@@ -15356,8 +14791,7 @@ generatedTranslations = <String, Map<String, String>>{
     "È il segnale principale del modello locale.":
         "यह स्थानीय मॉडल का मुख्य संकेत है.",
     "È stato condonato": "इसे माफ कर दिया गया",
-    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.":
-        "यह एक अनुमान है: यह खर्च करने योग्य संपत्तियों से शुरू होता है, महीने के अंत तक अपेक्षित आवर्ती व्यय को घटाता है और उद्देश्यों के लिए विवेकपूर्ण आरक्षित रखता है। यह कोई गारंटीशुदा बैंक बैलेंस नहीं है.",
+    "È una stima: parte dal patrimonio spendibile, sottrae le uscite ricorrenti previste fino a fine mese e conserva una riserva prudenziale per gli obiettivi. Non è un saldo bancario garantito.": "यह एक अनुमान है: यह खर्च करने योग्य संपत्तियों से शुरू होता है, महीने के अंत तक अपेक्षित आवर्ती व्यय को घटाता है और उद्देश्यों के लिए विवेकपूर्ण आरक्षित रखता है। यह कोई गारंटीशुदा बैंक बैलेंस नहीं है.",
     "•••• da ricevere · •••• da restituire": "•••• प्राप्त करना · •••• लौटाना",
   },
 };
@@ -15375,8 +14809,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
         "/week is the estimated sustainable pace",
     "/settimana è sostenibile": "/week is sustainable",
     "/settimana, richiesti": "/week, required",
-    "\\n\\nLa differenza sarà registrata come rettifica fuori dalle statistiche":
-        "\\n\\nThe difference will be recorded as an adjustment outside the statistics",
+    "\\n\\nLa differenza sarà registrata come rettifica fuori dalle statistiche": "\\n\\nThe difference will be recorded as an adjustment outside the statistics",
     "\\nSaldo reale": "\\nActual balance",
     "a \${person?.name ??": "to \${person?.name ??",
     "ancora disponibili": "still available",
@@ -15392,8 +14825,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "budget attivi": "active budgets",
     "categorie · preferite e quick slot":
         "categories · favorites and quick slots",
-    "Con il cash-flow attuale la data è difficile: sostenibili circa":
-        "With the current cash flow the date is difficult: approximately sustainable",
+    "Con il cash-flow attuale la data è difficile: sostenibili circa": "With the current cash flow the date is difficult: approximately sustainable",
     "con il ritmo attuale la scadenza potrebbe richiedere un aggiustamento":
         "at the current pace the deadline may require adjustment",
     "Corrisponde alla regola manuale “": "Corresponds to the manual rule “",
@@ -15409,8 +14841,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Devi restituire": "You have to give back",
     "di spese al giorno": "of expenses per day",
     "Dividi": "Divide",
-    "divisioni di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria":
-        "spending divisions. To avoid losing the classification, merge it into another category first",
+    "divisioni di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria": "spending divisions. To avoid losing the classification, merge it into another category first",
     "Eliminare": "Delete",
     "Eliminare “": "Delete “",
     "Esporta": "Export",
@@ -15435,8 +14866,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Modifica e gestisci": "Edit and manage",
     "movimenti aggiornati": "updated transactions",
     "movimenti corrispondenti": "corresponding transactions",
-    "movimenti corrispondenti. I saldi vengono ricalcolati se cambia il conto":
-        "corresponding transactions. Balances are recalculated if your account changes",
+    "movimenti corrispondenti. I saldi vengono ricalcolati se cambia il conto": "corresponding transactions. Balances are recalculated if your account changes",
     "movimenti e": "transactions e",
     "movimenti importati": "imported transactions",
     "movimenti simili a “": "transactions similar to “",
@@ -15467,12 +14897,10 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Restituzione a \${person?.name ??": "Returning to \${person?.name ??",
     "Ricevuti": "Received",
     "Ricorrenti di spesa ≈": "Recurring expenses ≈",
-    "ricorrenze collegate. Per proteggere lo storico non può essere eliminato: puoi archiviarlo":
-        "connected anniversaries. To protect the history it cannot be deleted: you can archive it",
+    "ricorrenze collegate. Per proteggere lo storico non può essere eliminato: puoi archiviarlo": "connected anniversaries. To protect the history it cannot be deleted: you can archive it",
     "ricorrenze configurate": "configured recurrences",
     "ricorrenze rilevate": "recurrences detected",
-    "riferimenti perderanno questa categoria. I preset che la usano torneranno a chiedere la categoria":
-        "references will lose this category. Presets that use it will return to asking for the category",
+    "riferimenti perderanno questa categoria. I preset che la usano torneranno a chiedere la categoria": "references will lose this category. Presets that use it will return to asking for the category",
     "righe corrispondono allo storico esistente":
         "rows correspond to the existing history",
     "righe prima del mapping": "lines before mapping",
@@ -15548,8 +14976,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
         "/semana es el ritmo sostenible estimado",
     "/settimana è sostenibile": "/semana es sostenible",
     "/settimana, richiesti": "/semana, requerido",
-    "\\n\\nLa differenza sarà registrata come rettifica fuori dalle statistiche":
-        "\\n\\nLa diferencia se registrará como un ajuste fuera de las estadísticas.",
+    "\\n\\nLa differenza sarà registrata come rettifica fuori dalle statistiche": "\\n\\nLa diferencia se registrará como un ajuste fuera de las estadísticas.",
     "\\nSaldo reale": "\\nSaldo real",
     "a \${person?.name ??": "a \${persona?.nombre ??",
     "ancora disponibili": "todavía disponible",
@@ -15565,8 +14992,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "budget attivi": "presupuestos activos",
     "categorie · preferite e quick slot":
         "categorías · favoritos y espacios rápidos",
-    "Con il cash-flow attuale la data è difficile: sostenibili circa":
-        "Con el flujo de caja actual la fecha es difícil: aproximadamente sostenible",
+    "Con il cash-flow attuale la data è difficile: sostenibili circa": "Con el flujo de caja actual la fecha es difícil: aproximadamente sostenible",
     "con il ritmo attuale la scadenza potrebbe richiedere un aggiustamento":
         "Al ritmo actual, el plazo puede requerir ajustes.",
     "Corrisponde alla regola manuale “": "Corresponde a la regla manual “",
@@ -15582,8 +15008,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Devi restituire": "tienes que devolver",
     "di spese al giorno": "de gastos por día",
     "Dividi": "dividir",
-    "divisioni di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria":
-        "divisiones de gasto. Para evitar perder la clasificación, combínela primero en otra categoría.",
+    "divisioni di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria": "divisiones de gasto. Para evitar perder la clasificación, combínela primero en otra categoría.",
     "Eliminare": "Eliminar",
     "Eliminare “": "Eliminar “",
     "Esporta": "Exportar",
@@ -15611,8 +15036,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Modifica e gestisci": "Editar y administrar",
     "movimenti aggiornati": "transacciones actualizadas",
     "movimenti corrispondenti": "transacciones correspondientes",
-    "movimenti corrispondenti. I saldi vengono ricalcolati se cambia il conto":
-        "transacciones correspondientes. Los saldos se recalculan si su cuenta cambia",
+    "movimenti corrispondenti. I saldi vengono ricalcolati se cambia il conto": "transacciones correspondientes. Los saldos se recalculan si su cuenta cambia",
     "movimenti e": "transacciones mi",
     "movimenti importati": "transacciones importadas",
     "movimenti simili a “": "transacciones similares a “",
@@ -15644,12 +15068,10 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Restituzione a \${person?.name ??": "Volviendo a \${persona?.nombre ??",
     "Ricevuti": "Recibido",
     "Ricorrenti di spesa ≈": "Gastos recurrentes ≈",
-    "ricorrenze collegate. Per proteggere lo storico non può essere eliminato: puoi archiviarlo":
-        "aniversarios conectados. Para proteger el historial no se puede eliminar: puedes archivarlo",
+    "ricorrenze collegate. Per proteggere lo storico non può essere eliminato: puoi archiviarlo": "aniversarios conectados. Para proteger el historial no se puede eliminar: puedes archivarlo",
     "ricorrenze configurate": "recurrencias configuradas",
     "ricorrenze rilevate": "recurrencias detectadas",
-    "riferimenti perderanno questa categoria. I preset che la usano torneranno a chiedere la categoria":
-        "Las referencias perderán esta categoría. Los presets que lo usen volverán a preguntar por la categoría.",
+    "riferimenti perderanno questa categoria. I preset che la usano torneranno a chiedere la categoria": "Las referencias perderán esta categoría. Los presets que lo usen volverán a preguntar por la categoría.",
     "righe corrispondono allo storico esistente":
         "Las filas corresponden al historial existente.",
     "righe prima del mapping": "líneas antes del mapeo",
@@ -15674,8 +15096,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Spesa effettiva": "Gasto real",
     "Stima completamento: \${DateFormat":
         "Estimación de finalización: \${DateFormat",
-    "Tocca per cambiare periodo, pressione lunga per intervallo personalizzato":
-        "Toque para cambiar el período, mantenga presionado para un intervalo personalizado",
+    "Tocca per cambiare periodo, pressione lunga per intervallo personalizzato": "Toque para cambiar el período, mantenga presionado para un intervalo personalizado",
     "Tocca per tornare al periodo": "Toque para regresar al período",
     "Ultimo controllo \${DateFormat": "Última comprobación \${DateFormat",
     "Unisci “": "Fusionar “",
@@ -15713,8 +15134,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
         "/semaine est le rythme durable estimé",
     "/settimana è sostenibile": "/semaine est durable",
     "/settimana, richiesti": "/semaine, obligatoire",
-    "\\n\\nLa differenza sarà registrata come rettifica fuori dalle statistiche":
-        "\\n\\nLa différence sera enregistrée comme un ajustement hors statistiques",
+    "\\n\\nLa differenza sarà registrata come rettifica fuori dalle statistiche": "\\n\\nLa différence sera enregistrée comme un ajustement hors statistiques",
     "\\nSaldo reale": "\\nSolde réel",
     "a \${person?.name ??": "à \${personne?.name ??",
     "ancora disponibili": "toujours disponible",
@@ -15730,8 +15150,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "budget attivi": "budgets actifs",
     "categorie · preferite e quick slot":
         "catégories · favoris et machines à sous rapides",
-    "Con il cash-flow attuale la data è difficile: sostenibili circa":
-        "Avec la trésorerie actuelle, la date est difficile : à peu près durable",
+    "Con il cash-flow attuale la data è difficile: sostenibili circa": "Avec la trésorerie actuelle, la date est difficile : à peu près durable",
     "con il ritmo attuale la scadenza potrebbe richiedere un aggiustamento":
         "au rythme actuel, le délai pourrait nécessiter un ajustement",
     "Corrisponde alla regola manuale “": "Correspond à la règle manuelle «",
@@ -15747,8 +15166,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Devi restituire": "Tu dois redonner",
     "di spese al giorno": "de dépenses par jour",
     "Dividi": "Diviser",
-    "divisioni di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria":
-        "divisions de dépenses. Pour éviter de perdre le classement, fusionnez-le d'abord dans une autre catégorie",
+    "divisioni di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria": "divisions de dépenses. Pour éviter de perdre le classement, fusionnez-le d'abord dans une autre catégorie",
     "Eliminare": "Supprimer",
     "Eliminare “": "Supprimer \"",
     "Esporta": "Exporter",
@@ -15774,8 +15192,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Modifica e gestisci": "Modifier et gérer",
     "movimenti aggiornati": "opérations mises à jour",
     "movimenti corrispondenti": "opérations correspondantes",
-    "movimenti corrispondenti. I saldi vengono ricalcolati se cambia il conto":
-        "opérations correspondantes. Les soldes sont recalculés si votre compte change",
+    "movimenti corrispondenti. I saldi vengono ricalcolati se cambia il conto": "opérations correspondantes. Les soldes sont recalculés si votre compte change",
     "movimenti e": "transactions e",
     "movimenti importati": "transactions importées",
     "movimenti simili a “": "transactions similaires à «",
@@ -15807,12 +15224,10 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Restituzione a \${person?.name ??": "Revenir à \${person?.name ??",
     "Ricevuti": "Reçu",
     "Ricorrenti di spesa ≈": "Dépenses récurrentes ≈",
-    "ricorrenze collegate. Per proteggere lo storico non può essere eliminato: puoi archiviarlo":
-        "anniversaires connectés. Pour protéger l'historique il ne peut pas être supprimé : vous pouvez l'archiver",
+    "ricorrenze collegate. Per proteggere lo storico non può essere eliminato: puoi archiviarlo": "anniversaires connectés. Pour protéger l'historique il ne peut pas être supprimé : vous pouvez l'archiver",
     "ricorrenze configurate": "récurrences configurées",
     "ricorrenze rilevate": "récidives détectées",
-    "riferimenti perderanno questa categoria. I preset che la usano torneranno a chiedere la categoria":
-        "les références perdront cette catégorie. Les préréglages qui l'utilisent reviendront à la demande de catégorie",
+    "riferimenti perderanno questa categoria. I preset che la usano torneranno a chiedere la categoria": "les références perdront cette catégorie. Les préréglages qui l'utilisent reviendront à la demande de catégorie",
     "righe corrispondono allo storico esistente":
         "les lignes correspondent à l'historique existant",
     "righe prima del mapping": "lignes avant le mappage",
@@ -15837,13 +15252,11 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Spesa effettiva": "Dépense réelle",
     "Stima completamento: \${DateFormat":
         "Estimation d'achèvement : \${DateFormat",
-    "Tocca per cambiare periodo, pressione lunga per intervallo personalizzato":
-        "Touchez pour changer la période, appuyez longuement pour un intervalle personnalisé",
+    "Tocca per cambiare periodo, pressione lunga per intervallo personalizzato": "Touchez pour changer la période, appuyez longuement pour un intervalle personnalisé",
     "Tocca per tornare al periodo": "Toucher pour revenir à la période",
     "Ultimo controllo \${DateFormat": "Dernière vérification \${DateFormat",
     "Unisci “": "Fusionner \"",
-    "Usa le frecce o scorri il grafico per cambiare periodo":
-        "Utilisez les flèches ou faites défiler le graphique pour changer de période",
+    "Usa le frecce o scorri il grafico per cambiare periodo": "Utilisez les flèches ou faites défiler le graphique pour changer de période",
     "Usato": "Utilisé",
     "Verranno considerate": "Ils seront considérés",
     "Vuoi registrarli come una tua entrata?":
@@ -15872,8 +15285,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
         "/Woche ist das geschätzte nachhaltige Tempo",
     "/settimana è sostenibile": "/Woche ist nachhaltig",
     "/settimana, richiesti": "/Woche, erforderlich",
-    "\\n\\nLa differenza sarà registrata come rettifica fuori dalle statistiche":
-        "\\n\\nDie Differenz wird als Anpassung außerhalb der Statistik erfasst",
+    "\\n\\nLa differenza sarà registrata come rettifica fuori dalle statistiche": "\\n\\nDie Differenz wird als Anpassung außerhalb der Statistik erfasst",
     "\\nSaldo reale": "\\nTatsächlicher Kontostand",
     "a \${person?.name ??": "zu \${person?.name ??",
     "ancora disponibili": "noch verfügbar",
@@ -15889,10 +15301,8 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "budget attivi": "Aktive Budgets",
     "categorie · preferite e quick slot":
         "Kategorien · Favoriten und Quick Slots",
-    "Con il cash-flow attuale la data è difficile: sostenibili circa":
-        "Beim aktuellen Cashflow ist die Datierung schwierig: annähernd nachhaltig",
-    "con il ritmo attuale la scadenza potrebbe richiedere un aggiustamento":
-        "Beim derzeitigen Tempo kann es sein, dass die Frist angepasst werden muss",
+    "Con il cash-flow attuale la data è difficile: sostenibili circa": "Beim aktuellen Cashflow ist die Datierung schwierig: annähernd nachhaltig",
+    "con il ritmo attuale la scadenza potrebbe richiedere un aggiustamento": "Beim derzeitigen Tempo kann es sein, dass die Frist angepasst werden muss",
     "Corrisponde alla regola manuale “": "Entspricht der manuellen Regel „",
     "Crea #": "# erstellen",
     "CSV non valido": "Ungültige CSV-Datei",
@@ -15906,8 +15316,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Devi restituire": "Du musst etwas zurückgeben",
     "di spese al giorno": "der Ausgaben pro Tag",
     "Dividi": "Teilen",
-    "divisioni di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria":
-        "Ausgabenabteilungen. Um den Verlust der Klassifizierung zu vermeiden, führen Sie sie zunächst in einer anderen Kategorie zusammen",
+    "divisioni di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria": "Ausgabenabteilungen. Um den Verlust der Klassifizierung zu vermeiden, führen Sie sie zunächst in einer anderen Kategorie zusammen",
     "Eliminare": "Löschen",
     "Eliminare “": "Löschen „",
     "Esporta": "Exportieren",
@@ -15934,8 +15343,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Modifica e gestisci": "Bearbeiten und verwalten",
     "movimenti aggiornati": "aktualisierte Transaktionen",
     "movimenti corrispondenti": "entsprechende Transaktionen",
-    "movimenti corrispondenti. I saldi vengono ricalcolati se cambia il conto":
-        "entsprechende Transaktionen. Der Saldo wird neu berechnet, wenn sich Ihr Konto ändert",
+    "movimenti corrispondenti. I saldi vengono ricalcolati se cambia il conto": "entsprechende Transaktionen. Der Saldo wird neu berechnet, wenn sich Ihr Konto ändert",
     "movimenti e": "Transaktionen e",
     "movimenti importati": "importierte Transaktionen",
     "movimenti simili a “": "Transaktionen ähnlich wie „",
@@ -15950,8 +15358,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "obiettivi attivi": "aktive Ziele",
     "pattern appresi": "gelernte Muster",
     "pattern ricorrenti rilevati": "wiederkehrende Muster erkannt",
-    "Potrebbe essere il rimborso dell’anticipo di \${person?.name ??":
-        "Könnte es sich um die Rückerstattung des \${person?.name-Vorschusses handeln??",
+    "Potrebbe essere il rimborso dell’anticipo di \${person?.name ??": "Könnte es sich um die Rückerstattung des \${person?.name-Vorschusses handeln??",
     "Precompilata da": "Vorab ausgefüllt von",
     "Prepara trasferimento": "Bereiten Sie den Transfer vor",
     "Puoi inserirlo manualmente oppure riprovare":
@@ -15967,12 +15374,10 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Restituzione a \${person?.name ??": "Zurück zu \${person?.name ??",
     "Ricevuti": "Erhalten",
     "Ricorrenti di spesa ≈": "Wiederkehrende Ausgaben ≈",
-    "ricorrenze collegate. Per proteggere lo storico non può essere eliminato: puoi archiviarlo":
-        "verbundene Jubiläen. Um den Verlauf zu schützen, kann er nicht gelöscht werden: Sie können ihn archivieren",
+    "ricorrenze collegate. Per proteggere lo storico non può essere eliminato: puoi archiviarlo": "verbundene Jubiläen. Um den Verlauf zu schützen, kann er nicht gelöscht werden: Sie können ihn archivieren",
     "ricorrenze configurate": "konfigurierte Wiederholungen",
     "ricorrenze rilevate": "Wiederholungen festgestellt",
-    "riferimenti perderanno questa categoria. I preset che la usano torneranno a chiedere la categoria":
-        "Referenzen verlieren diese Kategorie. Voreinstellungen, die diese Kategorie verwenden, werden wieder nach der Kategorie fragen",
+    "riferimenti perderanno questa categoria. I preset che la usano torneranno a chiedere la categoria": "Referenzen verlieren diese Kategorie. Voreinstellungen, die diese Kategorie verwenden, werden wieder nach der Kategorie fragen",
     "righe corrispondono allo storico esistente":
         "Zeilen entsprechen der vorhandenen Historie",
     "righe prima del mapping": "Zeilen vor dem Mapping",
@@ -15997,14 +15402,12 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Spesa effettiva": "Tatsächlicher Aufwand",
     "Stima completamento: \${DateFormat":
         "Fertigstellungsschätzung: \${DateFormat",
-    "Tocca per cambiare periodo, pressione lunga per intervallo personalizzato":
-        "Berühren Sie, um den Zeitraum zu ändern, und drücken Sie lange, um ein benutzerdefiniertes Intervall festzulegen",
+    "Tocca per cambiare periodo, pressione lunga per intervallo personalizzato": "Berühren Sie, um den Zeitraum zu ändern, und drücken Sie lange, um ein benutzerdefiniertes Intervall festzulegen",
     "Tocca per tornare al periodo":
         "Berühren Sie , um zum Zeitraum zurückzukehren",
     "Ultimo controllo \${DateFormat": "Zuletzt überprüft \${DateFormat",
     "Unisci “": "Zusammenführen“",
-    "Usa le frecce o scorri il grafico per cambiare periodo":
-        "Verwenden Sie die Pfeile oder scrollen Sie durch die Grafik, um die Zeiträume zu ändern",
+    "Usa le frecce o scorri il grafico per cambiare periodo": "Verwenden Sie die Pfeile oder scrollen Sie durch die Grafik, um die Zeiträume zu ändern",
     "Usato": "Gebraucht",
     "Verranno considerate": "Sie werden berücksichtigt",
     "Vuoi registrarli come una tua entrata?":
@@ -16047,8 +15450,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
         "/semana é o ritmo sustentável estimado",
     "/settimana è sostenibile": "/semana é sustentável",
     "/settimana, richiesti": "/semana, obrigatório",
-    "\\n\\nLa differenza sarà registrata come rettifica fuori dalle statistiche":
-        "\\n\\nA diferença será registrada como um ajuste fora das estatísticas",
+    "\\n\\nLa differenza sarà registrata come rettifica fuori dalle statistiche": "\\n\\nA diferença será registrada como um ajuste fora das estatísticas",
     "\\nSaldo reale": "\\nSaldo real",
     "a \${person?.name ??": "para \${pessoa?.nome ??",
     "ancora disponibili": "ainda disponível",
@@ -16064,8 +15466,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "budget attivi": "orçamentos ativos",
     "categorie · preferite e quick slot":
         "categorias · favoritos e slots rápidos",
-    "Con il cash-flow attuale la data è difficile: sostenibili circa":
-        "Com o fluxo de caixa atual a data é difícil: aproximadamente sustentável",
+    "Con il cash-flow attuale la data è difficile: sostenibili circa": "Com o fluxo de caixa atual a data é difícil: aproximadamente sustentável",
     "con il ritmo attuale la scadenza potrebbe richiedere un aggiustamento":
         "no ritmo atual, o prazo pode exigir ajustes",
     "Corrisponde alla regola manuale “": "Corresponde à regra manual “",
@@ -16081,8 +15482,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Devi restituire": "Você tem que retribuir",
     "di spese al giorno": "de despesas por dia",
     "Dividi": "Dividir",
-    "divisioni di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria":
-        "divisões de gastos. Para evitar perder a classificação, mescle-a primeiro em outra categoria",
+    "divisioni di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria": "divisões de gastos. Para evitar perder a classificação, mescle-a primeiro em outra categoria",
     "Eliminare": "Excluir",
     "Eliminare “": "Excluir “",
     "Esporta": "Exportar",
@@ -16110,8 +15510,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Modifica e gestisci": "Editar e gerenciar",
     "movimenti aggiornati": "transações atualizadas",
     "movimenti corrispondenti": "transações correspondentes",
-    "movimenti corrispondenti. I saldi vengono ricalcolati se cambia il conto":
-        "transações correspondentes. Os saldos são recalculados se sua conta mudar",
+    "movimenti corrispondenti. I saldi vengono ricalcolati se cambia il conto": "transações correspondentes. Os saldos são recalculados se sua conta mudar",
     "movimenti e": "transações e",
     "movimenti importati": "transações importadas",
     "movimenti simili a “": "transações semelhantes a “",
@@ -16143,12 +15542,10 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Restituzione a \${person?.name ??": "Voltando para \${person?.name ??",
     "Ricevuti": "Recebido",
     "Ricorrenti di spesa ≈": "Despesas recorrentes ≈",
-    "ricorrenze collegate. Per proteggere lo storico non può essere eliminato: puoi archiviarlo":
-        "aniversários conectados. Para proteger o histórico, ele não pode ser excluído: você pode arquivá-lo",
+    "ricorrenze collegate. Per proteggere lo storico non può essere eliminato: puoi archiviarlo": "aniversários conectados. Para proteger o histórico, ele não pode ser excluído: você pode arquivá-lo",
     "ricorrenze configurate": "recorrências configuradas",
     "ricorrenze rilevate": "recorrências detectadas",
-    "riferimenti perderanno questa categoria. I preset che la usano torneranno a chiedere la categoria":
-        "as referências perderão esta categoria. Os presets que o utilizam voltarão a perguntar a categoria",
+    "riferimenti perderanno questa categoria. I preset che la usano torneranno a chiedere la categoria": "as referências perderão esta categoria. Os presets que o utilizam voltarão a perguntar a categoria",
     "righe corrispondono allo storico esistente":
         "as linhas correspondem ao histórico existente",
     "righe prima del mapping": "linhas antes do mapeamento",
@@ -16172,8 +15569,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Spesa effettiva": "Despesa real",
     "Stima completamento: \${DateFormat":
         "Estimativa de conclusão: \${DateFormat",
-    "Tocca per cambiare periodo, pressione lunga per intervallo personalizzato":
-        "Toque para alterar o período, pressione longamente para intervalo personalizado",
+    "Tocca per cambiare periodo, pressione lunga per intervallo personalizzato": "Toque para alterar o período, pressione longamente para intervalo personalizado",
     "Tocca per tornare al periodo": "Toque para retornar ao período",
     "Ultimo controllo \${DateFormat": "Última verificação \${DateFormat",
     "Unisci “": "Mesclar “",
@@ -16248,8 +15644,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Devi restituire": "Вы должны вернуть",
     "di spese al giorno": "расходов в день",
     "Dividi": "Разделить",
-    "divisioni di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria":
-        "расходные подразделения. Чтобы не потерять классификацию, сначала объедините ее с другой категорией.",
+    "divisioni di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria": "расходные подразделения. Чтобы не потерять классификацию, сначала объедините ее с другой категорией.",
     "Eliminare": "Удалить",
     "Eliminare “": "Удалить »",
     "Esporta": "Экспорт",
@@ -16277,8 +15672,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Modifica e gestisci": "Редактируйте и управляйте",
     "movimenti aggiornati": "обновленные транзакции",
     "movimenti corrispondenti": "соответствующие транзакции",
-    "movimenti corrispondenti. I saldi vengono ricalcolati se cambia il conto":
-        "соответствующие транзакции. Балансы пересчитываются при изменении вашего аккаунта.",
+    "movimenti corrispondenti. I saldi vengono ricalcolati se cambia il conto": "соответствующие транзакции. Балансы пересчитываются при изменении вашего аккаунта.",
     "movimenti e": "транзакции е",
     "movimenti importati": "импортированные транзакции",
     "movimenti simili a “": "транзакции, подобные «",
@@ -16310,12 +15704,10 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Restituzione a \${person?.name ??": "Возврат к \${person?.name ??",
     "Ricevuti": "Получено",
     "Ricorrenti di spesa ≈": "Текущие расходы ≈",
-    "ricorrenze collegate. Per proteggere lo storico non può essere eliminato: puoi archiviarlo":
-        "связанные юбилеи. Чтобы защитить историю, ее нельзя удалить: вы можете заархивировать ее.",
+    "ricorrenze collegate. Per proteggere lo storico non può essere eliminato: puoi archiviarlo": "связанные юбилеи. Чтобы защитить историю, ее нельзя удалить: вы можете заархивировать ее.",
     "ricorrenze configurate": "настроенные повторения",
     "ricorrenze rilevate": "обнаружены рецидивы",
-    "riferimenti perderanno questa categoria. I preset che la usano torneranno a chiedere la categoria":
-        "ссылки потеряют эту категорию. Пресеты, которые его используют, вернутся к запросу категории.",
+    "riferimenti perderanno questa categoria. I preset che la usano torneranno a chiedere la categoria": "ссылки потеряют эту категорию. Пресеты, которые его используют, вернутся к запросу категории.",
     "righe corrispondono allo storico esistente":
         "строки соответствуют существующей истории",
     "righe prima del mapping": "линии перед отображением",
@@ -16339,8 +15731,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "snapshot locali": "локальные снимки",
     "Spesa effettiva": "Фактический расход",
     "Stima completamento: \${DateFormat": "Оценка завершения: \${DateFormat",
-    "Tocca per cambiare periodo, pressione lunga per intervallo personalizzato":
-        "Нажмите, чтобы изменить период, нажмите и удерживайте для выбора пользовательского интервала.",
+    "Tocca per cambiare periodo, pressione lunga per intervallo personalizzato": "Нажмите, чтобы изменить период, нажмите и удерживайте для выбора пользовательского интервала.",
     "Tocca per tornare al periodo": "Нажмите, чтобы вернуться к периоду",
     "Ultimo controllo \${DateFormat": "Последняя проверка \${DateFormat",
     "Unisci “": "Объединить »",
@@ -16963,8 +16354,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
         "الذكرى السنوية المتصلة. لحماية التاريخ، لا يمكن حذفه: يمكنك أرشفته",
     "ricorrenze configurate": "التكرارات التي تم تكوينها",
     "ricorrenze rilevate": "تم الكشف عن التكرار",
-    "riferimenti perderanno questa categoria. I preset che la usano torneranno a chiedere la categoria":
-        "سوف تفقد المراجع هذه الفئة. ستعود الإعدادات المسبقة التي تستخدمها إلى السؤال عن الفئة",
+    "riferimenti perderanno questa categoria. I preset che la usano torneranno a chiedere la categoria": "سوف تفقد المراجع هذه الفئة. ستعود الإعدادات المسبقة التي تستخدمها إلى السؤال عن الفئة",
     "righe corrispondono allo storico esistente":
         "الصفوف تتوافق مع التاريخ الموجود",
     "righe prima del mapping": "الخطوط قبل رسم الخرائط",
@@ -17067,8 +16457,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Devi restituire": "तुम्हें वापस देना होगा",
     "di spese al giorno": "प्रति दिन खर्च का",
     "Dividi": "फूट डालो",
-    "divisioni di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria":
-        "व्यय प्रभाग. वर्गीकरण खोने से बचने के लिए, पहले इसे किसी अन्य श्रेणी में मर्ज करें",
+    "divisioni di spesa. Per non perdere la classificazione, uniscila prima in un’altra categoria": "व्यय प्रभाग. वर्गीकरण खोने से बचने के लिए, पहले इसे किसी अन्य श्रेणी में मर्ज करें",
     "Eliminare": "हटाएँ",
     "Eliminare “": "हटाएँ \"",
     "Esporta": "निर्यात करें",
@@ -17096,8 +16485,7 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Modifica e gestisci": "संपादित करें और प्रबंधित करें",
     "movimenti aggiornati": "अद्यतन लेनदेन",
     "movimenti corrispondenti": "संगत लेनदेन",
-    "movimenti corrispondenti. I saldi vengono ricalcolati se cambia il conto":
-        "संगत लेनदेन. यदि आपका खाता बदलता है तो शेष राशि की पुनर्गणना की जाती है",
+    "movimenti corrispondenti. I saldi vengono ricalcolati se cambia il conto": "संगत लेनदेन. यदि आपका खाता बदलता है तो शेष राशि की पुनर्गणना की जाती है",
     "movimenti e": "लेन-देन ई",
     "movimenti importati": "आयातित लेनदेन",
     "movimenti simili a “": "के समान लेनदेन",
@@ -17129,12 +16517,10 @@ generatedPhraseTranslations = <String, Map<String, String>>{
     "Restituzione a \${person?.name ??": "\${person?.name पर लौट रहा हूँ ??",
     "Ricevuti": "प्राप्त हुआ",
     "Ricorrenti di spesa ≈": "आवर्ती व्यय ≈",
-    "ricorrenze collegate. Per proteggere lo storico non può essere eliminato: puoi archiviarlo":
-        "जुड़ी हुई वर्षगाँठ. इतिहास की सुरक्षा के लिए इसे हटाया नहीं जा सकता: आप इसे संग्रहीत कर सकते हैं",
+    "ricorrenze collegate. Per proteggere lo storico non può essere eliminato: puoi archiviarlo": "जुड़ी हुई वर्षगाँठ. इतिहास की सुरक्षा के लिए इसे हटाया नहीं जा सकता: आप इसे संग्रहीत कर सकते हैं",
     "ricorrenze configurate": "कॉन्फ़िगर की गई पुनरावृत्तियाँ",
     "ricorrenze rilevate": "पुनरावृत्ति का पता चला",
-    "riferimenti perderanno questa categoria. I preset che la usano torneranno a chiedere la categoria":
-        "संदर्भ इस श्रेणी को खो देंगे. इसका उपयोग करने वाले प्रीसेट श्रेणी के बारे में पूछते हुए वापस आ जाएंगे",
+    "riferimenti perderanno questa categoria. I preset che la usano torneranno a chiedere la categoria": "संदर्भ इस श्रेणी को खो देंगे. इसका उपयोग करने वाले प्रीसेट श्रेणी के बारे में पूछते हुए वापस आ जाएंगे",
     "righe corrispondono allo storico esistente":
         "पंक्तियाँ मौजूदा इतिहास से मेल खाती हैं",
     "righe prima del mapping": "मैपिंग से पहले लाइनें",
