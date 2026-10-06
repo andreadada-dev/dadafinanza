@@ -1085,7 +1085,7 @@ class _CategoryDonutRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(category.colorValue);
-    final percent = total <= 0 ? 0 : amount / total;
+    final percent = total <= 0 ? 0.0 : amount / total;
     return InkWell(
       borderRadius: BorderRadius.circular(18),
       onTap: () => Navigator.push(
