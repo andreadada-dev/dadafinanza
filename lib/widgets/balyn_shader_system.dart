@@ -299,6 +299,47 @@ class BalynShaderText extends StatelessWidget {
   }
 }
 
+class BalynShaderLinearProgress extends StatelessWidget {
+  const BalynShaderLinearProgress({
+    required this.value,
+    required this.seed,
+    this.minHeight = 6,
+    this.borderRadius = const BorderRadius.all(Radius.circular(999)),
+    super.key,
+  });
+
+  final double value;
+  final Color seed;
+  final double minHeight;
+  final BorderRadiusGeometry borderRadius;
+
+  @override
+  Widget build(BuildContext context) {
+    final track = Theme.of(context).colorScheme.onSurface.withValues(alpha: .10);
+    return Stack(
+      children: [
+        LinearProgressIndicator(
+          value: 1,
+          minHeight: minHeight,
+          borderRadius: borderRadius,
+          color: track,
+          backgroundColor: Colors.transparent,
+        ),
+        BalynShaderInk(
+          seed: seed,
+          child: LinearProgressIndicator(
+            value: value.clamp(0.0, 1.0).toDouble(),
+            minHeight: minHeight,
+            borderRadius: borderRadius,
+            color: Colors.white,
+            backgroundColor: Colors.transparent,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class BalynShaderIcon extends StatelessWidget {
   const BalynShaderIcon(
     this.icon, {
