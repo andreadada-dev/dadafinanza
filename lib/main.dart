@@ -18,6 +18,7 @@ import 'services/recurring_execution_service.dart';
 import 'services/security_service.dart';
 import 'theme/app_theme.dart';
 import 'widgets/app_lock_gate.dart';
+import 'widgets/balyn_shader_system.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -158,6 +159,11 @@ class _BalynAppState extends State<BalynApp> with WidgetsBindingObserver {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
+            builder: (context, child) => BalynShaderScope(
+              child: BalynShaderBackdrop(
+                child: child ?? const SizedBox.shrink(),
+              ),
+            ),
             home: AppLockGate(security: security, child: const BalynAppShell()),
           );
         },
