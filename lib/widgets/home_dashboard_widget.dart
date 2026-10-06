@@ -132,10 +132,7 @@ class _MetricBlock extends StatelessWidget {
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
           child: valueColor == null
-              ? Text(
-                  value,
-                  style: style?.copyWith(fontWeight: FontWeight.w800),
-                )
+              ? Text(value, style: style?.copyWith(fontWeight: FontWeight.w800))
               : BalynShaderText(
                   value,
                   seed: valueColor!,
@@ -635,19 +632,20 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                             )
                               PieChartSectionData(
                                 gradient: LinearGradient(
-                                  colors: balynShaderPalette(
-                                    data.slices[index].color,
-                                  )
-                                      .map(
-                                        (color) => color.withValues(
-                                          alpha:
-                                              pageSelectedIndex == -1 ||
-                                                  pageSelectedIndex == index
-                                              ? 1
-                                              : .22,
-                                        ),
-                                      )
-                                      .toList(),
+                                  colors:
+                                      balynShaderPalette(
+                                            data.slices[index].color,
+                                          )
+                                          .map(
+                                            (color) => color.withValues(
+                                              alpha:
+                                                  pageSelectedIndex == -1 ||
+                                                      pageSelectedIndex == index
+                                                  ? 1
+                                                  : .22,
+                                            ),
+                                          )
+                                          .toList(),
                                 ),
                                 value: data.slices[index].amount,
                                 title: '',
