@@ -1,6 +1,6 @@
 import 'dart:ui' as ui;
 
-import 'package:flutter/material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 
 /// Shared clock and GPU programs for Balyn's living-color system.
 ///
