@@ -9,6 +9,7 @@ import '../screens/account_management_screen.dart';
 import '../screens/account_screens.dart' show showAccountEditor;
 import '../screens/canonical_shell.dart' show CanonicalDashboardWidget;
 import '../screens/category_management_screen.dart' show CategoryDetailScreen;
+import 'balyn_shader_system.dart';
 import 'ui_helpers.dart';
 
 /// Renders a dashboard configuration on the canonical Home.
@@ -130,13 +131,16 @@ class _MetricBlock extends StatelessWidget {
         FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
-          child: Text(
-            value,
-            style: style?.copyWith(
-              color: valueColor,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
+          child: valueColor == null
+              ? Text(
+                  value,
+                  style: style?.copyWith(fontWeight: FontWeight.w800),
+                )
+              : BalynShaderText(
+                  value,
+                  seed: valueColor!,
+                  style: style?.copyWith(fontWeight: FontWeight.w800),
+                ),
         ),
         if (showDetail && detail != null) ...[
           const SizedBox(height: 4),
@@ -198,13 +202,17 @@ class _AccountsBlock extends StatelessWidget {
                 height: 42,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Color(account.colorValue).withValues(alpha: .11),
+                  color: Theme.of(context).colorScheme.onSurface.withValues(
+                    alpha: Theme.of(context).brightness == Brightness.dark
+                        ? .07
+                        : .045,
+                  ),
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: Icon(
+                child: BalynShaderIcon(
                   accountIcon(account.iconKey),
+                  seed: Color(account.colorValue),
                   size: 21,
-                  color: Color(account.colorValue),
                 ),
               ),
               title: Text(
@@ -626,13 +634,21 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                               index++
                             )
                               PieChartSectionData(
-                                color:
-                                    pageSelectedIndex == -1 ||
-                                        pageSelectedIndex == index
-                                    ? data.slices[index].color
-                                    : data.slices[index].color.withValues(
-                                        alpha: .22,
-                                      ),
+                                gradient: LinearGradient(
+                                  colors: balynShaderPalette(
+                                    data.slices[index].color,
+                                  )
+                                      .map(
+                                        (color) => color.withValues(
+                                          alpha:
+                                              pageSelectedIndex == -1 ||
+                                                  pageSelectedIndex == index
+                                              ? 1
+                                              : .22,
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
                                 value: data.slices[index].amount,
                                 title: '',
                                 radius:
@@ -898,7 +914,7 @@ class _DonutPeriodCenter extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 26, color: accent),
+          BalynShaderIcon(icon, seed: accent, size: 26),
           const SizedBox(height: 6),
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -947,10 +963,10 @@ class _DonutPeriodCenter extends StatelessWidget {
           const SizedBox(height: 2),
           FittedBox(
             fit: BoxFit.scaleDown,
-            child: Text(
+            child: BalynShaderText(
               totalLabel,
+              seed: accent,
               style: theme.textTheme.titleMedium?.copyWith(
-                color: accent,
                 fontWeight: FontWeight.w900,
               ),
             ),
@@ -1012,12 +1028,12 @@ class _SelectedDonutCenter extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
+              BalynShaderIcon(
                 slice.category == null
                     ? Icons.pie_chart_rounded
                     : categoryIcon(slice.category!.iconKey),
+                seed: slice.color,
                 size: 24,
-                color: slice.color,
               ),
               const SizedBox(height: 4),
               ConstrainedBox(
@@ -1033,10 +1049,10 @@ class _SelectedDonutCenter extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 2),
-              Text(
+              BalynShaderText(
                 '${(percentage * 100).round()}%',
+                seed: slice.color,
                 style: theme.textTheme.titleMedium?.copyWith(
-                  color: slice.color,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -1089,12 +1105,16 @@ class _CategoryDonutRow extends StatelessWidget {
               height: 38,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: color.withValues(alpha: .11),
+                color: Theme.of(context).colorScheme.onSurface.withValues(
+                  alpha: Theme.of(context).brightness == Brightness.dark
+                      ? .07
+                      : .045,
+                ),
                 borderRadius: BorderRadius.circular(14),
               ),
-              child: Icon(
+              child: BalynShaderIcon(
                 categoryIcon(category.iconKey),
-                color: color,
+                seed: color,
                 size: 19,
               ),
             ),
@@ -1112,11 +1132,10 @@ class _CategoryDonutRow extends StatelessWidget {
                   const SizedBox(height: 5),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(999),
-                    child: LinearProgressIndicator(
-                      value: percent.clamp(0, 1).toDouble(),
+                    child: BalynShaderLinearProgress(
+                      value: percent,
+                      seed: color,
                       minHeight: 4,
-                      color: color,
-                      backgroundColor: color.withValues(alpha: .10),
                     ),
                   ),
                 ],
