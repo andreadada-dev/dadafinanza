@@ -398,11 +398,7 @@ List<Color> balynShaderPalette(Color seed) {
     return HSLColor.fromAHSL(1, hue, saturation, lightness).toColor();
   }
 
-  return [
-    tone(-12, .035, -.025),
-    tone(2, .070, .065),
-    tone(15, .040, .010),
-  ];
+  return [tone(-12, .035, -.025), tone(2, .070, .065), tone(15, .040, .010)];
 }
 
 double _inkPhase(double backgroundPhase) => (backgroundPhase * 4.0) % 1.0;
