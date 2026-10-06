@@ -6,6 +6,7 @@ import '../core/money.dart';
 import '../main.dart';
 import '../models/models.dart';
 import '../widgets/balyn_motion.dart';
+import '../widgets/finance_charts.dart';
 import '../widgets/finance_quick_action.dart';
 import '../widgets/home_dashboard_widget.dart';
 import '../widgets/ui_helpers.dart';
@@ -335,6 +336,13 @@ class _IvyFinanceOverview extends StatelessWidget {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final showBalance = _shows(DashboardWidgetType.totalBalance);
+    final snapshots = state.netWorthSnapshots;
+    final visibleSnapshots = snapshots.length > 24
+        ? snapshots.sublist(snapshots.length - 24)
+        : snapshots;
+    final trendValues = [
+      for (final point in visibleSnapshots) (point['amount'] as num).toDouble(),
+    ];
     final metrics = <Widget>[];
 
     if (_shows(DashboardWidgetType.monthlyIncome)) {
@@ -369,7 +377,7 @@ class _IvyFinanceOverview extends StatelessWidget {
               ? '••••'
               : moneyFor(state, state.safeToSpend),
           icon: Icons.account_balance_wallet_rounded,
-          color: scheme.primary,
+          color: scheme.tertiary,
         ),
       );
     }
@@ -386,7 +394,16 @@ class _IvyFinanceOverview extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 18),
       decoration: BoxDecoration(
-        color: scheme.surfaceContainer,
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            scheme.tertiary.withValues(
+              alpha: theme.brightness == Brightness.dark ? .12 : .07,
+            ),
+            scheme.surfaceContainer,
+          ],
+        ),
         borderRadius: BorderRadius.circular(30),
       ),
       child: Column(
@@ -398,12 +415,12 @@ class _IvyFinanceOverview extends StatelessWidget {
                 width: 42,
                 height: 42,
                 decoration: BoxDecoration(
-                  color: scheme.primary.withValues(alpha: .12),
+                  color: scheme.tertiary.withValues(alpha: .14),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   Icons.account_balance_wallet_rounded,
-                  color: scheme.primary,
+                  color: scheme.tertiary,
                   size: 21,
                 ),
               ),
@@ -420,7 +437,7 @@ class _IvyFinanceOverview extends StatelessWidget {
                 child: Text(
                   DateFormat('MMM', AppI18n.intlLocale).format(DateTime.now()),
                   style: theme.textTheme.labelMedium?.copyWith(
-                    color: scheme.primary,
+                    color: scheme.tertiary,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
@@ -472,6 +489,14 @@ class _IvyFinanceOverview extends StatelessWidget {
               ],
             ),
           ],
+          if (!state.hideBalance && trendValues.length >= 2) ...[
+            const SizedBox(height: 14),
+            FinanceSparkline(
+              values: trendValues,
+              color: scheme.tertiary,
+              height: 62,
+            ),
+          ],
         ],
       ),
     );
@@ -494,47 +519,43 @@ class _OverviewMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
-      constraints: const BoxConstraints(minHeight: 78),
-      padding: const EdgeInsets.all(11),
-      decoration: BoxDecoration(
-        color: color.withValues(
-          alpha: theme.brightness == Brightness.dark ? .13 : .08,
-        ),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 17, color: color),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: theme.textTheme.labelSmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-              fontWeight: FontWeight.w700,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: 72),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 6),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 18, color: color),
+            const SizedBox(height: 8),
+            Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: theme.textTheme.labelSmall?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-          ),
-          const SizedBox(height: 2),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.centerLeft,
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 220),
-              child: Text(
-                value,
-                key: ValueKey(value),
-                style: theme.textTheme.labelLarge?.copyWith(
-                  color: color,
-                  fontWeight: FontWeight.w900,
+            const SizedBox(height: 2),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 220),
+                child: Text(
+                  value,
+                  key: ValueKey(value),
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    color: color,
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

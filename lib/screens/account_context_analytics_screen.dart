@@ -9,6 +9,8 @@ import '../main.dart';
 import '../models/models.dart';
 import '../services/account_context_service.dart';
 import '../widgets/account_context_selector.dart';
+import '../widgets/balyn_motion.dart';
+import '../widgets/finance_charts.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_management_screen.dart';
 import 'transaction_screens.dart';
@@ -149,6 +151,52 @@ class _AccountContextAnalyticsScreenState
     }
   }
 
+  List<FinanceTrendPoint> _cashFlowPoints(
+    AppState state,
+    int? accountId,
+    DateTime from,
+    DateTime to,
+  ) {
+    final totalDays = math.max(1, to.difference(from).inDays);
+    final targetBuckets = switch (period) {
+      _AnalyticsPeriod.today => 1,
+      _AnalyticsPeriod.week => math.min(7, totalDays),
+      _AnalyticsPeriod.month => math.min(12, totalDays),
+      _AnalyticsPeriod.year => 12,
+      _AnalyticsPeriod.custom => totalDays <= 31 ? math.min(12, totalDays) : 12,
+    };
+    if (targetBuckets < 2) return const [];
+
+    final bucketDays = math.max(1, (totalDays / targetBuckets).ceil());
+    final result = <FinanceTrendPoint>[];
+    var cursor = from;
+    while (cursor.isBefore(to)) {
+      var next = cursor.add(Duration(days: bucketDays));
+      if (next.isAfter(to)) next = to;
+      result.add(
+        FinanceTrendPoint(
+          date: cursor,
+          primary: AccountContextService.periodTotal(
+            state,
+            accountId,
+            TransactionType.expense,
+            cursor,
+            next,
+          ),
+          secondary: AccountContextService.periodTotal(
+            state,
+            accountId,
+            TransactionType.income,
+            cursor,
+            next,
+          ),
+        ),
+      );
+      cursor = next;
+    }
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
@@ -222,6 +270,31 @@ class _AccountContextAnalyticsScreenState
     }
     final categories = categoryTotals.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
+    final cashFlowPoints = _cashFlowPoints(state, effectiveAccountId, from, to);
+    final donutEntries = categories.take(6).toList(growable: false);
+    final donutShown = donutEntries.fold<double>(
+      0,
+      (sum, entry) => sum + entry.value,
+    );
+    final categorySegments = <FinanceDonutSegment>[
+      for (final entry in donutEntries)
+        if (state.categoryById(entry.key) case final category?)
+          FinanceDonutSegment(
+            label: category.name,
+            value: entry.value,
+            color: Color(category.colorValue),
+            icon: categoryIcon(category.iconKey),
+          ),
+      if (expense - donutShown > .01)
+        FinanceDonutSegment(
+          label: 'Altro',
+          value: expense - donutShown,
+          color: Theme.of(
+            context,
+          ).colorScheme.onSurfaceVariant.withValues(alpha: .36),
+          icon: Icons.more_horiz_rounded,
+        ),
+    ];
 
     final recurringMonthly =
         AccountContextService.recurringFor(state, effectiveAccountId)
@@ -300,7 +373,7 @@ class _AccountContextAnalyticsScreenState
               ),
             ],
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 30),
           SectionTitle(
             effectiveAccountId == null
                 ? 'Andamento patrimonio'
@@ -316,6 +389,24 @@ class _AccountContextAnalyticsScreenState
             rangeLabel: _visibleRangeLabel(from, to),
             onShiftPeriod: _shiftPeriod,
           ),
+          if (cashFlowPoints.length >= 2) ...[
+            const SizedBox(height: 32),
+            const SectionTitle('Entrate e spese'),
+            const SizedBox(height: 10),
+            BalynReveal(
+              child: FinanceTrendChart(
+                points: cashFlowPoints,
+                primaryLabel: AppI18n.tr('Spese'),
+                secondaryLabel: AppI18n.tr('Entrate'),
+                primaryColor: context.financeColors.negative,
+                secondaryColor: context.financeColors.positive,
+                valueFormatter: state.hideBalance
+                    ? (_) => '••••'
+                    : (value) => moneyFor(state, value),
+                height: 205,
+              ),
+            ),
+          ],
           const SizedBox(height: 24),
           _AnalyticsLine(
             icon: delta == null
@@ -346,7 +437,20 @@ class _AccountContextAnalyticsScreenState
           const SectionTitle('Dove stai spendendo'),
           if (categories.isEmpty)
             const Text('Nessun dato nel periodo')
-          else
+          else ...[
+            BalynReveal(
+              child: FinanceDonutChart(
+                segments: categorySegments,
+                centerLabel: AppI18n.tr('Spese'),
+                centerValue: state.hideBalance
+                    ? '••••'
+                    : moneyFor(state, expense),
+                valueFormatter: state.hideBalance
+                    ? (_) => '••••'
+                    : (value) => moneyFor(state, value),
+              ),
+            ),
+            const SizedBox(height: 16),
             ...categories.take(8).map((entry) {
               final category = state.categoryById(entry.key);
               if (category == null) return const SizedBox.shrink();
@@ -380,6 +484,7 @@ class _AccountContextAnalyticsScreenState
                 ),
               );
             }),
+          ],
           const SizedBox(height: 28),
           if (effectiveAccountId == null) ...[
             const SectionTitle('Per conto'),
@@ -459,7 +564,9 @@ class _PeriodPill extends StatelessWidget {
       label: label,
       child: Material(
         color: selected
-            ? theme.colorScheme.surfaceContainerHighest
+            ? theme.colorScheme.tertiary.withValues(
+                alpha: theme.brightness == Brightness.dark ? .20 : .11,
+              )
             : Colors.transparent,
         borderRadius: BorderRadius.circular(22),
         clipBehavior: Clip.antiAlias,
@@ -476,7 +583,9 @@ class _PeriodPill extends StatelessWidget {
                   maxLines: 1,
                   style: theme.textTheme.labelLarge?.copyWith(
                     fontWeight: FontWeight.w700,
-                    color: theme.colorScheme.onSurface,
+                    color: selected
+                        ? theme.colorScheme.tertiary
+                        : theme.colorScheme.onSurface,
                   ),
                 ),
               ),
@@ -778,7 +887,7 @@ class _BalanceTrendState extends State<_BalanceTrend>
     final xInterval = isToday ? 1.0 : _labelInterval(chartMaxX);
     final (chartMin, chartMax, yInterval) = _yScale(spots);
     final lineColor = account == null
-        ? theme.colorScheme.onSurfaceVariant
+        ? theme.colorScheme.tertiary
         : Color(account.colorValue);
     final hideValues = state.hideBalance || (account?.hideBalance ?? false);
 
@@ -979,6 +1088,15 @@ class _BalanceTrendState extends State<_BalanceTrend>
                       show: true,
                       drawVerticalLine: false,
                       horizontalInterval: yInterval,
+                      getDrawingHorizontalLine: (_) => FlLine(
+                        color: theme.colorScheme.onSurface.withValues(
+                          alpha: theme.brightness == Brightness.dark
+                              ? .10
+                              : .07,
+                        ),
+                        strokeWidth: 1,
+                        dashArray: const [3, 7],
+                      ),
                     ),
                     borderData: FlBorderData(show: false),
                     lineTouchData: LineTouchData(
@@ -1050,8 +1168,13 @@ class _BalanceTrendState extends State<_BalanceTrend>
                                   (spot.x - selectedSpot.x).abs() < .0001 &&
                                   (spot.y - selectedSpot.y).abs() < .0001),
                         ),
-                        barWidth: 3,
+                        barWidth: 2.6,
+                        isStrokeCapRound: true,
                         color: lineColor,
+                        belowBarData: BarAreaData(
+                          show: true,
+                          color: lineColor.withValues(alpha: .09),
+                        ),
                       ),
                     ],
                   ),
