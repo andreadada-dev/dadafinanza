@@ -18,6 +18,18 @@ void main() {
     expect(source, contains("label: 'Disponibile'"));
   });
 
+  test('Home overview centers summary values and has no patrimonio sparkline', () {
+    final source = File(
+      'lib/screens/account_context_home_screen.dart',
+    ).readAsStringSync();
+
+    expect(source, isNot(contains('FinanceSparkline(')));
+    expect(source, isNot(contains('trendValues:')));
+    expect(source, contains('crossAxisAlignment: CrossAxisAlignment.center'));
+    expect(source, contains('textAlign: TextAlign.center'));
+    expect(source, contains('alignment: Alignment.center'));
+  });
+
   test('fixed summary metrics are not duplicated by personalized sections', () {
     final source = File(
       'lib/screens/account_context_home_screen.dart',
