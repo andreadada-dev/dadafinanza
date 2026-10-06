@@ -10,6 +10,9 @@ flutter:
   uses-material-design: true
   assets:
     - assets/branding/
+  shaders:
+    - shaders/balyn_background.frag
+    - shaders/balyn_ink.frag
 
 dependencies:
   flutter:
