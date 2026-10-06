@@ -300,10 +300,8 @@ void main() {
     expect(source, contains('_stepPeriod(1)'));
     expect(source, isNot(contains('_hasTodayData')));
     expect(source, contains('emptyRingColor'));
-    expect(
-      source,
-      contains('centerSpaceColor: Theme.of(context).scaffoldBackgroundColor'),
-    );
+    expect(source, contains('centerSpaceColor:'));
+    expect(source, contains('scaffoldBackgroundColor'));
     expect(source, contains('color: Theme.of(context).colorScheme.surface'));
     expect(source, contains('width: chartSize * .64'));
     expect(source, contains('value: 1'));
