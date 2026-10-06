@@ -8,6 +8,7 @@ import '../models/models.dart';
 import '../models/quick_capture_models.dart';
 import '../services/haptic_service.dart';
 import '../services/quick_preset_service.dart';
+import '../widgets/balyn_shader_system.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_context_analytics_screen.dart';
 import 'account_context_home_screen.dart';
@@ -79,6 +80,7 @@ class _BalynAppShellState extends State<BalynAppShell> {
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
+    final accent = Theme.of(context).colorScheme.tertiary;
     final effectiveAccountId =
         state.activeAccounts.any((a) => a.id == accountId) ? accountId : null;
     if (effectiveAccountId != accountId) {
@@ -140,27 +142,42 @@ class _BalynAppShellState extends State<BalynAppShell> {
           destinations: [
             NavigationDestination(
               icon: Icon(Icons.home_outlined),
-              selectedIcon: Icon(Icons.home_rounded),
+              selectedIcon: BalynShaderIcon(
+                Icons.home_rounded,
+                seed: accent,
+              ),
               label: AppI18n.tr('Home'),
             ),
             NavigationDestination(
               icon: Icon(Icons.receipt_long_outlined),
-              selectedIcon: Icon(Icons.receipt_long_rounded),
+              selectedIcon: BalynShaderIcon(
+                Icons.receipt_long_rounded,
+                seed: accent,
+              ),
               label: AppI18n.tr('Movimenti'),
             ),
             NavigationDestination(
               icon: Icon(Icons.insights_outlined),
-              selectedIcon: Icon(Icons.insights_rounded),
+              selectedIcon: BalynShaderIcon(
+                Icons.insights_rounded,
+                seed: accent,
+              ),
               label: AppI18n.tr('Analisi'),
             ),
             NavigationDestination(
               icon: Icon(Icons.handshake_outlined),
-              selectedIcon: Icon(Icons.handshake_rounded),
+              selectedIcon: BalynShaderIcon(
+                Icons.handshake_rounded,
+                seed: accent,
+              ),
               label: AppI18n.tr('Anticipi'),
             ),
             NavigationDestination(
               icon: Icon(Icons.event_note_outlined),
-              selectedIcon: Icon(Icons.event_note_rounded),
+              selectedIcon: BalynShaderIcon(
+                Icons.event_note_rounded,
+                seed: accent,
+              ),
               label: AppI18n.tr('Pianifica'),
             ),
           ],
