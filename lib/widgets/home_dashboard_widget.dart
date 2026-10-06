@@ -601,8 +601,9 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
             Center(
               child: SizedBox.square(
                 dimension: chartSize,
-                child: PieChart(
-                  PieChartData(
+                child: BalynShaderMotionBuilder(
+                  builder: (context, shaderPhase) => PieChart(
+                    PieChartData(
                     startDegreeOffset: -90,
                     sectionsSpace: hasData ? 4 : 0,
                     centerSpaceRadius: chartSize * .32,
@@ -631,21 +632,14 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                               index++
                             )
                               PieChartSectionData(
-                                gradient: LinearGradient(
-                                  colors:
-                                      balynShaderPalette(
-                                            data.slices[index].color,
-                                          )
-                                          .map(
-                                            (color) => color.withValues(
-                                              alpha:
-                                                  pageSelectedIndex == -1 ||
-                                                      pageSelectedIndex == index
-                                                  ? 1
-                                                  : .22,
-                                            ),
-                                          )
-                                          .toList(),
+                                gradient: balynAnimatedGradient(
+                                  data.slices[index].color,
+                                  shaderPhase,
+                                  opacity:
+                                      pageSelectedIndex == -1 ||
+                                          pageSelectedIndex == index
+                                      ? 1
+                                      : .22,
                                 ),
                                 value: data.slices[index].amount,
                                 title: '',
@@ -665,8 +659,9 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                             ),
                           ],
                   ),
-                  duration: const Duration(milliseconds: 260),
-                  curve: Curves.easeOutCubic,
+                    duration: const Duration(milliseconds: 260),
+                    curve: Curves.easeOutCubic,
+                  ),
                 ),
               ),
             ),
