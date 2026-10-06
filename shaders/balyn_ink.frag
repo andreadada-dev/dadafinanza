@@ -33,7 +33,7 @@ void main() {
   animatedColor = mix(
     animatedColor,
     uColorC.rgb,
-    smoothstep(0.58, 0.98, band) * 0.42
+    smoothstep(0.54, 0.98, band) * 0.58
   );
 
   // Strength controls how far the material travels from the seed colour.
@@ -46,7 +46,7 @@ void main() {
     (p.x * 0.82 + p.y * 0.22) * 3.15 - t * 2.0
   );
   float sheen = smoothstep(0.78, 1.0, sheenWave);
-  color += vec3(sheen * 0.032 * clamp(uSheen, 0.0, 1.0));
+  color += vec3(sheen * 0.050 * clamp(uSheen, 0.0, 1.0));
 
   fragColor = vec4(clamp(color, 0.0, 1.0), 1.0);
 }
