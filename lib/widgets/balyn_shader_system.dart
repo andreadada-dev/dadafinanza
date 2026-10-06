@@ -315,7 +315,9 @@ class BalynShaderLinearProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final track = Theme.of(context).colorScheme.onSurface.withValues(alpha: .10);
+    final track = Theme.of(
+      context,
+    ).colorScheme.onSurface.withValues(alpha: .10);
     return Stack(
       children: [
         LinearProgressIndicator(
