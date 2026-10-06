@@ -10,6 +10,7 @@ import '../models/models.dart';
 import '../services/account_context_service.dart';
 import '../widgets/account_context_selector.dart';
 import '../widgets/balyn_motion.dart';
+import '../widgets/balyn_shader_system.dart';
 import '../widgets/finance_charts.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_management_screen.dart';
@@ -1383,12 +1384,13 @@ class _Metric extends StatelessWidget {
       FittedBox(
         fit: BoxFit.scaleDown,
         alignment: Alignment.centerLeft,
-        child: Text(
-          value,
-          style: Theme.of(
-            context,
-          ).textTheme.titleMedium?.copyWith(color: color),
-        ),
+        child: color == null
+            ? Text(value, style: Theme.of(context).textTheme.titleMedium)
+            : BalynShaderText(
+                value,
+                seed: color!,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
       ),
     ],
   );
