@@ -871,7 +871,8 @@ class AppDatabase {
   )).map(Account.fromMap).toList();
   Future<List<Category>> categories() async => (await db.query(
     'categories',
-    orderBy: 'type, CASE WHEN quick_order IS NULL THEN 999 ELSE quick_order END, name',
+    orderBy:
+        'type, CASE WHEN quick_order IS NULL THEN 999 ELSE quick_order END, name',
   )).map(Category.fromMap).toList();
   Future<List<FinanceTransaction>> transactions() async => (await db.query(
     'transactions',

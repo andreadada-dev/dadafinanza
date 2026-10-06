@@ -963,9 +963,9 @@ Future<String?> showIconPicker(
                             child: Ink(
                               decoration: BoxDecoration(
                                 color: active
-                                    ? Theme.of(context)
-                                          .colorScheme
-                                          .surfaceContainerHighest
+                                    ? Theme.of(
+                                        context,
+                                      ).colorScheme.surfaceContainerHighest
                                     : Colors.transparent,
                                 borderRadius: BorderRadius.circular(16),
                               ),
@@ -984,9 +984,9 @@ Future<String?> showIconPicker(
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.center,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelSmall,
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.labelSmall,
                                     ),
                                   ],
                                 ),

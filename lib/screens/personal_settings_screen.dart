@@ -46,8 +46,9 @@ class _BrandHeader extends StatelessWidget {
       const SizedBox(height: 10),
       Text(
         'Balyn',
-        style: Theme.of(context).textTheme.titleLarge
-            ?.copyWith(fontWeight: FontWeight.w700),
+        style: Theme.of(
+          context,
+        ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
       ),
     ],
   );
@@ -212,7 +213,8 @@ class PersonalSettingsScreen extends StatelessWidget {
           _Link(
             icon: Icons.widgets_outlined,
             title: 'Widget Android',
-            subtitle: 'Saldo, Quick Capture, importi rapidi e riepilogo configurabili',
+            subtitle:
+                'Saldo, Quick Capture, importi rapidi e riepilogo configurabili',
             onTap: () => _open(context, const AndroidWidgetsScreen()),
           ),
           const SizedBox(height: 32),
