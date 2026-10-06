@@ -306,8 +306,8 @@ class BalynShaderText extends StatelessWidget {
     final baseStyle = style ?? DefaultTextStyle.of(context).style;
     return BalynShaderInk(
       seed: seed,
-      strength: .36,
-      sheen: .14,
+      strength: .78,
+      sheen: .58,
       child: Text(
         data,
         textAlign: textAlign,
@@ -350,8 +350,8 @@ class BalynShaderLinearProgress extends StatelessWidget {
         ),
         BalynShaderInk(
           seed: seed,
-          strength: .24,
-          sheen: .06,
+          strength: .62,
+          sheen: .32,
           child: LinearProgressIndicator(
             value: value.clamp(0.0, 1.0).toDouble(),
             minHeight: minHeight,
@@ -382,8 +382,8 @@ class BalynShaderIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BalynShaderInk(
     seed: seed,
-    strength: .58,
-    sheen: .26,
+    strength: .88,
+    sheen: .68,
     child: Icon(
       icon,
       size: size,
@@ -410,7 +410,7 @@ List<Color> balynShaderPalette(Color seed) {
     return HSLColor.fromAHSL(1, hue, saturation, lightness).toColor();
   }
 
-  return [tone(-12, .035, -.025), tone(2, .070, .065), tone(15, .040, .010)];
+  return [tone(-18, .10, -.03), tone(5, .14, .10), tone(24, .08, -.01)];
 }
 
 double _inkPhase(double backgroundPhase) => (backgroundPhase * 4.0) % 1.0;
@@ -454,7 +454,7 @@ LinearGradient balynAnimatedGradient(
     begin: Alignment(-x, -y),
     end: Alignment(x, y),
     colors: palette,
-    stops: const [0, .44, 1],
+    stops: const [0, .50, 1],
   );
 }
 
