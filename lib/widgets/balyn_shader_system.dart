@@ -199,12 +199,16 @@ class BalynShaderInk extends StatefulWidget {
     required this.seed,
     required this.child,
     this.enabled = true,
+    this.strength = .68,
+    this.sheen = .45,
     super.key,
   });
 
   final Color seed;
   final Widget child;
   final bool enabled;
+  final double strength;
+  final double sheen;
 
   @override
   State<BalynShaderInk> createState() => _BalynShaderInkState();
@@ -253,6 +257,8 @@ class _BalynShaderInkState extends State<BalynShaderInk> {
             bounds.size,
             data.motionEnabled ? data.clock.value : 0,
             palette,
+            strength: widget.strength,
+            sheen: widget.sheen,
           );
           return shader;
         },
@@ -287,6 +293,8 @@ class BalynShaderText extends StatelessWidget {
     final baseStyle = style ?? DefaultTextStyle.of(context).style;
     return BalynShaderInk(
       seed: seed,
+      strength: .38,
+      sheen: .22,
       child: Text(
         data,
         textAlign: textAlign,
@@ -329,6 +337,8 @@ class BalynShaderLinearProgress extends StatelessWidget {
         ),
         BalynShaderInk(
           seed: seed,
+          strength: .28,
+          sheen: .10,
           child: LinearProgressIndicator(
             value: value.clamp(0.0, 1.0).toDouble(),
             minHeight: minHeight,
@@ -359,6 +369,8 @@ class BalynShaderIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BalynShaderInk(
     seed: seed,
+    strength: .62,
+    sheen: .42,
     child: Icon(
       icon,
       size: size,
@@ -385,15 +397,17 @@ List<Color> balynShaderPalette(Color seed) {
     return HSLColor.fromAHSL(1, hue, saturation, lightness).toColor();
   }
 
-  return [tone(-18, .10, -.03), tone(5, .14, .10), tone(24, .08, -.01)];
+  return [tone(-10, .04, -.02), tone(2, .07, .06), tone(12, .04, 0)];
 }
 
 void _configureInkShader(
   ui.FragmentShader shader,
   Size size,
   double time,
-  List<Color> colors,
-) {
+  List<Color> colors, {
+  required double strength,
+  required double sheen,
+}) {
   shader
     ..setFloat(0, size.width)
     ..setFloat(1, size.height)
@@ -406,4 +420,7 @@ void _configureInkShader(
       ..setFloat(index++, color.b)
       ..setFloat(index++, color.a);
   }
+  shader
+    ..setFloat(index++, strength.clamp(0.0, 1.0).toDouble())
+    ..setFloat(index, sheen.clamp(0.0, 1.0).toDouble());
 }
