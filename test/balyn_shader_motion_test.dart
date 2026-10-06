@@ -15,10 +15,8 @@ void main() {
             child: BalynShaderScope(
               loadPrograms: false,
               child: BalynShaderMotionBuilder(
-                builder: (context, phase) => Text(
-                  phase.toStringAsFixed(6),
-                  key: phaseKey,
-                ),
+                builder: (context, phase) =>
+                    Text(phase.toStringAsFixed(6), key: phaseKey),
               ),
             ),
           ),
