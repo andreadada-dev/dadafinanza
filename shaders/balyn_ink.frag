@@ -17,36 +17,33 @@ void main() {
   vec2 size = max(uSize, vec2(1.0));
   vec2 uv = frag / size;
 
-  // Never let very wide/thin widgets multiply the shader frequency.
-  // This keeps 4 px progress bars and small text completely smooth.
-  float aspect = clamp(size.x / size.y, 0.75, 2.35);
+  float aspect = clamp(size.x / size.y, 0.75, 3.0);
   vec2 p = vec2(uv.x * aspect, uv.y);
   float t = uTime * 6.28318530718;
 
-  float waveA = sin(p.x * 2.15 + p.y * 1.20 + t);
-  float waveB = cos(p.x * -1.35 + p.y * 2.05 - t * 2.0);
-  float flow = 0.5 + 0.5 * (waveA * 0.58 + waveB * 0.42);
-  flow = smoothstep(0.06, 0.94, flow);
+  float waveA = sin(p.x * 4.4 + p.y * 2.2 + t * 0.74);
+  float waveB = cos(p.x * -2.3 + p.y * 5.2 - t * 0.53);
+  float flow = 0.5 + 0.5 * (waveA * 0.62 + waveB * 0.38);
+  flow = smoothstep(0.02, 0.98, flow);
 
-  float band = 0.5 + 0.5 * sin((p.x + p.y * 0.32) * 2.45 - t);
+  float band = 0.5 + 0.5 * sin((p.x + p.y * 0.45) * 5.4 - t * 0.42);
   vec3 animatedColor = mix(uColorA.rgb, uColorB.rgb, flow);
   animatedColor = mix(
     animatedColor,
     uColorC.rgb,
-    smoothstep(0.54, 0.98, band) * 0.58
+    smoothstep(0.46, 0.96, band) * 0.72
   );
 
-  // Strength controls how far the material travels from the seed colour.
-  // Text uses a low value; larger icons/surfaces can stay more expressive.
   vec3 color = mix(uColorB.rgb, animatedColor, clamp(uStrength, 0.0, 1.0));
 
-  // One broad soft reflection instead of per-pixel glitter/noise.
-  // This preserves the living/iridescent feel without dotted glyphs.
-  float sheenWave = 0.5 + 0.5 * sin(
-    (p.x * 0.82 + p.y * 0.22) * 3.15 - t * 2.0
+  // Strong travelling reflection from the original look, but intentionally
+  // broad and noise-free so glyphs and 4 px bars stay clean.
+  float sheen = smoothstep(
+    0.76,
+    1.0,
+    sin((p.x * 0.92 + p.y * 0.25) * 8.0 - t * 0.58)
   );
-  float sheen = smoothstep(0.78, 1.0, sheenWave);
-  color += vec3(sheen * 0.050 * clamp(uSheen, 0.0, 1.0));
+  color += vec3(sheen * 0.095 * clamp(uSheen, 0.0, 1.0));
 
   fragColor = vec4(clamp(color, 0.0, 1.0), 1.0);
 }
