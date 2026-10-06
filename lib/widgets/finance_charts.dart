@@ -142,155 +142,152 @@ class FinanceTrendChart extends StatelessWidget {
           child: BalynShaderMotionBuilder(
             builder: (context, shaderPhase) => LineChart(
               LineChartData(
-              minX: 0,
-              maxX: (points.length - 1).toDouble(),
-              minY: minY,
-              maxY: maxY,
-              clipData: const FlClipData.all(),
-              borderData: FlBorderData(show: false),
-              gridData: FlGridData(
-                show: true,
-                drawVerticalLine: false,
-                horizontalInterval: (maxY - minY) / 4,
-                getDrawingHorizontalLine: (_) => FlLine(
-                  color: grid,
-                  strokeWidth: 1,
-                  dashArray: const [3, 7],
-                ),
-              ),
-              extraLinesData: ExtraLinesData(
-                horizontalLines: minY <= 0 && maxY >= 0
-                    ? [
-                        HorizontalLine(
-                          y: 0,
-                          color: theme.colorScheme.onSurface.withValues(
-                            alpha: .16,
-                          ),
-                          strokeWidth: 1.2,
-                        ),
-                      ]
-                    : const [],
-              ),
-              titlesData: FlTitlesData(
-                topTitles: const AxisTitles(
-                  sideTitles: SideTitles(showTitles: false),
-                ),
-                rightTitles: const AxisTitles(
-                  sideTitles: SideTitles(showTitles: false),
-                ),
-                leftTitles: const AxisTitles(
-                  sideTitles: SideTitles(showTitles: false),
-                ),
-                bottomTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    reservedSize: 34,
-                    interval: 1,
-                    getTitlesWidget: bottomTitle,
+                minX: 0,
+                maxX: (points.length - 1).toDouble(),
+                minY: minY,
+                maxY: maxY,
+                clipData: const FlClipData.all(),
+                borderData: FlBorderData(show: false),
+                gridData: FlGridData(
+                  show: true,
+                  drawVerticalLine: false,
+                  horizontalInterval: (maxY - minY) / 4,
+                  getDrawingHorizontalLine: (_) => FlLine(
+                    color: grid,
+                    strokeWidth: 1,
+                    dashArray: const [3, 7],
                   ),
                 ),
-              ),
-              lineTouchData: LineTouchData(
-                enabled: true,
-                handleBuiltInTouches: true,
-                touchTooltipData: LineTouchTooltipData(
-                  fitInsideHorizontally: true,
-                  fitInsideVertically: true,
-                  getTooltipItems: (spots) {
-                    if (spots.isEmpty) return const [];
-                    final index = spots.first.x
-                        .round()
-                        .clamp(0, points.length - 1)
-                        .toInt();
-                    final date = DateFormat(
-                      'd MMM',
-                      AppI18n.intlLocale,
-                    ).format(points[index].date);
-                    return [
-                      for (var i = 0; i < spots.length; i++)
-                        LineTooltipItem(
-                          i == 0 ? '$date\n' : '',
-                          theme.textTheme.labelMedium!.copyWith(
-                            color: theme.colorScheme.onSurface,
-                            fontWeight: FontWeight.w800,
+                extraLinesData: ExtraLinesData(
+                  horizontalLines: minY <= 0 && maxY >= 0
+                      ? [
+                          HorizontalLine(
+                            y: 0,
+                            color: theme.colorScheme.onSurface.withValues(
+                              alpha: .16,
+                            ),
+                            strokeWidth: 1.2,
                           ),
-                          children: [
-                            TextSpan(
-                              text:
-                                  '${i == 0 ? primaryLabel : secondaryLabel}: ${valueFormatter(spots[i].y)}',
-                              style: theme.textTheme.labelMedium?.copyWith(
-                                color: theme.colorScheme.onSurface,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                          ],
-                        ),
-                    ];
-                  },
+                        ]
+                      : const [],
                 ),
-                getTouchedSpotIndicator: (barData, indexes) => [
-                  for (final _ in indexes)
-                    TouchedSpotIndicatorData(
-                      FlLine(
-                        color: theme.colorScheme.onSurface.withValues(
-                          alpha: .20,
-                        ),
-                        strokeWidth: 1,
-                        dashArray: const [3, 4],
-                      ),
-                      FlDotData(
-                        getDotPainter: (spot, percent, bar, itemIndex) =>
-                            FlDotCirclePainter(
-                              radius: 4,
+                titlesData: FlTitlesData(
+                  topTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  rightTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  leftTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 34,
+                      interval: 1,
+                      getTitlesWidget: bottomTitle,
+                    ),
+                  ),
+                ),
+                lineTouchData: LineTouchData(
+                  enabled: true,
+                  handleBuiltInTouches: true,
+                  touchTooltipData: LineTouchTooltipData(
+                    fitInsideHorizontally: true,
+                    fitInsideVertically: true,
+                    getTooltipItems: (spots) {
+                      if (spots.isEmpty) return const [];
+                      final index = spots.first.x
+                          .round()
+                          .clamp(0, points.length - 1)
+                          .toInt();
+                      final date = DateFormat(
+                        'd MMM',
+                        AppI18n.intlLocale,
+                      ).format(points[index].date);
+                      return [
+                        for (var i = 0; i < spots.length; i++)
+                          LineTooltipItem(
+                            i == 0 ? '$date\n' : '',
+                            theme.textTheme.labelMedium!.copyWith(
                               color: theme.colorScheme.onSurface,
-                              strokeWidth: 2,
-                              strokeColor: theme.colorScheme.surface,
+                              fontWeight: FontWeight.w800,
                             ),
+                            children: [
+                              TextSpan(
+                                text:
+                                    '${i == 0 ? primaryLabel : secondaryLabel}: ${valueFormatter(spots[i].y)}',
+                                style: theme.textTheme.labelMedium?.copyWith(
+                                  color: theme.colorScheme.onSurface,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ],
+                          ),
+                      ];
+                    },
+                  ),
+                  getTouchedSpotIndicator: (barData, indexes) => [
+                    for (final _ in indexes)
+                      TouchedSpotIndicatorData(
+                        FlLine(
+                          color: theme.colorScheme.onSurface.withValues(
+                            alpha: .20,
+                          ),
+                          strokeWidth: 1,
+                          dashArray: const [3, 4],
+                        ),
+                        FlDotData(
+                          getDotPainter: (spot, percent, bar, itemIndex) =>
+                              FlDotCirclePainter(
+                                radius: 4,
+                                color: theme.colorScheme.onSurface,
+                                strokeWidth: 2,
+                                strokeColor: theme.colorScheme.surface,
+                              ),
+                        ),
+                      ),
+                  ],
+                ),
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: [
+                      for (var i = 0; i < points.length; i++)
+                        FlSpot(i.toDouble(), points[i].primary),
+                    ],
+                    isCurved: true,
+                    curveSmoothness: .18,
+                    gradient: balynAnimatedGradient(primaryColor, shaderPhase),
+                    barWidth: 2.6,
+                    isStrokeCapRound: true,
+                    dotData: const FlDotData(show: false),
+                    belowBarData: BarAreaData(
+                      show: true,
+                      gradient: balynAnimatedGradient(
+                        primaryColor,
+                        shaderPhase,
+                        opacity: .08,
                       ),
                     ),
+                  ),
+                  LineChartBarData(
+                    spots: [
+                      for (var i = 0; i < points.length; i++)
+                        FlSpot(i.toDouble(), points[i].secondary),
+                    ],
+                    isCurved: true,
+                    curveSmoothness: .18,
+                    gradient: balynAnimatedGradient(
+                      secondaryColor,
+                      shaderPhase,
+                    ),
+                    barWidth: 2,
+                    isStrokeCapRound: true,
+                    dotData: const FlDotData(show: false),
+                  ),
                 ],
               ),
-              lineBarsData: [
-                LineChartBarData(
-                  spots: [
-                    for (var i = 0; i < points.length; i++)
-                      FlSpot(i.toDouble(), points[i].primary),
-                  ],
-                  isCurved: true,
-                  curveSmoothness: .18,
-                  gradient: balynAnimatedGradient(
-                    primaryColor,
-                    shaderPhase,
-                  ),
-                  barWidth: 2.6,
-                  isStrokeCapRound: true,
-                  dotData: const FlDotData(show: false),
-                  belowBarData: BarAreaData(
-                    show: true,
-                    gradient: balynAnimatedGradient(
-                      primaryColor,
-                      shaderPhase,
-                      opacity: .08,
-                    ),
-                  ),
-                ),
-                LineChartBarData(
-                  spots: [
-                    for (var i = 0; i < points.length; i++)
-                      FlSpot(i.toDouble(), points[i].secondary),
-                  ],
-                  isCurved: true,
-                  curveSmoothness: .18,
-                  gradient: balynAnimatedGradient(
-                    secondaryColor,
-                    shaderPhase,
-                  ),
-                  barWidth: 2,
-                  isStrokeCapRound: true,
-                  dotData: const FlDotData(show: false),
-                ),
-              ],
-            ),
               duration: const Duration(milliseconds: 480),
               curve: Curves.easeOutCubic,
             ),
@@ -346,58 +343,60 @@ class _FinanceDonutChartState extends State<FinanceDonutChart> {
               BalynShaderMotionBuilder(
                 builder: (context, shaderPhase) => PieChart(
                   PieChartData(
-                  startDegreeOffset: -90,
-                  centerSpaceRadius: widget.size * .31,
-                  sectionsSpace: hasData ? 3 : 0,
-                  borderData: FlBorderData(show: false),
-                  pieTouchData: PieTouchData(
-                    enabled: hasData,
-                    touchCallback: (event, response) {
-                      if (!event.isInterestedForInteractions) return;
-                      final next =
-                          response?.touchedSection?.touchedSectionIndex ?? -1;
-                      if (next < 0 || next >= widget.segments.length) {
-                        if (_selected != -1) {
-                          setState(() => _selected = -1);
+                    startDegreeOffset: -90,
+                    centerSpaceRadius: widget.size * .31,
+                    sectionsSpace: hasData ? 3 : 0,
+                    borderData: FlBorderData(show: false),
+                    pieTouchData: PieTouchData(
+                      enabled: hasData,
+                      touchCallback: (event, response) {
+                        if (!event.isInterestedForInteractions) return;
+                        final next =
+                            response?.touchedSection?.touchedSectionIndex ?? -1;
+                        if (next < 0 || next >= widget.segments.length) {
+                          if (_selected != -1) {
+                            setState(() => _selected = -1);
+                          }
+                          return;
                         }
-                        return;
-                      }
-                      if (event is FlTapUpEvent || event is FlTapDownEvent) {
-                        setState(() {
-                          _selected = _selected == next ? -1 : next;
-                        });
-                      }
-                    },
-                  ),
-                  sections: hasData
-                      ? [
-                          for (var i = 0; i < widget.segments.length; i++)
-                            PieChartSectionData(
-                              gradient: balynAnimatedGradient(
-                                widget.segments[i].color,
-                                shaderPhase,
-                                opacity:
-                                    _selected == -1 || _selected == i ? 1 : .22,
+                        if (event is FlTapUpEvent || event is FlTapDownEvent) {
+                          setState(() {
+                            _selected = _selected == next ? -1 : next;
+                          });
+                        }
+                      },
+                    ),
+                    sections: hasData
+                        ? [
+                            for (var i = 0; i < widget.segments.length; i++)
+                              PieChartSectionData(
+                                gradient: balynAnimatedGradient(
+                                  widget.segments[i].color,
+                                  shaderPhase,
+                                  opacity: _selected == -1 || _selected == i
+                                      ? 1
+                                      : .22,
+                                ),
+                                value: widget.segments[i].value.abs(),
+                                title: '',
+                                showTitle: false,
+                                radius:
+                                    widget.size *
+                                    (_selected == i ? .155 : .132),
                               ),
-                              value: widget.segments[i].value.abs(),
+                          ]
+                        : [
+                            PieChartSectionData(
+                              color: theme.colorScheme.onSurface.withValues(
+                                alpha: .10,
+                              ),
+                              value: 1,
                               title: '',
                               showTitle: false,
-                              radius:
-                                  widget.size * (_selected == i ? .155 : .132),
+                              radius: widget.size * .132,
                             ),
-                        ]
-                      : [
-                          PieChartSectionData(
-                            color: theme.colorScheme.onSurface.withValues(
-                              alpha: .10,
-                            ),
-                            value: 1,
-                            title: '',
-                            showTitle: false,
-                            radius: widget.size * .132,
-                          ),
-                        ],
-                ),
+                          ],
+                  ),
                   duration: const Duration(milliseconds: 360),
                   curve: Curves.easeOutCubic,
                 ),
@@ -494,35 +493,35 @@ class FinanceSparkline extends StatelessWidget {
       child: BalynShaderMotionBuilder(
         builder: (context, shaderPhase) => LineChart(
           LineChartData(
-          minY: minY,
-          maxY: maxY,
-          titlesData: const FlTitlesData(show: false),
-          gridData: const FlGridData(show: false),
-          borderData: FlBorderData(show: false),
-          lineTouchData: const LineTouchData(enabled: false),
-          lineBarsData: [
-            LineChartBarData(
-              spots: [
-                for (var i = 0; i < values.length; i++)
-                  FlSpot(i.toDouble(), values[i]),
-              ],
-              isCurved: true,
-              curveSmoothness: .18,
-              barWidth: 2.4,
-              gradient: balynAnimatedGradient(color, shaderPhase),
-              isStrokeCapRound: true,
-              dotData: const FlDotData(show: false),
-              belowBarData: BarAreaData(
-                show: true,
-                gradient: balynAnimatedGradient(
-                  color,
-                  shaderPhase,
-                  opacity: .08,
+            minY: minY,
+            maxY: maxY,
+            titlesData: const FlTitlesData(show: false),
+            gridData: const FlGridData(show: false),
+            borderData: FlBorderData(show: false),
+            lineTouchData: const LineTouchData(enabled: false),
+            lineBarsData: [
+              LineChartBarData(
+                spots: [
+                  for (var i = 0; i < values.length; i++)
+                    FlSpot(i.toDouble(), values[i]),
+                ],
+                isCurved: true,
+                curveSmoothness: .18,
+                barWidth: 2.4,
+                gradient: balynAnimatedGradient(color, shaderPhase),
+                isStrokeCapRound: true,
+                dotData: const FlDotData(show: false),
+                belowBarData: BarAreaData(
+                  show: true,
+                  gradient: balynAnimatedGradient(
+                    color,
+                    shaderPhase,
+                    opacity: .08,
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
           duration: const Duration(milliseconds: 420),
           curve: Curves.easeOutCubic,
         ),

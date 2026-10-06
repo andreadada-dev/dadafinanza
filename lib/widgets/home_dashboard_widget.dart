@@ -604,61 +604,65 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                 child: BalynShaderMotionBuilder(
                   builder: (context, shaderPhase) => PieChart(
                     PieChartData(
-                    startDegreeOffset: -90,
-                    sectionsSpace: hasData ? 4 : 0,
-                    centerSpaceRadius: chartSize * .32,
-                    centerSpaceColor: Theme.of(context).scaffoldBackgroundColor,
-                    borderData: FlBorderData(show: false),
-                    pieTouchData: PieTouchData(
-                      enabled: interactive,
-                      touchCallback: (event, response) {
-                        if (!interactive ||
-                            event is! FlTapDownEvent ||
-                            response?.touchedSection == null) {
-                          return;
-                        }
-                        final next =
-                            response!.touchedSection!.touchedSectionIndex;
-                        setState(() {
-                          _selectedIndex = _selectedIndex == next ? -1 : next;
-                        });
-                      },
-                    ),
-                    sections: hasData
-                        ? [
-                            for (
-                              var index = 0;
-                              index < data.slices.length;
-                              index++
-                            )
-                              PieChartSectionData(
-                                gradient: balynAnimatedGradient(
-                                  data.slices[index].color,
-                                  shaderPhase,
-                                  opacity:
-                                      pageSelectedIndex == -1 ||
-                                          pageSelectedIndex == index
-                                      ? 1
-                                      : .22,
+                      startDegreeOffset: -90,
+                      sectionsSpace: hasData ? 4 : 0,
+                      centerSpaceRadius: chartSize * .32,
+                      centerSpaceColor: Theme.of(
+                        context,
+                      ).scaffoldBackgroundColor,
+                      borderData: FlBorderData(show: false),
+                      pieTouchData: PieTouchData(
+                        enabled: interactive,
+                        touchCallback: (event, response) {
+                          if (!interactive ||
+                              event is! FlTapDownEvent ||
+                              response?.touchedSection == null) {
+                            return;
+                          }
+                          final next =
+                              response!.touchedSection!.touchedSectionIndex;
+                          setState(() {
+                            _selectedIndex = _selectedIndex == next ? -1 : next;
+                          });
+                        },
+                      ),
+                      sections: hasData
+                          ? [
+                              for (
+                                var index = 0;
+                                index < data.slices.length;
+                                index++
+                              )
+                                PieChartSectionData(
+                                  gradient: balynAnimatedGradient(
+                                    data.slices[index].color,
+                                    shaderPhase,
+                                    opacity:
+                                        pageSelectedIndex == -1 ||
+                                            pageSelectedIndex == index
+                                        ? 1
+                                        : .22,
+                                  ),
+                                  value: data.slices[index].amount,
+                                  title: '',
+                                  radius:
+                                      chartSize *
+                                      (pageSelectedIndex == index
+                                          ? .165
+                                          : .145),
+                                  showTitle: false,
                                 ),
-                                value: data.slices[index].amount,
+                            ]
+                          : [
+                              PieChartSectionData(
+                                color: emptyRingColor,
+                                value: 1,
                                 title: '',
-                                radius:
-                                    chartSize *
-                                    (pageSelectedIndex == index ? .165 : .145),
+                                radius: chartSize * .145,
                                 showTitle: false,
                               ),
-                          ]
-                        : [
-                            PieChartSectionData(
-                              color: emptyRingColor,
-                              value: 1,
-                              title: '',
-                              radius: chartSize * .145,
-                              showTitle: false,
-                            ),
-                          ],
-                  ),
+                            ],
+                    ),
                     duration: const Duration(milliseconds: 260),
                     curve: Curves.easeOutCubic,
                   ),
