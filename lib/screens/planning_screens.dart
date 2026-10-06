@@ -10,6 +10,7 @@ import '../models/smart_models.dart';
 import '../services/goal_planning_service.dart';
 import '../services/smart_finance_engine.dart';
 import '../widgets/balyn_motion.dart';
+import '../widgets/balyn_shader_system.dart';
 import '../widgets/ui_helpers.dart';
 import 'quick_add_page.dart';
 
@@ -117,15 +118,8 @@ class _ForecastSummary extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 18),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            accent.withValues(
-              alpha: theme.brightness == Brightness.dark ? .15 : .09,
-            ),
-            theme.colorScheme.surfaceContainer.withValues(alpha: .72),
-          ],
+        color: theme.colorScheme.onSurface.withValues(
+          alpha: theme.brightness == Brightness.dark ? .035 : .025,
         ),
         borderRadius: BorderRadius.circular(30),
       ),
@@ -139,16 +133,22 @@ class _ForecastSummary extends StatelessWidget {
                 height: 42,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: accent.withValues(alpha: .14),
+                  color: theme.colorScheme.onSurface.withValues(
+                    alpha: theme.brightness == Brightness.dark ? .07 : .045,
+                  ),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.auto_graph_rounded, color: accent, size: 21),
+                child: BalynShaderIcon(
+                  Icons.auto_graph_rounded,
+                  seed: accent,
+                  size: 21,
+                ),
               ),
               const Spacer(),
-              Text(
+              BalynShaderText(
                 '${forecast.days} GIORNI',
+                seed: accent,
                 style: theme.textTheme.labelMedium?.copyWith(
-                  color: accent,
                   fontWeight: FontWeight.w800,
                   letterSpacing: .3,
                 ),
@@ -215,19 +215,21 @@ class _ForecastLine extends StatelessWidget {
       child: Row(
         children: [
           Expanded(child: Text(label)),
-          Text(
-            state.hideBalance
-                ? '••••'
-                : '${value >= 0 ? '+' : '−'}${moneyFor(state, value.abs())}',
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              color: value > 0
+          if (value == 0)
+            Text(
+              state.hideBalance ? '••••' : moneyFor(state, 0),
+              style: const TextStyle(fontWeight: FontWeight.w700),
+            )
+          else
+            BalynShaderText(
+              state.hideBalance
+                  ? '••••'
+                  : '${value > 0 ? '+' : '−'}${moneyFor(state, value.abs())}',
+              seed: value > 0
                   ? context.financeColors.positive
-                  : value < 0
-                  ? context.financeColors.negative
-                  : null,
+                  : context.financeColors.negative,
+              style: const TextStyle(fontWeight: FontWeight.w700),
             ),
-          ),
         ],
       ),
     );
@@ -294,14 +296,12 @@ class BudgetsScreen extends StatelessWidget {
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     minVerticalPadding: 12,
-                    leading: Icon(
-                      category == null
-                          ? Icons.account_balance_wallet_outlined
-                          : categoryIcon(category.iconKey),
-                      color: category == null
-                          ? null
-                          : Color(category.colorValue),
-                    ),
+                    leading: category == null
+                        ? const Icon(Icons.account_balance_wallet_outlined)
+                        : BalynShaderIcon(
+                            categoryIcon(category.iconKey),
+                            seed: Color(category.colorValue),
+                          ),
                     title: Text(
                       budget.name,
                       style: const TextStyle(fontWeight: FontWeight.w800),
@@ -314,12 +314,18 @@ class BudgetsScreen extends StatelessWidget {
                           '${_budgetPeriodLabel(budget.period)} · ${category?.name ?? 'Tutte le spese'}',
                         ),
                         const SizedBox(height: 8),
-                        LinearProgressIndicator(
-                          value: progress.clamp(0.0, 1.0).toDouble(),
-                          minHeight: 6,
-                          borderRadius: BorderRadius.circular(99),
-                          color: statusColor,
-                        ),
+                        if (statusColor != null || category != null)
+                          BalynShaderLinearProgress(
+                            value: progress,
+                            seed:
+                                statusColor ?? Color(category!.colorValue),
+                          )
+                        else
+                          LinearProgressIndicator(
+                            value: progress.clamp(0.0, 1.0).toDouble(),
+                            minHeight: 6,
+                            borderRadius: BorderRadius.circular(99),
+                          ),
                         const SizedBox(height: 6),
                         Text(
                           '${moneyFor(state, spent)} / ${moneyFor(state, budget.limit)}',
@@ -373,11 +379,9 @@ class BudgetsScreen extends StatelessWidget {
                         ),
                         PopupMenuItem(
                           value: 'delete',
-                          child: Text(
+                          child: BalynShaderText(
                             'Elimina',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.error,
-                            ),
+                            seed: Theme.of(context).colorScheme.error,
                           ),
                         ),
                       ],
@@ -698,12 +702,17 @@ class GoalsScreen extends StatelessWidget {
                     contentPadding: EdgeInsets.zero,
                     minVerticalPadding: 12,
                     leading: CircleAvatar(
-                      backgroundColor: Color(
-                        goal.colorValue,
-                      ).withValues(alpha: .12),
-                      child: Icon(
+                      backgroundColor: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withValues(
+                            alpha: Theme.of(context).brightness == Brightness.dark
+                                ? .07
+                                : .045,
+                          ),
+                      child: BalynShaderIcon(
                         categoryIcon(goal.iconKey),
-                        color: Color(goal.colorValue),
+                        seed: Color(goal.colorValue),
                       ),
                     ),
                     title: Text(
@@ -770,11 +779,9 @@ class GoalsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  LinearProgressIndicator(
-                    value: progress.clamp(0.0, 1.0).toDouble(),
-                    minHeight: 6,
-                    borderRadius: BorderRadius.circular(99),
-                    color: Color(goal.colorValue),
+                  BalynShaderLinearProgress(
+                    value: progress,
+                    seed: Color(goal.colorValue),
                   ),
                   const SizedBox(height: 10),
                   _GoalPlanText(plan: plan, budgetReserve: budgetReserve),
