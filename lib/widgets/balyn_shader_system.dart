@@ -1,7 +1,6 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 /// Shared clock and GPU programs for Balyn's living-color system.
 ///
@@ -81,12 +80,7 @@ class _BalynShaderScopeState extends State<BalynShaderScope>
   }
 
   void _syncClock() {
-    final shouldAnimate =
-        mounted &&
-        _appActive &&
-        !_reduceMotion &&
-        TickerMode.of(context) &&
-        SchedulerBinding.instance.framesEnabled;
+    final shouldAnimate = mounted && _appActive && !_reduceMotion;
     if (shouldAnimate) {
       if (!_clock.isAnimating) _clock.repeat();
     } else {
@@ -339,8 +333,12 @@ List<Color> balynShaderPalette(Color seed) {
   final hsl = HSLColor.fromColor(seed);
   Color tone(double hueShift, double saturationShift, double lightnessShift) {
     final hue = (hsl.hue + hueShift + 360) % 360;
-    final saturation = (hsl.saturation + saturationShift).clamp(0.42, 1.0);
-    final lightness = (hsl.lightness + lightnessShift).clamp(0.32, 0.78);
+    final saturation = (hsl.saturation + saturationShift)
+        .clamp(0.42, 1.0)
+        .toDouble();
+    final lightness = (hsl.lightness + lightnessShift)
+        .clamp(0.32, 0.78)
+        .toDouble();
     return HSLColor.fromAHSL(1, hue, saturation, lightness).toColor();
   }
 
