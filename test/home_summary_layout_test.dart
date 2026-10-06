@@ -18,6 +18,17 @@ void main() {
     expect(source, contains("label: 'Disponibile'"));
   });
 
+  test('Home summary metrics are centered and no trend chart is embedded', () {
+    final source = File(
+      'lib/screens/account_context_home_screen.dart',
+    ).readAsStringSync();
+
+    expect(source, contains('crossAxisAlignment: CrossAxisAlignment.center'));
+    expect(source, contains('textAlign: TextAlign.center'));
+    expect(source, contains('alignment: Alignment.center'));
+    expect(source, isNot(contains('LineChart(')));
+  });
+
   test('fixed summary metrics are not duplicated by personalized sections', () {
     final source = File(
       'lib/screens/account_context_home_screen.dart',
