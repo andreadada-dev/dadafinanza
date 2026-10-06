@@ -8,6 +8,7 @@ import '../models/models.dart';
 import '../services/account_context_service.dart';
 import '../widgets/account_context_selector.dart';
 import '../widgets/balyn_motion.dart';
+import '../widgets/balyn_shader_system.dart';
 import '../widgets/finance_quick_action.dart';
 import '../widgets/home_dashboard_widget.dart';
 import '../widgets/ui_helpers.dart';
@@ -669,25 +670,27 @@ class _OverviewSurface extends StatelessWidget {
                   height: 42,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: accent.withValues(alpha: .14),
+                    color: scheme.onSurface.withValues(
+                      alpha: theme.brightness == Brightness.dark ? .07 : .045,
+                    ),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(
+                  child: BalynShaderIcon(
                     Icons.account_balance_wallet_rounded,
-                    color: accent,
+                    seed: accent,
                     size: 21,
                   ),
                 ),
                 const Spacer(),
                 Padding(
                   padding: const EdgeInsets.only(right: 2),
-                  child: Text(
+                  child: BalynShaderText(
                     DateFormat(
                       'MMM',
                       AppI18n.intlLocale,
                     ).format(DateTime.now()),
+                    seed: accent,
                     style: theme.textTheme.labelMedium?.copyWith(
-                      color: accent,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
@@ -769,7 +772,7 @@ class _OverviewValue extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(icon, size: 17, color: color),
+          BalynShaderIcon(icon, seed: color, size: 17),
           const SizedBox(height: 7),
           Text(
             label,
@@ -785,10 +788,10 @@ class _OverviewValue extends StatelessWidget {
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.center,
-            child: Text(
+            child: BalynShaderText(
               value,
+              seed: color,
               style: theme.textTheme.labelLarge?.copyWith(
-                color: color,
                 fontWeight: FontWeight.w900,
               ),
             ),
