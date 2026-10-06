@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:balyn/l10n/localized_material.dart';
@@ -255,7 +256,7 @@ class _BalynShaderInkState extends State<BalynShaderInk> {
           _configureInkShader(
             shader,
             bounds.size,
-            data.motionEnabled ? data.clock.value : 0,
+            data.motionEnabled ? _inkPhase(data.clock.value) : 0,
             palette,
             strength: widget.strength,
             sheen: widget.sheen,
@@ -293,8 +294,8 @@ class BalynShaderText extends StatelessWidget {
     final baseStyle = style ?? DefaultTextStyle.of(context).style;
     return BalynShaderInk(
       seed: seed,
-      strength: .38,
-      sheen: .22,
+      strength: .24,
+      sheen: .08,
       child: Text(
         data,
         textAlign: textAlign,
@@ -337,8 +338,8 @@ class BalynShaderLinearProgress extends StatelessWidget {
         ),
         BalynShaderInk(
           seed: seed,
-          strength: .28,
-          sheen: .10,
+          strength: .16,
+          sheen: .03,
           child: LinearProgressIndicator(
             value: value.clamp(0.0, 1.0).toDouble(),
             minHeight: minHeight,
@@ -369,8 +370,8 @@ class BalynShaderIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BalynShaderInk(
     seed: seed,
-    strength: .62,
-    sheen: .42,
+    strength: .46,
+    sheen: .18,
     child: Icon(
       icon,
       size: size,
@@ -397,7 +398,52 @@ List<Color> balynShaderPalette(Color seed) {
     return HSLColor.fromAHSL(1, hue, saturation, lightness).toColor();
   }
 
-  return [tone(-10, .04, -.02), tone(2, .07, .06), tone(12, .04, 0)];
+  return [tone(-7, .02, -.015), tone(1, .035, .035), tone(8, .02, 0)];
+}
+
+double _inkPhase(double backgroundPhase) => (backgroundPhase * 3.0) % 1.0;
+
+/// Rebuilds only shader-driven visual material at the faster foreground phase.
+///
+/// The global backdrop keeps the full 72 s loop while foreground colour
+/// completes a smooth loop every 24 s, making motion visible without looking
+/// like a fast shimmer.
+class BalynShaderMotionBuilder extends StatelessWidget {
+  const BalynShaderMotionBuilder({required this.builder, super.key});
+
+  final Widget Function(BuildContext context, double phase) builder;
+
+  @override
+  Widget build(BuildContext context) {
+    final data = BalynShaderScope.maybeOf(context);
+    if (data == null || !data.motionEnabled) return builder(context, 0);
+    return AnimatedBuilder(
+      animation: data.clock,
+      builder: (context, _) => builder(context, _inkPhase(data.clock.value)),
+    );
+  }
+}
+
+/// Animated chart gradient for APIs such as fl_chart that cannot accept a
+/// FragmentShader directly. The palette stays close to the seed colour; only
+/// the broad light direction travels.
+LinearGradient balynAnimatedGradient(
+  Color seed,
+  double phase, {
+  double opacity = 1,
+}) {
+  final angle = phase * math.pi * 2;
+  final x = math.cos(angle);
+  final y = math.sin(angle);
+  final palette = balynShaderPalette(
+    seed,
+  ).map((color) => color.withValues(alpha: opacity)).toList();
+  return LinearGradient(
+    begin: Alignment(-x, -y),
+    end: Alignment(x, y),
+    colors: palette,
+    stops: const [0, .52, 1],
+  );
 }
 
 void _configureInkShader(
