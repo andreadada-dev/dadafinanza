@@ -4,6 +4,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:balyn/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
+import 'balyn_shader_system.dart';
+
 class FinanceTrendPoint {
   const FinanceTrendPoint({
     required this.date,
@@ -208,7 +210,7 @@ class FinanceTrendChart extends StatelessWidget {
                         LineTooltipItem(
                           i == 0 ? '$date\n' : '',
                           theme.textTheme.labelMedium!.copyWith(
-                            color: i == 0 ? primaryColor : secondaryColor,
+                            color: theme.colorScheme.onSurface,
                             fontWeight: FontWeight.w800,
                           ),
                           children: [
@@ -216,7 +218,7 @@ class FinanceTrendChart extends StatelessWidget {
                               text:
                                   '${i == 0 ? primaryLabel : secondaryLabel}: ${valueFormatter(spots[i].y)}',
                               style: theme.textTheme.labelMedium?.copyWith(
-                                color: i == 0 ? primaryColor : secondaryColor,
+                                color: theme.colorScheme.onSurface,
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
@@ -239,7 +241,7 @@ class FinanceTrendChart extends StatelessWidget {
                         getDotPainter: (spot, percent, bar, itemIndex) =>
                             FlDotCirclePainter(
                               radius: 4,
-                              color: bar.color ?? theme.colorScheme.tertiary,
+                              color: theme.colorScheme.onSurface,
                               strokeWidth: 2,
                               strokeColor: theme.colorScheme.surface,
                             ),
@@ -255,13 +257,19 @@ class FinanceTrendChart extends StatelessWidget {
                   ],
                   isCurved: true,
                   curveSmoothness: .18,
-                  color: primaryColor,
+                  gradient: LinearGradient(
+                    colors: balynShaderPalette(primaryColor),
+                  ),
                   barWidth: 2.6,
                   isStrokeCapRound: true,
                   dotData: const FlDotData(show: false),
                   belowBarData: BarAreaData(
                     show: true,
-                    color: primaryColor.withValues(alpha: .10),
+                    gradient: LinearGradient(
+                      colors: balynShaderPalette(primaryColor)
+                          .map((color) => color.withValues(alpha: .10))
+                          .toList(),
+                    ),
                   ),
                 ),
                 LineChartBarData(
@@ -271,7 +279,9 @@ class FinanceTrendChart extends StatelessWidget {
                   ],
                   isCurved: true,
                   curveSmoothness: .18,
-                  color: secondaryColor,
+                  gradient: LinearGradient(
+                    colors: balynShaderPalette(secondaryColor),
+                  ),
                   barWidth: 2,
                   isStrokeCapRound: true,
                   dotData: const FlDotData(show: false),
@@ -358,11 +368,20 @@ class _FinanceDonutChartState extends State<FinanceDonutChart> {
                       ? [
                           for (var i = 0; i < widget.segments.length; i++)
                             PieChartSectionData(
-                              color: _selected == -1 || _selected == i
-                                  ? widget.segments[i].color
-                                  : widget.segments[i].color.withValues(
-                                      alpha: .22,
-                                    ),
+                              gradient: LinearGradient(
+                                colors: balynShaderPalette(
+                                  widget.segments[i].color,
+                                )
+                                    .map(
+                                      (color) => color.withValues(
+                                        alpha:
+                                            _selected == -1 || _selected == i
+                                            ? 1
+                                            : .22,
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
                               value: widget.segments[i].value.abs(),
                               title: '',
                               showTitle: false,
@@ -491,12 +510,16 @@ class FinanceSparkline extends StatelessWidget {
               isCurved: true,
               curveSmoothness: .18,
               barWidth: 2.4,
-              color: color,
+              gradient: LinearGradient(colors: balynShaderPalette(color)),
               isStrokeCapRound: true,
               dotData: const FlDotData(show: false),
               belowBarData: BarAreaData(
                 show: true,
-                color: color.withValues(alpha: .10),
+                gradient: LinearGradient(
+                  colors: balynShaderPalette(
+                    color,
+                  ).map((item) => item.withValues(alpha: .10)).toList(),
+                ),
               ),
             ),
           ],
@@ -530,26 +553,45 @@ class _DonutCenter extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: theme.textTheme.labelMedium?.copyWith(
-              color: color ?? theme.colorScheme.onSurfaceVariant,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
+          color == null
+              ? Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w800,
+                  ),
+                )
+              : BalynShaderText(
+                  label,
+                  seed: color!,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
           const SizedBox(height: 3),
           FittedBox(
             fit: BoxFit.scaleDown,
-            child: Text(
-              value,
-              style: theme.textTheme.titleLarge?.copyWith(
-                color: color ?? theme.colorScheme.onSurface,
-                fontWeight: FontWeight.w900,
-                letterSpacing: -.5,
-              ),
-            ),
+            child: color == null
+                ? Text(
+                    value,
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      color: theme.colorScheme.onSurface,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: -.5,
+                    ),
+                  )
+                : BalynShaderText(
+                    value,
+                    seed: color!,
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: -.5,
+                    ),
+                  ),
           ),
           if (detail != null)
             Text(
@@ -589,21 +631,26 @@ class _LegendDot extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 180),
-            width: selected ? 10 : 8,
-            height: selected ? 10 : 8,
-            decoration: BoxDecoration(
-              color: color,
-              shape: BoxShape.circle,
-              boxShadow: selected
-                  ? [
-                      BoxShadow(
-                        color: color.withValues(alpha: .28),
-                        blurRadius: 8,
-                      ),
-                    ]
-                  : null,
+          BalynShaderInk(
+            seed: color,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 180),
+              width: selected ? 10 : 8,
+              height: selected ? 10 : 8,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+                boxShadow: selected
+                    ? [
+                        BoxShadow(
+                          color: theme.colorScheme.onSurface.withValues(
+                            alpha: .18,
+                          ),
+                          blurRadius: 8,
+                        ),
+                      ]
+                    : null,
+              ),
             ),
           ),
           const SizedBox(width: 7),
