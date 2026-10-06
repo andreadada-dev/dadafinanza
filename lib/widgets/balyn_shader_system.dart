@@ -294,8 +294,8 @@ class BalynShaderText extends StatelessWidget {
     final baseStyle = style ?? DefaultTextStyle.of(context).style;
     return BalynShaderInk(
       seed: seed,
-      strength: .24,
-      sheen: .08,
+      strength: .36,
+      sheen: .14,
       child: Text(
         data,
         textAlign: textAlign,
@@ -338,8 +338,8 @@ class BalynShaderLinearProgress extends StatelessWidget {
         ),
         BalynShaderInk(
           seed: seed,
-          strength: .16,
-          sheen: .03,
+          strength: .24,
+          sheen: .06,
           child: LinearProgressIndicator(
             value: value.clamp(0.0, 1.0).toDouble(),
             minHeight: minHeight,
@@ -370,8 +370,8 @@ class BalynShaderIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BalynShaderInk(
     seed: seed,
-    strength: .46,
-    sheen: .18,
+    strength: .58,
+    sheen: .26,
     child: Icon(
       icon,
       size: size,
@@ -398,16 +398,20 @@ List<Color> balynShaderPalette(Color seed) {
     return HSLColor.fromAHSL(1, hue, saturation, lightness).toColor();
   }
 
-  return [tone(-7, .02, -.015), tone(1, .035, .035), tone(8, .02, 0)];
+  return [
+    tone(-12, .035, -.025),
+    tone(2, .070, .065),
+    tone(15, .040, .010),
+  ];
 }
 
-double _inkPhase(double backgroundPhase) => (backgroundPhase * 3.0) % 1.0;
+double _inkPhase(double backgroundPhase) => (backgroundPhase * 4.0) % 1.0;
 
 /// Rebuilds only shader-driven visual material at the faster foreground phase.
 ///
 /// The global backdrop keeps the full 72 s loop while foreground colour
-/// completes a smooth loop every 24 s, making motion visible without looking
-/// like a fast shimmer.
+/// completes a smooth loop every 18 s: visible and alive, but still far from
+/// a fast shimmer.
 class BalynShaderMotionBuilder extends StatelessWidget {
   const BalynShaderMotionBuilder({required this.builder, super.key});
 
@@ -442,7 +446,7 @@ LinearGradient balynAnimatedGradient(
     begin: Alignment(-x, -y),
     end: Alignment(x, y),
     colors: palette,
-    stops: const [0, .52, 1],
+    stops: const [0, .44, 1],
   );
 }
 
