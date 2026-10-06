@@ -18,6 +18,7 @@ import '../services/transaction_metadata_suggestions.dart';
 import '../services/voice_input_service.dart';
 import '../services/voice_transaction_parser.dart';
 import '../widgets/transaction_metadata_fields.dart';
+import '../widgets/balyn_shader_system.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_screens.dart';
 import 'advances_screen.dart';
@@ -358,12 +359,6 @@ class _QuickAddPageState extends State<QuickAddPage> {
       }
     });
   }
-
-  Color _suggestionColor(BuildContext context) => switch (type) {
-    TransactionType.expense => context.financeColors.negative,
-    TransactionType.income => context.financeColors.positive,
-    TransactionType.transfer => context.financeColors.neutral,
-  };
 
   Future<void> _startVoice() async {
     final state = AppScope.of(context);
@@ -1003,9 +998,9 @@ class _QuickAddPageState extends State<QuickAddPage> {
             ...values.map(
               (category) => ListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: Icon(
+                leading: BalynShaderIcon(
                   categoryIcon(category.iconKey),
-                  color: Color(category.colorValue),
+                  seed: Color(category.colorValue),
                 ),
                 title: Text(category.name),
                 trailing: categoryId == category.id
@@ -1072,9 +1067,9 @@ class _QuickAddPageState extends State<QuickAddPage> {
             ...options.map(
               (account) => ListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: Icon(
+                leading: BalynShaderIcon(
                   accountIcon(account.iconKey),
-                  color: Color(account.colorValue),
+                  seed: Color(account.colorValue),
                 ),
                 title: Text(account.name),
                 subtitle: Text(account.accountType.label),
@@ -1152,7 +1147,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
               heroTag: 'smart-complete',
               tooltip: AppI18n.tr('Completa con il suggerimento'),
               onPressed: _previewSuggestion,
-              backgroundColor: _suggestionColor(context),
+              backgroundColor: Theme.of(context).colorScheme.onSurface,
               foregroundColor: Theme.of(context).colorScheme.surface,
               icon: const Icon(Icons.bolt_rounded),
               label: const Text('Completa'),
@@ -1987,18 +1982,22 @@ class _PickerRow extends StatelessWidget {
   Widget build(BuildContext context) => ListTile(
     contentPadding: EdgeInsets.zero,
     minVerticalPadding: 10,
-    leading: Icon(icon),
+    leading: valueColor == null
+        ? Icon(icon)
+        : BalynShaderIcon(icon, seed: valueColor!),
     title: Text(label),
     trailing: Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 180),
-          child: Text(
-            value,
-            overflow: TextOverflow.ellipsis,
-            style: valueColor == null ? null : TextStyle(color: valueColor),
-          ),
+          child: valueColor == null
+              ? Text(value, overflow: TextOverflow.ellipsis)
+              : BalynShaderText(
+                  value,
+                  seed: valueColor!,
+                  overflow: TextOverflow.ellipsis,
+                ),
         ),
         const SizedBox(width: 8),
         const Icon(Icons.chevron_right_rounded),
