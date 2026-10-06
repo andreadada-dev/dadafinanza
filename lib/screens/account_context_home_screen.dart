@@ -634,18 +634,29 @@ class _Metric extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      Text(label, style: Theme.of(context).textTheme.bodySmall),
-      const SizedBox(height: 3),
-      FittedBox(
-        fit: BoxFit.scaleDown,
-        alignment: Alignment.centerLeft,
+      SizedBox(
+        width: double.infinity,
         child: Text(
-          value,
-          style: Theme.of(
-            context,
-          ).textTheme.titleMedium?.copyWith(color: color),
+          label,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+      ),
+      const SizedBox(height: 3),
+      SizedBox(
+        width: double.infinity,
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.center,
+          child: Text(
+            value,
+            textAlign: TextAlign.center,
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(color: color),
+          ),
         ),
       ),
     ],
