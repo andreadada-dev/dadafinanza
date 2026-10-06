@@ -626,6 +626,15 @@ class _QuickAddPageState extends State<QuickAddPage> {
     }
   }
 
+  Color _suggestionColor(
+    BuildContext context,
+    TransactionType suggestionType,
+  ) => switch (suggestionType) {
+    TransactionType.expense => context.financeColors.negative,
+    TransactionType.income => context.financeColors.positive,
+    TransactionType.transfer => Theme.of(context).colorScheme.tertiary,
+  };
+
   Future<void> _previewSuggestion() async {
     final current = suggestion;
     if (current == null) return;
@@ -651,13 +660,13 @@ class _QuickAddPageState extends State<QuickAddPage> {
             const SizedBox(height: 12),
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: Icon(
+              leading: BalynShaderIcon(
                 current.type == TransactionType.expense
                     ? Icons.arrow_upward_rounded
                     : current.type == TransactionType.income
                     ? Icons.arrow_downward_rounded
                     : Icons.swap_horiz_rounded,
-                color: _suggestionColor(sheetContext),
+                seed: _suggestionColor(sheetContext, current.type),
               ),
               title: Text(current.type.label),
               subtitle: Text(
