@@ -240,8 +240,9 @@ class _BalynAppShellState extends State<BalynAppShell> {
   Future<void> _showQuickMenu() async {
     final state = AppScope.of(context);
     await HapticService.medium(enabled: state.haptics);
-    final presets = await QuickPresetService(state.database)
-        .all(enabledOnly: true);
+    final presets = await QuickPresetService(
+      state.database,
+    ).all(enabledOnly: true);
     if (!mounted) return;
 
     final choice = await showGeneralDialog<Object>(

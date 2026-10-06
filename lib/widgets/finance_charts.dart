@@ -266,9 +266,9 @@ class FinanceTrendChart extends StatelessWidget {
                   belowBarData: BarAreaData(
                     show: true,
                     gradient: LinearGradient(
-                      colors: balynShaderPalette(primaryColor)
-                          .map((color) => color.withValues(alpha: .10))
-                          .toList(),
+                      colors: balynShaderPalette(
+                        primaryColor,
+                      ).map((color) => color.withValues(alpha: .10)).toList(),
                     ),
                   ),
                 ),
@@ -516,9 +516,9 @@ class FinanceSparkline extends StatelessWidget {
               belowBarData: BarAreaData(
                 show: true,
                 gradient: LinearGradient(
-                  colors: balynShaderPalette(color)
-                      .map((item) => item.withValues(alpha: .10))
-                      .toList(),
+                  colors: balynShaderPalette(
+                    color,
+                  ).map((item) => item.withValues(alpha: .10)).toList(),
                 ),
               ),
             ),
