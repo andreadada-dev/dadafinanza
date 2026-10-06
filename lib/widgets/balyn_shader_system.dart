@@ -214,6 +214,7 @@ class BalynShaderInk extends StatefulWidget {
     this.enabled = true,
     this.strength = .68,
     this.sheen = .45,
+    this.motionMultiplier = 6,
     super.key,
   });
 
@@ -222,6 +223,7 @@ class BalynShaderInk extends StatefulWidget {
   final bool enabled;
   final double strength;
   final double sheen;
+  final double motionMultiplier;
 
   @override
   State<BalynShaderInk> createState() => _BalynShaderInkState();
@@ -268,7 +270,9 @@ class _BalynShaderInkState extends State<BalynShaderInk> {
           _configureInkShader(
             shader,
             bounds.size,
-            data.motionEnabled ? _inkPhase(data.clock.value) : 0,
+            data.motionEnabled
+                ? _scaledPhase(data.clock.value, widget.motionMultiplier)
+                : 0,
             palette,
             strength: widget.strength,
             sheen: widget.sheen,
@@ -352,6 +356,7 @@ class BalynShaderLinearProgress extends StatelessWidget {
           seed: seed,
           strength: .62,
           sheen: .32,
+          motionMultiplier: 5,
           child: LinearProgressIndicator(
             value: value.clamp(0.0, 1.0).toDouble(),
             minHeight: minHeight,
@@ -413,17 +418,23 @@ List<Color> balynShaderPalette(Color seed) {
   return [tone(-18, .10, -.03), tone(5, .14, .10), tone(24, .08, -.01)];
 }
 
-double _inkPhase(double backgroundPhase) => (backgroundPhase * 4.0) % 1.0;
+double _scaledPhase(double backgroundPhase, double multiplier) =>
+    (backgroundPhase * multiplier) % 1.0;
 
-/// Rebuilds only shader-driven visual material at the faster foreground phase.
+/// Rebuilds large chart/donut materials on a slower phase than text and icons.
 ///
-/// The global backdrop keeps the full 72 s loop while foreground colour
-/// completes a smooth loop every 18 s: visible and alive, but still far from
-/// a fast shimmer.
+/// With the 72 s global clock, the default 4.5x multiplier gives large charts
+/// a ~16 s cycle. Text/icons use 6x (~12 s), while progress bars use 5x
+/// (~14.4 s), so small accents feel alive without making large charts frantic.
 class BalynShaderMotionBuilder extends StatelessWidget {
-  const BalynShaderMotionBuilder({required this.builder, super.key});
+  const BalynShaderMotionBuilder({
+    required this.builder,
+    this.motionMultiplier = 4.5,
+    super.key,
+  });
 
   final Widget Function(BuildContext context, double phase) builder;
+  final double motionMultiplier;
 
   @override
   Widget build(BuildContext context) {
@@ -431,7 +442,8 @@ class BalynShaderMotionBuilder extends StatelessWidget {
     if (data == null || !data.motionEnabled) return builder(context, 0);
     return AnimatedBuilder(
       animation: data.clock,
-      builder: (context, _) => builder(context, _inkPhase(data.clock.value)),
+      builder: (context, _) =>
+          builder(context, _scaledPhase(data.clock.value, motionMultiplier)),
     );
   }
 }
