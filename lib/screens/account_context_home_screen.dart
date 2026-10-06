@@ -8,7 +8,6 @@ import '../models/models.dart';
 import '../services/account_context_service.dart';
 import '../widgets/account_context_selector.dart';
 import '../widgets/balyn_motion.dart';
-import '../widgets/finance_charts.dart';
 import '../widgets/finance_quick_action.dart';
 import '../widgets/home_dashboard_widget.dart';
 import '../widgets/ui_helpers.dart';
@@ -524,18 +523,10 @@ class _TotalOverviewSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
-    final snapshots = state.netWorthSnapshots;
-    final visibleSnapshots = snapshots.length > 24
-        ? snapshots.sublist(snapshots.length - 24)
-        : snapshots;
-    final trendValues = [
-      for (final point in visibleSnapshots) (point['amount'] as num).toDouble(),
-    ];
     return _OverviewSurface(
       accent: Theme.of(context).colorScheme.tertiary,
       eyebrow: const Text('PATRIMONIO'),
       value: state.hideBalance ? '••••••' : moneyFor(state, balance),
-      trendValues: state.hideBalance ? const [] : trendValues,
       metrics: [
         _OverviewValue(
           label: 'Entrate',
@@ -652,14 +643,12 @@ class _OverviewSurface extends StatelessWidget {
     required this.eyebrow,
     required this.value,
     required this.metrics,
-    this.trendValues = const [],
   });
 
   final Color accent;
   final Widget eyebrow;
   final String value;
   final List<_OverviewValue> metrics;
-  final List<double> trendValues;
 
   @override
   Widget build(BuildContext context) {
@@ -740,11 +729,7 @@ class _OverviewSurface extends StatelessWidget {
               ],
             ),
           ),
-          if (trendValues.length >= 2) ...[
-            const SizedBox(height: 10),
-            FinanceSparkline(values: trendValues, color: accent, height: 58),
-          ],
-          const SizedBox(height: 15),
+          const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
@@ -782,7 +767,7 @@ class _OverviewValue extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(icon, size: 17, color: color),
           const SizedBox(height: 7),
@@ -790,6 +775,7 @@ class _OverviewValue extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
             style: theme.textTheme.labelSmall?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
               fontWeight: FontWeight.w700,
@@ -798,7 +784,7 @@ class _OverviewValue extends StatelessWidget {
           const SizedBox(height: 2),
           FittedBox(
             fit: BoxFit.scaleDown,
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.center,
             child: Text(
               value,
               style: theme.textTheme.labelLarge?.copyWith(
