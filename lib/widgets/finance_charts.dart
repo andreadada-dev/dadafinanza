@@ -139,8 +139,9 @@ class FinanceTrendChart extends StatelessWidget {
         ],
         SizedBox(
           height: height,
-          child: LineChart(
-            LineChartData(
+          child: BalynShaderMotionBuilder(
+            builder: (context, shaderPhase) => LineChart(
+              LineChartData(
               minX: 0,
               maxX: (points.length - 1).toDouble(),
               minY: minY,
@@ -257,18 +258,19 @@ class FinanceTrendChart extends StatelessWidget {
                   ],
                   isCurved: true,
                   curveSmoothness: .18,
-                  gradient: LinearGradient(
-                    colors: balynShaderPalette(primaryColor),
+                  gradient: balynAnimatedGradient(
+                    primaryColor,
+                    shaderPhase,
                   ),
                   barWidth: 2.6,
                   isStrokeCapRound: true,
                   dotData: const FlDotData(show: false),
                   belowBarData: BarAreaData(
                     show: true,
-                    gradient: LinearGradient(
-                      colors: balynShaderPalette(
-                        primaryColor,
-                      ).map((color) => color.withValues(alpha: .10)).toList(),
+                    gradient: balynAnimatedGradient(
+                      primaryColor,
+                      shaderPhase,
+                      opacity: .08,
                     ),
                   ),
                 ),
@@ -279,8 +281,9 @@ class FinanceTrendChart extends StatelessWidget {
                   ],
                   isCurved: true,
                   curveSmoothness: .18,
-                  gradient: LinearGradient(
-                    colors: balynShaderPalette(secondaryColor),
+                  gradient: balynAnimatedGradient(
+                    secondaryColor,
+                    shaderPhase,
                   ),
                   barWidth: 2,
                   isStrokeCapRound: true,
@@ -288,8 +291,9 @@ class FinanceTrendChart extends StatelessWidget {
                 ),
               ],
             ),
-            duration: const Duration(milliseconds: 480),
-            curve: Curves.easeOutCubic,
+              duration: const Duration(milliseconds: 480),
+              curve: Curves.easeOutCubic,
+            ),
           ),
         ),
       ],
@@ -339,8 +343,9 @@ class _FinanceDonutChartState extends State<FinanceDonutChart> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              PieChart(
-                PieChartData(
+              BalynShaderMotionBuilder(
+                builder: (context, shaderPhase) => PieChart(
+                  PieChartData(
                   startDegreeOffset: -90,
                   centerSpaceRadius: widget.size * .31,
                   sectionsSpace: hasData ? 3 : 0,
@@ -368,19 +373,11 @@ class _FinanceDonutChartState extends State<FinanceDonutChart> {
                       ? [
                           for (var i = 0; i < widget.segments.length; i++)
                             PieChartSectionData(
-                              gradient: LinearGradient(
-                                colors:
-                                    balynShaderPalette(widget.segments[i].color)
-                                        .map(
-                                          (color) => color.withValues(
-                                            alpha:
-                                                _selected == -1 ||
-                                                    _selected == i
-                                                ? 1
-                                                : .22,
-                                          ),
-                                        )
-                                        .toList(),
+                              gradient: balynAnimatedGradient(
+                                widget.segments[i].color,
+                                shaderPhase,
+                                opacity:
+                                    _selected == -1 || _selected == i ? 1 : .22,
                               ),
                               value: widget.segments[i].value.abs(),
                               title: '',
@@ -401,8 +398,9 @@ class _FinanceDonutChartState extends State<FinanceDonutChart> {
                           ),
                         ],
                 ),
-                duration: const Duration(milliseconds: 360),
-                curve: Curves.easeOutCubic,
+                  duration: const Duration(milliseconds: 360),
+                  curve: Curves.easeOutCubic,
+                ),
               ),
               IgnorePointer(
                 child: Container(
@@ -493,8 +491,9 @@ class FinanceSparkline extends StatelessWidget {
 
     return SizedBox(
       height: height,
-      child: LineChart(
-        LineChartData(
+      child: BalynShaderMotionBuilder(
+        builder: (context, shaderPhase) => LineChart(
+          LineChartData(
           minY: minY,
           maxY: maxY,
           titlesData: const FlTitlesData(show: false),
@@ -510,22 +509,23 @@ class FinanceSparkline extends StatelessWidget {
               isCurved: true,
               curveSmoothness: .18,
               barWidth: 2.4,
-              gradient: LinearGradient(colors: balynShaderPalette(color)),
+              gradient: balynAnimatedGradient(color, shaderPhase),
               isStrokeCapRound: true,
               dotData: const FlDotData(show: false),
               belowBarData: BarAreaData(
                 show: true,
-                gradient: LinearGradient(
-                  colors: balynShaderPalette(
-                    color,
-                  ).map((item) => item.withValues(alpha: .10)).toList(),
+                gradient: balynAnimatedGradient(
+                  color,
+                  shaderPhase,
+                  opacity: .08,
                 ),
               ),
             ),
           ],
         ),
-        duration: const Duration(milliseconds: 420),
-        curve: Curves.easeOutCubic,
+          duration: const Duration(milliseconds: 420),
+          curve: Curves.easeOutCubic,
+        ),
       ),
     );
   }
