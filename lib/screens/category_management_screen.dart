@@ -4,6 +4,7 @@ import '../app_state.dart';
 import '../main.dart';
 import '../models/models.dart';
 import '../services/data_integrity_service.dart';
+import '../widgets/balyn_shader_system.dart';
 import '../widgets/ui_helpers.dart';
 import 'transaction_screens.dart';
 
@@ -194,9 +195,9 @@ class CategoryManagementScreen extends StatelessWidget {
             (item) => ListTile(
               contentPadding: EdgeInsets.zero,
               minVerticalPadding: 10,
-              leading: Icon(
+              leading: BalynShaderIcon(
                 categoryIcon(item.iconKey),
-                color: Color(item.colorValue),
+                seed: Color(item.colorValue),
               ),
               title: Text(item.name),
               subtitle: Text(
@@ -374,9 +375,9 @@ class CategoryManagementScreen extends StatelessWidget {
             ...candidates.map(
               (item) => ListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: Icon(
+                leading: BalynShaderIcon(
                   categoryIcon(item.iconKey),
-                  color: Color(item.colorValue),
+                  seed: Color(item.colorValue),
                 ),
                 title: Text(item.name),
                 onTap: () => Navigator.pop(sheetContext, item),
@@ -503,9 +504,9 @@ class CategoryDetailScreen extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
+              BalynShaderIcon(
                 categoryIcon(category.iconKey),
-                color: Color(category.colorValue),
+                seed: Color(category.colorValue),
                 size: 32,
               ),
               const SizedBox(width: 12),
