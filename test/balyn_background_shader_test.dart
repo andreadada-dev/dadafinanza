@@ -35,9 +35,11 @@ Future<Uint8List> _renderBackground({
 }
 
 void main() {
-  testWidgets(
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  test(
     'liquid background has visible contrast and moves in both themes',
-    (tester) async {
+    () async {
       for (final dark in [true, false]) {
         final initial = await _renderBackground(phase: 0, dark: dark);
         final moved = await _renderBackground(phase: .25, dark: dark);
