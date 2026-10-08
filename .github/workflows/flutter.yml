@@ -34,7 +34,9 @@ jobs:
         run: dart format --output=none --set-exit-if-changed lib test
       - name: Focused shader and navigation tests
         run: flutter test test/smooth_indexed_pages_test.dart test/balyn_background_shader_test.dart
-      - name: Analyze
-        run: flutter analyze --no-fatal-infos
       - name: Test
         run: flutter test
+      - name: Analyze
+        run: |
+          set -o pipefail
+          flutter analyze --no-fatal-infos 2>&1 | tail -n 100
