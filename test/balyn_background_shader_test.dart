@@ -35,31 +35,32 @@ Future<Uint8List> _renderBackground({
 }
 
 void main() {
-  testWidgets('liquid background has visible contrast and moves in both themes', (
-    tester,
-  ) async {
-    for (final dark in [true, false]) {
-      final initial = await _renderBackground(phase: 0, dark: dark);
-      final moved = await _renderBackground(phase: .25, dark: dark);
+  testWidgets(
+    'liquid background has visible contrast and moves in both themes',
+    (tester) async {
+      for (final dark in [true, false]) {
+        final initial = await _renderBackground(phase: 0, dark: dark);
+        final moved = await _renderBackground(phase: .25, dark: dark);
 
-      // Blue/violet must stand away from black and lavender away from white.
-      final visiblePixels = <int>[];
-      var movingPixels = 0;
-      for (var index = 0; index < initial.length; index += 4) {
-        final blue = initial[index + 2];
-        if (dark ? blue >= 24 : blue <= 247 && initial[index] <= 245) {
-          visiblePixels.add(index);
+        // Blue/violet must stand away from black and lavender away from white.
+        final visiblePixels = <int>[];
+        var movingPixels = 0;
+        for (var index = 0; index < initial.length; index += 4) {
+          final blue = initial[index + 2];
+          if (dark ? blue >= 24 : blue <= 247 && initial[index] <= 245) {
+            visiblePixels.add(index);
+          }
+          final delta =
+              (initial[index] - moved[index]).abs() +
+              (initial[index + 1] - moved[index + 1]).abs() +
+              (initial[index + 2] - moved[index + 2]).abs();
+          if (delta >= 8) movingPixels++;
         }
-        final delta =
-            (initial[index] - moved[index]).abs() +
-            (initial[index + 1] - moved[index + 1]).abs() +
-            (initial[index + 2] - moved[index + 2]).abs();
-        if (delta >= 8) movingPixels++;
+        // At least 5% of the surface must be visibly tinted, and the movement
+        // must change at least 5% of its pixels rather than remaining static.
+        expect(visiblePixels.length, greaterThan(initial.length ~/ 4 ~/ 20));
+        expect(movingPixels, greaterThan(initial.length ~/ 4 ~/ 20));
       }
-      // At least 5% of the surface must be visibly tinted, and the movement
-      // must change at least 5% of its pixels rather than remaining static.
-      expect(visiblePixels.length, greaterThan(initial.length ~/ 4 ~/ 20));
-      expect(movingPixels, greaterThan(initial.length ~/ 4 ~/ 20));
-    }
-  });
+    },
+  );
 }
