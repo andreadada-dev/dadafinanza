@@ -389,7 +389,8 @@ class _BalynShaderInkState extends State<BalynShaderInk> {
     }
 
     final palette = balynShaderPalette(widget.seed);
-    final animation = data.motionEnabled
+    // Hidden tabs remain mounted, but must not rebuild their shader masks.
+    final animation = data.motionEnabled && TickerMode.of(context)
         ? data.clock
         : const AlwaysStoppedAnimation<double>(0);
 
@@ -576,7 +577,8 @@ class BalynShaderMotionBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final data = BalynShaderScope.maybeOf(context);
     final enabled = data?.chartEnabled ?? true;
-    if (data == null || !data.motionEnabled || !enabled) {
+    if (data == null || !data.motionEnabled || !enabled ||
+        !TickerMode.of(context)) {
       return builder(context, 0, enabled);
     }
     return AnimatedBuilder(
