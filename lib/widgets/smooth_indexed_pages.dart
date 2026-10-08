@@ -40,25 +40,21 @@ class _SmoothIndexedPagesState extends State<SmoothIndexedPages>
     // The persistent liquid background remains underneath both phases.
     _outgoing = TweenSequence<double>([
       TweenSequenceItem(
-        tween: Tween<double>(begin: 1, end: 0).chain(
-          CurveTween(curve: Curves.easeInCubic),
-        ),
+        tween: Tween<double>(
+          begin: 1,
+          end: 0,
+        ).chain(CurveTween(curve: Curves.easeInCubic)),
         weight: 40,
       ),
-      TweenSequenceItem(
-        tween: ConstantTween<double>(0),
-        weight: 60,
-      ),
+      TweenSequenceItem(tween: ConstantTween<double>(0), weight: 60),
     ]).animate(_controller);
     _incoming = TweenSequence<double>([
+      TweenSequenceItem(tween: ConstantTween<double>(0), weight: 35),
       TweenSequenceItem(
-        tween: ConstantTween<double>(0),
-        weight: 35,
-      ),
-      TweenSequenceItem(
-        tween: Tween<double>(begin: 0, end: 1).chain(
-          CurveTween(curve: Curves.easeOutCubic),
-        ),
+        tween: Tween<double>(
+          begin: 0,
+          end: 1,
+        ).chain(CurveTween(curve: Curves.easeOutCubic)),
         weight: 65,
       ),
     ]).animate(_controller);

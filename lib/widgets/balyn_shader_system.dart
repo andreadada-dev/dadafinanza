@@ -579,7 +579,9 @@ class BalynShaderMotionBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final data = BalynShaderScope.maybeOf(context);
     final enabled = data?.chartEnabled ?? true;
-    if (data == null || !data.motionEnabled || !enabled ||
+    if (data == null ||
+        !data.motionEnabled ||
+        !enabled ||
         !TickerMode.of(context)) {
       return builder(context, 0, enabled);
     }
