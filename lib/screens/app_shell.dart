@@ -9,6 +9,7 @@ import '../models/quick_capture_models.dart';
 import '../services/haptic_service.dart';
 import '../services/quick_preset_service.dart';
 import '../widgets/balyn_shader_system.dart';
+import '../widgets/smooth_indexed_pages.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_context_analytics_screen.dart';
 import 'account_context_home_screen.dart';
@@ -118,7 +119,7 @@ class _BalynAppShellState extends State<BalynAppShell> {
       onPopInvoked: _handleBack,
       child: Scaffold(
         body: SafeArea(
-          child: IndexedStack(index: index, children: pages),
+          child: SmoothIndexedPages(index: index, children: pages),
         ),
         floatingActionButton: Semantics(
           button: true,
