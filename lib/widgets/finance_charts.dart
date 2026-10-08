@@ -140,7 +140,7 @@ class FinanceTrendChart extends StatelessWidget {
         SizedBox(
           height: height,
           child: BalynShaderMotionBuilder(
-            builder: (context, shaderPhase) => LineChart(
+            builder: (context, shaderPhase, shaderEnabled) => LineChart(
               LineChartData(
                 minX: 0,
                 maxX: (points.length - 1).toDouble(),
@@ -258,17 +258,25 @@ class FinanceTrendChart extends StatelessWidget {
                     ],
                     isCurved: true,
                     curveSmoothness: .18,
-                    gradient: balynAnimatedGradient(primaryColor, shaderPhase),
+                    color: shaderEnabled ? null : primaryColor,
+                    gradient: shaderEnabled
+                        ? balynAnimatedGradient(primaryColor, shaderPhase)
+                        : null,
                     barWidth: 2.6,
                     isStrokeCapRound: true,
                     dotData: const FlDotData(show: false),
                     belowBarData: BarAreaData(
                       show: true,
-                      gradient: balynAnimatedGradient(
-                        primaryColor,
-                        shaderPhase,
-                        opacity: .08,
-                      ),
+                      color: shaderEnabled
+                          ? null
+                          : primaryColor.withValues(alpha: .08),
+                      gradient: shaderEnabled
+                          ? balynAnimatedGradient(
+                              primaryColor,
+                              shaderPhase,
+                              opacity: .08,
+                            )
+                          : null,
                     ),
                   ),
                   LineChartBarData(
@@ -278,10 +286,13 @@ class FinanceTrendChart extends StatelessWidget {
                     ],
                     isCurved: true,
                     curveSmoothness: .18,
-                    gradient: balynAnimatedGradient(
-                      secondaryColor,
-                      shaderPhase,
-                    ),
+                    color: shaderEnabled ? null : secondaryColor,
+                    gradient: shaderEnabled
+                        ? balynAnimatedGradient(
+                            secondaryColor,
+                            shaderPhase,
+                          )
+                        : null,
                     barWidth: 2,
                     isStrokeCapRound: true,
                     dotData: const FlDotData(show: false),
@@ -341,7 +352,7 @@ class _FinanceDonutChartState extends State<FinanceDonutChart> {
             alignment: Alignment.center,
             children: [
               BalynShaderMotionBuilder(
-                builder: (context, shaderPhase) => PieChart(
+                builder: (context, shaderPhase, shaderEnabled) => PieChart(
                   PieChartData(
                     startDegreeOffset: -90,
                     centerSpaceRadius: widget.size * .31,
@@ -370,13 +381,24 @@ class _FinanceDonutChartState extends State<FinanceDonutChart> {
                         ? [
                             for (var i = 0; i < widget.segments.length; i++)
                               PieChartSectionData(
-                                gradient: balynAnimatedGradient(
-                                  widget.segments[i].color,
-                                  shaderPhase,
-                                  opacity: _selected == -1 || _selected == i
-                                      ? 1
-                                      : .22,
-                                ),
+                                color: shaderEnabled
+                                    ? null
+                                    : widget.segments[i].color.withValues(
+                                        alpha:
+                                            _selected == -1 || _selected == i
+                                            ? 1
+                                            : .22,
+                                      ),
+                                gradient: shaderEnabled
+                                    ? balynAnimatedGradient(
+                                        widget.segments[i].color,
+                                        shaderPhase,
+                                        opacity:
+                                            _selected == -1 || _selected == i
+                                            ? 1
+                                            : .22,
+                                      )
+                                    : null,
                                 value: widget.segments[i].value.abs(),
                                 title: '',
                                 showTitle: false,
@@ -491,7 +513,7 @@ class FinanceSparkline extends StatelessWidget {
     return SizedBox(
       height: height,
       child: BalynShaderMotionBuilder(
-        builder: (context, shaderPhase) => LineChart(
+        builder: (context, shaderPhase, shaderEnabled) => LineChart(
           LineChartData(
             minY: minY,
             maxY: maxY,
@@ -508,16 +530,24 @@ class FinanceSparkline extends StatelessWidget {
                 isCurved: true,
                 curveSmoothness: .18,
                 barWidth: 2.4,
-                gradient: balynAnimatedGradient(color, shaderPhase),
+                color: shaderEnabled ? null : color,
+                gradient: shaderEnabled
+                    ? balynAnimatedGradient(color, shaderPhase)
+                    : null,
                 isStrokeCapRound: true,
                 dotData: const FlDotData(show: false),
                 belowBarData: BarAreaData(
                   show: true,
-                  gradient: balynAnimatedGradient(
-                    color,
-                    shaderPhase,
-                    opacity: .08,
-                  ),
+                  color: shaderEnabled
+                      ? null
+                      : color.withValues(alpha: .08),
+                  gradient: shaderEnabled
+                      ? balynAnimatedGradient(
+                          color,
+                          shaderPhase,
+                          opacity: .08,
+                        )
+                      : null,
                 ),
               ),
             ],
@@ -632,6 +662,7 @@ class _LegendDot extends StatelessWidget {
         children: [
           BalynShaderInk(
             seed: color,
+            feature: BalynShaderFeature.chart,
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 180),
               width: selected ? 10 : 8,
