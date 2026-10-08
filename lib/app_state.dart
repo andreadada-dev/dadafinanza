@@ -1252,14 +1252,10 @@ class AppState extends ChangeNotifier {
     confirmDelete = (await database.getSetting('confirm_delete') ?? '1') == '1';
     showCents = (await database.getSetting('show_cents') ?? '1') == '1';
     haptics = (await database.getSetting('haptics') ?? '1') == '1';
-    shaderIcons =
-        (await database.getSetting('shader_icons') ?? '1') == '1';
-    shaderCharts =
-        (await database.getSetting('shader_charts') ?? '1') == '1';
-    shaderText =
-        (await database.getSetting('shader_text') ?? '1') == '1';
-    shaderBars =
-        (await database.getSetting('shader_bars') ?? '1') == '1';
+    shaderIcons = (await database.getSetting('shader_icons') ?? '1') == '1';
+    shaderCharts = (await database.getSetting('shader_charts') ?? '1') == '1';
+    shaderText = (await database.getSetting('shader_text') ?? '1') == '1';
+    shaderBars = (await database.getSetting('shader_bars') ?? '1') == '1';
     shaderBackground =
         (await database.getSetting('shader_background') ?? '1') == '1';
     currency = await database.getSetting('currency') ?? 'EUR';

@@ -48,10 +48,8 @@ void main() {
           loadPrograms: false,
           chartEnabled: false,
           child: BalynShaderMotionBuilder(
-            builder: (context, phase, enabled) => Text(
-              '$enabled:${phase.toStringAsFixed(3)}',
-              key: stateKey,
-            ),
+            builder: (context, phase, enabled) =>
+                Text('$enabled:${phase.toStringAsFixed(3)}', key: stateKey),
           ),
         ),
       ),

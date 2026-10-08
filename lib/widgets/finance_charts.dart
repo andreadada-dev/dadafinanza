@@ -288,10 +288,7 @@ class FinanceTrendChart extends StatelessWidget {
                     curveSmoothness: .18,
                     color: shaderEnabled ? null : secondaryColor,
                     gradient: shaderEnabled
-                        ? balynAnimatedGradient(
-                            secondaryColor,
-                            shaderPhase,
-                          )
+                        ? balynAnimatedGradient(secondaryColor, shaderPhase)
                         : null,
                     barWidth: 2,
                     isStrokeCapRound: true,
@@ -384,8 +381,7 @@ class _FinanceDonutChartState extends State<FinanceDonutChart> {
                                 color: shaderEnabled
                                     ? null
                                     : widget.segments[i].color.withValues(
-                                        alpha:
-                                            _selected == -1 || _selected == i
+                                        alpha: _selected == -1 || _selected == i
                                             ? 1
                                             : .22,
                                       ),
@@ -538,15 +534,9 @@ class FinanceSparkline extends StatelessWidget {
                 dotData: const FlDotData(show: false),
                 belowBarData: BarAreaData(
                   show: true,
-                  color: shaderEnabled
-                      ? null
-                      : color.withValues(alpha: .08),
+                  color: shaderEnabled ? null : color.withValues(alpha: .08),
                   gradient: shaderEnabled
-                      ? balynAnimatedGradient(
-                          color,
-                          shaderPhase,
-                          opacity: .08,
-                        )
+                      ? balynAnimatedGradient(color, shaderPhase, opacity: .08)
                       : null,
                 ),
               ),

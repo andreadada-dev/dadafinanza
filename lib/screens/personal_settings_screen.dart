@@ -88,10 +88,7 @@ class PersonalSettingsScreen extends StatelessWidget {
             icon: Icons.auto_awesome_rounded,
             title: 'Gradient animati',
             subtitle: 'Icone · Torte · Testo · Barre · Sfondo',
-            onTap: () => _open(
-              context,
-              const ShaderAppearanceSettingsScreen(),
-            ),
+            onTap: () => _open(context, const ShaderAppearanceSettingsScreen()),
           ),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
@@ -573,11 +570,7 @@ class ShaderAppearanceSettingsScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _setShaderSetting(
-    AppState state,
-    String key,
-    bool value,
-  ) async {
+  Future<void> _setShaderSetting(AppState state, String key, bool value) async {
     await HapticService.light(enabled: state.haptics);
     await state.setSetting(key, value ? '1' : '0');
   }
