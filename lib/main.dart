@@ -25,12 +25,19 @@ final navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting();
+  final shaderWarmup = BalynShaderPrograms.preload();
   final database = AppDatabase();
   await database.init();
   await FinanceSchemaService(database).ensure();
   await const RecurringExecutionService().processDue(database);
   final state = AppState(database);
   await state.load();
+  try {
+    await shaderWarmup;
+  } catch (_) {
+    // A failed warmup must never prevent the finance app from starting.
+    // BalynShaderScope will retry lazily and keep flat-color fallbacks meanwhile.
+  }
   runApp(BalynApp(state: state));
 }
 
@@ -160,6 +167,11 @@ class _BalynAppState extends State<BalynApp> with WidgetsBindingObserver {
               GlobalCupertinoLocalizations.delegate,
             ],
             builder: (context, child) => BalynShaderScope(
+              backgroundEnabled: widget.state.shaderBackground,
+              textEnabled: widget.state.shaderText,
+              iconEnabled: widget.state.shaderIcons,
+              chartEnabled: widget.state.shaderCharts,
+              barEnabled: widget.state.shaderBars,
               child: BalynShaderBackdrop(
                 child: child ?? const SizedBox.shrink(),
               ),
