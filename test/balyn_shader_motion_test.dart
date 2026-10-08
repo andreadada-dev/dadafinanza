@@ -15,8 +15,10 @@ void main() {
             child: BalynShaderScope(
               loadPrograms: false,
               child: BalynShaderMotionBuilder(
-                builder: (context, phase, enabled) =>
-                    Text('${enabled ? 'on' : 'off'}:${phase.toStringAsFixed(6)}', key: phaseKey),
+                builder: (context, phase, enabled) => Text(
+                  '${enabled ? 'on' : 'off'}:${phase.toStringAsFixed(6)}',
+                  key: phaseKey,
+                ),
               ),
             ),
           ),
