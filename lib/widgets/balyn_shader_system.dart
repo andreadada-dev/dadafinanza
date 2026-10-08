@@ -5,6 +5,33 @@ import 'package:balyn/l10n/localized_material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 
+enum BalynShaderFeature { generic, text, icon, bar, chart }
+
+class BalynShaderPrograms {
+  BalynShaderPrograms._();
+
+  static ui.FragmentProgram? _background;
+  static ui.FragmentProgram? _ink;
+  static Future<void>? _loading;
+
+  static ui.FragmentProgram? get background => _background;
+  static ui.FragmentProgram? get ink => _ink;
+  static bool get ready => _background != null && _ink != null;
+
+  static Future<void> preload() {
+    return _loading ??= _load();
+  }
+
+  static Future<void> _load() async {
+    final programs = await Future.wait([
+      ui.FragmentProgram.fromAsset('shaders/balyn_background.frag'),
+      ui.FragmentProgram.fromAsset('shaders/balyn_ink.frag'),
+    ]);
+    _background = programs[0];
+    _ink = programs[1];
+  }
+}
+
 /// Shared clock and GPU programs for Balyn's living-color system.
 ///
 /// One slow clock drives the whole app so colored elements feel like the same
@@ -13,6 +40,11 @@ class BalynShaderScope extends StatefulWidget {
   const BalynShaderScope({
     required this.child,
     this.loadPrograms = true,
+    this.backgroundEnabled = true,
+    this.textEnabled = true,
+    this.iconEnabled = true,
+    this.chartEnabled = true,
+    this.barEnabled = true,
     super.key,
   });
 
@@ -20,6 +52,11 @@ class BalynShaderScope extends StatefulWidget {
 
   @visibleForTesting
   final bool loadPrograms;
+  final bool backgroundEnabled;
+  final bool textEnabled;
+  final bool iconEnabled;
+  final bool chartEnabled;
+  final bool barEnabled;
 
   static BalynShaderData? maybeOf(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<_BalynShaderInherited>()?.data;
@@ -32,14 +69,32 @@ class BalynShaderData {
   const BalynShaderData({
     required this.clock,
     required this.motionEnabled,
+    required this.backgroundEnabled,
+    required this.textEnabled,
+    required this.iconEnabled,
+    required this.chartEnabled,
+    required this.barEnabled,
     this.backgroundProgram,
     this.inkProgram,
   });
 
   final ValueListenable<double> clock;
   final bool motionEnabled;
+  final bool backgroundEnabled;
+  final bool textEnabled;
+  final bool iconEnabled;
+  final bool chartEnabled;
+  final bool barEnabled;
   final ui.FragmentProgram? backgroundProgram;
   final ui.FragmentProgram? inkProgram;
+
+  bool isEnabled(BalynShaderFeature feature) => switch (feature) {
+    BalynShaderFeature.generic => true,
+    BalynShaderFeature.text => textEnabled,
+    BalynShaderFeature.icon => iconEnabled,
+    BalynShaderFeature.bar => barEnabled,
+    BalynShaderFeature.chart => chartEnabled,
+  };
 }
 
 class _BalynShaderScopeState extends State<BalynShaderScope>
@@ -58,8 +113,10 @@ class _BalynShaderScopeState extends State<BalynShaderScope>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    _backgroundProgram = BalynShaderPrograms.background;
+    _inkProgram = BalynShaderPrograms.ink;
     _ticker = createTicker(_onTick)..start();
-    if (widget.loadPrograms) {
+    if (widget.loadPrograms && !BalynShaderPrograms.ready) {
       _loadPrograms();
     }
   }
@@ -75,14 +132,11 @@ class _BalynShaderScopeState extends State<BalynShaderScope>
   }
 
   Future<void> _loadPrograms() async {
-    final programs = await Future.wait([
-      ui.FragmentProgram.fromAsset('shaders/balyn_background.frag'),
-      ui.FragmentProgram.fromAsset('shaders/balyn_ink.frag'),
-    ]);
+    await BalynShaderPrograms.preload();
     if (!mounted) return;
     setState(() {
-      _backgroundProgram = programs[0];
-      _inkProgram = programs[1];
+      _backgroundProgram = BalynShaderPrograms.background;
+      _inkProgram = BalynShaderPrograms.ink;
     });
   }
 
@@ -113,6 +167,11 @@ class _BalynShaderScopeState extends State<BalynShaderScope>
     final data = BalynShaderData(
       clock: _clock,
       motionEnabled: _appActive,
+      backgroundEnabled: widget.backgroundEnabled,
+      textEnabled: widget.textEnabled,
+      iconEnabled: widget.iconEnabled,
+      chartEnabled: widget.chartEnabled,
+      barEnabled: widget.barEnabled,
       backgroundProgram: _backgroundProgram,
       inkProgram: _inkProgram,
     );
@@ -129,7 +188,12 @@ class _BalynShaderInherited extends InheritedWidget {
   bool updateShouldNotify(_BalynShaderInherited oldWidget) =>
       oldWidget.data.backgroundProgram != data.backgroundProgram ||
       oldWidget.data.inkProgram != data.inkProgram ||
-      oldWidget.data.motionEnabled != data.motionEnabled;
+      oldWidget.data.motionEnabled != data.motionEnabled ||
+      oldWidget.data.backgroundEnabled != data.backgroundEnabled ||
+      oldWidget.data.textEnabled != data.textEnabled ||
+      oldWidget.data.iconEnabled != data.iconEnabled ||
+      oldWidget.data.chartEnabled != data.chartEnabled ||
+      oldWidget.data.barEnabled != data.barEnabled;
 }
 
 /// App-wide black/white surface with extremely slow liquid waves.
@@ -151,7 +215,7 @@ class BalynShaderBackdrop extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         ColoredBox(color: fallback),
-        if (data?.backgroundProgram != null)
+        if (data?.backgroundEnabled == true && data?.backgroundProgram != null)
           Positioned.fill(
             child: IgnorePointer(
               child: RepaintBoundary(
@@ -215,6 +279,7 @@ class BalynShaderInk extends StatefulWidget {
     this.strength = .68,
     this.sheen = .45,
     this.motionMultiplier = 6,
+    this.feature = BalynShaderFeature.generic,
     super.key,
   });
 
@@ -224,6 +289,7 @@ class BalynShaderInk extends StatefulWidget {
   final double strength;
   final double sheen;
   final double motionMultiplier;
+  final BalynShaderFeature feature;
 
   @override
   State<BalynShaderInk> createState() => _BalynShaderInkState();
@@ -245,9 +311,14 @@ class _BalynShaderInkState extends State<BalynShaderInk> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.enabled) return widget.child;
-
     final data = BalynShaderScope.maybeOf(context);
+    if (!widget.enabled || (data != null && !data.isEnabled(widget.feature))) {
+      return ColorFiltered(
+        colorFilter: ColorFilter.mode(widget.seed, BlendMode.srcIn),
+        child: widget.child,
+      );
+    }
+
     final shader = _shader;
     if (data == null || shader == null) {
       return ColorFiltered(
@@ -310,6 +381,7 @@ class BalynShaderText extends StatelessWidget {
     final baseStyle = style ?? DefaultTextStyle.of(context).style;
     return BalynShaderInk(
       seed: seed,
+      feature: BalynShaderFeature.text,
       strength: .78,
       sheen: .58,
       child: Text(
@@ -354,6 +426,7 @@ class BalynShaderLinearProgress extends StatelessWidget {
         ),
         BalynShaderInk(
           seed: seed,
+          feature: BalynShaderFeature.bar,
           strength: .62,
           sheen: .32,
           motionMultiplier: 5,
@@ -387,6 +460,7 @@ class BalynShaderIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BalynShaderInk(
     seed: seed,
+    feature: BalynShaderFeature.icon,
     strength: .88,
     sheen: .68,
     child: Icon(
@@ -433,17 +507,24 @@ class BalynShaderMotionBuilder extends StatelessWidget {
     super.key,
   });
 
-  final Widget Function(BuildContext context, double phase) builder;
+  final Widget Function(BuildContext context, double phase, bool enabled)
+  builder;
   final double motionMultiplier;
 
   @override
   Widget build(BuildContext context) {
     final data = BalynShaderScope.maybeOf(context);
-    if (data == null || !data.motionEnabled) return builder(context, 0);
+    final enabled = data?.chartEnabled ?? true;
+    if (data == null || !data.motionEnabled || !enabled) {
+      return builder(context, 0, enabled);
+    }
     return AnimatedBuilder(
       animation: data.clock,
-      builder: (context, _) =>
-          builder(context, _scaledPhase(data.clock.value, motionMultiplier)),
+      builder: (context, _) => builder(
+        context,
+        _scaledPhase(data.clock.value, motionMultiplier),
+        enabled,
+      ),
     );
   }
 }
