@@ -6,6 +6,7 @@ on:
       - main
       - 'build/**'
       - 'ui/**'
+      - 'feature/**'
 
 permissions:
   contents: read

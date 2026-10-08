@@ -1,6 +1,7 @@
 import 'package:balyn/l10n/localized_material.dart';
 
 import '../main.dart';
+import 'balyn_shader_system.dart';
 import 'ui_helpers.dart';
 
 class AccountContextSelector extends StatelessWidget {
@@ -41,9 +42,9 @@ class AccountContextSelector extends StatelessWidget {
             value: account.id,
             child: Row(
               children: [
-                Icon(
+                BalynShaderIcon(
                   accountIcon(account.iconKey),
-                  color: Color(account.colorValue),
+                  seed: Color(account.colorValue),
                 ),
                 const SizedBox(width: 12),
                 Expanded(

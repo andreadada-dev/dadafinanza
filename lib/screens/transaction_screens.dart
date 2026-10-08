@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../app_state.dart';
 import '../main.dart';
 import '../models/models.dart';
+import '../widgets/balyn_shader_system.dart';
 import '../widgets/ui_helpers.dart';
 import 'quick_add_page.dart';
 
@@ -26,21 +27,30 @@ class TransactionListTile extends StatelessWidget {
     final category = state.categoryById(item.categoryId);
     final account = state.accountById(item.accountId);
     final unassigned = account?.isSystem == true;
+    final theme = Theme.of(context);
+    final iconSeed = category == null
+        ? (item.type == TransactionType.transfer
+              ? theme.colorScheme.tertiary
+              : transactionColor(context, item.type))
+        : Color(category.colorValue);
+    final amountSeed = item.type == TransactionType.transfer
+        ? theme.colorScheme.tertiary
+        : transactionColor(context, item.type);
     return ListTile(
       contentPadding: EdgeInsets.zero,
       minVerticalPadding: 10,
       selected: selected,
       leading: CircleAvatar(
-        backgroundColor: (category == null
-            ? Theme.of(context).colorScheme.surfaceContainerHighest
-            : Color(category.colorValue).withValues(alpha: .13)),
-        child: Icon(
+        backgroundColor: theme.colorScheme.onSurface.withValues(
+          alpha: theme.brightness == Brightness.dark ? .07 : .045,
+        ),
+        child: BalynShaderIcon(
           category == null
               ? (item.type == TransactionType.transfer
                     ? Icons.swap_horiz_rounded
                     : Icons.receipt_long_rounded)
               : categoryIcon(category.iconKey),
-          color: category == null ? null : Color(category.colorValue),
+          seed: iconSeed,
         ),
       ),
       title: Text(
@@ -52,16 +62,14 @@ class TransactionListTile extends StatelessWidget {
       subtitle: Text(
         '${unassigned ? 'Non assegnato' : account?.name ?? 'Conto'} · ${DateFormat('dd MMM, HH:mm', AppI18n.intlLocale).format(item.date)}${item.note?.isNotEmpty == true ? ' · ${item.note}' : ''}',
       ),
-      trailing: Text(
+      trailing: BalynShaderText(
         item.type == TransactionType.expense
             ? '-${moneyFor(state, item.amount)}'
             : item.type == TransactionType.income
             ? '+${moneyFor(state, item.amount)}'
             : moneyFor(state, item.amount),
-        style: TextStyle(
-          fontWeight: FontWeight.w800,
-          color: transactionColor(context, item.type),
-        ),
+        seed: amountSeed,
+        style: const TextStyle(fontWeight: FontWeight.w800),
       ),
       onLongPress: onLongPress,
       onTap: () => Navigator.push(

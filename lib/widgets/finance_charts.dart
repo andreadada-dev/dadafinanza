@@ -4,6 +4,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:balyn/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
+import 'balyn_shader_system.dart';
+
 class FinanceTrendPoint {
   const FinanceTrendPoint({
     required this.date,
@@ -137,149 +139,166 @@ class FinanceTrendChart extends StatelessWidget {
         ],
         SizedBox(
           height: height,
-          child: LineChart(
-            LineChartData(
-              minX: 0,
-              maxX: (points.length - 1).toDouble(),
-              minY: minY,
-              maxY: maxY,
-              clipData: const FlClipData.all(),
-              borderData: FlBorderData(show: false),
-              gridData: FlGridData(
-                show: true,
-                drawVerticalLine: false,
-                horizontalInterval: (maxY - minY) / 4,
-                getDrawingHorizontalLine: (_) => FlLine(
-                  color: grid,
-                  strokeWidth: 1,
-                  dashArray: const [3, 7],
-                ),
-              ),
-              extraLinesData: ExtraLinesData(
-                horizontalLines: minY <= 0 && maxY >= 0
-                    ? [
-                        HorizontalLine(
-                          y: 0,
-                          color: theme.colorScheme.onSurface.withValues(
-                            alpha: .16,
-                          ),
-                          strokeWidth: 1.2,
-                        ),
-                      ]
-                    : const [],
-              ),
-              titlesData: FlTitlesData(
-                topTitles: const AxisTitles(
-                  sideTitles: SideTitles(showTitles: false),
-                ),
-                rightTitles: const AxisTitles(
-                  sideTitles: SideTitles(showTitles: false),
-                ),
-                leftTitles: const AxisTitles(
-                  sideTitles: SideTitles(showTitles: false),
-                ),
-                bottomTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    reservedSize: 34,
-                    interval: 1,
-                    getTitlesWidget: bottomTitle,
+          child: BalynShaderMotionBuilder(
+            builder: (context, shaderPhase, shaderEnabled) => LineChart(
+              LineChartData(
+                minX: 0,
+                maxX: (points.length - 1).toDouble(),
+                minY: minY,
+                maxY: maxY,
+                clipData: const FlClipData.all(),
+                borderData: FlBorderData(show: false),
+                gridData: FlGridData(
+                  show: true,
+                  drawVerticalLine: false,
+                  horizontalInterval: (maxY - minY) / 4,
+                  getDrawingHorizontalLine: (_) => FlLine(
+                    color: grid,
+                    strokeWidth: 1,
+                    dashArray: const [3, 7],
                   ),
                 ),
-              ),
-              lineTouchData: LineTouchData(
-                enabled: true,
-                handleBuiltInTouches: true,
-                touchTooltipData: LineTouchTooltipData(
-                  fitInsideHorizontally: true,
-                  fitInsideVertically: true,
-                  getTooltipItems: (spots) {
-                    if (spots.isEmpty) return const [];
-                    final index = spots.first.x
-                        .round()
-                        .clamp(0, points.length - 1)
-                        .toInt();
-                    final date = DateFormat(
-                      'd MMM',
-                      AppI18n.intlLocale,
-                    ).format(points[index].date);
-                    return [
-                      for (var i = 0; i < spots.length; i++)
-                        LineTooltipItem(
-                          i == 0 ? '$date\n' : '',
-                          theme.textTheme.labelMedium!.copyWith(
-                            color: i == 0 ? primaryColor : secondaryColor,
-                            fontWeight: FontWeight.w800,
+                extraLinesData: ExtraLinesData(
+                  horizontalLines: minY <= 0 && maxY >= 0
+                      ? [
+                          HorizontalLine(
+                            y: 0,
+                            color: theme.colorScheme.onSurface.withValues(
+                              alpha: .16,
+                            ),
+                            strokeWidth: 1.2,
                           ),
-                          children: [
-                            TextSpan(
-                              text:
-                                  '${i == 0 ? primaryLabel : secondaryLabel}: ${valueFormatter(spots[i].y)}',
-                              style: theme.textTheme.labelMedium?.copyWith(
-                                color: i == 0 ? primaryColor : secondaryColor,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                          ],
-                        ),
-                    ];
-                  },
+                        ]
+                      : const [],
                 ),
-                getTouchedSpotIndicator: (barData, indexes) => [
-                  for (final _ in indexes)
-                    TouchedSpotIndicatorData(
-                      FlLine(
-                        color: theme.colorScheme.onSurface.withValues(
-                          alpha: .20,
-                        ),
-                        strokeWidth: 1,
-                        dashArray: const [3, 4],
-                      ),
-                      FlDotData(
-                        getDotPainter: (spot, percent, bar, itemIndex) =>
-                            FlDotCirclePainter(
-                              radius: 4,
-                              color: bar.color ?? theme.colorScheme.tertiary,
-                              strokeWidth: 2,
-                              strokeColor: theme.colorScheme.surface,
-                            ),
-                      ),
+                titlesData: FlTitlesData(
+                  topTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  rightTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  leftTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 34,
+                      interval: 1,
+                      getTitlesWidget: bottomTitle,
                     ),
+                  ),
+                ),
+                lineTouchData: LineTouchData(
+                  enabled: true,
+                  handleBuiltInTouches: true,
+                  touchTooltipData: LineTouchTooltipData(
+                    fitInsideHorizontally: true,
+                    fitInsideVertically: true,
+                    getTooltipItems: (spots) {
+                      if (spots.isEmpty) return const [];
+                      final index = spots.first.x
+                          .round()
+                          .clamp(0, points.length - 1)
+                          .toInt();
+                      final date = DateFormat(
+                        'd MMM',
+                        AppI18n.intlLocale,
+                      ).format(points[index].date);
+                      return [
+                        for (var i = 0; i < spots.length; i++)
+                          LineTooltipItem(
+                            i == 0 ? '$date\n' : '',
+                            theme.textTheme.labelMedium!.copyWith(
+                              color: theme.colorScheme.onSurface,
+                              fontWeight: FontWeight.w800,
+                            ),
+                            children: [
+                              TextSpan(
+                                text:
+                                    '${i == 0 ? primaryLabel : secondaryLabel}: ${valueFormatter(spots[i].y)}',
+                                style: theme.textTheme.labelMedium?.copyWith(
+                                  color: theme.colorScheme.onSurface,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ],
+                          ),
+                      ];
+                    },
+                  ),
+                  getTouchedSpotIndicator: (barData, indexes) => [
+                    for (final _ in indexes)
+                      TouchedSpotIndicatorData(
+                        FlLine(
+                          color: theme.colorScheme.onSurface.withValues(
+                            alpha: .20,
+                          ),
+                          strokeWidth: 1,
+                          dashArray: const [3, 4],
+                        ),
+                        FlDotData(
+                          getDotPainter: (spot, percent, bar, itemIndex) =>
+                              FlDotCirclePainter(
+                                radius: 4,
+                                color: theme.colorScheme.onSurface,
+                                strokeWidth: 2,
+                                strokeColor: theme.colorScheme.surface,
+                              ),
+                        ),
+                      ),
+                  ],
+                ),
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: [
+                      for (var i = 0; i < points.length; i++)
+                        FlSpot(i.toDouble(), points[i].primary),
+                    ],
+                    isCurved: true,
+                    curveSmoothness: .18,
+                    color: shaderEnabled ? null : primaryColor,
+                    gradient: shaderEnabled
+                        ? balynAnimatedGradient(primaryColor, shaderPhase)
+                        : null,
+                    barWidth: 2.6,
+                    isStrokeCapRound: true,
+                    dotData: const FlDotData(show: false),
+                    belowBarData: BarAreaData(
+                      show: true,
+                      color: shaderEnabled
+                          ? null
+                          : primaryColor.withValues(alpha: .08),
+                      gradient: shaderEnabled
+                          ? balynAnimatedGradient(
+                              primaryColor,
+                              shaderPhase,
+                              opacity: .08,
+                            )
+                          : null,
+                    ),
+                  ),
+                  LineChartBarData(
+                    spots: [
+                      for (var i = 0; i < points.length; i++)
+                        FlSpot(i.toDouble(), points[i].secondary),
+                    ],
+                    isCurved: true,
+                    curveSmoothness: .18,
+                    color: shaderEnabled ? null : secondaryColor,
+                    gradient: shaderEnabled
+                        ? balynAnimatedGradient(secondaryColor, shaderPhase)
+                        : null,
+                    barWidth: 2,
+                    isStrokeCapRound: true,
+                    dotData: const FlDotData(show: false),
+                  ),
                 ],
               ),
-              lineBarsData: [
-                LineChartBarData(
-                  spots: [
-                    for (var i = 0; i < points.length; i++)
-                      FlSpot(i.toDouble(), points[i].primary),
-                  ],
-                  isCurved: true,
-                  curveSmoothness: .18,
-                  color: primaryColor,
-                  barWidth: 2.6,
-                  isStrokeCapRound: true,
-                  dotData: const FlDotData(show: false),
-                  belowBarData: BarAreaData(
-                    show: true,
-                    color: primaryColor.withValues(alpha: .10),
-                  ),
-                ),
-                LineChartBarData(
-                  spots: [
-                    for (var i = 0; i < points.length; i++)
-                      FlSpot(i.toDouble(), points[i].secondary),
-                  ],
-                  isCurved: true,
-                  curveSmoothness: .18,
-                  color: secondaryColor,
-                  barWidth: 2,
-                  isStrokeCapRound: true,
-                  dotData: const FlDotData(show: false),
-                ),
-              ],
+              duration: const Duration(milliseconds: 480),
+              curve: Curves.easeOutCubic,
             ),
-            duration: const Duration(milliseconds: 480),
-            curve: Curves.easeOutCubic,
           ),
         ),
       ],
@@ -329,61 +348,76 @@ class _FinanceDonutChartState extends State<FinanceDonutChart> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              PieChart(
-                PieChartData(
-                  startDegreeOffset: -90,
-                  centerSpaceRadius: widget.size * .31,
-                  sectionsSpace: hasData ? 3 : 0,
-                  borderData: FlBorderData(show: false),
-                  pieTouchData: PieTouchData(
-                    enabled: hasData,
-                    touchCallback: (event, response) {
-                      if (!event.isInterestedForInteractions) return;
-                      final next =
-                          response?.touchedSection?.touchedSectionIndex ?? -1;
-                      if (next < 0 || next >= widget.segments.length) {
-                        if (_selected != -1) {
-                          setState(() => _selected = -1);
+              BalynShaderMotionBuilder(
+                builder: (context, shaderPhase, shaderEnabled) => PieChart(
+                  PieChartData(
+                    startDegreeOffset: -90,
+                    centerSpaceRadius: widget.size * .31,
+                    sectionsSpace: hasData ? 3 : 0,
+                    borderData: FlBorderData(show: false),
+                    pieTouchData: PieTouchData(
+                      enabled: hasData,
+                      touchCallback: (event, response) {
+                        if (!event.isInterestedForInteractions) return;
+                        final next =
+                            response?.touchedSection?.touchedSectionIndex ?? -1;
+                        if (next < 0 || next >= widget.segments.length) {
+                          if (_selected != -1) {
+                            setState(() => _selected = -1);
+                          }
+                          return;
                         }
-                        return;
-                      }
-                      if (event is FlTapUpEvent || event is FlTapDownEvent) {
-                        setState(() {
-                          _selected = _selected == next ? -1 : next;
-                        });
-                      }
-                    },
-                  ),
-                  sections: hasData
-                      ? [
-                          for (var i = 0; i < widget.segments.length; i++)
+                        if (event is FlTapUpEvent || event is FlTapDownEvent) {
+                          setState(() {
+                            _selected = _selected == next ? -1 : next;
+                          });
+                        }
+                      },
+                    ),
+                    sections: hasData
+                        ? [
+                            for (var i = 0; i < widget.segments.length; i++)
+                              PieChartSectionData(
+                                color: shaderEnabled
+                                    ? null
+                                    : widget.segments[i].color.withValues(
+                                        alpha: _selected == -1 || _selected == i
+                                            ? 1
+                                            : .22,
+                                      ),
+                                gradient: shaderEnabled
+                                    ? balynAnimatedGradient(
+                                        widget.segments[i].color,
+                                        shaderPhase,
+                                        opacity:
+                                            _selected == -1 || _selected == i
+                                            ? 1
+                                            : .22,
+                                      )
+                                    : null,
+                                value: widget.segments[i].value.abs(),
+                                title: '',
+                                showTitle: false,
+                                radius:
+                                    widget.size *
+                                    (_selected == i ? .155 : .132),
+                              ),
+                          ]
+                        : [
                             PieChartSectionData(
-                              color: _selected == -1 || _selected == i
-                                  ? widget.segments[i].color
-                                  : widget.segments[i].color.withValues(
-                                      alpha: .22,
-                                    ),
-                              value: widget.segments[i].value.abs(),
+                              color: theme.colorScheme.onSurface.withValues(
+                                alpha: .10,
+                              ),
+                              value: 1,
                               title: '',
                               showTitle: false,
-                              radius:
-                                  widget.size * (_selected == i ? .155 : .132),
+                              radius: widget.size * .132,
                             ),
-                        ]
-                      : [
-                          PieChartSectionData(
-                            color: theme.colorScheme.onSurface.withValues(
-                              alpha: .10,
-                            ),
-                            value: 1,
-                            title: '',
-                            showTitle: false,
-                            radius: widget.size * .132,
-                          ),
-                        ],
+                          ],
+                  ),
+                  duration: const Duration(milliseconds: 360),
+                  curve: Curves.easeOutCubic,
                 ),
-                duration: const Duration(milliseconds: 360),
-                curve: Curves.easeOutCubic,
               ),
               IgnorePointer(
                 child: Container(
@@ -474,35 +508,43 @@ class FinanceSparkline extends StatelessWidget {
 
     return SizedBox(
       height: height,
-      child: LineChart(
-        LineChartData(
-          minY: minY,
-          maxY: maxY,
-          titlesData: const FlTitlesData(show: false),
-          gridData: const FlGridData(show: false),
-          borderData: FlBorderData(show: false),
-          lineTouchData: const LineTouchData(enabled: false),
-          lineBarsData: [
-            LineChartBarData(
-              spots: [
-                for (var i = 0; i < values.length; i++)
-                  FlSpot(i.toDouble(), values[i]),
-              ],
-              isCurved: true,
-              curveSmoothness: .18,
-              barWidth: 2.4,
-              color: color,
-              isStrokeCapRound: true,
-              dotData: const FlDotData(show: false),
-              belowBarData: BarAreaData(
-                show: true,
-                color: color.withValues(alpha: .10),
+      child: BalynShaderMotionBuilder(
+        builder: (context, shaderPhase, shaderEnabled) => LineChart(
+          LineChartData(
+            minY: minY,
+            maxY: maxY,
+            titlesData: const FlTitlesData(show: false),
+            gridData: const FlGridData(show: false),
+            borderData: FlBorderData(show: false),
+            lineTouchData: const LineTouchData(enabled: false),
+            lineBarsData: [
+              LineChartBarData(
+                spots: [
+                  for (var i = 0; i < values.length; i++)
+                    FlSpot(i.toDouble(), values[i]),
+                ],
+                isCurved: true,
+                curveSmoothness: .18,
+                barWidth: 2.4,
+                color: shaderEnabled ? null : color,
+                gradient: shaderEnabled
+                    ? balynAnimatedGradient(color, shaderPhase)
+                    : null,
+                isStrokeCapRound: true,
+                dotData: const FlDotData(show: false),
+                belowBarData: BarAreaData(
+                  show: true,
+                  color: shaderEnabled ? null : color.withValues(alpha: .08),
+                  gradient: shaderEnabled
+                      ? balynAnimatedGradient(color, shaderPhase, opacity: .08)
+                      : null,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
+          duration: const Duration(milliseconds: 420),
+          curve: Curves.easeOutCubic,
         ),
-        duration: const Duration(milliseconds: 420),
-        curve: Curves.easeOutCubic,
       ),
     );
   }
@@ -530,26 +572,45 @@ class _DonutCenter extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: theme.textTheme.labelMedium?.copyWith(
-              color: color ?? theme.colorScheme.onSurfaceVariant,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
+          color == null
+              ? Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w800,
+                  ),
+                )
+              : BalynShaderText(
+                  label,
+                  seed: color!,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
           const SizedBox(height: 3),
           FittedBox(
             fit: BoxFit.scaleDown,
-            child: Text(
-              value,
-              style: theme.textTheme.titleLarge?.copyWith(
-                color: color ?? theme.colorScheme.onSurface,
-                fontWeight: FontWeight.w900,
-                letterSpacing: -.5,
-              ),
-            ),
+            child: color == null
+                ? Text(
+                    value,
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      color: theme.colorScheme.onSurface,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: -.5,
+                    ),
+                  )
+                : BalynShaderText(
+                    value,
+                    seed: color!,
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: -.5,
+                    ),
+                  ),
           ),
           if (detail != null)
             Text(
@@ -589,21 +650,27 @@ class _LegendDot extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 180),
-            width: selected ? 10 : 8,
-            height: selected ? 10 : 8,
-            decoration: BoxDecoration(
-              color: color,
-              shape: BoxShape.circle,
-              boxShadow: selected
-                  ? [
-                      BoxShadow(
-                        color: color.withValues(alpha: .28),
-                        blurRadius: 8,
-                      ),
-                    ]
-                  : null,
+          BalynShaderInk(
+            seed: color,
+            feature: BalynShaderFeature.chart,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 180),
+              width: selected ? 10 : 8,
+              height: selected ? 10 : 8,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+                boxShadow: selected
+                    ? [
+                        BoxShadow(
+                          color: theme.colorScheme.onSurface.withValues(
+                            alpha: .18,
+                          ),
+                          blurRadius: 8,
+                        ),
+                      ]
+                    : null,
+              ),
             ),
           ),
           const SizedBox(width: 7),

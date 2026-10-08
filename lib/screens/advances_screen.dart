@@ -8,6 +8,7 @@ import '../models/advance_models.dart';
 import '../models/models.dart';
 import '../theme/app_theme.dart';
 import '../widgets/balyn_motion.dart';
+import '../widgets/balyn_shader_system.dart';
 import '../widgets/ui_helpers.dart';
 
 class AdvancesScreen extends StatefulWidget {
@@ -165,16 +166,22 @@ class _AdvancesOverview extends StatelessWidget {
                 height: 42,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: accent.withValues(alpha: .14),
+                  color: theme.colorScheme.onSurface.withValues(
+                    alpha: theme.brightness == Brightness.dark ? .07 : .045,
+                  ),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.handshake_rounded, color: accent, size: 21),
+                child: BalynShaderIcon(
+                  Icons.handshake_rounded,
+                  seed: accent,
+                  size: 21,
+                ),
               ),
               const Spacer(),
-              Text(
+              BalynShaderText(
                 'ANTICIPI',
+                seed: accent,
                 style: theme.textTheme.labelMedium?.copyWith(
-                  color: accent,
                   fontWeight: FontWeight.w800,
                   letterSpacing: .35,
                 ),
@@ -261,7 +268,7 @@ class _AdvanceOverviewValue extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 17, color: color),
+        BalynShaderIcon(icon, seed: color, size: 17),
         const SizedBox(height: 7),
         Text(
           label,
@@ -276,10 +283,10 @@ class _AdvanceOverviewValue extends StatelessWidget {
         FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
-          child: Text(
+          child: BalynShaderText(
             value,
+            seed: color,
             style: theme.textTheme.labelLarge?.copyWith(
-              color: color,
               fontWeight: FontWeight.w900,
             ),
           ),
@@ -385,14 +392,16 @@ class _AdvancePersonSummaryCard extends StatelessWidget {
                           height: 32,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            color: Color(
-                              person.colorValue,
-                            ).withValues(alpha: .12),
+                            color: theme.colorScheme.onSurface.withValues(
+                              alpha: theme.brightness == Brightness.dark
+                                  ? .07
+                                  : .045,
+                            ),
                             shape: BoxShape.circle,
                           ),
-                          child: Icon(
+                          child: BalynShaderIcon(
                             personIcon(person.iconKey),
-                            color: Color(person.colorValue),
+                            seed: Color(person.colorValue),
                             size: 18,
                           ),
                         ),
@@ -1481,9 +1490,9 @@ class FinancePeopleScreen extends StatelessWidget {
                     .length;
                 return ListTile(
                   contentPadding: EdgeInsets.zero,
-                  leading: Icon(
+                  leading: BalynShaderIcon(
                     personIcon(person.iconKey),
-                    color: Color(person.colorValue),
+                    seed: Color(person.colorValue),
                   ),
                   title: Text(person.name),
                   subtitle: Text(
@@ -1591,9 +1600,9 @@ class FinancePersonDetailScreen extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
+              BalynShaderIcon(
                 personIcon(person.iconKey),
-                color: Color(person.colorValue),
+                seed: Color(person.colorValue),
                 size: 24,
               ),
               const SizedBox(width: 10),
@@ -2181,9 +2190,9 @@ Future<int?> _pickAccount(BuildContext context) async {
           ...accounts.map(
             (account) => ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: Icon(
+              leading: BalynShaderIcon(
                 accountIcon(account.iconKey),
-                color: Color(account.colorValue),
+                seed: Color(account.colorValue),
               ),
               title: Text(account.name),
               onTap: () => Navigator.pop(sheetContext, account.id),
@@ -2213,9 +2222,9 @@ Future<int?> _pickCategory(BuildContext context, TransactionType type) async {
           ...categories.map(
             (category) => ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: Icon(
+              leading: BalynShaderIcon(
                 categoryIcon(category.iconKey),
-                color: Color(category.colorValue),
+                seed: Color(category.colorValue),
               ),
               title: Text(category.name),
               onTap: () => Navigator.pop(sheetContext, category.id),

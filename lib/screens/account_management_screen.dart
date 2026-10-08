@@ -10,6 +10,7 @@ import '../main.dart';
 import '../models/models.dart';
 import '../services/csv_service.dart';
 import '../services/data_integrity_service.dart';
+import '../widgets/balyn_shader_system.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_screens.dart' show showAccountEditor;
 
@@ -81,9 +82,9 @@ class _AccountTile extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       minVerticalPadding: 12,
-      leading: Icon(
+      leading: BalynShaderIcon(
         accountIcon(account.iconKey),
-        color: Color(account.colorValue),
+        seed: Color(account.colorValue),
       ),
       title: Text(
         account.name,
@@ -133,10 +134,10 @@ class SafeAccountDetailScreen extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
+              BalynShaderIcon(
                 accountIcon(account.iconKey),
+                seed: Color(account.colorValue),
                 size: 34,
-                color: Color(account.colorValue),
               ),
               const SizedBox(width: 14),
               Expanded(

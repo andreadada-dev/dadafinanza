@@ -53,7 +53,7 @@ class AppTheme {
 
   static ThemeData _build(Brightness brightness) {
     final dark = brightness == Brightness.dark;
-    final background = dark ? const Color(0xFF09090A) : const Color(0xFFFAFAFC);
+    final background = dark ? Colors.black : Colors.white;
     final raised = dark ? const Color(0xFF1C1C1F) : const Color(0xFFF0F0F5);
     final raisedStrong = dark
         ? const Color(0xFF303033)
@@ -99,7 +99,7 @@ class AppTheme {
       useMaterial3: true,
       brightness: brightness,
       colorScheme: scheme,
-      scaffoldBackgroundColor: background,
+      scaffoldBackgroundColor: Colors.transparent,
       dividerColor: hairline,
       visualDensity: VisualDensity.standard,
       splashFactory: InkSparkle.splashFactory,
@@ -151,7 +151,7 @@ class AppTheme {
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: false,
-        backgroundColor: background.withValues(alpha: .96),
+        backgroundColor: background.withValues(alpha: dark ? .62 : .78),
         foregroundColor: onSurface,
         titleTextStyle: TextStyle(
           color: onSurface,
@@ -169,12 +169,12 @@ class AppTheme {
       navigationBarTheme: NavigationBarThemeData(
         height: 72,
         elevation: 0,
-        backgroundColor: background,
-        indicatorColor: accent.withValues(alpha: dark ? .18 : .11),
+        backgroundColor: background.withValues(alpha: dark ? .68 : .82),
+        indicatorColor: onSurface.withValues(alpha: dark ? .10 : .06),
         labelTextStyle: WidgetStateProperty.resolveWith(
           (states) => TextStyle(
             color: states.contains(WidgetState.selected)
-                ? accent
+                ? onSurface
                 : secondaryText,
             fontSize: 11,
             fontWeight: states.contains(WidgetState.selected)
@@ -185,7 +185,7 @@ class AppTheme {
         iconTheme: WidgetStateProperty.resolveWith(
           (states) => IconThemeData(
             color: states.contains(WidgetState.selected)
-                ? accent
+                ? onSurface
                 : secondaryText,
           ),
         ),
@@ -193,8 +193,8 @@ class AppTheme {
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         elevation: 0,
         highlightElevation: 0,
-        backgroundColor: accent,
-        foregroundColor: Colors.white,
+        backgroundColor: onSurface,
+        foregroundColor: background,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -240,7 +240,7 @@ class AppTheme {
       ),
       chipTheme: ChipThemeData(
         backgroundColor: raised,
-        selectedColor: accent.withValues(alpha: dark ? .20 : .11),
+        selectedColor: onSurface.withValues(alpha: dark ? .10 : .06),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         side: BorderSide.none,
         labelStyle: const TextStyle(fontWeight: FontWeight.w700),
@@ -254,12 +254,11 @@ class AppTheme {
           ),
           backgroundColor: WidgetStateProperty.resolveWith(
             (states) => states.contains(WidgetState.selected)
-                ? accent.withValues(alpha: dark ? .20 : .11)
+                ? onSurface.withValues(alpha: dark ? .10 : .06)
                 : raised,
           ),
           foregroundColor: WidgetStateProperty.resolveWith(
-            (states) =>
-                states.contains(WidgetState.selected) ? accent : onSurface,
+            (states) => onSurface,
           ),
         ),
       ),
@@ -276,9 +275,9 @@ class AppTheme {
         ),
       ),
       progressIndicatorTheme: ProgressIndicatorThemeData(
-        color: accent,
-        linearTrackColor: accent.withValues(alpha: .10),
-        circularTrackColor: accent.withValues(alpha: .10),
+        color: onSurface,
+        linearTrackColor: onSurface.withValues(alpha: .10),
+        circularTrackColor: onSurface.withValues(alpha: .10),
       ),
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: {

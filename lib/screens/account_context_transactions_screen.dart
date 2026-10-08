@@ -7,6 +7,7 @@ import '../models/models.dart';
 import '../services/account_context_service.dart';
 import '../widgets/account_context_selector.dart';
 import '../widgets/balyn_motion.dart';
+import '../widgets/balyn_shader_system.dart';
 import '../widgets/ui_helpers.dart';
 import 'quick_add_page.dart';
 import 'transaction_screens.dart';
@@ -665,10 +666,10 @@ class _MovementMetric extends StatelessWidget {
         FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
-          child: Text(
+          child: BalynShaderText(
             value,
+            seed: color,
             style: theme.textTheme.titleMedium?.copyWith(
-              color: color,
               fontWeight: FontWeight.w900,
             ),
           ),
@@ -725,7 +726,7 @@ class _MovementSearch extends StatelessWidget {
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(18),
                 borderSide: BorderSide(
-                  color: theme.colorScheme.tertiary.withValues(alpha: .55),
+                  color: theme.colorScheme.onSurface.withValues(alpha: .32),
                   width: 1.2,
                 ),
               ),
@@ -749,19 +750,22 @@ class _MovementSearch extends StatelessWidget {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: activeFilterCount > 0
-                    ? theme.colorScheme.tertiary.withValues(alpha: .14)
+                    ? theme.colorScheme.onSurface.withValues(alpha: .08)
                     : theme.colorScheme.surfaceContainer.withValues(alpha: .64),
                 borderRadius: BorderRadius.circular(18),
               ),
               child: Badge(
                 isLabelVisible: activeFilterCount > 0,
                 label: Text('$activeFilterCount'),
-                child: Icon(
-                  Icons.tune_rounded,
-                  color: activeFilterCount > 0
-                      ? theme.colorScheme.tertiary
-                      : theme.colorScheme.onSurfaceVariant,
-                ),
+                child: activeFilterCount > 0
+                    ? BalynShaderIcon(
+                        Icons.tune_rounded,
+                        seed: theme.colorScheme.tertiary,
+                      )
+                    : Icon(
+                        Icons.tune_rounded,
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
               ),
             ),
           ),
@@ -844,19 +848,27 @@ class _TypeChip extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
           decoration: BoxDecoration(
             color: selected
-                ? color.withValues(
-                    alpha: theme.brightness == Brightness.dark ? .18 : .11,
+                ? theme.colorScheme.onSurface.withValues(
+                    alpha: theme.brightness == Brightness.dark ? .08 : .05,
                   )
                 : theme.colorScheme.surfaceContainer.withValues(alpha: .48),
             borderRadius: BorderRadius.circular(999),
           ),
-          child: Text(
-            label,
-            style: theme.textTheme.labelLarge?.copyWith(
-              color: selected ? color : theme.colorScheme.onSurfaceVariant,
-              fontWeight: selected ? FontWeight.w800 : FontWeight.w600,
-            ),
-          ),
+          child: selected
+              ? BalynShaderText(
+                  label,
+                  seed: color,
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    fontWeight: FontWeight.w800,
+                  ),
+                )
+              : Text(
+                  label,
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
         ),
       ),
     );
@@ -887,20 +899,26 @@ class _MovementViewSwitch extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 10),
               decoration: BoxDecoration(
                 color: selected
-                    ? theme.colorScheme.tertiary.withValues(alpha: .12)
+                    ? theme.colorScheme.onSurface.withValues(alpha: .07)
                     : Colors.transparent,
                 borderRadius: BorderRadius.circular(14),
               ),
               alignment: Alignment.center,
-              child: Text(
-                label,
-                style: theme.textTheme.labelLarge?.copyWith(
-                  color: selected
-                      ? theme.colorScheme.tertiary
-                      : theme.colorScheme.onSurfaceVariant,
-                  fontWeight: selected ? FontWeight.w800 : FontWeight.w600,
-                ),
-              ),
+              child: selected
+                  ? BalynShaderText(
+                      label,
+                      seed: theme.colorScheme.tertiary,
+                      style: theme.textTheme.labelLarge?.copyWith(
+                        fontWeight: FontWeight.w800,
+                      ),
+                    )
+                  : Text(
+                      label,
+                      style: theme.textTheme.labelLarge?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
             ),
           ),
         ),
@@ -980,15 +998,23 @@ class _MovementDaySection extends StatelessWidget {
                 ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w900),
               ),
             ),
-            Text(
-              hideValues
-                  ? '••••'
-                  : '${net >= 0 ? '+' : '−'}${moneyFor(state, net.abs())}',
-              style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                color: netColor,
-                fontWeight: FontWeight.w800,
+            if (net == 0)
+              Text(
+                hideValues ? '••••' : moneyFor(state, 0),
+                style: Theme.of(
+                  context,
+                ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w800),
+              )
+            else
+              BalynShaderText(
+                hideValues
+                    ? '••••'
+                    : '${net > 0 ? '+' : '−'}${moneyFor(state, net.abs())}',
+                seed: netColor,
+                style: Theme.of(
+                  context,
+                ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w800),
               ),
-            ),
           ],
         ),
         const SizedBox(height: 7),
@@ -1055,16 +1081,18 @@ class _MovementTile extends StatelessWidget {
                 height: 46,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: color.withValues(alpha: .12),
+                  color: theme.colorScheme.onSurface.withValues(
+                    alpha: theme.brightness == Brightness.dark ? .07 : .045,
+                  ),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
+                child: BalynShaderIcon(
                   item.type == TransactionType.transfer
                       ? Icons.swap_horiz_rounded
                       : category == null
                       ? Icons.receipt_long_rounded
                       : categoryIcon(category.iconKey),
-                  color: color,
+                  seed: color,
                   size: 22,
                 ),
               ),
@@ -1090,12 +1118,12 @@ class _MovementTile extends StatelessWidget {
                     ),
                     if (item.tags.isNotEmpty) ...[
                       const SizedBox(height: 3),
-                      Text(
+                      BalynShaderText(
                         item.tags.take(2).map((tag) => '#$tag').join('  '),
+                        seed: theme.colorScheme.tertiary,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: theme.textTheme.labelSmall?.copyWith(
-                          color: theme.colorScheme.tertiary,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -1104,10 +1132,10 @@ class _MovementTile extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 10),
-              Text(
+              BalynShaderText(
                 state.hideBalance ? '••••' : amount,
+                seed: transactionColor(context, item.type),
                 style: theme.textTheme.titleSmall?.copyWith(
-                  color: transactionColor(context, item.type),
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -1202,10 +1230,12 @@ class _CategoryRankRow extends StatelessWidget {
               height: 42,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: color.withValues(alpha: .12),
+                color: theme.colorScheme.onSurface.withValues(
+                  alpha: theme.brightness == Brightness.dark ? .07 : .045,
+                ),
                 shape: BoxShape.circle,
               ),
-              child: Icon(icon, color: color, size: 21),
+              child: BalynShaderIcon(icon, seed: color, size: 21),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -1225,10 +1255,10 @@ class _CategoryRankRow extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Text(
+                      BalynShaderText(
                         state.hideBalance ? '••••' : amount,
+                        seed: color,
                         style: theme.textTheme.labelLarge?.copyWith(
-                          color: color,
                           fontWeight: FontWeight.w900,
                         ),
                       ),
@@ -1240,14 +1270,10 @@ class _CategoryRankRow extends StatelessWidget {
                       Expanded(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(99),
-                          child: LinearProgressIndicator(
-                            value: (group.percentage / 100)
-                                .clamp(0.0, 1.0)
-                                .toDouble(),
+                          child: BalynShaderLinearProgress(
+                            value: group.percentage / 100,
+                            seed: color,
                             minHeight: 4,
-                            backgroundColor: theme.colorScheme.onSurface
-                                .withValues(alpha: .07),
-                            valueColor: AlwaysStoppedAnimation<Color>(color),
                           ),
                         ),
                       ),

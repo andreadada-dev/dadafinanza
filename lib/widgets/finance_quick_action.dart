@@ -1,5 +1,7 @@
 import 'package:balyn/l10n/localized_material.dart';
 
+import 'balyn_shader_system.dart';
+
 class FinanceQuickAction extends StatefulWidget {
   const FinanceQuickAction({
     required this.icon,
@@ -29,8 +31,9 @@ class _FinanceQuickActionState extends State<FinanceQuickAction> {
     final enabled = widget.onTap != null;
     final base = widget.color ?? theme.colorScheme.onSurface;
     final resolvedColor = enabled ? base : base.withValues(alpha: .38);
-    final circleSurface = resolvedColor.withValues(
-      alpha: theme.brightness == Brightness.dark ? .14 : .08,
+    final shaderEnabled = enabled && widget.color != null;
+    final circleSurface = theme.colorScheme.onSurface.withValues(
+      alpha: theme.brightness == Brightness.dark ? .07 : .045,
     );
 
     return Semantics(
@@ -70,24 +73,32 @@ class _FinanceQuickActionState extends State<FinanceQuickAction> {
                           color: circleSurface,
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(
-                          widget.icon,
-                          size: 29,
-                          color: resolvedColor,
-                        ),
+                        child: shaderEnabled
+                            ? BalynShaderIcon(widget.icon, seed: base, size: 29)
+                            : Icon(widget.icon, size: 29, color: resolvedColor),
                       ),
                       const SizedBox(height: 8),
                       FittedBox(
                         fit: BoxFit.scaleDown,
-                        child: Text(
-                          widget.label,
-                          maxLines: 1,
-                          softWrap: false,
-                          style: theme.textTheme.labelLarge?.copyWith(
-                            color: resolvedColor,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
+                        child: shaderEnabled
+                            ? BalynShaderText(
+                                widget.label,
+                                seed: base,
+                                maxLines: 1,
+                                softWrap: false,
+                                style: theme.textTheme.labelLarge?.copyWith(
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              )
+                            : Text(
+                                widget.label,
+                                maxLines: 1,
+                                softWrap: false,
+                                style: theme.textTheme.labelLarge?.copyWith(
+                                  color: resolvedColor,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
                       ),
                     ],
                   ),

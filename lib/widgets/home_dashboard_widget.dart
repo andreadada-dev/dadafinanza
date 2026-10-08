@@ -9,6 +9,7 @@ import '../screens/account_management_screen.dart';
 import '../screens/account_screens.dart' show showAccountEditor;
 import '../screens/canonical_shell.dart' show CanonicalDashboardWidget;
 import '../screens/category_management_screen.dart' show CategoryDetailScreen;
+import 'balyn_shader_system.dart';
 import 'ui_helpers.dart';
 
 /// Renders a dashboard configuration on the canonical Home.
@@ -130,13 +131,13 @@ class _MetricBlock extends StatelessWidget {
         FittedBox(
           fit: BoxFit.scaleDown,
           alignment: Alignment.centerLeft,
-          child: Text(
-            value,
-            style: style?.copyWith(
-              color: valueColor,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
+          child: valueColor == null
+              ? Text(value, style: style?.copyWith(fontWeight: FontWeight.w800))
+              : BalynShaderText(
+                  value,
+                  seed: valueColor!,
+                  style: style?.copyWith(fontWeight: FontWeight.w800),
+                ),
         ),
         if (showDetail && detail != null) ...[
           const SizedBox(height: 4),
@@ -198,13 +199,17 @@ class _AccountsBlock extends StatelessWidget {
                 height: 42,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Color(account.colorValue).withValues(alpha: .11),
+                  color: Theme.of(context).colorScheme.onSurface.withValues(
+                    alpha: Theme.of(context).brightness == Brightness.dark
+                        ? .07
+                        : .045,
+                  ),
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: Icon(
+                child: BalynShaderIcon(
                   accountIcon(account.iconKey),
+                  seed: Color(account.colorValue),
                   size: 21,
-                  color: Color(account.colorValue),
                 ),
               ),
               title: Text(
@@ -596,63 +601,82 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
             Center(
               child: SizedBox.square(
                 dimension: chartSize,
-                child: PieChart(
-                  PieChartData(
-                    startDegreeOffset: -90,
-                    sectionsSpace: hasData ? 4 : 0,
-                    centerSpaceRadius: chartSize * .32,
-                    centerSpaceColor: Theme.of(context).scaffoldBackgroundColor,
-                    borderData: FlBorderData(show: false),
-                    pieTouchData: PieTouchData(
-                      enabled: interactive,
-                      touchCallback: (event, response) {
-                        if (!interactive ||
-                            event is! FlTapDownEvent ||
-                            response?.touchedSection == null) {
-                          return;
-                        }
-                        final next =
-                            response!.touchedSection!.touchedSectionIndex;
-                        setState(() {
-                          _selectedIndex = _selectedIndex == next ? -1 : next;
-                        });
-                      },
-                    ),
-                    sections: hasData
-                        ? [
-                            for (
-                              var index = 0;
-                              index < data.slices.length;
-                              index++
-                            )
+                child: BalynShaderMotionBuilder(
+                  builder: (context, shaderPhase, shaderEnabled) => PieChart(
+                    PieChartData(
+                      startDegreeOffset: -90,
+                      sectionsSpace: hasData ? 4 : 0,
+                      centerSpaceRadius: chartSize * .32,
+                      centerSpaceColor: Theme.of(
+                        context,
+                      ).scaffoldBackgroundColor,
+                      borderData: FlBorderData(show: false),
+                      pieTouchData: PieTouchData(
+                        enabled: interactive,
+                        touchCallback: (event, response) {
+                          if (!interactive ||
+                              event is! FlTapDownEvent ||
+                              response?.touchedSection == null) {
+                            return;
+                          }
+                          final next =
+                              response!.touchedSection!.touchedSectionIndex;
+                          setState(() {
+                            _selectedIndex = _selectedIndex == next ? -1 : next;
+                          });
+                        },
+                      ),
+                      sections: hasData
+                          ? [
+                              for (
+                                var index = 0;
+                                index < data.slices.length;
+                                index++
+                              )
+                                PieChartSectionData(
+                                  color: shaderEnabled
+                                      ? null
+                                      : data.slices[index].color.withValues(
+                                          alpha:
+                                              pageSelectedIndex == -1 ||
+                                                  pageSelectedIndex == index
+                                              ? 1
+                                              : .22,
+                                        ),
+                                  gradient: shaderEnabled
+                                      ? balynAnimatedGradient(
+                                          data.slices[index].color,
+                                          shaderPhase,
+                                          opacity:
+                                              pageSelectedIndex == -1 ||
+                                                  pageSelectedIndex == index
+                                              ? 1
+                                              : .22,
+                                        )
+                                      : null,
+                                  value: data.slices[index].amount,
+                                  title: '',
+                                  radius:
+                                      chartSize *
+                                      (pageSelectedIndex == index
+                                          ? .165
+                                          : .145),
+                                  showTitle: false,
+                                ),
+                            ]
+                          : [
                               PieChartSectionData(
-                                color:
-                                    pageSelectedIndex == -1 ||
-                                        pageSelectedIndex == index
-                                    ? data.slices[index].color
-                                    : data.slices[index].color.withValues(
-                                        alpha: .22,
-                                      ),
-                                value: data.slices[index].amount,
+                                color: emptyRingColor,
+                                value: 1,
                                 title: '',
-                                radius:
-                                    chartSize *
-                                    (pageSelectedIndex == index ? .165 : .145),
+                                radius: chartSize * .145,
                                 showTitle: false,
                               ),
-                          ]
-                        : [
-                            PieChartSectionData(
-                              color: emptyRingColor,
-                              value: 1,
-                              title: '',
-                              radius: chartSize * .145,
-                              showTitle: false,
-                            ),
-                          ],
+                            ],
+                    ),
+                    duration: const Duration(milliseconds: 260),
+                    curve: Curves.easeOutCubic,
                   ),
-                  duration: const Duration(milliseconds: 260),
-                  curve: Curves.easeOutCubic,
                 ),
               ),
             ),
@@ -898,7 +922,7 @@ class _DonutPeriodCenter extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 26, color: accent),
+          BalynShaderIcon(icon, seed: accent, size: 26),
           const SizedBox(height: 6),
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -947,10 +971,10 @@ class _DonutPeriodCenter extends StatelessWidget {
           const SizedBox(height: 2),
           FittedBox(
             fit: BoxFit.scaleDown,
-            child: Text(
+            child: BalynShaderText(
               totalLabel,
+              seed: accent,
               style: theme.textTheme.titleMedium?.copyWith(
-                color: accent,
                 fontWeight: FontWeight.w900,
               ),
             ),
@@ -1012,12 +1036,12 @@ class _SelectedDonutCenter extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
+              BalynShaderIcon(
                 slice.category == null
                     ? Icons.pie_chart_rounded
                     : categoryIcon(slice.category!.iconKey),
+                seed: slice.color,
                 size: 24,
-                color: slice.color,
               ),
               const SizedBox(height: 4),
               ConstrainedBox(
@@ -1033,10 +1057,10 @@ class _SelectedDonutCenter extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 2),
-              Text(
+              BalynShaderText(
                 '${(percentage * 100).round()}%',
+                seed: slice.color,
                 style: theme.textTheme.titleMedium?.copyWith(
-                  color: slice.color,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -1071,7 +1095,7 @@ class _CategoryDonutRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Color(category.colorValue);
-    final percent = total <= 0 ? 0 : amount / total;
+    final percent = total <= 0 ? 0.0 : amount / total;
     return InkWell(
       borderRadius: BorderRadius.circular(18),
       onTap: () => Navigator.push(
@@ -1089,12 +1113,16 @@ class _CategoryDonutRow extends StatelessWidget {
               height: 38,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: color.withValues(alpha: .11),
+                color: Theme.of(context).colorScheme.onSurface.withValues(
+                  alpha: Theme.of(context).brightness == Brightness.dark
+                      ? .07
+                      : .045,
+                ),
                 borderRadius: BorderRadius.circular(14),
               ),
-              child: Icon(
+              child: BalynShaderIcon(
                 categoryIcon(category.iconKey),
-                color: color,
+                seed: color,
                 size: 19,
               ),
             ),
@@ -1112,11 +1140,10 @@ class _CategoryDonutRow extends StatelessWidget {
                   const SizedBox(height: 5),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(999),
-                    child: LinearProgressIndicator(
-                      value: percent.clamp(0, 1).toDouble(),
+                    child: BalynShaderLinearProgress(
+                      value: percent,
+                      seed: color,
                       minHeight: 4,
-                      color: color,
-                      backgroundColor: color.withValues(alpha: .10),
                     ),
                   ),
                 ],
