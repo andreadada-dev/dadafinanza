@@ -92,25 +92,10 @@ class AccountContextHomeScreen extends StatelessWidget {
         .where((config) => !_fixedSummaryTypes.contains(config.type))
         .toList(growable: false);
 
-    final vignetteColor = Color.lerp(
-      Theme.of(context).colorScheme.tertiary,
-      Colors.black,
-      .72,
-    )!;
-
+    // The liquid shader lives behind every section; a Home-only gradient
+    // would flash on and off whenever the user changes navigation tabs.
     return DecoratedBox(
-      decoration: BoxDecoration(
-        gradient: RadialGradient(
-          center: const Alignment(0, -.18),
-          radius: 1.12,
-          colors: [
-            Colors.transparent,
-            vignetteColor.withValues(alpha: .018),
-            vignetteColor.withValues(alpha: .075),
-          ],
-          stops: const [0, .62, 1],
-        ),
-      ),
+      decoration: const BoxDecoration(color: Colors.transparent),
       child: CustomScrollView(
         slivers: [
           SliverAppBar(

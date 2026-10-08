@@ -209,10 +209,11 @@ class _BalynShaderInherited extends InheritedWidget {
       oldWidget.data.barEnabled != data.barEnabled;
 }
 
-/// App-wide black/white surface with extremely slow liquid waves.
+/// One continuous, app-wide surface below the Navigator.
 ///
-/// Dark mode stays visually black: the colored energy is intentionally faint
-/// and only becomes obvious after looking at the surface for a few seconds.
+/// The GPU program is created once per mounted surface, not on every frame or
+/// when the selected tab changes. The painter listens directly to the shared
+/// clock; only this layer repaints, not the widget tree or current page.
 class BalynShaderBackdrop extends StatelessWidget {
   const BalynShaderBackdrop({required this.child, super.key});
 
@@ -222,26 +223,20 @@ class BalynShaderBackdrop extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = Theme.of(context).brightness == Brightness.dark;
     final data = BalynShaderScope.maybeOf(context);
-    final fallback = dark ? Colors.black : Colors.white;
+    final enabled = data?.backgroundEnabled == true;
 
     return Stack(
       fit: StackFit.expand,
       children: [
-        ColoredBox(color: fallback),
-        if (data?.backgroundEnabled == true && data?.backgroundProgram != null)
+        ColoredBox(color: dark ? Colors.black : Colors.white),
+        if (enabled && data?.backgroundProgram != null)
           Positioned.fill(
             child: IgnorePointer(
-              child: RepaintBoundary(
-                child: AnimatedBuilder(
-                  animation: data!.clock,
-                  builder: (context, _) => CustomPaint(
-                    painter: _BalynBackgroundPainter(
-                      program: data.backgroundProgram!,
-                      time: data.motionEnabled ? data.clock.value : 0,
-                      dark: dark,
-                    ),
-                  ),
-                ),
+              child: _BalynBackgroundSurface(
+                program: data!.backgroundProgram!,
+                clock: data.clock,
+                dark: dark,
+                motionEnabled: data.motionEnabled,
               ),
             ),
           ),
@@ -251,33 +246,88 @@ class BalynShaderBackdrop extends StatelessWidget {
   }
 }
 
-class _BalynBackgroundPainter extends CustomPainter {
-  const _BalynBackgroundPainter({
+class _BalynBackgroundSurface extends StatefulWidget {
+  const _BalynBackgroundSurface({
     required this.program,
-    required this.time,
+    required this.clock,
     required this.dark,
+    required this.motionEnabled,
   });
 
   final ui.FragmentProgram program;
-  final double time;
+  final ValueListenable<double> clock;
   final bool dark;
+  final bool motionEnabled;
+
+  @override
+  State<_BalynBackgroundSurface> createState() =>
+      _BalynBackgroundSurfaceState();
+}
+
+class _BalynBackgroundSurfaceState extends State<_BalynBackgroundSurface> {
+  late ui.FragmentShader _shader;
+
+  @override
+  void initState() {
+    super.initState();
+    _shader = widget.program.fragmentShader();
+  }
+
+  @override
+  void didUpdateWidget(covariant _BalynBackgroundSurface oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!identical(oldWidget.program, widget.program)) {
+      _shader = widget.program.fragmentShader();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => RepaintBoundary(
+    child: CustomPaint(
+      isComplex: true,
+      willChange: widget.motionEnabled,
+      painter: _BalynBackgroundPainter(
+        shader: _shader,
+        clock: widget.clock,
+        dark: widget.dark,
+        motionEnabled: widget.motionEnabled,
+      ),
+    ),
+  );
+}
+
+class _BalynBackgroundPainter extends CustomPainter {
+  _BalynBackgroundPainter({
+    required this.shader,
+    required this.clock,
+    required this.dark,
+    required this.motionEnabled,
+  }) : super(repaint: clock);
+
+  final ui.FragmentShader shader;
+  final ValueListenable<double> clock;
+  final bool dark;
+  final bool motionEnabled;
 
   @override
   void paint(Canvas canvas, Size size) {
     if (size.isEmpty) return;
-    final shader = program.fragmentShader()
+    shader
       ..setFloat(0, size.width)
       ..setFloat(1, size.height)
-      ..setFloat(2, time)
+      // Two seamless fluid cycles per 72 s shared clock: slow enough to
+      // stay ambient, but visibly alive within a few seconds.
+      ..setFloat(2, motionEnabled ? (clock.value * 2.0) % 1.0 : 0)
       ..setFloat(3, dark ? 1 : 0);
     canvas.drawRect(Offset.zero & size, Paint()..shader = shader);
   }
 
   @override
   bool shouldRepaint(_BalynBackgroundPainter oldDelegate) =>
-      oldDelegate.time != time ||
+      !identical(oldDelegate.shader, shader) ||
+      !identical(oldDelegate.clock, clock) ||
       oldDelegate.dark != dark ||
-      oldDelegate.program != program;
+      oldDelegate.motionEnabled != motionEnabled;
 }
 
 /// Applies the Balyn animated material to any alpha-masked child.
@@ -341,7 +391,8 @@ class _BalynShaderInkState extends State<BalynShaderInk> {
     }
 
     final palette = balynShaderPalette(widget.seed);
-    final animation = data.motionEnabled
+    // Hidden tabs remain mounted, but must not rebuild their shader masks.
+    final animation = data.motionEnabled && TickerMode.of(context)
         ? data.clock
         : const AlwaysStoppedAnimation<double>(0);
 
@@ -528,7 +579,10 @@ class BalynShaderMotionBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final data = BalynShaderScope.maybeOf(context);
     final enabled = data?.chartEnabled ?? true;
-    if (data == null || !data.motionEnabled || !enabled) {
+    if (data == null ||
+        !data.motionEnabled ||
+        !enabled ||
+        !TickerMode.of(context)) {
       return builder(context, 0, enabled);
     }
     return AnimatedBuilder(
