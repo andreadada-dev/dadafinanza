@@ -49,7 +49,11 @@ void main() {
         var movingPixels = 0;
         for (var index = 0; index < initial.length; index += 4) {
           final blue = initial[index + 2];
-          if (dark ? blue >= 24 : blue <= 247 && initial[index] <= 245) {
+          // Lavender on white reduces red/green more than blue; don't
+          // require the dark blue threshold from the old striped material.
+          if (dark
+              ? blue >= 24
+              : initial[index] <= 251 && initial[index + 1] <= 251) {
             visiblePixels.add(index);
           }
           final delta =
