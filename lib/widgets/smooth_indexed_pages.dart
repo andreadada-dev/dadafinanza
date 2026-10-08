@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 
 /// Cross-fades between permanent tab subtrees without remounting the app
 /// backdrop or losing form, filter and scroll state on inactive tabs.
