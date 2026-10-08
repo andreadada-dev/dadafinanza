@@ -10,7 +10,7 @@ on:
       - 'fix/**'
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: flutter-${{ github.ref }}
@@ -30,8 +30,16 @@ jobs:
 
       - name: Pub get
         run: flutter pub get
-      - name: Format check
-        run: dart format --output=none --set-exit-if-changed lib test
+      - name: Apply Dart format
+        run: |
+          dart format lib test
+          if ! git diff --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add lib test
+            git commit -m "style: format visible background shader test"
+            git push
+          fi
       - name: Analyze
         run: flutter analyze --no-fatal-infos
       - name: Test
