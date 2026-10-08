@@ -84,6 +84,15 @@ class PersonalSettingsScreen extends StatelessWidget {
             subtitle: AppI18n.preferenceLabel(state.languageCode),
             onTap: () => _pickLanguage(context, state),
           ),
+          _Link(
+            icon: Icons.auto_awesome_rounded,
+            title: 'Gradient animati',
+            subtitle: 'Icone · Torte · Testo · Barre · Sfondo',
+            onTap: () => _open(
+              context,
+              const ShaderAppearanceSettingsScreen(),
+            ),
+          ),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
             secondary: const Icon(Icons.visibility_off_outlined),
@@ -495,6 +504,82 @@ class PersonalSettingsScreen extends StatelessWidget {
       await HapticService.light(enabled: state.haptics);
       await state.setThemePreference(selected);
     }
+  }
+}
+
+class ShaderAppearanceSettingsScreen extends StatelessWidget {
+  const ShaderAppearanceSettingsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final state = AppScope.of(context);
+    return Scaffold(
+      appBar: AppBar(title: const Text('Gradient animati')),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(20, 8, 20, 100),
+        children: [
+          Text(
+            'Scegli dove usare il materiale shader animato. Disattivando una voce, quell’elemento torna al suo colore piatto originale.',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          const SizedBox(height: 20),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            secondary: const Icon(Icons.interests_outlined),
+            title: const Text('Icone'),
+            subtitle: const Text('Icone colorate e azioni rapide'),
+            value: state.shaderIcons,
+            onChanged: (value) =>
+                _setShaderSetting(state, 'shader_icons', value),
+          ),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            secondary: const Icon(Icons.donut_large_rounded),
+            title: const Text('Torte'),
+            subtitle: const Text('Donut e grafici colorati'),
+            value: state.shaderCharts,
+            onChanged: (value) =>
+                _setShaderSetting(state, 'shader_charts', value),
+          ),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            secondary: const Icon(Icons.text_fields_rounded),
+            title: const Text('Testo'),
+            subtitle: const Text('Importi e testi semanticamente colorati'),
+            value: state.shaderText,
+            onChanged: (value) =>
+                _setShaderSetting(state, 'shader_text', value),
+          ),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            secondary: const Icon(Icons.linear_scale_rounded),
+            title: const Text('Barre'),
+            subtitle: const Text('Progress bar e indicatori lineari'),
+            value: state.shaderBars,
+            onChanged: (value) =>
+                _setShaderSetting(state, 'shader_bars', value),
+          ),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            secondary: const Icon(Icons.wallpaper_rounded),
+            title: const Text('Sfondo'),
+            subtitle: const Text('Onde liquide lente sul nero o sul bianco'),
+            value: state.shaderBackground,
+            onChanged: (value) =>
+                _setShaderSetting(state, 'shader_background', value),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _setShaderSetting(
+    AppState state,
+    String key,
+    bool value,
+  ) async {
+    await HapticService.light(enabled: state.haptics);
+    await state.setSetting(key, value ? '1' : '0');
   }
 }
 
