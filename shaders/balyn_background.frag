@@ -8,44 +8,56 @@ uniform float uDark;
 
 out vec4 fragColor;
 
-// Two broad liquid ribbons drift across the screen over a seamless 72 s loop.
-// No per-pixel glitter, sharp edges or high-frequency noise.
+// Slow, seamless fluid domain warping rather than rows of sine-wave ribbons.
+// All temporal terms use integer harmonics of the full 72 second period.
 void main() {
-  vec2 size = max(uSize, vec2(1.0));
-  vec2 uv = FlutterFragCoord().xy / size;
+  vec2 uv = FlutterFragCoord().xy / max(uSize, vec2(1.0));
+  vec2 p = uv - vec2(0.5);
   float t = uTime * 6.28318530718;
 
-  // The moving centerlines use only integer multiples of t, so wrapping
-  // the phase from 1 back to 0 never produces a visible jump.
-  float upperPath = 0.27
-      + 0.14 * sin(uv.x * 4.4 + t)
-      + 0.035 * sin(uv.x * 8.2 - t);
-  float lowerPath = 0.73
-      + 0.12 * sin(uv.x * 3.7 - t + 1.8);
+  // Distort the coordinates in both directions. No hard edges or grain.
+  vec2 drift = vec2(
+    0.09 * sin(p.y * 3.6 + t) + 0.044 * cos(p.x * 4.5 - t * 2.0),
+    0.08 * cos(p.x * 3.1 - t) + 0.045 * sin(p.y * 4.2 + t * 2.0)
+  );
+  vec2 flow = p + drift;
 
-  float upperDistance = (uv.y - upperPath) / 0.25;
-  float lowerDistance = (uv.y - lowerPath) / 0.30;
-  float upperRibbon = exp(-upperDistance * upperDistance);
-  float lowerRibbon = exp(-lowerDistance * lowerDistance);
+  // Soft overlapping translucent clouds with independently drifting centers.
+  vec2 a = (flow - vec2(-0.25 + 0.12 * sin(t),
+                          -0.18 + 0.09 * cos(t))) / vec2(0.43, 0.47);
+  vec2 b = (flow - vec2(0.25 + 0.13 * cos(t),
+                           0.19 + 0.10 * sin(t))) / vec2(0.46, 0.44);
+  vec2 c = (flow - vec2(0.00 + 0.18 * sin(t * 2.0),
+                           0.02 - 0.12 * cos(t))) / vec2(0.57, 0.39);
 
-  // Slowly shifting concentrations give the ribbons organic texture without
-  // granular artifacts. These terms are periodic over the full 72 s cycle.
-  float upperFlow = 0.64 + 0.36 * (0.5 + 0.5 * sin(uv.x * 4.0 - t));
-  float lowerFlow = 0.60 + 0.40 * (0.5 + 0.5 * cos(uv.x * 3.2 + t));
-  float violetWave = upperRibbon * upperFlow;
-  float indigoWave = lowerRibbon * lowerFlow;
+  float cloudA = exp(-1.65 * dot(a, a));
+  float cloudB = exp(-1.75 * dot(b, b));
+  float cloudC = exp(-2.15 * dot(c, c));
 
-  // Dark mode stays black between waves but now has a readable #1B1036-like
-  // violet highlight instead of the previous near-invisible few RGB levels.
-  vec3 darkColor = vec3(0.0);
-  darkColor += vec3(0.13, 0.052, 0.28) * violetWave;
-  darkColor += vec3(0.055, 0.093, 0.21) * indigoWave;
+  // Advected detail creates silky liquid swirls, not high-contrast stripes.
+  float swirling = 0.5 + 0.5 * sin(
+    flow.x * 5.6 + flow.y * 3.4 +
+    0.75 * sin(flow.y * 3.2 - t) - t
+  );
+  float folding = 0.5 + 0.5 * cos(
+    flow.y * 5.1 - flow.x * 2.3 +
+    0.52 * sin(flow.x * 4.1 + t) + t
+  );
 
-  // On white, subtract a soft lavender tint so the animation is also visible.
-  // White remains pure where the ribbons are absent.
+  float violet = cloudA * (0.55 + 0.45 * swirling) +
+                 cloudC * (0.16 + 0.21 * folding);
+  float indigo = cloudB * (0.53 + 0.47 * folding) +
+                 cloudC * (0.10 + 0.18 * swirling);
+
+  // Both themes keep a very clean foundation with slow, coherent movement.
+  // Colors are soft violet/blue light, not opaque stripes or large flat bands.
+  vec3 darkColor = vec3(0.0014, 0.0015, 0.0032);
+  darkColor += vec3(0.098, 0.040, 0.185) * violet;
+  darkColor += vec3(0.037, 0.055, 0.132) * indigo;
+
   vec3 lightColor = vec3(1.0);
-  lightColor -= vec3(0.18, 0.17, 0.058) * violetWave;
-  lightColor -= vec3(0.105, 0.095, 0.034) * indigoWave;
+  lightColor -= vec3(0.060, 0.061, 0.024) * violet;
+  lightColor -= vec3(0.042, 0.043, 0.018) * indigo;
 
   vec3 color = mix(lightColor, darkColor, clamp(uDark, 0.0, 1.0));
   fragColor = vec4(clamp(color, 0.0, 1.0), 1.0);
