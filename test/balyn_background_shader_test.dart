@@ -23,7 +23,7 @@ Future<Uint8List> _renderBackground({
   final recorder = ui.PictureRecorder();
   final canvas = ui.Canvas(recorder);
   canvas.drawRect(
-    const ui.Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble()),
+    ui.Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble()),
     ui.Paint()..shader = shader,
   );
   final picture = recorder.endRecording();
