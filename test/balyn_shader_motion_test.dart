@@ -15,8 +15,8 @@ void main() {
             child: BalynShaderScope(
               loadPrograms: false,
               child: BalynShaderMotionBuilder(
-                builder: (context, phase) =>
-                    Text(phase.toStringAsFixed(6), key: phaseKey),
+                builder: (context, phase, enabled) =>
+                    Text('${enabled ? 'on' : 'off'}:${phase.toStringAsFixed(6)}', key: phaseKey),
               ),
             ),
           ),
@@ -29,7 +29,32 @@ void main() {
 
       expect(first, isNotNull);
       expect(second, isNotNull);
+      expect(first, startsWith('on:'));
+      expect(second, startsWith('on:'));
       expect(second, isNot(first));
     },
   );
+
+  testWidgets('chart shader toggle disables animated chart material', (
+    tester,
+  ) async {
+    const stateKey = ValueKey('shader-enabled');
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: BalynShaderScope(
+          loadPrograms: false,
+          chartEnabled: false,
+          child: BalynShaderMotionBuilder(
+            builder: (context, phase, enabled) => Text(
+              '$enabled:${phase.toStringAsFixed(3)}',
+              key: stateKey,
+            ),
+          ),
+        ),
+      ),
+    );
+
+    expect(tester.widget<Text>(find.byKey(stateKey)).data, 'false:0.000');
+  });
 }
