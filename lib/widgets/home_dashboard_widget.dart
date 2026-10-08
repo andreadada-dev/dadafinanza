@@ -602,7 +602,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
               child: SizedBox.square(
                 dimension: chartSize,
                 child: BalynShaderMotionBuilder(
-                  builder: (context, shaderPhase) => PieChart(
+                  builder: (context, shaderPhase, shaderEnabled) => PieChart(
                     PieChartData(
                       startDegreeOffset: -90,
                       sectionsSpace: hasData ? 4 : 0,
@@ -634,15 +634,26 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                                 index++
                               )
                                 PieChartSectionData(
-                                  gradient: balynAnimatedGradient(
-                                    data.slices[index].color,
-                                    shaderPhase,
-                                    opacity:
-                                        pageSelectedIndex == -1 ||
-                                            pageSelectedIndex == index
-                                        ? 1
-                                        : .22,
-                                  ),
+                                  color: shaderEnabled
+                                      ? null
+                                      : data.slices[index].color.withValues(
+                                          alpha:
+                                              pageSelectedIndex == -1 ||
+                                                  pageSelectedIndex == index
+                                              ? 1
+                                              : .22,
+                                        ),
+                                  gradient: shaderEnabled
+                                      ? balynAnimatedGradient(
+                                          data.slices[index].color,
+                                          shaderPhase,
+                                          opacity:
+                                              pageSelectedIndex == -1 ||
+                                                  pageSelectedIndex == index
+                                              ? 1
+                                              : .22,
+                                        )
+                                      : null,
                                   value: data.slices[index].amount,
                                   title: '',
                                   radius:
