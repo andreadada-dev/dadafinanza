@@ -315,7 +315,9 @@ class _BalynBackgroundPainter extends CustomPainter {
     shader
       ..setFloat(0, size.width)
       ..setFloat(1, size.height)
-      ..setFloat(2, motionEnabled ? clock.value : 0)
+      // Two seamless fluid cycles per 72 s shared clock: slow enough to
+      // stay ambient, but visibly alive within a few seconds.
+      ..setFloat(2, motionEnabled ? (clock.value * 2.0) % 1.0 : 0)
       ..setFloat(3, dark ? 1 : 0);
     canvas.drawRect(Offset.zero & size, Paint()..shader = shader);
   }
