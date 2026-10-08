@@ -18,8 +18,21 @@ class BalynShaderPrograms {
   static ui.FragmentProgram? get ink => _ink;
   static bool get ready => _background != null && _ink != null;
 
-  static Future<void> preload() {
-    return _loading ??= _load();
+  static Future<void> preload() async {
+    if (ready) return;
+    final existing = _loading;
+    if (existing != null) {
+      await existing;
+      return;
+    }
+
+    final loading = _load();
+    _loading = loading;
+    try {
+      await loading;
+    } finally {
+      if (!ready) _loading = null;
+    }
   }
 
   static Future<void> _load() async {
