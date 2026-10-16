@@ -281,10 +281,14 @@ class DataManagementScreen extends StatelessWidget {
     PlatformFile selected, {
     required String extension,
   }) async {
-    if (selected.path != null) return File(selected.path!);
+    // The picker path may point to the user's ORIGINAL backup. Never return
+    // it: the restore flow deletes its temporary input after processing.
     final file = File(
-      '${Directory.systemTemp.path}/dada-import-${DateTime.now().microsecondsSinceEpoch}$extension',
+      '${Directory.systemTemp.path}/balyn-import-${DateTime.now().microsecondsSinceEpoch}$extension',
     );
+    if (selected.path case final originalPath?) {
+      return File(originalPath).copy(file.path);
+    }
     await file.writeAsBytes(await selected.readAsBytes(), flush: true);
     return file;
   }
