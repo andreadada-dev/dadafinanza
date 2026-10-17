@@ -10,11 +10,13 @@ import 'ui_helpers.dart';
 class BalynRecentTransactionsCard extends StatelessWidget {
   const BalynRecentTransactionsCard({
     required this.items,
+    required this.hideAmounts,
     required this.onSeeAll,
     super.key,
   });
 
   final List<FinanceTransaction> items;
+  final bool hideAmounts;
   final VoidCallback onSeeAll;
 
   @override
@@ -59,6 +61,7 @@ class BalynRecentTransactionsCard extends StatelessWidget {
               _RecentMovementRow(
                 key: ValueKey('recent-movement-${movement.id}'),
                 movement: movement,
+                hideAmounts: hideAmounts,
               ),
           const SizedBox(height: 4),
           Center(
@@ -74,9 +77,10 @@ class BalynRecentTransactionsCard extends StatelessWidget {
 }
 
 class _RecentMovementRow extends StatelessWidget {
-  const _RecentMovementRow({required this.movement, super.key});
+  const _RecentMovementRow({required this.movement, required this.hideAmounts, super.key});
 
   final FinanceTransaction movement;
+  final bool hideAmounts;
 
   @override
   Widget build(BuildContext context) {
@@ -199,7 +203,7 @@ class _RecentMovementRow extends StatelessWidget {
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 112),
                 child: Text(
-                  state.hideBalance ? '••••' : amount,
+                  hideAmounts ? '••••' : amount,
                   textAlign: TextAlign.end,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
