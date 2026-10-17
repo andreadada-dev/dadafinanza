@@ -1,4 +1,10 @@
+import 'dart:math' as math;
+
 import 'package:balyn/l10n/localized_material.dart';
+
+import '../main.dart';
+import '../models/models.dart';
+import 'ui_helpers.dart';
 
 /// Revolut Invest-inspired, full-width Home header. All amounts and callbacks
 /// are supplied by the finance state; this is not a screenshot or mock data.
@@ -8,6 +14,9 @@ class BalynRevolutHomeHero extends StatelessWidget {
     required this.balance,
     required this.available,
     required this.hideBalance,
+    required this.accounts,
+    required this.currentAccountId,
+    required this.onAccountChanged,
     required this.selectedTab,
     required this.onTabChanged,
     required this.onSearch,
@@ -25,6 +34,9 @@ class BalynRevolutHomeHero extends StatelessWidget {
   final String balance;
   final String available;
   final bool hideBalance;
+  final List<Account> accounts;
+  final int? currentAccountId;
+  final ValueChanged<int?> onAccountChanged;
   final int selectedTab;
   final ValueChanged<int> onTabChanged;
   final VoidCallback onSearch;
@@ -36,10 +48,102 @@ class BalynRevolutHomeHero extends StatelessWidget {
   final VoidCallback onTransfer;
   final VoidCallback onMore;
 
+
+  static const _balynAccent = Color(0xFF6221E9);
+
+  Color get _accent {
+    final matching = accounts.where((account) => account.id == currentAccountId);
+    if (matching.isEmpty) return _balynAccent;
+    final source = HSLColor.fromColor(Color(matching.first.colorValue));
+    return source
+      .withSaturation(source.saturation.clamp(.55, .92).toDouble())
+      .withLightness(source.lightness.clamp(.30, .42).toDouble())
+      .toColor();
+  }
+
+  void _switchAccount(int direction) {
+    if (accounts.isEmpty) return;
+    final ids = <int?>[null, ...accounts.map((account) => account.id)];
+    final index = ids.indexOf(currentAccountId);
+    final next = ((index < 0 ? 0 : index) + direction + ids.length) % ids.length;
+    onAccountChanged(ids[next]);
+  }
+
+  void _showAccountSelector(BuildContext context) {
+    final state = AppScope.of(context);
+    showModalBottomSheet<void>(
+      context: context,
+      useSafeArea: true,
+      isScrollControlled: true,
+      showDragHandle: true,
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      builder: (sheetContext) => ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.sizeOf(sheetContext).height * .70,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text('Seleziona conto',
+                  style: Theme.of(sheetContext).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w800)),
+              ),
+            ),
+            Flexible(
+              child: ListView(
+                shrinkWrap: true,
+                padding: const EdgeInsets.fromLTRB(12, 0, 12, 20),
+                children: [
+                  _HeroAccountOption(
+                    title: 'Patrimonio totale',
+                    subtitle: 'Tutti i conti',
+                    icon: Icons.account_balance_wallet_outlined,
+                    color: _balynAccent,
+                    selected: currentAccountId == null,
+                    onTap: () {
+                      Navigator.pop(sheetContext);
+                      onAccountChanged(null);
+                    },
+                  ),
+                  if (accounts.isNotEmpty)
+                    const Padding(
+                      padding: EdgeInsets.fromLTRB(13, 12, 13, 6),
+                      child: Text('I TUOI CONTI',
+                        style: TextStyle(fontSize: 11,
+                          fontWeight: FontWeight.w800, letterSpacing: .8)),
+                    ),
+                  for (final account in accounts)
+                    _HeroAccountOption(
+                      key: ValueKey('hero-account-${account.id}'),
+                      title: account.name,
+                      subtitle: account.hideBalance || state.hideBalance
+                          ? account.accountType.label
+                          : '${account.accountType.label} · ${moneyFor(state, account.balance)}',
+                      icon: accountIcon(account.iconKey),
+                      color: Color(account.colorValue),
+                      selected: account.id == currentAccountId,
+                      onTap: () {
+                        Navigator.pop(sheetContext);
+                        onAccountChanged(account.id);
+                      },
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final availableHeight = MediaQuery.sizeOf(context).height;
-    final height = (availableHeight * .41).clamp(284.0, 345.0).toDouble();
+    final height = (availableHeight * .41).clamp(300.0, 356.0).toDouble();
     final largeText = MediaQuery.textScalerOf(context).scale(1) > 1.25;
 
     return SizedBox(
@@ -52,7 +156,14 @@ class BalynRevolutHomeHero extends StatelessWidget {
             right: 0,
             top: 0,
             height: height,
-            child: const CustomPaint(painter: _VioletWavesPainter()),
+            child: TweenAnimationBuilder<Color?>(
+              tween: ColorTween(end: _accent),
+              duration: const Duration(milliseconds: 550),
+              curve: Curves.easeInOutCubic,
+              builder: (context, color, _) => CustomPaint(
+                painter: _AccountWavesPainter(color ?? _accent),
+              ),
+            ),
           ),
           Positioned.fill(
             bottom: 23,
@@ -140,72 +251,156 @@ class BalynRevolutHomeHero extends StatelessWidget {
                       ),
                     ],
                   ),
+
                   const Spacer(flex: 3),
-                  Text(
-                    title.toUpperCase(),
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Colors.white.withValues(alpha: .88),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: .45,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Flexible(
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            balance,
-                            maxLines: 1,
-                            key: const ValueKey('balyn-revolut-balance'),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 37,
-                              height: 1.05,
-                              fontWeight: FontWeight.w800,
-                              letterSpacing: -1.7,
-                            ),
+                      if (accounts.isNotEmpty)
+                        _AnimatedAccountDiamond(
+                          direction: -1,
+                          onTap: () => _switchAccount(-1),
+                        )
+                      else
+                        const SizedBox(width: 39),
+                      Expanded(
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onHorizontalDragEnd: (details) {
+                            final velocity = details.primaryVelocity ?? 0;
+                            if (velocity.abs() >= 110) {
+                              _switchAccount(velocity < 0 ? 1 : -1);
+                            }
+                          },
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  key: const ValueKey('hero-account-dropdown'),
+                                  onTap: () => _showAccountSelector(context),
+                                  borderRadius: BorderRadius.circular(14),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 4, vertical: 6),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            title.toUpperCase(),
+                                            textAlign: TextAlign.center,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              color: Colors.white.withValues(alpha: .9),
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w700,
+                                              letterSpacing: .45,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 7),
+                                        Transform.rotate(
+                                          angle: math.pi / 4,
+                                          child: Container(
+                                            height: 10,
+                                            width: 10,
+                                            decoration: BoxDecoration(
+                                              border: Border(
+                                                right: BorderSide(
+                                                  color: Colors.white.withValues(alpha: .9),
+                                                  width: 2),
+                                                bottom: BorderSide(
+                                                  color: Colors.white.withValues(alpha: .9),
+                                                  width: 2),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              SizedBox(
+                                height: 48,
+                                width: double.infinity,
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    Positioned.fill(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 29),
+                                        child: Center(
+                                          child: AnimatedSwitcher(
+                                            duration: const Duration(milliseconds: 250),
+                                            child: FittedBox(
+                                              key: ValueKey('hero-balance-${currentAccountId ?? "total"}-$balance'),
+                                              fit: BoxFit.scaleDown,
+                                              child: Text(
+                                                balance,
+                                                key: const ValueKey('balyn-revolut-balance'),
+                                                textAlign: TextAlign.center,
+                                                maxLines: 1,
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 37,
+                                                  height: 1.05,
+                                                  fontWeight: FontWeight.w800,
+                                                  letterSpacing: -1.6,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 0,
+                                      child: IconButton(
+                                        tooltip: hideBalance
+                                            ? 'Mostra saldi'
+                                            : 'Nascondi saldi',
+                                        onPressed: onVisibility,
+                                        iconSize: 18,
+                                        color: Colors.white.withValues(alpha: .88),
+                                        constraints: const BoxConstraints(
+                                          minWidth: 35, minHeight: 40),
+                                        icon: Icon(hideBalance
+                                            ? Icons.visibility_off_outlined
+                                            : Icons.visibility_outlined),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 6),
+                              Text(
+                                'Disponibile  $available',
+                                maxLines: 1,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.white.withValues(alpha: .85),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                      const SizedBox(width: 6),
-                      IconButton(
-                        tooltip: hideBalance
-                            ? 'Mostra saldi'
-                            : 'Nascondi saldi',
-                        onPressed: onVisibility,
-                        color: Colors.white.withValues(alpha: .85),
-                        iconSize: 18,
-                        constraints: const BoxConstraints(
-                          minWidth: 40,
-                          minHeight: 40,
-                        ),
-                        icon: Icon(
-                          hideBalance
-                              ? Icons.visibility_off_outlined
-                              : Icons.visibility_outlined,
-                        ),
-                      ),
+                      if (accounts.isNotEmpty)
+                        _AnimatedAccountDiamond(
+                          direction: 1,
+                          onTap: () => _switchAccount(1),
+                        )
+                      else
+                        const SizedBox(width: 39),
                     ],
-                  ),
-                  const SizedBox(height: 6),
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      'Disponibile  $available',
-                      maxLines: 1,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.white.withValues(alpha: .85),
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
                   ),
                   const Spacer(flex: 4),
                   Row(
@@ -269,6 +464,146 @@ class BalynRevolutHomeHero extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+
+class _HeroAccountOption extends StatelessWidget {
+  const _HeroAccountOption({
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.color,
+    required this.selected,
+    required this.onTap,
+    super.key,
+  });
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  final Color color;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 5),
+      child: Material(
+        color: selected
+            ? scheme.primary.withValues(alpha: .09)
+            : Colors.transparent,
+        borderRadius: BorderRadius.circular(18),
+        child: ListTile(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18)),
+          leading: Container(
+            height: 42, width: 42,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: .13),
+              borderRadius: BorderRadius.circular(14)),
+            child: Icon(icon, color: color),
+          ),
+          title: Text(title, maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontWeight: selected ? FontWeight.w800 : FontWeight.w600)),
+          subtitle: Text(subtitle, maxLines: 1,
+            overflow: TextOverflow.ellipsis),
+          trailing: selected
+              ? Icon(Icons.check_circle_rounded, color: scheme.primary)
+              : const Icon(Icons.chevron_right_rounded),
+          onTap: onTap,
+        ),
+      ),
+    );
+  }
+}
+
+class _AnimatedAccountDiamond extends StatefulWidget {
+  const _AnimatedAccountDiamond({
+    required this.direction,
+    required this.onTap,
+  });
+  final int direction;
+  final VoidCallback onTap;
+
+  @override
+  State<_AnimatedAccountDiamond> createState() =>
+      _AnimatedAccountDiamondState();
+}
+
+class _AnimatedAccountDiamondState extends State<_AnimatedAccountDiamond>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 850),
+  )..repeat(reverse: true);
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final reducedMotion = MediaQuery.disableAnimationsOf(context);
+    return Tooltip(
+      message: widget.direction < 0
+          ? 'Conto precedente'
+          : 'Conto successivo',
+      child: InkWell(
+        borderRadius: BorderRadius.circular(22),
+        onTap: widget.onTap,
+        child: SizedBox(
+          height: 62, width: 39,
+          child: AnimatedBuilder(
+            animation: _controller,
+            builder: (context, _) {
+              final phase = reducedMotion
+                  ? 0.0
+                  : Curves.easeInOutSine.transform(_controller.value);
+              return Center(
+                child: Transform.translate(
+                  offset: Offset(widget.direction * phase * 4, 0),
+                  child: Opacity(
+                    opacity: .60 + .4 * phase,
+                    child: SizedBox(
+                      width: 26, height: 26,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Transform.rotate(
+                            angle: math.pi / 4,
+                            child: Container(
+                              width: 18, height: 18,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.white.withValues(alpha: .66)),
+                                borderRadius: BorderRadius.circular(3),
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            widget.direction < 0
+                                ? Icons.chevron_left_rounded
+                                : Icons.chevron_right_rounded,
+                            color: Colors.white, size: 23,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
@@ -401,92 +736,63 @@ class _TabPill extends StatelessWidget {
   );
 }
 
-class _VioletWavesPainter extends CustomPainter {
-  const _VioletWavesPainter();
+
+class _AccountWavesPainter extends CustomPainter {
+  const _AccountWavesPainter(this.base);
+  final Color base;
 
   @override
   void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
+    final bright = Color.lerp(base, Colors.white, .18)!;
+    final deep = Color.lerp(base, Colors.black, .18)!;
     canvas.drawRect(
       rect,
-      Paint()
-        ..shader = const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xFF6119FC),
-            Color(0xFF8217F7),
-            Color(0xFF440DF7),
-            Color(0xFF3610DF),
-          ],
-          stops: [0, .36, .74, 1],
-        ).createShader(rect),
+      Paint()..shader = LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [bright, base, deep],
+        stops: const [0, .56, 1],
+      ).createShader(rect),
     );
-
-    final bloom = Rect.fromCenter(
-      center: Offset(size.width * .86, size.height * .43),
-      width: size.width * .98,
-      height: size.height * .85,
+    final glow = Rect.fromCenter(
+      center: Offset(size.width * .81, size.height * .38),
+      width: size.width * 1.1,
+      height: size.height * .86,
     );
-    canvas.drawOval(
-      bloom,
-      Paint()
-        ..shader = const RadialGradient(
-          colors: [Color(0x669F7CFF), Color(0x187E5DFD), Color(0x008B5CFF)],
-          stops: [0, .65, 1],
-        ).createShader(bloom),
-    );
+    canvas.drawOval(glow, Paint()
+      ..shader = RadialGradient(
+        colors: [
+          Colors.white.withValues(alpha: .24),
+          Colors.white.withValues(alpha: .06),
+          Colors.white.withValues(alpha: 0),
+        ],
+      ).createShader(glow));
     final ribbon = Path()
-      ..moveTo(-size.width * .24, size.height * .98)
+      ..moveTo(-size.width * .22, size.height * .99)
       ..cubicTo(
-        size.width * .33,
-        size.height * .93,
-        size.width * .83,
-        size.height * .64,
-        size.width * .98,
-        size.height * .29,
+        size.width * .35, size.height * .92,
+        size.width * .80, size.height * .63,
+        size.width * 1.06, size.height * .27,
       );
-    final glow = Paint()
-      ..color = const Color(0x889A8AFF)
-      ..strokeWidth = 28
+    canvas.drawPath(ribbon, Paint()
+      ..color = Colors.white.withValues(alpha: .37)
+      ..strokeWidth = 26
       ..style = PaintingStyle.stroke
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 24);
-    canvas.drawPath(ribbon, glow);
-    canvas.drawPath(
-      ribbon,
-      Paint()
-        ..shader = const LinearGradient(
-          colors: [
-            Color(0x003B22F3),
-            Color(0x707FBFFF),
-            Color(0xB49EABFF),
-            Color(0x007B55FF),
-          ],
-        ).createShader(rect)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 9
-        ..strokeCap = StrokeCap.round,
-    );
-    final lower = Path()
-      ..moveTo(size.width * .25, size.height * 1.08)
-      ..cubicTo(
-        size.width * .60,
-        size.height * .86,
-        size.width * 1.11,
-        size.height * .89,
-        size.width * 1.22,
-        size.height * .56,
-      );
-    canvas.drawPath(
-      lower,
-      Paint()
-        ..color = const Color(0x8858A4FF)
-        ..strokeWidth = 22
-        ..style = PaintingStyle.stroke
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 22),
-    );
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 25));
+    canvas.drawPath(ribbon, Paint()
+      ..shader = LinearGradient(colors: [
+          Colors.white.withValues(alpha: 0),
+          Colors.white.withValues(alpha: .23),
+          Colors.white.withValues(alpha: .42),
+          Colors.white.withValues(alpha: 0),
+        ]).createShader(rect)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 8
+      ..strokeCap = StrokeCap.round);
   }
 
   @override
-  bool shouldRepaint(covariant _VioletWavesPainter oldDelegate) => false;
+  bool shouldRepaint(covariant _AccountWavesPainter oldDelegate) =>
+      oldDelegate.base != base;
 }
