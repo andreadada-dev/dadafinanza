@@ -157,7 +157,7 @@ void main() {
 
     final hero = home.indexOf('BalynRevolutHomeHero(');
     final accountCarousel = home.indexOf(
-      'AccountCategoryCarousel(accountId: selectedAccount!.id)',
+      'AccountCategoryCarousel(',
       hero + 1,
     );
     final openAccount = home.indexOf("'Apri conto'", accountCarousel + 1);
