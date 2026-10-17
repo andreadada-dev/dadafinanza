@@ -108,7 +108,8 @@ void main() {
     final grid = tester.widget<GridView>(find.byType(GridView));
     final delegate =
         grid.gridDelegate as SliverGridDelegateWithFixedCrossAxisCount;
-    expect(delegate.crossAxisCount, 3);
+    expect(delegate.crossAxisCount, 1);
+    expect(delegate.childAspectRatio, greaterThan(3));
     expect(find.text('Dario'), findsOneWidget);
     expect(find.text('Anna'), findsOneWidget);
     expect(find.text('Notifica domani'), findsOneWidget);
