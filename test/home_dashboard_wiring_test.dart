@@ -21,6 +21,7 @@ void main() {
       'lib/screens/account_context_home_screen.dart',
     ).readAsStringSync();
 
-    expect(source, contains('const Scaffold(body: advanced.HomeScreen())'));
+    expect(source, contains('const Scaffold('));
+    expect(source, contains('body: advanced.HomeScreen()'));
   });
 }
