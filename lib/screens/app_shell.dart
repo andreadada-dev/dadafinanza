@@ -125,19 +125,19 @@ class _BalynAppShellState extends State<BalynAppShell> {
             ? null
             : Semantics(
                 button: true,
-          label: fabLabel,
-          hint: fabHint,
-          excludeSemantics: true,
-          child: GestureDetector(
-            onLongPress: _showQuickMenu,
-            child: FloatingActionButton(
-              onPressed: index == 3
-                  ? () => _openAdvance()
-                  : () => _open(TransactionType.expense),
-              child: const Icon(Icons.add_rounded),
-            ),
-          ),
-        ),
+                label: fabLabel,
+                hint: fabHint,
+                excludeSemantics: true,
+                child: GestureDetector(
+                  onLongPress: _showQuickMenu,
+                  child: FloatingActionButton(
+                    onPressed: index == 3
+                        ? () => _openAdvance()
+                        : () => _open(TransactionType.expense),
+                    child: const Icon(Icons.add_rounded),
+                  ),
+                ),
+              ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         bottomNavigationBar: NavigationBar(
           selectedIndex: index,
