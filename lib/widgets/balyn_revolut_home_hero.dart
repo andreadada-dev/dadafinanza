@@ -48,24 +48,26 @@ class BalynRevolutHomeHero extends StatelessWidget {
   final VoidCallback onTransfer;
   final VoidCallback onMore;
 
-
   static const _balynAccent = Color(0xFF6221E9);
 
   Color get _accent {
-    final matching = accounts.where((account) => account.id == currentAccountId);
+    final matching = accounts.where(
+      (account) => account.id == currentAccountId,
+    );
     if (matching.isEmpty) return _balynAccent;
     final source = HSLColor.fromColor(Color(matching.first.colorValue));
     return source
-      .withSaturation(source.saturation.clamp(.55, .92).toDouble())
-      .withLightness(source.lightness.clamp(.30, .42).toDouble())
-      .toColor();
+        .withSaturation(source.saturation.clamp(.55, .92).toDouble())
+        .withLightness(source.lightness.clamp(.30, .42).toDouble())
+        .toColor();
   }
 
   void _switchAccount(int direction) {
     if (accounts.isEmpty) return;
     final ids = <int?>[null, ...accounts.map((account) => account.id)];
     final index = ids.indexOf(currentAccountId);
-    final next = ((index < 0 ? 0 : index) + direction + ids.length) % ids.length;
+    final next =
+        ((index < 0 ? 0 : index) + direction + ids.length) % ids.length;
     onAccountChanged(ids[next]);
   }
 
@@ -88,9 +90,12 @@ class BalynRevolutHomeHero extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text('Seleziona conto',
-                  style: Theme.of(sheetContext).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w800)),
+                child: Text(
+                  'Seleziona conto',
+                  style: Theme.of(
+                    sheetContext,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
+                ),
               ),
             ),
             Flexible(
@@ -112,9 +117,14 @@ class BalynRevolutHomeHero extends StatelessWidget {
                   if (accounts.isNotEmpty)
                     const Padding(
                       padding: EdgeInsets.fromLTRB(13, 12, 13, 6),
-                      child: Text('I TUOI CONTI',
-                        style: TextStyle(fontSize: 11,
-                          fontWeight: FontWeight.w800, letterSpacing: .8)),
+                      child: Text(
+                        'I TUOI CONTI',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: .8,
+                        ),
+                      ),
                     ),
                   for (final account in accounts)
                     _HeroAccountOption(
@@ -160,9 +170,8 @@ class BalynRevolutHomeHero extends StatelessWidget {
               tween: ColorTween(end: _accent),
               duration: const Duration(milliseconds: 550),
               curve: Curves.easeInOutCubic,
-              builder: (context, color, _) => CustomPaint(
-                painter: _AccountWavesPainter(color ?? _accent),
-              ),
+              builder: (context, color, _) =>
+                  CustomPaint(painter: _AccountWavesPainter(color ?? _accent)),
             ),
           ),
           Positioned.fill(
@@ -282,10 +291,13 @@ class BalynRevolutHomeHero extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(14),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
-                                      horizontal: 4, vertical: 6),
+                                      horizontal: 4,
+                                      vertical: 6,
+                                    ),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Flexible(
                                           child: Text(
@@ -294,7 +306,9 @@ class BalynRevolutHomeHero extends StatelessWidget {
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
-                                              color: Colors.white.withValues(alpha: .9),
+                                              color: Colors.white.withValues(
+                                                alpha: .9,
+                                              ),
                                               fontSize: 12,
                                               fontWeight: FontWeight.w700,
                                               letterSpacing: .45,
@@ -310,11 +324,15 @@ class BalynRevolutHomeHero extends StatelessWidget {
                                             decoration: BoxDecoration(
                                               border: Border(
                                                 right: BorderSide(
-                                                  color: Colors.white.withValues(alpha: .9),
-                                                  width: 2),
+                                                  color: Colors.white
+                                                      .withValues(alpha: .9),
+                                                  width: 2,
+                                                ),
                                                 bottom: BorderSide(
-                                                  color: Colors.white.withValues(alpha: .9),
-                                                  width: 2),
+                                                  color: Colors.white
+                                                      .withValues(alpha: .9),
+                                                  width: 2,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -333,16 +351,24 @@ class BalynRevolutHomeHero extends StatelessWidget {
                                   children: [
                                     Positioned.fill(
                                       child: Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 29),
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 29,
+                                        ),
                                         child: Center(
                                           child: AnimatedSwitcher(
-                                            duration: const Duration(milliseconds: 250),
+                                            duration: const Duration(
+                                              milliseconds: 250,
+                                            ),
                                             child: FittedBox(
-                                              key: ValueKey('hero-balance-${currentAccountId ?? "total"}-$balance'),
+                                              key: ValueKey(
+                                                'hero-balance-${currentAccountId ?? "total"}-$balance',
+                                              ),
                                               fit: BoxFit.scaleDown,
                                               child: Text(
                                                 balance,
-                                                key: const ValueKey('balyn-revolut-balance'),
+                                                key: const ValueKey(
+                                                  'balyn-revolut-balance',
+                                                ),
                                                 textAlign: TextAlign.center,
                                                 maxLines: 1,
                                                 style: const TextStyle(
@@ -366,12 +392,18 @@ class BalynRevolutHomeHero extends StatelessWidget {
                                             : 'Nascondi saldi',
                                         onPressed: onVisibility,
                                         iconSize: 18,
-                                        color: Colors.white.withValues(alpha: .88),
+                                        color: Colors.white.withValues(
+                                          alpha: .88,
+                                        ),
                                         constraints: const BoxConstraints(
-                                          minWidth: 35, minHeight: 40),
-                                        icon: Icon(hideBalance
-                                            ? Icons.visibility_off_outlined
-                                            : Icons.visibility_outlined),
+                                          minWidth: 35,
+                                          minHeight: 40,
+                                        ),
+                                        icon: Icon(
+                                          hideBalance
+                                              ? Icons.visibility_off_outlined
+                                              : Icons.visibility_outlined,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -469,7 +501,6 @@ class BalynRevolutHomeHero extends StatelessWidget {
   }
 }
 
-
 class _HeroAccountOption extends StatelessWidget {
   const _HeroAccountOption({
     required this.title,
@@ -499,21 +530,31 @@ class _HeroAccountOption extends StatelessWidget {
         borderRadius: BorderRadius.circular(18),
         child: ListTile(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18)),
+            borderRadius: BorderRadius.circular(18),
+          ),
           leading: Container(
-            height: 42, width: 42,
+            height: 42,
+            width: 42,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: color.withValues(alpha: .13),
-              borderRadius: BorderRadius.circular(14)),
+              borderRadius: BorderRadius.circular(14),
+            ),
             child: Icon(icon, color: color),
           ),
-          title: Text(title, maxLines: 1,
+          title: Text(
+            title,
+            maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              fontWeight: selected ? FontWeight.w800 : FontWeight.w600)),
-          subtitle: Text(subtitle, maxLines: 1,
-            overflow: TextOverflow.ellipsis),
+              fontWeight: selected ? FontWeight.w800 : FontWeight.w600,
+            ),
+          ),
+          subtitle: Text(
+            subtitle,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
           trailing: selected
               ? Icon(Icons.check_circle_rounded, color: scheme.primary)
               : const Icon(Icons.chevron_right_rounded),
@@ -525,10 +566,7 @@ class _HeroAccountOption extends StatelessWidget {
 }
 
 class _AnimatedAccountDiamond extends StatefulWidget {
-  const _AnimatedAccountDiamond({
-    required this.direction,
-    required this.onTap,
-  });
+  const _AnimatedAccountDiamond({required this.direction, required this.onTap});
   final int direction;
   final VoidCallback onTap;
 
@@ -554,14 +592,13 @@ class _AnimatedAccountDiamondState extends State<_AnimatedAccountDiamond>
   Widget build(BuildContext context) {
     final reducedMotion = MediaQuery.disableAnimationsOf(context);
     return Tooltip(
-      message: widget.direction < 0
-          ? 'Conto precedente'
-          : 'Conto successivo',
+      message: widget.direction < 0 ? 'Conto precedente' : 'Conto successivo',
       child: InkWell(
         borderRadius: BorderRadius.circular(22),
         onTap: widget.onTap,
         child: SizedBox(
-          height: 62, width: 39,
+          height: 62,
+          width: 39,
           child: AnimatedBuilder(
             animation: _controller,
             builder: (context, _) {
@@ -574,17 +611,20 @@ class _AnimatedAccountDiamondState extends State<_AnimatedAccountDiamond>
                   child: Opacity(
                     opacity: .60 + .4 * phase,
                     child: SizedBox(
-                      width: 26, height: 26,
+                      width: 26,
+                      height: 26,
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
                           Transform.rotate(
                             angle: math.pi / 4,
                             child: Container(
-                              width: 18, height: 18,
+                              width: 18,
+                              height: 18,
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                  color: Colors.white.withValues(alpha: .66)),
+                                  color: Colors.white.withValues(alpha: .66),
+                                ),
                                 borderRadius: BorderRadius.circular(3),
                               ),
                             ),
@@ -593,7 +633,8 @@ class _AnimatedAccountDiamondState extends State<_AnimatedAccountDiamond>
                             widget.direction < 0
                                 ? Icons.chevron_left_rounded
                                 : Icons.chevron_right_rounded,
-                            color: Colors.white, size: 23,
+                            color: Colors.white,
+                            size: 23,
                           ),
                         ],
                       ),
@@ -736,7 +777,6 @@ class _TabPill extends StatelessWidget {
   );
 }
 
-
 class _AccountWavesPainter extends CustomPainter {
   const _AccountWavesPainter(this.base);
   final Color base;
@@ -748,48 +788,63 @@ class _AccountWavesPainter extends CustomPainter {
     final deep = Color.lerp(base, Colors.black, .18)!;
     canvas.drawRect(
       rect,
-      Paint()..shader = LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [bright, base, deep],
-        stops: const [0, .56, 1],
-      ).createShader(rect),
+      Paint()
+        ..shader = LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [bright, base, deep],
+          stops: const [0, .56, 1],
+        ).createShader(rect),
     );
     final glow = Rect.fromCenter(
       center: Offset(size.width * .81, size.height * .38),
       width: size.width * 1.1,
       height: size.height * .86,
     );
-    canvas.drawOval(glow, Paint()
-      ..shader = RadialGradient(
-        colors: [
-          Colors.white.withValues(alpha: .24),
-          Colors.white.withValues(alpha: .06),
-          Colors.white.withValues(alpha: 0),
-        ],
-      ).createShader(glow));
+    canvas.drawOval(
+      glow,
+      Paint()
+        ..shader = RadialGradient(
+          colors: [
+            Colors.white.withValues(alpha: .24),
+            Colors.white.withValues(alpha: .06),
+            Colors.white.withValues(alpha: 0),
+          ],
+        ).createShader(glow),
+    );
     final ribbon = Path()
       ..moveTo(-size.width * .22, size.height * .99)
       ..cubicTo(
-        size.width * .35, size.height * .92,
-        size.width * .80, size.height * .63,
-        size.width * 1.06, size.height * .27,
+        size.width * .35,
+        size.height * .92,
+        size.width * .80,
+        size.height * .63,
+        size.width * 1.06,
+        size.height * .27,
       );
-    canvas.drawPath(ribbon, Paint()
-      ..color = Colors.white.withValues(alpha: .37)
-      ..strokeWidth = 26
-      ..style = PaintingStyle.stroke
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 25));
-    canvas.drawPath(ribbon, Paint()
-      ..shader = LinearGradient(colors: [
-          Colors.white.withValues(alpha: 0),
-          Colors.white.withValues(alpha: .23),
-          Colors.white.withValues(alpha: .42),
-          Colors.white.withValues(alpha: 0),
-        ]).createShader(rect)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 8
-      ..strokeCap = StrokeCap.round);
+    canvas.drawPath(
+      ribbon,
+      Paint()
+        ..color = Colors.white.withValues(alpha: .37)
+        ..strokeWidth = 26
+        ..style = PaintingStyle.stroke
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 25),
+    );
+    canvas.drawPath(
+      ribbon,
+      Paint()
+        ..shader = LinearGradient(
+          colors: [
+            Colors.white.withValues(alpha: 0),
+            Colors.white.withValues(alpha: .23),
+            Colors.white.withValues(alpha: .42),
+            Colors.white.withValues(alpha: 0),
+          ],
+        ).createShader(rect)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 8
+        ..strokeCap = StrokeCap.round,
+    );
   }
 
   @override

@@ -241,8 +241,10 @@ class AccountContextHomeScreen extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    DateFormat('MMMM yyyy', AppI18n.intlLocale)
-                        .format(DateTime.now()),
+                    DateFormat(
+                      'MMMM yyyy',
+                      AppI18n.intlLocale,
+                    ).format(DateTime.now()),
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.w800,
                     ),

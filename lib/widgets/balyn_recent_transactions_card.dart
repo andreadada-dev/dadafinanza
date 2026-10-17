@@ -35,13 +35,21 @@ class BalynRecentTransactionsCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text('Movimento', style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-                fontWeight: FontWeight.w500)),
+              Text(
+                'Movimento',
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
               const Spacer(),
-              Text('Importo', style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-                fontWeight: FontWeight.w500)),
+              Text(
+                'Importo',
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 11),
@@ -77,7 +85,11 @@ class BalynRecentTransactionsCard extends StatelessWidget {
 }
 
 class _RecentMovementRow extends StatelessWidget {
-  const _RecentMovementRow({required this.movement, required this.hideAmounts, super.key});
+  const _RecentMovementRow({
+    required this.movement,
+    required this.hideAmounts,
+    super.key,
+  });
 
   final FinanceTransaction movement;
   final bool hideAmounts;
@@ -92,8 +104,8 @@ class _RecentMovementRow extends StatelessWidget {
     final title = movement.note?.trim().isNotEmpty == true
         ? movement.note!.trim()
         : movement.type == TransactionType.transfer
-            ? 'Trasferimento'
-            : category?.name ?? 'Senza categoria';
+        ? 'Trasferimento'
+        : category?.name ?? 'Senza categoria';
     final accent = category == null
         ? transactionColor(context, movement.type)
         : Color(category.colorValue);
@@ -103,8 +115,8 @@ class _RecentMovementRow extends StatelessWidget {
     final amount = movement.type == TransactionType.expense
         ? '-${moneyFor(state, movement.amount)}'
         : movement.type == TransactionType.income
-            ? '+${moneyFor(state, movement.amount)}'
-            : moneyFor(state, movement.amount);
+        ? '+${moneyFor(state, movement.amount)}'
+        : moneyFor(state, movement.amount);
 
     return Material(
       color: Colors.transparent,
@@ -137,8 +149,8 @@ class _RecentMovementRow extends StatelessWidget {
                         movement.type == TransactionType.transfer
                             ? Icons.swap_horiz_rounded
                             : category == null
-                                ? Icons.receipt_long_outlined
-                                : categoryIcon(category.iconKey),
+                            ? Icons.receipt_long_outlined
+                            : categoryIcon(category.iconKey),
                         color: accent,
                         size: 23,
                       ),
@@ -161,8 +173,8 @@ class _RecentMovementRow extends StatelessWidget {
                           movement.type == TransactionType.income
                               ? Icons.south_west_rounded
                               : movement.type == TransactionType.expense
-                                  ? Icons.north_east_rounded
-                                  : Icons.swap_horiz_rounded,
+                              ? Icons.north_east_rounded
+                              : Icons.swap_horiz_rounded,
                           size: 10,
                           color: Colors.white,
                         ),
@@ -176,11 +188,13 @@ class _RecentMovementRow extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title,
+                    Text(
+                      title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w800),
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                     const SizedBox(height: 4),
                     Text(
@@ -188,13 +202,15 @@ class _RecentMovementRow extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant),
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       movement.type.label,
                       style: theme.textTheme.labelSmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant),
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
                     ),
                   ],
                 ),
