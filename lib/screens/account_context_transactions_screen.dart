@@ -151,12 +151,14 @@ class _AccountContextTransactionsScreenState
     final totals = _MovementTotals.from(state, items);
 
     return Scaffold(
-      appBar: widget.embedded ? null : AppBar(
-        title: AccountContextSelector(
-          accountId: widget.accountId,
-          onChanged: widget.onAccountChanged,
-        ),
-      ),
+      appBar: widget.embedded
+          ? null
+          : AppBar(
+              title: AccountContextSelector(
+                accountId: widget.accountId,
+                onChanged: widget.onAccountChanged,
+              ),
+            ),
       body: CustomScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         slivers: [
@@ -597,7 +599,8 @@ class _MovementHeader extends StatelessWidget {
       children: [
         BalynEditorialHeading(
           title: 'Movimenti',
-          subtitle: '$count ${count == 1 ? 'movimento' : 'movimenti'} nel risultato',
+          subtitle:
+              '$count ${count == 1 ? 'movimento' : 'movimenti'} nel risultato',
         ),
         const SizedBox(height: 14),
         Row(
@@ -651,7 +654,8 @@ class _MovementMetric extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 11),
       decoration: BoxDecoration(
         color: theme.brightness == Brightness.dark
-            ? const Color(0xFF252532) : Colors.white,
+            ? const Color(0xFF252532)
+            : Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(

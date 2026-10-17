@@ -315,12 +315,14 @@ class _AccountContextAnalyticsScreenState
             });
 
     return Scaffold(
-      appBar: widget.embedded ? null : AppBar(
-        title: AccountContextSelector(
-          accountId: effectiveAccountId,
-          onChanged: widget.onAccountChanged,
-        ),
-      ),
+      appBar: widget.embedded
+          ? null
+          : AppBar(
+              title: AccountContextSelector(
+                accountId: effectiveAccountId,
+                onChanged: widget.onAccountChanged,
+              ),
+            ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 120),
         children: [
@@ -387,13 +389,13 @@ class _AccountContextAnalyticsScreenState
           BalynEditorialSurface(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 14),
             child: _BalanceTrend(
-            state: state,
-            account: effectiveAccountId == null ? null : selected,
-            from: from,
-            to: to,
-            period: period,
-            rangeLabel: _visibleRangeLabel(from, to),
-            onShiftPeriod: _shiftPeriod,
+              state: state,
+              account: effectiveAccountId == null ? null : selected,
+              from: from,
+              to: to,
+              period: period,
+              rangeLabel: _visibleRangeLabel(from, to),
+              onShiftPeriod: _shiftPeriod,
             ),
           ),
           if (cashFlowPoints.length >= 2) ...[
@@ -1389,7 +1391,8 @@ class _Metric extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 12),
       decoration: BoxDecoration(
         color: theme.brightness == Brightness.dark
-            ? const Color(0xFF252532) : Colors.white,
+            ? const Color(0xFF252532)
+            : Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(

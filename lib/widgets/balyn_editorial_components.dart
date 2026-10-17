@@ -71,10 +71,13 @@ class BalynEditorialHeading extends StatelessWidget {
         if (actionLabel != null && onAction != null)
           TextButton(
             onPressed: onAction,
-            child: Text(actionLabel!, style: TextStyle(
-              color: theme.colorScheme.primary,
-              fontWeight: FontWeight.w700,
-            )),
+            child: Text(
+              actionLabel!,
+              style: TextStyle(
+                color: theme.colorScheme.primary,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
           ),
       ],
     );
@@ -130,10 +133,7 @@ class BalynEditorialPageTitle extends StatelessWidget {
         BalynEditorialIcon(icon: icon, size: 46),
         const SizedBox(width: 12),
         Expanded(
-          child: BalynEditorialHeading(
-            title: title,
-            subtitle: subtitle,
-          ),
+          child: BalynEditorialHeading(title: title, subtitle: subtitle),
         ),
       ],
     ),

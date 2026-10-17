@@ -46,8 +46,7 @@ class PlanningScreen extends StatelessWidget {
           const SizedBox(height: 12),
           LayoutBuilder(
             builder: (context, constraints) {
-              final largeText =
-                  MediaQuery.textScalerOf(context).scale(1) > 1.2;
+              final largeText = MediaQuery.textScalerOf(context).scale(1) > 1.2;
               return GridView.count(
                 crossAxisCount: 2,
                 shrinkWrap: true,
@@ -55,38 +54,55 @@ class PlanningScreen extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
-                childAspectRatio: largeText ? .78 :
-                    constraints.maxWidth >= 600 ? 1.40 : 1.06,
+                childAspectRatio: largeText
+                    ? .78
+                    : constraints.maxWidth >= 600
+                    ? 1.40
+                    : 1.06,
                 children: [
                   _PlanningLink(
                     icon: Icons.pie_chart_outline_rounded,
                     title: 'Budget',
                     subtitle: state.budgets.isEmpty
-                      ? 'Imposta i limiti di spesa'
-                      : '${state.budgets.where((item) => item.enabled).length} budget attivi',
-                    onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const BudgetsScreen())),
+                        ? 'Imposta i limiti di spesa'
+                        : '${state.budgets.where((item) => item.enabled).length} budget attivi',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const BudgetsScreen()),
+                    ),
                   ),
                   _PlanningLink(
                     icon: Icons.repeat_rounded,
                     title: 'Ricorrenti',
-                    subtitle: '${state.recurring.where((item) => item.enabled).length} configurate',
-                    onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const RecurringScreen())),
+                    subtitle:
+                        '${state.recurring.where((item) => item.enabled).length} configurate',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const RecurringScreen(),
+                      ),
+                    ),
                   ),
                   _PlanningLink(
                     icon: Icons.flag_outlined,
                     title: 'Obiettivi',
-                    subtitle: '${state.goals.where((item) => !item.archived && !item.completed).length} attivi',
-                    onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const GoalsScreen())),
+                    subtitle:
+                        '${state.goals.where((item) => !item.archived && !item.completed).length} attivi',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const GoalsScreen()),
+                    ),
                   ),
                   _PlanningLink(
                     icon: Icons.calendar_month_outlined,
                     title: 'Calendario',
                     subtitle: 'Previsioni e scadenze',
-                    onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const FinanceCalendarScreen())),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const FinanceCalendarScreen(),
+                      ),
+                    ),
                   ),
                 ],
               );
@@ -116,7 +132,8 @@ class _PlanningLink extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     return Material(
       color: Theme.of(context).brightness == Brightness.dark
-          ? const Color(0xFF252532) : Colors.white,
+          ? const Color(0xFF252532)
+          : Colors.white,
       borderRadius: BorderRadius.circular(20),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
@@ -129,14 +146,21 @@ class _PlanningLink extends StatelessWidget {
             children: [
               BalynEditorialIcon(icon: icon, color: scheme.tertiary, size: 41),
               const Spacer(),
-              Text(title, maxLines: 1,
+              Text(
+                title,
+                maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w800)),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w800),
+              ),
               const SizedBox(height: 3),
-              Text(subtitle, maxLines: 2,
+              Text(
+                subtitle,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodySmall),
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
               const SizedBox(height: 4),
             ],
           ),
@@ -160,7 +184,8 @@ class _ForecastSummary extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 18),
       decoration: BoxDecoration(
         color: theme.brightness == Brightness.dark
-            ? const Color(0xFF252532) : Colors.white,
+            ? const Color(0xFF252532)
+            : Colors.white,
         borderRadius: BorderRadius.circular(21),
       ),
       child: Column(

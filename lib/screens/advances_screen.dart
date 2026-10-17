@@ -156,7 +156,8 @@ class _AdvancesOverview extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(17, 15, 17, 19),
       decoration: BoxDecoration(
         color: theme.brightness == Brightness.dark
-          ? const Color(0xFF252532) : Colors.white,
+            ? const Color(0xFF252532)
+            : Colors.white,
         borderRadius: BorderRadius.circular(21),
       ),
       child: Column(
@@ -357,10 +358,11 @@ class _AdvancePersonSummaryCard extends StatelessWidget {
     return Semantics(
       button: true,
       label:
-        '${person.name}. $subtitle. $movementCount ${movementCount == 1 ? 'movimento' : 'movimenti'}.',
+          '${person.name}. $subtitle. $movementCount ${movementCount == 1 ? 'movimento' : 'movimenti'}.',
       child: Material(
         color: theme.brightness == Brightness.dark
-            ? const Color(0xFF252532) : Colors.white,
+            ? const Color(0xFF252532)
+            : Colors.white,
         borderRadius: BorderRadius.circular(19),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
@@ -385,14 +387,21 @@ class _AdvancePersonSummaryCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(person.name, maxLines: 1,
+                      Text(
+                        person.name,
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: theme.textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.w800)),
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
                       const SizedBox(height: 4),
-                      Text(subtitle, maxLines: 1,
+                      Text(
+                        subtitle,
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.bodySmall),
+                        style: theme.textTheme.bodySmall,
+                      ),
                     ],
                   ),
                 ),
@@ -400,9 +409,12 @@ class _AdvancePersonSummaryCard extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('$movementCount', style:
-                      theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w900)),
+                    Text(
+                      '$movementCount',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
                     const SizedBox(height: 3),
                     Text('mov.', style: theme.textTheme.labelSmall),
                   ],

@@ -135,39 +135,39 @@ class _BalanceMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-        height: 112,
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-        decoration: BoxDecoration(
-          color: theme.brightness == Brightness.dark
-              ? const Color(0xFF242431)
-              : Colors.white,
-          borderRadius: BorderRadius.circular(17),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, color: color, size: 19),
-            const Spacer(),
-            Text(
-              title,
+      height: 112,
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+      decoration: BoxDecoration(
+        color: theme.brightness == Brightness.dark
+            ? const Color(0xFF242431)
+            : Colors.white,
+        borderRadius: BorderRadius.circular(17),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: color, size: 19),
+          const Spacer(),
+          Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: theme.textTheme.labelSmall,
+          ),
+          const SizedBox(height: 4),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              value,
               maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.labelSmall,
-            ),
-            const SizedBox(height: 4),
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.centerLeft,
-              child: Text(
-                value,
-                maxLines: 1,
-                style: theme.textTheme.labelLarge?.copyWith(
-                  fontWeight: FontWeight.w800,
-                ),
+              style: theme.textTheme.labelLarge?.copyWith(
+                fontWeight: FontWeight.w800,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -189,20 +189,30 @@ class _AvailableSummary extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(Icons.account_balance_wallet_outlined,
-            color: theme.colorScheme.primary, size: 23),
+          Icon(
+            Icons.account_balance_wallet_outlined,
+            color: theme.colorScheme.primary,
+            size: 23,
+          ),
           const SizedBox(width: 11),
           Expanded(
-            child: Text('Disponibile',
+            child: Text(
+              'Disponibile',
               style: theme.textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.w700)),
+                fontWeight: FontWeight.w700,
+              ),
+            ),
           ),
           Flexible(
             child: FittedBox(
               alignment: Alignment.centerRight,
               fit: BoxFit.scaleDown,
-              child: Text(value, style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w900)),
+              child: Text(
+                value,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
             ),
           ),
         ],

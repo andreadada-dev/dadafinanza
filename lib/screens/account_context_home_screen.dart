@@ -258,7 +258,9 @@ class AccountContextHomeScreen extends StatelessWidget {
                 // promotions, keeping its clear rounded white-strip rhythm.
                 BalynEditorialSurface(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 14, vertical: 8),
+                    horizontal: 14,
+                    vertical: 8,
+                  ),
                   child: ListTile(
                     contentPadding: EdgeInsets.zero,
                     leading: const BalynEditorialIcon(
@@ -307,29 +309,38 @@ class AccountContextHomeScreen extends StatelessWidget {
                   const SizedBox(height: 9),
                   BalynEditorialSurface(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 10, vertical: 7),
+                      horizontal: 10,
+                      vertical: 7,
+                    ),
                     child: recent.isEmpty
                         ? ListTile(
                             leading: const BalynEditorialIcon(
-                              icon: Icons.receipt_long_outlined),
+                              icon: Icons.receipt_long_outlined,
+                            ),
                             title: const Text('Nessun movimento'),
                             subtitle: const Text(
-                              'Le operazioni compariranno qui.'),
+                              'Le operazioni compariranno qui.',
+                            ),
                             onTap: () => _openQuick(
                               context,
                               TransactionType.expense,
-                              effectiveAccountId),
+                              effectiveAccountId,
+                            ),
                           )
                         : Column(
                             children: [
-                              for (var index = 0;
-                                  index < recent.take(3).length;
-                                  index++) ...[
+                              for (
+                                var index = 0;
+                                index < recent.take(3).length;
+                                index++
+                              ) ...[
                                 if (index > 0)
                                   Divider(
                                     height: 1,
-                                    color: Theme.of(context)
-                                        .colorScheme.outlineVariant),
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.outlineVariant,
+                                  ),
                                 TransactionListTile(item: recent[index]),
                               ],
                             ],
