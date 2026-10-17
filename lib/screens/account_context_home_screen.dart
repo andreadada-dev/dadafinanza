@@ -7,12 +7,14 @@ import '../main.dart';
 import '../models/models.dart';
 import '../services/account_context_service.dart';
 import '../widgets/account_context_selector.dart';
+import '../widgets/balyn_revolut_home_content.dart';
+import '../widgets/balyn_revolut_home_hero.dart';
 import '../widgets/balyn_motion.dart';
-import '../widgets/finance_quick_action.dart';
 import '../widgets/home_dashboard_widget.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_context_analytics_screen.dart';
-import 'account_management_screen.dart' show SafeAccountDetailScreen;
+import 'account_context_transactions_screen.dart';
+import 'account_management_screen.dart' show AccountManagementScreen, SafeAccountDetailScreen;
 import 'account_screens.dart' show showAccountEditor;
 import 'advances_screen.dart';
 import 'personal_settings_screen.dart';
@@ -91,116 +93,139 @@ class AccountContextHomeScreen extends StatelessWidget {
         .where((config) => !_fixedSummaryTypes.contains(config.type))
         .toList(growable: false);
 
-    // The liquid shader lives behind every section; a Home-only gradient
-    // would flash on and off whenever the user changes navigation tabs.
-    return DecoratedBox(
-      decoration: const BoxDecoration(color: Colors.transparent),
+    final hidden = state.hideBalance ||
+        (!isTotal && selectedAccount!.hideBalance);
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    return ColoredBox(
+      color: dark ? const Color(0xFF101018) : const Color(0xFFF7F8FA),
       child: CustomScrollView(
+        key: const PageStorageKey('balyn-invest-home'),
         slivers: [
-          SliverAppBar(
-            floating: true,
-            backgroundColor: Colors.transparent,
-            surfaceTintColor: Colors.transparent,
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AccountContextSelector(
+          SliverToBoxAdapter(
+            child: BalynRevolutHomeHero(
+              title: isTotal ? 'Patrimonio totale' : selectedAccount!.name,
+              balance: hidden ? '••••••' : moneyFor(state, balance),
+              available: hidden
+                  ? '••••'
+                  : moneyFor(state, isTotal ? state.safeToSpend : balance),
+              hideBalance: hidden,
+              selectedTab: 0,
+              onTabChanged: (selected) {
+                if (selected == 1) {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (_) => const AccountManagementScreen()));
+                }
+              },
+              onVisibility: () => state.setHideBalance(!state.hideBalance),
+              onSearch: () => Navigator.push(context, MaterialPageRoute(
+                builder: (_) => AccountContextTransactionsScreen(
                   accountId: effectiveAccountId,
-                  onChanged: onAccountChanged,
+                  onAccountChanged: onAccountChanged,
+                ))),
+              onAnalytics: () => Navigator.push(context, MaterialPageRoute(
+                builder: (_) => AccountContextAnalyticsScreen(
+                  accountId: effectiveAccountId,
+                  onAccountChanged: onAccountChanged,
+                ))),
+              onSettings: () => Navigator.push(context, MaterialPageRoute(
+                builder: (_) => const PersonalSettingsScreen())),
+              onExpense: () => _openQuick(
+                context, TransactionType.expense, effectiveAccountId),
+              onIncome: () => _openQuick(
+                context, TransactionType.income, effectiveAccountId),
+              onTransfer: () => _openQuick(
+                context, TransactionType.transfer, effectiveAccountId),
+              onMore: () => showModalBottomSheet<void>(
+                context: context,
+                useSafeArea: true,
+                showDragHandle: true,
+                builder: (sheetContext) => SafeArea(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ListTile(
+                        leading: const Icon(Icons.account_balance_wallet_outlined),
+                        title: const Text('Gestisci conti'),
+                        onTap: () {
+                          Navigator.pop(sheetContext);
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (_) => const AccountManagementScreen()));
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.handshake_outlined),
+                        title: const Text('Anticipi'),
+                        onTap: () {
+                          Navigator.pop(sheetContext);
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (_) => const AdvancesScreen()));
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.dashboard_customize_outlined),
+                        title: const Text('Dashboard avanzata'),
+                        onTap: () {
+                          Navigator.pop(sheetContext);
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (_) => const Scaffold(
+                              body: advanced.HomeScreen())));
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.tune_rounded),
+                        title: const Text('Personalizza Home'),
+                        onTap: () {
+                          Navigator.pop(sheetContext);
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (_) => const DashboardCustomizerScreen()));
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-                Text(
-                  DateFormat(
-                    'MMMM yyyy',
-                    AppI18n.intlLocale,
-                  ).format(DateTime.now()),
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ],
+              ),
             ),
-            actions: [
-              IconButton(
-                tooltip: state.hideBalance ? 'Mostra saldi' : 'Nascondi saldi',
-                onPressed: () => state.setHideBalance(!state.hideBalance),
-                icon: Icon(
-                  state.hideBalance
-                      ? Icons.visibility_off_outlined
-                      : Icons.visibility_outlined,
-                ),
-              ),
-              IconButton(
-                tooltip: AppI18n.tr('Dashboard avanzata'),
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const Scaffold(body: advanced.HomeScreen()),
-                  ),
-                ),
-                icon: const Icon(Icons.dashboard_customize_outlined),
-              ),
-              IconButton(
-                tooltip: AppI18n.tr('Impostazioni'),
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const PersonalSettingsScreen(),
-                  ),
-                ),
-                icon: const Icon(Icons.settings_outlined),
-              ),
-            ],
           ),
           SliverPadding(
-            padding: const EdgeInsets.fromLTRB(20, 8, 20, 130),
+            padding: const EdgeInsets.fromLTRB(16, 9, 16, 130),
             sliver: SliverList.list(
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      DateFormat('MMMM yyyy', AppI18n.intlLocale)
+                          .format(DateTime.now()),
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w800),
+                    ),
+                    AccountContextSelector(
+                      accountId: effectiveAccountId,
+                      onChanged: onAccountChanged,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                BalynRevolutHomeContent(
+                  income: income,
+                  expense: expense,
+                  available: isTotal ? state.safeToSpend : balance,
+                  hideValues: hidden,
+                  showAccounts: true,
+                  onSelectAccount: onAccountChanged,
+                  onManageAccounts: () => Navigator.push(context,
+                    MaterialPageRoute(
+                      builder: (_) => const AccountManagementScreen())),
+                ),
+                const SizedBox(height: 24),
                 if (state.userAccounts.isEmpty) ...[
                   _SetupBlock(
                     onAccount: () => showAccountEditor(context),
                     onMovement: () => _openQuick(
-                      context,
-                      TransactionType.expense,
-                      effectiveAccountId,
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-                ],
-                if (isTotal) ...[
-                  _HomeFullBleed(
-                    child: BalynReveal(
-                      key: const ValueKey('context-home-total-summary'),
-                      child: _TotalOverviewSummary(
-                        balance: balance,
-                        income: income,
-                        expense: expense,
-                        available: state.safeToSpend,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                ] else ...[
-                  _HomeFullBleed(
-                    child: BalynReveal(
-                      key: ValueKey(
-                        'context-home-account-${selectedAccount!.id}',
-                      ),
-                      child: _SelectedAccountSummary(
-                        account: selectedAccount,
-                        balance: balance,
-                        income: income,
-                        expense: expense,
-                      ),
-                    ),
+                      context, TransactionType.expense, effectiveAccountId),
                   ),
                   const SizedBox(height: 20),
                 ],
-                BalynReveal(
-                  key: const ValueKey('context-home-quick-actions'),
-                  delay: const Duration(milliseconds: 55),
-                  child: _QuickActions(
-                    onOpen: (type) =>
-                        _openQuick(context, type, effectiveAccountId),
-                  ),
-                ),
                 if (isTotal) ...[
                   if (state.advanceReceivableCents > 0 ||
                       state.advancePayableCents > 0 ||
@@ -377,6 +402,7 @@ class AccountContextHomeScreen extends StatelessWidget {
                           ),
                         ),
                 ],
+
               ],
             ),
           ),
@@ -472,343 +498,6 @@ class AccountContextHomeScreen extends StatelessWidget {
           initialAccountId: account,
           initialToAccountId: destination,
         ),
-      ),
-    );
-  }
-}
-
-class _HomeFullBleed extends StatelessWidget {
-  const _HomeFullBleed({required this.child});
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return UnconstrainedBox(
-      constrainedAxis: Axis.vertical,
-      alignment: Alignment.center,
-      child: SizedBox(width: MediaQuery.sizeOf(context).width, child: child),
-    );
-  }
-}
-
-class _TotalOverviewSummary extends StatelessWidget {
-  const _TotalOverviewSummary({
-    required this.balance,
-    required this.income,
-    required this.expense,
-    required this.available,
-  });
-
-  final double balance;
-  final double income;
-  final double expense;
-  final double available;
-
-  @override
-  Widget build(BuildContext context) {
-    final state = AppScope.of(context);
-    return _OverviewSurface(
-      accent: Theme.of(context).colorScheme.tertiary,
-      eyebrow: const Text('PATRIMONIO'),
-      value: state.hideBalance ? '••••••' : moneyFor(state, balance),
-      metrics: [
-        _OverviewValue(
-          label: 'Entrate',
-          value: state.hideBalance ? '••••' : moneyFor(state, income),
-          color: context.financeColors.positive,
-          icon: Icons.south_west_rounded,
-        ),
-        _OverviewValue(
-          label: 'Spese',
-          value: state.hideBalance ? '••••' : moneyFor(state, expense),
-          color: context.financeColors.negative,
-          icon: Icons.north_east_rounded,
-        ),
-        _OverviewValue(
-          label: 'Disponibile',
-          value: state.hideBalance ? '••••' : moneyFor(state, available),
-          color: Theme.of(context).colorScheme.tertiary,
-          icon: Icons.account_balance_wallet_outlined,
-        ),
-      ],
-    );
-  }
-}
-
-class _QuickActions extends StatelessWidget {
-  const _QuickActions({required this.onOpen});
-
-  final ValueChanged<TransactionType> onOpen;
-
-  @override
-  Widget build(BuildContext context) => Row(
-    children: [
-      Expanded(
-        child: FinanceQuickAction(
-          icon: Icons.arrow_upward_rounded,
-          label: 'Spesa',
-          color: context.financeColors.negative,
-          onTap: () => onOpen(TransactionType.expense),
-        ),
-      ),
-      Expanded(
-        child: FinanceQuickAction(
-          icon: Icons.arrow_downward_rounded,
-          label: 'Entrata',
-          color: context.financeColors.positive,
-          onTap: () => onOpen(TransactionType.income),
-        ),
-      ),
-      Expanded(
-        child: FinanceQuickAction(
-          icon: Icons.swap_horiz_rounded,
-          label: 'Trasferisci',
-          color: Theme.of(context).colorScheme.tertiary,
-          onTap: () => onOpen(TransactionType.transfer),
-        ),
-      ),
-    ],
-  );
-}
-
-class _SelectedAccountSummary extends StatelessWidget {
-  const _SelectedAccountSummary({
-    required this.account,
-    required this.balance,
-    required this.income,
-    required this.expense,
-  });
-
-  final Account account;
-  final double balance;
-  final double income;
-  final double expense;
-
-  @override
-  Widget build(BuildContext context) {
-    final state = AppScope.of(context);
-    final hidden = state.hideBalance || account.hideBalance;
-    final accent = Color(account.colorValue);
-    return _OverviewSurface(
-      accent: accent,
-      eyebrow: Text(
-        account.name.toUpperCase(),
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
-      value: hidden ? '••••••' : moneyFor(state, balance),
-      metrics: [
-        _OverviewValue(
-          label: 'Entrate',
-          value: hidden ? '••••' : moneyFor(state, income),
-          color: context.financeColors.positive,
-          icon: Icons.south_west_rounded,
-        ),
-        _OverviewValue(
-          label: 'Spese',
-          value: hidden ? '••••' : moneyFor(state, expense),
-          color: context.financeColors.negative,
-          icon: Icons.north_east_rounded,
-        ),
-        _OverviewValue(
-          label: 'Saldo',
-          value: hidden ? '••••' : moneyFor(state, balance),
-          color: accent,
-          icon: accountIcon(account.iconKey),
-        ),
-      ],
-    );
-  }
-}
-
-class _OverviewSurface extends StatelessWidget {
-  const _OverviewSurface({
-    required this.accent,
-    required this.eyebrow,
-    required this.value,
-    required this.metrics,
-  });
-
-  final Color accent;
-  final Widget eyebrow;
-  final String value;
-  final List<_OverviewValue> metrics;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    // A native Flutter balance card inspired by the Figma Revolut cards:
-    // content stays live, selectable, accessible and privacy-aware.
-    final deep = Color.lerp(const Color(0xFF29155C), accent, .15)!;
-    final luminous = Color.lerp(const Color(0xFF7846D8), accent, .20)!;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            padding: const EdgeInsets.fromLTRB(24, 24, 24, 28),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [deep, luminous, deep],
-                stops: const [0, .58, 1],
-              ),
-              borderRadius: BorderRadius.circular(28),
-              boxShadow: [
-                BoxShadow(
-                  color: deep.withValues(alpha: .18),
-                  blurRadius: 24,
-                  offset: const Offset(0, 12),
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.account_balance_wallet_rounded,
-                      color: Colors.white,
-                      size: 23,
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: DefaultTextStyle(
-                        style: theme.textTheme.titleSmall!.copyWith(
-                          color: Colors.white.withValues(alpha: .87),
-                          fontWeight: FontWeight.w600,
-                        ),
-                        child: eyebrow,
-                      ),
-                    ),
-                    Text(
-                      DateFormat(
-                        'MMM',
-                        AppI18n.intlLocale,
-                      ).format(DateTime.now()).toUpperCase(),
-                      style: theme.textTheme.labelSmall?.copyWith(
-                        color: Colors.white.withValues(alpha: .70),
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 1.2,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 28),
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 260),
-                  switchInCurve: Curves.easeOutCubic,
-                  child: FittedBox(
-                    key: ValueKey(value),
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      value,
-                      style: theme.textTheme.displayMedium?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: -1.7,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.shield_outlined,
-                      size: 16,
-                      color: Colors.white.withValues(alpha: .72),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      AppI18n.tr('Le tue finanze, a colpo d’occhio'),
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: Colors.white.withValues(alpha: .75),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 18),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                for (var index = 0; index < metrics.length; index++) ...[
-                  if (index > 0) const SizedBox(width: 9),
-                  Expanded(child: metrics[index]),
-                ],
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _OverviewValue extends StatelessWidget {
-  const _OverviewValue({
-    required this.label,
-    required this.value,
-    required this.color,
-    required this.icon,
-  });
-
-  final String label;
-  final String value;
-  final Color color;
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Container(
-      constraints: const BoxConstraints(minHeight: 94),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: color, size: 19),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            maxLines: 1,
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            style: theme.textTheme.labelSmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 4),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              value,
-              maxLines: 1,
-              style: theme.textTheme.labelLarge?.copyWith(
-                color: theme.colorScheme.onSurface,
-                fontWeight: FontWeight.w800,
-                letterSpacing: -.3,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
