@@ -6,9 +6,9 @@ import '../core/money.dart';
 import '../main.dart';
 import '../models/models.dart';
 import '../services/account_context_service.dart';
-import '../widgets/account_context_selector.dart';
 import '../widgets/balyn_revolut_home_content.dart';
 import '../widgets/balyn_revolut_home_hero.dart';
+import '../widgets/balyn_recent_transactions_card.dart';
 import '../widgets/balyn_motion.dart';
 import '../widgets/balyn_editorial_components.dart';
 import '../widgets/home_dashboard_widget.dart';
@@ -111,6 +111,9 @@ class AccountContextHomeScreen extends StatelessWidget {
                   ? '••••'
                   : moneyFor(state, isTotal ? state.safeToSpend : balance),
               hideBalance: hidden,
+              accounts: state.activeAccounts,
+              currentAccountId: effectiveAccountId,
+              onAccountChanged: onAccountChanged,
               selectedTab: 0,
               onTabChanged: (selected) {
                 if (selected == 1) {
@@ -235,23 +238,15 @@ class AccountContextHomeScreen extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(16, 9, 16, 130),
             sliver: SliverList.list(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      DateFormat(
-                        'MMMM yyyy',
-                        AppI18n.intlLocale,
-                      ).format(DateTime.now()),
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.w800,
-                      ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    DateFormat('MMMM yyyy', AppI18n.intlLocale)
+                        .format(DateTime.now()),
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w800,
                     ),
-                    AccountContextSelector(
-                      accountId: effectiveAccountId,
-                      onChanged: onAccountChanged,
-                    ),
-                  ],
+                  ),
                 ),
                 const SizedBox(height: 12),
                 // A compact real-data overview replaces the kit's fictional
@@ -291,63 +286,25 @@ class AccountContextHomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                if (isTotal) ...[
-                  BalynEditorialHeading(
-                    title: 'Ultimi movimenti',
-                    subtitle: 'Le operazioni più recenti',
-                    actionLabel: 'Vedi tutti',
-                    onAction: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => AccountContextTransactionsScreen(
-                          accountId: effectiveAccountId,
-                          onAccountChanged: onAccountChanged,
-                        ),
+                BalynEditorialHeading(
+                  title: 'Ultimi movimenti',
+                  subtitle: 'Le operazioni più recenti',
+                ),
+                const SizedBox(height: 10),
+                BalynRecentTransactionsCard(
+                  items: recent,
+                  hideAmounts: hidden,
+                  onSeeAll: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => AccountContextTransactionsScreen(
+                        accountId: effectiveAccountId,
+                        onAccountChanged: onAccountChanged,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 9),
-                  BalynEditorialSurface(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 7,
-                    ),
-                    child: recent.isEmpty
-                        ? ListTile(
-                            leading: const BalynEditorialIcon(
-                              icon: Icons.receipt_long_outlined,
-                            ),
-                            title: const Text('Nessun movimento'),
-                            subtitle: const Text(
-                              'Le operazioni compariranno qui.',
-                            ),
-                            onTap: () => _openQuick(
-                              context,
-                              TransactionType.expense,
-                              effectiveAccountId,
-                            ),
-                          )
-                        : Column(
-                            children: [
-                              for (
-                                var index = 0;
-                                index < recent.take(3).length;
-                                index++
-                              ) ...[
-                                if (index > 0)
-                                  Divider(
-                                    height: 1,
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.outlineVariant,
-                                  ),
-                                TransactionListTile(item: recent[index]),
-                              ],
-                            ],
-                          ),
-                  ),
-                  const SizedBox(height: 23),
-                ],
+                ),
+                const SizedBox(height: 23),
                 BalynEditorialHeading(
                   title: 'In sintesi',
                   subtitle: 'Entrate, spese e disponibilità',
@@ -499,20 +456,7 @@ class AccountContextHomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 32),
-                  const SectionTitle('Ultimi movimenti'),
-                  if (recent.isEmpty)
-                    const EmptyState(
-                      icon: Icons.receipt_long_outlined,
-                      title: 'Nessun movimento',
-                      subtitle:
-                          'Non ci sono ancora movimenti per questo conto.',
-                    )
-                  else
-                    ...recent
-                        .take(5)
-                        .map((item) => TransactionListTile(item: item)),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 24),
                   SectionTitle(
                     'Prossime scadenze',
                     trailing: TextButton(
