@@ -3,35 +3,41 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('total Home keeps the original summary above quick actions', () {
-    final source = File(
-      'lib/screens/account_context_home_screen.dart',
-    ).readAsStringSync();
+  test('Home uses a full-bleed Revolut-style header above live content', () {
+    final home = File('lib/screens/account_context_home_screen.dart')
+        .readAsStringSync();
+    final hero = File('lib/widgets/balyn_revolut_home_hero.dart')
+        .readAsStringSync();
+    final content = File('lib/widgets/balyn_revolut_home_content.dart')
+        .readAsStringSync();
 
-    final summary = source.indexOf('_TotalOverviewSummary(');
-    final quickActions = source.indexOf('_QuickActions(', summary + 1);
-    expect(summary, greaterThanOrEqualTo(0));
-    expect(quickActions, greaterThan(summary));
-    expect(source, contains("Text('PATRIMONIO'"));
-    expect(source, contains("label: 'Entrate'"));
-    expect(source, contains("label: 'Spese'"));
-    expect(source, contains("label: 'Disponibile'"));
+    expect(home, contains('SliverToBoxAdapter('));
+    expect(home, contains('BalynRevolutHomeHero('));
+    expect(home, contains('BalynRevolutHomeContent('));
+    expect(home, contains('state.safeToSpend'));
+    expect(hero, contains('_VioletWavesPainter'));
+    expect(hero, contains('CustomPaint('));
+    expect(hero, contains("label: 'Spesa'"));
+    expect(hero, contains("label: 'Entrata'"));
+    expect(hero, contains("label: 'Trasferisci'"));
+    expect(hero, contains("label: 'Altro'"));
+    expect(content, contains("'I tuoi conti'"));
   });
 
-  test(
-    'Home overview centers summary values and has no patrimonio sparkline',
-    () {
-      final source = File(
-        'lib/screens/account_context_home_screen.dart',
-      ).readAsStringSync();
-
-      expect(source, isNot(contains('FinanceSparkline(')));
-      expect(source, isNot(contains('trendValues:')));
-      expect(source, contains('crossAxisAlignment: CrossAxisAlignment.center'));
-      expect(source, contains('textAlign: TextAlign.center'));
-      expect(source, contains('alignment: Alignment.center'));
-    },
-  );
+  test('Home keeps real account selection, privacy and quick actions', () {
+    final home = File('lib/screens/account_context_home_screen.dart')
+        .readAsStringSync();
+    expect(home, contains('AccountContextSelector('));
+    expect(home, contains('onAccountChanged'));
+    expect(home, contains('hideBalance'));
+    expect(home, contains('onVisibility:'));
+    expect(home, contains('onSearch:'));
+    expect(home, contains('onExpense:'));
+    expect(home, contains('onIncome:'));
+    expect(home, contains('onTransfer:'));
+    expect(home, contains('onMore:'));
+    expect(home, isNot(contains('FinanceSparkline(')));
+  });
 
   test('fixed summary metrics are not duplicated by personalized sections', () {
     final source = File(
@@ -95,7 +101,7 @@ void main() {
     expect(database, contains('isFreshDashboard && defaultOrder >= 0'));
   });
 
-  test('selected account Home mirrors the main summary hierarchy', () {
+  test('selected account uses the same hero and preserves account details', () {
     final home = File(
       'lib/screens/account_context_home_screen.dart',
     ).readAsStringSync();
@@ -103,18 +109,16 @@ void main() {
       'lib/widgets/home_dashboard_widget.dart',
     ).readAsStringSync();
 
-    final summary = home.indexOf('_SelectedAccountSummary(');
-    final quickActions = home.indexOf('_QuickActions(', summary + 1);
+    final hero = home.indexOf('BalynRevolutHomeHero(');
     final accountCarousel = home.indexOf(
       'AccountCategoryCarousel(accountId: selectedAccount!.id)',
-      quickActions + 1,
+      hero + 1,
     );
     final openAccount = home.indexOf("'Apri conto'", accountCarousel + 1);
     final analytics = home.indexOf("'Analytics del conto'", openAccount + 1);
 
-    expect(summary, greaterThanOrEqualTo(0));
-    expect(quickActions, greaterThan(summary));
-    expect(accountCarousel, greaterThan(quickActions));
+    expect(hero, greaterThanOrEqualTo(0));
+    expect(accountCarousel, greaterThan(hero));
     expect(openAccount, greaterThan(accountCarousel));
     expect(analytics, greaterThan(openAccount));
     expect(widget, contains('class AccountCategoryCarousel'));
