@@ -40,7 +40,7 @@ class PlanningScreen extends StatelessWidget {
               MaterialPageRoute(builder: (_) => const BudgetsScreen()),
             ),
           ),
-          const Divider(height: 1),
+          const SizedBox(height: 10),
           _PlanningLink(
             icon: Icons.repeat_rounded,
             title: 'Ricorrenti',
@@ -52,7 +52,7 @@ class PlanningScreen extends StatelessWidget {
               MaterialPageRoute(builder: (_) => const RecurringScreen()),
             ),
           ),
-          const Divider(height: 1),
+          const SizedBox(height: 10),
           _PlanningLink(
             icon: Icons.flag_outlined,
             title: 'Obiettivi',
@@ -64,7 +64,7 @@ class PlanningScreen extends StatelessWidget {
               MaterialPageRoute(builder: (_) => const GoalsScreen()),
             ),
           ),
-          const Divider(height: 1),
+          const SizedBox(height: 10),
           _PlanningLink(
             icon: Icons.calendar_month_outlined,
             title: 'Previsioni e calendario',
@@ -81,28 +81,35 @@ class PlanningScreen extends StatelessWidget {
 }
 
 class _PlanningLink extends StatelessWidget {
-  const _PlanningLink({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.onTap,
-  });
-
+  const _PlanningLink({required this.icon, required this.title,
+    required this.subtitle, required this.onTap});
   final IconData icon;
   final String title;
   final String subtitle;
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) => ListTile(
-    contentPadding: EdgeInsets.zero,
-    minVerticalPadding: 12,
-    leading: Icon(icon),
-    title: Text(title, style: const TextStyle(fontWeight: FontWeight.w800)),
-    subtitle: Text(subtitle),
-    trailing: const Icon(Icons.chevron_right_rounded),
-    onTap: onTap,
-  );
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Material(
+      color: scheme.surfaceContainer.withValues(alpha: .82),
+      borderRadius: BorderRadius.circular(22),
+      clipBehavior: Clip.antiAlias,
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+        leading: Container(
+          width: 44, height: 44, alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: scheme.tertiary.withValues(alpha: .11),
+            borderRadius: BorderRadius.circular(15)),
+          child: Icon(icon, color: scheme.tertiary)),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w800)),
+        subtitle: Text(subtitle),
+        trailing: const Icon(Icons.chevron_right_rounded),
+        onTap: onTap,
+      ),
+    );
+  }
 }
 
 class _ForecastSummary extends StatelessWidget {
@@ -118,10 +125,8 @@ class _ForecastSummary extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 18),
       decoration: BoxDecoration(
-        color: theme.colorScheme.onSurface.withValues(
-          alpha: theme.brightness == Brightness.dark ? .035 : .025,
-        ),
-        borderRadius: BorderRadius.circular(30),
+        color: theme.colorScheme.surfaceContainer.withValues(alpha: .85),
+        borderRadius: BorderRadius.circular(26),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

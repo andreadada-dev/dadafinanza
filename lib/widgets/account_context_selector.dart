@@ -59,15 +59,21 @@ class AccountContextSelector extends StatelessWidget {
           ),
         ),
       ],
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 220),
+      child: Container(
+        constraints: const BoxConstraints(maxWidth: 220, minHeight: 38),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surfaceContainer.withValues(alpha: .88),
+          borderRadius: BorderRadius.circular(16),
+        ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Flexible(
-              child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
+              child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontWeight: FontWeight.w700)),
             ),
-            const SizedBox(width: 4),
+            const SizedBox(width: 6),
             const Icon(Icons.keyboard_arrow_down_rounded, size: 20),
           ],
         ),

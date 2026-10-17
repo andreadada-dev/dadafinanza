@@ -639,12 +639,7 @@ class _MovementHeader extends StatelessWidget {
 }
 
 class _MovementMetric extends StatelessWidget {
-  const _MovementMetric({
-    required this.label,
-    required this.value,
-    required this.color,
-  });
-
+  const _MovementMetric({required this.label, required this.value, required this.color});
   final String label;
   final String value;
   final Color color;
@@ -652,29 +647,36 @@ class _MovementMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: theme.textTheme.labelMedium?.copyWith(
+    return Container(
+      constraints: const BoxConstraints(minHeight: 94),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surfaceContainer.withValues(alpha: .86),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label, style: theme.textTheme.labelSmall?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w600,
+          )),
+          const SizedBox(height: 9),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: BalynShaderText(value, seed: color, style:
+              theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
           ),
-        ),
-        const SizedBox(height: 3),
-        FittedBox(
-          fit: BoxFit.scaleDown,
-          alignment: Alignment.centerLeft,
-          child: BalynShaderText(
-            value,
-            seed: color,
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w900,
-            ),
+          const SizedBox(height: 7),
+          Container(
+            width: 20, height: 3,
+            decoration: BoxDecoration(color: color,
+              borderRadius: BorderRadius.circular(3)),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

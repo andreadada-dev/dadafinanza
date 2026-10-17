@@ -577,26 +577,36 @@ class ShaderAppearanceSettingsScreen extends StatelessWidget {
 }
 
 class _Link extends StatelessWidget {
-  const _Link({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.onTap,
-  });
-
+  const _Link({required this.icon, required this.title,
+    required this.subtitle, required this.onTap});
   final IconData icon;
   final String title;
   final String subtitle;
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) => ListTile(
-    contentPadding: EdgeInsets.zero,
-    minVerticalPadding: 12,
-    leading: Icon(icon),
-    title: Text(title),
-    subtitle: Text(subtitle),
-    trailing: const Icon(Icons.chevron_right_rounded),
-    onTap: onTap,
-  );
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Material(
+        color: scheme.surfaceContainer.withValues(alpha: .82),
+        borderRadius: BorderRadius.circular(20),
+        clipBehavior: Clip.antiAlias,
+        child: ListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
+          leading: Container(
+            width: 42, height: 42, alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: scheme.tertiary.withValues(alpha: .11),
+              borderRadius: BorderRadius.circular(14)),
+            child: Icon(icon, size: 22, color: scheme.tertiary)),
+          title: Text(title, style: const TextStyle(fontWeight: FontWeight.w700)),
+          subtitle: Text(subtitle),
+          trailing: const Icon(Icons.chevron_right_rounded),
+          onTap: onTap,
+        ),
+      ),
+    );
+  }
 }

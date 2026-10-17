@@ -1376,24 +1376,36 @@ class _Metric extends StatelessWidget {
   final Color? color;
 
   @override
-  Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(label, style: Theme.of(context).textTheme.bodySmall),
-      const SizedBox(height: 3),
-      FittedBox(
-        fit: BoxFit.scaleDown,
-        alignment: Alignment.centerLeft,
-        child: color == null
-            ? Text(value, style: Theme.of(context).textTheme.titleMedium)
-            : BalynShaderText(
-                value,
-                seed: color!,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      constraints: const BoxConstraints(minHeight: 88),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 13),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surfaceContainer.withValues(alpha: .86),
+        borderRadius: BorderRadius.circular(20),
       ),
-    ],
-  );
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label, style: theme.textTheme.labelSmall?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
+            fontWeight: FontWeight.w600)),
+          const SizedBox(height: 8),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: color == null
+              ? Text(value, style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w800))
+              : BalynShaderText(value, seed: color!, style:
+                  theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class _AnalyticsLine extends StatelessWidget {
