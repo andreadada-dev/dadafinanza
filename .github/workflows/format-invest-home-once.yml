@@ -1,4 +1,4 @@
-name: Format Invest Home once
+name: Format Invest Home after tests
 
 on:
   push:
