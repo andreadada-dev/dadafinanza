@@ -238,8 +238,7 @@ class AccountContextHomeScreen extends StatelessWidget {
                     EmptyState(
                       icon: Icons.dashboard_customize_outlined,
                       title: 'Nessuna sezione aggiuntiva',
-                      subtitle:
-                          'Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.',
+                      subtitle: 'Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.',
                       action: TextButton.icon(
                         onPressed: () => Navigator.push(
                           context,
@@ -672,8 +671,11 @@ class _OverviewSurface extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.account_balance_wallet_rounded,
-                        color: Colors.white, size: 23),
+                    const Icon(
+                      Icons.account_balance_wallet_rounded,
+                      color: Colors.white,
+                      size: 23,
+                    ),
                     const SizedBox(width: 10),
                     Expanded(
                       child: DefaultTextStyle(
@@ -685,8 +687,10 @@ class _OverviewSurface extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      DateFormat('MMM', AppI18n.intlLocale)
-                          .format(DateTime.now()).toUpperCase(),
+                      DateFormat(
+                        'MMM',
+                        AppI18n.intlLocale,
+                      ).format(DateTime.now()).toUpperCase(),
                       style: theme.textTheme.labelSmall?.copyWith(
                         color: Colors.white.withValues(alpha: .70),
                         fontWeight: FontWeight.w700,
@@ -716,8 +720,11 @@ class _OverviewSurface extends StatelessWidget {
                 const SizedBox(height: 24),
                 Row(
                   children: [
-                    Icon(Icons.shield_outlined,
-                        size: 16, color: Colors.white.withValues(alpha: .72)),
+                    Icon(
+                      Icons.shield_outlined,
+                      size: 16,
+                      color: Colors.white.withValues(alpha: .72),
+                    ),
                     const SizedBox(width: 8),
                     Text(
                       AppI18n.tr('Le tue finanze, a colpo d’occhio'),

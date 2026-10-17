@@ -81,8 +81,12 @@ class PlanningScreen extends StatelessWidget {
 }
 
 class _PlanningLink extends StatelessWidget {
-  const _PlanningLink({required this.icon, required this.title,
-    required this.subtitle, required this.onTap});
+  const _PlanningLink({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.onTap,
+  });
   final IconData icon;
   final String title;
   final String subtitle;
@@ -98,11 +102,15 @@ class _PlanningLink extends StatelessWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
         leading: Container(
-          width: 44, height: 44, alignment: Alignment.center,
+          width: 44,
+          height: 44,
+          alignment: Alignment.center,
           decoration: BoxDecoration(
             color: scheme.tertiary.withValues(alpha: .11),
-            borderRadius: BorderRadius.circular(15)),
-          child: Icon(icon, color: scheme.tertiary)),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Icon(icon, color: scheme.tertiary),
+        ),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.w800)),
         subtitle: Text(subtitle),
         trailing: const Icon(Icons.chevron_right_rounded),
@@ -278,8 +286,7 @@ class BudgetsScreen extends StatelessWidget {
             EmptyState(
               icon: Icons.pie_chart_outline_rounded,
               title: 'Nessun budget',
-              subtitle:
-                  'Imposta un limite per sapere quanto puoi ancora spendere nel periodo.',
+              subtitle: 'Imposta un limite per sapere quanto puoi ancora spendere nel periodo.',
               action: FilledButton.icon(
                 onPressed: () => showBudgetEditor(context),
                 icon: const Icon(Icons.add_rounded),
@@ -681,8 +688,7 @@ class GoalsScreen extends StatelessWidget {
             EmptyState(
               icon: Icons.flag_outlined,
               title: 'Nessun obiettivo',
-              subtitle:
-                  'Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.',
+              subtitle: 'Definisci una cifra e, se vuoi, una data: Balyn stimerà un ritmo sostenibile.',
               action: FilledButton.icon(
                 onPressed: () => showGoalEditor(context),
                 icon: const Icon(Icons.add_rounded),
@@ -751,8 +757,7 @@ class GoalsScreen extends StatelessWidget {
                           final confirmed = await confirmDestructiveAction(
                             context,
                             title: 'Eliminare “${goal.name}”?',
-                            message:
-                                'L’obiettivo verrà eliminato. Conti e movimenti non saranno modificati.',
+                            message: 'L’obiettivo verrà eliminato. Conti e movimenti non saranno modificati.',
                           );
                           if (confirmed) await state.deleteGoal(goal);
                         }
@@ -831,8 +836,7 @@ class _GoalPlanText extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
     final text = switch (plan.status) {
-      GoalPlanStatus.insufficientData =>
-        'Servono almeno 3 settimane di storico utile per un consiglio realistico.',
+      GoalPlanStatus.insufficientData => 'Servono almeno 3 settimane di storico utile per un consiglio realistico.',
       GoalPlanStatus.ahead =>
         'In anticipo · ritmo realistico ${moneyFor(state, plan.realisticWeekly)}/settimana',
       GoalPlanStatus.onTrack =>
@@ -1199,8 +1203,7 @@ class RecurringScreen extends StatelessWidget {
                           final confirmed = await confirmDestructiveAction(
                             context,
                             title: 'Eliminare “${item.name}”?',
-                            message:
-                                'I movimenti già registrati resteranno invariati.',
+                            message: 'I movimenti già registrati resteranno invariati.',
                           );
                           if (confirmed) await state.deleteRecurring(item);
                         }
@@ -1699,8 +1702,7 @@ class _FinanceCalendarScreenState extends State<FinanceCalendarScreen> {
             const EmptyState(
               icon: Icons.event_available_outlined,
               title: 'Nessun evento puntuale',
-              subtitle:
-                  'La stima comportamentale è comunque inclusa nel saldo previsto sopra.',
+              subtitle: 'La stima comportamentale è comunque inclusa nel saldo previsto sopra.',
             )
           else
             ...events.map(

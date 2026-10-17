@@ -381,9 +381,8 @@ class _AccountContextTransactionsScreenState
                       width: 38,
                       height: 4,
                       decoration: BoxDecoration(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSurface.withValues(alpha: .18),
+                        color: Theme.of(context).colorScheme.onSurface
+                            .withValues(alpha: .18),
                         borderRadius: BorderRadius.circular(99),
                       ),
                     ),
@@ -639,7 +638,11 @@ class _MovementHeader extends StatelessWidget {
 }
 
 class _MovementMetric extends StatelessWidget {
-  const _MovementMetric({required this.label, required this.value, required this.color});
+  const _MovementMetric({
+    required this.label,
+    required this.value,
+    required this.color,
+  });
   final String label;
   final String value;
   final Color color;
@@ -658,22 +661,33 @@ class _MovementMetric extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: theme.textTheme.labelSmall?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
-            fontWeight: FontWeight.w600,
-          )),
+          Text(
+            label,
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           const SizedBox(height: 9),
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerLeft,
-            child: BalynShaderText(value, seed: color, style:
-              theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
+            child: BalynShaderText(
+              value,
+              seed: color,
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w800,
+              ),
+            ),
           ),
           const SizedBox(height: 7),
           Container(
-            width: 20, height: 3,
-            decoration: BoxDecoration(color: color,
-              borderRadius: BorderRadius.circular(3)),
+            width: 20,
+            height: 3,
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(3),
+            ),
           ),
         ],
       ),
@@ -995,17 +1009,15 @@ class _MovementDaySection extends StatelessWidget {
             Expanded(
               child: Text(
                 _label(),
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w900),
+                style: Theme.of(context).textTheme.titleMedium
+                    ?.copyWith(fontWeight: FontWeight.w900),
               ),
             ),
             if (net == 0)
               Text(
                 hideValues ? '••••' : moneyFor(state, 0),
-                style: Theme.of(
-                  context,
-                ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w800),
+                style: Theme.of(context).textTheme.labelLarge
+                    ?.copyWith(fontWeight: FontWeight.w800),
               )
             else
               BalynShaderText(
@@ -1013,9 +1025,8 @@ class _MovementDaySection extends StatelessWidget {
                     ? '••••'
                     : '${net > 0 ? '+' : '−'}${moneyFor(state, net.abs())}',
                 seed: netColor,
-                style: Theme.of(
-                  context,
-                ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w800),
+                style: Theme.of(context).textTheme.labelLarge
+                    ?.copyWith(fontWeight: FontWeight.w800),
               ),
           ],
         ),

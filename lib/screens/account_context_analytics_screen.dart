@@ -290,9 +290,8 @@ class _AccountContextAnalyticsScreenState
         FinanceDonutSegment(
           label: 'Altro',
           value: expense - donutShown,
-          color: Theme.of(
-            context,
-          ).colorScheme.onSurfaceVariant.withValues(alpha: .36),
+          color: Theme.of(context).colorScheme.onSurfaceVariant
+              .withValues(alpha: .36),
           icon: Icons.more_horiz_rounded,
         ),
     ];
@@ -1389,18 +1388,31 @@ class _Metric extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: theme.textTheme.labelSmall?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
-            fontWeight: FontWeight.w600)),
+          Text(
+            label,
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           const SizedBox(height: 8),
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerLeft,
             child: color == null
-              ? Text(value, style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w800))
-              : BalynShaderText(value, seed: color!, style:
-                  theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
+                ? Text(
+                    value,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
+                  )
+                : BalynShaderText(
+                    value,
+                    seed: color!,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
           ),
         ],
       ),

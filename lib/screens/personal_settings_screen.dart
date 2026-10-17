@@ -46,9 +46,8 @@ class _BrandHeader extends StatelessWidget {
       const SizedBox(height: 10),
       Text(
         'Balyn',
-        style: Theme.of(
-          context,
-        ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+        style: Theme.of(context).textTheme.titleLarge
+            ?.copyWith(fontWeight: FontWeight.w700),
       ),
     ],
   );
@@ -219,8 +218,7 @@ class PersonalSettingsScreen extends StatelessWidget {
           _Link(
             icon: Icons.widgets_outlined,
             title: 'Widget Android',
-            subtitle:
-                'Saldo, Quick Capture, importi rapidi e riepilogo configurabili',
+            subtitle: 'Saldo, Quick Capture, importi rapidi e riepilogo configurabili',
             onTap: () => _open(context, const AndroidWidgetsScreen()),
           ),
           const SizedBox(height: 32),
@@ -577,8 +575,12 @@ class ShaderAppearanceSettingsScreen extends StatelessWidget {
 }
 
 class _Link extends StatelessWidget {
-  const _Link({required this.icon, required this.title,
-    required this.subtitle, required this.onTap});
+  const _Link({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.onTap,
+  });
   final IconData icon;
   final String title;
   final String subtitle;
@@ -594,14 +596,24 @@ class _Link extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         clipBehavior: Clip.antiAlias,
         child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 14,
+            vertical: 5,
+          ),
           leading: Container(
-            width: 42, height: 42, alignment: Alignment.center,
+            width: 42,
+            height: 42,
+            alignment: Alignment.center,
             decoration: BoxDecoration(
               color: scheme.tertiary.withValues(alpha: .11),
-              borderRadius: BorderRadius.circular(14)),
-            child: Icon(icon, size: 22, color: scheme.tertiary)),
-          title: Text(title, style: const TextStyle(fontWeight: FontWeight.w700)),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Icon(icon, size: 22, color: scheme.tertiary),
+          ),
+          title: Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.w700),
+          ),
           subtitle: Text(subtitle),
           trailing: const Icon(Icons.chevron_right_rounded),
           onTap: onTap,
