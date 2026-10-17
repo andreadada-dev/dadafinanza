@@ -9,11 +9,13 @@ import '../services/account_context_service.dart';
 import '../widgets/balyn_revolut_home_content.dart';
 import '../widgets/balyn_revolut_home_hero.dart';
 import '../widgets/balyn_recent_transactions_card.dart';
+import '../widgets/balyn_home_section_transition.dart';
 import '../widgets/balyn_motion.dart';
 import '../widgets/balyn_editorial_components.dart';
 import '../widgets/home_dashboard_widget.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_context_analytics_screen.dart';
+import 'balyn_activity_screen.dart';
 import 'account_context_transactions_screen.dart';
 import 'account_management_screen.dart'
     show AccountManagementScreen, SafeAccountDetailScreen;
@@ -29,6 +31,11 @@ class AccountContextHomeScreen extends StatelessWidget {
   const AccountContextHomeScreen({
     required this.accountId,
     required this.onAccountChanged,
+    required this.selectedSection,
+    required this.slideDirection,
+    required this.activityInitialTab,
+    required this.onSectionChanged,
+    required this.onShowActivity,
     super.key,
   });
 
@@ -55,6 +62,11 @@ class AccountContextHomeScreen extends StatelessWidget {
 
   final int? accountId;
   final ValueChanged<int?> onAccountChanged;
+  final int selectedSection;
+  final int slideDirection;
+  final int activityInitialTab;
+  final ValueChanged<int> onSectionChanged;
+  final ValueChanged<int> onShowActivity;
 
   @override
   Widget build(BuildContext context) {
@@ -113,36 +125,11 @@ class AccountContextHomeScreen extends StatelessWidget {
               accounts: state.activeAccounts,
               currentAccountId: effectiveAccountId,
               onAccountChanged: onAccountChanged,
-              selectedTab: 0,
-              onTabChanged: (selected) {
-                if (selected == 1) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const AccountManagementScreen(),
-                    ),
-                  );
-                }
-              },
+              selectedTab: selectedSection,
+              onTabChanged: onSectionChanged,
               onVisibility: () => state.setHideBalance(!state.hideBalance),
-              onSearch: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => AccountContextTransactionsScreen(
-                    accountId: effectiveAccountId,
-                    onAccountChanged: onAccountChanged,
-                  ),
-                ),
-              ),
-              onAnalytics: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => AccountContextAnalyticsScreen(
-                    accountId: effectiveAccountId,
-                    onAccountChanged: onAccountChanged,
-                  ),
-                ),
-              ),
+              onSearch: () => onShowActivity(0),
+              onAnalytics: () => onShowActivity(1),
               onSettings: () => Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -235,8 +222,14 @@ class AccountContextHomeScreen extends StatelessWidget {
           ),
           SliverPadding(
             padding: const EdgeInsets.fromLTRB(16, 9, 16, 130),
-            sliver: SliverList.list(
-              children: [
+            sliver: SliverToBoxAdapter(
+              child: BalynHomeSectionTransition(
+                index: selectedSection,
+                direction: slideDirection,
+                child: selectedSection == 0
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -295,15 +288,7 @@ class AccountContextHomeScreen extends StatelessWidget {
                 BalynRecentTransactionsCard(
                   items: recent,
                   hideAmounts: hidden,
-                  onSeeAll: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => AccountContextTransactionsScreen(
-                        accountId: effectiveAccountId,
-                        onAccountChanged: onAccountChanged,
-                      ),
-                    ),
-                  ),
+                  onSeeAll: () => onShowActivity(0),
                 ),
                 const SizedBox(height: 23),
                 BalynEditorialHeading(
@@ -500,7 +485,33 @@ class AccountContextHomeScreen extends StatelessWidget {
                           ),
                         ),
                 ],
-              ],
+                        ],
+                      )
+                    : selectedSection == 1
+                        ? BalynRevolutHomeContent(
+                            income: income,
+                            expense: expense,
+                            available: isTotal ? state.safeToSpend : balance,
+                            hideValues: hidden,
+                            showAccounts: false,
+                            onSelectAccount: onAccountChanged,
+                            onManageAccounts: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const AccountManagementScreen(),
+                              ),
+                            ),
+                          )
+                        : SizedBox(
+                            height: (MediaQuery.sizeOf(context).height * .78)
+                                .clamp(490.0, 820.0),
+                            child: BalynActivityScreen(
+                              accountId: effectiveAccountId,
+                              onAccountChanged: onAccountChanged,
+                              initialTab: activityInitialTab,
+                            ),
+                          ),
+              ),
             ),
           ),
         ],

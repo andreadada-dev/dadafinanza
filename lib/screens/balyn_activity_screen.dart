@@ -12,18 +12,28 @@ class BalynActivityScreen extends StatefulWidget {
   const BalynActivityScreen({
     required this.accountId,
     required this.onAccountChanged,
+    this.initialTab = 0,
     super.key,
   });
 
   final int? accountId;
   final ValueChanged<int?> onAccountChanged;
+  final int initialTab;
 
   @override
   State<BalynActivityScreen> createState() => _BalynActivityScreenState();
 }
 
 class _BalynActivityScreenState extends State<BalynActivityScreen> {
-  int _selected = 0;
+  late int _selected = widget.initialTab;
+
+  @override
+  void didUpdateWidget(covariant BalynActivityScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.initialTab != oldWidget.initialTab) {
+      _selected = widget.initialTab;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

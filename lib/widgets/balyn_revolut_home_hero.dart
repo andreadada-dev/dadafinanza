@@ -478,19 +478,53 @@ class BalynRevolutHomeHero extends StatelessWidget {
                   color: const Color(0xFFE8E9EF),
                   borderRadius: BorderRadius.circular(27),
                 ),
-                child: Row(
-                  children: [
-                    _TabPill(
-                      label: 'Panoramica',
-                      active: selectedTab == 0,
-                      onTap: () => onTabChanged(0),
-                    ),
-                    _TabPill(
-                      label: 'Conti',
-                      active: selectedTab == 1,
-                      onTap: () => onTabChanged(1),
-                    ),
-                  ],
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final segmentWidth = constraints.maxWidth / 3;
+                    return Stack(
+                      children: [
+                        AnimatedPositioned(
+                          duration: const Duration(milliseconds: 320),
+                          curve: Curves.easeInOutCubic,
+                          left: segmentWidth * selectedTab,
+                          top: 0,
+                          bottom: 0,
+                          width: segmentWidth,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(24),
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 8,
+                                  color: Colors.black.withValues(alpha: .045),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            _TabPill(
+                              label: 'Panoramica',
+                              active: selectedTab == 0,
+                              onTap: () => onTabChanged(0),
+                            ),
+                            _TabPill(
+                              label: 'Conti',
+                              active: selectedTab == 1,
+                              onTap: () => onTabChanged(1),
+                            ),
+                            _TabPill(
+                              label: 'Attività',
+                              active: selectedTab == 2,
+                              onTap: () => onTabChanged(2),
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ),
@@ -752,7 +786,7 @@ class _TabPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Expanded(
     child: Material(
-      color: active ? Colors.white : Colors.transparent,
+      color: Colors.transparent,
       borderRadius: BorderRadius.circular(24),
       child: InkWell(
         onTap: onTap,

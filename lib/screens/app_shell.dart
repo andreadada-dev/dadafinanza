@@ -8,7 +8,7 @@ import '../models/models.dart';
 import '../models/quick_capture_models.dart';
 import '../services/haptic_service.dart';
 import '../services/quick_preset_service.dart';
-import '../widgets/balyn_shader_system.dart';
+import '../widgets/balyn_glass_navigation.dart';
 import '../widgets/smooth_indexed_pages.dart';
 import '../widgets/ui_helpers.dart';
 import 'balyn_activity_screen.dart';
@@ -31,6 +31,9 @@ class BalynAppShell extends StatefulWidget {
 class _BalynAppShellState extends State<BalynAppShell> {
   int index = 0;
   int? accountId;
+  int _homeSection = 0;
+  int _homeDirection = 1;
+  int _homeActivityTab = 0;
   bool _allowExit = false;
   Timer? _exitTimer;
 
@@ -45,6 +48,21 @@ class _BalynAppShellState extends State<BalynAppShell> {
     final state = AppScope.of(context);
     unawaited(HapticService.light(enabled: state.haptics));
     setState(() => accountId = value);
+  }
+
+  void _selectHomeSection(int next) {
+    if (_homeSection == next) return;
+    final state = AppScope.of(context);
+    unawaited(HapticService.light(enabled: state.haptics));
+    setState(() {
+      _homeDirection = next > _homeSection ? 1 : -1;
+      _homeSection = next;
+    });
+  }
+
+  void _showHomeActivity(int innerTab) {
+    setState(() => _homeActivityTab = innerTab);
+    _selectHomeSection(2);
   }
 
   void _selectTab(int value) {
@@ -95,6 +113,11 @@ class _BalynAppShellState extends State<BalynAppShell> {
       AccountContextHomeScreen(
         accountId: effectiveAccountId,
         onAccountChanged: _selectAccount,
+        selectedSection: _homeSection,
+        slideDirection: _homeDirection,
+        activityInitialTab: _homeActivityTab,
+        onSectionChanged: _selectHomeSection,
+        onShowActivity: _showHomeActivity,
       ),
       BalynActivityScreen(
         accountId: effectiveAccountId,
@@ -113,60 +136,43 @@ class _BalynAppShellState extends State<BalynAppShell> {
       canPop: _allowExit,
       onPopInvoked: _handleBack,
       child: Scaffold(
-        body: SafeArea(
-          child: SmoothIndexedPages(index: index, children: pages),
-        ),
-        floatingActionButton: index == 0 || index == 3
-            ? null
-            : Semantics(
-                button: true,
-                label: fabLabel,
-                hint: fabHint,
-                excludeSemantics: true,
-                child: GestureDetector(
-                  onLongPress: _showQuickMenu,
-                  child: FloatingActionButton(
-                    onPressed: index == 2
-                        ? () => _openAdvance()
-                        : () => _open(TransactionType.expense),
-                    child: const Icon(Icons.add_rounded),
+        extendBody: true,
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            SafeArea(
+              bottom: false,
+              child: SmoothIndexedPages(index: index, children: pages),
+            ),
+            Positioned(
+              left: 16,
+              right: 16,
+              bottom: MediaQuery.viewPaddingOf(context).bottom + 10,
+              child: BalynGlassNavigation(
+                index: index,
+                onDestinationSelected: _selectTab,
+              ),
+            ),
+            if (index == 1 || index == 2)
+              Positioned(
+                right: 22,
+                bottom: MediaQuery.viewPaddingOf(context).bottom + 93,
+                child: Semantics(
+                  button: true,
+                  label: fabLabel,
+                  hint: fabHint,
+                  excludeSemantics: true,
+                  child: GestureDetector(
+                    onLongPress: _showQuickMenu,
+                    child: FloatingActionButton(
+                      onPressed: index == 2
+                          ? () => _openAdvance()
+                          : () => _open(TransactionType.expense),
+                      child: const Icon(Icons.add_rounded),
+                    ),
                   ),
                 ),
               ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: index,
-          onDestinationSelected: _selectTab,
-          destinations: [
-            NavigationDestination(
-              icon: Icon(Icons.home_outlined),
-              selectedIcon: BalynShaderIcon(Icons.home_rounded, seed: accent),
-              label: AppI18n.tr('Home'),
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.receipt_long_outlined),
-              selectedIcon: BalynShaderIcon(
-                Icons.receipt_long_rounded,
-                seed: accent,
-              ),
-              label: AppI18n.tr('Attività'),
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.handshake_outlined),
-              selectedIcon: BalynShaderIcon(
-                Icons.handshake_rounded,
-                seed: accent,
-              ),
-              label: AppI18n.tr('Anticipi'),
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.event_note_outlined),
-              selectedIcon: BalynShaderIcon(
-                Icons.event_note_rounded,
-                seed: accent,
-              ),
-              label: AppI18n.tr('Pianifica'),
-            ),
           ],
         ),
       ),
