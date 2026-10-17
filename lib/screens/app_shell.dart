@@ -11,9 +11,8 @@ import '../services/quick_preset_service.dart';
 import '../widgets/balyn_shader_system.dart';
 import '../widgets/smooth_indexed_pages.dart';
 import '../widgets/ui_helpers.dart';
-import 'account_context_analytics_screen.dart';
+import 'balyn_activity_screen.dart';
 import 'account_context_home_screen.dart';
-import 'account_context_transactions_screen.dart';
 import 'advances_screen.dart';
 import 'planning_screens.dart';
 import 'preset_management_screen.dart';
@@ -21,7 +20,7 @@ import 'quick_add_page.dart';
 
 /// The single navigation shell exposed by Balyn.
 ///
-/// Home, Movimenti and Analisi share one account context. `null` means Totale.
+/// Home and Attività share one account context. `null` means Totale.
 class BalynAppShell extends StatefulWidget {
   const BalynAppShell({super.key});
 
@@ -97,11 +96,7 @@ class _BalynAppShellState extends State<BalynAppShell> {
         accountId: effectiveAccountId,
         onAccountChanged: _selectAccount,
       ),
-      AccountContextTransactionsScreen(
-        accountId: effectiveAccountId,
-        onAccountChanged: _selectAccount,
-      ),
-      AccountContextAnalyticsScreen(
+      BalynActivityScreen(
         accountId: effectiveAccountId,
         onAccountChanged: _selectAccount,
       ),
@@ -109,8 +104,8 @@ class _BalynAppShellState extends State<BalynAppShell> {
       const PlanningScreen(),
     ];
 
-    final fabLabel = index == 3 ? 'Nuovo anticipo' : 'Nuovo movimento';
-    final fabHint = index == 3
+    final fabLabel = index == 2 ? 'Nuovo anticipo' : 'Nuovo movimento';
+    final fabHint = index == 2
         ? 'Tocca per creare un anticipo. Tieni premuto per le scorciatoie.'
         : 'Tocca per una nuova spesa. Tieni premuto per preset e scorciatoie.';
 
@@ -121,7 +116,7 @@ class _BalynAppShellState extends State<BalynAppShell> {
         body: SafeArea(
           child: SmoothIndexedPages(index: index, children: pages),
         ),
-        floatingActionButton: index == 0
+        floatingActionButton: index == 0 || index == 3
             ? null
             : Semantics(
                 button: true,
@@ -131,7 +126,7 @@ class _BalynAppShellState extends State<BalynAppShell> {
                 child: GestureDetector(
                   onLongPress: _showQuickMenu,
                   child: FloatingActionButton(
-                    onPressed: index == 3
+                    onPressed: index == 2
                         ? () => _openAdvance()
                         : () => _open(TransactionType.expense),
                     child: const Icon(Icons.add_rounded),
@@ -154,15 +149,7 @@ class _BalynAppShellState extends State<BalynAppShell> {
                 Icons.receipt_long_rounded,
                 seed: accent,
               ),
-              label: AppI18n.tr('Movimenti'),
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.insights_outlined),
-              selectedIcon: BalynShaderIcon(
-                Icons.insights_rounded,
-                seed: accent,
-              ),
-              label: AppI18n.tr('Analisi'),
+              label: AppI18n.tr('Attività'),
             ),
             NavigationDestination(
               icon: Icon(Icons.handshake_outlined),

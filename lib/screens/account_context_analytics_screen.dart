@@ -22,11 +22,13 @@ class AccountContextAnalyticsScreen extends StatefulWidget {
   const AccountContextAnalyticsScreen({
     required this.accountId,
     required this.onAccountChanged,
+    this.embedded = false,
     super.key,
   });
 
   final int? accountId;
   final ValueChanged<int?> onAccountChanged;
+  final bool embedded;
 
   @override
   State<AccountContextAnalyticsScreen> createState() =>
@@ -312,14 +314,14 @@ class _AccountContextAnalyticsScreenState
             });
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: widget.embedded ? null : AppBar(
         title: AccountContextSelector(
           accountId: effectiveAccountId,
           onChanged: widget.onAccountChanged,
         ),
       ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 120),
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 120),
         children: [
           Row(
             children: [

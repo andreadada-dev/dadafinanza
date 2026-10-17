@@ -20,11 +20,13 @@ class AccountContextTransactionsScreen extends StatefulWidget {
   const AccountContextTransactionsScreen({
     required this.accountId,
     required this.onAccountChanged,
+    this.embedded = false,
     super.key,
   });
 
   final int? accountId;
   final ValueChanged<int?> onAccountChanged;
+  final bool embedded;
 
   @override
   State<AccountContextTransactionsScreen> createState() =>
@@ -148,7 +150,7 @@ class _AccountContextTransactionsScreenState
     final totals = _MovementTotals.from(state, items);
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: widget.embedded ? null : AppBar(
         title: AccountContextSelector(
           accountId: widget.accountId,
           onChanged: widget.onAccountChanged,
@@ -158,7 +160,7 @@ class _AccountContextTransactionsScreenState
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         slivers: [
           SliverPadding(
-            padding: const EdgeInsets.fromLTRB(20, 4, 20, 0),
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
             sliver: SliverList.list(
               children: [
                 BalynReveal(
