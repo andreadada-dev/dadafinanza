@@ -18,7 +18,7 @@ void main() {
     expect(home, contains('BalynRevolutHomeHero('));
     expect(home, contains('BalynRevolutHomeContent('));
     expect(home, contains('state.safeToSpend'));
-    expect(hero, contains('_VioletWavesPainter'));
+    expect(hero, contains('_AccountWavesPainter'));
     expect(hero, contains('CustomPaint('));
     expect(hero, contains("label: 'Spesa'"));
     expect(hero, contains("label: 'Entrata'"));
@@ -31,7 +31,9 @@ void main() {
     final home = File(
       'lib/screens/account_context_home_screen.dart',
     ).readAsStringSync();
-    expect(home, contains('AccountContextSelector('));
+    expect(home, contains('accounts: state.activeAccounts'));
+    expect(home, contains('currentAccountId: effectiveAccountId'));
+    expect(home, contains('BalynRecentTransactionsCard('));
     expect(home, contains('onAccountChanged'));
     expect(home, contains('hideBalance'));
     expect(home, contains('onVisibility:'));
@@ -41,6 +43,35 @@ void main() {
     expect(home, contains('onTransfer:'));
     expect(home, contains('onMore:'));
     expect(home, isNot(contains('FinanceSparkline(')));
+  });
+
+
+  test('Home hero supports account dropdown, swipe and account-specific waves', () {
+    final hero = File('lib/widgets/balyn_revolut_home_hero.dart')
+        .readAsStringSync();
+    expect(hero, contains('hero-account-dropdown'));
+    expect(hero, contains('_showAccountSelector(context)'));
+    expect(hero, contains('onHorizontalDragEnd:'));
+    expect(hero, contains('_switchAccount('));
+    expect(hero, contains('_AnimatedAccountDiamond'));
+    expect(hero, contains('Color(matching.first.colorValue)'));
+    expect(hero, contains('ColorTween(end: _accent)'));
+    expect(hero, contains('oldDelegate.base != base'));
+    expect(hero, contains('textAlign: TextAlign.center'));
+  });
+
+  test('Recent movements use live data and respect hidden account balances', () {
+    final home = File('lib/screens/account_context_home_screen.dart')
+        .readAsStringSync();
+    final card = File('lib/widgets/balyn_recent_transactions_card.dart')
+        .readAsStringSync();
+    expect(home, contains('items: recent'));
+    expect(home, contains('hideAmounts: hidden'));
+    expect(card, contains('items.take(3)'));
+    expect(card, contains('AppScope.of(context)'));
+    expect(card, contains('TransactionDetailPage(transactionId: movement.id)'));
+    expect(card, contains('hideAmounts ?'));
+    expect(card, contains("'Vedi tutti'"));
   });
 
   test('fixed summary metrics are not duplicated by personalized sections', () {
