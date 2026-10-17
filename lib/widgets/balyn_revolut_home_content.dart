@@ -36,37 +36,40 @@ class BalynRevolutHomeContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (showAccounts) ...[
-          Row(children: [
-            _BalanceMetric(
-              title: 'Entrate',
-              value: hideValues ? '••••' : moneyFor(state, income),
-              icon: Icons.south_west_rounded,
-              color: context.financeColors.positive,
-            ),
-            const SizedBox(width: 8),
-            _BalanceMetric(
-              title: 'Spese',
-              value: hideValues ? '••••' : moneyFor(state, expense),
-              icon: Icons.north_east_rounded,
-              color: context.financeColors.negative,
-            ),
-            const SizedBox(width: 8),
-            _BalanceMetric(
-              title: 'Disponibile',
-              value: hideValues ? '••••' : moneyFor(state, available),
-              icon: Icons.account_balance_wallet_outlined,
-              color: scheme.primary,
-            ),
-          ]),
+          Row(
+            children: [
+              _BalanceMetric(
+                title: 'Entrate',
+                value: hideValues ? '••••' : moneyFor(state, income),
+                icon: Icons.south_west_rounded,
+                color: context.financeColors.positive,
+              ),
+              const SizedBox(width: 8),
+              _BalanceMetric(
+                title: 'Spese',
+                value: hideValues ? '••••' : moneyFor(state, expense),
+                icon: Icons.north_east_rounded,
+                color: context.financeColors.negative,
+              ),
+              const SizedBox(width: 8),
+              _BalanceMetric(
+                title: 'Disponibile',
+                value: hideValues ? '••••' : moneyFor(state, available),
+                icon: Icons.account_balance_wallet_outlined,
+                color: scheme.primary,
+              ),
+            ],
+          ),
           const SizedBox(height: 22),
         ],
         Row(
           children: [
             Expanded(
-              child: Text('I tuoi conti',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w800,
-                ),
+              child: Text(
+                'I tuoi conti',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
               ),
             ),
             TextButton(
@@ -80,7 +83,8 @@ class BalynRevolutHomeContent extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(19),
             color: Theme.of(context).brightness == Brightness.dark
-                ? const Color(0xFF242431) : Colors.white,
+                ? const Color(0xFF242431)
+                : Colors.white,
           ),
           child: accountList.isEmpty
               ? ListTile(
@@ -115,8 +119,10 @@ class BalynRevolutHomeContent extends StatelessWidget {
 
 class _BalanceMetric extends StatelessWidget {
   const _BalanceMetric({
-    required this.title, required this.value,
-    required this.icon, required this.color,
+    required this.title,
+    required this.value,
+    required this.icon,
+    required this.color,
   });
 
   final String title;
@@ -133,7 +139,8 @@ class _BalanceMetric extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
         decoration: BoxDecoration(
           color: theme.brightness == Brightness.dark
-              ? const Color(0xFF242431) : Colors.white,
+              ? const Color(0xFF242431)
+              : Colors.white,
           borderRadius: BorderRadius.circular(17),
         ),
         child: Column(
@@ -141,15 +148,23 @@ class _BalanceMetric extends StatelessWidget {
           children: [
             Icon(icon, color: color, size: 19),
             const Spacer(),
-            Text(title, maxLines: 1, overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.labelSmall),
+            Text(
+              title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: theme.textTheme.labelSmall,
+            ),
             const SizedBox(height: 4),
             FittedBox(
               fit: BoxFit.scaleDown,
               alignment: Alignment.centerLeft,
-              child: Text(value, maxLines: 1,
+              child: Text(
+                value,
+                maxLines: 1,
                 style: theme.textTheme.labelLarge?.copyWith(
-                  fontWeight: FontWeight.w800)),
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
             ),
           ],
         ),
@@ -184,16 +199,19 @@ class _LiveAccountTile extends StatelessWidget {
         ),
         child: Icon(accountIcon(account.iconKey), color: color),
       ),
-      title: Text(account.name,
+      title: Text(
+        account.name,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: const TextStyle(fontWeight: FontWeight.w700)),
+        style: const TextStyle(fontWeight: FontWeight.w700),
+      ),
       subtitle: Text(account.accountType.label),
       trailing: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 118),
         child: Text(
           hideValues || account.hideBalance
-              ? '••••' : moneyFor(state, account.balance),
+              ? '••••'
+              : moneyFor(state, account.balance),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.end,

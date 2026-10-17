@@ -4,12 +4,15 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Home uses a full-bleed Revolut-style header above live content', () {
-    final home = File('lib/screens/account_context_home_screen.dart')
-        .readAsStringSync();
-    final hero = File('lib/widgets/balyn_revolut_home_hero.dart')
-        .readAsStringSync();
-    final content = File('lib/widgets/balyn_revolut_home_content.dart')
-        .readAsStringSync();
+    final home = File(
+      'lib/screens/account_context_home_screen.dart',
+    ).readAsStringSync();
+    final hero = File(
+      'lib/widgets/balyn_revolut_home_hero.dart',
+    ).readAsStringSync();
+    final content = File(
+      'lib/widgets/balyn_revolut_home_content.dart',
+    ).readAsStringSync();
 
     expect(home, contains('SliverToBoxAdapter('));
     expect(home, contains('BalynRevolutHomeHero('));
@@ -25,8 +28,9 @@ void main() {
   });
 
   test('Home keeps real account selection, privacy and quick actions', () {
-    final home = File('lib/screens/account_context_home_screen.dart')
-        .readAsStringSync();
+    final home = File(
+      'lib/screens/account_context_home_screen.dart',
+    ).readAsStringSync();
     expect(home, contains('AccountContextSelector('));
     expect(home, contains('onAccountChanged'));
     expect(home, contains('hideBalance'));

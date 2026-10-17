@@ -74,11 +74,14 @@ class BalynRevolutHomeHero extends StatelessWidget {
                               width: 40,
                               height: 40,
                               child: Center(
-                                child: Text('B', style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 21,
-                                  fontWeight: FontWeight.w900,
-                                )),
+                                child: Text(
+                                  'B',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 21,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -98,11 +101,15 @@ class BalynRevolutHomeHero extends StatelessWidget {
                                 padding: EdgeInsets.symmetric(horizontal: 14),
                                 child: Row(
                                   children: [
-                                    Icon(Icons.search_rounded,
-                                        color: Colors.white, size: 18),
+                                    Icon(
+                                      Icons.search_rounded,
+                                      color: Colors.white,
+                                      size: 18,
+                                    ),
                                     SizedBox(width: 8),
                                     Expanded(
-                                      child: Text('Cerca movimenti',
+                                      child: Text(
+                                        'Cerca movimenti',
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
@@ -169,15 +176,21 @@ class BalynRevolutHomeHero extends StatelessWidget {
                       ),
                       const SizedBox(width: 6),
                       IconButton(
-                        tooltip: hideBalance ? 'Mostra saldi' : 'Nascondi saldi',
+                        tooltip: hideBalance
+                            ? 'Mostra saldi'
+                            : 'Nascondi saldi',
                         onPressed: onVisibility,
                         color: Colors.white.withValues(alpha: .85),
                         iconSize: 18,
                         constraints: const BoxConstraints(
-                          minWidth: 40, minHeight: 40),
-                        icon: Icon(hideBalance
-                          ? Icons.visibility_off_outlined
-                          : Icons.visibility_outlined),
+                          minWidth: 40,
+                          minHeight: 40,
+                        ),
+                        icon: Icon(
+                          hideBalance
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+                        ),
                       ),
                     ],
                   ),
@@ -198,14 +211,26 @@ class BalynRevolutHomeHero extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      _HeroAction(icon: Icons.arrow_upward_rounded,
-                        label: 'Spesa', onTap: onExpense),
-                      _HeroAction(icon: Icons.arrow_downward_rounded,
-                        label: 'Entrata', onTap: onIncome),
-                      _HeroAction(icon: Icons.swap_horiz_rounded,
-                        label: 'Trasferisci', onTap: onTransfer),
-                      _HeroAction(icon: Icons.more_horiz_rounded,
-                        label: 'Altro', onTap: onMore),
+                      _HeroAction(
+                        icon: Icons.arrow_upward_rounded,
+                        label: 'Spesa',
+                        onTap: onExpense,
+                      ),
+                      _HeroAction(
+                        icon: Icons.arrow_downward_rounded,
+                        label: 'Entrata',
+                        onTap: onIncome,
+                      ),
+                      _HeroAction(
+                        icon: Icons.swap_horiz_rounded,
+                        label: 'Trasferisci',
+                        onTap: onTransfer,
+                      ),
+                      _HeroAction(
+                        icon: Icons.more_horiz_rounded,
+                        label: 'Altro',
+                        onTap: onMore,
+                      ),
                     ],
                   ),
                   SizedBox(height: largeText ? 28 : 19),
@@ -228,10 +253,16 @@ class BalynRevolutHomeHero extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    _TabPill(label: 'Panoramica',
-                      active: selectedTab == 0, onTap: () => onTabChanged(0)),
-                    _TabPill(label: 'Conti',
-                      active: selectedTab == 1, onTap: () => onTabChanged(1)),
+                    _TabPill(
+                      label: 'Panoramica',
+                      active: selectedTab == 0,
+                      onTap: () => onTabChanged(0),
+                    ),
+                    _TabPill(
+                      label: 'Conti',
+                      active: selectedTab == 1,
+                      onTap: () => onTabChanged(1),
+                    ),
                   ],
                 ),
               ),
@@ -245,7 +276,9 @@ class BalynRevolutHomeHero extends StatelessWidget {
 
 class _RoundHeaderAction extends StatelessWidget {
   const _RoundHeaderAction({
-    required this.icon, required this.tooltip, required this.onTap,
+    required this.icon,
+    required this.tooltip,
+    required this.onTap,
   });
   final IconData icon;
   final String tooltip;
@@ -261,8 +294,11 @@ class _RoundHeaderAction extends StatelessWidget {
         child: InkWell(
           customBorder: const CircleBorder(),
           onTap: onTap,
-          child: SizedBox(width: 39, height: 39,
-            child: Icon(icon, color: Colors.white, size: 20)),
+          child: SizedBox(
+            width: 39,
+            height: 39,
+            child: Icon(icon, color: Colors.white, size: 20),
+          ),
         ),
       ),
     );
@@ -271,7 +307,9 @@ class _RoundHeaderAction extends StatelessWidget {
 
 class _HeroAction extends StatelessWidget {
   const _HeroAction({
-    required this.icon, required this.label, required this.onTap,
+    required this.icon,
+    required this.label,
+    required this.onTap,
   });
   final IconData icon;
   final String label;
@@ -305,11 +343,15 @@ class _HeroAction extends StatelessWidget {
                   const SizedBox(height: 9),
                   FittedBox(
                     fit: BoxFit.scaleDown,
-                    child: Text(label, maxLines: 1,
+                    child: Text(
+                      label,
+                      maxLines: 1,
                       style: const TextStyle(
-                        fontSize: 12, fontWeight: FontWeight.w600,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
                         color: Colors.white,
-                      )),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -323,7 +365,9 @@ class _HeroAction extends StatelessWidget {
 
 class _TabPill extends StatelessWidget {
   const _TabPill({
-    required this.label, required this.active, required this.onTap,
+    required this.label,
+    required this.active,
+    required this.onTap,
   });
   final String label;
   final bool active;
@@ -340,11 +384,16 @@ class _TabPill extends StatelessWidget {
         child: SizedBox(
           height: 38,
           child: Center(
-            child: Text(label, style: TextStyle(
-              color: active ? const Color(0xFF22222B) : const Color(0xFF747682),
-              fontSize: 12,
-              fontWeight: active ? FontWeight.w700 : FontWeight.w500,
-            )),
+            child: Text(
+              label,
+              style: TextStyle(
+                color: active
+                    ? const Color(0xFF22222B)
+                    : const Color(0xFF747682),
+                fontSize: 12,
+                fontWeight: active ? FontWeight.w700 : FontWeight.w500,
+              ),
+            ),
           ),
         ),
       ),
@@ -383,19 +432,20 @@ class _VioletWavesPainter extends CustomPainter {
       bloom,
       Paint()
         ..shader = const RadialGradient(
-          colors: [
-            Color(0x669F7CFF),
-            Color(0x187E5DFD),
-            Color(0x008B5CFF),
-          ],
+          colors: [Color(0x669F7CFF), Color(0x187E5DFD), Color(0x008B5CFF)],
           stops: [0, .65, 1],
         ).createShader(bloom),
     );
     final ribbon = Path()
       ..moveTo(-size.width * .24, size.height * .98)
-      ..cubicTo(size.width * .33, size.height * .93,
-        size.width * .83, size.height * .64,
-        size.width * .98, size.height * .29);
+      ..cubicTo(
+        size.width * .33,
+        size.height * .93,
+        size.width * .83,
+        size.height * .64,
+        size.width * .98,
+        size.height * .29,
+      );
     final glow = Paint()
       ..color = const Color(0x889A8AFF)
       ..strokeWidth = 28
@@ -419,9 +469,14 @@ class _VioletWavesPainter extends CustomPainter {
     );
     final lower = Path()
       ..moveTo(size.width * .25, size.height * 1.08)
-      ..cubicTo(size.width * .60, size.height * .86,
-        size.width * 1.11, size.height * .89,
-        size.width * 1.22, size.height * .56);
+      ..cubicTo(
+        size.width * .60,
+        size.height * .86,
+        size.width * 1.11,
+        size.height * .89,
+        size.width * 1.22,
+        size.height * .56,
+      );
     canvas.drawPath(
       lower,
       Paint()

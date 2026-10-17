@@ -14,7 +14,8 @@ import '../widgets/home_dashboard_widget.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_context_analytics_screen.dart';
 import 'account_context_transactions_screen.dart';
-import 'account_management_screen.dart' show AccountManagementScreen, SafeAccountDetailScreen;
+import 'account_management_screen.dart'
+    show AccountManagementScreen, SafeAccountDetailScreen;
 import 'account_screens.dart' show showAccountEditor;
 import 'advances_screen.dart';
 import 'personal_settings_screen.dart';
@@ -93,8 +94,8 @@ class AccountContextHomeScreen extends StatelessWidget {
         .where((config) => !_fixedSummaryTypes.contains(config.type))
         .toList(growable: false);
 
-    final hidden = state.hideBalance ||
-        (!isTotal && selectedAccount!.hideBalance);
+    final hidden =
+        state.hideBalance || (!isTotal && selectedAccount!.hideBalance);
     final dark = Theme.of(context).brightness == Brightness.dark;
     return ColoredBox(
       color: dark ? const Color(0xFF101018) : const Color(0xFFF7F8FA),
@@ -112,29 +113,54 @@ class AccountContextHomeScreen extends StatelessWidget {
               selectedTab: 0,
               onTabChanged: (selected) {
                 if (selected == 1) {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (_) => const AccountManagementScreen()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const AccountManagementScreen(),
+                    ),
+                  );
                 }
               },
               onVisibility: () => state.setHideBalance(!state.hideBalance),
-              onSearch: () => Navigator.push(context, MaterialPageRoute(
-                builder: (_) => AccountContextTransactionsScreen(
-                  accountId: effectiveAccountId,
-                  onAccountChanged: onAccountChanged,
-                ))),
-              onAnalytics: () => Navigator.push(context, MaterialPageRoute(
-                builder: (_) => AccountContextAnalyticsScreen(
-                  accountId: effectiveAccountId,
-                  onAccountChanged: onAccountChanged,
-                ))),
-              onSettings: () => Navigator.push(context, MaterialPageRoute(
-                builder: (_) => const PersonalSettingsScreen())),
+              onSearch: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => AccountContextTransactionsScreen(
+                    accountId: effectiveAccountId,
+                    onAccountChanged: onAccountChanged,
+                  ),
+                ),
+              ),
+              onAnalytics: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => AccountContextAnalyticsScreen(
+                    accountId: effectiveAccountId,
+                    onAccountChanged: onAccountChanged,
+                  ),
+                ),
+              ),
+              onSettings: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const PersonalSettingsScreen(),
+                ),
+              ),
               onExpense: () => _openQuick(
-                context, TransactionType.expense, effectiveAccountId),
+                context,
+                TransactionType.expense,
+                effectiveAccountId,
+              ),
               onIncome: () => _openQuick(
-                context, TransactionType.income, effectiveAccountId),
+                context,
+                TransactionType.income,
+                effectiveAccountId,
+              ),
               onTransfer: () => _openQuick(
-                context, TransactionType.transfer, effectiveAccountId),
+                context,
+                TransactionType.transfer,
+                effectiveAccountId,
+              ),
               onMore: () => showModalBottomSheet<void>(
                 context: context,
                 useSafeArea: true,
@@ -144,12 +170,18 @@ class AccountContextHomeScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       ListTile(
-                        leading: const Icon(Icons.account_balance_wallet_outlined),
+                        leading: const Icon(
+                          Icons.account_balance_wallet_outlined,
+                        ),
                         title: const Text('Gestisci conti'),
                         onTap: () {
                           Navigator.pop(sheetContext);
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (_) => const AccountManagementScreen()));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const AccountManagementScreen(),
+                            ),
+                          );
                         },
                       ),
                       ListTile(
@@ -157,8 +189,12 @@ class AccountContextHomeScreen extends StatelessWidget {
                         title: const Text('Anticipi'),
                         onTap: () {
                           Navigator.pop(sheetContext);
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (_) => const AdvancesScreen()));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const AdvancesScreen(),
+                            ),
+                          );
                         },
                       ),
                       ListTile(
@@ -166,9 +202,13 @@ class AccountContextHomeScreen extends StatelessWidget {
                         title: const Text('Dashboard avanzata'),
                         onTap: () {
                           Navigator.pop(sheetContext);
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (_) => const Scaffold(
-                              body: advanced.HomeScreen())));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) =>
+                                  const Scaffold(body: advanced.HomeScreen()),
+                            ),
+                          );
                         },
                       ),
                       ListTile(
@@ -176,8 +216,12 @@ class AccountContextHomeScreen extends StatelessWidget {
                         title: const Text('Personalizza Home'),
                         onTap: () {
                           Navigator.pop(sheetContext);
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (_) => const DashboardCustomizerScreen()));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const DashboardCustomizerScreen(),
+                            ),
+                          );
                         },
                       ),
                     ],
@@ -194,10 +238,13 @@ class AccountContextHomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      DateFormat('MMMM yyyy', AppI18n.intlLocale)
-                          .format(DateTime.now()),
+                      DateFormat(
+                        'MMMM yyyy',
+                        AppI18n.intlLocale,
+                      ).format(DateTime.now()),
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.w800),
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                     AccountContextSelector(
                       accountId: effectiveAccountId,
@@ -213,16 +260,22 @@ class AccountContextHomeScreen extends StatelessWidget {
                   hideValues: hidden,
                   showAccounts: true,
                   onSelectAccount: onAccountChanged,
-                  onManageAccounts: () => Navigator.push(context,
+                  onManageAccounts: () => Navigator.push(
+                    context,
                     MaterialPageRoute(
-                      builder: (_) => const AccountManagementScreen())),
+                      builder: (_) => const AccountManagementScreen(),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 24),
                 if (state.userAccounts.isEmpty) ...[
                   _SetupBlock(
                     onAccount: () => showAccountEditor(context),
                     onMovement: () => _openQuick(
-                      context, TransactionType.expense, effectiveAccountId),
+                      context,
+                      TransactionType.expense,
+                      effectiveAccountId,
+                    ),
                   ),
                   const SizedBox(height: 20),
                 ],
@@ -402,7 +455,6 @@ class AccountContextHomeScreen extends StatelessWidget {
                           ),
                         ),
                 ],
-
               ],
             ),
           ),
