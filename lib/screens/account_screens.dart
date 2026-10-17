@@ -31,9 +31,8 @@ class AccountsScreen extends StatelessWidget {
         children: [
           Text(
             'PATRIMONIO',
-            style: Theme.of(
-              context,
-            ).textTheme.labelMedium?.copyWith(letterSpacing: 1.1),
+            style: Theme.of(context).textTheme.labelMedium
+                ?.copyWith(letterSpacing: 1.1),
           ),
           const SizedBox(height: 6),
           Text(
@@ -45,8 +44,7 @@ class AccountsScreen extends StatelessWidget {
             EmptyState(
               icon: Icons.account_balance_wallet_outlined,
               title: 'Nessun conto',
-              subtitle:
-                  'Crea un conto oppure registra un movimento come Non assegnato.',
+              subtitle: 'Crea un conto oppure registra un movimento come Non assegnato.',
               action: FilledButton.icon(
                 onPressed: () => showAccountEditor(context),
                 icon: const Icon(Icons.add_rounded),
@@ -61,9 +59,8 @@ class AccountsScreen extends StatelessWidget {
                     contentPadding: EdgeInsets.zero,
                     minVerticalPadding: 12,
                     leading: CircleAvatar(
-                      backgroundColor: Color(
-                        account.colorValue,
-                      ).withValues(alpha: .14),
+                      backgroundColor: Color(account.colorValue)
+                          .withValues(alpha: .14),
                       child: Icon(
                         accountIcon(account.iconKey),
                         color: Color(account.colorValue),
@@ -193,8 +190,7 @@ class AccountDetailPage extends StatelessWidget {
     final confirmed = await confirmDestructiveAction(
       context,
       title: 'Eliminare “${account.name}”?',
-      message:
-          'Il conto è vuoto. Eventuali riferimenti in preset e obiettivi verranno scollegati in sicurezza.',
+      message: 'Il conto è vuoto. Eventuali riferimenti in preset e obiettivi verranno scollegati in sicurezza.',
       confirmLabel: 'Elimina conto',
     );
     if (!confirmed) return;
@@ -316,9 +312,8 @@ class AccountDetailPage extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 28,
-                backgroundColor: Color(
-                  account.colorValue,
-                ).withValues(alpha: .14),
+                backgroundColor: Color(account.colorValue)
+                    .withValues(alpha: .14),
                 child: Icon(
                   accountIcon(account.iconKey),
                   color: Color(account.colorValue),
