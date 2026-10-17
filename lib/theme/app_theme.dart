@@ -42,9 +42,9 @@ class FinanceColors extends ThemeExtension<FinanceColors> {
 class AppTheme {
   // Balyn keeps a neutral high-contrast shell. Semantic finance colors
   // carry meaning; navigation and primary chrome stay black/white.
-  static const purple = Color(0xFF5C3DF5);
-  static const purpleDark = Color(0xFF7B62F5);
-  static const muted = Color(0xFF74747A);
+  static const purple = Color(0xFF0666EB);
+  static const purpleDark = Color(0xFF75A7FF);
+  static const muted = Color(0xFF687387);
   static const surface = Colors.transparent;
   static const border = Colors.transparent;
 
@@ -53,17 +53,17 @@ class AppTheme {
 
   static ThemeData _build(Brightness brightness) {
     final dark = brightness == Brightness.dark;
-    final background = dark ? Colors.black : Colors.white;
-    final raised = dark ? const Color(0xFF1C1C1F) : const Color(0xFFF0F0F5);
+    final background = dark ? const Color(0xFF0D1018) : const Color(0xFFFFFFFF);
+    final raised = dark ? const Color(0xFF1B2330) : const Color(0xFFF2F4F7);
     final raisedStrong = dark
-        ? const Color(0xFF303033)
-        : const Color(0xFFE8E8EF);
-    final hairline = dark ? const Color(0xFF303033) : const Color(0xFFEBEBF0);
-    final onSurface = dark ? const Color(0xFFFAFAFC) : const Color(0xFF09090A);
+        ? const Color(0xFF263141)
+        : const Color(0xFFE9EDF2);
+    final hairline = dark ? const Color(0xFF303B4B) : const Color(0xFFE9EDF2);
+    final onSurface = dark ? const Color(0xFFF8FAFD) : const Color(0xFF141A23);
     final secondaryText = dark
-        ? const Color(0xFFCBCBD6)
-        : const Color(0xFF74747A);
-    final primary = onSurface;
+        ? const Color(0xFFA7B1C1)
+        : const Color(0xFF687387);
+    final primary = dark ? const Color(0xFF75A7FF) : const Color(0xFF0666EB);
     final accent = dark ? purpleDark : purple;
 
     final scheme =
@@ -74,7 +74,7 @@ class AppTheme {
           error: dark ? const Color(0xFFFF7373) : const Color(0xFFF53D3D),
         ).copyWith(
           primary: primary,
-          onPrimary: background,
+          onPrimary: Colors.white,
           secondary: dark ? const Color(0xFF38E0A8) : const Color(0xFF12B880),
           onSecondary: Colors.white,
           tertiary: accent,
@@ -193,8 +193,8 @@ class AppTheme {
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         elevation: 0,
         highlightElevation: 0,
-        backgroundColor: onSurface,
-        foregroundColor: background,
+        backgroundColor: primary,
+        foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -275,7 +275,7 @@ class AppTheme {
         ),
       ),
       progressIndicatorTheme: ProgressIndicatorThemeData(
-        color: onSurface,
+        color: primary,
         linearTrackColor: onSurface.withValues(alpha: .10),
         circularTrackColor: onSurface.withValues(alpha: .10),
       ),

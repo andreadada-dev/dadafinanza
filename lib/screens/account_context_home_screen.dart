@@ -639,67 +639,65 @@ class _OverviewSurface extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
-
+    // A native Flutter balance card inspired by the Figma Revolut cards:
+    // content stays live, selectable, accessible and privacy-aware.
+    final deep = Color.lerp(const Color(0xFF29155C), accent, .15)!;
+    final luminous = Color.lerp(const Color(0xFF7846D8), accent, .20)!;
     return Padding(
-      padding: const EdgeInsets.only(top: 20, bottom: 16),
+      padding: const EdgeInsets.symmetric(vertical: 12),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              children: [
-                Container(
-                  width: 42,
-                  height: 42,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: scheme.onSurface.withValues(
-                      alpha: theme.brightness == Brightness.dark ? .07 : .045,
-                    ),
-                    shape: BoxShape.circle,
-                  ),
-                  child: BalynShaderIcon(
-                    Icons.account_balance_wallet_rounded,
-                    seed: accent,
-                    size: 21,
-                  ),
-                ),
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(right: 2),
-                  child: BalynShaderText(
-                    DateFormat(
-                      'MMM',
-                      AppI18n.intlLocale,
-                    ).format(DateTime.now()),
-                    seed: accent,
-                    style: theme.textTheme.labelMedium?.copyWith(
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.fromLTRB(24, 24, 24, 28),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [deep, luminous, deep],
+                stops: const [0, .58, 1],
+              ),
+              borderRadius: BorderRadius.circular(28),
+              boxShadow: [
+                BoxShadow(
+                  color: deep.withValues(alpha: .18),
+                  blurRadius: 24,
+                  offset: const Offset(0, 12),
                 ),
               ],
             ),
-          ),
-          const SizedBox(height: 18),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                DefaultTextStyle(
-                  style: theme.textTheme.labelMedium!.copyWith(
-                    color: scheme.onSurfaceVariant,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: .35,
-                  ),
-                  child: eyebrow,
+                Row(
+                  children: [
+                    const Icon(Icons.account_balance_wallet_rounded,
+                        color: Colors.white, size: 23),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: DefaultTextStyle(
+                        style: theme.textTheme.titleSmall!.copyWith(
+                          color: Colors.white.withValues(alpha: .87),
+                          fontWeight: FontWeight.w600,
+                        ),
+                        child: eyebrow,
+                      ),
+                    ),
+                    Text(
+                      DateFormat('MMM', AppI18n.intlLocale)
+                          .format(DateTime.now()).toUpperCase(),
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: Colors.white.withValues(alpha: .70),
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(height: 28),
                 AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 240),
+                  duration: const Duration(milliseconds: 260),
                   switchInCurve: Curves.easeOutCubic,
                   child: FittedBox(
                     key: ValueKey(value),
@@ -707,24 +705,39 @@ class _OverviewSurface extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       value,
-                      style: theme.textTheme.displaySmall?.copyWith(
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: -1.3,
+                      style: theme.textTheme.displayMedium?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -1.7,
                       ),
                     ),
                   ),
                 ),
+                const SizedBox(height: 24),
+                Row(
+                  children: [
+                    Icon(Icons.shield_outlined,
+                        size: 16, color: Colors.white.withValues(alpha: .72)),
+                    const SizedBox(width: 8),
+                    Text(
+                      AppI18n.tr('Le tue finanze, a colpo d’occhio'),
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: Colors.white.withValues(alpha: .75),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 18),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 for (var index = 0; index < metrics.length; index++) ...[
-                  if (index > 0) const SizedBox(width: 10),
+                  if (index > 0) const SizedBox(width: 9),
                   Expanded(child: metrics[index]),
                 ],
               ],
@@ -752,32 +765,37 @@ class _OverviewValue extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+    return Container(
+      constraints: const BoxConstraints(minHeight: 94),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surfaceContainer,
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BalynShaderIcon(icon, seed: color, size: 17),
-          const SizedBox(height: 7),
+          Icon(icon, color: color, size: 19),
+          const SizedBox(height: 8),
           Text(
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
             style: theme.textTheme.labelSmall?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(height: 2),
+          const SizedBox(height: 4),
           FittedBox(
             fit: BoxFit.scaleDown,
-            alignment: Alignment.center,
-            child: BalynShaderText(
+            child: Text(
               value,
-              seed: color,
+              maxLines: 1,
               style: theme.textTheme.labelLarge?.copyWith(
-                fontWeight: FontWeight.w900,
+                color: theme.colorScheme.onSurface,
+                fontWeight: FontWeight.w800,
+                letterSpacing: -.3,
               ),
             ),
           ),
