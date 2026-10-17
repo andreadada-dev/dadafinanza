@@ -38,29 +38,30 @@ class BalynRevolutHomeContent extends StatelessWidget {
         if (showAccounts) ...[
           Row(
             children: [
-              _BalanceMetric(
-                title: 'Entrate',
-                value: hideValues ? '••••' : moneyFor(state, income),
-                icon: Icons.south_west_rounded,
-                color: context.financeColors.positive,
+              Expanded(
+                child: _BalanceMetric(
+                  title: 'Entrate',
+                  value: hideValues ? '••••' : moneyFor(state, income),
+                  icon: Icons.south_west_rounded,
+                  color: context.financeColors.positive,
+                ),
               ),
-              const SizedBox(width: 8),
-              _BalanceMetric(
-                title: 'Spese',
-                value: hideValues ? '••••' : moneyFor(state, expense),
-                icon: Icons.north_east_rounded,
-                color: context.financeColors.negative,
-              ),
-              const SizedBox(width: 8),
-              _BalanceMetric(
-                title: 'Disponibile',
-                value: hideValues ? '••••' : moneyFor(state, available),
-                icon: Icons.account_balance_wallet_outlined,
-                color: scheme.primary,
+              const SizedBox(width: 10),
+              Expanded(
+                child: _BalanceMetric(
+                  title: 'Spese',
+                  value: hideValues ? '••••' : moneyFor(state, expense),
+                  icon: Icons.north_east_rounded,
+                  color: context.financeColors.negative,
+                ),
               ),
             ],
           ),
-          const SizedBox(height: 22),
+          const SizedBox(height: 10),
+          _AvailableSummary(
+            value: hideValues ? '••••' : moneyFor(state, available),
+          ),
+          const SizedBox(height: 23),
         ],
         Row(
           children: [
@@ -133,9 +134,8 @@ class _BalanceMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Expanded(
-      child: Container(
-        height: 104,
+    return Container(
+        height: 112,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
         decoration: BoxDecoration(
           color: theme.brightness == Brightness.dark
@@ -168,6 +168,44 @@ class _BalanceMetric extends StatelessWidget {
             ),
           ],
         ),
+    );
+  }
+}
+
+class _AvailableSummary extends StatelessWidget {
+  const _AvailableSummary({required this.value});
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final dark = theme.brightness == Brightness.dark;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+      decoration: BoxDecoration(
+        color: dark ? const Color(0xFF242431) : Colors.white,
+        borderRadius: BorderRadius.circular(17),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.account_balance_wallet_outlined,
+            color: theme.colorScheme.primary, size: 23),
+          const SizedBox(width: 11),
+          Expanded(
+            child: Text('Disponibile',
+              style: theme.textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w700)),
+          ),
+          Flexible(
+            child: FittedBox(
+              alignment: Alignment.centerRight,
+              fit: BoxFit.scaleDown,
+              child: Text(value, style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w900)),
+            ),
+          ),
+        ],
       ),
     );
   }

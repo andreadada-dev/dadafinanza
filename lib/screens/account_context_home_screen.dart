@@ -10,6 +10,7 @@ import '../widgets/account_context_selector.dart';
 import '../widgets/balyn_revolut_home_content.dart';
 import '../widgets/balyn_revolut_home_hero.dart';
 import '../widgets/balyn_motion.dart';
+import '../widgets/balyn_editorial_components.dart';
 import '../widgets/home_dashboard_widget.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_context_analytics_screen.dart';
@@ -252,7 +253,95 @@ class AccountContextHomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
+                // A compact real-data overview replaces the kit's fictional
+                // promotions, keeping its clear rounded white-strip rhythm.
+                BalynEditorialSurface(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14, vertical: 8),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const BalynEditorialIcon(
+                      icon: Icons.calendar_month_outlined,
+                      size: 42,
+                    ),
+                    title: const Text(
+                      'Riepilogo del mese',
+                      style: TextStyle(fontWeight: FontWeight.w800),
+                    ),
+                    subtitle: Text(
+                      hidden
+                          ? 'Entrate ••••  ·  Spese ••••'
+                          : 'Entrate ${moneyFor(state, income)}  ·  Spese ${moneyFor(state, expense)}',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    trailing: const Icon(Icons.chevron_right_rounded),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => AccountContextAnalyticsScreen(
+                          accountId: effectiveAccountId,
+                          onAccountChanged: onAccountChanged,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                if (isTotal) ...[
+                  BalynEditorialHeading(
+                    title: 'Ultimi movimenti',
+                    subtitle: 'Le operazioni più recenti',
+                    actionLabel: 'Vedi tutti',
+                    onAction: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => AccountContextTransactionsScreen(
+                          accountId: effectiveAccountId,
+                          onAccountChanged: onAccountChanged,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 9),
+                  BalynEditorialSurface(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10, vertical: 7),
+                    child: recent.isEmpty
+                        ? ListTile(
+                            leading: const BalynEditorialIcon(
+                              icon: Icons.receipt_long_outlined),
+                            title: const Text('Nessun movimento'),
+                            subtitle: const Text(
+                              'Le operazioni compariranno qui.'),
+                            onTap: () => _openQuick(
+                              context,
+                              TransactionType.expense,
+                              effectiveAccountId),
+                          )
+                        : Column(
+                            children: [
+                              for (var index = 0;
+                                  index < recent.take(3).length;
+                                  index++) ...[
+                                if (index > 0)
+                                  Divider(
+                                    height: 1,
+                                    color: Theme.of(context)
+                                        .colorScheme.outlineVariant),
+                                TransactionListTile(item: recent[index]),
+                              ],
+                            ],
+                          ),
+                  ),
+                  const SizedBox(height: 23),
+                ],
+                BalynEditorialHeading(
+                  title: 'In sintesi',
+                  subtitle: 'Entrate, spese e disponibilità',
+                ),
+                const SizedBox(height: 10),
                 BalynRevolutHomeContent(
                   income: income,
                   expense: expense,
@@ -267,7 +356,7 @@ class AccountContextHomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 20),
                 if (state.userAccounts.isEmpty) ...[
                   _SetupBlock(
                     onAccount: () => showAccountEditor(context),

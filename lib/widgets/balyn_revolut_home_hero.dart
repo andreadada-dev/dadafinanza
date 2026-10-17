@@ -39,7 +39,7 @@ class BalynRevolutHomeHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final availableHeight = MediaQuery.sizeOf(context).height;
-    final height = (availableHeight * .53).clamp(340.0, 440.0).toDouble();
+    final height = (availableHeight * .41).clamp(284.0, 345.0).toDouble();
     final largeText = MediaQuery.textScalerOf(context).scale(1) > 1.25;
 
     return SizedBox(
@@ -140,7 +140,7 @@ class BalynRevolutHomeHero extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const Spacer(flex: 4),
+                  const Spacer(flex: 3),
                   Text(
                     title.toUpperCase(),
                     textAlign: TextAlign.center,
@@ -166,7 +166,7 @@ class BalynRevolutHomeHero extends StatelessWidget {
                             key: const ValueKey('balyn-revolut-balance'),
                             style: const TextStyle(
                               color: Colors.white,
-                              fontSize: 39,
+                              fontSize: 37,
                               height: 1.05,
                               fontWeight: FontWeight.w800,
                               letterSpacing: -1.7,
@@ -207,7 +207,7 @@ class BalynRevolutHomeHero extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Spacer(flex: 5),
+                  const Spacer(flex: 4),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -233,7 +233,7 @@ class BalynRevolutHomeHero extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: largeText ? 28 : 19),
+                  SizedBox(height: largeText ? 23 : 13),
                 ],
               ),
             ),
