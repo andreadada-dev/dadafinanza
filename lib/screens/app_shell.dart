@@ -83,6 +83,10 @@ class _BalynAppShellState extends State<BalynAppShell> {
       _selectTab(0);
       return;
     }
+    if (_homeSection != 0) {
+      _selectHomeSection(0);
+      return;
+    }
     _exitTimer?.cancel();
     setState(() => _allowExit = true);
     ScaffoldMessenger.of(context)

@@ -156,10 +156,7 @@ void main() {
     ).readAsStringSync();
 
     final hero = home.indexOf('BalynRevolutHomeHero(');
-    final accountCarousel = home.indexOf(
-      'AccountCategoryCarousel(',
-      hero + 1,
-    );
+    final accountCarousel = home.indexOf('AccountCategoryCarousel(', hero + 1);
     final openAccount = home.indexOf("'Apri conto'", accountCarousel + 1);
     final analytics = home.indexOf("'Analytics del conto'", openAccount + 1);
 
