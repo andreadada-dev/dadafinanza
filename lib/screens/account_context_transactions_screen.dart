@@ -381,8 +381,9 @@ class _AccountContextTransactionsScreenState
                       width: 38,
                       height: 4,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.onSurface
-                            .withValues(alpha: .18),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: .18),
                         borderRadius: BorderRadius.circular(99),
                       ),
                     ),
@@ -1009,15 +1010,17 @@ class _MovementDaySection extends StatelessWidget {
             Expanded(
               child: Text(
                 _label(),
-                style: Theme.of(context).textTheme.titleMedium
-                    ?.copyWith(fontWeight: FontWeight.w900),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w900),
               ),
             ),
             if (net == 0)
               Text(
                 hideValues ? '••••' : moneyFor(state, 0),
-                style: Theme.of(context).textTheme.labelLarge
-                    ?.copyWith(fontWeight: FontWeight.w800),
+                style: Theme.of(
+                  context,
+                ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w800),
               )
             else
               BalynShaderText(
@@ -1025,8 +1028,9 @@ class _MovementDaySection extends StatelessWidget {
                     ? '••••'
                     : '${net > 0 ? '+' : '−'}${moneyFor(state, net.abs())}',
                 seed: netColor,
-                style: Theme.of(context).textTheme.labelLarge
-                    ?.copyWith(fontWeight: FontWeight.w800),
+                style: Theme.of(
+                  context,
+                ).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w800),
               ),
           ],
         ),
