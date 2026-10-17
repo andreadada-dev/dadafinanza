@@ -1,0 +1,40 @@
+name: Normalize Home tabs and glass navigation once
+
+on:
+  push:
+    branches:
+      - fix/balyn-visible-liquid-background
+    paths:
+      - .github/workflows/normalize-home-tabs-glass-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: true
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.2'
+          channel: stable
+          cache: true
+      - name: Normalize all changed Dart files
+        shell: bash
+        run: |
+          set -euo pipefail
+          flutter pub get
+          dart format lib test
+          dart format --output=none --set-exit-if-changed lib test
+          git diff --check
+          git add lib test
+          if ! git diff --cached --quiet; then
+            git -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -m "style: normalize animated Home tabs and glass navigation"
+            git push origin "HEAD:fix/balyn-visible-liquid-background"
+          fi
