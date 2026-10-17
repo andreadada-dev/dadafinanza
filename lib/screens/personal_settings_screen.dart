@@ -66,7 +66,7 @@ class PersonalSettingsScreen extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 100),
         children: [
           const _BrandHeader(),
-          const SizedBox(height: 28),
+          const SizedBox(height: 18),
           const SectionTitle('Aspetto'),
           _Link(
             icon: Icons.contrast_rounded,
@@ -100,7 +100,7 @@ class PersonalSettingsScreen extends StatelessWidget {
             value: state.hideBalance,
             onChanged: (value) => _setHideBalance(state, value),
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 22),
           const SectionTitle('Generali'),
           _Link(
             icon: Icons.account_balance_wallet_outlined,
@@ -146,7 +146,7 @@ class PersonalSettingsScreen extends StatelessWidget {
             onChanged: (value) =>
                 _setBoolSetting(state, 'confirm_delete', value),
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 22),
           const SectionTitle('Privacy locale'),
           _Link(
             icon: Icons.fingerprint_rounded,
@@ -166,7 +166,7 @@ class PersonalSettingsScreen extends StatelessWidget {
             subtitle: 'Scadenze, anticipi, budget, obiettivi e cash-flow',
             onTap: () => _open(context, const NotificationSettingsScreen()),
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 22),
           const SectionTitle('Inserimento'),
           _Link(
             icon: Icons.mic_none_rounded,
@@ -188,7 +188,7 @@ class PersonalSettingsScreen extends StatelessWidget {
             subtitle: 'Caffè, benzina, spesa e azioni personalizzate',
             onTap: () => _open(context, const PresetManagementScreen()),
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 22),
           const SectionTitle('Organizzazione'),
           _Link(
             icon: Icons.handshake_outlined,
@@ -223,7 +223,7 @@ class PersonalSettingsScreen extends StatelessWidget {
                 'Saldo, Quick Capture, importi rapidi e riepilogo configurabili',
             onTap: () => _open(context, const AndroidWidgetsScreen()),
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 22),
           const SectionTitle('Dati'),
           _Link(
             icon: Icons.folder_zip_outlined,
@@ -231,7 +231,7 @@ class PersonalSettingsScreen extends StatelessWidget {
             subtitle: 'Backup completo con allegati · import portabile',
             onTap: () => _open(context, const DataManagementScreen()),
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 22),
           const SectionTitle('Comportamento'),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
@@ -592,19 +592,19 @@ class _Link extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.only(bottom: 4),
       child: Material(
         color: scheme.surfaceContainer.withValues(alpha: .82),
         borderRadius: BorderRadius.circular(20),
         clipBehavior: Clip.antiAlias,
         child: ListTile(
           contentPadding: const EdgeInsets.symmetric(
-            horizontal: 14,
-            vertical: 5,
+            horizontal: 12,
+            vertical: 0,
           ),
           leading: Container(
-            width: 42,
-            height: 42,
+            width: 38,
+            height: 38,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: scheme.tertiary.withValues(alpha: .11),
