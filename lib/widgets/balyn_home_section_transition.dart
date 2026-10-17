@@ -36,7 +36,9 @@ class BalynHomeSectionTransition extends StatelessWidget {
         ),
         transitionBuilder: (page, animation) {
           final entering = page.key == ValueKey<int>(index);
-          final offset = entering ? direction.toDouble() : -direction.toDouble();
+          final offset = entering
+              ? direction.toDouble()
+              : -direction.toDouble();
           return SlideTransition(
             position: Tween<Offset>(
               begin: Offset(offset, 0),
@@ -46,10 +48,7 @@ class BalynHomeSectionTransition extends StatelessWidget {
               opacity: animation,
               child: IgnorePointer(
                 ignoring: !entering,
-                child: ExcludeSemantics(
-                  excluding: !entering,
-                  child: page,
-                ),
+                child: ExcludeSemantics(excluding: !entering, child: page),
               ),
             ),
           );

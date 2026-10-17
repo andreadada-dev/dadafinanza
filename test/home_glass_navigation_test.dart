@@ -7,10 +7,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Home segments are in-place, directional, and account-aware', () {
-    final home = File('lib/screens/account_context_home_screen.dart')
-        .readAsStringSync();
-    final hero = File('lib/widgets/balyn_revolut_home_hero.dart')
-        .readAsStringSync();
+    final home = File(
+      'lib/screens/account_context_home_screen.dart',
+    ).readAsStringSync();
+    final hero = File(
+      'lib/widgets/balyn_revolut_home_hero.dart',
+    ).readAsStringSync();
     final shell = File('lib/screens/app_shell.dart').readAsStringSync();
 
     expect(home, contains('BalynHomeSectionTransition('));
@@ -27,19 +29,25 @@ void main() {
     expect(shell, contains('onSectionChanged: _selectHomeSection'));
   });
 
-  test('Glass navigation overlays page content instead of reserving bottom bar', () {
-    final shell = File('lib/screens/app_shell.dart').readAsStringSync();
-    final nav = File('lib/widgets/balyn_glass_navigation.dart')
-        .readAsStringSync();
-    expect(shell, contains('extendBody: true'));
-    expect(shell, contains('body: Stack('));
-    expect(shell, contains('BalynGlassNavigation('));
-    expect(shell, isNot(contains('bottomNavigationBar: NavigationBar(')));
-    expect(nav, contains('BackdropFilter('));
-    expect(nav, contains('ImageFilter.blur('));
-  });
+  test(
+    'Glass navigation overlays page content instead of reserving bottom bar',
+    () {
+      final shell = File('lib/screens/app_shell.dart').readAsStringSync();
+      final nav = File(
+        'lib/widgets/balyn_glass_navigation.dart',
+      ).readAsStringSync();
+      expect(shell, contains('extendBody: true'));
+      expect(shell, contains('body: Stack('));
+      expect(shell, contains('BalynGlassNavigation('));
+      expect(shell, isNot(contains('bottomNavigationBar: NavigationBar(')));
+      expect(nav, contains('BackdropFilter('));
+      expect(nav, contains('ImageFilter.blur('));
+    },
+  );
 
-  testWidgets('Floating glass destinations dispatch all four taps', (tester) async {
+  testWidgets('Floating glass destinations dispatch all four taps', (
+    tester,
+  ) async {
     final selections = <int>[];
     await tester.pumpWidget(
       MaterialApp(
@@ -64,7 +72,9 @@ void main() {
     expect(selections, [0, 1, 2, 3]);
   });
 
-  testWidgets('Home content slides in either direction without routes', (tester) async {
+  testWidgets('Home content slides in either direction without routes', (
+    tester,
+  ) async {
     var selected = 0;
     var direction = 1;
     late StateSetter update;

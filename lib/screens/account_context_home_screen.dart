@@ -230,270 +230,77 @@ class AccountContextHomeScreen extends StatelessWidget {
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    DateFormat(
-                      'MMMM yyyy',
-                      AppI18n.intlLocale,
-                    ).format(DateTime.now()),
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                // A compact real-data overview replaces the kit's fictional
-                // promotions, keeping its clear rounded white-strip rhythm.
-                BalynEditorialSurface(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 8,
-                  ),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: const BalynEditorialIcon(
-                      icon: Icons.calendar_month_outlined,
-                      size: 42,
-                    ),
-                    title: const Text(
-                      'Riepilogo del mese',
-                      style: TextStyle(fontWeight: FontWeight.w800),
-                    ),
-                    subtitle: Text(
-                      hidden
-                          ? 'Entrate ••••  ·  Spese ••••'
-                          : 'Entrate ${moneyFor(state, income)}  ·  Spese ${moneyFor(state, expense)}',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    trailing: const Icon(Icons.chevron_right_rounded),
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => AccountContextAnalyticsScreen(
-                          accountId: effectiveAccountId,
-                          onAccountChanged: onAccountChanged,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                BalynEditorialHeading(
-                  title: 'Ultimi movimenti',
-                  subtitle: 'Le operazioni più recenti',
-                ),
-                const SizedBox(height: 10),
-                BalynRecentTransactionsCard(
-                  items: recent,
-                  hideAmounts: hidden,
-                  onSeeAll: () => onShowActivity(0),
-                ),
-                const SizedBox(height: 23),
-                BalynEditorialHeading(
-                  title: 'In sintesi',
-                  subtitle: 'Entrate, spese e disponibilità',
-                ),
-                const SizedBox(height: 10),
-                BalynRevolutHomeContent(
-                  income: income,
-                  expense: expense,
-                  available: isTotal ? state.safeToSpend : balance,
-                  hideValues: hidden,
-                  showAccounts: true,
-                  onSelectAccount: onAccountChanged,
-                  onManageAccounts: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const AccountManagementScreen(),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                if (state.userAccounts.isEmpty) ...[
-                  _SetupBlock(
-                    onAccount: () => showAccountEditor(context),
-                    onMovement: () => _openQuick(
-                      context,
-                      TransactionType.expense,
-                      effectiveAccountId,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                ],
-                if (isTotal) ...[
-                  if (state.advanceReceivableCents > 0 ||
-                      state.advancePayableCents > 0 ||
-                      smartInsight != null) ...[
-                    const SizedBox(height: 28),
-                    const SectionTitle('Per te'),
-                    if (state.advanceReceivableCents > 0 ||
-                        state.advancePayableCents > 0)
-                      ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        leading: const Icon(Icons.handshake_outlined),
-                        title: const Text(
-                          'Anticipi',
-                          style: TextStyle(fontWeight: FontWeight.w700),
-                        ),
-                        subtitle: Text(
-                          state.hideBalance
-                              ? '•••• da ricevere · •••• da restituire'
-                              : '${moneyFor(state, Money.fromCents(state.advanceReceivableCents))} da ricevere · ${moneyFor(state, Money.fromCents(state.advancePayableCents))} da restituire',
-                        ),
-                        trailing: const Icon(Icons.chevron_right_rounded),
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const AdvancesScreen(),
-                          ),
-                        ),
-                      ),
-                    if (smartInsight case final insight?)
-                      _InsightRow(insight: insight),
-                  ],
-                  const SizedBox(height: 30),
-                  if (secondaryDashboardWidgets.isEmpty)
-                    EmptyState(
-                      icon: Icons.dashboard_customize_outlined,
-                      title: 'Nessuna sezione aggiuntiva',
-                      subtitle:
-                          'Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.',
-                      action: TextButton.icon(
-                        onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const DashboardCustomizerScreen(),
-                          ),
-                        ),
-                        icon: const Icon(Icons.tune_rounded),
-                        label: const Text('Personalizza Home'),
-                      ),
-                    )
-                  else
-                    ...secondaryDashboardWidgets.map(
-                      (config) => Padding(
-                        key: ValueKey('context-home-${config.type.name}'),
-                        padding: EdgeInsets.only(
-                          bottom: switch (config.size) {
-                            DashboardWidgetSize.small => 20,
-                            DashboardWidgetSize.medium => 28,
-                            DashboardWidgetSize.large => 36,
-                          },
-                        ),
-                        child: BalynReveal(
-                          delay: Duration(
-                            milliseconds:
-                                90 + (config.orderIndex.clamp(0, 6) * 30),
-                          ),
-                          child: HomeDashboardWidget(config: config),
-                        ),
-                      ),
-                    ),
-                ] else ...[
-                  const SizedBox(height: 28),
-                  AccountCategoryCarousel(accountId: selectedAccount!.id),
-                  const SizedBox(height: 28),
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: Icon(
-                      accountIcon(selectedAccount.iconKey),
-                      color: Color(selectedAccount.colorValue),
-                    ),
-                    title: const Text(
-                      'Apri conto',
-                      style: TextStyle(fontWeight: FontWeight.w700),
-                    ),
-                    subtitle: Text(
-                      'Modifica e gestisci ${selectedAccount.name}',
-                    ),
-                    trailing: const Icon(Icons.chevron_right_rounded),
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => SafeAccountDetailScreen(
-                          accountId: selectedAccount.id,
-                        ),
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: Icon(
-                      Icons.insights_rounded,
-                      color: Color(selectedAccount.colorValue),
-                    ),
-                    title: const Text(
-                      'Analytics del conto',
-                      style: TextStyle(fontWeight: FontWeight.w700),
-                    ),
-                    subtitle: const Text(
-                      'Entrate, spese e andamento del conto',
-                    ),
-                    trailing: const Icon(Icons.chevron_right_rounded),
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => AccountContextAnalyticsScreen(
-                          accountId: selectedAccount.id,
-                          onAccountChanged: onAccountChanged,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  SectionTitle(
-                    'Prossime scadenze',
-                    trailing: TextButton(
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const RecurringScreen(),
-                        ),
-                      ),
-                      child: const Text('Apri'),
-                    ),
-                  ),
-                  if (upcoming.isEmpty)
-                    const Text('Nessuna scadenza prevista per questo conto')
-                  else
-                    ...upcoming
-                        .take(3)
-                        .map(
-                          (item) => ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            leading: Icon(
-                              Icons.repeat_rounded,
-                              color: transactionColor(context, item.type),
-                            ),
-                            title: Text(item.name),
-                            subtitle: Text(
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
                               DateFormat(
-                                'EEE d MMM',
+                                'MMMM yyyy',
                                 AppI18n.intlLocale,
-                              ).format(item.nextDate),
+                              ).format(DateTime.now()),
+                              style: Theme.of(context).textTheme.titleLarge
+                                  ?.copyWith(fontWeight: FontWeight.w800),
                             ),
-                            trailing: Text(
-                              state.hideBalance
-                                  ? '••••'
-                                  : moneyFor(state, item.amount),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w700,
+                          ),
+                          const SizedBox(height: 12),
+                          // A compact real-data overview replaces the kit's fictional
+                          // promotions, keeping its clear rounded white-strip rhythm.
+                          BalynEditorialSurface(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 8,
+                            ),
+                            child: ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              leading: const BalynEditorialIcon(
+                                icon: Icons.calendar_month_outlined,
+                                size: 42,
+                              ),
+                              title: const Text(
+                                'Riepilogo del mese',
+                                style: TextStyle(fontWeight: FontWeight.w800),
+                              ),
+                              subtitle: Text(
+                                hidden
+                                    ? 'Entrate ••••  ·  Spese ••••'
+                                    : 'Entrate ${moneyFor(state, income)}  ·  Spese ${moneyFor(state, expense)}',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              trailing: const Icon(Icons.chevron_right_rounded),
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => AccountContextAnalyticsScreen(
+                                    accountId: effectiveAccountId,
+                                    onAccountChanged: onAccountChanged,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                ],
-                        ],
-                      )
-                    : selectedSection == 1
-                        ? BalynRevolutHomeContent(
+                          const SizedBox(height: 20),
+                          BalynEditorialHeading(
+                            title: 'Ultimi movimenti',
+                            subtitle: 'Le operazioni più recenti',
+                          ),
+                          const SizedBox(height: 10),
+                          BalynRecentTransactionsCard(
+                            items: recent,
+                            hideAmounts: hidden,
+                            onSeeAll: () => onShowActivity(0),
+                          ),
+                          const SizedBox(height: 23),
+                          BalynEditorialHeading(
+                            title: 'In sintesi',
+                            subtitle: 'Entrate, spese e disponibilità',
+                          ),
+                          const SizedBox(height: 10),
+                          BalynRevolutHomeContent(
                             income: income,
                             expense: expense,
                             available: isTotal ? state.safeToSpend : balance,
                             hideValues: hidden,
-                            showAccounts: false,
+                            showAccounts: true,
                             onSelectAccount: onAccountChanged,
                             onManageAccounts: () => Navigator.push(
                               context,
@@ -501,16 +308,225 @@ class AccountContextHomeScreen extends StatelessWidget {
                                 builder: (_) => const AccountManagementScreen(),
                               ),
                             ),
-                          )
-                        : SizedBox(
-                            height: (MediaQuery.sizeOf(context).height * .78)
-                                .clamp(490.0, 820.0),
-                            child: BalynActivityScreen(
-                              accountId: effectiveAccountId,
-                              onAccountChanged: onAccountChanged,
-                              initialTab: activityInitialTab,
-                            ),
                           ),
+                          const SizedBox(height: 20),
+                          if (state.userAccounts.isEmpty) ...[
+                            _SetupBlock(
+                              onAccount: () => showAccountEditor(context),
+                              onMovement: () => _openQuick(
+                                context,
+                                TransactionType.expense,
+                                effectiveAccountId,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                          ],
+                          if (isTotal) ...[
+                            if (state.advanceReceivableCents > 0 ||
+                                state.advancePayableCents > 0 ||
+                                smartInsight != null) ...[
+                              const SizedBox(height: 28),
+                              const SectionTitle('Per te'),
+                              if (state.advanceReceivableCents > 0 ||
+                                  state.advancePayableCents > 0)
+                                ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  leading: const Icon(Icons.handshake_outlined),
+                                  title: const Text(
+                                    'Anticipi',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    state.hideBalance
+                                        ? '•••• da ricevere · •••• da restituire'
+                                        : '${moneyFor(state, Money.fromCents(state.advanceReceivableCents))} da ricevere · ${moneyFor(state, Money.fromCents(state.advancePayableCents))} da restituire',
+                                  ),
+                                  trailing: const Icon(
+                                    Icons.chevron_right_rounded,
+                                  ),
+                                  onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => const AdvancesScreen(),
+                                    ),
+                                  ),
+                                ),
+                              if (smartInsight case final insight?)
+                                _InsightRow(insight: insight),
+                            ],
+                            const SizedBox(height: 30),
+                            if (secondaryDashboardWidgets.isEmpty)
+                              EmptyState(
+                                icon: Icons.dashboard_customize_outlined,
+                                title: 'Nessuna sezione aggiuntiva',
+                                subtitle:
+                                    'Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.',
+                                action: TextButton.icon(
+                                  onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          const DashboardCustomizerScreen(),
+                                    ),
+                                  ),
+                                  icon: const Icon(Icons.tune_rounded),
+                                  label: const Text('Personalizza Home'),
+                                ),
+                              )
+                            else
+                              ...secondaryDashboardWidgets.map(
+                                (config) => Padding(
+                                  key: ValueKey(
+                                    'context-home-${config.type.name}',
+                                  ),
+                                  padding: EdgeInsets.only(
+                                    bottom: switch (config.size) {
+                                      DashboardWidgetSize.small => 20,
+                                      DashboardWidgetSize.medium => 28,
+                                      DashboardWidgetSize.large => 36,
+                                    },
+                                  ),
+                                  child: BalynReveal(
+                                    delay: Duration(
+                                      milliseconds:
+                                          90 +
+                                          (config.orderIndex.clamp(0, 6) * 30),
+                                    ),
+                                    child: HomeDashboardWidget(config: config),
+                                  ),
+                                ),
+                              ),
+                          ] else ...[
+                            const SizedBox(height: 28),
+                            AccountCategoryCarousel(
+                              accountId: selectedAccount!.id,
+                            ),
+                            const SizedBox(height: 28),
+                            ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              leading: Icon(
+                                accountIcon(selectedAccount.iconKey),
+                                color: Color(selectedAccount.colorValue),
+                              ),
+                              title: const Text(
+                                'Apri conto',
+                                style: TextStyle(fontWeight: FontWeight.w700),
+                              ),
+                              subtitle: Text(
+                                'Modifica e gestisci ${selectedAccount.name}',
+                              ),
+                              trailing: const Icon(Icons.chevron_right_rounded),
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => SafeAccountDetailScreen(
+                                    accountId: selectedAccount.id,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              leading: Icon(
+                                Icons.insights_rounded,
+                                color: Color(selectedAccount.colorValue),
+                              ),
+                              title: const Text(
+                                'Analytics del conto',
+                                style: TextStyle(fontWeight: FontWeight.w700),
+                              ),
+                              subtitle: const Text(
+                                'Entrate, spese e andamento del conto',
+                              ),
+                              trailing: const Icon(Icons.chevron_right_rounded),
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => AccountContextAnalyticsScreen(
+                                    accountId: selectedAccount.id,
+                                    onAccountChanged: onAccountChanged,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 24),
+                            SectionTitle(
+                              'Prossime scadenze',
+                              trailing: TextButton(
+                                onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const RecurringScreen(),
+                                  ),
+                                ),
+                                child: const Text('Apri'),
+                              ),
+                            ),
+                            if (upcoming.isEmpty)
+                              const Text(
+                                'Nessuna scadenza prevista per questo conto',
+                              )
+                            else
+                              ...upcoming
+                                  .take(3)
+                                  .map(
+                                    (item) => ListTile(
+                                      contentPadding: EdgeInsets.zero,
+                                      leading: Icon(
+                                        Icons.repeat_rounded,
+                                        color: transactionColor(
+                                          context,
+                                          item.type,
+                                        ),
+                                      ),
+                                      title: Text(item.name),
+                                      subtitle: Text(
+                                        DateFormat(
+                                          'EEE d MMM',
+                                          AppI18n.intlLocale,
+                                        ).format(item.nextDate),
+                                      ),
+                                      trailing: Text(
+                                        state.hideBalance
+                                            ? '••••'
+                                            : moneyFor(state, item.amount),
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                          ],
+                        ],
+                      )
+                    : selectedSection == 1
+                    ? BalynRevolutHomeContent(
+                        income: income,
+                        expense: expense,
+                        available: isTotal ? state.safeToSpend : balance,
+                        hideValues: hidden,
+                        showAccounts: false,
+                        onSelectAccount: onAccountChanged,
+                        onManageAccounts: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const AccountManagementScreen(),
+                          ),
+                        ),
+                      )
+                    : SizedBox(
+                        height: (MediaQuery.sizeOf(context).height * .78).clamp(
+                          490.0,
+                          820.0,
+                        ),
+                        child: BalynActivityScreen(
+                          accountId: effectiveAccountId,
+                          onAccountChanged: onAccountChanged,
+                          initialTab: activityInitialTab,
+                        ),
+                      ),
               ),
             ),
           ),

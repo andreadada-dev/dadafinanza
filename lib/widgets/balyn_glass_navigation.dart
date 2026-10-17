@@ -69,7 +69,8 @@ class BalynGlassNavigation extends StatelessWidget {
                             duration: const Duration(milliseconds: 260),
                             curve: Curves.easeOutCubic,
                             margin: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 3,
+                              vertical: 5,
+                              horizontal: 3,
                             ),
                             decoration: BoxDecoration(
                               color: i == index
