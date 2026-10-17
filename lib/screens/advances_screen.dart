@@ -8,6 +8,7 @@ import '../models/advance_models.dart';
 import '../models/models.dart';
 import '../theme/app_theme.dart';
 import '../widgets/balyn_motion.dart';
+import '../widgets/balyn_editorial_components.dart';
 import '../widgets/balyn_shader_system.dart';
 import '../widgets/ui_helpers.dart';
 
@@ -82,7 +83,7 @@ class _AdvancesScreenState extends State<AdvancesScreen> {
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 120),
         children: [
           const BalynReveal(child: _AdvancesOverview()),
-          const SizedBox(height: 32),
+          const SizedBox(height: 22),
           const SectionTitle('Persone'),
           const SizedBox(height: 8),
           TextField(
@@ -112,24 +113,20 @@ class _AdvancesScreenState extends State<AdvancesScreen> {
           else
             LayoutBuilder(
               builder: (context, constraints) {
-                final textScale = MediaQuery.textScalerOf(context).scale(1);
-                final columns = constraints.maxWidth >= 700
-                    ? 5
-                    : constraints.maxWidth >= 500
-                    ? 4
-                    : textScale > 1.2
-                    ? 2
-                    : 3;
-
+                final largeText =
+                    MediaQuery.textScalerOf(context).scale(1) > 1.2;
+                final columns = constraints.maxWidth >= 680 ? 2 : 1;
                 return GridView.builder(
                   shrinkWrap: true,
                   primary: false,
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: columns,
-                    mainAxisSpacing: 8,
-                    crossAxisSpacing: 8,
-                    childAspectRatio: 1.02,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: columns == 1
+                        ? (largeText ? 3.0 : 3.6)
+                        : 2.8,
                   ),
                   itemCount: people.length,
                   itemBuilder: (context, index) =>
@@ -155,11 +152,12 @@ class _AdvancesOverview extends StatelessWidget {
     final positive = financeColors?.positive ?? const Color(0xFF12B880);
     final negative = financeColors?.negative ?? const Color(0xFFF53D3D);
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 12),
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.fromLTRB(17, 15, 17, 19),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainer.withValues(alpha: .85),
-        borderRadius: BorderRadius.circular(26),
+        color: theme.brightness == Brightness.dark
+          ? const Color(0xFF252532) : Colors.white,
+        borderRadius: BorderRadius.circular(21),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -359,10 +357,11 @@ class _AdvancePersonSummaryCard extends StatelessWidget {
     return Semantics(
       button: true,
       label:
-          '${person.name}. $subtitle. $movementCount ${movementCount == 1 ? 'movimento' : 'movimenti'}.',
+        '${person.name}. $subtitle. $movementCount ${movementCount == 1 ? 'movimento' : 'movimenti'}.',
       child: Material(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(18),
+        color: theme.brightness == Brightness.dark
+            ? const Color(0xFF252532) : Colors.white,
+        borderRadius: BorderRadius.circular(19),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: () => Navigator.push(
@@ -371,71 +370,47 @@ class _AdvancePersonSummaryCard extends StatelessWidget {
               builder: (_) => FinancePersonDetailScreen(personId: person.id),
             ),
           ),
-          child: Stack(
-            children: [
-              Positioned(
-                top: 7,
-                right: 9,
-                child: Text(
-                  '$movementCount',
-                  style: theme.textTheme.labelLarge?.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 13),
+            child: Row(
+              children: [
+                BalynEditorialIcon(
+                  icon: personIcon(person.iconKey),
+                  color: Color(person.colorValue),
+                  size: 45,
                 ),
-              ),
-              Positioned.fill(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(7, 6, 7, 4),
+                const SizedBox(width: 12),
+                Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Center(
-                        child: Container(
-                          width: 32,
-                          height: 32,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: theme.colorScheme.onSurface.withValues(
-                              alpha: theme.brightness == Brightness.dark
-                                  ? .07
-                                  : .045,
-                            ),
-                            shape: BoxShape.circle,
-                          ),
-                          child: BalynShaderIcon(
-                            personIcon(person.iconKey),
-                            seed: Color(person.colorValue),
-                            size: 18,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        person.name,
-                        maxLines: 1,
+                      Text(person.name, maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                      const SizedBox(height: 1),
-                      Text(
-                        subtitle,
-                        maxLines: 1,
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w800)),
+                      const SizedBox(height: 4),
+                      Text(subtitle, maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
-                      ),
+                        style: theme.textTheme.bodySmall),
                     ],
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(width: 5),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('$movementCount', style:
+                      theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w900)),
+                    const SizedBox(height: 3),
+                    Text('mov.', style: theme.textTheme.labelSmall),
+                  ],
+                ),
+                const SizedBox(width: 6),
+                const Icon(Icons.chevron_right_rounded, size: 19),
+              ],
+            ),
           ),
         ),
       ),

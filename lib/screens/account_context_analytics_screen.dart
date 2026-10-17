@@ -10,6 +10,7 @@ import '../models/models.dart';
 import '../services/account_context_service.dart';
 import '../widgets/account_context_selector.dart';
 import '../widgets/balyn_motion.dart';
+import '../widgets/balyn_editorial_components.dart';
 import '../widgets/balyn_shader_system.dart';
 import '../widgets/finance_charts.dart';
 import '../widgets/ui_helpers.dart';
@@ -348,7 +349,7 @@ class _AccountContextAnalyticsScreenState
                   color: context.financeColors.positive,
                 ),
               ),
-              const SizedBox(width: 20),
+              const SizedBox(width: 8),
               Expanded(
                 child: _Metric(
                   label: 'Spese',
@@ -356,7 +357,7 @@ class _AccountContextAnalyticsScreenState
                   color: context.financeColors.negative,
                 ),
               ),
-              const SizedBox(width: 20),
+              const SizedBox(width: 8),
               Expanded(
                 child: _Metric(
                   label: effectiveAccountId == null
@@ -383,7 +384,9 @@ class _AccountContextAnalyticsScreenState
                 : 'Andamento saldo',
           ),
           const SizedBox(height: 12),
-          _BalanceTrend(
+          BalynEditorialSurface(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 14),
+            child: _BalanceTrend(
             state: state,
             account: effectiveAccountId == null ? null : selected,
             from: from,
@@ -391,6 +394,7 @@ class _AccountContextAnalyticsScreenState
             period: period,
             rangeLabel: _visibleRangeLabel(from, to),
             onShiftPeriod: _shiftPeriod,
+            ),
           ),
           if (cashFlowPoints.length >= 2) ...[
             const SizedBox(height: 32),
@@ -1382,9 +1386,10 @@ class _Metric extends StatelessWidget {
     final theme = Theme.of(context);
     return Container(
       constraints: const BoxConstraints(minHeight: 88),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 13),
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 12),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainer.withValues(alpha: .86),
+        color: theme.brightness == Brightness.dark
+            ? const Color(0xFF252532) : Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(

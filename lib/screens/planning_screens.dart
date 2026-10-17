@@ -10,6 +10,7 @@ import '../models/smart_models.dart';
 import '../services/goal_planning_service.dart';
 import '../services/smart_finance_engine.dart';
 import '../widgets/balyn_motion.dart';
+import '../widgets/balyn_editorial_components.dart';
 import '../widgets/balyn_shader_system.dart';
 import '../widgets/ui_helpers.dart';
 import 'quick_add_page.dart';
@@ -26,53 +27,70 @@ class PlanningScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 100),
         children: [
-          const SectionTitle('Prossimi 30 giorni'),
+          const BalynEditorialPageTitle(
+            title: 'Il tuo piano',
+            subtitle: 'Una vista chiara dei prossimi impegni',
+            icon: Icons.route_outlined,
+          ),
+          const BalynEditorialHeading(
+            title: 'Prossimi 30 giorni',
+            subtitle: 'Saldo previsto in base ai dati disponibili',
+          ),
+          const SizedBox(height: 10),
           BalynReveal(child: _ForecastSummary(forecast: forecast)),
-          const SizedBox(height: 32),
-          _PlanningLink(
-            icon: Icons.pie_chart_outline_rounded,
-            title: 'Budget',
-            subtitle: state.budgets.isEmpty
-                ? 'Imposta limiti giornalieri, settimanali, mensili o annuali.'
-                : '${state.budgets.where((item) => item.enabled).length} budget attivi',
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const BudgetsScreen()),
-            ),
+          const SizedBox(height: 23),
+          const BalynEditorialHeading(
+            title: 'Strumenti',
+            subtitle: 'Organizza spese, risparmi e scadenze',
           ),
-          const SizedBox(height: 10),
-          _PlanningLink(
-            icon: Icons.repeat_rounded,
-            title: 'Ricorrenti',
-            subtitle: state.detectedRecurringPatterns.isEmpty
-                ? '${state.recurring.where((item) => item.enabled).length} ricorrenze configurate'
-                : '${state.recurring.where((item) => item.enabled).length} configurate · ${state.detectedRecurringPatterns.length} rilevate',
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const RecurringScreen()),
-            ),
-          ),
-          const SizedBox(height: 10),
-          _PlanningLink(
-            icon: Icons.flag_outlined,
-            title: 'Obiettivi',
-            subtitle: state.goals.isEmpty
-                ? 'Crea un obiettivo di risparmio realistico.'
-                : '${state.goals.where((item) => !item.archived && !item.completed).length} obiettivi attivi',
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const GoalsScreen()),
-            ),
-          ),
-          const SizedBox(height: 10),
-          _PlanningLink(
-            icon: Icons.calendar_month_outlined,
-            title: 'Previsioni e calendario',
-            subtitle: '7, 30 o 90 giorni · confermato, previsto e stimato',
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const FinanceCalendarScreen()),
-            ),
+          const SizedBox(height: 12),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final largeText =
+                  MediaQuery.textScalerOf(context).scale(1) > 1.2;
+              return GridView.count(
+                crossAxisCount: 2,
+                shrinkWrap: true,
+                primary: false,
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                childAspectRatio: largeText ? .78 :
+                    constraints.maxWidth >= 600 ? 1.40 : 1.06,
+                children: [
+                  _PlanningLink(
+                    icon: Icons.pie_chart_outline_rounded,
+                    title: 'Budget',
+                    subtitle: state.budgets.isEmpty
+                      ? 'Imposta i limiti di spesa'
+                      : '${state.budgets.where((item) => item.enabled).length} budget attivi',
+                    onTap: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const BudgetsScreen())),
+                  ),
+                  _PlanningLink(
+                    icon: Icons.repeat_rounded,
+                    title: 'Ricorrenti',
+                    subtitle: '${state.recurring.where((item) => item.enabled).length} configurate',
+                    onTap: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const RecurringScreen())),
+                  ),
+                  _PlanningLink(
+                    icon: Icons.flag_outlined,
+                    title: 'Obiettivi',
+                    subtitle: '${state.goals.where((item) => !item.archived && !item.completed).length} attivi',
+                    onTap: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const GoalsScreen())),
+                  ),
+                  _PlanningLink(
+                    icon: Icons.calendar_month_outlined,
+                    title: 'Calendario',
+                    subtitle: 'Previsioni e scadenze',
+                    onTap: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const FinanceCalendarScreen())),
+                  ),
+                ],
+              );
+            },
           ),
         ],
       ),
@@ -87,6 +105,7 @@ class _PlanningLink extends StatelessWidget {
     required this.subtitle,
     required this.onTap,
   });
+
   final IconData icon;
   final String title;
   final String subtitle;
@@ -96,25 +115,32 @@ class _PlanningLink extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     return Material(
-      color: scheme.surfaceContainer.withValues(alpha: .82),
-      borderRadius: BorderRadius.circular(22),
+      color: Theme.of(context).brightness == Brightness.dark
+          ? const Color(0xFF252532) : Colors.white,
+      borderRadius: BorderRadius.circular(20),
       clipBehavior: Clip.antiAlias,
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-        leading: Container(
-          width: 44,
-          height: 44,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: scheme.tertiary.withValues(alpha: .11),
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Icon(icon, color: scheme.tertiary),
-        ),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w800)),
-        subtitle: Text(subtitle),
-        trailing: const Icon(Icons.chevron_right_rounded),
+      child: InkWell(
         onTap: onTap,
+        borderRadius: BorderRadius.circular(20),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(14, 14, 11, 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              BalynEditorialIcon(icon: icon, color: scheme.tertiary, size: 41),
+              const Spacer(),
+              Text(title, maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w800)),
+              const SizedBox(height: 3),
+              Text(subtitle, maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodySmall),
+              const SizedBox(height: 4),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -133,8 +159,9 @@ class _ForecastSummary extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 18),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainer.withValues(alpha: .85),
-        borderRadius: BorderRadius.circular(26),
+        color: theme.brightness == Brightness.dark
+            ? const Color(0xFF252532) : Colors.white,
+        borderRadius: BorderRadius.circular(21),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

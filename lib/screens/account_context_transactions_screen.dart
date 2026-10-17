@@ -7,6 +7,7 @@ import '../models/models.dart';
 import '../services/account_context_service.dart';
 import '../widgets/account_context_selector.dart';
 import '../widgets/balyn_motion.dart';
+import '../widgets/balyn_editorial_components.dart';
 import '../widgets/balyn_shader_system.dart';
 import '../widgets/ui_helpers.dart';
 import 'quick_add_page.dart';
@@ -170,7 +171,7 @@ class _AccountContextTransactionsScreenState
                     hideValues: state.hideBalance,
                   ),
                 ),
-                const SizedBox(height: 22),
+                const SizedBox(height: 15),
                 _MovementSearch(
                   controller: search,
                   query: query,
@@ -242,7 +243,7 @@ class _AccountContextTransactionsScreenState
   Widget _buildTimelineSliver(AppState state, List<FinanceTransaction> items) {
     if (sort == _MovementSort.amountDesc || sort == _MovementSort.amountAsc) {
       return SliverPadding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         sliver: SliverList.builder(
           itemCount: items.length,
           itemBuilder: (context, index) => _MovementTile(item: items[index]),
@@ -252,7 +253,7 @@ class _AccountContextTransactionsScreenState
 
     final days = _groupByDay(items);
     return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       sliver: SliverList.builder(
         itemCount: days.length,
         itemBuilder: (context, index) {
@@ -292,7 +293,7 @@ class _AccountContextTransactionsScreenState
     ].where((section) => section.groups.isNotEmpty).toList(growable: false);
 
     return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       sliver: SliverList.builder(
         itemCount: sections.length,
         itemBuilder: (context, index) {
@@ -594,19 +595,11 @@ class _MovementHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Movimenti',
-          style: theme.textTheme.headlineLarge?.copyWith(
-            fontWeight: FontWeight.w900,
-            letterSpacing: -1,
-          ),
+        BalynEditorialHeading(
+          title: 'Movimenti',
+          subtitle: '$count ${count == 1 ? 'movimento' : 'movimenti'} nel risultato',
         ),
-        const SizedBox(height: 3),
-        Text(
-          '$count ${count == 1 ? 'movimento' : 'movimenti'} nel risultato',
-          style: theme.textTheme.bodyMedium,
-        ),
-        const SizedBox(height: 22),
+        const SizedBox(height: 14),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -617,7 +610,7 @@ class _MovementHeader extends StatelessWidget {
                 color: context.financeColors.positive,
               ),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 8),
             Expanded(
               child: _MovementMetric(
                 label: 'Spese',
@@ -625,7 +618,7 @@ class _MovementHeader extends StatelessWidget {
                 color: context.financeColors.negative,
               ),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 8),
             Expanded(
               child: _MovementMetric(
                 label: 'Netto',
@@ -654,10 +647,11 @@ class _MovementMetric extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      constraints: const BoxConstraints(minHeight: 94),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+      constraints: const BoxConstraints(minHeight: 88),
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 11),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainer.withValues(alpha: .86),
+        color: theme.brightness == Brightness.dark
+            ? const Color(0xFF252532) : Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
