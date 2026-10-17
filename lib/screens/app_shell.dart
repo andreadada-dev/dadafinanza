@@ -121,8 +121,10 @@ class _BalynAppShellState extends State<BalynAppShell> {
         body: SafeArea(
           child: SmoothIndexedPages(index: index, children: pages),
         ),
-        floatingActionButton: Semantics(
-          button: true,
+        floatingActionButton: index == 0
+            ? null
+            : Semantics(
+                button: true,
           label: fabLabel,
           hint: fabHint,
           excludeSemantics: true,
