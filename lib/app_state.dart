@@ -13,6 +13,7 @@ import 'services/attachment_service.dart';
 import 'services/goal_ledger_service.dart';
 import 'services/smart_finance_engine.dart';
 import 'services/widget_service.dart';
+import 'widgets/balyn_home_widget_catalog.dart';
 
 class AppState extends ChangeNotifier {
   AppState(
@@ -1054,33 +1055,8 @@ class AppState extends ChangeNotifier {
   }
 
   Future<void> resetDashboard() async {
-    final defaults = <DashboardWidgetType>[
-      DashboardWidgetType.totalBalance,
-      DashboardWidgetType.monthlyCashFlow,
-      DashboardWidgetType.safeToSpend,
-      DashboardWidgetType.accounts,
-      DashboardWidgetType.monthlyBudget,
-      DashboardWidgetType.recentTransactions,
-      DashboardWidgetType.upcomingRecurring,
-      DashboardWidgetType.goals,
-      DashboardWidgetType.topCategories,
-      DashboardWidgetType.endMonthForecast,
-      DashboardWidgetType.unassignedTransactions,
-    ];
-    final items = <DashboardWidgetConfig>[];
-    for (var i = 0; i < DashboardWidgetType.values.length; i++) {
-      final type = DashboardWidgetType.values[i];
-      final index = defaults.indexOf(type);
-      items.add(
-        DashboardWidgetConfig(
-          type: type,
-          enabled: index >= 0,
-          orderIndex: index >= 0 ? index : defaults.length + i,
-          size: DashboardWidgetSize.medium,
-        ),
-      );
-    }
-    await saveDashboard(items);
+    // Reset includes all redesigned Home sections as well as legacy widgets.
+    await saveDashboard(BalynHomeWidgetCatalog.normalize(const []));
   }
 
   Future<void> addRule(AutomationRule rule) async {
