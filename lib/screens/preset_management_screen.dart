@@ -118,11 +118,13 @@ class _PresetManagementScreenState extends State<PresetManagementScreen> {
                         final confirmed = await confirmDestructiveAction(
                           context,
                           title: 'Eliminare “${preset.name}”?',
-                          message: 'Il preset verrà rimosso. I movimenti già registrati non cambieranno.',
+                          message:
+                              'Il preset verrà rimosso. I movimenti già registrati non cambieranno.',
                         );
                         if (confirmed) {
-                          await QuickPresetService(state.database)
-                              .delete(preset.id);
+                          await QuickPresetService(
+                            state.database,
+                          ).delete(preset.id);
                         }
                       }
                       if (mounted) await _load();
@@ -274,9 +276,9 @@ class _PresetManagementScreenState extends State<PresetManagementScreen> {
                                     shape: BoxShape.circle,
                                     color: candidate,
                                     border: Border.all(
-                                      color: Theme.of(sheetContext)
-                                          .colorScheme
-                                          .outlineVariant,
+                                      color: Theme.of(
+                                        sheetContext,
+                                      ).colorScheme.outlineVariant,
                                     ),
                                   ),
                                   child: candidate == iconColor

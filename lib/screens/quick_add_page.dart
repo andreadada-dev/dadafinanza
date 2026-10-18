@@ -478,8 +478,9 @@ class _QuickAddPageState extends State<QuickAddPage> {
             draft.advanceAmountCents ??
             (draft.advanceWholeAmount ? draft.amountCents : null);
         if (voiceAdvanceCents != null && voiceAdvanceCents > 0) {
-          advanceShare.text = Money.fromCents(voiceAdvanceCents)
-              .toStringAsFixed(2);
+          advanceShare.text = Money.fromCents(
+            voiceAdvanceCents,
+          ).toStringAsFixed(2);
         }
       }
       _mergeCanonicalTags(draft.tags, state);
@@ -983,9 +984,9 @@ class _QuickAddPageState extends State<QuickAddPage> {
     }
   }
 
-  void _error(String message) =>
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(message)));
+  void _error(String message) => ScaffoldMessenger.of(
+    context,
+  ).showSnackBar(SnackBar(content: Text(message)));
 
   Future<void> _chooseCategory() async {
     final state = AppScope.of(context);
