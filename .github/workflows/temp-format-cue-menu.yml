@@ -1,5 +1,5 @@
 name: Temporary Cue menu formatting
-# Final pinned formatter after adding Cue/FAB regression tests.
+# Final pinned formatter after correcting shared menu trigger alignment.
 on:
   push:
     branches:
