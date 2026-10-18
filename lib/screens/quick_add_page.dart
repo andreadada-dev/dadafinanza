@@ -1119,11 +1119,9 @@ class _QuickAddPageState extends State<QuickAddPage> {
 
   // Same flat, rounded card treatment used by BalynTransactionDetailContent.
   Widget _movementCard(List<Widget> children) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: BalynPalette.surface(Theme.of(context).brightness),
-        borderRadius: BorderRadius.circular(BalynPalette.radius),
-      ),
+    return Material(
+      color: BalynPalette.surface(Theme.of(context).brightness),
+      borderRadius: BorderRadius.circular(BalynPalette.radius),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
         child: Column(
