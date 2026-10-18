@@ -13,6 +13,7 @@ class BalynRevolutHomeContent extends StatelessWidget {
     required this.available,
     required this.hideValues,
     required this.showAccounts,
+    this.maxAccounts,
     required this.onSelectAccount,
     required this.onManageAccounts,
     super.key,
@@ -23,6 +24,7 @@ class BalynRevolutHomeContent extends StatelessWidget {
   final double available;
   final bool hideValues;
   final bool showAccounts;
+  final int? maxAccounts;
   final ValueChanged<int?> onSelectAccount;
   final VoidCallback onManageAccounts;
 
@@ -96,7 +98,7 @@ class BalynRevolutHomeContent extends StatelessWidget {
                 )
               : Column(
                   children: [
-                    for (var i = 0; i < accountList.length; i++) ...[
+                    for (var i = 0; i < (maxAccounts == null ? accountList.length : accountList.length.clamp(0, maxAccounts!)); i++) ...[
                       if (i > 0)
                         Divider(
                           height: 1,
