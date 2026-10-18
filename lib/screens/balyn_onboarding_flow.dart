@@ -15,7 +15,8 @@ class BalynOnboardingFlow extends StatefulWidget {
 
 class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
     with SingleTickerProviderStateMixin {
-  final GlobalKey<IntroductionScreenState> _introKey = GlobalKey<IntroductionScreenState>();
+  final GlobalKey<IntroductionScreenState> _introKey =
+      GlobalKey<IntroductionScreenState>();
   final TextEditingController _name = TextEditingController(
     text: 'Conto principale',
   );
@@ -468,7 +469,8 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                 ),
                 done: _saving
                     ? const SizedBox(
-                        width: 22, height: 22,
+                        width: 22,
+                        height: 22,
                         child: CircularProgressIndicator(strokeWidth: 2),
                       )
                     : Text(
@@ -505,7 +507,8 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                   activeShape: StadiumBorder(),
                 ),
                 controlsPadding: const EdgeInsets.symmetric(
-                  horizontal: 21, vertical: 11,
+                  horizontal: 21,
+                  vertical: 11,
                 ),
                 controlsMargin: const EdgeInsets.only(bottom: 12),
                 hideBottomOnKeyboard: true,

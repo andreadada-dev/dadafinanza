@@ -26,14 +26,11 @@ void main() {
     expect(flow, contains("onTap: () => setState(() => _skipping = true)"));
   });
 
-
   testWidgets('IntroductionScreen has three Balyn pages and actions', (
     tester,
   ) async {
     await tester.pumpWidget(
-      const MaterialApp(
-        home: BalynOnboardingFlow(onFinished: _noop),
-      ),
+      const MaterialApp(home: BalynOnboardingFlow(onFinished: _noop)),
     );
     expect(find.byType(IntroductionScreen), findsOneWidget);
     expect(find.byKey(const ValueKey('onboarding-skip')), findsOneWidget);
