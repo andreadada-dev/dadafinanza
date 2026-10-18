@@ -101,7 +101,10 @@ void main() {
 
     expect(source, contains("title: const Text('Personalizza Home')"));
     expect(source, contains('ReorderableListView.builder'));
-    expect(source, contains('BalynHomeWidgetCatalog.fixed.contains(item.type)'));
+    expect(
+      source,
+      contains('BalynHomeWidgetCatalog.fixed.contains(item.type)'),
+    );
     expect(source, contains('state.saveDashboard(normalized)'));
   });
 
