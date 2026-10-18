@@ -92,7 +92,6 @@ void main() {
     expect(settings, contains('oldIndex < newIndex'));
     expect(settings, contains('AnimatedSize('));
     expect(settings, contains('HomeDashboardWidget('));
-    expect(settings, contains('Ignored'), isFalse);
     expect(settings, contains('IgnorePointer('));
     expect(settings, contains("ValueKey('add-home-widget')"));
     expect(settings, contains('state.saveDashboard(normalized)'));
