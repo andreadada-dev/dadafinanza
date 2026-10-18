@@ -138,9 +138,12 @@ class HomeDashboardWidget extends StatelessWidget {
           ],
         );
       case DashboardWidgetType.smartHighlights:
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+        return BalynEditorialSurface(
+          radius: 22,
+          padding: const EdgeInsets.all(18),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
             const SectionTitle('Per te'),
             if (state.advanceReceivableCents > 0 ||
                 state.advancePayableCents > 0)
@@ -164,7 +167,8 @@ class HomeDashboardWidget extends StatelessWidget {
                 state.advanceReceivableCents == 0 &&
                 state.advancePayableCents == 0)
               const Text('Nessun suggerimento al momento'),
-          ],
+            ],
+          ),
         );
       case DashboardWidgetType.totalBalance:
         return _MetricBlock(
@@ -209,7 +213,11 @@ class HomeDashboardWidget extends StatelessWidget {
       case DashboardWidgetType.accounts:
         return _AccountsBlock(config: config);
       case DashboardWidgetType.topCategories:
-        return _TopCategoriesDonut(config: config);
+        return BalynEditorialSurface(
+          radius: 22,
+          padding: const EdgeInsets.fromLTRB(14, 18, 14, 18),
+          child: _TopCategoriesDonut(config: config),
+        );
       default:
         return _SizedCanonicalWidget(config: config);
     }
@@ -228,8 +236,12 @@ class _SizedCanonicalWidget extends StatelessWidget {
       DashboardWidgetSize.medium => 4.0,
       DashboardWidgetSize.large => 10.0,
     };
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: padding),
+    return BalynEditorialSurface(
+      radius: 22,
+      padding: EdgeInsets.symmetric(
+        horizontal: 18,
+        vertical: 19 + padding,
+      ),
       child: CanonicalDashboardWidget(config: config),
     );
   }
@@ -261,10 +273,13 @@ class _MetricBlock extends StatelessWidget {
     };
     final showDetail = config.size != DashboardWidgetSize.small;
     final showIcon = icon != null && config.size == DashboardWidgetSize.large;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title, style: Theme.of(context).textTheme.labelMedium),
+    return BalynEditorialSurface(
+      radius: 22,
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 19),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: Theme.of(context).textTheme.labelMedium),
         if (showIcon) ...[const SizedBox(height: 8), Icon(icon, size: 24)],
         const SizedBox(height: 6),
         FittedBox(
@@ -283,6 +298,7 @@ class _MetricBlock extends StatelessWidget {
           Text(detail!, style: Theme.of(context).textTheme.bodySmall),
         ],
       ],
+    ),
     );
   }
 }
@@ -301,11 +317,14 @@ class _AccountsBlock extends StatelessWidget {
       DashboardWidgetSize.large => 6,
     };
     final accounts = state.activeAccounts.take(limit).toList();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SectionTitle(
-          'Conti',
+    return BalynEditorialSurface(
+      radius: 22,
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SectionTitle(
+            'Conti',
           trailing: TextButton(
             onPressed: () => Navigator.push(
               context,
@@ -373,7 +392,8 @@ class _AccountsBlock extends StatelessWidget {
               ),
             ),
           ),
-      ],
+        ],
+      ),
     );
   }
 }
