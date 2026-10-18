@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:balyn/l10n/localized_material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../l10n/app_i18n.dart';
 import '../main.dart';
 import '../models/models.dart';
@@ -498,13 +499,19 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                   minimumSize: const Size(116, 51),
                   shape: const StadiumBorder(),
                 ),
-                dotsDecorator: const DotsDecorator(
-                  color: Color(0x66FFFFFF),
-                  activeColor: Color(0xFFF0A8E5),
-                  size: Size(8, 8),
-                  activeSize: Size(24, 8),
-                  spacing: EdgeInsets.symmetric(horizontal: 4),
-                  activeShape: StadiumBorder(),
+                // The thin worm stretches between dots on every page change.
+                customProgress: AnimatedSmoothIndicator(
+                  activeIndex: _step,
+                  count: 3,
+                  effect: const WormEffect(
+                    type: WormType.thin,
+                    dotWidth: 9,
+                    dotHeight: 9,
+                    spacing: 10,
+                    radius: 8,
+                    dotColor: Color(0x66FFFFFF),
+                    activeDotColor: Color(0xFFF0A8E5),
+                  ),
                 ),
                 controlsPadding: const EdgeInsets.symmetric(
                   horizontal: 21,

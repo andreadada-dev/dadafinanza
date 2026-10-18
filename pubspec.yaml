@@ -27,6 +27,8 @@ dependencies:
   home_widget: ^0.9.3
   image_picker: ^1.2.3
   introduction_screen: 4.0.0
+  smooth_page_indicator: ^3.0.0
+  cue: ^0.4.0
   intl: ^0.20.3
   local_auth: ^3.0.2
   path: ^1.9.1

@@ -22,7 +22,8 @@ void main() {
     expect(flow, contains('rawPages: ['));
     expect(flow, contains('onChange: (page)'));
     expect(flow, contains('onDone: () => _complete()'));
-    expect(flow, contains('dotsDecorator: const DotsDecorator('));
+    expect(flow, contains('customProgress: AnimatedSmoothIndicator('));
+    expect(flow, contains('type: WormType.thin'));
     expect(flow, contains("onTap: () => setState(() => _skipping = true)"));
   });
 
