@@ -258,14 +258,8 @@ void main() {
     expect(analytics, contains("import 'dart:math' as math;"));
     expect(analytics, contains('movementHours'));
     expect(analytics, contains('minutes / 60'));
-    expect(
-      analytics,
-      contains('minWidth: MediaQuery.sizeOf(context).width - 4'),
-    );
-    expect(
-      analytics,
-      contains('maxWidth: MediaQuery.sizeOf(context).width - 4'),
-    );
+    // The chart is now constrained inside its card (no more OverflowBox).
+    expect(analytics, contains('width: double.infinity'));
     expect(analytics, contains('height: 224'));
     expect(analytics, isNot(contains('child: OverflowBox(')));
     expect(analytics, contains('horizontalNudge'));
