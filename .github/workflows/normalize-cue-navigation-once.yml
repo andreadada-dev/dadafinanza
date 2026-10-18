@@ -1,4 +1,4 @@
-name: Normalize Cue navigation and worm indicator
+name: Normalize Cue navigation and worm indicator retry
 
 on:
   push:
