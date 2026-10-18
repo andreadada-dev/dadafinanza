@@ -40,7 +40,7 @@ void main() {
     expect(hero, isNot(contains('_AnimatedAccountDiamond')));
   });
 
-  test('Header More and corner + share the identical Cue menu', () {
+  test('Hero More remains Cue while corner + uses a radial PieMenu', () {
     final header = File(
       'lib/widgets/balyn_cue_three_dots_action.dart',
     ).readAsStringSync();
@@ -51,7 +51,12 @@ void main() {
       'lib/widgets/balyn_cue_anchored_menu.dart',
     ).readAsStringSync();
     expect(header, contains('BalynCueAnchoredMenu('));
-    expect(fab, contains('BalynCueAnchoredMenu('));
+    expect(fab, contains('return PieMenu('));
+    expect(fab, contains('overlayColor: Colors.black54'));
+    expect(fab, contains('longPressShowsMenu: true'));
+    expect(fab, contains('longPressDuration: holdDuration'));
+    expect(fab, contains('onPressed: widget.onCreate'));
+    expect(fab, contains('math.pi * 2 * progress.clamp(0.0, 1.0)'));
     expect(menu, contains('barrierColor: Colors.black54'));
     expect(menu, contains('motion: .bouncy()'));
     expect(menu, contains('reverseMotion: .snappy()'));
@@ -60,6 +65,7 @@ void main() {
     expect(menu, contains('height: closeSlotHeight'));
     expect(header, contains('closeSlotHeight: 82'));
     expect(menu, contains('alignment: Alignment.topCenter'));
+    expect(menu, contains('offset: Offset((56 - triggerRect.width) / 2, 0)'));
   });
 
   testWidgets('FAB changes shape with scrolling and springs back to circle', (
