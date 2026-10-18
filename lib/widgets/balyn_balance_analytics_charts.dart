@@ -37,6 +37,7 @@ class BalynStatisticBars extends StatelessWidget {
   });
   final List<FinanceTrendPoint> points;
   final bool hidden;
+
   /// Null means the total portfolio; otherwise both series inherit
   /// complementary shades from the selected account's saved color.
   final Color? accountColor;
@@ -116,8 +117,10 @@ class BalynStatisticBars extends StatelessWidget {
                         meta: meta,
                         child: Text(
                           points.length == 1
-                              ? DateFormat('d MMM', AppI18n.intlLocale)
-                                  .format(points[i].date)
+                              ? DateFormat(
+                                  'd MMM',
+                                  AppI18n.intlLocale,
+                                ).format(points[i].date)
                               : daysSpanned < 45
                               ? DateFormat(
                                   'd',

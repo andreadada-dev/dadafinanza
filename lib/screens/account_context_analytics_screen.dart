@@ -434,7 +434,9 @@ class _AccountContextAnalyticsScreenState
           BalynReveal(
             child: BalynEditorialSurface(
               child: AccountCategoryCarousel(
-                key: ValueKey('analytics-category-carousel-${effectiveAccountId ?? 'total'}'),
+                key: ValueKey(
+                  'analytics-category-carousel-${effectiveAccountId ?? 'total'}',
+                ),
                 accountId: effectiveAccountId,
                 from: from,
                 to: to,

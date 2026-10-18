@@ -6,42 +6,47 @@ import 'package:balyn/widgets/home_dashboard_widget.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('Income and expense share account palette instead of purple constants',
-      () {
-    const accountViolet = Color(0xFF7134D6);
-    const accountOrange = Color(0xFFFF7C30);
-    final violetIncome = balynAnalyticsIncomeColor(accountViolet);
-    final violetExpense = balynAnalyticsExpenseColor(accountViolet);
-    final orangeIncome = balynAnalyticsIncomeColor(accountOrange);
-    final orangeExpense = balynAnalyticsExpenseColor(accountOrange);
+  test(
+    'Income and expense share account palette instead of purple constants',
+    () {
+      const accountViolet = Color(0xFF7134D6);
+      const accountOrange = Color(0xFFFF7C30);
+      final violetIncome = balynAnalyticsIncomeColor(accountViolet);
+      final violetExpense = balynAnalyticsExpenseColor(accountViolet);
+      final orangeIncome = balynAnalyticsIncomeColor(accountOrange);
+      final orangeExpense = balynAnalyticsExpenseColor(accountOrange);
 
-    expect(violetIncome, isNot(violetExpense));
-    expect(violetIncome, isNot(orangeIncome));
-    expect(violetExpense, isNot(orangeExpense));
-    expect(balynAnalyticsIncomeColor(null), const Color(0xFFD0A7F7));
-    expect(balynAnalyticsExpenseColor(null), const Color(0xFF7522ED));
-  });
+      expect(violetIncome, isNot(violetExpense));
+      expect(violetIncome, isNot(orangeIncome));
+      expect(violetExpense, isNot(orangeExpense));
+      expect(balynAnalyticsIncomeColor(null), const Color(0xFFD0A7F7));
+      expect(balynAnalyticsExpenseColor(null), const Color(0xFF7522ED));
+    },
+  );
 
   testWidgets('Bar chart accepts the selected account color', (tester) async {
-    await tester.pumpWidget(const MaterialApp(
-      home: Scaffold(
-        body: BalynStatisticBars(
-          points: [],
-          hidden: false,
-          accountColor: Color(0xFF7134D6),
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: BalynStatisticBars(
+            points: [],
+            hidden: false,
+            accountColor: Color(0xFF7134D6),
+          ),
         ),
       ),
-    ));
+    );
     expect(find.byType(BalynStatisticBars), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
   test('One global analytics period controls trend bars and Home donut', () {
-    final analytics =
-        File('lib/screens/account_context_analytics_screen.dart')
-            .readAsStringSync();
-    final homeDonut = File('lib/widgets/home_dashboard_widget.dart')
-        .readAsStringSync();
+    final analytics = File(
+      'lib/screens/account_context_analytics_screen.dart',
+    ).readAsStringSync();
+    final homeDonut = File(
+      'lib/widgets/home_dashboard_widget.dart',
+    ).readAsStringSync();
 
     final globalNavigator = analytics.indexOf(
       'child: _AnalyticsPeriodNavigator(',

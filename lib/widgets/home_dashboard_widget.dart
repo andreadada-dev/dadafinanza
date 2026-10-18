@@ -391,6 +391,7 @@ class AccountCategoryCarousel extends StatelessWidget {
 
   final int? accountId;
   final DashboardWidgetSize size;
+
   /// When specified, use the shared Analytics period instead of a separate
   /// selector in the donut. Home keeps its independent carousel unchanged.
   final DateTime? from;
@@ -1103,40 +1104,40 @@ class _DonutPeriodCenter extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 _DonutRangeArrow(
-                icon: Icons.chevron_left_rounded,
-                tooltip: AppI18n.tr('Periodo precedente'),
-                onPressed: onPreviousRange,
-              ),
-              Semantics(
-                button: true,
-                label:
-                    'Periodo $rangeLabel. Tocca per cambiare periodo, pressione lunga per intervallo personalizzato.',
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(14),
-                  onTap: onRangeTap,
-                  onLongPress: onRangeLongPress,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 4,
-                      vertical: 6,
-                    ),
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 112),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          rangeLabel,
-                          maxLines: 1,
-                          style: theme.textTheme.labelLarge?.copyWith(
-                            fontWeight: FontWeight.w800,
+                  icon: Icons.chevron_left_rounded,
+                  tooltip: AppI18n.tr('Periodo precedente'),
+                  onPressed: onPreviousRange,
+                ),
+                Semantics(
+                  button: true,
+                  label:
+                      'Periodo $rangeLabel. Tocca per cambiare periodo, pressione lunga per intervallo personalizzato.',
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(14),
+                    onTap: onRangeTap,
+                    onLongPress: onRangeLongPress,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 4,
+                        vertical: 6,
+                      ),
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 112),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            rangeLabel,
+                            maxLines: 1,
+                            style: theme.textTheme.labelLarge?.copyWith(
+                              fontWeight: FontWeight.w800,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              _DonutRangeArrow(
+                _DonutRangeArrow(
                   icon: Icons.chevron_right_rounded,
                   tooltip: AppI18n.tr('Periodo successivo'),
                   onPressed: onNextRange,
@@ -1344,7 +1345,9 @@ class _CategoryDonutRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  state.hideBalance || hideAmounts ? '••••' : moneyFor(state, amount),
+                  state.hideBalance || hideAmounts
+                      ? '••••'
+                      : moneyFor(state, amount),
                   style: const TextStyle(fontWeight: FontWeight.w800),
                 ),
                 Text(
