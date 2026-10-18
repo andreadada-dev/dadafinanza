@@ -135,11 +135,6 @@ class TransactionDetailPage extends StatelessWidget {
     if (item == null)
       return const Scaffold(body: Center(child: Text('Movimento non trovato')));
     final category = state.categoryById(item.categoryId);
-    final account = state.accountById(item.accountId);
-    final destination = state.accountById(item.toAccountId);
-    final splits = state.splitsFor(item.id);
-    final refundOf = state.transactionById(item.refundOfTransactionId);
-    final refunded = state.refundsFor(item.id);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
