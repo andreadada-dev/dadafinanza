@@ -1,4 +1,5 @@
 import 'package:balyn/l10n/localized_material.dart';
+import '../theme/balyn_palette.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -655,7 +656,7 @@ class _MovementMetric extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 11),
       decoration: BoxDecoration(
         color: theme.brightness == Brightness.dark
-            ? const Color(0xFF252532)
+            ? BalynPalette.darkSurface
             : Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
