@@ -33,7 +33,6 @@ class _BalynAppShellState extends State<BalynAppShell> {
   int? accountId;
   int _homeSection = 0;
   int _homeDirection = 1;
-  int _homeActivityTab = 0;
   bool _allowExit = false;
   bool _launcherOpen = false;
   Timer? _exitTimer;
@@ -62,8 +61,7 @@ class _BalynAppShellState extends State<BalynAppShell> {
   }
 
   void _showHomeActivity(int innerTab) {
-    setState(() => _homeActivityTab = innerTab);
-    _selectHomeSection(2);
+    _selectHomeSection(innerTab == 0 ? 1 : 2);
   }
 
   void _selectTab(int value) {
@@ -124,7 +122,6 @@ class _BalynAppShellState extends State<BalynAppShell> {
         onAccountChanged: _selectAccount,
         selectedSection: _homeSection,
         slideDirection: _homeDirection,
-        activityInitialTab: _homeActivityTab,
         onSectionChanged: _selectHomeSection,
         onShowActivity: _showHomeActivity,
       ),

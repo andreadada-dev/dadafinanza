@@ -14,7 +14,7 @@ import '../widgets/balyn_editorial_components.dart';
 import '../widgets/home_dashboard_widget.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_context_analytics_screen.dart';
-import 'balyn_activity_screen.dart';
+import 'account_context_transactions_screen.dart';
 import 'account_management_screen.dart'
     show AccountManagementScreen, SafeAccountDetailScreen;
 import 'account_screens.dart' show showAccountEditor;
@@ -31,7 +31,6 @@ class AccountContextHomeScreen extends StatefulWidget {
     required this.onAccountChanged,
     required this.selectedSection,
     required this.slideDirection,
-    required this.activityInitialTab,
     required this.onSectionChanged,
     required this.onShowActivity,
     super.key,
@@ -41,7 +40,6 @@ class AccountContextHomeScreen extends StatefulWidget {
   final ValueChanged<int?> onAccountChanged;
   final int selectedSection;
   final int slideDirection;
-  final int activityInitialTab;
   final ValueChanged<int> onSectionChanged;
   final ValueChanged<int> onShowActivity;
 
@@ -126,7 +124,6 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
     final accountId = widget.accountId;
     final onAccountChanged = widget.onAccountChanged;
     final selectedSection = widget.selectedSection;
-    final activityInitialTab = widget.activityInitialTab;
     final onShowActivity = widget.onShowActivity;
     final state = AppScope.of(context);
     final selectedAccount = state.accountById(accountId);
@@ -577,36 +574,17 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
               ),
             ),
             _PersistentHomePage(
-              child: CustomScrollView(
-                key: const PageStorageKey('home-accounts-scroll'),
-                slivers: [
-                  SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(16, 18, 16, 135),
-                    sliver: SliverToBoxAdapter(
-                      child: BalynRevolutHomeContent(
-                        income: income,
-                        expense: expense,
-                        available: isTotal ? state.safeToSpend : balance,
-                        hideValues: hidden,
-                        showAccounts: false,
-                        onSelectAccount: onAccountChanged,
-                        onManageAccounts: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const AccountManagementScreen(),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+              child: AccountContextTransactionsScreen(
+                embedded: true,
+                accountId: effectiveAccountId,
+                onAccountChanged: onAccountChanged,
               ),
             ),
             _PersistentHomePage(
-              child: BalynActivityScreen(
+              child: AccountContextAnalyticsScreen(
+                embedded: true,
                 accountId: effectiveAccountId,
                 onAccountChanged: onAccountChanged,
-                initialTab: activityInitialTab,
               ),
             ),
           ],

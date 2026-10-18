@@ -23,17 +23,24 @@ void main() {
     expect(home, contains('controller: _pageController'));
     expect(home, contains('onPageChanged: _onHomePageChanged'));
     expect(home, contains('onTabChanged: _selectHomePage'));
-    expect(home, contains('BalynActivityScreen('));
+    expect(home, contains('AccountContextTransactionsScreen('));
+    expect(home, contains('AccountContextAnalyticsScreen('));
+    expect(home, contains('embedded: true'));
+    expect(home, contains("title: 'Gestisci conti'"));
+    expect(home, contains('onAccountChanged: onAccountChanged'));
+    expect(home, isNot(contains('home-accounts-scroll')));
     expect(home, contains('sectionPage: _pageController.hasClients'));
     expect(hero, contains('BalynCueSectionBar('));
     expect(selector, contains("'Panoramica'"));
-    expect(selector, contains("'Conti'"));
+    expect(selector, contains("'Movimenti'"));
+    expect(selector, isNot(contains("'Conti'")));
     expect(selector, contains("'Attività'"));
     expect(selector, contains('Cue.onToggle('));
     expect(selector, contains('left: unit * progress'));
     expect(selector, contains('width: unit * (1 + weight[i])'));
     expect(shell, contains('_homeDirection = next > _homeSection ? 1 : -1'));
     expect(shell, contains('onShowActivity: _showHomeActivity'));
+    expect(shell, contains('_selectHomeSection(innerTab == 0 ? 1 : 2)'));
     expect(shell, contains('onSectionChanged: _selectHomeSection'));
   });
 
@@ -139,7 +146,7 @@ void main() {
               onPageChanged: (value) => selected = value,
               children: const [
                 Center(child: Text('Panoramica')),
-                Center(child: Text('Conti')),
+                Center(child: Text('Movimenti')),
                 Center(child: Text('Attività')),
               ],
             ),
