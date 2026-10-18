@@ -1,4 +1,5 @@
 import 'package:balyn/l10n/localized_material.dart';
+import '../theme/balyn_palette.dart';
 
 import '../widgets/account_context_selector.dart';
 import '../widgets/balyn_editorial_components.dart';
@@ -40,7 +41,7 @@ class _BalynActivityScreenState extends State<BalynActivityScreen> {
     final theme = Theme.of(context);
     final dark = theme.brightness == Brightness.dark;
     return ColoredBox(
-      color: dark ? const Color(0xFF101018) : const Color(0xFFF7F8FA),
+      color: dark ? BalynPalette.darkCanvas : BalynPalette.lightCanvas,
       child: Column(
         children: [
           Padding(
@@ -68,8 +69,8 @@ class _BalynActivityScreenState extends State<BalynActivityScreen> {
                   padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
                     color: dark
-                        ? const Color(0xFF2B2A37)
-                        : const Color(0xFFE9E9F0),
+                        ? BalynPalette.darkSurface
+                        : BalynPalette.lightSurfaceHigh,
                     borderRadius: BorderRadius.circular(24),
                   ),
                   child: Row(
@@ -134,7 +135,7 @@ class _ActivityTab extends StatelessWidget {
     return Expanded(
       child: Material(
         color: selected
-            ? (dark ? const Color(0xFF4C466B) : Colors.white)
+            ? (dark ? BalynPalette.accent.withValues(alpha: .32) : Colors.white)
             : Colors.transparent,
         borderRadius: BorderRadius.circular(21),
         child: InkWell(
