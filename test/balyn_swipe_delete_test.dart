@@ -65,6 +65,7 @@ void main() {
     final delete = find.byKey(const ValueKey('swipe-delete-40'));
     final edit = find.byKey(const ValueKey('swipe-edit-40'));
     final initialWidth = tester.getSize(row).width;
+    final initialX = tester.getTopLeft(row).dx;
     expect(delete, findsNothing);
     expect(edit, findsNothing);
     expect(initialWidth, closeTo(360, 1));
@@ -74,7 +75,10 @@ void main() {
 
     expect(delete, findsOneWidget);
     expect(edit, findsOneWidget);
-    expect(tester.getSize(row).width, lessThan(initialWidth));
+    // Regression: the old Expanded(child: widget.child) shrank the row and
+    // made its amounts/header reflow outside the Home card.
+    expect(tester.getSize(row).width, closeTo(initialWidth, 1));
+    expect(tester.getTopLeft(row).dx, closeTo(initialX - 94, 1));
     expect(tester.getSize(edit).width, lessThanOrEqualTo(40));
     expect(tester.getSize(delete).width, lessThanOrEqualTo(40));
 
@@ -84,6 +88,7 @@ void main() {
     expect(delete, findsNothing);
     expect(edit, findsNothing);
     expect(tester.getSize(row).width, closeTo(initialWidth, 1));
+    expect(tester.getTopLeft(row).dx, closeTo(initialX, 1));
 
     await tester.drag(row, const Offset(-110, 0));
     await tester.pumpAndSettle();
@@ -95,6 +100,7 @@ void main() {
     expect(delete, findsNothing);
     expect(edit, findsNothing);
     expect(tester.getSize(row).width, closeTo(initialWidth, 1));
+    expect(tester.getTopLeft(row).dx, closeTo(initialX, 1));
     expect(tester.takeException(), isNull);
   });
 
@@ -106,7 +112,64 @@ void main() {
     expect(source, contains('Icons.edit_rounded'));
     expect(source, contains('Icons.delete_outline_rounded'));
     expect(source, contains('await confirmDestructiveAction('));
-    expect(source, contains('OverflowBox('));
-    expect(source, contains('Expanded(child: widget.child)'));
+    expect(source, contains('Matrix4.translationValues(-_reveal, 0, 0)'));
+    expect(source, contains('width: rowWidth'));
+    expect(source, contains("key: const ValueKey('swipe-full-width-content')"));
+    expect(source, isNot(contains('Expanded(child: widget.child)')));
   });
+  testWidgets('swiping a movement never scrolls the parent Home PageView',
+      (tester) async {
+    final now = DateTime(2026, 10, 18);
+    final controller = PageController();
+    addTearDown(controller.dispose);
+    final transaction = FinanceTransaction(
+      id: 90,
+      type: TransactionType.expense,
+      amount: 20,
+      accountId: 1,
+      date: now,
+      includeInAnalytics: true,
+      createdAt: now,
+      updatedAt: now,
+    );
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: PageView(
+            controller: controller,
+            children: [
+              Center(
+                child: SizedBox(
+                  width: 320,
+                  child: BalynSwipeDeleteTile(
+                    item: transaction,
+                    onEdit: () {},
+                    child: const SizedBox(
+                      key: ValueKey('home-movement'),
+                      height: 72,
+                      child: Center(child: Text('Pagamento prova')),
+                    ),
+                  ),
+                ),
+              ),
+              const Center(child: Text('Conti')),
+              const Center(child: Text('Attività')),
+            ],
+          ),
+        ),
+      ),
+    );
+    await tester.drag(
+      find.byKey(const ValueKey('home-movement')),
+      const Offset(-115, 0),
+    );
+    await tester.pumpAndSettle();
+    expect(controller.page, closeTo(0, .01));
+    expect(find.byKey(const ValueKey('swipe-edit-90')), findsOneWidget);
+    expect(find.byKey(const ValueKey('swipe-delete-90')), findsOneWidget);
+    expect(tester.getSize(find.byKey(const ValueKey('home-movement'))).width,
+        closeTo(320, 1));
+    expect(tester.takeException(), isNull);
+  });
+
 }
