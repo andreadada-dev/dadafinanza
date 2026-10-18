@@ -84,7 +84,8 @@ class BalynGlassNavigation extends StatelessWidget {
                                     : const Duration(milliseconds: 270),
                                 curve: Curves.easeOutCubic,
                                 margin: const EdgeInsets.symmetric(
-                                  horizontal: 3, vertical: 5,
+                                  horizontal: 3,
+                                  vertical: 5,
                                 ),
                                 decoration: BoxDecoration(
                                   gradient: i == index
@@ -93,13 +94,20 @@ class BalynGlassNavigation extends StatelessWidget {
                                           end: Alignment.bottomRight,
                                           colors: dark
                                               ? [
-                                                  redGlass.withValues(alpha: .35),
-                                                  const Color(0xFF60303B)
-                                                      .withValues(alpha: .14),
+                                                  redGlass.withValues(
+                                                    alpha: .35,
+                                                  ),
+                                                  const Color(
+                                                    0xFF60303B,
+                                                  ).withValues(alpha: .14),
                                                 ]
                                               : [
-                                                  Colors.white.withValues(alpha: .44),
-                                                  redGlass.withValues(alpha: .09),
+                                                  Colors.white.withValues(
+                                                    alpha: .44,
+                                                  ),
+                                                  redGlass.withValues(
+                                                    alpha: .09,
+                                                  ),
                                                 ],
                                         )
                                       : null,
@@ -122,15 +130,21 @@ class BalynGlassNavigation extends StatelessWidget {
                                           : const Duration(milliseconds: 230),
                                       scale: i == index ? 1.09 : 1.0,
                                       child: Icon(
-                                        i == index ? _items[i].$3 : _items[i].$2,
+                                        i == index
+                                            ? _items[i].$3
+                                            : _items[i].$2,
                                         size: 23,
                                         color: i == index
                                             ? (dark
-                                                ? Colors.white
-                                                : theme.colorScheme.onSurface)
+                                                  ? Colors.white
+                                                  : theme.colorScheme.onSurface)
                                             : (dark
-                                                ? Colors.white.withValues(alpha: .77)
-                                                : theme.colorScheme.onSurfaceVariant),
+                                                  ? Colors.white.withValues(
+                                                      alpha: .77,
+                                                    )
+                                                  : theme
+                                                        .colorScheme
+                                                        .onSurfaceVariant),
                                       ),
                                     ),
                                     const SizedBox(height: 3),
@@ -146,11 +160,17 @@ class BalynGlassNavigation extends StatelessWidget {
                                               : FontWeight.w500,
                                           color: i == index
                                               ? (dark
-                                                  ? Colors.white
-                                                  : theme.colorScheme.onSurface)
+                                                    ? Colors.white
+                                                    : theme
+                                                          .colorScheme
+                                                          .onSurface)
                                               : (dark
-                                                  ? Colors.white.withValues(alpha: .75)
-                                                  : theme.colorScheme.onSurfaceVariant),
+                                                    ? Colors.white.withValues(
+                                                        alpha: .75,
+                                                      )
+                                                    : theme
+                                                          .colorScheme
+                                                          .onSurfaceVariant),
                                         ),
                                       ),
                                     ),
@@ -182,7 +202,8 @@ class _LiquidRimPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final outer = RRect.fromRectAndRadius(
-      Offset.zero & size, const Radius.circular(36),
+      Offset.zero & size,
+      const Radius.circular(36),
     );
     final borderRect = Offset.zero & size;
     canvas.drawRRect(
