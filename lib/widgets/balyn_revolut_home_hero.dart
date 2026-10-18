@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:balyn/l10n/localized_material.dart';
+import 'balyn_cue_section_bar.dart';
 
 import '../main.dart';
 import '../models/models.dart';
@@ -473,62 +474,11 @@ class BalynRevolutHomeHero extends StatelessWidget {
             right: 16,
             child: Semantics(
               label: 'Sezione Home',
-              child: Container(
-                height: 46,
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFE8E9EF),
-                  borderRadius: BorderRadius.circular(27),
-                ),
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    final segmentWidth = constraints.maxWidth / 3;
-                    return Stack(
-                      children: [
-                        Positioned(
-                          left: segmentWidth * sectionPage.clamp(0.0, 2.0),
-                          top: 0,
-                          bottom: 0,
-                          width: segmentWidth,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(24),
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 8,
-                                  color: Colors.black.withValues(alpha: .045),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            _TabPill(
-                              label: 'Panoramica',
-                              active: selectedTab == 0,
-                              onTap: () => onTabChanged(0),
-                            ),
-                            _TabPill(
-                              label: 'Conti',
-                              active: selectedTab == 1,
-                              onTap: () => onTabChanged(1),
-                            ),
-                            _TabPill(
-                              label: 'Attività',
-                              active: selectedTab == 2,
-                              onTap: () => onTabChanged(2),
-                            ),
-                          ],
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
-            ),
-          ),
+              child: BalynCueSectionBar(
+                selectedTab: selectedTab,
+                page: sectionPage,
+                onSelected: onTabChanged,
+              ),          ),
         ],
       ),
     );
@@ -771,44 +721,6 @@ class _HeroAction extends StatelessWidget {
       ),
     );
   }
-}
-
-class _TabPill extends StatelessWidget {
-  const _TabPill({
-    required this.label,
-    required this.active,
-    required this.onTap,
-  });
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) => Expanded(
-    child: Material(
-      color: Colors.transparent,
-      borderRadius: BorderRadius.circular(24),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(24),
-        child: SizedBox(
-          height: 38,
-          child: Center(
-            child: Text(
-              label,
-              style: TextStyle(
-                color: active
-                    ? const Color(0xFF22222B)
-                    : const Color(0xFF747682),
-                fontSize: 12,
-                fontWeight: active ? FontWeight.w700 : FontWeight.w500,
-              ),
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
 }
 
 class _AccountWavesPainter extends CustomPainter {
