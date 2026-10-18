@@ -1,4 +1,5 @@
 import 'package:balyn/l10n/localized_material.dart';
+import 'balyn_palette.dart';
 
 @immutable
 class FinanceColors extends ThemeExtension<FinanceColors> {
@@ -42,9 +43,9 @@ class FinanceColors extends ThemeExtension<FinanceColors> {
 class AppTheme {
   // Balyn keeps a neutral high-contrast shell. Semantic finance colors
   // carry meaning; navigation and primary chrome stay black/white.
-  static const purple = Color(0xFF0666EB);
-  static const purpleDark = Color(0xFF75A7FF);
-  static const muted = Color(0xFF687387);
+  static const purple = BalynPalette.accentLight;
+  static const purpleDark = BalynPalette.accentTextDark;
+  static const muted = BalynPalette.lightMuted;
   static const surface = Colors.transparent;
   static const border = Colors.transparent;
 
@@ -53,18 +54,22 @@ class AppTheme {
 
   static ThemeData _build(Brightness brightness) {
     final dark = brightness == Brightness.dark;
-    final background = dark ? const Color(0xFF0D1018) : const Color(0xFFFFFFFF);
-    final raised = dark ? const Color(0xFF1B2330) : const Color(0xFFF2F4F7);
+    final background = BalynPalette.canvas(brightness);
+    final raised = BalynPalette.surface(brightness);
     final raisedStrong = dark
-        ? const Color(0xFF263141)
-        : const Color(0xFFE9EDF2);
-    final hairline = dark ? const Color(0xFF303B4B) : const Color(0xFFE9EDF2);
-    final onSurface = dark ? const Color(0xFFF8FAFD) : const Color(0xFF141A23);
+        ? BalynPalette.darkSurfaceHigh
+        : BalynPalette.lightSurfaceHigh;
+    final hairline = dark
+        ? BalynPalette.darkHairline
+        : BalynPalette.lightHairline;
+    final onSurface = dark ? BalynPalette.darkText : BalynPalette.lightText;
     final secondaryText = dark
-        ? const Color(0xFFA7B1C1)
-        : const Color(0xFF687387);
-    final primary = dark ? const Color(0xFF75A7FF) : const Color(0xFF0666EB);
-    final accent = dark ? purpleDark : purple;
+        ? BalynPalette.darkMuted
+        : BalynPalette.lightMuted;
+    final primary = dark
+        ? BalynPalette.accentTextDark
+        : BalynPalette.accentLight;
+    final accent = BalynPalette.accent;
 
     final scheme =
         ColorScheme.fromSeed(
@@ -74,7 +79,9 @@ class AppTheme {
           error: dark ? const Color(0xFFFF7373) : const Color(0xFFF53D3D),
         ).copyWith(
           primary: primary,
-          onPrimary: Colors.white,
+          onPrimary: dark ? BalynPalette.darkCanvas : Colors.white,
+          primaryContainer: accent,
+          onPrimaryContainer: Colors.white,
           secondary: dark ? const Color(0xFF38E0A8) : const Color(0xFF12B880),
           onSecondary: Colors.white,
           tertiary: accent,
@@ -87,13 +94,6 @@ class AppTheme {
           onSurfaceVariant: secondaryText,
           outlineVariant: hairline,
         );
-
-    final underline = UnderlineInputBorder(
-      borderSide: BorderSide(color: hairline),
-    );
-    final focusedUnderline = UnderlineInputBorder(
-      borderSide: BorderSide(color: scheme.primary, width: 1.7),
-    );
 
     return ThemeData(
       useMaterial3: true,
@@ -160,11 +160,20 @@ class AppTheme {
           letterSpacing: -.6,
         ),
       ),
-      cardTheme: const CardThemeData(
+      cardTheme: CardThemeData(
         margin: EdgeInsets.zero,
         elevation: 0,
-        color: Colors.transparent,
+        color: raised,
         surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(BalynPalette.radius),
+        ),
+      ),
+      listTileTheme: ListTileThemeData(
+        iconColor: primary,
+        textColor: onSurface,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 3),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
       navigationBarTheme: NavigationBarThemeData(
         height: 72,
@@ -193,23 +202,36 @@ class AppTheme {
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         elevation: 0,
         highlightElevation: 0,
-        backgroundColor: primary,
+        backgroundColor: accent,
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
       inputDecorationTheme: InputDecorationTheme(
-        filled: false,
+        filled: true,
+        fillColor: raised,
         hintStyle: TextStyle(color: secondaryText.withValues(alpha: .8)),
         labelStyle: TextStyle(color: secondaryText),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 13),
-        border: underline,
-        enabledBorder: underline,
-        focusedBorder: focusedUnderline,
+        floatingLabelStyle: TextStyle(color: primary),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(BalynPalette.fieldRadius),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(BalynPalette.fieldRadius),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(BalynPalette.fieldRadius),
+          borderSide: BorderSide(color: primary, width: 1.3),
+        ),
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           minimumSize: const Size(48, 52),
           elevation: 0,
+          backgroundColor: accent,
+          foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18),
           ),
@@ -240,7 +262,7 @@ class AppTheme {
       ),
       chipTheme: ChipThemeData(
         backgroundColor: raised,
-        selectedColor: onSurface.withValues(alpha: dark ? .10 : .06),
+        selectedColor: accent.withValues(alpha: dark ? .24 : .12),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         side: BorderSide.none,
         labelStyle: const TextStyle(fontWeight: FontWeight.w700),
@@ -254,7 +276,7 @@ class AppTheme {
           ),
           backgroundColor: WidgetStateProperty.resolveWith(
             (states) => states.contains(WidgetState.selected)
-                ? onSurface.withValues(alpha: dark ? .10 : .06)
+                ? accent.withValues(alpha: dark ? .22 : .12)
                 : raised,
           ),
           foregroundColor: WidgetStateProperty.resolveWith(
@@ -263,16 +285,70 @@ class AppTheme {
         ),
       ),
       dialogTheme: DialogThemeData(
-        backgroundColor: dark ? const Color(0xFF1C1C1F) : Colors.white,
+        backgroundColor: raised,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
       ),
       bottomSheetTheme: BottomSheetThemeData(
         backgroundColor: dark ? const Color(0xFF1C1C1F) : Colors.white,
-        modalBackgroundColor: dark ? const Color(0xFF1C1C1F) : Colors.white,
+        modalBackgroundColor: raised,
         showDragHandle: true,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
         ),
+      ),
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? Colors.white
+              : secondaryText,
+        ),
+        trackColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? accent
+              : raisedStrong,
+        ),
+        trackOutlineColor: const WidgetStatePropertyAll(Colors.transparent),
+      ),
+      checkboxTheme: CheckboxThemeData(
+        fillColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? accent
+              : raisedStrong,
+        ),
+        checkColor: const WidgetStatePropertyAll(Colors.white),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      ),
+      radioTheme: RadioThemeData(
+        fillColor: WidgetStatePropertyAll(primary),
+      ),
+      sliderTheme: SliderThemeData(
+        activeTrackColor: accent,
+        thumbColor: accent,
+        inactiveTrackColor: raisedStrong,
+      ),
+      tabBarTheme: TabBarThemeData(
+        labelColor: primary,
+        unselectedLabelColor: secondaryText,
+        indicatorColor: accent,
+        dividerColor: Colors.transparent,
+      ),
+      popupMenuTheme: PopupMenuThemeData(
+        color: raised,
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      ),
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor: raisedStrong,
+        contentTextStyle: TextStyle(color: onSurface),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      ),
+      datePickerTheme: DatePickerThemeData(
+        backgroundColor: raised,
+        surfaceTintColor: Colors.transparent,
+        headerBackgroundColor: raised,
+        headerForegroundColor: onSurface,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       ),
       progressIndicatorTheme: ProgressIndicatorThemeData(
         color: primary,
