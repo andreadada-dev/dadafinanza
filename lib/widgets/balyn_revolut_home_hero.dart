@@ -290,7 +290,9 @@ class BalynRevolutHomeHero extends StatelessWidget {
                                 child: Material(
                                   color: Colors.transparent,
                                   child: InkWell(
-                                    key: const ValueKey('hero-account-dropdown'),
+                                    key: const ValueKey(
+                                      'hero-account-dropdown',
+                                    ),
                                     onTap: () => _showAccountSelector(context),
                                     borderRadius: BorderRadius.circular(14),
                                     child: Padding(
@@ -300,7 +302,8 @@ class BalynRevolutHomeHero extends StatelessWidget {
                                       ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Flexible(
                                             fit: FlexFit.loose,
@@ -310,7 +313,9 @@ class BalynRevolutHomeHero extends StatelessWidget {
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                color: Colors.white.withValues(alpha: .9),
+                                                color: Colors.white.withValues(
+                                                  alpha: .9,
+                                                ),
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w700,
                                                 letterSpacing: .45,
@@ -341,7 +346,9 @@ class BalynRevolutHomeHero extends StatelessWidget {
                                       Flexible(
                                         fit: FlexFit.loose,
                                         child: AnimatedSwitcher(
-                                          duration: const Duration(milliseconds: 250),
+                                          duration: const Duration(
+                                            milliseconds: 250,
+                                          ),
                                           child: FittedBox(
                                             key: ValueKey(
                                               'hero-balance-${currentAccountId ?? "total"}-$balance',
@@ -349,7 +356,9 @@ class BalynRevolutHomeHero extends StatelessWidget {
                                             fit: BoxFit.scaleDown,
                                             child: Text(
                                               balance,
-                                              key: const ValueKey('balyn-revolut-balance'),
+                                              key: const ValueKey(
+                                                'balyn-revolut-balance',
+                                              ),
                                               maxLines: 1,
                                               style: const TextStyle(
                                                 color: Colors.white,
@@ -364,10 +373,14 @@ class BalynRevolutHomeHero extends StatelessWidget {
                                       ),
                                       const SizedBox(width: 4),
                                       IconButton(
-                                        tooltip: hideBalance ? 'Mostra saldi' : 'Nascondi saldi',
+                                        tooltip: hideBalance
+                                            ? 'Mostra saldi'
+                                            : 'Nascondi saldi',
                                         onPressed: onVisibility,
                                         iconSize: 19,
-                                        color: Colors.white.withValues(alpha: .88),
+                                        color: Colors.white.withValues(
+                                          alpha: .88,
+                                        ),
                                         padding: EdgeInsets.zero,
                                         constraints: const BoxConstraints(
                                           minWidth: 36,

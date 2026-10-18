@@ -99,8 +99,9 @@ void main() {
     expect(changed, [0, 1, 2]);
   });
 
-  testWidgets('FAB uses PieCanvas and a clockwise white charge',
-      (tester) async {
+  testWidgets('FAB uses PieCanvas and a clockwise white charge', (
+    tester,
+  ) async {
     var transferCount = 0;
     await tester.pumpWidget(
       MaterialApp(
@@ -125,12 +126,16 @@ void main() {
     expect(find.byType(PieMenu), findsOneWidget);
     final pie = tester.widget<PieMenu>(find.byType(PieMenu));
     expect(pie.actions, hasLength(3));
-    expect(find.byKey(const ValueKey('quick-fab-white-charge')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('quick-fab-white-charge')),
+      findsOneWidget,
+    );
     await tester.tap(find.byKey(const ValueKey('quick-launcher')));
     await tester.pumpAndSettle();
     expect(transferCount, 1);
     final touch = await tester.startGesture(
-        tester.getCenter(find.byKey(const ValueKey('quick-launcher'))));
+      tester.getCenter(find.byKey(const ValueKey('quick-launcher'))),
+    );
     await tester.pump(const Duration(milliseconds: 350));
     expect(tester.takeException(), isNull);
     await touch.up();

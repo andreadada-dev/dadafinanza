@@ -55,88 +55,88 @@ class BalynCueAnchoredMenu extends StatelessWidget {
         // label, so center the 56dp close button on the ORIGINAL circle.
         offset: Offset((56 - triggerRect.width) / 2, 0),
         child: SizedBox(
-        width: 232,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            for (final action in actions)
-              Actor(
-                acts: [
-                  .slideY(from: .45),
-                  .zoomIn(),
-                  .fadeIn(),
-                  .focus(from: 8),
-                ],
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 9),
-                  child: Material(
-                    elevation: 5,
-                    color: scheme.surface,
-                    borderRadius: BorderRadius.circular(28),
-                    clipBehavior: Clip.antiAlias,
-                    child: InkWell(
-                      key: ValueKey(action.id),
+          width: 232,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              for (final action in actions)
+                Actor(
+                  acts: [
+                    .slideY(from: .45),
+                    .zoomIn(),
+                    .fadeIn(),
+                    .focus(from: 8),
+                  ],
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 9),
+                    child: Material(
+                      elevation: 5,
+                      color: scheme.surface,
                       borderRadius: BorderRadius.circular(28),
-                      onTap: () {
-                        Navigator.of(modalContext).pop();
-                        action.onTap();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 17,
-                          vertical: 12,
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              action.icon,
-                              color: scheme.onSurface,
-                              size: 20,
-                            ),
-                            const SizedBox(width: 11),
-                            Flexible(
-                              child: Text(
-                                action.label,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w700,
-                                  color: scheme.onSurface,
+                      clipBehavior: Clip.antiAlias,
+                      child: InkWell(
+                        key: ValueKey(action.id),
+                        borderRadius: BorderRadius.circular(28),
+                        onTap: () {
+                          Navigator.of(modalContext).pop();
+                          action.onTap();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 17,
+                            vertical: 12,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                action.icon,
+                                color: scheme.onSurface,
+                                size: 20,
+                              ),
+                              const SizedBox(width: 11),
+                              Flexible(
+                                child: Text(
+                                  action.label,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w700,
+                                    color: scheme.onSurface,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            Actor(
-              acts: [.fadeIn(), .focus(from: 8), .slideY(from: .6)],
-              child: SizedBox(
-                height: closeSlotHeight,
-                width: 56,
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: SizedBox(
-                    height: 56,
-                    width: 56,
-                    child: IconButton.filledTonal(
-                      key: closeKey,
-                      tooltip: closeTooltip,
-                      onPressed: () => Navigator.of(modalContext).pop(),
-                      icon: const Icon(Icons.keyboard_arrow_down_rounded),
+              Actor(
+                acts: [.fadeIn(), .focus(from: 8), .slideY(from: .6)],
+                child: SizedBox(
+                  height: closeSlotHeight,
+                  width: 56,
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: SizedBox(
+                      height: 56,
+                      width: 56,
+                      child: IconButton.filledTonal(
+                        key: closeKey,
+                        tooltip: closeTooltip,
+                        onPressed: () => Navigator.of(modalContext).pop(),
+                        icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
         ),
       );
     },

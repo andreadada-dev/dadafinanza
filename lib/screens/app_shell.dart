@@ -137,50 +137,51 @@ class _BalynAppShellState extends State<BalynAppShell> {
 
     return PieCanvas(
       child: PopScope(
-      canPop: _allowExit,
-      onPopInvoked: _handleBack,
-      child: Scaffold(
-        extendBody: true,
-        body: Stack(
-          fit: StackFit.expand,
-          children: [
-            SafeArea(
-              bottom: false,
-              child: NotificationListener<ScrollNotification>(
-                onNotification: (notification) {
-                  if (notification is ScrollUpdateNotification) {
-                    final delta = notification.scrollDelta ?? 0.0;
-                    // Bound the deformation, but preserve direction and
-                    // proportional speed. Horizontal page swipes count too.
-                    final impulse = (delta / 22.0).clamp(-1.0, 1.0);
-                    _fabMotion.value =
-                        notification.metrics.axis == Axis.horizontal
-                        ? Offset(impulse, 0)
-                        : Offset(0, impulse);
-                  }
-                  return false;
-                },
-                child: SmoothIndexedPages(index: index, children: pages),
+        canPop: _allowExit,
+        onPopInvoked: _handleBack,
+        child: Scaffold(
+          extendBody: true,
+          body: Stack(
+            fit: StackFit.expand,
+            children: [
+              SafeArea(
+                bottom: false,
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: (notification) {
+                    if (notification is ScrollUpdateNotification) {
+                      final delta = notification.scrollDelta ?? 0.0;
+                      // Bound the deformation, but preserve direction and
+                      // proportional speed. Horizontal page swipes count too.
+                      final impulse = (delta / 22.0).clamp(-1.0, 1.0);
+                      _fabMotion.value =
+                          notification.metrics.axis == Axis.horizontal
+                          ? Offset(impulse, 0)
+                          : Offset(0, impulse);
+                    }
+                    return false;
+                  },
+                  child: SmoothIndexedPages(index: index, children: pages),
+                ),
               ),
-            ),
-            Positioned(
-              right: 19,
-              bottom: MediaQuery.viewPaddingOf(context).bottom + 15,
-              child: BalynQuickActionLauncher(
-                motion: _fabMotion,
-                onCreate: () => _open(TransactionType.transfer),
-                onAdvances: () => _selectTab(2),
-                onPlanning: () => _selectTab(3),
-                onPresetSelected: (preset) => _open(preset.type, preset: preset),
-                onAddPreset: _createPreset,
-                loadPresets: () => QuickPresetService(
-                  AppScope.of(context).database,
-                ).all(enabledOnly: true),
+              Positioned(
+                right: 19,
+                bottom: MediaQuery.viewPaddingOf(context).bottom + 15,
+                child: BalynQuickActionLauncher(
+                  motion: _fabMotion,
+                  onCreate: () => _open(TransactionType.transfer),
+                  onAdvances: () => _selectTab(2),
+                  onPlanning: () => _selectTab(3),
+                  onPresetSelected: (preset) =>
+                      _open(preset.type, preset: preset),
+                  onAddPreset: _createPreset,
+                  loadPresets: () => QuickPresetService(
+                    AppScope.of(context).database,
+                  ).all(enabledOnly: true),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
       ),
     );
   }
@@ -239,5 +240,4 @@ class _BalynAppShellState extends State<BalynAppShell> {
       MaterialPageRoute(builder: (_) => QuickAddPage(initialDraft: draft)),
     );
   }
-
 }
