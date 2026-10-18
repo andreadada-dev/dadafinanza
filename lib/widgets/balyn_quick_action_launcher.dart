@@ -100,14 +100,19 @@ class _BalynQuickActionLauncherState extends State<BalynQuickActionLauncher>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            label,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14,
-                              color: Colors.white,
+                          Expanded(
+                            child: Text(
+                              label,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
+                          const SizedBox(width: 6),
                           Icon(icon, size: 22, color: Colors.white),
                         ],
                       ),
