@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:balyn/l10n/localized_material.dart';
 
 import 'balyn_cue_section_bar.dart';
@@ -60,18 +58,16 @@ class BalynRevolutHomeHero extends StatelessWidget {
   final VoidCallback onAdvancedDashboard;
   final VoidCallback onCustomizeHome;
 
-  static const _balynAccent = Color(0xFF6221E9);
+  static const _balynAccent = Color(0xFF7955EB);
 
   Color get _accent {
     final matching = accounts.where(
       (account) => account.id == currentAccountId,
     );
     if (matching.isEmpty) return _balynAccent;
-    final source = HSLColor.fromColor(Color(matching.first.colorValue));
-    return source
-        .withSaturation(source.saturation.clamp(.55, .92).toDouble())
-        .withLightness(source.lightness.clamp(.30, .42).toDouble())
-        .toColor();
+    // Honor the real saved account color; hue companions are derived by
+    // balynHeroMeshColors, never chosen from a complementary palette.
+    return Color(matching.first.colorValue);
   }
 
   void _switchAccount(int direction) {
@@ -278,13 +274,6 @@ class BalynRevolutHomeHero extends StatelessWidget {
                   const Spacer(flex: 3),
                   Row(
                     children: [
-                      if (accounts.isNotEmpty)
-                        _AnimatedAccountDiamond(
-                          direction: -1,
-                          onTap: () => _switchAccount(-1),
-                        )
-                      else
-                        const SizedBox(width: 39),
                       Expanded(
                         child: GestureDetector(
                           behavior: HitTestBehavior.opaque,
@@ -330,26 +319,10 @@ class BalynRevolutHomeHero extends StatelessWidget {
                                           ),
                                         ),
                                         const SizedBox(width: 7),
-                                        Transform.rotate(
-                                          angle: math.pi / 4,
-                                          child: Container(
-                                            height: 10,
-                                            width: 10,
-                                            decoration: BoxDecoration(
-                                              border: Border(
-                                                right: BorderSide(
-                                                  color: Colors.white
-                                                      .withValues(alpha: .9),
-                                                  width: 2,
-                                                ),
-                                                bottom: BorderSide(
-                                                  color: Colors.white
-                                                      .withValues(alpha: .9),
-                                                  width: 2,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                        Icon(
+                                          Icons.keyboard_arrow_down_rounded,
+                                          size: 21,
+                                          color: Colors.white.withValues(alpha: .92),
                                         ),
                                       ],
                                     ),
@@ -439,13 +412,6 @@ class BalynRevolutHomeHero extends StatelessWidget {
                           ),
                         ),
                       ),
-                      if (accounts.isNotEmpty)
-                        _AnimatedAccountDiamond(
-                          direction: 1,
-                          onTap: () => _switchAccount(1),
-                        )
-                      else
-                        const SizedBox(width: 39),
                     ],
                   ),
                   const Spacer(flex: 4),
@@ -557,91 +523,6 @@ class _HeroAccountOption extends StatelessWidget {
               ? Icon(Icons.check_circle_rounded, color: scheme.primary)
               : const Icon(Icons.chevron_right_rounded),
           onTap: onTap,
-        ),
-      ),
-    );
-  }
-}
-
-class _AnimatedAccountDiamond extends StatefulWidget {
-  const _AnimatedAccountDiamond({required this.direction, required this.onTap});
-  final int direction;
-  final VoidCallback onTap;
-
-  @override
-  State<_AnimatedAccountDiamond> createState() =>
-      _AnimatedAccountDiamondState();
-}
-
-class _AnimatedAccountDiamondState extends State<_AnimatedAccountDiamond>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 850),
-  )..repeat(reverse: true);
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final reducedMotion = MediaQuery.disableAnimationsOf(context);
-    return Tooltip(
-      message: widget.direction < 0 ? 'Conto precedente' : 'Conto successivo',
-      child: InkWell(
-        borderRadius: BorderRadius.circular(22),
-        onTap: widget.onTap,
-        child: SizedBox(
-          height: 62,
-          width: 39,
-          child: AnimatedBuilder(
-            animation: _controller,
-            builder: (context, _) {
-              final phase = reducedMotion
-                  ? 0.0
-                  : Curves.easeInOutSine.transform(_controller.value);
-              return Center(
-                child: Transform.translate(
-                  offset: Offset(widget.direction * phase * 4, 0),
-                  child: Opacity(
-                    opacity: .60 + .4 * phase,
-                    child: SizedBox(
-                      width: 26,
-                      height: 26,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Transform.rotate(
-                            angle: math.pi / 4,
-                            child: Container(
-                              width: 18,
-                              height: 18,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.white.withValues(alpha: .66),
-                                ),
-                                borderRadius: BorderRadius.circular(3),
-                              ),
-                            ),
-                          ),
-                          Icon(
-                            widget.direction < 0
-                                ? Icons.chevron_left_rounded
-                                : Icons.chevron_right_rounded,
-                            color: Colors.white,
-                            size: 23,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
         ),
       ),
     );
