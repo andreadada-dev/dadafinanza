@@ -561,6 +561,26 @@ class _DashboardWidget extends StatelessWidget {
             MaterialPageRoute(builder: (_) => const FinanceCalendarScreen()),
           ),
         );
+      case DashboardWidgetType.monthlyOverview:
+        return metric(
+          moneyFor(state, state.monthlyCashFlow, signed: true),
+          subtitle: 'Riepilogo entrate e spese',
+          icon: Icons.calendar_month_outlined,
+        );
+      case DashboardWidgetType.financialSnapshot:
+        return metric(
+          state.hideBalance ? '••••' : moneyFor(state, state.safeToSpend),
+          subtitle: 'Entrate, spese e disponibilità',
+          icon: Icons.account_balance_wallet_outlined,
+        );
+      case DashboardWidgetType.smartHighlights:
+        return metric(
+          state.advanceReceivableCents + state.advancePayableCents > 0
+              ? 'Anticipi'
+              : 'Nessun suggerimento',
+          subtitle: 'Segnalazioni e anticipi',
+          icon: Icons.auto_awesome_outlined,
+        );
       case DashboardWidgetType.unassignedTransactions:
         return metric(
           '${state.unassignedCount}',
