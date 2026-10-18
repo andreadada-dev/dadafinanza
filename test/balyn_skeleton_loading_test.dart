@@ -45,8 +45,9 @@ void main() {
   test(
     'Onboarding last page retains all sections with staggered animation',
     () {
-      final onboarding = File('lib/screens/balyn_onboarding_flow.dart')
-          .readAsStringSync();
+      final onboarding = File(
+        'lib/screens/balyn_onboarding_flow.dart',
+      ).readAsStringSync();
       expect(onboarding, contains('AnimationController _tourController'));
       expect(onboarding, contains('_TourOrbitIllustration('));
       expect(onboarding, contains("'Movimenti e Analisi'"));

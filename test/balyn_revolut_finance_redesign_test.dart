@@ -10,8 +10,9 @@ import 'package:balyn/screens/balyn_onboarding_flow.dart';
 void main() {
   test('first launch is gated and never overwrites an existing user', () {
     final main = File('lib/main.dart').readAsStringSync();
-    final flow = File('lib/screens/balyn_onboarding_flow.dart')
-        .readAsStringSync();
+    final flow = File(
+      'lib/screens/balyn_onboarding_flow.dart',
+    ).readAsStringSync();
     expect(main, contains("getSetting('onboarding_completed')"));
     expect(main, contains('state.userAccounts.isEmpty'));
     expect(main, contains('state.transactions.isEmpty'));
@@ -55,10 +56,12 @@ void main() {
   });
 
   test('transaction details use real edit and analytics persistence', () {
-    final screen = File('lib/screens/transaction_screens.dart')
-        .readAsStringSync();
-    final design = File('lib/widgets/balyn_transaction_detail_content.dart')
-        .readAsStringSync();
+    final screen = File(
+      'lib/screens/transaction_screens.dart',
+    ).readAsStringSync();
+    final design = File(
+      'lib/widgets/balyn_transaction_detail_content.dart',
+    ).readAsStringSync();
     expect(screen, contains('BalynTransactionDetailContent('));
     expect(screen, isNot(contains('QuickAddPage(editing: item)')));
     expect(screen, contains('await _delete(context, item, state)'));

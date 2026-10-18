@@ -103,8 +103,9 @@ class BalynRevolutHomeHero extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Seleziona conto',
-                  style: Theme.of(sheetContext).textTheme.titleLarge
-                      ?.copyWith(fontWeight: FontWeight.w800),
+                  style: Theme.of(
+                    sheetContext,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
                 ),
               ),
             ),

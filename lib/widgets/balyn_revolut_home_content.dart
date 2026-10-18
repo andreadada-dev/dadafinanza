@@ -68,8 +68,9 @@ class BalynRevolutHomeContent extends StatelessWidget {
             Expanded(
               child: Text(
                 'I tuoi conti',
-                style: Theme.of(context).textTheme.titleLarge
-                    ?.copyWith(fontWeight: FontWeight.w800),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
               ),
             ),
             TextButton(

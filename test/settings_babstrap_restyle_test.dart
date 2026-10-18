@@ -8,8 +8,9 @@ void main() {
   test(
     'grouped settings keep all seven sections and their existing actions',
     () {
-      final main = File('lib/screens/personal_settings_screen.dart')
-          .readAsStringSync();
+      final main = File(
+        'lib/screens/personal_settings_screen.dart',
+      ).readAsStringSync();
       for (final section in [
         'Aspetto',
         'Generali',

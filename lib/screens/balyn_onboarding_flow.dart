@@ -88,8 +88,9 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
         _saving = false;
         _skipping = false;
       });
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(error.toString())));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(error.toString())));
     }
   }
 

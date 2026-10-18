@@ -21,16 +21,17 @@ class RuleService {
     return true;
   }
 
-  RuleMatchPreview preview(AppState state, AutomationRule rule) =>
-      RuleMatchPreview(
-        matches: state.transactions
-            .where(
-              (item) =>
-                  !state.isAdvanceProtectedTransaction(item) &&
-                  matches(rule, item),
-            )
-            .toList(),
-      );
+  RuleMatchPreview preview(
+    AppState state,
+    AutomationRule rule,
+  ) => RuleMatchPreview(
+    matches: state.transactions
+        .where(
+          (item) =>
+              !state.isAdvanceProtectedTransaction(item) && matches(rule, item),
+        )
+        .toList(),
+  );
 
   void validate(AppState state, AutomationRule rule) {
     if (rule.categoryId == null) return;

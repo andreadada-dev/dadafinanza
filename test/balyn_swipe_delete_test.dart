@@ -16,8 +16,9 @@ void main() {
       final source = File(file).readAsStringSync();
       expect(source, contains('BalynSwipeDeleteTile('), reason: file);
     }
-    final gesture = File('lib/widgets/balyn_swipe_delete_tile.dart')
-        .readAsStringSync();
+    final gesture = File(
+      'lib/widgets/balyn_swipe_delete_tile.dart',
+    ).readAsStringSync();
     expect(gesture, contains('confirmDestructiveAction('));
     expect(gesture, contains('isAdvanceProtectedTransaction('));
     expect(gesture, contains('await state.deleteTransaction(current)'));
@@ -104,8 +105,9 @@ void main() {
   });
 
   test('delete buttons are not part of the idle render tree', () {
-    final source = File('lib/widgets/balyn_swipe_delete_tile.dart')
-        .readAsStringSync();
+    final source = File(
+      'lib/widgets/balyn_swipe_delete_tile.dart',
+    ).readAsStringSync();
     expect(source, contains('_reveal >= .5'));
     expect(source, contains('Icons.edit_rounded'));
     expect(source, contains('Icons.delete_outline_rounded'));
