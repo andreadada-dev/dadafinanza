@@ -1,4 +1,5 @@
 import 'package:balyn/l10n/localized_material.dart';
+import '../theme/balyn_palette.dart';
 import 'package:intl/intl.dart';
 
 import '../main.dart';
@@ -25,12 +26,11 @@ class BalynRecentTransactionsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final light = theme.brightness == Brightness.light;
     final visible = items.take(maxItems).toList(growable: false);
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: light ? Colors.white : const Color(0xFF252532),
+        color: BalynPalette.surface(theme.brightness),
         borderRadius: BorderRadius.circular(21),
       ),
       padding: const EdgeInsets.fromLTRB(14, 15, 14, 8),
