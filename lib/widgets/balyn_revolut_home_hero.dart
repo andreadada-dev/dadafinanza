@@ -286,47 +286,45 @@ class BalynRevolutHomeHero extends StatelessWidget {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  key: const ValueKey('hero-account-dropdown'),
-                                  onTap: () => _showAccountSelector(context),
-                                  borderRadius: BorderRadius.circular(14),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 4,
-                                      vertical: 6,
-                                    ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Flexible(
-                                          child: Text(
-                                            title.toUpperCase(),
-                                            textAlign: TextAlign.center,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              color: Colors.white.withValues(
-                                                alpha: .9,
+                              Center(
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    key: const ValueKey('hero-account-dropdown'),
+                                    onTap: () => _showAccountSelector(context),
+                                    borderRadius: BorderRadius.circular(14),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 7,
+                                        vertical: 6,
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Flexible(
+                                            fit: FlexFit.loose,
+                                            child: Text(
+                                              title.toUpperCase(),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Colors.white.withValues(alpha: .9),
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w700,
+                                                letterSpacing: .45,
                                               ),
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w700,
-                                              letterSpacing: .45,
                                             ),
                                           ),
-                                        ),
-                                        const SizedBox(width: 7),
-                                        Icon(
-                                          Icons.keyboard_arrow_down_rounded,
-                                          size: 21,
-                                          color: Colors.white.withValues(
-                                            alpha: .92,
+                                          const SizedBox(width: 3),
+                                          const Icon(
+                                            Icons.keyboard_arrow_down_rounded,
+                                            size: 21,
+                                            color: Colors.white,
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -335,57 +333,44 @@ class BalynRevolutHomeHero extends StatelessWidget {
                               SizedBox(
                                 height: 48,
                                 width: double.infinity,
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Positioned.fill(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 29,
-                                        ),
-                                        child: Center(
-                                          child: AnimatedSwitcher(
-                                            duration: const Duration(
-                                              milliseconds: 250,
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Flexible(
+                                        fit: FlexFit.loose,
+                                        child: AnimatedSwitcher(
+                                          duration: const Duration(milliseconds: 250),
+                                          child: FittedBox(
+                                            key: ValueKey(
+                                              'hero-balance-${currentAccountId ?? "total"}-$balance',
                                             ),
-                                            child: FittedBox(
-                                              key: ValueKey(
-                                                'hero-balance-${currentAccountId ?? "total"}-$balance',
-                                              ),
-                                              fit: BoxFit.scaleDown,
-                                              child: Text(
-                                                balance,
-                                                key: const ValueKey(
-                                                  'balyn-revolut-balance',
-                                                ),
-                                                textAlign: TextAlign.center,
-                                                maxLines: 1,
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 37,
-                                                  height: 1.05,
-                                                  fontWeight: FontWeight.w800,
-                                                  letterSpacing: -1.6,
-                                                ),
+                                            fit: BoxFit.scaleDown,
+                                            child: Text(
+                                              balance,
+                                              key: const ValueKey('balyn-revolut-balance'),
+                                              maxLines: 1,
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 37,
+                                                height: 1.05,
+                                                fontWeight: FontWeight.w800,
+                                                letterSpacing: -1.6,
                                               ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Positioned(
-                                      right: 0,
-                                      child: IconButton(
-                                        tooltip: hideBalance
-                                            ? 'Mostra saldi'
-                                            : 'Nascondi saldi',
+                                      const SizedBox(width: 4),
+                                      IconButton(
+                                        tooltip: hideBalance ? 'Mostra saldi' : 'Nascondi saldi',
                                         onPressed: onVisibility,
-                                        iconSize: 18,
-                                        color: Colors.white.withValues(
-                                          alpha: .88,
-                                        ),
+                                        iconSize: 19,
+                                        color: Colors.white.withValues(alpha: .88),
+                                        padding: EdgeInsets.zero,
                                         constraints: const BoxConstraints(
-                                          minWidth: 35,
+                                          minWidth: 36,
                                           minHeight: 40,
                                         ),
                                         icon: Icon(
@@ -394,8 +379,8 @@ class BalynRevolutHomeHero extends StatelessWidget {
                                               : Icons.visibility_outlined,
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 6),
