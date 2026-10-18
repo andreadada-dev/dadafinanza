@@ -55,7 +55,8 @@ void main() {
     expect(fab, contains('overlayColor: Colors.black54'));
     expect(fab, contains('longPressShowsMenu: true'));
     expect(fab, contains('longPressDuration: holdDuration'));
-    expect(fab, contains('onPressed: widget.onCreate'));
+    expect(fab, contains('onPressed: _openTransferOnce'));
+    expect(fab, contains('scheduleMicrotask(() => _tapInProgress = false)'));
     expect(fab, contains('math.pi * 2 * progress.clamp(0.0, 1.0)'));
     expect(menu, contains('barrierColor: Colors.black54'));
     expect(menu, contains('motion: .bouncy()'));
