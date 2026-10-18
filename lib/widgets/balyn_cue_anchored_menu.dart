@@ -32,6 +32,7 @@ class BalynCueAnchoredMenu extends StatelessWidget {
   triggerBuilder;
   final Key? closeKey;
   final String closeTooltip;
+
   /// Reserve the vertical slot occupied by the original trigger. The Home
   /// trigger has a text label beneath its circle, the floating FAB doesn't.
   final double closeSlotHeight;
