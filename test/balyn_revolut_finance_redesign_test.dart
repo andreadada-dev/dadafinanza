@@ -68,19 +68,28 @@ void main() {
       design,
       contains('await state.updateTransaction(widget.item, updated)'),
     );
-    expect(design, contains("title: 'Dettagli movimento'"));
-    expect(design, contains("label: 'Duplica'"));
-    expect(design, contains("label: 'Elimina'"));
-    expect(design, contains("title: 'Collegamenti'"));
+    expect(design, contains("const PageStorageKey('detail-revolut-layout')"));
+    expect(design, contains("Text('Duplica'"));
+    expect(design, contains("Text('Elimina'"));
+    expect(design, contains("label: 'Rimborso di'"));
     expect(design, contains('ValueListenableBuilder<TextEditingValue>('));
+    expect(design, contains("width: .85"));
+    expect(design, contains('Icons.edit_outlined'));
+    expect(design, contains("tooltip: 'Modifica importo'"));
+    expect(design, contains("const ValueKey('detail-amount-pencil')"));
+    expect(design, contains('showModalBottomSheet<T>('));
+    expect(design, contains("key: const ValueKey('detail-amount')"));
+    expect(design, contains("BorderSide(color: scheme.primary"));
+    expect(design, contains('await state.updateTransaction(widget.item, updated)'));
+    expect(design, isNot(contains('QuickAddPage(')));
     expect(design, contains('Escludi dalle analisi'));
     expect(design, contains('widget.item.receiptPath'));
     for (final key in [
       'detail-amount',
-      'detail-type-',
-      'detail-source-',
-      'detail-target-',
-      'detail-category-',
+      'detail-type',
+      'detail-source',
+      'detail-target',
+      'detail-category',
       'detail-note',
       'detail-tags',
       'detail-date',
