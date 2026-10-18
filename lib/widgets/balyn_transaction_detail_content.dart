@@ -1,346 +1,480 @@
 import 'dart:io';
 
 import 'package:balyn/l10n/localized_material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+
+import '../core/money.dart';
 import '../main.dart';
 import '../models/models.dart';
+import '../services/attachment_service.dart';
 import 'ui_helpers.dart';
 
-/// Information-first Balyn transaction detail, wired to existing edit actions.
-class BalynTransactionDetailContent extends StatelessWidget {
+/// The transaction is edited in place: no QuickAddPage or nested form route.
+/// Changes are committed atomically through AppState.updateTransaction.
+class BalynTransactionDetailContent extends StatefulWidget {
   const BalynTransactionDetailContent({
     required this.item,
-    required this.onEdit,
     required this.onDelete,
     required this.onDuplicate,
-    required this.onAnalyticsChanged,
     super.key,
   });
   final FinanceTransaction item;
-  final VoidCallback onEdit;
   final VoidCallback onDelete;
   final VoidCallback onDuplicate;
-  final ValueChanged<bool> onAnalyticsChanged;
+
+  @override
+  State<BalynTransactionDetailContent> createState() =>
+      _BalynTransactionDetailContentState();
+}
+
+class _BalynTransactionDetailContentState
+    extends State<BalynTransactionDetailContent> {
+  final _amount = TextEditingController();
+  final _note = TextEditingController();
+  final _tags = TextEditingController();
+  final _attachmentService = AttachmentService();
+  TransactionType _type = TransactionType.expense;
+  int? _accountId;
+  int? _toAccountId;
+  int? _categoryId;
+  DateTime _date = DateTime.now();
+  bool _includeInAnalytics = true;
+  bool _removeReceipt = false;
+  XFile? _newReceipt;
+  bool _saving = false;
+  bool _changed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initialize(widget.item);
+    _amount.addListener(_markChanged);
+    _note.addListener(_markChanged);
+    _tags.addListener(_markChanged);
+  }
+
+  void _markChanged() {
+    if (!_changed && mounted) setState(() => _changed = true);
+  }
+
+  void _initialize(FinanceTransaction item) {
+    _amount.text = item.amount.toStringAsFixed(2);
+    _note.text = item.note ?? '';
+    _tags.text = item.tags.join(', ');
+    _type = item.type;
+    _accountId = item.accountId;
+    _toAccountId = item.toAccountId;
+    _categoryId = item.categoryId;
+    _date = item.date;
+    _includeInAnalytics = item.includeInAnalytics;
+    _removeReceipt = false;
+    _newReceipt = null;
+    _changed = false;
+  }
+
+  @override
+  void didUpdateWidget(covariant BalynTransactionDetailContent oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.item.id != widget.item.id ||
+        oldWidget.item.updatedAt != widget.item.updatedAt) {
+      _initialize(widget.item);
+    }
+  }
+
+  @override
+  void dispose() {
+    _amount.removeListener(_markChanged);
+    _note.removeListener(_markChanged);
+    _tags.removeListener(_markChanged);
+    _amount.dispose();
+    _note.dispose();
+    _tags.dispose();
+    super.dispose();
+  }
+
+  void _error(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+
+  Future<void> _pickDate() async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: _date,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+    if (picked == null || !mounted) return;
+    final time = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(_date),
+    );
+    if (!mounted) return;
+    setState(() {
+      _date = DateTime(picked.year, picked.month, picked.day,
+        time?.hour ?? _date.hour, time?.minute ?? _date.minute);
+      _changed = true;
+    });
+  }
+
+  Future<void> _pickReceipt() async {
+    try {
+      final file = await ImagePicker().pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 82,
+        maxWidth: 1800,
+      );
+      if (!mounted || file == null) return;
+      setState(() {
+        _newReceipt = file;
+        _removeReceipt = false;
+        _changed = true;
+      });
+    } catch (e) {
+      if (mounted) _error(e.toString());
+    }
+  }
+
+  Future<void> _save() async {
+    if (_saving) return;
+    final state = AppScope.of(context);
+    if (state.isAdvanceProtectedTransaction(widget.item)) {
+      _error('Gestisci questo movimento dalla sezione Anticipi.');
+      return;
+    }
+    final amount = Money.parseExpression(_amount.text);
+    if (amount == null || amount <= 0) {
+      _error('Inserisci un importo valido maggiore di zero.');
+      return;
+    }
+    if (_accountId == null) {
+      _error('Seleziona un conto.');
+      return;
+    }
+    if (_type == TransactionType.transfer &&
+        (_toAccountId == null || _toAccountId == _accountId)) {
+      _error('Un trasferimento richiede due conti diversi.');
+      return;
+    }
+    if (_type != TransactionType.transfer && _categoryId == null &&
+        widget.item.categoryId != null) {
+      _error('Seleziona una categoria.');
+      return;
+    }
+    setState(() => _saving = true);
+    String? receipt = _removeReceipt ? null : widget.item.receiptPath;
+    String? newlyPersisted;
+    try {
+      if (_newReceipt != null) {
+        newlyPersisted = await _attachmentService.persist(_newReceipt!.path);
+        receipt = newlyPersisted;
+      }
+      final updated = widget.item.copyWith(
+        type: _type,
+        amount: amount,
+        accountId: _accountId,
+        toAccountId: _type == TransactionType.transfer ? _toAccountId : null,
+        categoryId: _type == TransactionType.transfer ? null : _categoryId,
+        date: _date,
+        note: _note.text.trim().isEmpty ? null : _note.text.trim(),
+        tags: _tags.text.split(',').map((s) => s.trim())
+            .where((s) => s.isNotEmpty).toSet().toList(),
+        receiptPath: receipt,
+        includeInAnalytics: _includeInAnalytics,
+        updatedAt: DateTime.now(),
+      );
+      await state.updateTransaction(widget.item, updated);
+      if (!mounted) return;
+      setState(() => _changed = false);
+      _error('Movimento aggiornato.');
+    } catch (e) {
+      if (newlyPersisted != null) {
+        await _attachmentService.delete(newlyPersisted);
+      }
+      if (mounted) _error(e.toString().replaceFirst('Bad state: ', ''));
+    } finally {
+      if (mounted) setState(() => _saving = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
-    final account = state.accountById(item.accountId);
-    final target = state.accountById(item.toAccountId);
-    final category = state.categoryById(item.categoryId);
-    final text = Theme.of(context).textTheme;
-    final subdued = Theme.of(context).colorScheme.onSurfaceVariant;
-    final dark = Theme.of(context).brightness == Brightness.dark;
-    final color = item.type == TransactionType.expense
-        ? Theme.of(context).colorScheme.error
-        : item.type == TransactionType.income
-        ? const Color(0xFF2C9B74)
-        : Theme.of(context).colorScheme.primary;
-    final amount = state.hideBalance || account?.hideBalance == true
-        ? '••••'
-        : '${item.type == TransactionType.expense
-              ? '-'
-              : item.type == TransactionType.income
-              ? '+'
-              : ''}${moneyFor(state, item.amount)}';
-    final refund = state.transactionById(item.refundOfTransactionId);
-    final refunds = state.refundsFor(item.id);
-    final splits = state.splitsFor(item.id);
+    final theme = Theme.of(context);
+    final dark = theme.brightness == Brightness.dark;
+    final accounts = state.accounts.where((a) =>
+      (!a.isSystem && !a.isArchived && !a.isLocked) ||
+      a.id == widget.item.accountId ||
+      a.id == widget.item.toAccountId).toList();
+    final categories = state.categoriesFor(_type);
+    final categoryIds = categories.map((e) => e.id).toSet();
+    final accountIds = accounts.map((e) => e.id).toSet();
+    final actionColor = theme.colorScheme.error;
+    final receipt = _removeReceipt ? null : widget.item.receiptPath;
     return ColoredBox(
       color: dark ? const Color(0xFF101018) : const Color(0xFFF6F7F9),
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 3, 16, 44),
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 56),
         children: [
-          Text(
-            amount,
-            style: text.displayMedium?.copyWith(
-              fontWeight: FontWeight.w800,
-              color: color,
-              letterSpacing: -1.7,
+          Center(
+            child: Text('Dettaglio movimento',
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w700)),
+          ),
+          const SizedBox(height: 8),
+          TextField(
+            key: const ValueKey('detail-amount'),
+            controller: _amount,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            textAlign: TextAlign.center,
+            style: theme.textTheme.displaySmall?.copyWith(
+              fontWeight: FontWeight.w900, letterSpacing: -1),
+            decoration: InputDecoration(
+              prefixText: '${state.currency} ',
+              labelText: 'Importo',
+              floatingLabelAlignment: FloatingLabelAlignment.center,
+              border: InputBorder.none,
             ),
           ),
-          const SizedBox(height: 4),
-          Text(
-            item.note?.trim().isNotEmpty == true
-                ? item.note!.trim()
-                : category?.name ?? item.type.label,
-            style: text.titleMedium?.copyWith(fontWeight: FontWeight.w800),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            DateFormat(
-              'd MMM yyyy, HH:mm',
-              AppI18n.intlLocale,
-            ).format(item.date),
-            style: text.bodySmall?.copyWith(color: subdued),
-          ),
-          const SizedBox(height: 18),
-          Row(
+          const SizedBox(height: 10),
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 8,
+            runSpacing: 8,
             children: [
-              Expanded(
-                child: _ActionPill(
-                  icon: Icons.edit_outlined,
-                  label: 'Modifica',
-                  onTap: onEdit,
-                ),
+              OutlinedButton.icon(
+                onPressed: widget.onDuplicate,
+                icon: const Icon(Icons.copy_outlined, size: 18),
+                label: const Text('Duplica'),
               ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: _ActionPill(
-                  icon: Icons.copy_outlined,
-                  label: 'Duplica',
-                  onTap: onDuplicate,
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: _ActionPill(
-                  icon: Icons.delete_outline_rounded,
-                  label: 'Elimina',
-                  destructive: true,
-                  onTap: onDelete,
-                ),
+              OutlinedButton.icon(
+                onPressed: widget.onDelete,
+                icon: Icon(Icons.delete_outline_rounded,
+                    size: 18, color: actionColor),
+                label: Text('Elimina', style: TextStyle(color: actionColor)),
               ),
             ],
           ),
           const SizedBox(height: 20),
-          _DetailSection(
-            children: [
-              const _DetailRow(label: 'Stato', value: 'Registrato'),
-              _DetailRow(label: 'Tipo', value: item.type.label),
-              _DetailRow(
-                label: item.type == TransactionType.transfer ? 'Da' : 'Conto',
-                value: account?.isSystem == true
-                    ? 'Non assegnato'
-                    : account?.name ?? 'Conto non disponibile',
-                icon: accountIcon(account?.iconKey ?? 'wallet'),
-              ),
-              if (target != null)
-                _DetailRow(
-                  label: 'A',
-                  value: target.name,
-                  icon: accountIcon(target.iconKey),
-                ),
-              if (category != null)
-                _DetailRow(
-                  label: 'Categoria',
-                  value: category.name,
-                  icon: categoryIcon(category.iconKey),
-                ),
-              if (item.tags.isNotEmpty)
-                _DetailRow(label: 'Tag', value: item.tags.join(', ')),
-            ],
-          ),
-          const SizedBox(height: 13),
-          _DetailSection(
-            children: [
-              SwitchListTile.adaptive(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 14),
-                title: const Text('Escludi dalle analisi'),
-                subtitle: const Text(
-                  'Non conteggiare questo movimento nei grafici',
-                ),
-                value: !item.includeInAnalytics,
-                onChanged: (excluded) => onAnalyticsChanged(!excluded),
-              ),
-            ],
-          ),
-          const SizedBox(height: 13),
-          _DetailSection(
-            children: [
-              ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 14),
-                leading: const Icon(Icons.photo_camera_outlined),
-                title: const Text('Ricevuta'),
-                trailing: Text(
-                  item.receiptPath?.isNotEmpty == true
-                      ? 'Modifica'
-                      : 'Aggiungi',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                onTap: onEdit,
-              ),
-              if (item.receiptPath?.isNotEmpty == true)
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(14, 0, 14, 12),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(14),
-                    child: Image.file(
-                      File(item.receiptPath!),
-                      height: 180,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => const ListTile(
-                        title: Text('Ricevuta non disponibile'),
-                      ),
-                    ),
-                  ),
-                ),
-            ],
-          ),
-          const SizedBox(height: 13),
-          _DetailSection(
-            children: [
-              ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 14),
-                leading: const Icon(Icons.edit_note_rounded),
-                title: const Text('Nota'),
-                subtitle: item.note?.isNotEmpty == true
-                    ? Text(item.note!)
-                    : null,
-                trailing: Text(
-                  item.note?.isNotEmpty == true ? 'Modifica' : 'Aggiungi nota',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                onTap: onEdit,
-              ),
-            ],
-          ),
-          if (splits.isNotEmpty) ...[
-            const SizedBox(height: 13),
-            _DetailSection(
-              children: [
-                for (final split in splits)
-                  _DetailRow(
-                    label:
-                        state.categoryById(split.categoryId)?.name ??
-                        'Categoria',
-                    value: state.hideBalance
-                        ? '••••'
-                        : moneyFor(state, split.amount),
-                  ),
+          _Section(title: 'Informazioni', children: [
+            DropdownButtonFormField<TransactionType>(
+              key: ValueKey('detail-type-${_type.name}'),
+              initialValue: _type,
+              decoration: const InputDecoration(
+                labelText: 'Tipo movimento', prefixIcon: Icon(Icons.swap_horiz)),
+              items: [
+                for (final kind in TransactionType.values)
+                  DropdownMenuItem(value: kind, child: Text(kind.label)),
               ],
+              onChanged: (v) {
+                if (v == null) return;
+                setState(() {
+                  _type = v;
+                  if (v != TransactionType.transfer) _toAccountId = null;
+                  if (v == TransactionType.transfer ||
+                      !state.categoriesFor(v).any((c) => c.id == _categoryId)) {
+                    _categoryId = null;
+                  }
+                  _changed = true;
+                });
+              },
             ),
-          ],
-          if (refund != null || refunds > 0) ...[
-            const SizedBox(height: 13),
-            _DetailSection(
-              children: [
-                if (refund != null)
-                  _DetailRow(label: 'Rimborso di', value: '#${refund.id}'),
-                if (refunds > 0)
-                  _DetailRow(
-                    label: 'Rimborsato',
-                    value: state.hideBalance
-                        ? '••••'
-                        : moneyFor(state, refunds),
-                  ),
+            DropdownButtonFormField<int>(
+              key: ValueKey('detail-source-${_accountId ?? -1}'),
+              initialValue: accountIds.contains(_accountId)
+                  ? _accountId : null,
+              decoration: const InputDecoration(
+                labelText: 'Conto', prefixIcon: Icon(Icons.account_balance_wallet_outlined)),
+              isExpanded: true,
+              items: [
+                for (final account in accounts)
+                  DropdownMenuItem(value: account.id, child: Text(
+                    account.name, overflow: TextOverflow.ellipsis)),
               ],
+              onChanged: (value) => setState(() {
+                _accountId = value;
+                if (_toAccountId == value) _toAccountId = null;
+                _changed = true;
+              }),
             ),
-          ],
-          if (item.recurringId != null) ...[
-            const SizedBox(height: 13),
-            const _DetailSection(
-              children: [
-                _DetailRow(label: 'Ricorrenza', value: 'Collegata a Pianifica'),
-              ],
+            if (_type == TransactionType.transfer)
+              DropdownButtonFormField<int>(
+                key: ValueKey('detail-target-${_toAccountId ?? -1}'),
+                initialValue: accountIds.contains(_toAccountId) &&
+                    _toAccountId != _accountId ? _toAccountId : null,
+                decoration: const InputDecoration(
+                  labelText: 'Conto destinazione',
+                  prefixIcon: Icon(Icons.east_rounded)),
+                isExpanded: true,
+                items: [
+                  for (final account in accounts)
+                    if (account.id != _accountId && !account.isSystem &&
+                        !account.isLocked && !account.isArchived)
+                      DropdownMenuItem(value: account.id,
+                        child: Text(account.name, overflow: TextOverflow.ellipsis)),
+                ],
+                onChanged: (value) => setState(() {
+                  _toAccountId = value;
+                  _changed = true;
+                }),
+              )
+            else
+              DropdownButtonFormField<int?>(
+                key: ValueKey('detail-category-${_categoryId ?? -1}'),
+                initialValue: categoryIds.contains(_categoryId)
+                    ? _categoryId : null,
+                decoration: const InputDecoration(
+                  labelText: 'Categoria', prefixIcon: Icon(Icons.category_outlined)),
+                isExpanded: true,
+                items: [
+                  const DropdownMenuItem<int?>(
+                    value: null, child: Text('Senza categoria')),
+                  for (final category in categories)
+                    DropdownMenuItem<int?>(
+                      value: category.id,
+                      child: Text(category.name, overflow: TextOverflow.ellipsis)),
+                ],
+                onChanged: (value) => setState(() {
+                  _categoryId = value;
+                  _changed = true;
+                }),
+              ),
+            ListTile(
+              key: const ValueKey('detail-date'),
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.calendar_today_outlined),
+              title: const Text('Data e ora'),
+              subtitle: Text(DateFormat(
+                'd MMM yyyy, HH:mm', AppI18n.intlLocale).format(_date)),
+              trailing: const Icon(Icons.chevron_right_rounded),
+              onTap: _pickDate,
             ),
+          ]),
+          const SizedBox(height: 14),
+          _Section(title: 'Dettagli', children: [
+            TextField(
+              key: const ValueKey('detail-note'),
+              controller: _note,
+              maxLines: 2,
+              minLines: 1,
+              decoration: const InputDecoration(
+                labelText: 'Nota', prefixIcon: Icon(Icons.edit_note_outlined)),
+            ),
+            TextField(
+              key: const ValueKey('detail-tags'),
+              controller: _tags,
+              decoration: const InputDecoration(
+                labelText: 'Tag (separati da virgola)',
+                prefixIcon: Icon(Icons.sell_outlined)),
+            ),
+            SwitchListTile.adaptive(
+              contentPadding: EdgeInsets.zero,
+              title: const Text('Escludi dalle analisi'),
+              subtitle: const Text('Ignora il movimento nei grafici'),
+              value: !_includeInAnalytics,
+              onChanged: (excluded) => setState(() {
+                _includeInAnalytics = !excluded;
+                _changed = true;
+              }),
+            ),
+          ]),
+          const SizedBox(height: 14),
+          _Section(title: 'Ricevuta', children: [
+            Row(children: [
+              Expanded(child: TextButton.icon(
+                onPressed: _pickReceipt,
+                icon: const Icon(Icons.photo_camera_outlined),
+                label: Text(receipt == null && _newReceipt == null
+                    ? 'Aggiungi ricevuta' : 'Cambia ricevuta'),
+              )),
+              if (receipt != null || _newReceipt != null)
+                IconButton(
+                  tooltip: 'Rimuovi ricevuta',
+                  onPressed: () => setState(() {
+                    _newReceipt = null;
+                    _removeReceipt = true;
+                    _changed = true;
+                  }),
+                  icon: Icon(Icons.delete_outline, color: actionColor),
+                ),
+            ]),
+            if (_newReceipt != null)
+              _ReceiptPreview(file: File(_newReceipt!.path))
+            else if (receipt != null)
+              FutureBuilder<File?>(
+                future: _attachmentService.resolve(receipt),
+                builder: (context, snapshot) => snapshot.data == null
+                    ? const SizedBox.shrink()
+                    : _ReceiptPreview(file: snapshot.data!),
+              ),
+          ]),
+          if (state.splitsFor(widget.item.id).isNotEmpty) ...[
+            const SizedBox(height: 14),
+            _Section(title: 'Suddivisioni', children: [
+              const Text('Modifica le suddivisioni dal menu azioni in alto.'),
+              for (final split in state.splitsFor(widget.item.id))
+                ListTile(
+                  title: Text(state.categoryById(split.categoryId)?.name
+                    ?? 'Categoria'),
+                  trailing: Text(moneyFor(state, split.amount)),
+                ),
+            ]),
           ],
+          const SizedBox(height: 23),
+          FilledButton.icon(
+            key: const ValueKey('detail-save'),
+            onPressed: _saving || !_changed ? null : _save,
+            icon: _saving
+                ? const SizedBox.square(dimension: 17,
+                    child: CircularProgressIndicator(strokeWidth: 2))
+                : const Icon(Icons.check_rounded),
+            label: const Text('Salva modifiche'),
+            style: FilledButton.styleFrom(
+              minimumSize: const Size.fromHeight(53),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(17)),
+            ),
+          ),
         ],
       ),
     );
   }
 }
 
-class _ActionPill extends StatelessWidget {
-  const _ActionPill({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-    this.destructive = false,
-  });
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
-  final bool destructive;
-
-  @override
-  Widget build(BuildContext context) {
-    final color = destructive
-        ? Theme.of(context).colorScheme.error
-        : Theme.of(context).colorScheme.primary;
-    return Material(
-      color: color.withValues(alpha: .08),
-      borderRadius: BorderRadius.circular(18),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(18),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 4),
-          child: Column(
-            children: [
-              Icon(icon, size: 20, color: color),
-              const SizedBox(height: 5),
-              FittedBox(
-                child: Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                    color: color,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _DetailSection extends StatelessWidget {
-  const _DetailSection({required this.children});
+class _Section extends StatelessWidget {
+  const _Section({required this.title, required this.children});
+  final String title;
   final List<Widget> children;
+
   @override
   Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.fromLTRB(16, 14, 16, 12),
     decoration: BoxDecoration(
       color: Theme.of(context).brightness == Brightness.dark
-          ? const Color(0xFF252532)
-          : Colors.white,
-      borderRadius: BorderRadius.circular(18),
+          ? const Color(0xFF24242E) : Colors.white,
+      borderRadius: BorderRadius.circular(19),
     ),
-    child: Column(children: children),
+    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Text(title, style: Theme.of(context).textTheme.titleSmall
+        ?.copyWith(fontWeight: FontWeight.w800)),
+      const SizedBox(height: 9),
+      ...children,
+    ]),
   );
 }
 
-class _DetailRow extends StatelessWidget {
-  const _DetailRow({required this.label, required this.value, this.icon});
-  final String label;
-  final String value;
-  final IconData? icon;
+class _ReceiptPreview extends StatelessWidget {
+  const _ReceiptPreview({required this.file});
+  final File file;
+
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 13),
-      child: Row(
-        children: [
-          Text(
-            label,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
-          const Spacer(),
-          if (icon != null) ...[
-            Icon(icon, color: theme.colorScheme.primary, size: 17),
-            const SizedBox(width: 6),
-          ],
-          Flexible(
-            child: Text(
-              value,
-              textAlign: TextAlign.right,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context) => ClipRRect(
+    borderRadius: BorderRadius.circular(14),
+    child: Image.file(file, height: 160, width: double.infinity,
+      fit: BoxFit.cover,
+      errorBuilder: (_, __, ___) =>
+          const ListTile(title: Text('Ricevuta non disponibile'))),
+  );
 }
