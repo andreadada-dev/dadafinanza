@@ -74,7 +74,7 @@ void main() {
       ).readAsStringSync();
       expect(home, contains('items: recent'));
       expect(home, contains('hideAmounts: hidden'));
-      expect(card, contains('items.take(3)'));
+      expect(card, contains('items.take(maxItems)'));
       expect(card, contains('AppScope.of(context)'));
       expect(
         card,
@@ -101,8 +101,8 @@ void main() {
 
     expect(source, contains("title: const Text('Personalizza Home')"));
     expect(source, contains('ReorderableListView.builder'));
-    expect(source, contains('_fixedSummaryTypes.contains(item.type)'));
-    expect(source, contains('await state.saveDashboard(normalized)'));
+    expect(source, contains('BalynHomeWidgetCatalog.fixed.contains(item.type)'));
+    expect(source, contains('state.saveDashboard(normalized)'));
   });
 
   test('category chart is clearly exposed in Personalizza Home', () {
