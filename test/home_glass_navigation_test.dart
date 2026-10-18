@@ -55,16 +55,16 @@ void main() {
     expect(shell, contains('body: Stack('));
     expect(shell, contains('BalynQuickActionLauncher('));
     expect(shell, isNot(contains('BalynGlassNavigation(')));
-    expect(launcher, contains('SizeTransition('));
-    expect(launcher, contains('FadeTransition('));
-    expect(launcher, contains('SlideTransition('));
-    expect(launcher, contains("label: 'Movimento'"));
-    expect(launcher, contains('Color(0xFF8157F7)'));
+    expect(launcher, contains('BalynCueAnchoredMenu('));
+    expect(launcher, contains('BalynMorphingFab('));
+    expect(launcher, contains('BalynPalette.accent'));
     expect(launcher, contains('onLongPress: widget.onLongPress'));
-    expect(launcher, contains("id: 'create'"));
-    expect(launcher, contains("id: 'advances'"));
-    expect(launcher, contains("id: 'planning'"));
-    expect(launcher, contains("id: 'home'"));
+    expect(launcher, contains("id: 'quick-nav-create'"));
+    expect(launcher, contains("id: 'quick-nav-advances'"));
+    expect(launcher, contains("id: 'quick-nav-planning'"));
+    expect(launcher, contains("id: 'quick-nav-home'"));
+    expect(shell, contains('NotificationListener<ScrollNotification>'));
+    expect(shell, contains('motion: _fabMotion'));
   });
 
   testWidgets('Cue selector dispatches three tabs', (tester) async {
@@ -94,40 +94,37 @@ void main() {
     expect(changed, [0, 1, 2]);
   });
 
-  testWidgets('Launcher reveals working actions and closes', (tester) async {
-    var expanded = false;
+  testWidgets('Cue quick launcher opens pills and returns to its trigger',
+      (tester) async {
     final actions = <String>[];
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: StatefulBuilder(
-            builder: (context, setState) => Align(
-              alignment: Alignment.bottomRight,
-              child: BalynQuickActionLauncher(
-                expanded: expanded,
-                showHome: true,
-                onToggle: () => setState(() => expanded = !expanded),
-                onCreate: () => actions.add('create'),
-                onAdvances: () => actions.add('advances'),
-                onPlanning: () => actions.add('planning'),
-                onHome: () => actions.add('home'),
-              ),
+          body: Align(
+            alignment: Alignment.bottomRight,
+            child: BalynQuickActionLauncher(
+              showHome: true,
+              onCreate: () => actions.add('create'),
+              onAdvances: () => actions.add('advances'),
+              onPlanning: () => actions.add('planning'),
+              onHome: () => actions.add('home'),
             ),
           ),
         ),
       ),
     );
-    await tester.tap(find.byKey(const ValueKey('quick-launcher')));
-    await tester.pumpAndSettle();
-    expect(expanded, isTrue);
     for (final item in ['create', 'advances', 'planning', 'home']) {
+      await tester.tap(find.byKey(const ValueKey('quick-launcher')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(ValueKey('quick-nav-$item')), findsOneWidget);
       await tester.tap(find.byKey(ValueKey('quick-nav-$item')));
-      await tester.pump();
+      await tester.pumpAndSettle();
     }
     expect(actions, ['create', 'advances', 'planning', 'home']);
     await tester.tap(find.byKey(const ValueKey('quick-launcher')));
     await tester.pumpAndSettle();
-    expect(expanded, isFalse);
+    await tester.tap(find.byKey(const ValueKey('quick-launcher-close')));
+    await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
   });
 
