@@ -12,10 +12,12 @@ class BalynShaderPrograms {
 
   static ui.FragmentProgram? _background;
   static ui.FragmentProgram? _ink;
+  static ui.FragmentProgram? _onboardingVelvet;
   static Future<void>? _loading;
 
   static ui.FragmentProgram? get background => _background;
   static ui.FragmentProgram? get ink => _ink;
+  static ui.FragmentProgram? get onboardingVelvet => _onboardingVelvet;
   static bool get ready => _background != null && _ink != null;
 
   static Future<void> preload() async {
@@ -42,6 +44,15 @@ class BalynShaderPrograms {
     ]);
     _background = programs[0];
     _ink = programs[1];
+    // Keep the original global shader system functional if the onboarding-only
+    // effect is unsupported on a device: use the static fallback in that case.
+    try {
+      _onboardingVelvet = await ui.FragmentProgram.fromAsset(
+        'shaders/balyn_onboarding_velvet.frag',
+      );
+    } catch (_) {
+      _onboardingVelvet = null;
+    }
   }
 }
 
@@ -89,6 +100,7 @@ class BalynShaderData {
     required this.barEnabled,
     this.backgroundProgram,
     this.inkProgram,
+    this.onboardingVelvetProgram,
   });
 
   final ValueListenable<double> clock;
@@ -100,6 +112,7 @@ class BalynShaderData {
   final bool barEnabled;
   final ui.FragmentProgram? backgroundProgram;
   final ui.FragmentProgram? inkProgram;
+  final ui.FragmentProgram? onboardingVelvetProgram;
 
   bool isEnabled(BalynShaderFeature feature) => switch (feature) {
     BalynShaderFeature.generic => true,
@@ -120,6 +133,7 @@ class _BalynShaderScopeState extends State<BalynShaderScope>
   Duration _lastPublished = Duration.zero;
   ui.FragmentProgram? _backgroundProgram;
   ui.FragmentProgram? _inkProgram;
+  ui.FragmentProgram? _velvetProgram;
   bool _appActive = true;
 
   @override
@@ -128,6 +142,7 @@ class _BalynShaderScopeState extends State<BalynShaderScope>
     WidgetsBinding.instance.addObserver(this);
     _backgroundProgram = BalynShaderPrograms.background;
     _inkProgram = BalynShaderPrograms.ink;
+    _velvetProgram = BalynShaderPrograms.onboardingVelvet;
     _ticker = createTicker(_onTick)..start();
     if (widget.loadPrograms && !BalynShaderPrograms.ready) {
       _loadPrograms();
@@ -150,6 +165,7 @@ class _BalynShaderScopeState extends State<BalynShaderScope>
     setState(() {
       _backgroundProgram = BalynShaderPrograms.background;
       _inkProgram = BalynShaderPrograms.ink;
+      _velvetProgram = BalynShaderPrograms.onboardingVelvet;
     });
   }
 
@@ -187,6 +203,7 @@ class _BalynShaderScopeState extends State<BalynShaderScope>
       barEnabled: widget.barEnabled,
       backgroundProgram: _backgroundProgram,
       inkProgram: _inkProgram,
+      onboardingVelvetProgram: _velvetProgram,
     );
     return _BalynShaderInherited(data: data, child: widget.child);
   }
@@ -201,6 +218,7 @@ class _BalynShaderInherited extends InheritedWidget {
   bool updateShouldNotify(_BalynShaderInherited oldWidget) =>
       oldWidget.data.backgroundProgram != data.backgroundProgram ||
       oldWidget.data.inkProgram != data.inkProgram ||
+      oldWidget.data.onboardingVelvetProgram != data.onboardingVelvetProgram ||
       oldWidget.data.motionEnabled != data.motionEnabled ||
       oldWidget.data.backgroundEnabled != data.backgroundEnabled ||
       oldWidget.data.textEnabled != data.textEnabled ||
