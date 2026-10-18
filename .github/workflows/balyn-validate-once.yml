@@ -1,0 +1,34 @@
+name: Balyn final format and validation
+on:
+  push:
+    branches: [fix/balyn-visible-liquid-background]
+    paths: [.github/workflows/balyn-validate-once.yml]
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.2'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Format exactly as project CI does
+        run: |
+          dart format lib test
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lib test
+          if ! git diff --cached --quiet; then
+            git commit -m "style: apply pub-resolved Dart formatting"
+            git push origin HEAD:fix/balyn-visible-liquid-background
+          fi
+      - name: Analyze
+        run: flutter analyze
+      - name: Test
+        run: flutter test
