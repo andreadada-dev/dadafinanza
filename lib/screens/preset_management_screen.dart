@@ -6,6 +6,7 @@ import '../models/models.dart';
 import '../services/quick_preset_service.dart';
 import '../widgets/full_page_empty_state.dart';
 import '../widgets/ui_helpers.dart';
+import '../widgets/balyn_preset_visual.dart';
 
 class PresetManagementScreen extends StatefulWidget {
   const PresetManagementScreen({this.startCreating = false, super.key});
@@ -91,7 +92,18 @@ class _PresetManagementScreenState extends State<PresetManagementScreen> {
                   key: ValueKey(preset.id),
                   contentPadding: EdgeInsets.zero,
                   minVerticalPadding: 12,
-                  leading: const Icon(Icons.drag_handle_rounded),
+                  leading: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.drag_handle_rounded),
+                      const SizedBox(width: 9),
+                      BalynPresetGlyph(
+                        name: preset.name,
+                        iconKey: preset.iconKey,
+                        colorValue: preset.colorValue,
+                      ),
+                    ],
+                  ),
                   title: Text(
                     preset.name,
                     style: const TextStyle(fontWeight: FontWeight.w700),
@@ -169,6 +181,8 @@ class _PresetManagementScreenState extends State<PresetManagementScreen> {
     );
     final note = TextEditingController(text: existing?.note ?? '');
     var type = existing?.type ?? TransactionType.expense;
+    String? iconKey = existing?.iconKey;
+    Color iconColor = Color(existing?.colorValue ?? 0xFFFFFFFF);
     int? accountId = existing?.accountId;
     int? toAccountId = existing?.toAccountId;
     int? categoryId = existing?.categoryId;
@@ -200,6 +214,85 @@ class _PresetManagementScreenState extends State<PresetManagementScreen> {
                   autofocus: existing == null,
                   decoration: InputDecoration(labelText: AppI18n.tr('Nome')),
                 ),
+                const SizedBox(height: 12),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: BalynPresetGlyph(
+                    name: name.text.isEmpty ? 'P' : name.text,
+                    iconKey: iconKey,
+                    colorValue: iconColor.toARGB32(),
+                  ),
+                  title: const Text('Icona del preset'),
+                  subtitle: Text(
+                    iconKey == null ? 'Iniziale del nome (predefinita)' : 'Icona personalizzata',
+                  ),
+                  trailing: const Icon(Icons.edit_outlined, size: 18),
+                  onTap: () async {
+                    final selected = await showIconPicker(
+                      sheetContext,
+                      options: presetIconOptions,
+                      selected: iconKey ?? '',
+                    );
+                    if (selected != null) {
+                      setSheetState(() => iconKey = selected);
+                    }
+                  },
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () => setSheetState(() => iconKey = null),
+                    child: const Text('Usa iniziale'),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text('Colore icona',
+                    style: Theme.of(sheetContext).textTheme.titleSmall),
+                const SizedBox(height: 8),
+                Wrap(
+                  spacing: 7,
+                  runSpacing: 7,
+                  children: <Color>[Colors.white, ...categoryPalette]
+                      .map((candidate) => Semantics(
+                            button: true,
+                            selected: candidate == iconColor,
+                            label: 'Colore preset',
+                            child: InkWell(
+                              customBorder: const CircleBorder(),
+                              onTap: () => setSheetState(
+                                () => iconColor = candidate,
+                              ),
+                              child: SizedBox.square(
+                                dimension: 42,
+                                child: Center(
+                                  child: Container(
+                                    height: 28,
+                                    width: 28,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: candidate,
+                                      border: Border.all(
+                                        color: Theme.of(sheetContext)
+                                            .colorScheme.outlineVariant,
+                                      ),
+                                    ),
+                                    child: candidate == iconColor
+                                        ? Icon(
+                                            Icons.check_rounded,
+                                            size: 17,
+                                            color: candidate == Colors.white
+                                                ? Colors.black
+                                                : Colors.white,
+                                          )
+                                        : null,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                ),
+                const SizedBox(height: 12),
                 DropdownButtonFormField<TransactionType>(
                   initialValue: type,
                   decoration: InputDecoration(labelText: AppI18n.tr('Tipo')),
@@ -332,6 +425,8 @@ class _PresetManagementScreenState extends State<PresetManagementScreen> {
                         amount: parsed,
                         note: note.text.trim(),
                         tags: existing?.tags ?? const [],
+                        iconKey: iconKey,
+                        colorValue: iconColor.toARGB32(),
                         position: existing?.position,
                         enabled: existing?.enabled ?? true,
                       );
