@@ -9,6 +9,7 @@ import '../models/quick_capture_models.dart';
 import '../services/haptic_service.dart';
 import '../services/quick_preset_service.dart';
 import '../widgets/balyn_quick_action_launcher.dart';
+import '../widgets/balyn_data_skeleton.dart';
 import '../widgets/smooth_indexed_pages.dart';
 import '../widgets/ui_helpers.dart';
 import 'balyn_activity_screen.dart';
@@ -132,6 +133,10 @@ class _BalynAppShellState extends State<BalynAppShell> {
       const AdvancesScreen(showFab: false),
       const PlanningScreen(),
     ];
+
+    if (state.loading) {
+      return Scaffold(body: BalynDataSkeletonView(section: index));
+    }
 
     return PopScope(
       canPop: _allowExit,
