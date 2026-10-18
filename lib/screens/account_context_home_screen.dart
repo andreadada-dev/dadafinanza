@@ -255,86 +255,86 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                       children: [
                         // Account-specific overview remains unchanged.
                         if (!isTotal) ...[
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            DateFormat(
-                              'MMMM yyyy',
-                              AppI18n.intlLocale,
-                            ).format(DateTime.now()),
-                            style: Theme.of(context).textTheme.titleLarge
-                                ?.copyWith(fontWeight: FontWeight.w800),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              DateFormat(
+                                'MMMM yyyy',
+                                AppI18n.intlLocale,
+                              ).format(DateTime.now()),
+                              style: Theme.of(context).textTheme.titleLarge
+                                  ?.copyWith(fontWeight: FontWeight.w800),
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 12),
-                        // A compact real-data overview replaces the kit's fictional
-                        // promotions, keeping its clear rounded white-strip rhythm.
-                        BalynEditorialSurface(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 14,
-                            vertical: 8,
-                          ),
-                          child: ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            leading: const BalynEditorialIcon(
-                              icon: Icons.calendar_month_outlined,
-                              size: 42,
+                          const SizedBox(height: 12),
+                          // A compact real-data overview replaces the kit's fictional
+                          // promotions, keeping its clear rounded white-strip rhythm.
+                          BalynEditorialSurface(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 8,
                             ),
-                            title: const Text(
-                              'Riepilogo del mese',
-                              style: TextStyle(fontWeight: FontWeight.w800),
-                            ),
-                            subtitle: Text(
-                              hidden
-                                  ? 'Entrate ••••  ·  Spese ••••'
-                                  : 'Entrate ${moneyFor(state, income)}  ·  Spese ${moneyFor(state, expense)}',
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            trailing: const Icon(Icons.chevron_right_rounded),
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => AccountContextAnalyticsScreen(
-                                  accountId: effectiveAccountId,
-                                  onAccountChanged: onAccountChanged,
+                            child: ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              leading: const BalynEditorialIcon(
+                                icon: Icons.calendar_month_outlined,
+                                size: 42,
+                              ),
+                              title: const Text(
+                                'Riepilogo del mese',
+                                style: TextStyle(fontWeight: FontWeight.w800),
+                              ),
+                              subtitle: Text(
+                                hidden
+                                    ? 'Entrate ••••  ·  Spese ••••'
+                                    : 'Entrate ${moneyFor(state, income)}  ·  Spese ${moneyFor(state, expense)}',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              trailing: const Icon(Icons.chevron_right_rounded),
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => AccountContextAnalyticsScreen(
+                                    accountId: effectiveAccountId,
+                                    onAccountChanged: onAccountChanged,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        BalynEditorialHeading(
-                          title: 'Ultimi movimenti',
-                          subtitle: 'Le operazioni più recenti',
-                        ),
-                        const SizedBox(height: 10),
-                        BalynRecentTransactionsCard(
-                          items: recent,
-                          hideAmounts: hidden,
-                          onSeeAll: () => onShowActivity(0),
-                        ),
-                        const SizedBox(height: 23),
-                        BalynEditorialHeading(
-                          title: 'In sintesi',
-                          subtitle: 'Entrate, spese e disponibilità',
-                        ),
-                        const SizedBox(height: 10),
-                        BalynRevolutHomeContent(
-                          income: income,
-                          expense: expense,
-                          available: isTotal ? state.safeToSpend : balance,
-                          hideValues: hidden,
-                          showAccounts: true,
-                          onSelectAccount: onAccountChanged,
-                          onManageAccounts: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const AccountManagementScreen(),
+                          const SizedBox(height: 20),
+                          BalynEditorialHeading(
+                            title: 'Ultimi movimenti',
+                            subtitle: 'Le operazioni più recenti',
+                          ),
+                          const SizedBox(height: 10),
+                          BalynRecentTransactionsCard(
+                            items: recent,
+                            hideAmounts: hidden,
+                            onSeeAll: () => onShowActivity(0),
+                          ),
+                          const SizedBox(height: 23),
+                          BalynEditorialHeading(
+                            title: 'In sintesi',
+                            subtitle: 'Entrate, spese e disponibilità',
+                          ),
+                          const SizedBox(height: 10),
+                          BalynRevolutHomeContent(
+                            income: income,
+                            expense: expense,
+                            available: isTotal ? state.safeToSpend : balance,
+                            hideValues: hidden,
+                            showAccounts: true,
+                            onSelectAccount: onAccountChanged,
+                            onManageAccounts: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const AccountManagementScreen(),
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
+                          const SizedBox(height: 20),
                         ],
                         if (state.userAccounts.isEmpty) ...[
                           _SetupBlock(
@@ -352,12 +352,14 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                             EmptyState(
                               icon: Icons.dashboard_customize_outlined,
                               title: 'Nessuna sezione aggiuntiva',
-                              subtitle: 'Scegli le sezioni da mostrare nella Home.',
+                              subtitle:
+                                  'Scegli le sezioni da mostrare nella Home.',
                               action: TextButton.icon(
                                 onPressed: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => const DashboardCustomizerScreen(),
+                                    builder: (_) =>
+                                        const DashboardCustomizerScreen(),
                                   ),
                                 ),
                                 icon: const Icon(Icons.tune_rounded),
@@ -367,7 +369,9 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                           else
                             ...secondaryDashboardWidgets.map(
                               (config) => Padding(
-                                key: ValueKey('context-home-${config.type.name}'),
+                                key: ValueKey(
+                                  'context-home-${config.type.name}',
+                                ),
                                 padding: EdgeInsets.only(
                                   bottom: switch (config.size) {
                                     DashboardWidgetSize.small => 20,
@@ -378,17 +382,20 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                                 child: BalynReveal(
                                   delay: Duration(
                                     milliseconds:
-                                        90 + (config.orderIndex.clamp(0, 6) * 30),
+                                        90 +
+                                        (config.orderIndex.clamp(0, 6) * 30),
                                   ),
                                   child: HomeDashboardWidget(
                                     config: config,
                                     onAnalytics: () => Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (_) => AccountContextAnalyticsScreen(
-                                          accountId: effectiveAccountId,
-                                          onAccountChanged: onAccountChanged,
-                                        ),
+                                        builder: (_) =>
+                                            AccountContextAnalyticsScreen(
+                                              accountId: effectiveAccountId,
+                                              onAccountChanged:
+                                                  onAccountChanged,
+                                            ),
                                       ),
                                     ),
                                     onSeeAll: () => onShowActivity(0),
@@ -396,7 +403,8 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                                     onManageAccounts: () => Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (_) => const AccountManagementScreen(),
+                                        builder: (_) =>
+                                            const AccountManagementScreen(),
                                       ),
                                     ),
                                     onAdvances: () => Navigator.push(
@@ -410,8 +418,8 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                                         : _InsightRow(insight: smartInsight),
                                     showAccountsInsideSummary:
                                         BalynHomeWidgetCatalog.showAccountsInsideSnapshot(
-                                      dashboardWidgets,
-                                    ),
+                                          dashboardWidgets,
+                                        ),
                                   ),
                                 ),
                               ),
@@ -544,9 +552,9 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
   }
 
   List<DashboardWidgetConfig> _visibleDashboardWidgets(AppState state) {
-    final items = BalynHomeWidgetCatalog.normalize(state.dashboardWidgets)
-        .where((item) => item.enabled)
-        .toList(growable: false);
+    final items = BalynHomeWidgetCatalog.normalize(
+      state.dashboardWidgets,
+    ).where((item) => item.enabled).toList(growable: false);
     return items..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
   }
 

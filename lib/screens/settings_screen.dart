@@ -352,16 +352,14 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
     final fixed = BalynHomeWidgetCatalog.normalize(state.dashboardWidgets)
         .where((item) => BalynHomeWidgetCatalog.fixed.contains(item.type))
         .toList();
-    final snapshot = <DashboardWidgetConfig>[
-      ...fixed,
-      ...items!,
-    ];
+    final snapshot = <DashboardWidgetConfig>[...fixed, ...items!];
     final normalized = [
       for (var index = 0; index < snapshot.length; index++)
         DashboardWidgetConfig(
           type: snapshot[index].type,
-          enabled: BalynHomeWidgetCatalog.fixed.contains(snapshot[index].type)
-              || snapshot[index].enabled,
+          enabled:
+              BalynHomeWidgetCatalog.fixed.contains(snapshot[index].type) ||
+              snapshot[index].enabled,
           orderIndex: index,
           size: snapshot[index].size,
         ),
@@ -453,8 +451,11 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
     _update(state, type, enabled: true);
   }
 
-  Widget _preview(BuildContext context, DashboardWidgetConfig config,
-      {bool hero = false}) {
+  Widget _preview(
+    BuildContext context,
+    DashboardWidgetConfig config, {
+    bool hero = false,
+  }) {
     final state = AppScope.of(context);
     final realWidget = hero
         ? SizedBox(
@@ -499,8 +500,8 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
             config: config,
             showAccountsInsideSummary:
                 BalynHomeWidgetCatalog.showAccountsInsideSnapshot(
-              BalynHomeWidgetCatalog.normalize(state.dashboardWidgets),
-            ),
+                  BalynHomeWidgetCatalog.normalize(state.dashboardWidgets),
+                ),
           );
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 0, 12, 13),
@@ -516,9 +517,9 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
               child: TickerMode(
                 enabled: false,
                 child: MediaQuery(
-                  data: MediaQuery.of(context).copyWith(
-                    disableAnimations: true,
-                  ),
+                  data: MediaQuery.of(
+                    context,
+                  ).copyWith(disableAnimations: true),
                   child: realWidget,
                 ),
               ),
@@ -536,17 +537,21 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
       child: Column(
         children: [
           ListTile(
-            title: Text(config.type == DashboardWidgetType.totalBalance
-                ? 'Hero · Patrimonio totale'
-                : config.type.label),
+            title: Text(
+              config.type == DashboardWidgetType.totalBalance
+                  ? 'Hero · Patrimonio totale'
+                  : config.type.label,
+            ),
             subtitle: const Text('Sempre visibile nella Hero'),
             leading: const Icon(Icons.lock_outline_rounded),
             trailing: IconButton(
               key: ValueKey('expand-fixed-${config.type.name}'),
               tooltip: expanded ? 'Chiudi anteprima' : 'Apri anteprima',
-              icon: Icon(expanded
-                  ? Icons.keyboard_arrow_up_rounded
-                  : Icons.keyboard_arrow_down_rounded),
+              icon: Icon(
+                expanded
+                    ? Icons.keyboard_arrow_up_rounded
+                    : Icons.keyboard_arrow_down_rounded,
+              ),
               onPressed: () => setState(() {
                 if (expanded) {
                   _expanded.remove(config.type);
@@ -560,8 +565,11 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
             duration: const Duration(milliseconds: 220),
             alignment: Alignment.topCenter,
             child: expanded
-                ? _preview(context, config,
-                    hero: config.type == DashboardWidgetType.totalBalance)
+                ? _preview(
+                    context,
+                    config,
+                    hero: config.type == DashboardWidgetType.totalBalance,
+                  )
                 : const SizedBox.shrink(),
           ),
         ],
@@ -610,16 +618,17 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
                     _expanded.add(item.type);
                   }
                 }),
-                icon: Icon(expanded
-                    ? Icons.keyboard_arrow_up_rounded
-                    : Icons.keyboard_arrow_down_rounded),
+                icon: Icon(
+                  expanded
+                      ? Icons.keyboard_arrow_up_rounded
+                      : Icons.keyboard_arrow_down_rounded,
+                ),
               ),
               Switch(
                 key: ValueKey('enabled-${item.type.name}'),
                 value: item.enabled,
-                onChanged: (enabled) => _update(
-                  state, item.type, enabled: enabled,
-                ),
+                onChanged: (enabled) =>
+                    _update(state, item.type, enabled: enabled),
               ),
               const SizedBox(width: 8),
             ],
@@ -628,7 +637,10 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
             padding: const EdgeInsets.fromLTRB(48, 0, 14, 7),
             child: Row(
               children: [
-                Text('Dimensione', style: Theme.of(context).textTheme.bodySmall),
+                Text(
+                  'Dimensione',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
                 const SizedBox(width: 8),
                 DropdownButton<DashboardWidgetSize>(
                   key: ValueKey('size-${item.type.name}'),
@@ -636,10 +648,12 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
                   isDense: true,
                   underline: const SizedBox.shrink(),
                   items: DashboardWidgetSize.values
-                      .map((size) => DropdownMenuItem(
-                            value: size,
-                            child: Text(_sizeLabel(size)),
-                          ))
+                      .map(
+                        (size) => DropdownMenuItem(
+                          value: size,
+                          child: Text(_sizeLabel(size)),
+                        ),
+                      )
                       .toList(),
                   onChanged: (size) {
                     if (size != null) _update(state, item.type, size: size);
@@ -647,14 +661,19 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
                 ),
                 const Spacer(),
                 if (!item.enabled)
-                  Text('Nascosto', style: Theme.of(context).textTheme.bodySmall),
+                  Text(
+                    'Nascosto',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
               ],
             ),
           ),
           if (item.type == DashboardWidgetType.accounts &&
-              items!.any((entry) =>
-                  entry.type == DashboardWidgetType.financialSnapshot &&
-                  entry.enabled))
+              items!.any(
+                (entry) =>
+                    entry.type == DashboardWidgetType.financialSnapshot &&
+                    entry.enabled,
+              ))
             const Padding(
               padding: EdgeInsets.fromLTRB(15, 0, 15, 7),
               child: Text(
@@ -665,9 +684,7 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
           AnimatedSize(
             duration: const Duration(milliseconds: 220),
             alignment: Alignment.topCenter,
-            child: expanded
-                ? _preview(context, item)
-                : const SizedBox.shrink(),
+            child: expanded ? _preview(context, item) : const SizedBox.shrink(),
           ),
         ],
       ),
@@ -682,7 +699,8 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
     final fixed = configs.where(
       (item) => BalynHomeWidgetCatalog.fixed.contains(item.type),
     );
-    final duplicates = state.dashboardWidgets.length -
+    final duplicates =
+        state.dashboardWidgets.length -
         state.dashboardWidgets.map((item) => item.type).toSet().length;
 
     return Scaffold(
@@ -753,8 +771,7 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
           ],
         ),
         itemCount: items!.length,
-        onReorder: (oldIndex, newIndex) =>
-            _reorder(state, oldIndex, newIndex),
+        onReorder: (oldIndex, newIndex) => _reorder(state, oldIndex, newIndex),
         itemBuilder: (context, index) =>
             _reorderableTile(state, items![index], index),
       ),
@@ -765,7 +782,8 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
 IconData _homeWidgetIcon(DashboardWidgetType type) => switch (type) {
   DashboardWidgetType.monthlyOverview => Icons.calendar_month_outlined,
   DashboardWidgetType.recentTransactions => Icons.receipt_long_outlined,
-  DashboardWidgetType.financialSnapshot => Icons.account_balance_wallet_outlined,
+  DashboardWidgetType.financialSnapshot =>
+    Icons.account_balance_wallet_outlined,
   DashboardWidgetType.smartHighlights => Icons.auto_awesome_outlined,
   DashboardWidgetType.topCategories => Icons.donut_large_outlined,
   DashboardWidgetType.accounts => Icons.account_balance_outlined,

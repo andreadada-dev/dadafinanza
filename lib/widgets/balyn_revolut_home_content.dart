@@ -38,82 +38,91 @@ class BalynRevolutHomeContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-            children: [
-              Expanded(
-                child: _BalanceMetric(
-                  title: 'Entrate',
-                  value: hideValues ? '••••' : moneyFor(state, income),
-                  icon: Icons.south_west_rounded,
-                  color: context.financeColors.positive,
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: _BalanceMetric(
-                  title: 'Spese',
-                  value: hideValues ? '••••' : moneyFor(state, expense),
-                  icon: Icons.north_east_rounded,
-                  color: context.financeColors.negative,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          _AvailableSummary(
-            value: hideValues ? '••••' : moneyFor(state, available),
-          ),
-          const SizedBox(height: 23),
-        if (showAccounts) ...[
-        Row(
           children: [
             Expanded(
-              child: Text(
-                'I tuoi conti',
-                style: Theme.of(
-                  context,
-                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
+              child: _BalanceMetric(
+                title: 'Entrate',
+                value: hideValues ? '••••' : moneyFor(state, income),
+                icon: Icons.south_west_rounded,
+                color: context.financeColors.positive,
               ),
             ),
-            TextButton(
-              onPressed: onManageAccounts,
-              child: const Text('Gestisci'),
+            const SizedBox(width: 10),
+            Expanded(
+              child: _BalanceMetric(
+                title: 'Spese',
+                value: hideValues ? '••••' : moneyFor(state, expense),
+                icon: Icons.north_east_rounded,
+                color: context.financeColors.negative,
+              ),
             ),
           ],
         ),
-        const SizedBox(height: 8),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(19),
-            color: Theme.of(context).brightness == Brightness.dark
-                ? const Color(0xFF242431)
-                : Colors.white,
-          ),
-          child: accountList.isEmpty
-              ? ListTile(
-                  leading: const Icon(Icons.account_balance_wallet_outlined),
-                  title: const Text('Nessun conto'),
-                  subtitle: const Text('Aggiungi il primo conto per iniziare'),
-                  trailing: const Icon(Icons.add_rounded),
-                  onTap: onManageAccounts,
-                )
-              : Column(
-                  children: [
-                    for (var i = 0; i < (maxAccounts == null ? accountList.length : accountList.length.clamp(0, maxAccounts!)); i++) ...[
-                      if (i > 0)
-                        Divider(
-                          height: 1,
-                          indent: 70,
-                          color: scheme.outlineVariant,
-                        ),
-                      _LiveAccountTile(
-                        account: accountList[i],
-                        hideValues: hideValues,
-                        onTap: () => onSelectAccount(accountList[i].id),
-                      ),
-                    ],
-                  ],
-                ),
+        const SizedBox(height: 10),
+        _AvailableSummary(
+          value: hideValues ? '••••' : moneyFor(state, available),
         ),
+        const SizedBox(height: 23),
+        if (showAccounts) ...[
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'I tuoi conti',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
+                ),
+              ),
+              TextButton(
+                onPressed: onManageAccounts,
+                child: const Text('Gestisci'),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(19),
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? const Color(0xFF242431)
+                  : Colors.white,
+            ),
+            child: accountList.isEmpty
+                ? ListTile(
+                    leading: const Icon(Icons.account_balance_wallet_outlined),
+                    title: const Text('Nessun conto'),
+                    subtitle: const Text(
+                      'Aggiungi il primo conto per iniziare',
+                    ),
+                    trailing: const Icon(Icons.add_rounded),
+                    onTap: onManageAccounts,
+                  )
+                : Column(
+                    children: [
+                      for (
+                        var i = 0;
+                        i <
+                            (maxAccounts == null
+                                ? accountList.length
+                                : accountList.length.clamp(0, maxAccounts!));
+                        i++
+                      ) ...[
+                        if (i > 0)
+                          Divider(
+                            height: 1,
+                            indent: 70,
+                            color: scheme.outlineVariant,
+                          ),
+                        _LiveAccountTile(
+                          account: accountList[i],
+                          hideValues: hideValues,
+                          onTap: () => onSelectAccount(accountList[i].id),
+                        ),
+                      ],
+                    ],
+                  ),
+          ),
         ],
       ],
     );

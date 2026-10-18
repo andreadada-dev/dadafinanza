@@ -52,12 +52,14 @@ abstract final class BalynHomeWidgetCatalog {
         ),
       ];
       for (final type in defaults) {
-        result.add(DashboardWidgetConfig(
-          type: type,
-          enabled: defaultEnabled.contains(type),
-          orderIndex: result.length,
-          size: DashboardWidgetSize.medium,
-        ));
+        result.add(
+          DashboardWidgetConfig(
+            type: type,
+            enabled: defaultEnabled.contains(type),
+            orderIndex: result.length,
+            size: DashboardWidgetSize.medium,
+          ),
+        );
       }
     } else {
       // On upgrade, put newly introduced sections before the old secondary
@@ -65,12 +67,14 @@ abstract final class BalynHomeWidgetCatalog {
       final old = ordered.map((item) => item.type).toSet();
       for (final type in featured) {
         if (!old.contains(type)) {
-          result.add(DashboardWidgetConfig(
-            type: type,
-            enabled: true,
-            orderIndex: result.length,
-            size: DashboardWidgetSize.medium,
-          ));
+          result.add(
+            DashboardWidgetConfig(
+              type: type,
+              enabled: true,
+              orderIndex: result.length,
+              size: DashboardWidgetSize.medium,
+            ),
+          );
         }
       }
       for (final type in byType.keys) {
@@ -78,12 +82,14 @@ abstract final class BalynHomeWidgetCatalog {
       }
       for (final type in DashboardWidgetType.values) {
         if (!result.any((item) => item.type == type)) {
-          result.add(DashboardWidgetConfig(
-            type: type,
-            enabled: fixed.contains(type),
-            orderIndex: result.length,
-            size: DashboardWidgetSize.medium,
-          ));
+          result.add(
+            DashboardWidgetConfig(
+              type: type,
+              enabled: fixed.contains(type),
+              orderIndex: result.length,
+              size: DashboardWidgetSize.medium,
+            ),
+          );
         }
       }
     }

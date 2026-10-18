@@ -21,10 +21,7 @@ void main() {
     final types = layout.map((item) => item.type).toList();
     expect(types.toSet().length, types.length);
     expect(types.toSet(), containsAll(DashboardWidgetType.values));
-    expect(
-      types,
-      containsAll(BalynHomeWidgetCatalog.featured),
-    );
+    expect(types, containsAll(BalynHomeWidgetCatalog.featured));
     for (final type in BalynHomeWidgetCatalog.featured) {
       expect(layout.firstWhere((item) => item.type == type).enabled, isTrue);
     }
@@ -47,8 +44,10 @@ void main() {
       (item) => item.type == DashboardWidgetType.accounts,
     );
     expect(goalsIndex, lessThan(accountsIndex));
-    expect(result.map((item) => item.orderIndex),
-        orderedEquals(List.generate(result.length, (i) => i)));
+    expect(
+      result.map((item) => item.orderIndex),
+      orderedEquals(List.generate(result.length, (i) => i)),
+    );
   });
 
   test('Explicitly hidden widget remains hidden through normalization', () {
@@ -56,9 +55,11 @@ void main() {
       widget(DashboardWidgetType.monthlyOverview, enabled: false),
     ]);
     expect(
-      result.firstWhere(
-        (item) => item.type == DashboardWidgetType.monthlyOverview,
-      ).enabled,
+      result
+          .firstWhere(
+            (item) => item.type == DashboardWidgetType.monthlyOverview,
+          )
+          .enabled,
       isFalse,
     );
   });
@@ -81,12 +82,15 @@ void main() {
   });
 
   test('Settings offer drag handle, add, previews and persistence', () {
-    final settings = File('lib/screens/settings_screen.dart').readAsStringSync();
+    final settings = File(
+      'lib/screens/settings_screen.dart',
+    ).readAsStringSync();
     final home = File(
       'lib/screens/account_context_home_screen.dart',
     ).readAsStringSync();
-    final widgetSource =
-        File('lib/widgets/home_dashboard_widget.dart').readAsStringSync();
+    final widgetSource = File(
+      'lib/widgets/home_dashboard_widget.dart',
+    ).readAsStringSync();
     expect(settings, contains('ReorderableListView.builder('));
     expect(settings, contains('ReorderableDragStartListener('));
     expect(settings, contains('oldIndex < newIndex'));
