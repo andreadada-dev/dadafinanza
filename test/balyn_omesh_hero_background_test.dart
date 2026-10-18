@@ -34,18 +34,23 @@ void main() {
     },
   );
 
-  test('Basic palette retains its pink cyan and cream while accounts vary', () {
+  test('Gradient remains within the account hue family', () {
     const violet = Color(0xFF6221E9);
-    final basic = balynHeroMeshColors(violet, useBasicPalette: true);
-    final account = balynHeroMeshColors(violet, useBasicPalette: false);
-    const orange = Color(0xFFF5833C);
-    final second = balynHeroMeshColors(orange, useBasicPalette: false);
-    expect(basic, hasLength(9));
-    expect(basic[0], const Color(0xFFA52B68));
-    expect(basic[1], const Color(0xFF4693A9));
-    expect(basic[4], const Color(0xFFE8DAD4));
-    expect(account[0], isNot(second[0]));
-    expect(account[4], isNot(second[4]));
+    const green = Color(0xFF259B50);
+    final total = balynHeroMeshColors(violet, useBasicPalette: true);
+    final violetShades = balynHeroMeshColors(violet, useBasicPalette: false);
+    final greenShades = balynHeroMeshColors(green, useBasicPalette: false);
+    expect(total, hasLength(9));
+    expect(total.toSet().length, greaterThan(2));
+    expect(violetShades[0], isNot(greenShades[0]));
+    for (final color in violetShades) {
+      final hue = HSLColor.fromColor(color).hue;
+      expect(hue, inInclusiveRange(235, 335));
+    }
+    for (final color in greenShades) {
+      final hue = HSLColor.fromColor(color).hue;
+      expect(hue, inInclusiveRange(70, 180));
+    }
   });
 
   testWidgets('Hero background is composed of a mesh and contrast scrim', (
