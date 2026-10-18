@@ -278,7 +278,7 @@ void main() {
   });
 
   test('all dashboard widget types have a non-empty label', () {
-    expect(DashboardWidgetType.values.length, 22);
+    expect(DashboardWidgetType.values.length, 25);
     for (final type in DashboardWidgetType.values) {
       expect(type.label.trim(), isNotEmpty);
     }
