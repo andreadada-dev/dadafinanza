@@ -528,7 +528,8 @@ class _BalynTransactionDetailContentState
                                   fontWeight: FontWeight.w800,
                                   color: Colors.white,
                                 );
-                            final prefix = (_type == TransactionType.expense
+                            final prefix =
+                                (_type == TransactionType.expense
                                     ? '−'
                                     : _type == TransactionType.income
                                     ? '+'
@@ -719,7 +720,9 @@ class _BalynTransactionDetailContentState
                     key: const ValueKey('detail-source'),
                     label: _type == TransactionType.transfer ? 'Da' : 'Conto',
                     value: account?.name ?? 'Conto non disponibile',
-                    valueColor: account == null ? null : Color(account.colorValue),
+                    valueColor: account == null
+                        ? null
+                        : Color(account.colorValue),
                     icon: account == null
                         ? Icons.account_balance_wallet_outlined
                         : accountIcon(account.iconKey),
@@ -730,7 +733,9 @@ class _BalynTransactionDetailContentState
                       key: const ValueKey('detail-target'),
                       label: 'A',
                       value: target?.name ?? 'Seleziona conto',
-                      valueColor: target == null ? null : Color(target.colorValue),
+                      valueColor: target == null
+                          ? null
+                          : Color(target.colorValue),
                       icon: Icons.east_rounded,
                       onTap: protected
                           ? null

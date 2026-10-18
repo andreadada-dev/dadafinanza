@@ -34,7 +34,10 @@ void main() {
     expect(source, contains('TextPainter('));
     expect(source, contains('width: fieldWidth'));
     expect(source, contains("ValueKey('detail-amount-pencil')"));
-    expect(source, isNot(contains('border: Border(\n                            bottom:')));
+    expect(
+      source,
+      isNot(contains('border: Border(\n                            bottom:')),
+    );
   });
 
   testWidgets('Semantic transaction colors distinguish income and expense', (
