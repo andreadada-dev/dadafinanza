@@ -51,6 +51,9 @@ class BalynStatisticBars extends StatelessWidget {
       (m, p) => math.max(m, math.max(p.primary, p.secondary)),
     );
     final maxY = math.max(1.0, maxValue * 1.17);
+    final daysSpanned = points.length < 2
+        ? 0
+        : points.last.date.difference(points.first.date).inDays;
     return Column(
       children: [
         SizedBox(
@@ -112,10 +115,18 @@ class BalynStatisticBars extends StatelessWidget {
                       return SideTitleWidget(
                         meta: meta,
                         child: Text(
-                          DateFormat(
-                            'MMM',
-                            AppI18n.intlLocale,
-                          ).format(points[i].date),
+                          points.length == 1
+                              ? DateFormat('d MMM', AppI18n.intlLocale)
+                                  .format(points[i].date)
+                              : daysSpanned < 45
+                              ? DateFormat(
+                                  'd',
+                                  AppI18n.intlLocale,
+                                ).format(points[i].date)
+                              : DateFormat(
+                                  'MMM',
+                                  AppI18n.intlLocale,
+                                ).format(points[i].date),
                           style: TextStyle(
                             fontSize: 10,
                             color: scheme.onSurfaceVariant,
