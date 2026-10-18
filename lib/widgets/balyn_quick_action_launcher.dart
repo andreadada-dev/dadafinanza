@@ -2,69 +2,178 @@ import 'dart:math' as math;
 
 import 'package:balyn/l10n/localized_material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:pie_menu/pie_menu.dart';
+
+import '../models/models.dart';
 
 import '../theme/balyn_palette.dart';
-import 'balyn_cue_anchored_menu.dart';
 
-/// One Cue menu implementation shared by the hero's "Altro" and the FAB.
-/// The FAB alone reacts to scroll velocity with a small elastic deformation.
-class BalynQuickActionLauncher extends StatelessWidget {
+/// Regular taps open the transfer editor; a 700ms hold charges the
+/// button clockwise and reveals the preset radial menu from pie_menu.
+/// The independent Hero "Altro" keeps its original Cue pills.
+class BalynQuickActionLauncher extends StatefulWidget {
   const BalynQuickActionLauncher({
-    required this.showHome,
     required this.onCreate,
     required this.onAdvances,
     required this.onPlanning,
-    required this.onHome,
+    required this.onPresetSelected,
+    required this.onAddPreset,
+    required this.loadPresets,
     this.motion,
-    this.onLongPress,
     super.key,
   });
 
-  final bool showHome;
+  /// Fast tap opens a fresh transfer (never the former vertical Cue sheet).
   final VoidCallback onCreate;
   final VoidCallback onAdvances;
   final VoidCallback onPlanning;
-  final VoidCallback onHome;
+  final ValueChanged<QuickPreset> onPresetSelected;
+  final Future<void> Function() onAddPreset;
+  final Future<List<QuickPreset>> Function() loadPresets;
   final ValueListenable<Offset>? motion;
-  final VoidCallback? onLongPress;
 
   @override
-  Widget build(BuildContext context) => BalynCueAnchoredMenu(
-    closeKey: const ValueKey('quick-launcher-close'),
-    closeTooltip: 'Chiudi azioni',
-    actions: [
-      if (showHome)
-        BalynCueMenuAction(
-          id: 'quick-nav-home',
-          label: 'Home',
-          icon: Icons.home_rounded,
-          onTap: onHome,
-        ),
-      BalynCueMenuAction(
-        id: 'quick-nav-create',
-        label: 'Movimento',
-        icon: Icons.add_rounded,
-        onTap: onCreate,
-      ),
-      BalynCueMenuAction(
-        id: 'quick-nav-advances',
-        label: 'Anticipi',
-        icon: Icons.handshake_outlined,
-        onTap: onAdvances,
-      ),
-      BalynCueMenuAction(
-        id: 'quick-nav-planning',
-        label: 'Pianifica',
-        icon: Icons.event_note_outlined,
-        onTap: onPlanning,
-      ),
-    ],
-    triggerBuilder: (context, open) => BalynMorphingFab(
-      motion: motion,
-      onPressed: open,
-      onLongPress: onLongPress,
-    ),
+  State<BalynQuickActionLauncher> createState() =>
+      _BalynQuickActionLauncherState();
+}
+
+class _BalynQuickActionLauncherState extends State<BalynQuickActionLauncher>
+    with SingleTickerProviderStateMixin {
+  static const holdDuration = Duration(milliseconds: 700);
+  late final AnimationController _charge = AnimationController(
+    vsync: this,
+    duration: holdDuration,
   );
+  List<QuickPreset> _presets = const [];
+  bool _menuOpen = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _refreshPresets();
+  }
+
+  Future<void> _refreshPresets() async {
+    try {
+      final latest = await widget.loadPresets();
+      if (mounted) setState(() => _presets = latest.take(4).toList());
+    } catch (_) {
+      // The preset table can still be initializing on first launch.
+      if (mounted) setState(() => _presets = const []);
+    }
+  }
+
+  @override
+  void dispose() {
+    _charge.dispose();
+    super.dispose();
+  }
+
+  void _startCharge(PointerDownEvent event) {
+    if (!_menuOpen) _charge.forward(from: 0);
+  }
+
+  void _stopCharge(PointerEvent event) {
+    if (!_menuOpen) _charge.reverse();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PieMenu(
+      key: const ValueKey('quick-radial-pie-menu'),
+      theme: PieTheme(
+        overlayColor: Colors.black54,
+        radius: 115,
+        buttonSize: 54,
+        spacing: 8,
+        regularPressShowsMenu: false,
+        longPressShowsMenu: true,
+        longPressDuration: holdDuration,
+        buttonTheme: const PieButtonTheme(
+          backgroundColor: BalynPalette.darkSurface,
+          iconColor: BalynPalette.darkText,
+        ),
+        buttonThemeHovered: const PieButtonTheme(
+          backgroundColor: BalynPalette.accent,
+          iconColor: Colors.white,
+        ),
+      ),
+      onToggle: (open) {
+        _menuOpen = open;
+        if (open) {
+          _charge.value = 1;
+        } else {
+          _charge.reverse();
+          _refreshPresets();
+        }
+      },
+      onPressed: widget.onCreate,
+      actions: [
+        for (final preset in _presets)
+          PieAction(
+            tooltip: Text(preset.name),
+            onSelect: () => widget.onPresetSelected(preset),
+            child: const Icon(Icons.bookmark_rounded),
+          ),
+        PieAction(
+          tooltip: const Text('Nuovo preset'),
+          onSelect: () async {
+            await widget.onAddPreset();
+            if (mounted) await _refreshPresets();
+          },
+          child: const Icon(Icons.add_circle_outline_rounded),
+        ),
+        PieAction(
+          tooltip: const Text('Anticipi'),
+          onSelect: widget.onAdvances,
+          child: const Icon(Icons.handshake_outlined),
+        ),
+        PieAction(
+          tooltip: const Text('Pianifica'),
+          onSelect: widget.onPlanning,
+          child: const Icon(Icons.event_note_outlined),
+        ),
+      ],
+      child: Listener(
+        behavior: HitTestBehavior.translucent,
+        onPointerDown: _startCharge,
+        onPointerUp: _stopCharge,
+        onPointerCancel: _stopCharge,
+        child: BalynMorphingFab(
+          motion: widget.motion,
+          progress: _charge,
+          onPressed: () {},
+        ),
+      ),
+    );
+  }
+}
+
+class _WhiteChargePainter extends CustomPainter {
+  const _WhiteChargePainter(this.progress);
+  final double progress;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (progress <= 0) return;
+    final center = size.center(Offset.zero);
+    final radius = size.shortestSide / 2;
+    final sector = Path()
+      ..moveTo(center.dx, center.dy)
+      ..arcTo(
+        Rect.fromCircle(center: center, radius: radius),
+        -math.pi / 2,
+        math.pi * 2 * progress.clamp(0.0, 1.0),
+        false,
+      )
+      ..close();
+    canvas.drawPath(sector, Paint()..color = Colors.white);
+  }
+
+  @override
+  bool shouldRepaint(_WhiteChargePainter oldDelegate) =>
+      oldDelegate.progress != progress;
 }
 
 /// The circle subtly compresses or stretches in the direction of travel,
@@ -75,9 +184,11 @@ class BalynMorphingFab extends StatefulWidget {
     required this.onPressed,
     this.onLongPress,
     this.motion,
+    this.progress,
     super.key,
   });
 
+  final Animation<double>? progress;
   final VoidCallback onPressed;
   final VoidCallback? onLongPress;
   final ValueListenable<Offset>? motion;
@@ -164,7 +275,28 @@ class _BalynMorphingFabState extends State<BalynMorphingFab>
             foregroundColor: Colors.white,
             shape: const CircleBorder(),
             onPressed: widget.onPressed,
-            child: const Icon(Icons.add_rounded, size: 30),
+            child: ClipOval(
+              child: AnimatedBuilder(
+                animation: widget.progress ?? _rebound,
+                builder: (context, _) {
+                  final progress = widget.progress?.value ?? 0;
+                  return CustomPaint(
+                    key: const ValueKey('quick-fab-white-charge'),
+                    size: const Size(56, 56),
+                    painter: _WhiteChargePainter(progress),
+                    child: Center(
+                      child: Icon(
+                        Icons.add_rounded,
+                        color: progress > .5
+                            ? BalynPalette.accent
+                            : Colors.white,
+                        size: 30,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
           ),
         ),
       ),
