@@ -21,6 +21,7 @@ class BalynCueThreeDotsAction extends StatelessWidget {
   Widget build(BuildContext context) => Expanded(
     child: BalynCueAnchoredMenu(
       closeKey: const ValueKey('home-more-close'),
+      closeSlotHeight: 82,
       closeTooltip: 'Chiudi altre azioni',
       actions: [
         BalynCueMenuAction(
