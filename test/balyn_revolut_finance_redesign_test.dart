@@ -68,6 +68,11 @@ void main() {
       design,
       contains('await state.updateTransaction(widget.item, updated)'),
     );
+    expect(design, contains("title: 'Dettagli movimento'"));
+    expect(design, contains("label: 'Duplica'"));
+    expect(design, contains("label: 'Elimina'"));
+    expect(design, contains("title: 'Collegamenti'"));
+    expect(design, contains('ValueListenableBuilder<TextEditingValue>('));
     expect(design, contains('Escludi dalle analisi'));
     expect(design, contains('widget.item.receiptPath'));
     for (final key in [

@@ -46,8 +46,12 @@ void main() {
     expect(shell, contains('body: Stack('));
     expect(shell, contains('BalynQuickActionLauncher('));
     expect(shell, isNot(contains('BalynGlassNavigation(')));
-    expect(launcher, contains('Cue.onToggle('));
-    expect(launcher, contains('onLongPress: onLongPress'));
+    expect(launcher, contains('SizeTransition('));
+    expect(launcher, contains('FadeTransition('));
+    expect(launcher, contains('SlideTransition('));
+    expect(launcher, contains("label: 'Movimento'"));
+    expect(launcher, contains('Color(0xFF8157F7)'));
+    expect(launcher, contains('onLongPress: widget.onLongPress'));
     expect(launcher, contains("id: 'create'"));
     expect(launcher, contains("id: 'advances'"));
     expect(launcher, contains("id: 'planning'"));
