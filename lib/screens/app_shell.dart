@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:balyn/l10n/localized_material.dart';
+import 'package:pie_menu/pie_menu.dart';
 
 import '../app_state.dart';
 import '../main.dart';
@@ -134,7 +135,8 @@ class _BalynAppShellState extends State<BalynAppShell> {
       return Scaffold(body: BalynDataSkeletonView(section: index));
     }
 
-    return PopScope(
+    return PieCanvas(
+      child: PopScope(
       canPop: _allowExit,
       onPopInvoked: _handleBack,
       child: Scaffold(
@@ -166,25 +168,29 @@ class _BalynAppShellState extends State<BalynAppShell> {
               bottom: MediaQuery.viewPaddingOf(context).bottom + 15,
               child: BalynQuickActionLauncher(
                 motion: _fabMotion,
-                showHome: index != 0,
-                onCreate: () => _open(TransactionType.expense),
+                onCreate: () => _open(TransactionType.transfer),
                 onAdvances: () => _selectTab(2),
                 onPlanning: () => _selectTab(3),
-                onHome: () => _selectTab(0),
-                onLongPress: _showQuickMenu,
+                onPresetSelected: (preset) => _open(preset.type, preset: preset),
+                onAddPreset: _createPreset,
+                loadPresets: () => QuickPresetService(
+                  AppScope.of(context).database,
+                ).all(enabledOnly: true),
               ),
             ),
           ],
         ),
       ),
+      ),
     );
   }
 
-  Future<void> _openAdvance() async {
-    final state = AppScope.of(context);
-    await HapticService.light(enabled: state.haptics);
-    if (!mounted) return;
-    await showAdvanceEditor(context);
+  Future<void> _createPreset() async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const PresetManagementScreen(startCreating: true),
+      ),
+    );
   }
 
   Future<void> _open(
@@ -234,219 +240,4 @@ class _BalynAppShellState extends State<BalynAppShell> {
     );
   }
 
-  Future<void> _showQuickMenu() async {
-    final state = AppScope.of(context);
-    await HapticService.medium(enabled: state.haptics);
-    final presets = await QuickPresetService(
-      state.database,
-    ).all(enabledOnly: true);
-    if (!mounted) return;
-
-    final choice = await showGeneralDialog<Object>(
-      context: context,
-      barrierDismissible: true,
-      barrierLabel: AppI18n.tr('Chiudi scorciatoie'),
-      barrierColor: Theme.of(context).colorScheme.scrim.withOpacity(0.32),
-      transitionDuration: const Duration(milliseconds: 180),
-      pageBuilder: (dialogContext, _, __) => SafeArea(
-        child: LayoutBuilder(
-          builder: (dialogContext, constraints) {
-            final maxHeight = (constraints.maxHeight - 180)
-                .clamp(220.0, 460.0)
-                .toDouble();
-            return Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 20, 20, 144),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: 360,
-                    maxHeight: maxHeight,
-                  ),
-                  child: _QuickFabMenu(
-                    presets: presets,
-                    state: state,
-                    onSelected: (value) => Navigator.pop(dialogContext, value),
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
-      ),
-      transitionBuilder: (dialogContext, animation, _, child) {
-        final curved = CurvedAnimation(
-          parent: animation,
-          curve: Curves.easeOutCubic,
-          reverseCurve: Curves.easeInCubic,
-        );
-        return FadeTransition(
-          opacity: curved,
-          child: SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(0, 0.08),
-              end: Offset.zero,
-            ).animate(curved),
-            child: ScaleTransition(
-              scale: Tween<double>(begin: 0.94, end: 1).animate(curved),
-              alignment: Alignment.bottomCenter,
-              child: child,
-            ),
-          ),
-        );
-      },
-    );
-
-    if (!mounted || choice == null) return;
-    if (choice is _AdvanceChoice) {
-      await _openAdvance();
-    } else if (choice is QuickPreset) {
-      await _open(choice.type, preset: choice);
-    } else if (choice is _VoiceChoice) {
-      await _open(TransactionType.expense, voice: true);
-    } else if (choice is _ManagePresetsChoice) {
-      await Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => const PresetManagementScreen()),
-      );
-    }
-  }
-}
-
-class _QuickFabMenu extends StatelessWidget {
-  const _QuickFabMenu({
-    required this.presets,
-    required this.state,
-    required this.onSelected,
-  });
-
-  final List<QuickPreset> presets;
-  final AppState state;
-  final ValueChanged<Object> onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Material(
-      color: theme.colorScheme.surface,
-      elevation: 8,
-      shadowColor: theme.colorScheme.shadow.withOpacity(0.18),
-      borderRadius: BorderRadius.circular(28),
-      clipBehavior: Clip.antiAlias,
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Scorciatoie', style: theme.textTheme.titleLarge),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Tocca un preset per aprire il movimento già compilato.',
-                    style: theme.textTheme.bodySmall,
-                  ),
-                ],
-              ),
-            ),
-            if (presets.isNotEmpty) ...[
-              const _QuickFabSectionLabel('Preset'),
-              ...presets.map(
-                (preset) => _QuickFabMenuItem(
-                  icon: Icons.bookmark_outline_rounded,
-                  title: preset.name,
-                  subtitle: [
-                    preset.type.label,
-                    if (preset.amount != null) moneyFor(state, preset.amount!),
-                  ].join(' · '),
-                  onTap: () => onSelected(preset),
-                ),
-              ),
-            ] else ...[
-              const _QuickFabSectionLabel('Preset'),
-              _QuickFabMenuItem(
-                icon: Icons.bookmark_add_outlined,
-                title: 'Crea il primo preset',
-                subtitle: 'Salva un movimento ricorrente come scorciatoia',
-                onTap: () => onSelected(const _ManagePresetsChoice()),
-              ),
-            ],
-            const Divider(height: 1, indent: 20, endIndent: 20),
-            const _QuickFabSectionLabel('Azioni'),
-            _QuickFabMenuItem(
-              icon: Icons.mic_none_rounded,
-              title: 'Voce',
-              subtitle: 'Compila il movimento parlando',
-              onTap: () => onSelected(const _VoiceChoice()),
-            ),
-            _QuickFabMenuItem(
-              icon: Icons.handshake_outlined,
-              title: 'Anticipo',
-              subtitle: 'Soldi da ricevere o da restituire',
-              onTap: () => onSelected(const _AdvanceChoice()),
-            ),
-            _QuickFabMenuItem(
-              icon: Icons.tune_rounded,
-              title: 'Gestisci preset',
-              subtitle: 'Crea, modifica e riordina le scorciatoie',
-              onTap: () => onSelected(const _ManagePresetsChoice()),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _QuickFabSectionLabel extends StatelessWidget {
-  const _QuickFabSectionLabel(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.fromLTRB(20, 12, 20, 4),
-    child: Text(text, style: Theme.of(context).textTheme.labelLarge),
-  );
-}
-
-class _QuickFabMenuItem extends StatelessWidget {
-  const _QuickFabMenuItem({
-    required this.icon,
-    required this.title,
-    required this.onTap,
-    this.subtitle,
-  });
-
-  final IconData icon;
-  final String title;
-  final String? subtitle;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) => ListTile(
-    minVerticalPadding: 10,
-    contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-    leading: Icon(icon),
-    title: Text(title),
-    subtitle: subtitle == null ? null : Text(subtitle!),
-    trailing: const Icon(Icons.chevron_right_rounded),
-    onTap: onTap,
-  );
-}
-
-class _VoiceChoice {
-  const _VoiceChoice();
-}
-
-class _AdvanceChoice {
-  const _AdvanceChoice();
-}
-
-class _ManagePresetsChoice {
-  const _ManagePresetsChoice();
 }
