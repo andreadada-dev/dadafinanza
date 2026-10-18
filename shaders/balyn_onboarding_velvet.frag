@@ -53,7 +53,8 @@ void main() {
   vec2 uv = FlutterFragCoord().xy / max(uSize, vec2(1.0));
   float aspect = uSize.x / max(uSize.y, 1.0);
   vec2 p = (uv - 0.5) * vec2(aspect, 1.0);
-  float t = uPhase * TAU;
+  // Normalize 1.0 exactly to 0.0 so the end frame joins the first.
+  float t = fract(uPhase) * TAU;
 
   // Derive a virtual surface normal from neighboring height samples so the
   // highlight hugs each actual fold (rather than looking like moving stripes).
