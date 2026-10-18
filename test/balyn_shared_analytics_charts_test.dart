@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:balyn/l10n/localized_material.dart';
 import 'package:balyn/widgets/balyn_balance_analytics_charts.dart';
-import 'package:balyn/widgets/home_dashboard_widget.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
