@@ -292,7 +292,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
       ),
       bottomSheetTheme: BottomSheetThemeData(
-        backgroundColor: dark ? const Color(0xFF1C1C1F) : Colors.white,
+        backgroundColor: raised,
         modalBackgroundColor: raised,
         showDragHandle: true,
         shape: const RoundedRectangleBorder(
