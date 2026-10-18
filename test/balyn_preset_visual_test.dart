@@ -33,7 +33,9 @@ void main() {
     expect(presetIconData(preset.iconKey), isNotNull);
   });
 
-  testWidgets('Empty radial slot stays visible and transparent', (tester) async {
+  testWidgets('Empty radial slot stays visible and transparent', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
