@@ -24,10 +24,10 @@ void main() {
     expect(gesture, contains('await state.deleteTransaction(current)'));
   });
 
-  testWidgets('swiping left reveals but does not automatically delete', (
-    tester,
-  ) async {
+  testWidgets('idle row hides both actions; swipe reveals two compact icons',
+      (tester) async {
     final now = DateTime(2026, 10, 18);
+    var edited = 0;
     final transaction = FinanceTransaction(
       id: 40,
       type: TransactionType.expense,
@@ -38,6 +38,7 @@ void main() {
       createdAt: now,
       updatedAt: now,
     );
+
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
@@ -46,6 +47,7 @@ void main() {
               width: 360,
               child: BalynSwipeDeleteTile(
                 item: transaction,
+                onEdit: () => edited++,
                 child: const SizedBox(
                   key: ValueKey('row-content'),
                   height: 68,
@@ -57,14 +59,52 @@ void main() {
         ),
       ),
     );
+
     final row = find.byKey(const ValueKey('row-content'));
-    final xBefore = tester.getTopLeft(row).dx;
+    final delete = find.byKey(const ValueKey('swipe-delete-40'));
+    final edit = find.byKey(const ValueKey('swipe-edit-40'));
+    final initialWidth = tester.getSize(row).width;
+    expect(delete, findsNothing);
+    expect(edit, findsNothing);
+    expect(initialWidth, closeTo(360, 1));
+
     await tester.drag(row, const Offset(-110, 0));
     await tester.pumpAndSettle();
-    expect(tester.getTopLeft(row).dx, lessThan(xBefore));
-    expect(find.byKey(const ValueKey('swipe-delete-40')), findsOneWidget);
+
+    expect(delete, findsOneWidget);
+    expect(edit, findsOneWidget);
+    expect(tester.getSize(row).width, lessThan(initialWidth));
+    expect(tester.getSize(edit).width, lessThanOrEqualTo(40));
+    expect(tester.getSize(delete).width, lessThanOrEqualTo(40));
+
+    await tester.tap(edit);
+    await tester.pumpAndSettle();
+    expect(edited, 1);
+    expect(delete, findsNothing);
+    expect(edit, findsNothing);
+    expect(tester.getSize(row).width, closeTo(initialWidth, 1));
+
+    await tester.drag(row, const Offset(-110, 0));
+    await tester.pumpAndSettle();
+    expect(delete, findsOneWidget);
+
+    // Swiping back closes the rail without deleting the transaction.
     await tester.drag(row, const Offset(110, 0));
     await tester.pumpAndSettle();
-    expect(tester.getTopLeft(row).dx, closeTo(xBefore, 1.0));
+    expect(delete, findsNothing);
+    expect(edit, findsNothing);
+    expect(tester.getSize(row).width, closeTo(initialWidth, 1));
+    expect(tester.takeException(), isNull);
+  });
+
+  test('delete buttons are not part of the idle render tree', () {
+    final source = File('lib/widgets/balyn_swipe_delete_tile.dart')
+        .readAsStringSync();
+    expect(source, contains('_reveal < .5'));
+    expect(source, contains('Icons.edit_rounded'));
+    expect(source, contains('Icons.delete_outline_rounded'));
+    expect(source, contains('await confirmDestructiveAction('));
+    expect(source, contains('OverflowBox('));
+    expect(source, contains('Expanded(child: widget.child)'));
   });
 }
