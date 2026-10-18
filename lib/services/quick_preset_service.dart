@@ -16,6 +16,8 @@ class QuickPreset {
     this.amount,
     this.note,
     this.tags = const [],
+    this.iconKey,
+    this.colorValue = 0xFFFFFFFF,
   });
 
   final int id;
@@ -27,6 +29,10 @@ class QuickPreset {
   final double? amount;
   final String? note;
   final List<String> tags;
+  /// Null means show the first letter of the preset name.
+  final String? iconKey;
+  /// White is the default, regardless of expense/income type.
+  final int colorValue;
   final int position;
   final bool enabled;
 
@@ -62,6 +68,8 @@ class QuickPreset {
         .where((item) => item.isNotEmpty)
         .toList(),
     position: map['position'] as int? ?? 0,
+    iconKey: map['icon_key'] as String?,
+    colorValue: (map['color_value'] as num?)?.toInt() ?? 0xFFFFFFFF,
     enabled: (map['enabled'] as int? ?? 1) == 1,
   );
 }
@@ -89,6 +97,8 @@ class QuickPresetService {
     double? amount,
     String? note,
     List<String> tags = const [],
+    String? iconKey,
+    int colorValue = 0xFFFFFFFF,
     int? position,
     bool enabled = true,
   }) async {
@@ -102,6 +112,8 @@ class QuickPresetService {
       'amount_cents': amount == null ? null : Money.toCents(amount),
       'note': note?.trim().isEmpty == true ? null : note?.trim(),
       'tags': tags.where((item) => item.trim().isNotEmpty).join('|'),
+      'icon_key': iconKey,
+      'color_value': colorValue,
       'position': position ?? await _nextPosition(),
       'enabled': enabled ? 1 : 0,
       'updated_at': now,
