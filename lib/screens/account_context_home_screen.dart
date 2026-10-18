@@ -225,8 +225,7 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                 onAdvancedDashboard: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) =>
-                        const Scaffold(body: advanced.HomeScreen()),
+                    builder: (_) => const Scaffold(body: advanced.HomeScreen()),
                   ),
                 ),
                 onCustomizeHome: () => Navigator.push(
@@ -382,8 +381,7 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                             EmptyState(
                               icon: Icons.dashboard_customize_outlined,
                               title: 'Nessuna sezione aggiuntiva',
-                              subtitle:
-                                  'Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.',
+                              subtitle: 'Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.',
                               action: TextButton.icon(
                                 onPressed: () => Navigator.push(
                                   context,

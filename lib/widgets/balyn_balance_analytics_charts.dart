@@ -1,7 +1,9 @@
 import 'dart:math' as math;
+
 import 'package:balyn/l10n/localized_material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
+
 import 'finance_charts.dart';
 
 /// Balanced paired bars with the clean Statistic screen geometry.

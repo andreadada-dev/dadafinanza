@@ -97,9 +97,8 @@ class _BalynTransactionDetailContentState
   }
 
   void _error(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   Future<void> _pickDate() async {
@@ -226,9 +225,8 @@ class _BalynTransactionDetailContentState
                   alignment: Alignment.centerLeft,
                   child: Text(
                     title,
-                    style: Theme.of(sheet).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w800,
-                    ),
+                    style: Theme.of(sheet).textTheme.titleLarge
+                        ?.copyWith(fontWeight: FontWeight.w800),
                   ),
                 ),
               ),
@@ -284,12 +282,15 @@ class _BalynTransactionDetailContentState
               account.id == widget.item.toAccountId,
         )
         .toList();
-    final next =
-        await _select<int>(destination ? 'Conto destinazione' : 'Conto', [
-          for (final a in options)
-            if (!destination || a.id != _accountId)
-              _Choice(a.id, a.name, accountIcon(a.iconKey)),
-        ], destination ? _toAccountId : _accountId);
+    final next = await _select<int>(
+      destination ? 'Conto destinazione' : 'Conto',
+      [
+        for (final a in options)
+          if (!destination || a.id != _accountId)
+            _Choice(a.id, a.name, accountIcon(a.iconKey)),
+      ],
+      destination ? _toAccountId : _accountId,
+    );
     if (!mounted || next == null) return;
     setState(() {
       if (destination) {

@@ -292,8 +292,7 @@ class PersonalSettingsScreen extends StatelessWidget {
               BalynSettingsTile(
                 icon: Icons.widgets_outlined,
                 title: 'Widget Android',
-                subtitle:
-                    'Saldo, Quick Capture, importi rapidi e riepilogo configurabili',
+                subtitle: 'Saldo, Quick Capture, importi rapidi e riepilogo configurabili',
                 onTap: () => _open(context, const AndroidWidgetsScreen()),
               ),
             ],

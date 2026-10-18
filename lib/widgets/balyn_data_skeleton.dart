@@ -46,31 +46,52 @@ class BalynDataSkeletonView extends StatelessWidget {
               ),
               const SizedBox(height: 33),
             ],
-            const Bone(height: 19, width: 152, borderRadius: BorderRadius.all(Radius.circular(9))),
+            const Bone(
+              height: 19,
+              width: 152,
+              borderRadius: BorderRadius.all(Radius.circular(9)),
+            ),
             const SizedBox(height: 14),
-            Bone(height: section == 1 ? 95 : 154, width: double.infinity,
-                borderRadius: BorderRadius.circular(22)),
+            Bone(
+              height: section == 1 ? 95 : 154,
+              width: double.infinity,
+              borderRadius: BorderRadius.circular(22),
+            ),
             const SizedBox(height: 27),
-            const Bone(height: 19, width: 180, borderRadius: BorderRadius.all(Radius.circular(9))),
+            const Bone(
+              height: 19,
+              width: 180,
+              borderRadius: BorderRadius.all(Radius.circular(9)),
+            ),
             const SizedBox(height: 14),
             for (var i = 0; i < (section == 1 ? 5 : 3); i++) ...[
-              Row(children: [
-                const Bone.circle(size: 43),
-                const SizedBox(width: 13),
-                const Expanded(child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [Bone.text(words: 3), SizedBox(height: 8),
-                    Bone.text(words: 2, fontSize: 11)],
-                )),
-                const SizedBox(width: 16),
-                const Bone(width: 65, height: 16),
-              ]),
+              Row(
+                children: [
+                  const Bone.circle(size: 43),
+                  const SizedBox(width: 13),
+                  const Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Bone.text(words: 3),
+                        SizedBox(height: 8),
+                        Bone.text(words: 2, fontSize: 11),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  const Bone(width: 65, height: 16),
+                ],
+              ),
               const SizedBox(height: 19),
             ],
             if (section != 1) ...[
               const SizedBox(height: 7),
-              Bone(height: 120, width: double.infinity,
-                  borderRadius: BorderRadius.circular(22)),
+              Bone(
+                height: 120,
+                width: double.infinity,
+                borderRadius: BorderRadius.circular(22),
+              ),
             ],
             // Skeletonizer only paints neutral placeholders, never real amounts.
             Text(' ', style: TextStyle(color: scheme.surface)),

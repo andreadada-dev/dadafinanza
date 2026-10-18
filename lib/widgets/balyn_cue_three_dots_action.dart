@@ -21,11 +21,17 @@ class BalynCueThreeDotsAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final actions = <_MoreAction>[
-      _MoreAction('Gestisci conti', Icons.account_balance_wallet_outlined,
-          onManageAccounts),
+      _MoreAction(
+        'Gestisci conti',
+        Icons.account_balance_wallet_outlined,
+        onManageAccounts,
+      ),
       _MoreAction('Anticipi', Icons.handshake_outlined, onAdvances),
-      _MoreAction('Dashboard avanzata', Icons.dashboard_customize_outlined,
-          onAdvancedDashboard),
+      _MoreAction(
+        'Dashboard avanzata',
+        Icons.dashboard_customize_outlined,
+        onAdvancedDashboard,
+      ),
       _MoreAction('Personalizza Home', Icons.tune_rounded, onCustomizeHome),
     ];
 
@@ -63,7 +69,9 @@ class BalynCueThreeDotsAction extends StatelessWidget {
                         children: [
                           for (var i = 0; i < 3; i++)
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 1.5),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 1.5,
+                              ),
                               child: CircleAvatar(
                                 radius: 2.5,
                                 backgroundColor: Colors.white,
@@ -124,7 +132,11 @@ class BalynCueThreeDotsAction extends StatelessWidget {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(action.icon, color: scheme.onSurface, size: 20),
+                                Icon(
+                                  action.icon,
+                                  color: scheme.onSurface,
+                                  size: 20,
+                                ),
                                 const SizedBox(width: 10),
                                 Flexible(
                                   child: Text(

@@ -1,6 +1,7 @@
 import 'package:balyn/l10n/localized_material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
 import '../l10n/app_i18n.dart';
 import '../main.dart';
 import '../models/models.dart';
@@ -87,9 +88,8 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
         _saving = false;
         _skipping = false;
       });
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(error.toString())));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(error.toString())));
     }
   }
 
@@ -130,10 +130,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
           opacity: progress,
           child: Transform.translate(
             offset: Offset(0, 25 * (1 - progress)),
-            child: Transform.scale(
-              scale: .965 + .035 * progress,
-              child: child,
-            ),
+            child: Transform.scale(scale: .965 + .035 * progress, child: child),
           ),
         );
       },
@@ -165,22 +162,31 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(title, style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 15,
-                      )),
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 15,
+                        ),
+                      ),
                       const SizedBox(height: 3),
-                      Text(subtitle, style: const TextStyle(
-                        color: Color(0xFFE0D9ED),
-                        fontSize: 12,
-                        height: 1.35,
-                      )),
+                      Text(
+                        subtitle,
+                        style: const TextStyle(
+                          color: Color(0xFFE0D9ED),
+                          fontSize: 12,
+                          height: 1.35,
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                Icon(Icons.chevron_right_rounded,
-                    color: color.withValues(alpha: .7), size: 18),
+                Icon(
+                  Icons.chevron_right_rounded,
+                  color: color.withValues(alpha: .7),
+                  size: 18,
+                ),
               ],
             ),
           ),
@@ -522,7 +528,9 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                     ),
                   ),
                   _page(
-                    illustration: _TourOrbitIllustration(progress: _tourController),
+                    illustration: _TourOrbitIllustration(
+                      progress: _tourController,
+                    ),
                     title: _t('Ecco come funziona', 'How Balyn works'),
                     subtitle: _t(
                       'Quattro sezioni, tutte collegate tra loro.',
@@ -539,7 +547,10 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                         _tour(
                           1,
                           Icons.receipt_long_rounded,
-                          _t('Movimenti e Analisi', 'Transactions and Analytics'),
+                          _t(
+                            'Movimenti e Analisi',
+                            'Transactions and Analytics',
+                          ),
                           _t(
                             'Entrate, spese e statistiche',
                             'Income, expenses and insights',
@@ -681,7 +692,6 @@ class _CircleArt extends StatelessWidget {
   );
 }
 
-
 /// On the last page the four product sections assemble around the Balyn core.
 class _TourOrbitIllustration extends StatelessWidget {
   const _TourOrbitIllustration({required this.progress});
@@ -695,9 +705,21 @@ class _TourOrbitIllustration extends StatelessWidget {
       final factor = Curves.easeOutCubic.transform(progress.value);
       final symbols = [
         (Icons.home_rounded, const Color(0xFFFFC2ED), const Offset(-58, -25)),
-        (Icons.receipt_long_rounded, const Color(0xFFAACDFF), const Offset(58, -25)),
-        (Icons.handshake_rounded, const Color(0xFFB3F5D9), const Offset(-58, 30)),
-        (Icons.event_note_rounded, const Color(0xFFFFD8A3), const Offset(58, 30)),
+        (
+          Icons.receipt_long_rounded,
+          const Color(0xFFAACDFF),
+          const Offset(58, -25),
+        ),
+        (
+          Icons.handshake_rounded,
+          const Color(0xFFB3F5D9),
+          const Offset(-58, 30),
+        ),
+        (
+          Icons.event_note_rounded,
+          const Color(0xFFFFD8A3),
+          const Offset(58, 30),
+        ),
       ];
       return SizedBox(
         height: 124,
@@ -713,8 +735,11 @@ class _TourOrbitIllustration extends StatelessWidget {
                 color: const Color(0xFF9B74FF).withValues(alpha: .28),
                 border: Border.all(color: Colors.white24),
               ),
-              child: const Icon(Icons.auto_graph_rounded,
-                  color: Colors.white, size: 34),
+              child: const Icon(
+                Icons.auto_graph_rounded,
+                color: Colors.white,
+                size: 34,
+              ),
             ),
             for (final item in symbols)
               Transform.translate(
@@ -727,9 +752,7 @@ class _TourOrbitIllustration extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: item.$2.withValues(alpha: .17),
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: item.$2.withValues(alpha: .47),
-                      ),
+                      border: Border.all(color: item.$2.withValues(alpha: .47)),
                     ),
                     child: Icon(item.$1, color: item.$2, size: 20),
                   ),

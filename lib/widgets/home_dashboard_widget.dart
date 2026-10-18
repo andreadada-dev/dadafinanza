@@ -181,8 +181,7 @@ class _AccountsBlock extends StatelessWidget {
           EmptyState(
             icon: Icons.account_balance_wallet_outlined,
             title: 'Nessun conto',
-            subtitle:
-                'Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.',
+            subtitle: 'Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.',
             action: TextButton.icon(
               onPressed: () => showAccountEditor(context),
               icon: const Icon(Icons.add_rounded),
@@ -549,9 +548,8 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
           category: null,
           label: 'Altro',
           amount: other,
-          color: Theme.of(
-            context,
-          ).colorScheme.onSurfaceVariant.withValues(alpha: .38),
+          color: Theme.of(context).colorScheme.onSurfaceVariant
+              .withValues(alpha: .38),
         ),
       );
     }
@@ -587,9 +585,8 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
         pageSelectedIndex >= 0 && pageSelectedIndex < data.slices.length
         ? data.slices[pageSelectedIndex]
         : null;
-    final emptyRingColor = Theme.of(
-      context,
-    ).colorScheme.onSurface.withValues(alpha: .16);
+    final emptyRingColor = Theme.of(context).colorScheme.onSurface
+        .withValues(alpha: .16);
 
     return Center(
       child: SizedBox(
@@ -607,9 +604,8 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                       startDegreeOffset: -90,
                       sectionsSpace: hasData ? 4 : 0,
                       centerSpaceRadius: chartSize * .32,
-                      centerSpaceColor: Theme.of(
-                        context,
-                      ).scaffoldBackgroundColor,
+                      centerSpaceColor: Theme.of(context)
+                          .scaffoldBackgroundColor,
                       borderData: FlBorderData(show: false),
                       pieTouchData: PieTouchData(
                         enabled: interactive,
@@ -762,8 +758,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
             alignment: Alignment.center,
             children: [
               Semantics(
-                label:
-                    'Carosello categorie. Scorri a destra o sinistra per passare tra Spese ed Entrate.',
+                label: 'Carosello categorie. Scorri a destra o sinistra per passare tra Spese ed Entrate.',
                 child: NotificationListener<ScrollNotification>(
                   onNotification: (notification) {
                     if (notification is ScrollStartNotification &&

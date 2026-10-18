@@ -476,9 +476,8 @@ class BalynShaderLinearProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final track = Theme.of(
-      context,
-    ).colorScheme.onSurface.withValues(alpha: .10);
+    final track = Theme.of(context).colorScheme.onSurface
+        .withValues(alpha: .10);
     return Stack(
       children: [
         LinearProgressIndicator(
@@ -607,9 +606,9 @@ LinearGradient balynAnimatedGradient(
   final angle = phase * math.pi * 2;
   final x = math.cos(angle);
   final y = math.sin(angle);
-  final palette = balynShaderPalette(
-    seed,
-  ).map((color) => color.withValues(alpha: opacity)).toList();
+  final palette = balynShaderPalette(seed)
+      .map((color) => color.withValues(alpha: opacity))
+      .toList();
   return LinearGradient(
     begin: Alignment(-x, -y),
     end: Alignment(x, y),

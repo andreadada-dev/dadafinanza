@@ -63,9 +63,8 @@ class AccountContextSelector extends StatelessWidget {
         constraints: const BoxConstraints(maxWidth: 220, minHeight: 38),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: Theme.of(
-            context,
-          ).colorScheme.surfaceContainer.withValues(alpha: .88),
+          color: Theme.of(context).colorScheme.surfaceContainer
+              .withValues(alpha: .88),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(

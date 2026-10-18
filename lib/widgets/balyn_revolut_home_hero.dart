@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:balyn/l10n/localized_material.dart';
+
 import 'balyn_cue_section_bar.dart';
 import 'balyn_cue_three_dots_action.dart';
 
@@ -102,9 +103,8 @@ class BalynRevolutHomeHero extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Seleziona conto',
-                  style: Theme.of(
-                    sheetContext,
-                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
+                  style: Theme.of(sheetContext).textTheme.titleLarge
+                      ?.copyWith(fontWeight: FontWeight.w800),
                 ),
               ),
             ),

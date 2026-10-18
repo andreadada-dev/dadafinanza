@@ -4,15 +4,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Home uses a full-bleed Revolut-style header above live content', () {
-    final home = File(
-      'lib/screens/account_context_home_screen.dart',
-    ).readAsStringSync();
-    final hero = File(
-      'lib/widgets/balyn_revolut_home_hero.dart',
-    ).readAsStringSync();
-    final content = File(
-      'lib/widgets/balyn_revolut_home_content.dart',
-    ).readAsStringSync();
+    final home = File('lib/screens/account_context_home_screen.dart')
+        .readAsStringSync();
+    final hero = File('lib/widgets/balyn_revolut_home_hero.dart')
+        .readAsStringSync();
+    final content = File('lib/widgets/balyn_revolut_home_content.dart')
+        .readAsStringSync();
 
     expect(home, contains('SliverToBoxAdapter('));
     expect(home, contains('BalynRevolutHomeHero('));
@@ -28,9 +25,8 @@ void main() {
   });
 
   test('Home keeps real account selection, privacy and quick actions', () {
-    final home = File(
-      'lib/screens/account_context_home_screen.dart',
-    ).readAsStringSync();
+    final home = File('lib/screens/account_context_home_screen.dart')
+        .readAsStringSync();
     expect(home, contains('accounts: state.activeAccounts'));
     expect(home, contains('currentAccountId: effectiveAccountId'));
     expect(home, contains('BalynRecentTransactionsCard('));
@@ -48,9 +44,8 @@ void main() {
   test(
     'Home hero supports account dropdown, swipe and account-specific waves',
     () {
-      final hero = File(
-        'lib/widgets/balyn_revolut_home_hero.dart',
-      ).readAsStringSync();
+      final hero = File('lib/widgets/balyn_revolut_home_hero.dart')
+          .readAsStringSync();
       expect(hero, contains('hero-account-dropdown'));
       expect(hero, contains('_showAccountSelector(context)'));
       expect(hero, contains('onHorizontalDragEnd:'));
@@ -66,12 +61,10 @@ void main() {
   test(
     'Recent movements use live data and respect hidden account balances',
     () {
-      final home = File(
-        'lib/screens/account_context_home_screen.dart',
-      ).readAsStringSync();
-      final card = File(
-        'lib/widgets/balyn_recent_transactions_card.dart',
-      ).readAsStringSync();
+      final home = File('lib/screens/account_context_home_screen.dart')
+          .readAsStringSync();
+      final card = File('lib/widgets/balyn_recent_transactions_card.dart')
+          .readAsStringSync();
       expect(home, contains('items: recent'));
       expect(home, contains('hideAmounts: hidden'));
       expect(card, contains('items.take(3)'));
@@ -86,9 +79,8 @@ void main() {
   );
 
   test('fixed summary metrics are not duplicated by personalized sections', () {
-    final source = File(
-      'lib/screens/account_context_home_screen.dart',
-    ).readAsStringSync();
+    final source = File('lib/screens/account_context_home_screen.dart')
+        .readAsStringSync();
 
     expect(source, contains('secondaryDashboardWidgets'));
     expect(source, contains('_fixedSummaryTypes.contains(config.type)'));
@@ -106,9 +98,8 @@ void main() {
   });
 
   test('category chart is clearly exposed in Personalizza Home', () {
-    final settings = File(
-      'lib/screens/settings_screen.dart',
-    ).readAsStringSync();
+    final settings = File('lib/screens/settings_screen.dart')
+        .readAsStringSync();
     final models = File('lib/models/models.dart').readAsStringSync();
 
     expect(
@@ -124,9 +115,8 @@ void main() {
   });
 
   test('category carousel drags fluidly and commits data after release', () {
-    final source = File(
-      'lib/widgets/home_dashboard_widget.dart',
-    ).readAsStringSync();
+    final source = File('lib/widgets/home_dashboard_widget.dart')
+        .readAsStringSync();
 
     expect(source, isNot(contains('_CategoryChartControls')));
     expect(source, contains('PageView.builder'));
@@ -148,12 +138,10 @@ void main() {
   });
 
   test('selected account uses the same hero and preserves account details', () {
-    final home = File(
-      'lib/screens/account_context_home_screen.dart',
-    ).readAsStringSync();
-    final widget = File(
-      'lib/widgets/home_dashboard_widget.dart',
-    ).readAsStringSync();
+    final home = File('lib/screens/account_context_home_screen.dart')
+        .readAsStringSync();
+    final widget = File('lib/widgets/home_dashboard_widget.dart')
+        .readAsStringSync();
 
     final hero = home.indexOf('BalynRevolutHomeHero(');
     final accountCarousel = home.indexOf('AccountCategoryCarousel(', hero + 1);
@@ -172,9 +160,8 @@ void main() {
   test(
     'selected account exposes account settings before account analytics',
     () {
-      final source = File(
-        'lib/screens/account_context_home_screen.dart',
-      ).readAsStringSync();
+      final source = File('lib/screens/account_context_home_screen.dart')
+          .readAsStringSync();
 
       expect(source, contains("'Apri conto'"));
       expect(source, contains('accountIcon(selectedAccount.iconKey)'));
@@ -186,12 +173,10 @@ void main() {
   );
 
   test('account management is settings-first and trend lives in analytics', () {
-    final account = File(
-      'lib/screens/account_management_screen.dart',
-    ).readAsStringSync();
-    final analytics = File(
-      'lib/screens/account_context_analytics_screen.dart',
-    ).readAsStringSync();
+    final account = File('lib/screens/account_management_screen.dart')
+        .readAsStringSync();
+    final analytics = File('lib/screens/account_context_analytics_screen.dart')
+        .readAsStringSync();
 
     expect(account, contains("'Impostazioni conto'"));
     expect(account, contains("'Nome, icona e nota'"));
@@ -210,9 +195,8 @@ void main() {
   });
 
   test('analytics periods all fit on screen and Custom stays Custom', () {
-    final analytics = File(
-      'lib/screens/account_context_analytics_screen.dart',
-    ).readAsStringSync();
+    final analytics = File('lib/screens/account_context_analytics_screen.dart')
+        .readAsStringSync();
 
     expect(analytics, contains('class _PeriodPill'));
     expect(analytics, isNot(contains('SegmentedButton<_AnalyticsPeriod>')));
@@ -228,9 +212,8 @@ void main() {
   });
 
   test('analytics trend has date axis labels for total and account views', () {
-    final analytics = File(
-      'lib/screens/account_context_analytics_screen.dart',
-    ).readAsStringSync();
+    final analytics = File('lib/screens/account_context_analytics_screen.dart')
+        .readAsStringSync();
 
     expect(analytics, contains('bottomTitles: AxisTitles('));
     expect(analytics, contains('_AnalyticsPeriod.week =>'));
@@ -248,9 +231,8 @@ void main() {
   });
 
   test('analytics chart supports hourly Today and clean selectable scales', () {
-    final analytics = File(
-      'lib/screens/account_context_analytics_screen.dart',
-    ).readAsStringSync();
+    final analytics = File('lib/screens/account_context_analytics_screen.dart')
+        .readAsStringSync();
 
     expect(analytics, contains("import 'dart:math' as math;"));
     expect(analytics, contains('movementHours'));
@@ -310,9 +292,9 @@ void main() {
     expect(paletteEnd, greaterThan(paletteStart));
 
     final paletteSource = helpers.substring(paletteStart, paletteEnd);
-    final colorCount = RegExp(
-      r'Color\(0xFF[0-9A-F]{6}\)',
-    ).allMatches(paletteSource).length;
+    final colorCount = RegExp(r'Color\(0xFF[0-9A-F]{6}\)')
+        .allMatches(paletteSource)
+        .length;
     expect(colorCount, greaterThanOrEqualTo(40));
 
     for (final path in const [
@@ -331,9 +313,8 @@ void main() {
   });
 
   test('category donut always offers Today and renders an empty ring', () {
-    final source = File(
-      'lib/widgets/home_dashboard_widget.dart',
-    ).readAsStringSync();
+    final source = File('lib/widgets/home_dashboard_widget.dart')
+        .readAsStringSync();
 
     expect(source, contains('var _range = _CategoryChartRange.today;'));
     expect(source, contains('static const _cycleRanges'));

@@ -97,9 +97,8 @@ class BalynGlassNavigation extends StatelessWidget {
                                                   redGlass.withValues(
                                                     alpha: .35,
                                                   ),
-                                                  const Color(
-                                                    0xFF60303B,
-                                                  ).withValues(alpha: .14),
+                                                  const Color(0xFF60303B)
+                                                      .withValues(alpha: .14),
                                                 ]
                                               : [
                                                   Colors.white.withValues(
