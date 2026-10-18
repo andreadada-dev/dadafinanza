@@ -26,15 +26,17 @@ void main() {
     expect(home, contains('AccountContextTransactionsScreen('));
     expect(home, contains('AccountContextAnalyticsScreen('));
     expect(home, contains('embedded: true'));
-    expect(home, contains("const Text('Gestisci conti')"));
+    expect(home, contains('onManageAccounts: () => Navigator.push('));
     expect(home, contains('onAccountChanged: onAccountChanged'));
     expect(home, isNot(contains('home-accounts-scroll')));
     expect(home, contains('sectionPage: _pageController.hasClients'));
     expect(hero, contains('BalynCueSectionBar('));
+    expect(hero, contains('BalynCueThreeDotsAction('));
+    expect(home, contains('onCustomizeHome: () => Navigator.push('));
     expect(selector, contains("'Panoramica'"));
     expect(selector, contains("'Movimenti'"));
     expect(selector, isNot(contains("'Conti'")));
-    expect(selector, contains("'Attività'"));
+    expect(selector, contains("'Analisi'"));
     expect(selector, contains('Cue.onToggle('));
     expect(selector, contains('left: unit * progress'));
     expect(selector, contains('width: unit * (1 + weight[i])'));
@@ -147,7 +149,7 @@ void main() {
               children: const [
                 Center(child: Text('Panoramica')),
                 Center(child: Text('Movimenti')),
-                Center(child: Text('Attività')),
+                Center(child: Text('Analisi')),
               ],
             ),
           ),
