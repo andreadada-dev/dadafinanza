@@ -68,10 +68,8 @@ void main() {
       expect(source, contains('state.setLanguageCode(_language)'));
       expect(source, contains('state.addAccount('));
       expect(source, contains("setSetting('onboarding_completed', '1')"));
-      expect(
-        source,
-        contains('const Positioned.fill(child: BalynOnboardingVelvet())'),
-      );
+      expect(source, isNot(contains('BalynOnboardingVelvet()')));
+      expect(source, contains('ColoredBox(color: BalynPalette.darkCanvas)'));
       expect(source, contains('backgroundColor: BalynPalette.darkCanvas'));
       expect(source, contains('backgroundColor: BalynPalette.accent'));
     },
