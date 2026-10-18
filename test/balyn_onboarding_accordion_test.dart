@@ -45,26 +45,37 @@ void main() {
         expect(phrase.trim(), isNotEmpty, reason: '$language.$key');
       }
       for (final type in [
-        'checking', 'cash', 'card', 'savings', 'prepaid', 'investment'
+        'checking',
+        'cash',
+        'card',
+        'savings',
+        'prepaid',
+        'investment',
       ]) {
-        expect(BalynOnboardingL10n.accountType(language, type),
-            isNot(type));
+        expect(BalynOnboardingL10n.accountType(language, type), isNot(type));
       }
     }
   });
 
-  test('The onboarding maintains account setup and actual data persistence', () {
-    final source =
-        File('lib/screens/balyn_onboarding_flow.dart').readAsStringSync();
-    expect(source, contains('BalynOnboardingFeatureAccordion('));
-    expect(source, contains('onChanged: _changeLanguage'));
-    expect(source, contains('state.setLanguageCode(_language)'));
-    expect(source, contains('state.addAccount('));
-    expect(source, contains("setSetting('onboarding_completed', '1')"));
-    expect(source, contains('const Positioned.fill(child: BalynOnboardingVelvet())'));
-    expect(source, contains('backgroundColor: BalynPalette.darkCanvas'));
-    expect(source, contains('backgroundColor: BalynPalette.accent'));
-  });
+  test(
+    'The onboarding maintains account setup and actual data persistence',
+    () {
+      final source = File(
+        'lib/screens/balyn_onboarding_flow.dart',
+      ).readAsStringSync();
+      expect(source, contains('BalynOnboardingFeatureAccordion('));
+      expect(source, contains('onChanged: _changeLanguage'));
+      expect(source, contains('state.setLanguageCode(_language)'));
+      expect(source, contains('state.addAccount('));
+      expect(source, contains("setSetting('onboarding_completed', '1')"));
+      expect(
+        source,
+        contains('const Positioned.fill(child: BalynOnboardingVelvet())'),
+      );
+      expect(source, contains('backgroundColor: BalynPalette.darkCanvas'));
+      expect(source, contains('backgroundColor: BalynPalette.accent'));
+    },
+  );
 
   testWidgets('Cue accordion opens one section at a time and can close', (
     tester,
@@ -89,10 +100,11 @@ void main() {
         ),
       ),
     );
-    expect(find.byKey(const ValueKey('onboarding-feature-accordion')),
-        findsOneWidget);
-    expect(find.byKey(const ValueKey('onboarding-feature-0')),
-        findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('onboarding-feature-accordion')),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('onboarding-feature-0')), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('onboarding-feature-1')));
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);

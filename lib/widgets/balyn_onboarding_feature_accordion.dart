@@ -66,7 +66,9 @@ class _BalynOnboardingFeatureAccordionState
                   final previous = _expandedIndex - 1 == i;
                   final next = _expandedIndex + 1 == i;
                   final topRadius = active || i == 0 || next ? 22.0 : 0.0;
-                  final bottomRadius = active || isLast || previous ? 22.0 : 0.0;
+                  final bottomRadius = active || isLast || previous
+                      ? 22.0
+                      : 0.0;
                   final title = BalynOnboardingL10n.tr(
                     widget.languageCode,
                     _titleKeys[i],
@@ -78,9 +80,7 @@ class _BalynOnboardingFeatureAccordionState
                   return Actor(
                     acts: [
                       .scale(from: 1.0, to: 1.035),
-                      .padding(
-                        to: const EdgeInsets.symmetric(vertical: 7),
-                      ),
+                      .padding(to: const EdgeInsets.symmetric(vertical: 7)),
                     ],
                     child: Material(
                       clipBehavior: Clip.antiAlias,

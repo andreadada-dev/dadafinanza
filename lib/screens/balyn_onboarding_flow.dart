@@ -45,7 +45,8 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
     const keys = <String, String>{
       "Inserisci il nome del conto": "requiredName",
       "Le tue finanze, più semplici": "welcomeTitle",
-      "Tutti i tuoi conti, movimenti e obiettivi in un solo posto. I dati restano sul dispositivo.": "welcomeSubtitle",
+      "Tutti i tuoi conti, movimenti e obiettivi in un solo posto. I dati restano sul dispositivo.":
+          "welcomeSubtitle",
       "Lingua": "language",
       "Valuta": "currency",
       "Crea il tuo primo conto": "accountTitle",
@@ -165,7 +166,10 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: compact ? 82 : 120, child: Center(child: illustration)),
+            SizedBox(
+              height: compact ? 82 : 120,
+              child: Center(child: illustration),
+            ),
             const SizedBox(height: 13),
             Text(
               title,
@@ -206,9 +210,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
         fit: StackFit.expand,
         children: [
           const Positioned.fill(child: BalynOnboardingVelvet()),
-          const Positioned.fill(
-            child: ColoredBox(color: Color(0xC5101018)),
-          ),
+          const Positioned.fill(child: ColoredBox(color: Color(0xC5101018))),
           SafeArea(
             child: Column(
               children: [
@@ -258,7 +260,8 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
                                     child: CircularProgressIndicator(
                                       value: value,
                                       strokeWidth: 3,
-                                      backgroundColor: BalynPalette.darkSurfaceHigh,
+                                      backgroundColor:
+                                          BalynPalette.darkSurfaceHigh,
                                       valueColor: const AlwaysStoppedAnimation(
                                         BalynPalette.accentTextDark,
                                       ),
@@ -307,7 +310,9 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
                                 isExpanded: true,
                                 value: _language,
                                 dropdownColor: BalynPalette.darkSurfaceHigh,
-                                style: const TextStyle(color: BalynPalette.darkText),
+                                style: const TextStyle(
+                                  color: BalynPalette.darkText,
+                                ),
                                 underline: const SizedBox.shrink(),
                                 items: [
                                   for (final l in AppI18n.languages)
@@ -392,7 +397,12 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
                                   ])
                                     DropdownMenuItem(
                                       value: v,
-                                      child: Text(BalynOnboardingL10n.accountType(_language, v.name)),
+                                      child: Text(
+                                        BalynOnboardingL10n.accountType(
+                                          _language,
+                                          v.name,
+                                        ),
+                                      ),
                                     ),
                                 ],
                                 onChanged: (v) => setState(() {
@@ -413,7 +423,9 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
                             Text(
                               _t('Icona del conto', 'Account icon'),
                               textAlign: TextAlign.center,
-                              style: const TextStyle(color: BalynPalette.darkMuted),
+                              style: const TextStyle(
+                                color: BalynPalette.darkMuted,
+                              ),
                             ),
                             const SizedBox(height: 9),
                             Wrap(
@@ -527,7 +539,6 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
                     onChange: (page) {
                       if (_step != page && mounted) {
                         setState(() => _step = page);
-
                       }
                     },
                     onDone: () => _complete(),
@@ -599,7 +610,10 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
 }
 
 class _CircleArt extends StatelessWidget {
-  const _CircleArt({required this.icon, this.color = BalynPalette.accentTextDark});
+  const _CircleArt({
+    required this.icon,
+    this.color = BalynPalette.accentTextDark,
+  });
   final IconData icon;
   final Color color;
 
@@ -621,4 +635,3 @@ class _CircleArt extends StatelessWidget {
     ),
   );
 }
-
