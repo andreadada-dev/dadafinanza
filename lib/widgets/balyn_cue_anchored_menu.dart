@@ -49,7 +49,12 @@ class BalynCueAnchoredMenu extends StatelessWidget {
         triggerBuilder(context, () => showModal()),
     builder: (modalContext, triggerRect) {
       final scheme = Theme.of(modalContext).colorScheme;
-      return SizedBox(
+      return Transform.translate(
+        // Cue aligns the right edge of the overlay to the trigger rectangle.
+        // The hero Altro trigger is wider than its 52dp circle due to its
+        // label, so center the 56dp close button on the ORIGINAL circle.
+        offset: Offset((56 - triggerRect.width) / 2, 0),
+        child: SizedBox(
         width: 232,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -131,6 +136,7 @@ class BalynCueAnchoredMenu extends StatelessWidget {
               ),
             ),
           ],
+        ),
         ),
       );
     },
