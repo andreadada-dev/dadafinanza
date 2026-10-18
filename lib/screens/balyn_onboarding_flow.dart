@@ -14,7 +14,13 @@ class BalynOnboardingFlow extends StatefulWidget {
   State<BalynOnboardingFlow> createState() => _BalynOnboardingFlowState();
 }
 
-class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
+class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _tourController = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 920),
+  );
+
   final GlobalKey<IntroductionScreenState> _introKey =
       GlobalKey<IntroductionScreenState>();
   final TextEditingController _name = TextEditingController(
@@ -40,6 +46,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
 
   @override
   void dispose() {
+    _tourController.dispose();
     _name.dispose();
     super.dispose();
   }
@@ -103,40 +110,84 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
     ),
   );
 
-  Widget _tour(IconData icon, String title, String subtitle) => Padding(
-    padding: const EdgeInsets.only(bottom: 9),
-    child: Container(
-      padding: const EdgeInsets.all(13),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: .12),
-        borderRadius: BorderRadius.circular(18),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, color: const Color(0xFFFFBEE9), size: 27),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _tour(int index, IconData icon, String title, String subtitle) {
+    const accent = [
+      Color(0xFFFFC2ED),
+      Color(0xFFAACDFF),
+      Color(0xFFB3F5D9),
+      Color(0xFFFFD8A3),
+    ];
+    final color = accent[index];
+    final begin = index * .14;
+    final end = (begin + .57).clamp(0.0, 1.0);
+    return AnimatedBuilder(
+      animation: _tourController,
+      builder: (context, child) {
+        final progress = Curves.easeOutCubic.transform(
+          ((_tourController.value - begin) / (end - begin)).clamp(0.0, 1.0),
+        );
+        return Opacity(
+          opacity: progress,
+          child: Transform.translate(
+            offset: Offset(0, 25 * (1 - progress)),
+            child: Transform.scale(
+              scale: .965 + .035 * progress,
+              child: child,
+            ),
+          ),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: Semantics(
+          label: '$title. $subtitle',
+          child: Container(
+            key: ValueKey('onboarding-tour-$index'),
+            padding: const EdgeInsets.fromLTRB(14, 15, 14, 15),
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: .095),
+              borderRadius: BorderRadius.circular(22),
+              border: Border.all(color: Colors.white.withValues(alpha: .15)),
+            ),
+            child: Row(
               children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w800,
+                Container(
+                  height: 47,
+                  width: 47,
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: .18),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Icon(icon, color: color, size: 25),
+                ),
+                const SizedBox(width: 13),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(title, style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 15,
+                      )),
+                      const SizedBox(height: 3),
+                      Text(subtitle, style: const TextStyle(
+                        color: Color(0xFFE0D9ED),
+                        fontSize: 12,
+                        height: 1.35,
+                      )),
+                    ],
                   ),
                 ),
-                Text(
-                  subtitle,
-                  style: const TextStyle(color: Colors.white70, fontSize: 12),
-                ),
+                Icon(Icons.chevron_right_rounded,
+                    color: color.withValues(alpha: .7), size: 18),
               ],
             ),
           ),
-        ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 
   Widget _page({
     required Widget illustration,
@@ -471,9 +522,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
                     ),
                   ),
                   _page(
-                    illustration: const _CircleArt(
-                      icon: Icons.auto_graph_rounded,
-                    ),
+                    illustration: _TourOrbitIllustration(progress: _tourController),
                     title: _t('Ecco come funziona', 'How Balyn works'),
                     subtitle: _t(
                       'Quattro sezioni, tutte collegate tra loro.',
@@ -482,19 +531,22 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
                     content: Column(
                       children: [
                         _tour(
+                          0,
                           Icons.home_rounded,
                           'Home',
                           _t('Patrimonio e conti', 'Balances and accounts'),
                         ),
                         _tour(
+                          1,
                           Icons.receipt_long_rounded,
-                          _t('Attività', 'Activity'),
+                          _t('Movimenti e Analisi', 'Transactions and Analytics'),
                           _t(
-                            'Movimenti e analisi',
-                            'Transactions and analytics',
+                            'Entrate, spese e statistiche',
+                            'Income, expenses and insights',
                           ),
                         ),
                         _tour(
+                          2,
                           Icons.handshake_rounded,
                           _t('Anticipi', 'Advances'),
                           _t(
@@ -503,6 +555,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
                           ),
                         ),
                         _tour(
+                          3,
                           Icons.event_note_rounded,
                           _t('Pianifica', 'Plan'),
                           _t(
@@ -525,7 +578,18 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
                 showSkipButton: false,
                 isProgressTap: false,
                 onChange: (page) {
-                  if (_step != page && mounted) setState(() => _step = page);
+                  if (_step != page && mounted) {
+                    setState(() => _step = page);
+                    if (page == 2) {
+                      if (reduced) {
+                        _tourController.value = 1;
+                      } else {
+                        _tourController.forward(from: 0);
+                      }
+                    } else {
+                      _tourController.reset();
+                    }
+                  }
                 },
                 onDone: () => _complete(),
                 next: Text(
@@ -614,5 +678,66 @@ class _CircleArt extends StatelessWidget {
       duration: const Duration(milliseconds: 200),
       child: Icon(icon, key: ValueKey(icon), size: 65, color: color),
     ),
+  );
+}
+
+
+/// On the last page the four product sections assemble around the Balyn core.
+class _TourOrbitIllustration extends StatelessWidget {
+  const _TourOrbitIllustration({required this.progress});
+
+  final Animation<double> progress;
+
+  @override
+  Widget build(BuildContext context) => AnimatedBuilder(
+    animation: progress,
+    builder: (context, _) {
+      final factor = Curves.easeOutCubic.transform(progress.value);
+      final symbols = [
+        (Icons.home_rounded, const Color(0xFFFFC2ED), const Offset(-58, -25)),
+        (Icons.receipt_long_rounded, const Color(0xFFAACDFF), const Offset(58, -25)),
+        (Icons.handshake_rounded, const Color(0xFFB3F5D9), const Offset(-58, 30)),
+        (Icons.event_note_rounded, const Color(0xFFFFD8A3), const Offset(58, 30)),
+      ];
+      return SizedBox(
+        height: 124,
+        width: 230,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              width: 65,
+              height: 65,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(22),
+                color: const Color(0xFF9B74FF).withValues(alpha: .28),
+                border: Border.all(color: Colors.white24),
+              ),
+              child: const Icon(Icons.auto_graph_rounded,
+                  color: Colors.white, size: 34),
+            ),
+            for (final item in symbols)
+              Transform.translate(
+                offset: item.$3 * factor,
+                child: Opacity(
+                  opacity: factor,
+                  child: Container(
+                    height: 35,
+                    width: 35,
+                    decoration: BoxDecoration(
+                      color: item.$2.withValues(alpha: .17),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: item.$2.withValues(alpha: .47),
+                      ),
+                    ),
+                    child: Icon(item.$1, color: item.$2, size: 20),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      );
+    },
   );
 }
