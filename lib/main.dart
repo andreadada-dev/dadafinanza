@@ -19,12 +19,16 @@ import 'services/recurring_execution_service.dart';
 import 'services/security_service.dart';
 import 'theme/app_theme.dart';
 import 'widgets/app_lock_gate.dart';
+import 'widgets/balyn_data_skeleton.dart';
 import 'widgets/balyn_shader_system.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Render a real skeleton immediately while the local database is loaded.
+  // This bootstrap contains no sample balances or persisted user data.
+  runApp(const BalynBootstrapLoadingApp());
   await initializeDateFormatting();
   final shaderWarmup = BalynShaderPrograms.preload();
   final database = AppDatabase();
