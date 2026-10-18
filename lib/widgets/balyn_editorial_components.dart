@@ -1,4 +1,5 @@
 import 'package:balyn/l10n/localized_material.dart';
+import '../theme/balyn_palette.dart';
 
 /// The same flat, information-first surfaces are used throughout Balyn.
 /// Background remains local to each screen, so the shared liquid shader is
@@ -7,7 +8,7 @@ class BalynEditorialSurface extends StatelessWidget {
   const BalynEditorialSurface({
     required this.child,
     this.padding = const EdgeInsets.all(16),
-    this.radius = 20,
+    this.radius = BalynPalette.radius,
     super.key,
   });
 
@@ -17,12 +18,11 @@ class BalynEditorialSurface extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       width: double.infinity,
       padding: padding,
       decoration: BoxDecoration(
-        color: dark ? const Color(0xFF252532) : Colors.white,
+        color: BalynPalette.surface(Theme.of(context).brightness),
         borderRadius: BorderRadius.circular(radius),
       ),
       child: child,
