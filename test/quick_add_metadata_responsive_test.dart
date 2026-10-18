@@ -57,7 +57,7 @@ void main() {
     });
   }
 
-  testWidgets('Quick Add exposes separate date and time controls', (
+  testWidgets('Quick Add exposes one inline date and time control', (
     tester,
   ) async {
     tester.view.physicalSize = const Size(390, 844);
@@ -67,16 +67,14 @@ void main() {
 
     await _pumpQuickAdd(tester, dark: true);
     await tester.scrollUntilVisible(
-      find.text('Data'),
+      find.text('Data e ora'),
       240,
       scrollable: find.byType(Scrollable).first,
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Data'), findsOneWidget);
-    expect(find.text('Ora'), findsOneWidget);
-    expect(find.byIcon(Icons.calendar_today_outlined), findsOneWidget);
-    expect(find.byIcon(Icons.schedule_rounded), findsOneWidget);
+    expect(find.text('Data e ora'), findsOneWidget);
+    expect(find.byIcon(Icons.event_outlined), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
