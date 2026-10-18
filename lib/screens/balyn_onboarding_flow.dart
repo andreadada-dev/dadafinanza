@@ -253,423 +253,430 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
           const Positioned.fill(child: BalynOnboardingVelvet()),
           SafeArea(
             child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 10, 24, 13),
-              child: Row(
-                children: [
-                  const Text(
-                    'Balyn',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 23,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    '${_step + 1}/3',
-                    style: const TextStyle(color: Colors.white70),
-                  ),
-                  const SizedBox(width: 17),
-                  if (!_saving)
-                    InkWell(
-                      key: const ValueKey('onboarding-skip'),
-                      onTap: () => setState(() => _skipping = true),
-                      child: SizedBox(
-                        width: 62,
-                        height: 54,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            TweenAnimationBuilder<double>(
-                              tween: Tween<double>(
-                                begin: 0,
-                                end: _skipping ? 1 : 0,
-                              ),
-                              duration: reduced
-                                  ? Duration.zero
-                                  : const Duration(milliseconds: 880),
-                              curve: Curves.easeInOutCubic,
-                              onEnd: () {
-                                if (_skipping && mounted) _complete(skip: true);
-                              },
-                              builder: (_, value, __) => SizedBox.square(
-                                dimension: 48,
-                                child: CircularProgressIndicator(
-                                  value: value,
-                                  strokeWidth: 3,
-                                  backgroundColor: Colors.white24,
-                                  valueColor: const AlwaysStoppedAnimation(
-                                    Color(0xFFFFD5EE),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              _t('Salta', 'Skip'),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 11,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 10, 24, 13),
+                  child: Row(
+                    children: [
+                      const Text(
+                        'Balyn',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 23,
+                          fontWeight: FontWeight.w900,
                         ),
                       ),
-                    ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: IntroductionScreen(
-                key: _introKey,
-                rawPages: [
-                  _page(
-                    illustration: const _CircleArt(
-                      icon: Icons.auto_graph_rounded,
-                    ),
-                    title: _t(
-                      'Le tue finanze, più semplici',
-                      'Your finances, simplified',
-                    ),
-                    subtitle: _t(
-                      'Tutti i tuoi conti, movimenti e obiettivi in un solo posto. '
-                          'I dati restano sul dispositivo.',
-                      'Your accounts, activity and goals in one place. '
-                          'Your data stays on your device.',
-                    ),
-                    content: Column(
-                      children: [
-                        _tile(
-                          Icons.language_rounded,
-                          _t('Lingua', 'Language'),
-                          DropdownButton<String>(
-                            isExpanded: true,
-                            value: _language,
-                            dropdownColor: const Color(0xFF392566),
-                            style: const TextStyle(color: Colors.white),
-                            underline: const SizedBox.shrink(),
-                            items: [
-                              for (final l in AppI18n.languages)
-                                DropdownMenuItem(
-                                  value: l.code,
-                                  child: Text(l.nativeName),
-                                ),
-                            ],
-                            onChanged: (v) =>
-                                setState(() => _language = v ?? 'it'),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        _tile(
-                          Icons.currency_exchange_rounded,
-                          _t('Valuta', 'Currency'),
-                          DropdownButton<String>(
-                            isExpanded: true,
-                            value: _currency,
-                            dropdownColor: const Color(0xFF392566),
-                            style: const TextStyle(color: Colors.white),
-                            underline: const SizedBox.shrink(),
-                            items: [
-                              for (final v in options)
-                                DropdownMenuItem(value: v, child: Text(v)),
-                            ],
-                            onChanged: (v) =>
-                                setState(() => _currency = v ?? 'EUR'),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  _page(
-                    illustration: _CircleArt(
-                      icon: accountIcon(_iconKey),
-                      color: Color(_color),
-                    ),
-                    title: _t(
-                      'Crea il tuo primo conto',
-                      'Create your first account',
-                    ),
-                    subtitle: _t(
-                      'Il saldo parte da zero e puoi cambiarlo in seguito.',
-                      'Your balance starts at zero and can be updated later.',
-                    ),
-                    content: Column(
-                      children: [
-                        TextField(
-                          controller: _name,
-                          style: const TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            labelText: _t('Nome conto', 'Account name'),
-                            labelStyle: const TextStyle(color: Colors.white70),
-                            filled: true,
-                            fillColor: Colors.white12,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(17),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        _tile(
-                          Icons.account_balance_outlined,
-                          _t('Tipo', 'Type'),
-                          DropdownButton<AccountType>(
-                            isExpanded: true,
-                            value: _type,
-                            dropdownColor: const Color(0xFF392566),
-                            style: const TextStyle(color: Colors.white),
-                            underline: const SizedBox.shrink(),
-                            items: [
-                              for (final v in [
-                                AccountType.checking,
-                                AccountType.cash,
-                                AccountType.card,
-                                AccountType.savings,
-                                AccountType.prepaid,
-                                AccountType.investment,
-                              ])
-                                DropdownMenuItem(
-                                  value: v,
-                                  child: Text(v.label),
-                                ),
-                            ],
-                            onChanged: (v) => setState(() {
-                              _type = v ?? AccountType.checking;
-                              _iconKey = switch (_type) {
-                                AccountType.cash => 'cash',
-                                AccountType.checking => 'bank',
-                                AccountType.savings => 'savings',
-                                AccountType.card ||
-                                AccountType.prepaid => 'card',
-                                AccountType.investment => 'investment',
-                                AccountType.other => 'wallet',
-                              };
-                            }),
-                          ),
-                        ),
-                        const SizedBox(height: 18),
-                        Text(
-                          _t('Icona del conto', 'Account icon'),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(color: Colors.white70),
-                        ),
-                        const SizedBox(height: 9),
-                        Wrap(
-                          alignment: WrapAlignment.center,
-                          spacing: 9,
-                          runSpacing: 9,
-                          children: [
-                            for (final key in const [
-                              'wallet',
-                              'bank',
-                              'card',
-                              'cash',
-                              'savings',
-                              'investment',
-                            ])
-                              InkWell(
-                                key: ValueKey('intro-icon-$key'),
-                                borderRadius: BorderRadius.circular(15),
-                                onTap: () => setState(() => _iconKey = key),
-                                child: Container(
-                                  width: 47,
-                                  height: 45,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: _iconKey == key
-                                        ? Color(_color).withValues(alpha: .26)
-                                        : Colors.white.withValues(alpha: .07),
-                                    borderRadius: BorderRadius.circular(15),
-                                    border: Border.all(
-                                      color: _iconKey == key
-                                          ? Color(_color)
-                                          : Colors.white12,
+                      const Spacer(),
+                      Text(
+                        '${_step + 1}/3',
+                        style: const TextStyle(color: Colors.white70),
+                      ),
+                      const SizedBox(width: 17),
+                      if (!_saving)
+                        InkWell(
+                          key: const ValueKey('onboarding-skip'),
+                          onTap: () => setState(() => _skipping = true),
+                          child: SizedBox(
+                            width: 62,
+                            height: 54,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                TweenAnimationBuilder<double>(
+                                  tween: Tween<double>(
+                                    begin: 0,
+                                    end: _skipping ? 1 : 0,
+                                  ),
+                                  duration: reduced
+                                      ? Duration.zero
+                                      : const Duration(milliseconds: 880),
+                                  curve: Curves.easeInOutCubic,
+                                  onEnd: () {
+                                    if (_skipping && mounted)
+                                      _complete(skip: true);
+                                  },
+                                  builder: (_, value, __) => SizedBox.square(
+                                    dimension: 48,
+                                    child: CircularProgressIndicator(
+                                      value: value,
+                                      strokeWidth: 3,
+                                      backgroundColor: Colors.white24,
+                                      valueColor: const AlwaysStoppedAnimation(
+                                        Color(0xFFFFD5EE),
+                                      ),
                                     ),
                                   ),
-                                  child: Icon(
-                                    accountIcon(key),
+                                ),
+                                Text(
+                                  _t('Salta', 'Skip'),
+                                  style: const TextStyle(
                                     color: Colors.white,
-                                    size: 23,
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
+                              ],
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: IntroductionScreen(
+                    key: _introKey,
+                    rawPages: [
+                      _page(
+                        illustration: const _CircleArt(
+                          icon: Icons.auto_graph_rounded,
+                        ),
+                        title: _t(
+                          'Le tue finanze, più semplici',
+                          'Your finances, simplified',
+                        ),
+                        subtitle: _t(
+                          'Tutti i tuoi conti, movimenti e obiettivi in un solo posto. '
+                              'I dati restano sul dispositivo.',
+                          'Your accounts, activity and goals in one place. '
+                              'Your data stays on your device.',
+                        ),
+                        content: Column(
+                          children: [
+                            _tile(
+                              Icons.language_rounded,
+                              _t('Lingua', 'Language'),
+                              DropdownButton<String>(
+                                isExpanded: true,
+                                value: _language,
+                                dropdownColor: const Color(0xFF392566),
+                                style: const TextStyle(color: Colors.white),
+                                underline: const SizedBox.shrink(),
+                                items: [
+                                  for (final l in AppI18n.languages)
+                                    DropdownMenuItem(
+                                      value: l.code,
+                                      child: Text(l.nativeName),
+                                    ),
+                                ],
+                                onChanged: (v) =>
+                                    setState(() => _language = v ?? 'it'),
                               ),
+                            ),
+                            const SizedBox(height: 10),
+                            _tile(
+                              Icons.currency_exchange_rounded,
+                              _t('Valuta', 'Currency'),
+                              DropdownButton<String>(
+                                isExpanded: true,
+                                value: _currency,
+                                dropdownColor: const Color(0xFF392566),
+                                style: const TextStyle(color: Colors.white),
+                                underline: const SizedBox.shrink(),
+                                items: [
+                                  for (final v in options)
+                                    DropdownMenuItem(value: v, child: Text(v)),
+                                ],
+                                onChanged: (v) =>
+                                    setState(() => _currency = v ?? 'EUR'),
+                              ),
+                            ),
                           ],
                         ),
-                        const SizedBox(height: 20),
-                        Text(
-                          _t('Colore del conto', 'Account color'),
-                          style: const TextStyle(color: Colors.white),
+                      ),
+                      _page(
+                        illustration: _CircleArt(
+                          icon: accountIcon(_iconKey),
+                          color: Color(_color),
                         ),
-                        const SizedBox(height: 9),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        title: _t(
+                          'Crea il tuo primo conto',
+                          'Create your first account',
+                        ),
+                        subtitle: _t(
+                          'Il saldo parte da zero e puoi cambiarlo in seguito.',
+                          'Your balance starts at zero and can be updated later.',
+                        ),
+                        content: Column(
                           children: [
-                            for (final c in colors)
-                              InkWell(
-                                onTap: () => setState(() => _color = c),
-                                child: Container(
-                                  width: 43,
-                                  height: 43,
-                                  decoration: BoxDecoration(
-                                    color: Color(c),
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: Colors.white,
-                                      width: _color == c ? 3 : 0,
+                            TextField(
+                              controller: _name,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                labelText: _t('Nome conto', 'Account name'),
+                                labelStyle: const TextStyle(
+                                  color: Colors.white70,
+                                ),
+                                filled: true,
+                                fillColor: Colors.white12,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(17),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            _tile(
+                              Icons.account_balance_outlined,
+                              _t('Tipo', 'Type'),
+                              DropdownButton<AccountType>(
+                                isExpanded: true,
+                                value: _type,
+                                dropdownColor: const Color(0xFF392566),
+                                style: const TextStyle(color: Colors.white),
+                                underline: const SizedBox.shrink(),
+                                items: [
+                                  for (final v in [
+                                    AccountType.checking,
+                                    AccountType.cash,
+                                    AccountType.card,
+                                    AccountType.savings,
+                                    AccountType.prepaid,
+                                    AccountType.investment,
+                                  ])
+                                    DropdownMenuItem(
+                                      value: v,
+                                      child: Text(v.label),
+                                    ),
+                                ],
+                                onChanged: (v) => setState(() {
+                                  _type = v ?? AccountType.checking;
+                                  _iconKey = switch (_type) {
+                                    AccountType.cash => 'cash',
+                                    AccountType.checking => 'bank',
+                                    AccountType.savings => 'savings',
+                                    AccountType.card ||
+                                    AccountType.prepaid => 'card',
+                                    AccountType.investment => 'investment',
+                                    AccountType.other => 'wallet',
+                                  };
+                                }),
+                              ),
+                            ),
+                            const SizedBox(height: 18),
+                            Text(
+                              _t('Icona del conto', 'Account icon'),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(color: Colors.white70),
+                            ),
+                            const SizedBox(height: 9),
+                            Wrap(
+                              alignment: WrapAlignment.center,
+                              spacing: 9,
+                              runSpacing: 9,
+                              children: [
+                                for (final key in const [
+                                  'wallet',
+                                  'bank',
+                                  'card',
+                                  'cash',
+                                  'savings',
+                                  'investment',
+                                ])
+                                  InkWell(
+                                    key: ValueKey('intro-icon-$key'),
+                                    borderRadius: BorderRadius.circular(15),
+                                    onTap: () => setState(() => _iconKey = key),
+                                    child: Container(
+                                      width: 47,
+                                      height: 45,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: _iconKey == key
+                                            ? Color(
+                                                _color,
+                                              ).withValues(alpha: .26)
+                                            : Colors.white.withValues(
+                                                alpha: .07,
+                                              ),
+                                        borderRadius: BorderRadius.circular(15),
+                                        border: Border.all(
+                                          color: _iconKey == key
+                                              ? Color(_color)
+                                              : Colors.white12,
+                                        ),
+                                      ),
+                                      child: Icon(
+                                        accountIcon(key),
+                                        color: Colors.white,
+                                        size: 23,
+                                      ),
                                     ),
                                   ),
-                                  child: _color == c
-                                      ? const Icon(
-                                          Icons.check_rounded,
+                              ],
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
+                              _t('Colore del conto', 'Account color'),
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            const SizedBox(height: 9),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                for (final c in colors)
+                                  InkWell(
+                                    onTap: () => setState(() => _color = c),
+                                    child: Container(
+                                      width: 43,
+                                      height: 43,
+                                      decoration: BoxDecoration(
+                                        color: Color(c),
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
                                           color: Colors.white,
-                                        )
-                                      : null,
-                                ),
-                              ),
+                                          width: _color == c ? 3 : 0,
+                                        ),
+                                      ),
+                                      child: _color == c
+                                          ? const Icon(
+                                              Icons.check_rounded,
+                                              color: Colors.white,
+                                            )
+                                          : null,
+                                    ),
+                                  ),
+                              ],
+                            ),
                           ],
                         ),
-                      ],
-                    ),
-                  ),
-                  _page(
-                    illustration: _TourOrbitIllustration(
-                      progress: _tourController,
-                    ),
-                    title: _t('Ecco come funziona', 'How Balyn works'),
-                    subtitle: _t(
-                      'Quattro sezioni, tutte collegate tra loro.',
-                      'Four connected sections, one clear view.',
-                    ),
-                    content: Column(
-                      children: [
-                        _tour(
-                          0,
-                          Icons.home_rounded,
-                          'Home',
-                          _t('Patrimonio e conti', 'Balances and accounts'),
-                        ),
-                        _tour(
-                          1,
-                          Icons.receipt_long_rounded,
-                          _t(
-                            'Movimenti e Analisi',
-                            'Transactions and Analytics',
-                          ),
-                          _t(
-                            'Entrate, spese e statistiche',
-                            'Income, expenses and insights',
-                          ),
-                        ),
-                        _tour(
-                          2,
-                          Icons.handshake_rounded,
-                          _t('Anticipi', 'Advances'),
-                          _t(
-                            'Prestiti e rimborsi',
-                            'Money owed and repayments',
-                          ),
-                        ),
-                        _tour(
-                          3,
-                          Icons.event_note_rounded,
-                          _t('Pianifica', 'Plan'),
-                          _t(
-                            'Budget, obiettivi e scadenze',
-                            'Budgets, goals and schedules',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-                animationDuration: 460,
-                curve: Curves.easeOutCubic,
-                globalBackgroundColor: Colors.transparent,
-                freeze: _saving || _skipping,
-                scrollPhysics: const BouncingScrollPhysics(),
-                showNextButton: true,
-                showBackButton: true,
-                showDoneButton: true,
-                showSkipButton: false,
-                isProgressTap: false,
-                onChange: (page) {
-                  if (_step != page && mounted) {
-                    setState(() => _step = page);
-                    if (page == 2) {
-                      if (reduced) {
-                        _tourController.value = 1;
-                      } else {
-                        _tourController.forward(from: 0);
-                      }
-                    } else {
-                      _tourController.reset();
-                    }
-                  }
-                },
-                onDone: () => _complete(),
-                next: Text(
-                  _t('Avanti', 'Continue'),
-                  key: const ValueKey('onboarding-next'),
-                  style: const TextStyle(fontWeight: FontWeight.w800),
-                ),
-                done: _saving
-                    ? const SizedBox(
-                        width: 22,
-                        height: 22,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : Text(
-                        _t('Inizia', 'Get started'),
-                        key: const ValueKey('onboarding-done'),
-                        style: const TextStyle(fontWeight: FontWeight.w800),
                       ),
-                back: Text(
-                  _t('Indietro', 'Back'),
-                  style: const TextStyle(fontWeight: FontWeight.w600),
-                ),
-                backStyle: TextButton.styleFrom(
-                  foregroundColor: Colors.white70,
-                  minimumSize: const Size(65, 48),
-                ),
-                nextStyle: TextButton.styleFrom(
-                  backgroundColor: const Color(0xFFEBA2DA),
-                  foregroundColor: const Color(0xFF28144C),
-                  minimumSize: const Size(106, 51),
-                  shape: const StadiumBorder(),
-                ),
-                doneStyle: TextButton.styleFrom(
-                  backgroundColor: const Color(0xFFEBA2DA),
-                  foregroundColor: const Color(0xFF28144C),
-                  minimumSize: const Size(116, 51),
-                  shape: const StadiumBorder(),
-                ),
-                // The thin worm stretches between dots on every page change.
-                customProgress: AnimatedSmoothIndicator(
-                  activeIndex: _step,
-                  count: 3,
-                  effect: const WormEffect(
-                    type: WormType.thin,
-                    dotWidth: 9,
-                    dotHeight: 9,
-                    spacing: 10,
-                    radius: 8,
-                    dotColor: Color(0x66FFFFFF),
-                    activeDotColor: Color(0xFFF0A8E5),
+                      _page(
+                        illustration: _TourOrbitIllustration(
+                          progress: _tourController,
+                        ),
+                        title: _t('Ecco come funziona', 'How Balyn works'),
+                        subtitle: _t(
+                          'Quattro sezioni, tutte collegate tra loro.',
+                          'Four connected sections, one clear view.',
+                        ),
+                        content: Column(
+                          children: [
+                            _tour(
+                              0,
+                              Icons.home_rounded,
+                              'Home',
+                              _t('Patrimonio e conti', 'Balances and accounts'),
+                            ),
+                            _tour(
+                              1,
+                              Icons.receipt_long_rounded,
+                              _t(
+                                'Movimenti e Analisi',
+                                'Transactions and Analytics',
+                              ),
+                              _t(
+                                'Entrate, spese e statistiche',
+                                'Income, expenses and insights',
+                              ),
+                            ),
+                            _tour(
+                              2,
+                              Icons.handshake_rounded,
+                              _t('Anticipi', 'Advances'),
+                              _t(
+                                'Prestiti e rimborsi',
+                                'Money owed and repayments',
+                              ),
+                            ),
+                            _tour(
+                              3,
+                              Icons.event_note_rounded,
+                              _t('Pianifica', 'Plan'),
+                              _t(
+                                'Budget, obiettivi e scadenze',
+                                'Budgets, goals and schedules',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                    animationDuration: 460,
+                    curve: Curves.easeOutCubic,
+                    globalBackgroundColor: Colors.transparent,
+                    freeze: _saving || _skipping,
+                    scrollPhysics: const BouncingScrollPhysics(),
+                    showNextButton: true,
+                    showBackButton: true,
+                    showDoneButton: true,
+                    showSkipButton: false,
+                    isProgressTap: false,
+                    onChange: (page) {
+                      if (_step != page && mounted) {
+                        setState(() => _step = page);
+                        if (page == 2) {
+                          if (reduced) {
+                            _tourController.value = 1;
+                          } else {
+                            _tourController.forward(from: 0);
+                          }
+                        } else {
+                          _tourController.reset();
+                        }
+                      }
+                    },
+                    onDone: () => _complete(),
+                    next: Text(
+                      _t('Avanti', 'Continue'),
+                      key: const ValueKey('onboarding-next'),
+                      style: const TextStyle(fontWeight: FontWeight.w800),
+                    ),
+                    done: _saving
+                        ? const SizedBox(
+                            width: 22,
+                            height: 22,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : Text(
+                            _t('Inizia', 'Get started'),
+                            key: const ValueKey('onboarding-done'),
+                            style: const TextStyle(fontWeight: FontWeight.w800),
+                          ),
+                    back: Text(
+                      _t('Indietro', 'Back'),
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    backStyle: TextButton.styleFrom(
+                      foregroundColor: Colors.white70,
+                      minimumSize: const Size(65, 48),
+                    ),
+                    nextStyle: TextButton.styleFrom(
+                      backgroundColor: const Color(0xFFEBA2DA),
+                      foregroundColor: const Color(0xFF28144C),
+                      minimumSize: const Size(106, 51),
+                      shape: const StadiumBorder(),
+                    ),
+                    doneStyle: TextButton.styleFrom(
+                      backgroundColor: const Color(0xFFEBA2DA),
+                      foregroundColor: const Color(0xFF28144C),
+                      minimumSize: const Size(116, 51),
+                      shape: const StadiumBorder(),
+                    ),
+                    // The thin worm stretches between dots on every page change.
+                    customProgress: AnimatedSmoothIndicator(
+                      activeIndex: _step,
+                      count: 3,
+                      effect: const WormEffect(
+                        type: WormType.thin,
+                        dotWidth: 9,
+                        dotHeight: 9,
+                        spacing: 10,
+                        radius: 8,
+                        dotColor: Color(0x66FFFFFF),
+                        activeDotColor: Color(0xFFF0A8E5),
+                      ),
+                    ),
+                    controlsPadding: const EdgeInsets.symmetric(
+                      horizontal: 21,
+                      vertical: 11,
+                    ),
+                    controlsMargin: const EdgeInsets.only(bottom: 12),
+                    hideBottomOnKeyboard: true,
                   ),
                 ),
-                controlsPadding: const EdgeInsets.symmetric(
-                  horizontal: 21,
-                  vertical: 11,
-                ),
-                controlsMargin: const EdgeInsets.only(bottom: 12),
-                hideBottomOnKeyboard: true,
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
         ],
       ),
     );

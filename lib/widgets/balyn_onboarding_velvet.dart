@@ -62,10 +62,7 @@ class _BalynOnboardingVelvetState extends State<BalynOnboardingVelvet> {
                 key: const ValueKey('balyn-onboarding-velvet-shader'),
                 isComplex: true,
                 willChange: animate,
-                painter: _VelvetPainter(
-                  shader: _shader!,
-                  clock: clock,
-                ),
+                painter: _VelvetPainter(shader: _shader!, clock: clock),
               ),
           ],
         ),
@@ -76,7 +73,7 @@ class _BalynOnboardingVelvetState extends State<BalynOnboardingVelvet> {
 
 class _VelvetPainter extends CustomPainter {
   _VelvetPainter({required this.shader, required this.clock})
-      : super(repaint: clock);
+    : super(repaint: clock);
 
   final ui.FragmentShader shader;
   final ValueListenable<double> clock;

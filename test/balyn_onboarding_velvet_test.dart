@@ -35,25 +35,28 @@ Future<Uint8List> _renderVelvet(double phase) async {
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  test('Velvet shader paints purple folds and visibly moves over time', () async {
-    final initial = await _renderVelvet(0.0);
-    final moved = await _renderVelvet(0.25);
-    var purplePixels = 0;
-    var movingPixels = 0;
-    for (var index = 0; index < initial.length; index += 4) {
-      final red = initial[index];
-      final blue = initial[index + 2];
-      if (blue > red + 6 && red > 12) purplePixels++;
-      final difference =
-          (initial[index] - moved[index]).abs() +
-          (initial[index + 1] - moved[index + 1]).abs() +
-          (initial[index + 2] - moved[index + 2]).abs();
-      if (difference >= 6) movingPixels++;
-    }
+  test(
+    'Velvet shader paints purple folds and visibly moves over time',
+    () async {
+      final initial = await _renderVelvet(0.0);
+      final moved = await _renderVelvet(0.25);
+      var purplePixels = 0;
+      var movingPixels = 0;
+      for (var index = 0; index < initial.length; index += 4) {
+        final red = initial[index];
+        final blue = initial[index + 2];
+        if (blue > red + 6 && red > 12) purplePixels++;
+        final difference =
+            (initial[index] - moved[index]).abs() +
+            (initial[index + 1] - moved[index + 1]).abs() +
+            (initial[index + 2] - moved[index + 2]).abs();
+        if (difference >= 6) movingPixels++;
+      }
 
-    expect(purplePixels, greaterThan(initial.length ~/ 4 ~/ 5));
-    expect(movingPixels, greaterThan(initial.length ~/ 4 ~/ 50));
-  });
+      expect(purplePixels, greaterThan(initial.length ~/ 4 ~/ 5));
+      expect(movingPixels, greaterThan(initial.length ~/ 4 ~/ 50));
+    },
+  );
 
   test('Shader animation is a seamless loop on the global 72s clock', () async {
     final first = await _renderVelvet(0.0);
@@ -65,26 +68,32 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(
-      const MaterialApp(
-        home: Scaffold(body: BalynOnboardingVelvet()),
-      ),
+      const MaterialApp(home: Scaffold(body: BalynOnboardingVelvet())),
     );
     expect(find.byType(BalynOnboardingVelvet), findsOneWidget);
     expect(find.byType(DecoratedBox), findsWidgets);
     expect(tester.takeException(), isNull);
   });
 
-  test('Shader stays behind onboarding navigation and respects reduced motion', () {
-    final source = File('lib/screens/balyn_onboarding_flow.dart')
-        .readAsStringSync();
-    final velvet = File('lib/widgets/balyn_onboarding_velvet.dart')
-        .readAsStringSync();
-    expect(source, contains('const Positioned.fill(child: BalynOnboardingVelvet())'));
-    expect(source, contains('globalBackgroundColor: Colors.transparent'));
-    expect(source, contains('IntroductionScreen('));
-    expect(source, contains("setSetting('onboarding_completed', '1')"));
-    expect(velvet, contains('data?.motionEnabled == true && !reduced'));
-    expect(velvet, contains('const AlwaysStoppedAnimation<double>(0)'));
-    expect(velvet, contains('super(repaint: clock)'));
-  });
+  test(
+    'Shader stays behind onboarding navigation and respects reduced motion',
+    () {
+      final source = File(
+        'lib/screens/balyn_onboarding_flow.dart',
+      ).readAsStringSync();
+      final velvet = File(
+        'lib/widgets/balyn_onboarding_velvet.dart',
+      ).readAsStringSync();
+      expect(
+        source,
+        contains('const Positioned.fill(child: BalynOnboardingVelvet())'),
+      );
+      expect(source, contains('globalBackgroundColor: Colors.transparent'));
+      expect(source, contains('IntroductionScreen('));
+      expect(source, contains("setSetting('onboarding_completed', '1')"));
+      expect(velvet, contains('data?.motionEnabled == true && !reduced'));
+      expect(velvet, contains('const AlwaysStoppedAnimation<double>(0)'));
+      expect(velvet, contains('super(repaint: clock)'));
+    },
+  );
 }
