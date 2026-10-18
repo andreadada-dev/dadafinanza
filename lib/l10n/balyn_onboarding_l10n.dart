@@ -5,6 +5,7 @@ abstract final class BalynOnboardingL10n {
   static const supportedCodes = <String>["it", "en", "es", "fr", "de", "pt", "ru", "zh", "ja", "ko", "ar", "hi"];
   static const Map<String, Map<String, String>> _translations = {
     "it": {
+      "defaultName": "Conto principale",
       "welcomeTitle": "Le tue finanze, più semplici",
       "welcomeSubtitle": "Conti, movimenti e obiettivi in un solo posto. I dati restano sul dispositivo.",
       "language": "Lingua",
@@ -32,6 +33,7 @@ abstract final class BalynOnboardingL10n {
       "requiredName": "Inserisci il nome del conto",
     },
     "en": {
+      "defaultName": "Main account",
       "welcomeTitle": "Your money, made simple",
       "welcomeSubtitle": "Accounts, transactions and goals in one place. Your data stays on your device.",
       "language": "Language",
@@ -59,6 +61,7 @@ abstract final class BalynOnboardingL10n {
       "requiredName": "Enter an account name",
     },
     "es": {
+      "defaultName": "Cuenta principal",
       "welcomeTitle": "Tus finanzas, más fáciles",
       "welcomeSubtitle": "Cuentas, movimientos y metas en un solo lugar. Tus datos permanecen en tu dispositivo.",
       "language": "Idioma",
@@ -86,6 +89,7 @@ abstract final class BalynOnboardingL10n {
       "requiredName": "Introduce un nombre de cuenta",
     },
     "fr": {
+      "defaultName": "Compte principal",
       "welcomeTitle": "Vos finances, simplifiées",
       "welcomeSubtitle": "Comptes, opérations et objectifs au même endroit. Vos données restent sur votre appareil.",
       "language": "Langue",
@@ -113,6 +117,7 @@ abstract final class BalynOnboardingL10n {
       "requiredName": "Saisissez le nom du compte",
     },
     "de": {
+      "defaultName": "Hauptkonto",
       "welcomeTitle": "Deine Finanzen, ganz einfach",
       "welcomeSubtitle": "Konten, Buchungen und Ziele an einem Ort. Deine Daten bleiben auf deinem Gerät.",
       "language": "Sprache",
@@ -140,6 +145,7 @@ abstract final class BalynOnboardingL10n {
       "requiredName": "Gib einen Kontonamen ein",
     },
     "pt": {
+      "defaultName": "Conta principal",
       "welcomeTitle": "Suas finanças, mais simples",
       "welcomeSubtitle": "Contas, transações e metas em um só lugar. Seus dados ficam no dispositivo.",
       "language": "Idioma",
@@ -167,6 +173,7 @@ abstract final class BalynOnboardingL10n {
       "requiredName": "Informe o nome da conta",
     },
     "ru": {
+      "defaultName": "Основной счёт",
       "welcomeTitle": "Ваши финансы — проще",
       "welcomeSubtitle": "Счета, операции и цели в одном месте. Данные остаются на устройстве.",
       "language": "Язык",
@@ -194,6 +201,7 @@ abstract final class BalynOnboardingL10n {
       "requiredName": "Введите название счёта",
     },
     "zh": {
+      "defaultName": "主账户",
       "welcomeTitle": "轻松管理财务",
       "welcomeSubtitle": "账户、交易和目标集中管理。数据保存在你的设备上。",
       "language": "语言",
@@ -221,6 +229,7 @@ abstract final class BalynOnboardingL10n {
       "requiredName": "请输入账户名称",
     },
     "ja": {
+      "defaultName": "メイン口座",
       "welcomeTitle": "お金の管理をもっと簡単に",
       "welcomeSubtitle": "口座・取引・目標をひとつに。データは端末内に保存されます。",
       "language": "言語",
@@ -248,6 +257,7 @@ abstract final class BalynOnboardingL10n {
       "requiredName": "口座名を入力してください",
     },
     "ko": {
+      "defaultName": "기본 계좌",
       "welcomeTitle": "더 간편한 자산 관리",
       "welcomeSubtitle": "계좌, 거래, 목표를 한곳에. 데이터는 기기에 저장됩니다.",
       "language": "언어",
@@ -275,6 +285,7 @@ abstract final class BalynOnboardingL10n {
       "requiredName": "계좌 이름을 입력하세요",
     },
     "ar": {
+      "defaultName": "الحساب الرئيسي",
       "welcomeTitle": "أموالك بكل بساطة",
       "welcomeSubtitle": "الحسابات والمعاملات والأهداف في مكان واحد. تبقى بياناتك على جهازك.",
       "language": "اللغة",
@@ -302,6 +313,7 @@ abstract final class BalynOnboardingL10n {
       "requiredName": "أدخل اسم الحساب",
     },
     "hi": {
+      "defaultName": "मुख्य खाता",
       "welcomeTitle": "आपके पैसे, आसान प्रबंधन",
       "welcomeSubtitle": "खाते, लेन-देन और लक्ष्य एक जगह। डेटा आपके डिवाइस पर रहता है।",
       "language": "भाषा",
@@ -332,6 +344,27 @@ abstract final class BalynOnboardingL10n {
 
   static String tr(String languageCode, String key) =>
       _translations[languageCode]?[key] ?? _translations['it']![key]!;
+
+  static const _accountTypes = <String, List<String>>{
+    "it": ["Conto corrente", "Contanti", "Carta", "Risparmi", "Prepagata", "Investimenti"],
+    "en": ["Checking account", "Cash", "Card", "Savings", "Prepaid", "Investments"],
+    "es": ["Cuenta corriente", "Efectivo", "Tarjeta", "Ahorros", "Prepago", "Inversiones"],
+    "fr": ["Compte courant", "Espèces", "Carte", "Épargne", "Prépayée", "Investissements"],
+    "de": ["Girokonto", "Bargeld", "Karte", "Sparen", "Prepaid", "Anlagen"],
+    "pt": ["Conta corrente", "Dinheiro", "Cartão", "Poupança", "Pré-pago", "Investimentos"],
+    "ru": ["Текущий счёт", "Наличные", "Карта", "Сбережения", "Предоплата", "Инвестиции"],
+    "zh": ["活期账户", "现金", "银行卡", "储蓄", "预付卡", "投资"],
+    "ja": ["普通預金", "現金", "カード", "貯蓄", "プリペイド", "投資"],
+    "ko": ["입출금 계좌", "현금", "카드", "저축", "선불", "투자"],
+    "ar": ["حساب جاري", "نقد", "بطاقة", "مدخرات", "مسبق الدفع", "استثمارات"],
+    "hi": ["चालू खाता", "नकद", "कार्ड", "बचत", "प्रीपेड", "निवेश"],
+  };
+  static String accountType(String languageCode, String typeName) {
+    const typeKeys = ['checking', 'cash', 'card', 'savings', 'prepaid', 'investment'];
+    final index = typeKeys.indexOf(typeName);
+    if (index == -1) return typeName;
+    return (_accountTypes[languageCode] ?? _accountTypes['it']!)[index];
+  }
 
   static bool isComplete(String languageCode) =>
       _translations[languageCode]?.length == _translations['it']!.length;
