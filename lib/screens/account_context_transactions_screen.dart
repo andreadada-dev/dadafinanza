@@ -9,6 +9,7 @@ import '../widgets/account_context_selector.dart';
 import '../widgets/balyn_motion.dart';
 import '../widgets/balyn_editorial_components.dart';
 import '../widgets/balyn_shader_system.dart';
+import '../widgets/balyn_swipe_delete_tile.dart';
 import '../widgets/ui_helpers.dart';
 import 'quick_add_page.dart';
 import 'transaction_screens.dart';
@@ -1077,7 +1078,9 @@ class _MovementTile extends StatelessWidget {
         ? '+${moneyFor(state, item.amount)}'
         : moneyFor(state, item.amount);
 
-    return Semantics(
+    return BalynSwipeDeleteTile(
+      item: item,
+      child: Semantics(
       button: true,
       label: '$title, $amount',
       child: InkWell(
@@ -1160,6 +1163,7 @@ class _MovementTile extends StatelessWidget {
           ),
         ),
       ),
+    ),
     );
   }
 }

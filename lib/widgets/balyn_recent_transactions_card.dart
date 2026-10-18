@@ -5,6 +5,7 @@ import '../main.dart';
 import '../models/models.dart';
 import '../screens/transaction_screens.dart';
 import 'ui_helpers.dart';
+import 'balyn_swipe_delete_tile.dart';
 
 /// Figma Home transaction panel. No mock movements or invented statuses.
 class BalynRecentTransactionsCard extends StatelessWidget {
@@ -118,7 +119,9 @@ class _RecentMovementRow extends StatelessWidget {
         ? '+${moneyFor(state, movement.amount)}'
         : moneyFor(state, movement.amount);
 
-    return Material(
+    return BalynSwipeDeleteTile(
+      item: movement,
+      child: Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: () => Navigator.push(
@@ -232,6 +235,7 @@ class _RecentMovementRow extends StatelessWidget {
           ),
         ),
       ),
+    ),
     );
   }
 }

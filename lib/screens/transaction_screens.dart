@@ -6,6 +6,7 @@ import '../main.dart';
 import '../models/models.dart';
 import '../widgets/balyn_shader_system.dart';
 import '../widgets/balyn_transaction_detail_content.dart';
+import '../widgets/balyn_swipe_delete_tile.dart';
 import '../widgets/ui_helpers.dart';
 import 'quick_add_page.dart';
 
@@ -35,7 +36,9 @@ class TransactionListTile extends StatelessWidget {
     final amountSeed = item.type == TransactionType.transfer
         ? theme.colorScheme.tertiary
         : transactionColor(context, item.type);
-    return ListTile(
+    return BalynSwipeDeleteTile(
+      item: item,
+      child: ListTile(
       contentPadding: EdgeInsets.zero,
       minVerticalPadding: 10,
       selected: selected,
@@ -77,6 +80,7 @@ class TransactionListTile extends StatelessWidget {
           builder: (_) => TransactionDetailPage(transactionId: item.id),
         ),
       ),
+    ),
     );
   }
 }
