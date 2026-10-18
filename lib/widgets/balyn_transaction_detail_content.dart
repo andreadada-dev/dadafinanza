@@ -241,37 +241,49 @@ class _BalynTransactionDetailContentState
                 TextField(
                   key: const ValueKey('detail-amount'),
                   controller: _amount,
-                  obscureText: (state.hideBalance ||
-                      state.accountById(_accountId)?.hideBalance == true) &&
+                  obscureText:
+                      (state.hideBalance ||
+                          state.accountById(_accountId)?.hideBalance == true) &&
                       !_revealAmount,
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
                   textAlign: TextAlign.left,
                   style: theme.textTheme.displayMedium?.copyWith(
                     fontWeight: FontWeight.w800,
                     letterSpacing: -1.7,
                     color: _type == TransactionType.expense
-                      ? theme.colorScheme.error
-                      : _type == TransactionType.income
+                        ? theme.colorScheme.error
+                        : _type == TransactionType.income
                         ? const Color(0xFF4CA980)
                         : theme.colorScheme.primary,
                   ),
                   decoration: InputDecoration(
                     labelText: 'Importo',
-                    prefixText: (_type == TransactionType.expense ? '−'
-                      : _type == TransactionType.income ? '+' : '') +
-                      state.currency + ' ',
+                    prefixText:
+                        (_type == TransactionType.expense
+                            ? '−'
+                            : _type == TransactionType.income
+                            ? '+'
+                            : '') +
+                        state.currency +
+                        ' ',
                     border: InputBorder.none,
                     isDense: true,
-                    suffixIcon: (state.hideBalance ||
-                        state.accountById(_accountId)?.hideBalance == true)
+                    suffixIcon:
+                        (state.hideBalance ||
+                            state.accountById(_accountId)?.hideBalance == true)
                         ? IconButton(
                             tooltip: _revealAmount
-                                ? 'Nascondi importo' : 'Mostra importo',
-                            onPressed: () => setState(() =>
-                                _revealAmount = !_revealAmount),
-                            icon: Icon(_revealAmount
-                                ? Icons.visibility_off_outlined
-                                : Icons.visibility_outlined),
+                                ? 'Nascondi importo'
+                                : 'Mostra importo',
+                            onPressed: () =>
+                                setState(() => _revealAmount = !_revealAmount),
+                            icon: Icon(
+                              _revealAmount
+                                  ? Icons.visibility_off_outlined
+                                  : Icons.visibility_outlined,
+                            ),
                           )
                         : const Icon(Icons.edit_outlined, size: 20),
                   ),
@@ -280,18 +292,23 @@ class _BalynTransactionDetailContentState
                 ValueListenableBuilder<TextEditingValue>(
                   valueListenable: _note,
                   builder: (context, value, _) => Text(
-                    value.text.trim().isNotEmpty ? value.text.trim()
+                    value.text.trim().isNotEmpty
+                        ? value.text.trim()
                         : state.categoryById(_categoryId)?.name ?? _type.label,
                     style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w800),
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  DateFormat('d MMM yyyy, HH:mm', AppI18n.intlLocale)
-                      .format(_date),
+                  DateFormat(
+                    'd MMM yyyy, HH:mm',
+                    AppI18n.intlLocale,
+                  ).format(_date),
                   style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant),
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
                 ),
               ],
             ),
@@ -299,15 +316,22 @@ class _BalynTransactionDetailContentState
           const SizedBox(height: 19),
           Row(
             children: [
-              Expanded(child: _DetailAction(
-                icon: Icons.copy_outlined, label: 'Duplica',
-                onPressed: widget.onDuplicate,
-              )),
+              Expanded(
+                child: _DetailAction(
+                  icon: Icons.copy_outlined,
+                  label: 'Duplica',
+                  onPressed: widget.onDuplicate,
+                ),
+              ),
               const SizedBox(width: 9),
-              Expanded(child: _DetailAction(
-                icon: Icons.delete_outline_rounded, label: 'Elimina',
-                destructive: true, onPressed: widget.onDelete,
-              )),
+              Expanded(
+                child: _DetailAction(
+                  icon: Icons.delete_outline_rounded,
+                  label: 'Elimina',
+                  destructive: true,
+                  onPressed: widget.onDelete,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 19),
@@ -315,8 +339,10 @@ class _BalynTransactionDetailContentState
             title: 'Dettagli movimento',
             children: [
               const ListTile(
-                dense: true, contentPadding: EdgeInsets.zero,
-                title: Text('Stato'), trailing: Text('Registrato'),
+                dense: true,
+                contentPadding: EdgeInsets.zero,
+                title: Text('Stato'),
+                trailing: Text('Registrato'),
               ),
               DropdownButtonFormField<TransactionType>(
                 key: ValueKey('detail-type-${_type.name}'),
@@ -382,7 +408,7 @@ class _BalynTransactionDetailContentState
                       : null,
                   decoration: const InputDecoration(
                     labelText: 'Conto destinazione',
-                  border: InputBorder.none,
+                    border: InputBorder.none,
                     prefixIcon: Icon(Icons.east_rounded),
                   ),
                   isExpanded: true,
@@ -413,7 +439,7 @@ class _BalynTransactionDetailContentState
                       : null,
                   decoration: const InputDecoration(
                     labelText: 'Categoria',
-                  border: InputBorder.none,
+                    border: InputBorder.none,
                     prefixIcon: Icon(Icons.category_outlined),
                   ),
                   isExpanded: true,
@@ -544,31 +570,41 @@ class _BalynTransactionDetailContentState
               ],
             ),
           ],
-          if (state.transactionById(widget.item.refundOfTransactionId) != null ||
+          if (state.transactionById(widget.item.refundOfTransactionId) !=
+                  null ||
               state.refundsFor(widget.item.id) > 0 ||
               widget.item.recurringId != null) ...[
             const SizedBox(height: 14),
-            _Section(title: 'Collegamenti', children: [
-              if (state.transactionById(widget.item.refundOfTransactionId) != null)
-                ListTile(
-                  dense: true,
-                  title: const Text('Rimborso di'),
-                  trailing: Text('#' + widget.item.refundOfTransactionId.toString()),
-                ),
-              if (state.refundsFor(widget.item.id) > 0)
-                ListTile(
-                  dense: true,
-                  title: const Text('Rimborsato'),
-                  trailing: Text(state.hideBalance ? '••••' :
-                    moneyFor(state, state.refundsFor(widget.item.id))),
-                ),
-              if (widget.item.recurringId != null)
-                const ListTile(
-                  dense: true,
-                  title: Text('Ricorrenza'),
-                  trailing: Text('Collegata a Pianifica'),
-                ),
-            ]),
+            _Section(
+              title: 'Collegamenti',
+              children: [
+                if (state.transactionById(widget.item.refundOfTransactionId) !=
+                    null)
+                  ListTile(
+                    dense: true,
+                    title: const Text('Rimborso di'),
+                    trailing: Text(
+                      '#' + widget.item.refundOfTransactionId.toString(),
+                    ),
+                  ),
+                if (state.refundsFor(widget.item.id) > 0)
+                  ListTile(
+                    dense: true,
+                    title: const Text('Rimborsato'),
+                    trailing: Text(
+                      state.hideBalance
+                          ? '••••'
+                          : moneyFor(state, state.refundsFor(widget.item.id)),
+                    ),
+                  ),
+                if (widget.item.recurringId != null)
+                  const ListTile(
+                    dense: true,
+                    title: Text('Ricorrenza'),
+                    trailing: Text('Collegata a Pianifica'),
+                  ),
+              ],
+            ),
           ],
           const SizedBox(height: 23),
           FilledButton.icon(
@@ -596,7 +632,9 @@ class _BalynTransactionDetailContentState
 
 class _DetailAction extends StatelessWidget {
   const _DetailAction({
-    required this.icon, required this.label, required this.onPressed,
+    required this.icon,
+    required this.label,
+    required this.onPressed,
     this.destructive = false,
   });
   final IconData icon;
@@ -606,8 +644,8 @@ class _DetailAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = destructive
-      ? Theme.of(context).colorScheme.error
-      : Theme.of(context).colorScheme.primary;
+        ? Theme.of(context).colorScheme.error
+        : Theme.of(context).colorScheme.primary;
     return Material(
       color: color.withValues(alpha: .10),
       borderRadius: BorderRadius.circular(17),
@@ -621,8 +659,10 @@ class _DetailAction extends StatelessWidget {
             children: [
               Icon(icon, color: color, size: 19),
               const SizedBox(width: 9),
-              Text(label, style: TextStyle(
-                fontWeight: FontWeight.w700, color: color)),
+              Text(
+                label,
+                style: TextStyle(fontWeight: FontWeight.w700, color: color),
+              ),
             ],
           ),
         ),

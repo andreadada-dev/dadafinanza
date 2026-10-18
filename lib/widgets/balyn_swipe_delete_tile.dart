@@ -139,10 +139,7 @@ class _BalynSwipeDeleteTileState extends State<BalynSwipeDeleteTile> {
                   : const Duration(milliseconds: 220),
               curve: Curves.easeOutCubic,
               transform: Matrix4.translationValues(_offset, 0, 0),
-              child: Material(
-                color: Colors.transparent,
-                child: widget.child,
-              ),
+              child: Material(color: Colors.transparent, child: widget.child),
             ),
           ),
         ],

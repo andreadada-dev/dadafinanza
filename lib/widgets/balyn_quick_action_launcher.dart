@@ -64,8 +64,11 @@ class _BalynQuickActionLauncherState extends State<BalynQuickActionLauncher>
     final delay = position * .11;
     final curved = CurvedAnimation(
       parent: _controller,
-      curve: Interval(delay, (delay + .65).clamp(0.0, 1.0),
-        curve: Curves.easeOutCubic),
+      curve: Interval(
+        delay,
+        (delay + .65).clamp(0.0, 1.0),
+        curve: Curves.easeOutCubic,
+      ),
       reverseCurve: Curves.easeInCubic,
     );
     return ClipRect(
@@ -133,14 +136,34 @@ class _BalynQuickActionLauncherState extends State<BalynQuickActionLauncher>
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               if (widget.showHome)
-                _entry(position: 0, id: 'home', label: 'Home',
-                  icon: Icons.home_rounded, onTap: widget.onHome),
-              _entry(position: 0, id: 'create', label: 'Movimento',
-                icon: Icons.add_rounded, onTap: widget.onCreate),
-              _entry(position: 1, id: 'advances', label: 'Anticipi',
-                icon: Icons.handshake_outlined, onTap: widget.onAdvances),
-              _entry(position: 2, id: 'planning', label: 'Pianifica',
-                icon: Icons.event_note_outlined, onTap: widget.onPlanning),
+                _entry(
+                  position: 0,
+                  id: 'home',
+                  label: 'Home',
+                  icon: Icons.home_rounded,
+                  onTap: widget.onHome,
+                ),
+              _entry(
+                position: 0,
+                id: 'create',
+                label: 'Movimento',
+                icon: Icons.add_rounded,
+                onTap: widget.onCreate,
+              ),
+              _entry(
+                position: 1,
+                id: 'advances',
+                label: 'Anticipi',
+                icon: Icons.handshake_outlined,
+                onTap: widget.onAdvances,
+              ),
+              _entry(
+                position: 2,
+                id: 'planning',
+                label: 'Pianifica',
+                icon: Icons.event_note_outlined,
+                onTap: widget.onPlanning,
+              ),
               const SizedBox(height: 7),
             ],
           ),

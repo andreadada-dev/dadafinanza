@@ -88,7 +88,8 @@ class BalynCueSectionBar extends StatelessWidget {
                                     opacity: weight[i],
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Cue.onToggle(
                                           toggled: selectedTab == i,
