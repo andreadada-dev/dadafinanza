@@ -18,6 +18,7 @@ class BalynRevolutHomeHero extends StatelessWidget {
     required this.currentAccountId,
     required this.onAccountChanged,
     required this.selectedTab,
+    required this.sectionPage,
     required this.onTabChanged,
     required this.onSearch,
     required this.onAnalytics,
@@ -38,6 +39,7 @@ class BalynRevolutHomeHero extends StatelessWidget {
   final int? currentAccountId;
   final ValueChanged<int?> onAccountChanged;
   final int selectedTab;
+  final double sectionPage;
   final ValueChanged<int> onTabChanged;
   final VoidCallback onSearch;
   final VoidCallback onAnalytics;
@@ -483,10 +485,8 @@ class BalynRevolutHomeHero extends StatelessWidget {
                     final segmentWidth = constraints.maxWidth / 3;
                     return Stack(
                       children: [
-                        AnimatedPositioned(
-                          duration: const Duration(milliseconds: 320),
-                          curve: Curves.easeInOutCubic,
-                          left: segmentWidth * selectedTab,
+                        Positioned(
+                          left: segmentWidth * sectionPage.clamp(0.0, 2.0),
                           top: 0,
                           bottom: 0,
                           width: segmentWidth,

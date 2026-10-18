@@ -9,7 +9,6 @@ import '../services/account_context_service.dart';
 import '../widgets/balyn_revolut_home_content.dart';
 import '../widgets/balyn_revolut_home_hero.dart';
 import '../widgets/balyn_recent_transactions_card.dart';
-import '../widgets/balyn_home_section_transition.dart';
 import '../widgets/balyn_motion.dart';
 import '../widgets/balyn_editorial_components.dart';
 import '../widgets/home_dashboard_widget.dart';
@@ -26,7 +25,7 @@ import 'quick_add_page.dart';
 import 'root_screen.dart' as advanced;
 import 'settings_screen.dart' show DashboardCustomizerScreen;
 
-class AccountContextHomeScreen extends StatelessWidget {
+class AccountContextHomeScreen extends StatefulWidget
   const AccountContextHomeScreen({
     required this.accountId,
     required this.onAccountChanged,
@@ -68,7 +67,66 @@ class AccountContextHomeScreen extends StatelessWidget {
   final ValueChanged<int> onShowActivity;
 
   @override
+  State<AccountContextHomeScreen> createState() => _AccountContextHomeScreenState();
+}
+
+class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
+  late final PageController _pageController = PageController(
+    initialPage: widget.selectedSection,
+  );
+  late int _requestedPage = widget.selectedSection;
+
+  @override
+  void didUpdateWidget(covariant AccountContextHomeScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.selectedSection != oldWidget.selectedSection &&
+        _requestedPage != widget.selectedSection) {
+      final next = widget.selectedSection;
+      _requestedPage = next;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted || !_pageController.hasClients) return;
+        _pageController.animateToPage(
+          next,
+          duration: const Duration(milliseconds: 370),
+          curve: Curves.easeOutCubic,
+        );
+      });
+    }
+  }
+
+  void _selectHomePage(int next) {
+    if (!_pageController.hasClients) {
+      widget.onSectionChanged(next);
+      return;
+    }
+    _requestedPage = next;
+    _pageController.animateToPage(
+      next,
+      duration: MediaQuery.disableAnimationsOf(context)
+          ? Duration.zero
+          : const Duration(milliseconds: 390),
+      curve: Curves.easeOutCubic,
+    );
+  }
+
+  void _onHomePageChanged(int next) {
+    _requestedPage = next;
+    if (widget.selectedSection != next) widget.onSectionChanged(next);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final accountId = widget.accountId;
+    final onAccountChanged = widget.onAccountChanged;
+    final selectedSection = widget.selectedSection;
+    final activityInitialTab = widget.activityInitialTab;
+    final onShowActivity = widget.onShowActivity;
     final state = AppScope.of(context);
     final selectedAccount = state.accountById(accountId);
     final effectiveAccountId =
@@ -108,13 +166,16 @@ class AccountContextHomeScreen extends StatelessWidget {
     final hidden =
         state.hideBalance || (!isTotal && selectedAccount!.hideBalance);
     final dark = Theme.of(context).brightness == Brightness.dark;
+
     return ColoredBox(
       color: dark ? const Color(0xFF101018) : const Color(0xFFF7F8FA),
-      child: CustomScrollView(
+      child: NestedScrollView(
         key: const PageStorageKey('balyn-invest-home'),
-        slivers: [
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverToBoxAdapter(
-            child: BalynRevolutHomeHero(
+            child: AnimatedBuilder(
+              animation: _pageController,
+              builder: (context, _) => BalynRevolutHomeHero(
               title: isTotal ? 'Patrimonio totale' : selectedAccount!.name,
               balance: hidden ? '••••••' : moneyFor(state, balance),
               available: hidden
@@ -125,7 +186,10 @@ class AccountContextHomeScreen extends StatelessWidget {
               currentAccountId: effectiveAccountId,
               onAccountChanged: onAccountChanged,
               selectedTab: selectedSection,
-              onTabChanged: onSectionChanged,
+              sectionPage: _pageController.hasClients
+                  ? (_pageController.page ?? selectedSection.toDouble())
+                  : selectedSection.toDouble(),
+              onTabChanged: _selectHomePage,
               onVisibility: () => state.setHideBalance(!state.hideBalance),
               onSearch: () => onShowActivity(0),
               onAnalytics: () => onShowActivity(1),
@@ -218,17 +282,25 @@ class AccountContextHomeScreen extends StatelessWidget {
                 ),
               ),
             ),
+            ),
           ),
-          SliverPadding(
-            padding: const EdgeInsets.fromLTRB(16, 9, 16, 130),
-            sliver: SliverToBoxAdapter(
-              child: BalynHomeSectionTransition(
-                index: selectedSection,
-                direction: slideDirection,
-                child: selectedSection == 0
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+
+        ],
+        body: PageView(
+          key: const ValueKey('home-swipe-pages'),
+          controller: _pageController,
+          onPageChanged: _onHomePageChanged,
+          physics: const PageScrollPhysics(),
+          children: [
+            _PersistentHomePage(
+              child: CustomScrollView(
+                key: const PageStorageKey('home-overview-scroll'),
+                slivers: [
+                  SliverPadding(
+                    padding: const EdgeInsets.fromLTRB(16, 9, 16, 130),
+                    sliver: SliverList.list(
+                      children: [
+
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -498,6 +570,60 @@ class AccountContextHomeScreen extends StatelessWidget {
                                     ),
                                   ),
                           ],
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            _PersistentHomePage(
+              child: CustomScrollView(
+                key: const PageStorageKey('home-accounts-scroll'),
+                slivers: [
+                  SliverPadding(
+                    padding: const EdgeInsets.fromLTRB(16, 18, 16, 135),
+                    sliver: SliverToBoxAdapter(
+                      child: BalynRevolutHomeContent(
+                        income: income,
+                        expense: expense,
+                        available: isTotal ? state.safeToSpend : balance,
+                        hideValues: hidden,
+                        showAccounts: false,
+                        onSelectAccount: onAccountChanged,
+                        onManageAccounts: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const AccountManagementScreen(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            _PersistentHomePage(
+              child: BalynActivityScreen(
+                accountId: effectiveAccountId,
+                onAccountChanged: onAccountChanged,
+                initialTab: activityInitialTab,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+                               ? '••••'
+                                            : moneyFor(state, item.amount),
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                          ],
                         ],
                       )
                     : selectedSection == 1
@@ -623,6 +749,27 @@ class AccountContextHomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+
+class _PersistentHomePage extends StatefulWidget {
+  const _PersistentHomePage({required this.child});
+  final Widget child;
+
+  @override
+  State<_PersistentHomePage> createState() => _PersistentHomePageState();
+}
+
+class _PersistentHomePageState extends State<_PersistentHomePage>
+    with AutomaticKeepAliveClientMixin<_PersistentHomePage> {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return widget.child;
   }
 }
 
