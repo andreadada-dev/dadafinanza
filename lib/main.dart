@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:balyn/l10n/localized_material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:material_ui/material_ui.dart' as mui;
 import 'package:home_widget/home_widget.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -176,6 +177,9 @@ class _BalynAppState extends State<BalynApp> with WidgetsBindingObserver {
             locale: AppI18n.locale,
             supportedLocales: AppI18n.supportedLocales,
             localizationsDelegates: const [
+              // Cue uses the decoupled material_ui MaterialLocalizations.
+              // Legacy Flutter Material widgets still need their own delegate.
+              mui.GlobalMaterialLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
