@@ -555,9 +555,7 @@ Future<Account?> showAccountEditor(
                 existing == null ? 'Nuovo conto' : 'Modifica conto',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              BalynAccountLivePreview(
-                iconKey: iconKey, color: color,
-              ),
+              BalynAccountLivePreview(iconKey: iconKey, color: color),
               TextField(
                 controller: name,
                 autofocus: existing == null,

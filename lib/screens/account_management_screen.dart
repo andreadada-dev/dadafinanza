@@ -481,9 +481,7 @@ class SafeAccountDetailScreen extends StatelessWidget {
                   'Modifica conto',
                   style: Theme.of(sheetContext).textTheme.titleLarge,
                 ),
-                BalynAccountLivePreview(
-                  iconKey: iconKey, color: color,
-                ),
+                BalynAccountLivePreview(iconKey: iconKey, color: color),
                 TextField(
                   controller: name,
                   decoration: InputDecoration(labelText: AppI18n.tr('Nome')),
