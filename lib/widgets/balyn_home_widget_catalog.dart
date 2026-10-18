@@ -62,18 +62,19 @@ abstract final class BalynHomeWidgetCatalog {
         );
       }
     } else {
-      // On upgrade, put newly introduced sections before the old secondary
-      // widgets; the original relative order remains unchanged.
-      final old = ordered.map((item) => item.type).toSet();
-      for (final type in featured) {
-        if (!old.contains(type)) {
+      // Only migrate once. After all featured types are present, the
+      // custom order saved by the user is never rearranged automatically.
+      if (featured.any((type) => !byType.containsKey(type))) {
+        for (final type in featured) {
+          final previous = byType.remove(type);
           result.add(
-            DashboardWidgetConfig(
-              type: type,
-              enabled: true,
-              orderIndex: result.length,
-              size: DashboardWidgetSize.medium,
-            ),
+            previous ??
+                DashboardWidgetConfig(
+                  type: type,
+                  enabled: true,
+                  orderIndex: result.length,
+                  size: DashboardWidgetSize.medium,
+                ),
           );
         }
       }
