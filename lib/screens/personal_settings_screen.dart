@@ -7,7 +7,6 @@ import '../l10n/app_i18n.dart';
 import '../main.dart';
 import '../models/models.dart';
 import '../services/haptic_service.dart';
-import '../widgets/ui_helpers.dart';
 import '../widgets/balyn_settings_components.dart';
 import 'account_management_screen.dart';
 import 'android_widgets_screen.dart';
