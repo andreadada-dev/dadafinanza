@@ -41,7 +41,7 @@ float softBeam(vec2 uv, float origin, float slope, float width, float t) {
   float center = origin + slope * uv.y + 0.022 * sin(t);
   float sigma = width + uv.y * 0.23;
   float x = (uv.x - center) / sigma;
-  float envelope = smoothstep(1.0, 0.0, uv.y) * 0.83 + 0.17;
+  float envelope = (1.0 - smoothstep(0.0, 1.0, uv.y)) * 0.83 + 0.17;
   return exp(-x * x * 1.45) * envelope;
 }
 
