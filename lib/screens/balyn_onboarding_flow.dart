@@ -3,6 +3,9 @@ import 'package:introduction_screen/introduction_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../l10n/app_i18n.dart';
+import '../l10n/balyn_onboarding_l10n.dart';
+import '../theme/balyn_palette.dart';
+import '../widgets/balyn_onboarding_feature_accordion.dart';
 import '../main.dart';
 import '../models/models.dart';
 import '../widgets/ui_helpers.dart';
@@ -16,13 +19,7 @@ class BalynOnboardingFlow extends StatefulWidget {
   State<BalynOnboardingFlow> createState() => _BalynOnboardingFlowState();
 }
 
-class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _tourController = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 920),
-  );
-
+class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
   final GlobalKey<IntroductionScreenState> _introKey =
       GlobalKey<IntroductionScreenState>();
   final TextEditingController _name = TextEditingController(
@@ -34,21 +31,53 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
   String _language = 'it';
   String _currency = 'EUR';
   AccountType _type = AccountType.checking;
-  int _color = 0xFF6539E8;
+  int _color = 0xFF7955EB;
   String _iconKey = 'wallet';
   static const colors = <int>[
-    0xFF6539E8,
+    0xFF7955EB,
     0xFF3573ED,
     0xFF1F9D8A,
     0xFFEF853B,
     0xFFD55686,
   ];
 
-  String _t(String it, String en) => _language == 'it' ? it : en;
+  String _t(String it, String en) {
+    const keys = <String, String>{
+      "Inserisci il nome del conto": "requiredName",
+      "Le tue finanze, più semplici": "welcomeTitle",
+      "Tutti i tuoi conti, movimenti e obiettivi in un solo posto. I dati restano sul dispositivo.": "welcomeSubtitle",
+      "Lingua": "language",
+      "Valuta": "currency",
+      "Crea il tuo primo conto": "accountTitle",
+      "Il saldo parte da zero e puoi cambiarlo in seguito.": "accountSubtitle",
+      "Nome conto": "nameLabel",
+      "Tipo": "typeLabel",
+      "Icona del conto": "accountIcon",
+      "Colore del conto": "accountColor",
+      "Ecco come funziona": "howTitle",
+      "Quattro sezioni, tutte collegate tra loro.": "howSubtitle",
+      "Salta": "skip",
+      "Avanti": "next",
+      "Inizia": "done",
+      "Indietro": "back",
+    };
+    final key = keys[it];
+    return key == null
+        ? (_language == 'it' ? it : en)
+        : BalynOnboardingL10n.tr(_language, key);
+  }
+
+  void _changeLanguage(String? code) {
+    if (code == null || code == _language) return;
+    final oldName = BalynOnboardingL10n.tr(_language, 'defaultName');
+    if (_name.text == oldName || _name.text == 'Conto principale') {
+      _name.text = BalynOnboardingL10n.tr(code, 'defaultName');
+    }
+    setState(() => _language = code);
+  }
 
   @override
   void dispose() {
-    _tourController.dispose();
     _name.dispose();
     super.dispose();
   }
@@ -98,7 +127,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
   Widget _tile(IconData icon, String label, Widget child) => Container(
     padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
     decoration: BoxDecoration(
-      color: Colors.white.withValues(alpha: .13),
+      color: BalynPalette.darkSurface,
       borderRadius: BorderRadius.circular(18),
     ),
     child: Row(
@@ -112,111 +141,27 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
     ),
   );
 
-  Widget _tour(int index, IconData icon, String title, String subtitle) {
-    const accent = [
-      Color(0xFFFFC2ED),
-      Color(0xFFAACDFF),
-      Color(0xFFB3F5D9),
-      Color(0xFFFFD8A3),
-    ];
-    final color = accent[index];
-    final begin = index * .14;
-    final end = (begin + .57).clamp(0.0, 1.0);
-    return AnimatedBuilder(
-      animation: _tourController,
-      builder: (context, child) {
-        final progress = Curves.easeOutCubic.transform(
-          ((_tourController.value - begin) / (end - begin)).clamp(0.0, 1.0),
-        );
-        return Opacity(
-          opacity: progress,
-          child: Transform.translate(
-            offset: Offset(0, 25 * (1 - progress)),
-            child: Transform.scale(scale: .965 + .035 * progress, child: child),
-          ),
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 10),
-        child: Semantics(
-          label: '$title. $subtitle',
-          child: Container(
-            key: ValueKey('onboarding-tour-$index'),
-            padding: const EdgeInsets.fromLTRB(14, 15, 14, 15),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: .095),
-              borderRadius: BorderRadius.circular(22),
-              border: Border.all(color: Colors.white.withValues(alpha: .15)),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  height: 47,
-                  width: 47,
-                  decoration: BoxDecoration(
-                    color: color.withValues(alpha: .18),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Icon(icon, color: color, size: 25),
-                ),
-                const SizedBox(width: 13),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 15,
-                        ),
-                      ),
-                      const SizedBox(height: 3),
-                      Text(
-                        subtitle,
-                        style: const TextStyle(
-                          color: Color(0xFFE0D9ED),
-                          fontSize: 12,
-                          height: 1.35,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Icon(
-                  Icons.chevron_right_rounded,
-                  color: color.withValues(alpha: .7),
-                  size: 18,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _page({
     required Widget illustration,
     required String title,
     required String subtitle,
     required Widget content,
+    bool compact = false,
   }) => SingleChildScrollView(
-    padding: const EdgeInsets.fromLTRB(24, 8, 24, 18),
+    padding: const EdgeInsets.fromLTRB(24, 8, 24, 25),
     child: Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 440),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 132, child: Center(child: illustration)),
-            const SizedBox(height: 16),
+            SizedBox(height: compact ? 82 : 120, child: Center(child: illustration)),
+            const SizedBox(height: 13),
             Text(
               title,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 26,
+                fontSize: 27,
                 height: 1.18,
                 fontWeight: FontWeight.w800,
                 color: Colors.white,
@@ -227,12 +172,12 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
               subtitle,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                color: Color(0xFFCEC9D8),
+                color: BalynPalette.darkMuted,
                 height: 1.45,
                 fontSize: 14,
               ),
             ),
-            const SizedBox(height: 28),
+            const SizedBox(height: 24),
             content,
           ],
         ),
@@ -245,12 +190,15 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
     final reduced = MediaQuery.disableAnimationsOf(context);
     const options = ['EUR', 'USD', 'GBP', 'CHF'];
     return Scaffold(
-      backgroundColor: const Color(0xFF211248),
+      backgroundColor: BalynPalette.darkCanvas,
       resizeToAvoidBottomInset: true,
       body: Stack(
         fit: StackFit.expand,
         children: [
           const Positioned.fill(child: BalynOnboardingVelvet()),
+          const Positioned.fill(
+            child: ColoredBox(color: Color(0xC5101018)),
+          ),
           SafeArea(
             child: Column(
               children: [
@@ -269,7 +217,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                       const Spacer(),
                       Text(
                         '${_step + 1}/3',
-                        style: const TextStyle(color: Colors.white70),
+                        style: const TextStyle(color: BalynPalette.darkMuted),
                       ),
                       const SizedBox(width: 17),
                       if (!_saving)
@@ -300,9 +248,9 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                                     child: CircularProgressIndicator(
                                       value: value,
                                       strokeWidth: 3,
-                                      backgroundColor: Colors.white24,
+                                      backgroundColor: BalynPalette.darkSurfaceHigh,
                                       valueColor: const AlwaysStoppedAnimation(
-                                        Color(0xFFFFD5EE),
+                                        BalynPalette.accentTextDark,
                                       ),
                                     ),
                                   ),
@@ -348,7 +296,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                               DropdownButton<String>(
                                 isExpanded: true,
                                 value: _language,
-                                dropdownColor: const Color(0xFF392566),
+                                dropdownColor: BalynPalette.darkSurfaceHigh,
                                 style: const TextStyle(color: Colors.white),
                                 underline: const SizedBox.shrink(),
                                 items: [
@@ -369,7 +317,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                               DropdownButton<String>(
                                 isExpanded: true,
                                 value: _currency,
-                                dropdownColor: const Color(0xFF392566),
+                                dropdownColor: BalynPalette.darkSurfaceHigh,
                                 style: const TextStyle(color: Colors.white),
                                 underline: const SizedBox.shrink(),
                                 items: [
@@ -404,10 +352,10 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                               decoration: InputDecoration(
                                 labelText: _t('Nome conto', 'Account name'),
                                 labelStyle: const TextStyle(
-                                  color: Colors.white70,
+                                  color: BalynPalette.darkMuted,
                                 ),
                                 filled: true,
-                                fillColor: Colors.white12,
+                                fillColor: BalynPalette.darkSurface,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(17),
                                   borderSide: BorderSide.none,
@@ -421,7 +369,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                               DropdownButton<AccountType>(
                                 isExpanded: true,
                                 value: _type,
-                                dropdownColor: const Color(0xFF392566),
+                                dropdownColor: BalynPalette.darkSurfaceHigh,
                                 style: const TextStyle(color: Colors.white),
                                 underline: const SizedBox.shrink(),
                                 items: [
@@ -435,7 +383,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                                   ])
                                     DropdownMenuItem(
                                       value: v,
-                                      child: Text(v.label),
+                                      child: Text(BalynOnboardingL10n.accountType(_language, v.name)),
                                     ),
                                 ],
                                 onChanged: (v) => setState(() {
@@ -456,7 +404,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                             Text(
                               _t('Icona del conto', 'Account icon'),
                               textAlign: TextAlign.center,
-                              style: const TextStyle(color: Colors.white70),
+                              style: const TextStyle(color: BalynPalette.darkMuted),
                             ),
                             const SizedBox(height: 9),
                             Wrap(
@@ -492,7 +440,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                                         border: Border.all(
                                           color: _iconKey == key
                                               ? Color(_color)
-                                              : Colors.white12,
+                                              : BalynPalette.darkSurface,
                                         ),
                                       ),
                                       child: Icon(
@@ -541,53 +489,19 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                         ),
                       ),
                       _page(
-                        illustration: _TourOrbitIllustration(
-                          progress: _tourController,
+                        illustration: const Icon(
+                          Icons.dashboard_customize_outlined,
+                          size: 45,
+                          color: BalynPalette.accentTextDark,
                         ),
                         title: _t('Ecco come funziona', 'How Balyn works'),
                         subtitle: _t(
                           'Quattro sezioni, tutte collegate tra loro.',
                           'Four connected sections, one clear view.',
                         ),
-                        content: Column(
-                          children: [
-                            _tour(
-                              0,
-                              Icons.home_rounded,
-                              'Home',
-                              _t('Patrimonio e conti', 'Balances and accounts'),
-                            ),
-                            _tour(
-                              1,
-                              Icons.receipt_long_rounded,
-                              _t(
-                                'Movimenti e Analisi',
-                                'Transactions and Analytics',
-                              ),
-                              _t(
-                                'Entrate, spese e statistiche',
-                                'Income, expenses and insights',
-                              ),
-                            ),
-                            _tour(
-                              2,
-                              Icons.handshake_rounded,
-                              _t('Anticipi', 'Advances'),
-                              _t(
-                                'Prestiti e rimborsi',
-                                'Money owed and repayments',
-                              ),
-                            ),
-                            _tour(
-                              3,
-                              Icons.event_note_rounded,
-                              _t('Pianifica', 'Plan'),
-                              _t(
-                                'Budget, obiettivi e scadenze',
-                                'Budgets, goals and schedules',
-                              ),
-                            ),
-                          ],
+                        compact: true,
+                        content: BalynOnboardingFeatureAccordion(
+                          languageCode: _language,
                         ),
                       ),
                     ],
@@ -604,15 +518,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                     onChange: (page) {
                       if (_step != page && mounted) {
                         setState(() => _step = page);
-                        if (page == 2) {
-                          if (reduced) {
-                            _tourController.value = 1;
-                          } else {
-                            _tourController.forward(from: 0);
-                          }
-                        } else {
-                          _tourController.reset();
-                        }
+
                       }
                     },
                     onDone: () => _complete(),
@@ -641,14 +547,14 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                       minimumSize: const Size(65, 48),
                     ),
                     nextStyle: TextButton.styleFrom(
-                      backgroundColor: const Color(0xFFEBA2DA),
-                      foregroundColor: const Color(0xFF28144C),
+                      backgroundColor: BalynPalette.accent,
+                      foregroundColor: Colors.white,
                       minimumSize: const Size(106, 51),
                       shape: const StadiumBorder(),
                     ),
                     doneStyle: TextButton.styleFrom(
-                      backgroundColor: const Color(0xFFEBA2DA),
-                      foregroundColor: const Color(0xFF28144C),
+                      backgroundColor: BalynPalette.accent,
+                      foregroundColor: Colors.white,
                       minimumSize: const Size(116, 51),
                       shape: const StadiumBorder(),
                     ),
@@ -662,8 +568,8 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                         dotHeight: 9,
                         spacing: 10,
                         radius: 8,
-                        dotColor: Color(0x66FFFFFF),
-                        activeDotColor: Color(0xFFF0A8E5),
+                        dotColor: BalynPalette.darkSurfaceHigh,
+                        activeDotColor: BalynPalette.accentTextDark,
                       ),
                     ),
                     controlsPadding: const EdgeInsets.symmetric(
@@ -684,7 +590,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
 }
 
 class _CircleArt extends StatelessWidget {
-  const _CircleArt({required this.icon, this.color = const Color(0xFF9D8ABF)});
+  const _CircleArt({required this.icon, this.color = BalynPalette.accentTextDark});
   final IconData icon;
   final Color color;
 
@@ -694,88 +600,16 @@ class _CircleArt extends StatelessWidget {
     duration: const Duration(milliseconds: 220),
     curve: Curves.easeInOut,
     alignment: Alignment.center,
-    width: 116,
-    height: 116,
+    width: 102,
+    height: 102,
     decoration: BoxDecoration(
-      color: color.withValues(alpha: .14),
-      borderRadius: BorderRadius.circular(31),
+      color: BalynPalette.darkSurface
+      borderRadius: BorderRadius.circular(26)
     ),
     child: AnimatedSwitcher(
       duration: const Duration(milliseconds: 200),
-      child: Icon(icon, key: ValueKey(icon), size: 65, color: color),
+      child: Icon(icon, key: ValueKey(icon), size: 53, color: color),
     ),
   );
 }
 
-/// On the last page the four product sections assemble around the Balyn core.
-class _TourOrbitIllustration extends StatelessWidget {
-  const _TourOrbitIllustration({required this.progress});
-
-  final Animation<double> progress;
-
-  @override
-  Widget build(BuildContext context) => AnimatedBuilder(
-    animation: progress,
-    builder: (context, _) {
-      final factor = Curves.easeOutCubic.transform(progress.value);
-      final symbols = [
-        (Icons.home_rounded, const Color(0xFFFFC2ED), const Offset(-58, -25)),
-        (
-          Icons.receipt_long_rounded,
-          const Color(0xFFAACDFF),
-          const Offset(58, -25),
-        ),
-        (
-          Icons.handshake_rounded,
-          const Color(0xFFB3F5D9),
-          const Offset(-58, 30),
-        ),
-        (
-          Icons.event_note_rounded,
-          const Color(0xFFFFD8A3),
-          const Offset(58, 30),
-        ),
-      ];
-      return SizedBox(
-        height: 124,
-        width: 230,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              width: 65,
-              height: 65,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(22),
-                color: const Color(0xFF9B74FF).withValues(alpha: .28),
-                border: Border.all(color: Colors.white24),
-              ),
-              child: const Icon(
-                Icons.auto_graph_rounded,
-                color: Colors.white,
-                size: 34,
-              ),
-            ),
-            for (final item in symbols)
-              Transform.translate(
-                offset: item.$3 * factor,
-                child: Opacity(
-                  opacity: factor,
-                  child: Container(
-                    height: 35,
-                    width: 35,
-                    decoration: BoxDecoration(
-                      color: item.$2.withValues(alpha: .17),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: item.$2.withValues(alpha: .47)),
-                    ),
-                    child: Icon(item.$1, color: item.$2, size: 20),
-                  ),
-                ),
-              ),
-          ],
-        ),
-      );
-    },
-  );
-}
