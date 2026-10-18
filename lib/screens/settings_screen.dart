@@ -668,6 +668,14 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
               ],
             ),
           ),
+          if (item.type == DashboardWidgetType.topCategories)
+            const Padding(
+              padding: EdgeInsets.fromLTRB(15, 0, 15, 7),
+              child: Text(
+                'Torta Spese/Entrate con periodo scorrevole e intervallo personalizzato.',
+                style: TextStyle(fontSize: 11),
+              ),
+            ),
           if (item.type == DashboardWidgetType.accounts &&
               items!.any(
                 (entry) =>
