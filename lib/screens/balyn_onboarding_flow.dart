@@ -9,7 +9,6 @@ import '../widgets/balyn_onboarding_feature_accordion.dart';
 import '../main.dart';
 import '../models/models.dart';
 import '../widgets/ui_helpers.dart';
-import '../widgets/balyn_onboarding_velvet.dart';
 
 /// Three-page, first-install-only flow. Uses Balyn's real account and settings APIs.
 class BalynOnboardingFlow extends StatefulWidget {
@@ -209,8 +208,10 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          const Positioned.fill(child: BalynOnboardingVelvet()),
-          const Positioned.fill(child: ColoredBox(color: Color(0xC5101018))),
+          // Exactly the flat charcoal background used by the Home.
+          const Positioned.fill(
+            child: ColoredBox(color: BalynPalette.darkCanvas),
+          ),
           SafeArea(
             child: Column(
               children: [
