@@ -245,7 +245,8 @@ class _BalynTransactionDetailContentState
           TextField(
             key: const ValueKey('detail-amount'),
             controller: _amount,
-            obscureText: (state.hideBalance ||
+            obscureText:
+                (state.hideBalance ||
                     state.accountById(_accountId)?.hideBalance == true) &&
                 !_revealAmount,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -257,15 +258,20 @@ class _BalynTransactionDetailContentState
             decoration: InputDecoration(
               prefixText: '${state.currency} ',
               labelText: 'Importo',
-              suffixIcon: (state.hideBalance ||
+              suffixIcon:
+                  (state.hideBalance ||
                       state.accountById(_accountId)?.hideBalance == true)
                   ? IconButton(
-                      tooltip: _revealAmount ? 'Nascondi importo' : 'Mostra importo',
-                      onPressed: () => setState(() =>
-                          _revealAmount = !_revealAmount),
-                      icon: Icon(_revealAmount
-                          ? Icons.visibility_off_outlined
-                          : Icons.visibility_outlined),
+                      tooltip: _revealAmount
+                          ? 'Nascondi importo'
+                          : 'Mostra importo',
+                      onPressed: () =>
+                          setState(() => _revealAmount = !_revealAmount),
+                      icon: Icon(
+                        _revealAmount
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                      ),
                     )
                   : null,
               floatingLabelAlignment: FloatingLabelAlignment.center,
