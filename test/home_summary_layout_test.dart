@@ -23,7 +23,7 @@ void main() {
     expect(hero, contains("label: 'Spesa'"));
     expect(hero, contains("label: 'Entrata'"));
     expect(hero, contains("label: 'Trasferisci'"));
-    expect(hero, contains("label: 'Altro'"));
+    expect(hero, contains('BalynCueThreeDotsAction('));
     expect(content, contains("'I tuoi conti'"));
   });
 
@@ -41,7 +41,7 @@ void main() {
     expect(home, contains('onExpense:'));
     expect(home, contains('onIncome:'));
     expect(home, contains('onTransfer:'));
-    expect(home, contains('onMore:'));
+    expect(home, contains('onManageAccounts:'));
     expect(home, isNot(contains('FinanceSparkline(')));
   });
 
