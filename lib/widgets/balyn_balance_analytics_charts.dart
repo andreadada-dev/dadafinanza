@@ -58,7 +58,8 @@ class BalynStatisticBars extends StatelessWidget {
                     getTitlesWidget: (value, meta) => SideTitleWidget(
                       meta: meta,
                       child: Text(
-                        hidden ? '••'
+                        hidden
+                            ? '••'
                             : value >= 1000
                             ? '${(value / 1000).toStringAsFixed(0)}k'
                             : value.toStringAsFixed(0),
@@ -99,15 +100,18 @@ class BalynStatisticBars extends StatelessWidget {
                 ),
               ),
               barTouchData: BarTouchData(
-              touchTooltipData: BarTouchTooltipData(
-                getTooltipItem: (group, groupIndex, rod, rodIndex) =>
-                  BarTooltipItem(
-                    hidden ? '••••' : rod.toY.toStringAsFixed(2),
-                    TextStyle(color: scheme.onSurface, fontWeight: FontWeight.w700),
-                  ),
+                touchTooltipData: BarTouchTooltipData(
+                  getTooltipItem: (group, groupIndex, rod, rodIndex) =>
+                      BarTooltipItem(
+                        hidden ? '••••' : rod.toY.toStringAsFixed(2),
+                        TextStyle(
+                          color: scheme.onSurface,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                ),
               ),
-            ),
-            barGroups: [
+              barGroups: [
                 for (var i = 0; i < points.length; i++)
                   BarChartGroupData(
                     x: i,
