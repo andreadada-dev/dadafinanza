@@ -1,4 +1,5 @@
 name: Temporary Home customization formatter
+# Final corrected widget tree and responsive preview formatting
 on:
   push:
     branches:
