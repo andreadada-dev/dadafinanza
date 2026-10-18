@@ -1,4 +1,5 @@
 import 'package:balyn/l10n/localized_material.dart';
+import '../theme/balyn_palette.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -152,7 +153,7 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
     final dark = Theme.of(context).brightness == Brightness.dark;
 
     return ColoredBox(
-      color: dark ? const Color(0xFF101018) : const Color(0xFFF7F8FA),
+      color: dark ? BalynPalette.darkCanvas : BalynPalette.lightCanvas,
       child: NestedScrollView(
         key: const PageStorageKey('balyn-invest-home'),
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
