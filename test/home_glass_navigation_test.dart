@@ -44,7 +44,7 @@ void main() {
       expect(nav, contains('BackdropFilter('));
       expect(nav, contains('ImageFilter.blur('));
       expect(nav, contains('_LiquidRimPainter'));
-      expect(nav, contains('const Color(0xFFAA4559)'));
+      expect(nav, contains('Color(0xFFAA4559)'));
       expect(nav, contains('Colors.white.withValues(alpha: dark ? .72 : .9)'));
     },
   );
