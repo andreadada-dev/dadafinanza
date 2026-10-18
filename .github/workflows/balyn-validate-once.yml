@@ -1,4 +1,4 @@
-name: Balyn final format and validation
+name: Balyn final format and regression validation
 on:
   push:
     branches: [fix/balyn-visible-liquid-background]
