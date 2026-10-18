@@ -18,8 +18,8 @@ void main() {
     expect(home, contains('BalynRevolutHomeHero('));
     expect(home, contains('BalynRevolutHomeContent('));
     expect(home, contains('state.safeToSpend'));
-    expect(hero, contains('_AccountWavesPainter'));
-    expect(hero, contains('CustomPaint('));
+    expect(hero, contains('BalynOMeshHeroBackground('));
+    expect(hero, isNot(contains('_AccountWavesPainter')));
     expect(hero, contains("label: 'Spesa'"));
     expect(hero, contains("label: 'Entrata'"));
     expect(hero, contains("label: 'Trasferisci'"));
@@ -58,7 +58,7 @@ void main() {
       expect(hero, contains('_AnimatedAccountDiamond'));
       expect(hero, contains('Color(matching.first.colorValue)'));
       expect(hero, contains('ColorTween(end: _accent)'));
-      expect(hero, contains('oldDelegate.base != base'));
+      expect(hero, contains('useBasicPalette: currentAccountId == null'));
       expect(hero, contains('textAlign: TextAlign.center'));
     },
   );
