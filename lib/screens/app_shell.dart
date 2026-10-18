@@ -35,12 +35,13 @@ class _BalynAppShellState extends State<BalynAppShell> {
   int _homeSection = 0;
   int _homeDirection = 1;
   bool _allowExit = false;
-  bool _launcherOpen = false;
+  final ValueNotifier<Offset> _fabMotion = ValueNotifier(Offset.zero);
   Timer? _exitTimer;
 
   @override
   void dispose() {
     _exitTimer?.cancel();
+    _fabMotion.dispose();
     super.dispose();
   }
 
@@ -73,17 +74,12 @@ class _BalynAppShellState extends State<BalynAppShell> {
     _exitTimer?.cancel();
     setState(() {
       index = value;
-      _launcherOpen = false;
       _allowExit = false;
     });
   }
 
   void _handleBack(bool didPop) {
     if (didPop) return;
-    if (_launcherOpen) {
-      setState(() => _launcherOpen = false);
-      return;
-    }
     if (index != 0) {
       _selectTab(0);
       return;
@@ -148,35 +144,33 @@ class _BalynAppShellState extends State<BalynAppShell> {
           children: [
             SafeArea(
               bottom: false,
-              child: SmoothIndexedPages(index: index, children: pages),
-            ),
-            if (_launcherOpen)
-              Positioned.fill(
-                child: GestureDetector(
-                  key: const ValueKey('quick-nav-dismiss'),
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () => setState(() => _launcherOpen = false),
-                  child: ColoredBox(color: Colors.black.withValues(alpha: .12)),
-                ),
+              child: NotificationListener<ScrollNotification>(
+                onNotification: (notification) {
+                  if (notification is ScrollUpdateNotification) {
+                    final delta = notification.scrollDelta ?? 0.0;
+                    // Bound the deformation, but preserve direction and
+                    // proportional speed. Horizontal page swipes count too.
+                    final impulse = (delta / 22.0).clamp(-1.0, 1.0);
+                    _fabMotion.value = notification.metrics.axis == Axis.horizontal
+                        ? Offset(impulse, 0)
+                        : Offset(0, impulse);
+                  }
+                  return false;
+                },
+                child: SmoothIndexedPages(index: index, children: pages),
               ),
+            ),
             Positioned(
               right: 19,
               bottom: MediaQuery.viewPaddingOf(context).bottom + 15,
               child: BalynQuickActionLauncher(
-                expanded: _launcherOpen,
+                motion: _fabMotion,
                 showHome: index != 0,
-                onToggle: () => setState(() => _launcherOpen = !_launcherOpen),
-                onCreate: () {
-                  setState(() => _launcherOpen = false);
-                  _open(TransactionType.expense);
-                },
+                onCreate: () => _open(TransactionType.expense),
                 onAdvances: () => _selectTab(2),
                 onPlanning: () => _selectTab(3),
                 onHome: () => _selectTab(0),
-                onLongPress: () {
-                  setState(() => _launcherOpen = false);
-                  _showQuickMenu();
-                },
+                onLongPress: _showQuickMenu,
               ),
             ),
           ],
