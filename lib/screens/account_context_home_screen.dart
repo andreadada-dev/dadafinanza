@@ -25,7 +25,7 @@ import 'quick_add_page.dart';
 import 'root_screen.dart' as advanced;
 import 'settings_screen.dart' show DashboardCustomizerScreen;
 
-class AccountContextHomeScreen extends StatefulWidget
+class AccountContextHomeScreen extends StatefulWidget {
   const AccountContextHomeScreen({
     required this.accountId,
     required this.onAccountChanged,
@@ -37,6 +37,19 @@ class AccountContextHomeScreen extends StatefulWidget
     super.key,
   });
 
+  final int? accountId;
+  final ValueChanged<int?> onAccountChanged;
+  final int selectedSection;
+  final int slideDirection;
+  final int activityInitialTab;
+  final ValueChanged<int> onSectionChanged;
+  final ValueChanged<int> onShowActivity;
+
+  @override
+  State<AccountContextHomeScreen> createState() => _AccountContextHomeScreenState();
+}
+
+class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
   static const _fallbackTypes = <DashboardWidgetType>[
     DashboardWidgetType.totalBalance,
     DashboardWidgetType.monthlyCashFlow,
@@ -58,19 +71,6 @@ class AccountContextHomeScreen extends StatefulWidget
     DashboardWidgetType.safeToSpend,
   };
 
-  final int? accountId;
-  final ValueChanged<int?> onAccountChanged;
-  final int selectedSection;
-  final int slideDirection;
-  final int activityInitialTab;
-  final ValueChanged<int> onSectionChanged;
-  final ValueChanged<int> onShowActivity;
-
-  @override
-  State<AccountContextHomeScreen> createState() => _AccountContextHomeScreenState();
-}
-
-class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
   late final PageController _pageController = PageController(
     initialPage: widget.selectedSection,
   );
