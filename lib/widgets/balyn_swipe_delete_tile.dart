@@ -69,9 +69,9 @@ class _BalynSwipeDeleteTileState extends State<BalynSwipeDeleteTile> {
     } catch (error) {
       if (!mounted) return;
       _close();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.toString())),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(error.toString())));
     } finally {
       if (mounted) setState(() => _deleting = false);
     }
@@ -102,9 +102,7 @@ class _BalynSwipeDeleteTileState extends State<BalynSwipeDeleteTile> {
           child: SizedBox(
             width: 39,
             height: 39,
-            child: Center(
-              child: Icon(icon, color: Colors.white, size: 19),
-            ),
+            child: Center(child: Icon(icon, color: Colors.white, size: 19)),
           ),
         ),
       ),

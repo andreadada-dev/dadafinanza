@@ -24,8 +24,9 @@ void main() {
     expect(gesture, contains('await state.deleteTransaction(current)'));
   });
 
-  testWidgets('idle row hides both actions; swipe reveals two compact icons',
-      (tester) async {
+  testWidgets('idle row hides both actions; swipe reveals two compact icons', (
+    tester,
+  ) async {
     final now = DateTime(2026, 10, 18);
     var edited = 0;
     final transaction = FinanceTransaction(
@@ -98,8 +99,9 @@ void main() {
   });
 
   test('delete buttons are not part of the idle render tree', () {
-    final source = File('lib/widgets/balyn_swipe_delete_tile.dart')
-        .readAsStringSync();
+    final source = File(
+      'lib/widgets/balyn_swipe_delete_tile.dart',
+    ).readAsStringSync();
     expect(source, contains('_reveal < .5'));
     expect(source, contains('Icons.edit_rounded'));
     expect(source, contains('Icons.delete_outline_rounded'));
