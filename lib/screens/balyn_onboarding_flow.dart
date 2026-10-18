@@ -297,7 +297,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
                                 isExpanded: true,
                                 value: _language,
                                 dropdownColor: BalynPalette.darkSurfaceHigh,
-                                style: const TextStyle(color: Colors.white),
+                                style: const TextStyle(color: BalynPalette.darkText),
                                 underline: const SizedBox.shrink(),
                                 items: [
                                   for (final l in AppI18n.languages)
@@ -306,8 +306,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
                                       child: Text(l.nativeName),
                                     ),
                                 ],
-                                onChanged: (v) =>
-                                    setState(() => _language = v ?? 'it'),
+                                onChanged: _changeLanguage,
                               ),
                             ),
                             const SizedBox(height: 10),
@@ -603,8 +602,8 @@ class _CircleArt extends StatelessWidget {
     width: 102,
     height: 102,
     decoration: BoxDecoration(
-      color: BalynPalette.darkSurface
-      borderRadius: BorderRadius.circular(26)
+      color: BalynPalette.darkSurface,
+      borderRadius: BorderRadius.circular(26),
     ),
     child: AnimatedSwitcher(
       duration: const Duration(milliseconds: 200),
