@@ -10,6 +10,7 @@ import 'data/app_database.dart';
 import 'l10n/app_i18n.dart';
 import 'models/models.dart';
 import 'screens/app_shell.dart';
+import 'screens/balyn_onboarding_flow.dart';
 import 'screens/quick_add_page.dart';
 import 'services/finance_schema_service.dart';
 import 'services/notification_service.dart';
@@ -38,12 +39,17 @@ Future<void> main() async {
     // A failed warmup must never prevent the finance app from starting.
     // BalynShaderScope will retry lazily and keep flat-color fallbacks meanwhile.
   }
-  runApp(BalynApp(state: state));
+  final onboardingDone = await database.getSetting('onboarding_completed');
+  // Existing user data always takes priority over first-run onboarding.
+  final firstLaunch = onboardingDone != '1' &&
+      state.userAccounts.isEmpty && state.transactions.isEmpty;
+  runApp(BalynApp(state: state, showOnboarding: firstLaunch));
 }
 
 class BalynApp extends StatefulWidget {
-  const BalynApp({required this.state, super.key});
+  const BalynApp({required this.state, this.showOnboarding = false, super.key});
   final AppState state;
+  final bool showOnboarding;
 
   @override
   State<BalynApp> createState() => _BalynAppState();
@@ -56,10 +62,12 @@ class _BalynAppState extends State<BalynApp> with WidgetsBindingObserver {
   StreamSubscription<Uri?>? _widgetSubscription;
   Timer? _notificationDebounce;
   bool? _lastWidgetPrivacy;
+  late bool _showOnboarding;
 
   @override
   void initState() {
     super.initState();
+    _showOnboarding = widget.showOnboarding;
     WidgetsBinding.instance.addObserver(this);
     _widgetSubscription = HomeWidget.widgetClicked.listen(
       (uri) => unawaited(_handleWidgetUri(uri)),
@@ -176,7 +184,14 @@ class _BalynAppState extends State<BalynApp> with WidgetsBindingObserver {
                 child: child ?? const SizedBox.shrink(),
               ),
             ),
-            home: AppLockGate(security: security, child: const BalynAppShell()),
+            home: AppLockGate(
+              security: security,
+              child: _showOnboarding
+                  ? BalynOnboardingFlow(
+                      onFinished: () => setState(() => _showOnboarding = false),
+                    )
+                  : const BalynAppShell(),
+            ),
           );
         },
       ),
