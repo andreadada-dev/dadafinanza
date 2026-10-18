@@ -26,7 +26,7 @@ void main() {
     expect(home, contains('AccountContextTransactionsScreen('));
     expect(home, contains('AccountContextAnalyticsScreen('));
     expect(home, contains('embedded: true'));
-    expect(home, contains("title: 'Gestisci conti'"));
+    expect(home, contains("const Text('Gestisci conti')"));
     expect(home, contains('onAccountChanged: onAccountChanged'));
     expect(home, isNot(contains('home-accounts-scroll')));
     expect(home, contains('sectionPage: _pageController.hasClients'));
