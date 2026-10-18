@@ -194,7 +194,6 @@ class _AccountContextAnalyticsScreenState
       _AnalyticsPeriod.year => 12,
       _AnalyticsPeriod.custom => totalDays <= 31 ? math.min(12, totalDays) : 12,
     };
-    if (targetBuckets < 2) return const [];
 
     final bucketDays = math.max(1, (totalDays / targetBuckets).ceil());
     final result = <FinanceTrendPoint>[];
@@ -384,7 +383,7 @@ class _AccountContextAnalyticsScreenState
               onShiftPeriod: _shiftPeriod,
             ),
           ),
-          if (cashFlowPoints.length >= 2) ...[
+          if (cashFlowPoints.isNotEmpty) ...[
             const SizedBox(height: 32),
             const SectionTitle('Entrate e spese'),
             const SizedBox(height: 10),
