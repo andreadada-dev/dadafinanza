@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:balyn/l10n/localized_material.dart';
 import 'package:pie_menu/pie_menu.dart';
 
-import '../app_state.dart';
 import '../main.dart';
 import '../models/models.dart';
 import '../models/quick_capture_models.dart';
