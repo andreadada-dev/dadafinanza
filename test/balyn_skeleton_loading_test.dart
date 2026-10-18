@@ -43,18 +43,22 @@ void main() {
   });
 
   test(
-    'Onboarding last page retains all sections with staggered animation',
+    'Onboarding third page explains all sections with the Cue accordion',
     () {
       final onboarding = File(
         'lib/screens/balyn_onboarding_flow.dart',
       ).readAsStringSync();
-      expect(onboarding, contains('AnimationController _tourController'));
-      expect(onboarding, contains('_TourOrbitIllustration('));
-      expect(onboarding, contains("'Movimenti e Analisi'"));
-      expect(onboarding, contains("'Anticipi'"));
-      expect(onboarding, contains("'Pianifica'"));
+      final accordion = File(
+        'lib/widgets/balyn_onboarding_feature_accordion.dart',
+      ).readAsStringSync();
+      expect(onboarding, contains('BalynOnboardingFeatureAccordion('));
       expect(onboarding, contains('MediaQuery.disableAnimationsOf(context)'));
-      expect(onboarding, contains('_tourController.forward(from: 0)'));
+      expect(accordion, contains('Cue.onToggle('));
+      expect(accordion, contains('Spring.smooth()'));
+      expect(accordion, contains("'homeTitle'"));
+      expect(accordion, contains("'movementTitle'"));
+      expect(accordion, contains("'advancesTitle'"));
+      expect(accordion, contains("'planTitle'"));
     },
   );
 }
