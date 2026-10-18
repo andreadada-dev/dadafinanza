@@ -66,18 +66,28 @@ class _BrandHeader extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Balyn',
+                  Text(
+                    'Balyn',
                     style: theme.textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w900, letterSpacing: -.5)),
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: -.5,
+                    ),
+                  ),
                   const SizedBox(height: 3),
-                  Text('Le tue preferenze finanziarie',
+                  Text(
+                    'Le tue preferenze finanziarie',
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant)),
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
                   const SizedBox(height: 5),
-                  Text('$accountCount conti · $currency',
+                  Text(
+                    '$accountCount conti · $currency',
                     style: theme.textTheme.labelMedium?.copyWith(
                       fontWeight: FontWeight.w700,
-                      color: theme.colorScheme.primary)),
+                      color: theme.colorScheme.primary,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -107,43 +117,47 @@ class PersonalSettingsScreen extends StatelessWidget {
         key: const PageStorageKey('balyn-settings-scroll'),
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 112),
         children: [
-          _BrandHeader(accountCount: state.userAccounts.length, currency: state.currency),
+          _BrandHeader(
+            accountCount: state.userAccounts.length,
+            currency: state.currency,
+          ),
           const SizedBox(height: 26),
           BalynSettingsGroup(
             title: 'Aspetto',
             accent: const Color(0xFF4365F5),
             children: [
               BalynSettingsTile(
-            icon: Icons.contrast_rounded,
-            title: 'Tema',
-            subtitle: switch (state.themePreference) {
-              AppThemePreference.system => 'Sistema',
-              AppThemePreference.light => 'Chiaro',
-              AppThemePreference.dark => 'Scuro',
-            },
-            onTap: () => _pickTheme(context, state),
-          ),
-          BalynSettingsTile(
-            icon: Icons.language_rounded,
-            title: 'Lingua',
-            subtitle: AppI18n.preferenceLabel(state.languageCode),
-            onTap: () => _pickLanguage(context, state),
-          ),
-          BalynSettingsTile(
-            icon: Icons.auto_awesome_rounded,
-            title: 'Gradient animati',
-            subtitle: 'Icone · Torte · Testo · Barre · Sfondo',
-            onTap: () => _open(context, const ShaderAppearanceSettingsScreen()),
-          ),
-          BalynSettingsSwitch(
-            icon: Icons.visibility_off_outlined,
-            title: const Text('Nascondi saldi nell’app'),
-            subtitle: const Text(
-              'Nasconde gli importi finanziari nelle viste principali.',
-            ),
-            value: state.hideBalance,
-            onChanged: (value) => _setHideBalance(state, value),
-          ),
+                icon: Icons.contrast_rounded,
+                title: 'Tema',
+                subtitle: switch (state.themePreference) {
+                  AppThemePreference.system => 'Sistema',
+                  AppThemePreference.light => 'Chiaro',
+                  AppThemePreference.dark => 'Scuro',
+                },
+                onTap: () => _pickTheme(context, state),
+              ),
+              BalynSettingsTile(
+                icon: Icons.language_rounded,
+                title: 'Lingua',
+                subtitle: AppI18n.preferenceLabel(state.languageCode),
+                onTap: () => _pickLanguage(context, state),
+              ),
+              BalynSettingsTile(
+                icon: Icons.auto_awesome_rounded,
+                title: 'Gradient animati',
+                subtitle: 'Icone · Torte · Testo · Barre · Sfondo',
+                onTap: () =>
+                    _open(context, const ShaderAppearanceSettingsScreen()),
+              ),
+              BalynSettingsSwitch(
+                icon: Icons.visibility_off_outlined,
+                title: const Text('Nascondi saldi nell’app'),
+                subtitle: const Text(
+                  'Nasconde gli importi finanziari nelle viste principali.',
+                ),
+                value: state.hideBalance,
+                onChanged: (value) => _setHideBalance(state, value),
+              ),
             ],
           ),
           BalynSettingsGroup(
@@ -151,47 +165,48 @@ class PersonalSettingsScreen extends StatelessWidget {
             accent: const Color(0xFF684BEC),
             children: [
               BalynSettingsTile(
-            icon: Icons.account_balance_wallet_outlined,
-            title: 'Conti',
-            subtitle: '${state.userAccounts.length} conti',
-            onTap: () => _open(context, const AccountManagementScreen()),
-          ),
-          BalynSettingsTile(
-            icon: Icons.currency_exchange_rounded,
-            title: 'Valuta principale',
-            subtitle: state.currency,
-            onTap: () => _pickCurrency(context, state),
-          ),
-          BalynSettingsSwitch(
-            icon: Icons.pin_outlined,
-            title: const Text('Mostra centesimi'),
-            value: state.showCents,
-            onChanged: (value) => _setBoolSetting(state, 'show_cents', value),
-          ),
-          BalynSettingsTile(
-            icon: Icons.calendar_view_week_outlined,
-            title: 'Primo giorno settimana',
-            subtitle: state.weekStart == DateTime.sunday
-                ? 'Domenica'
-                : 'Lunedì',
-            onTap: () => _pickWeekStart(context, state),
-          ),
-          BalynSettingsTile(
-            icon: Icons.calendar_month_outlined,
-            title: 'Inizio mese finanziario',
-            subtitle: 'Giorno ${state.financialMonthStart}',
-            onTap: () => _pickFinancialMonthStart(context, state),
-          ),
-          BalynSettingsSwitch(
-            icon: Icons.warning_amber_rounded,
-            title: const Text('Conferma eliminazioni'),
-            subtitle: const Text(
-              'Richiede conferma prima di eliminare un movimento.',
-            ),
-            value: state.confirmDelete,
-            onChanged: (value) =>
-                _setBoolSetting(state, 'confirm_delete', value),
-          ),
+                icon: Icons.account_balance_wallet_outlined,
+                title: 'Conti',
+                subtitle: '${state.userAccounts.length} conti',
+                onTap: () => _open(context, const AccountManagementScreen()),
+              ),
+              BalynSettingsTile(
+                icon: Icons.currency_exchange_rounded,
+                title: 'Valuta principale',
+                subtitle: state.currency,
+                onTap: () => _pickCurrency(context, state),
+              ),
+              BalynSettingsSwitch(
+                icon: Icons.pin_outlined,
+                title: const Text('Mostra centesimi'),
+                value: state.showCents,
+                onChanged: (value) =>
+                    _setBoolSetting(state, 'show_cents', value),
+              ),
+              BalynSettingsTile(
+                icon: Icons.calendar_view_week_outlined,
+                title: 'Primo giorno settimana',
+                subtitle: state.weekStart == DateTime.sunday
+                    ? 'Domenica'
+                    : 'Lunedì',
+                onTap: () => _pickWeekStart(context, state),
+              ),
+              BalynSettingsTile(
+                icon: Icons.calendar_month_outlined,
+                title: 'Inizio mese finanziario',
+                subtitle: 'Giorno ${state.financialMonthStart}',
+                onTap: () => _pickFinancialMonthStart(context, state),
+              ),
+              BalynSettingsSwitch(
+                icon: Icons.warning_amber_rounded,
+                title: const Text('Conferma eliminazioni'),
+                subtitle: const Text(
+                  'Richiede conferma prima di eliminare un movimento.',
+                ),
+                value: state.confirmDelete,
+                onChanged: (value) =>
+                    _setBoolSetting(state, 'confirm_delete', value),
+              ),
             ],
           ),
           BalynSettingsGroup(
@@ -199,23 +214,23 @@ class PersonalSettingsScreen extends StatelessWidget {
             accent: const Color(0xFF298B83),
             children: [
               BalynSettingsTile(
-            icon: Icons.fingerprint_rounded,
-            title: 'Blocco e schermata recenti',
-            subtitle: 'Biometria o PIN · timeout · protezione screenshot',
-            onTap: () => _open(context, const LocalPrivacyScreen()),
-          ),
-          BalynSettingsTile(
-            icon: Icons.policy_outlined,
-            title: 'Privacy e dati',
-            subtitle: 'Dati locali, permessi, backup e servizi di sistema',
-            onTap: () => _open(context, const PrivacyPolicyScreen()),
-          ),
-          BalynSettingsTile(
-            icon: Icons.notifications_none_rounded,
-            title: 'Notifiche locali',
-            subtitle: 'Scadenze, anticipi, budget, obiettivi e cash-flow',
-            onTap: () => _open(context, const NotificationSettingsScreen()),
-          ),
+                icon: Icons.fingerprint_rounded,
+                title: 'Blocco e schermata recenti',
+                subtitle: 'Biometria o PIN · timeout · protezione screenshot',
+                onTap: () => _open(context, const LocalPrivacyScreen()),
+              ),
+              BalynSettingsTile(
+                icon: Icons.policy_outlined,
+                title: 'Privacy e dati',
+                subtitle: 'Dati locali, permessi, backup e servizi di sistema',
+                onTap: () => _open(context, const PrivacyPolicyScreen()),
+              ),
+              BalynSettingsTile(
+                icon: Icons.notifications_none_rounded,
+                title: 'Notifiche locali',
+                subtitle: 'Scadenze, anticipi, budget, obiettivi e cash-flow',
+                onTap: () => _open(context, const NotificationSettingsScreen()),
+              ),
             ],
           ),
           BalynSettingsGroup(
@@ -223,25 +238,26 @@ class PersonalSettingsScreen extends StatelessWidget {
             accent: const Color(0xFF8651B2),
             children: [
               BalynSettingsTile(
-            icon: Icons.mic_none_rounded,
-            title: 'Inserimento vocale',
-            subtitle: 'Parser locale · on-device quando disponibile',
-            onTap: () => _open(context, const VoiceSettingsScreen()),
-          ),
-          BalynSettingsTile(
-            icon: Icons.bolt_outlined,
-            title: 'Smart Suggestions',
-            subtitle: state.smartSuggestionsEnabled
-                ? '${state.learnedPatterns.length} pattern appresi'
-                : 'Disattivate',
-            onTap: () => _open(context, const SmartSuggestionsSettingsScreen()),
-          ),
-          BalynSettingsTile(
-            icon: Icons.bookmark_add_outlined,
-            title: 'Preset rapidi',
-            subtitle: 'Caffè, benzina, spesa e azioni personalizzate',
-            onTap: () => _open(context, const PresetManagementScreen()),
-          ),
+                icon: Icons.mic_none_rounded,
+                title: 'Inserimento vocale',
+                subtitle: 'Parser locale · on-device quando disponibile',
+                onTap: () => _open(context, const VoiceSettingsScreen()),
+              ),
+              BalynSettingsTile(
+                icon: Icons.bolt_outlined,
+                title: 'Smart Suggestions',
+                subtitle: state.smartSuggestionsEnabled
+                    ? '${state.learnedPatterns.length} pattern appresi'
+                    : 'Disattivate',
+                onTap: () =>
+                    _open(context, const SmartSuggestionsSettingsScreen()),
+              ),
+              BalynSettingsTile(
+                icon: Icons.bookmark_add_outlined,
+                title: 'Preset rapidi',
+                subtitle: 'Caffè, benzina, spesa e azioni personalizzate',
+                onTap: () => _open(context, const PresetManagementScreen()),
+              ),
             ],
           ),
           BalynSettingsGroup(
@@ -249,38 +265,38 @@ class PersonalSettingsScreen extends StatelessWidget {
             accent: const Color(0xFFCB7737),
             children: [
               BalynSettingsTile(
-            icon: Icons.handshake_outlined,
-            title: 'Anticipi',
-            subtitle:
-                '${state.advances.where((item) => item.closedKind == null && state.advanceRemainingCents(item.id) > 0).length} aperti · persone e storico',
-            onTap: () => _open(context, const AdvancesScreen()),
-          ),
-          BalynSettingsTile(
-            icon: Icons.category_outlined,
-            title: 'Categorie',
-            subtitle:
-                '${state.categories.length} categorie · preferite e quick slot',
-            onTap: () => _open(context, const CategoryManagementScreen()),
-          ),
-          BalynSettingsTile(
-            icon: Icons.auto_fix_high_outlined,
-            title: 'Regole automatiche',
-            subtitle: '${state.rules.length} regole · priorità e test',
-            onTap: () => _open(context, const RulesManagementScreen()),
-          ),
-          BalynSettingsTile(
-            icon: Icons.dashboard_customize_outlined,
-            title: 'Personalizza Home',
-            subtitle: 'Mostra, nascondi, ridimensiona e riordina i widget',
-            onTap: () => _open(context, const DashboardCustomizerScreen()),
-          ),
-          BalynSettingsTile(
-            icon: Icons.widgets_outlined,
-            title: 'Widget Android',
-            subtitle:
-                'Saldo, Quick Capture, importi rapidi e riepilogo configurabili',
-            onTap: () => _open(context, const AndroidWidgetsScreen()),
-          ),
+                icon: Icons.handshake_outlined,
+                title: 'Anticipi',
+                subtitle:
+                    '${state.advances.where((item) => item.closedKind == null && state.advanceRemainingCents(item.id) > 0).length} aperti · persone e storico',
+                onTap: () => _open(context, const AdvancesScreen()),
+              ),
+              BalynSettingsTile(
+                icon: Icons.category_outlined,
+                title: 'Categorie',
+                subtitle:
+                    '${state.categories.length} categorie · preferite e quick slot',
+                onTap: () => _open(context, const CategoryManagementScreen()),
+              ),
+              BalynSettingsTile(
+                icon: Icons.auto_fix_high_outlined,
+                title: 'Regole automatiche',
+                subtitle: '${state.rules.length} regole · priorità e test',
+                onTap: () => _open(context, const RulesManagementScreen()),
+              ),
+              BalynSettingsTile(
+                icon: Icons.dashboard_customize_outlined,
+                title: 'Personalizza Home',
+                subtitle: 'Mostra, nascondi, ridimensiona e riordina i widget',
+                onTap: () => _open(context, const DashboardCustomizerScreen()),
+              ),
+              BalynSettingsTile(
+                icon: Icons.widgets_outlined,
+                title: 'Widget Android',
+                subtitle:
+                    'Saldo, Quick Capture, importi rapidi e riepilogo configurabili',
+                onTap: () => _open(context, const AndroidWidgetsScreen()),
+              ),
             ],
           ),
           BalynSettingsGroup(
@@ -288,11 +304,11 @@ class PersonalSettingsScreen extends StatelessWidget {
             accent: const Color(0xFF4C749C),
             children: [
               BalynSettingsTile(
-            icon: Icons.folder_zip_outlined,
-            title: 'Backup, CSV e ripristino',
-            subtitle: 'Backup completo con allegati · import portabile',
-            onTap: () => _open(context, const DataManagementScreen()),
-          ),
+                icon: Icons.folder_zip_outlined,
+                title: 'Backup, CSV e ripristino',
+                subtitle: 'Backup completo con allegati · import portabile',
+                onTap: () => _open(context, const DataManagementScreen()),
+              ),
             ],
           ),
           BalynSettingsGroup(
@@ -300,31 +316,31 @@ class PersonalSettingsScreen extends StatelessWidget {
             accent: const Color(0xFF7664BE),
             children: [
               BalynSettingsSwitch(
-            icon: Icons.help_outline_rounded,
-            title: const Text('Permetti “Non assegnato”'),
-            subtitle: const Text(
-              'Registra velocemente e assegna il conto in seguito.',
-            ),
-            value: state.allowUnassigned,
-            onChanged: (value) =>
-                _setBoolSetting(state, 'allow_unassigned', value),
-          ),
-          BalynSettingsSwitch(
-            icon: Icons.swap_horiz_rounded,
-            title: const Text('Trasferimenti nelle statistiche'),
-            value: state.showTransfersInAnalytics,
-            onChanged: (value) =>
-                _setBoolSetting(state, 'show_transfers_analytics', value),
-          ),
-          BalynSettingsSwitch(
-            icon: Icons.vibration_rounded,
-            title: const Text('Feedback aptico'),
-            subtitle: const Text(
-              'Vibrazione leggera su navigazione, azioni rapide e impostazioni.',
-            ),
-            value: state.haptics,
-            onChanged: (value) => _setHaptics(state, value),
-          ),
+                icon: Icons.help_outline_rounded,
+                title: const Text('Permetti “Non assegnato”'),
+                subtitle: const Text(
+                  'Registra velocemente e assegna il conto in seguito.',
+                ),
+                value: state.allowUnassigned,
+                onChanged: (value) =>
+                    _setBoolSetting(state, 'allow_unassigned', value),
+              ),
+              BalynSettingsSwitch(
+                icon: Icons.swap_horiz_rounded,
+                title: const Text('Trasferimenti nelle statistiche'),
+                value: state.showTransfersInAnalytics,
+                onChanged: (value) =>
+                    _setBoolSetting(state, 'show_transfers_analytics', value),
+              ),
+              BalynSettingsSwitch(
+                icon: Icons.vibration_rounded,
+                title: const Text('Feedback aptico'),
+                subtitle: const Text(
+                  'Vibrazione leggera su navigazione, azioni rapide e impostazioni.',
+                ),
+                value: state.haptics,
+                onChanged: (value) => _setHaptics(state, value),
+              ),
             ],
           ),
         ],
@@ -591,47 +607,48 @@ class ShaderAppearanceSettingsScreen extends StatelessWidget {
             title: 'Elementi animati',
             accent: const Color(0xFF8651B2),
             children: [
-          BalynSettingsSwitch(
-            icon: Icons.interests_outlined,
-            title: const Text('Icone'),
-            subtitle: const Text('Icone colorate e azioni rapide'),
-            value: state.shaderIcons,
-            onChanged: (value) =>
-                _setShaderSetting(state, 'shader_icons', value),
-          ),
-          BalynSettingsSwitch(
-            icon: Icons.donut_large_rounded,
-            title: const Text('Torte'),
-            subtitle: const Text('Donut e grafici colorati'),
-            value: state.shaderCharts,
-            onChanged: (value) =>
-                _setShaderSetting(state, 'shader_charts', value),
-          ),
-          BalynSettingsSwitch(
-            icon: Icons.text_fields_rounded,
-            title: const Text('Testo'),
-            subtitle: const Text('Importi e testi semanticamente colorati'),
-            value: state.shaderText,
-            onChanged: (value) =>
-                _setShaderSetting(state, 'shader_text', value),
-          ),
-          BalynSettingsSwitch(
-            icon: Icons.linear_scale_rounded,
-            title: const Text('Barre'),
-            subtitle: const Text('Progress bar e indicatori lineari'),
-            value: state.shaderBars,
-            onChanged: (value) =>
-                _setShaderSetting(state, 'shader_bars', value),
-          ),
-          BalynSettingsSwitch(
-            icon: Icons.wallpaper_rounded,
-            title: const Text('Sfondo'),
-            subtitle: const Text('Onde liquide lente sul nero o sul bianco'),
-            value: state.shaderBackground,
-            onChanged: (value) =>
-                _setShaderSetting(state, 'shader_background', value),
-          ),
-
+              BalynSettingsSwitch(
+                icon: Icons.interests_outlined,
+                title: const Text('Icone'),
+                subtitle: const Text('Icone colorate e azioni rapide'),
+                value: state.shaderIcons,
+                onChanged: (value) =>
+                    _setShaderSetting(state, 'shader_icons', value),
+              ),
+              BalynSettingsSwitch(
+                icon: Icons.donut_large_rounded,
+                title: const Text('Torte'),
+                subtitle: const Text('Donut e grafici colorati'),
+                value: state.shaderCharts,
+                onChanged: (value) =>
+                    _setShaderSetting(state, 'shader_charts', value),
+              ),
+              BalynSettingsSwitch(
+                icon: Icons.text_fields_rounded,
+                title: const Text('Testo'),
+                subtitle: const Text('Importi e testi semanticamente colorati'),
+                value: state.shaderText,
+                onChanged: (value) =>
+                    _setShaderSetting(state, 'shader_text', value),
+              ),
+              BalynSettingsSwitch(
+                icon: Icons.linear_scale_rounded,
+                title: const Text('Barre'),
+                subtitle: const Text('Progress bar e indicatori lineari'),
+                value: state.shaderBars,
+                onChanged: (value) =>
+                    _setShaderSetting(state, 'shader_bars', value),
+              ),
+              BalynSettingsSwitch(
+                icon: Icons.wallpaper_rounded,
+                title: const Text('Sfondo'),
+                subtitle: const Text(
+                  'Onde liquide lente sul nero o sul bianco',
+                ),
+                value: state.shaderBackground,
+                onChanged: (value) =>
+                    _setShaderSetting(state, 'shader_background', value),
+              ),
             ],
           ),
         ],
@@ -644,4 +661,3 @@ class ShaderAppearanceSettingsScreen extends StatelessWidget {
     await state.setSetting(key, value ? '1' : '0');
   }
 }
-

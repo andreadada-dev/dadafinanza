@@ -140,9 +140,7 @@ class BalynSettingsSwitch extends StatelessWidget {
       horizontalTitleGap: 12,
       leading: _SettingsIcon(icon: icon),
       title: DefaultTextStyle.merge(
-        style: theme.textTheme.bodyLarge?.copyWith(
-          fontWeight: FontWeight.w700,
-        ),
+        style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700),
         child: title,
       ),
       subtitle: subtitle == null
@@ -154,10 +152,7 @@ class BalynSettingsSwitch extends StatelessWidget {
               ),
               child: subtitle!,
             ),
-      trailing: Switch.adaptive(
-        value: value,
-        onChanged: onChanged,
-      ),
+      trailing: Switch.adaptive(value: value, onChanged: onChanged),
       onTap: onChanged == null ? null : () => onChanged!(!value),
     );
   }
