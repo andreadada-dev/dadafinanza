@@ -56,7 +56,9 @@ void main() {
     expect(menu, contains('reverseMotion: .snappy()'));
     expect(menu, contains('alignment: Alignment.bottomRight'));
     expect(menu, contains('Navigator.of(modalContext).pop()'));
-    expect(menu, contains('height: 56'));
+    expect(menu, contains('height: closeSlotHeight'));
+    expect(header, contains('closeSlotHeight: 82'));
+    expect(menu, contains('alignment: Alignment.topCenter'));
   });
 
   testWidgets('FAB changes shape with scrolling and springs back to circle', (
