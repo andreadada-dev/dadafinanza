@@ -1,4 +1,5 @@
 import 'package:balyn/l10n/localized_material.dart';
+import '../theme/balyn_palette.dart';
 
 /// Revolut-inspired grouped settings, based on the information hierarchy of
 /// Babstrap Settings Screen. No dependency on its pre-Dart-3 package.
@@ -36,7 +37,7 @@ class BalynSettingsGroup extends StatelessWidget {
             ),
           ),
           Material(
-            color: dark ? const Color(0xFF21232B) : Colors.white,
+            color: BalynPalette.surface(theme.brightness),
             borderRadius: BorderRadius.circular(22),
             clipBehavior: Clip.antiAlias,
             child: Theme(
