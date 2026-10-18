@@ -478,7 +478,9 @@ class BalynRevolutHomeHero extends StatelessWidget {
                 selectedTab: selectedTab,
                 page: sectionPage,
                 onSelected: onTabChanged,
-              ),          ),
+              ),
+            ),
+          ),
         ],
       ),
     );
