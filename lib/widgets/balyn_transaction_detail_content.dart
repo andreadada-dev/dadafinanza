@@ -233,82 +233,97 @@ class _BalynTransactionDetailContentState
       child: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 56),
         children: [
-          Center(
-            child: Text(
-              'Dettaglio movimento',
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-          const SizedBox(height: 8),
-          TextField(
-            key: const ValueKey('detail-amount'),
-            controller: _amount,
-            obscureText:
-                (state.hideBalance ||
-                    state.accountById(_accountId)?.hideBalance == true) &&
-                !_revealAmount,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            textAlign: TextAlign.center,
-            style: theme.textTheme.displaySmall?.copyWith(
-              fontWeight: FontWeight.w900,
-              letterSpacing: -1,
-            ),
-            decoration: InputDecoration(
-              prefixText: '${state.currency} ',
-              labelText: 'Importo',
-              suffixIcon:
-                  (state.hideBalance ||
-                      state.accountById(_accountId)?.hideBalance == true)
-                  ? IconButton(
-                      tooltip: _revealAmount
-                          ? 'Nascondi importo'
-                          : 'Mostra importo',
-                      onPressed: () =>
-                          setState(() => _revealAmount = !_revealAmount),
-                      icon: Icon(
-                        _revealAmount
-                            ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined,
-                      ),
-                    )
-                  : null,
-              floatingLabelAlignment: FloatingLabelAlignment.center,
-              border: InputBorder.none,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              OutlinedButton.icon(
-                onPressed: widget.onDuplicate,
-                icon: const Icon(Icons.copy_outlined, size: 18),
-                label: const Text('Duplica'),
-              ),
-              OutlinedButton.icon(
-                onPressed: widget.onDelete,
-                icon: Icon(
-                  Icons.delete_outline_rounded,
-                  size: 18,
-                  color: actionColor,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(2, 14, 2, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  key: const ValueKey('detail-amount'),
+                  controller: _amount,
+                  obscureText: (state.hideBalance ||
+                      state.accountById(_accountId)?.hideBalance == true) &&
+                      !_revealAmount,
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  textAlign: TextAlign.left,
+                  style: theme.textTheme.displayMedium?.copyWith(
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: -1.7,
+                    color: _type == TransactionType.expense
+                      ? theme.colorScheme.error
+                      : _type == TransactionType.income
+                        ? const Color(0xFF4CA980)
+                        : theme.colorScheme.primary,
+                  ),
+                  decoration: InputDecoration(
+                    labelText: 'Importo',
+                    prefixText: (_type == TransactionType.expense ? '−'
+                      : _type == TransactionType.income ? '+' : '') +
+                      state.currency + ' ',
+                    border: InputBorder.none,
+                    isDense: true,
+                    suffixIcon: (state.hideBalance ||
+                        state.accountById(_accountId)?.hideBalance == true)
+                        ? IconButton(
+                            tooltip: _revealAmount
+                                ? 'Nascondi importo' : 'Mostra importo',
+                            onPressed: () => setState(() =>
+                                _revealAmount = !_revealAmount),
+                            icon: Icon(_revealAmount
+                                ? Icons.visibility_off_outlined
+                                : Icons.visibility_outlined),
+                          )
+                        : const Icon(Icons.edit_outlined, size: 20),
+                  ),
                 ),
-                label: Text('Elimina', style: TextStyle(color: actionColor)),
-              ),
+                const SizedBox(height: 4),
+                ValueListenableBuilder<TextEditingValue>(
+                  valueListenable: _note,
+                  builder: (context, value, _) => Text(
+                    value.text.trim().isNotEmpty ? value.text.trim()
+                        : state.categoryById(_categoryId)?.name ?? _type.label,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w800),
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  DateFormat('d MMM yyyy, HH:mm', AppI18n.intlLocale)
+                      .format(_date),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 19),
+          Row(
+            children: [
+              Expanded(child: _DetailAction(
+                icon: Icons.copy_outlined, label: 'Duplica',
+                onPressed: widget.onDuplicate,
+              )),
+              const SizedBox(width: 9),
+              Expanded(child: _DetailAction(
+                icon: Icons.delete_outline_rounded, label: 'Elimina',
+                destructive: true, onPressed: widget.onDelete,
+              )),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 19),
           _Section(
-            title: 'Informazioni',
+            title: 'Dettagli movimento',
             children: [
+              const ListTile(
+                dense: true, contentPadding: EdgeInsets.zero,
+                title: Text('Stato'), trailing: Text('Registrato'),
+              ),
               DropdownButtonFormField<TransactionType>(
                 key: ValueKey('detail-type-${_type.name}'),
                 initialValue: _type,
                 decoration: const InputDecoration(
                   labelText: 'Tipo movimento',
+                  border: InputBorder.none,
                   prefixIcon: Icon(Icons.swap_horiz),
                 ),
                 items: [
@@ -337,6 +352,7 @@ class _BalynTransactionDetailContentState
                     : null,
                 decoration: const InputDecoration(
                   labelText: 'Conto',
+                  border: InputBorder.none,
                   prefixIcon: Icon(Icons.account_balance_wallet_outlined),
                 ),
                 isExpanded: true,
@@ -366,6 +382,7 @@ class _BalynTransactionDetailContentState
                       : null,
                   decoration: const InputDecoration(
                     labelText: 'Conto destinazione',
+                  border: InputBorder.none,
                     prefixIcon: Icon(Icons.east_rounded),
                   ),
                   isExpanded: true,
@@ -396,6 +413,7 @@ class _BalynTransactionDetailContentState
                       : null,
                   decoration: const InputDecoration(
                     labelText: 'Categoria',
+                  border: InputBorder.none,
                     prefixIcon: Icon(Icons.category_outlined),
                   ),
                   isExpanded: true,
@@ -445,6 +463,7 @@ class _BalynTransactionDetailContentState
                 minLines: 1,
                 decoration: const InputDecoration(
                   labelText: 'Nota',
+                  border: InputBorder.none,
                   prefixIcon: Icon(Icons.edit_note_outlined),
                 ),
               ),
@@ -453,6 +472,7 @@ class _BalynTransactionDetailContentState
                 controller: _tags,
                 decoration: const InputDecoration(
                   labelText: 'Tag (separati da virgola)',
+                  border: InputBorder.none,
                   prefixIcon: Icon(Icons.sell_outlined),
                 ),
               ),
@@ -524,6 +544,32 @@ class _BalynTransactionDetailContentState
               ],
             ),
           ],
+          if (state.transactionById(widget.item.refundOfTransactionId) != null ||
+              state.refundsFor(widget.item.id) > 0 ||
+              widget.item.recurringId != null) ...[
+            const SizedBox(height: 14),
+            _Section(title: 'Collegamenti', children: [
+              if (state.transactionById(widget.item.refundOfTransactionId) != null)
+                ListTile(
+                  dense: true,
+                  title: const Text('Rimborso di'),
+                  trailing: Text('#' + widget.item.refundOfTransactionId.toString()),
+                ),
+              if (state.refundsFor(widget.item.id) > 0)
+                ListTile(
+                  dense: true,
+                  title: const Text('Rimborsato'),
+                  trailing: Text(state.hideBalance ? '••••' :
+                    moneyFor(state, state.refundsFor(widget.item.id))),
+                ),
+              if (widget.item.recurringId != null)
+                const ListTile(
+                  dense: true,
+                  title: Text('Ricorrenza'),
+                  trailing: Text('Collegata a Pianifica'),
+                ),
+            ]),
+          ],
           const SizedBox(height: 23),
           FilledButton.icon(
             key: const ValueKey('detail-save'),
@@ -543,6 +589,43 @@ class _BalynTransactionDetailContentState
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _DetailAction extends StatelessWidget {
+  const _DetailAction({
+    required this.icon, required this.label, required this.onPressed,
+    this.destructive = false,
+  });
+  final IconData icon;
+  final String label;
+  final VoidCallback onPressed;
+  final bool destructive;
+  @override
+  Widget build(BuildContext context) {
+    final color = destructive
+      ? Theme.of(context).colorScheme.error
+      : Theme.of(context).colorScheme.primary;
+    return Material(
+      color: color.withValues(alpha: .10),
+      borderRadius: BorderRadius.circular(17),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(17),
+        onTap: onPressed,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, color: color, size: 19),
+              const SizedBox(width: 9),
+              Text(label, style: TextStyle(
+                fontWeight: FontWeight.w700, color: color)),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -572,7 +655,14 @@ class _Section extends StatelessWidget {
           ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w800),
         ),
         const SizedBox(height: 9),
-        ...children,
+        for (var i = 0; i < children.length; i++) ...[
+          if (i != 0)
+            Divider(
+              height: 1,
+              color: Theme.of(context).dividerColor.withValues(alpha: .20),
+            ),
+          children[i],
+        ],
       ],
     ),
   );
