@@ -206,50 +206,61 @@ class _BalynTransactionDetailContentState
     }
   }
 
-
-  Future<T?> _select<T>(
-    String title, List<_Choice<T>> choices, T? selected,
-  ) => showModalBottomSheet<T>(
-    context: context,
-    useSafeArea: true,
-    showDragHandle: true,
-    isScrollControlled: true,
-    backgroundColor: Theme.of(context).colorScheme.surface,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
-    builder: (sheet) => FractionallySizedBox(
-      heightFactor: .64,
-      child: Column(children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 4, 20, 12),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(title, style: Theme.of(sheet).textTheme.titleLarge
-              ?.copyWith(fontWeight: FontWeight.w800)),
+  Future<T?> _select<T>(String title, List<_Choice<T>> choices, T? selected) =>
+      showModalBottomSheet<T>(
+        context: context,
+        useSafeArea: true,
+        showDragHandle: true,
+        isScrollControlled: true,
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        ),
+        builder: (sheet) => FractionallySizedBox(
+          heightFactor: .64,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 4, 20, 12),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    title,
+                    style: Theme.of(sheet).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListView(
+                  children: [
+                    for (final choice in choices)
+                      ListTile(
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                        ),
+                        leading: choice.icon == null
+                            ? null
+                            : Icon(choice.icon, size: 20),
+                        title: Text(choice.label),
+                        trailing: choice.value == selected
+                            ? const Icon(Icons.check_rounded)
+                            : null,
+                        onTap: () => Navigator.pop(sheet, choice.value),
+                      ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
-        Expanded(child: ListView(children: [
-          for (final choice in choices)
-            ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-              leading: choice.icon == null ? null
-                  : Icon(choice.icon, size: 20),
-              title: Text(choice.label),
-              trailing: choice.value == selected
-                  ? const Icon(Icons.check_rounded) : null,
-              onTap: () => Navigator.pop(sheet, choice.value),
-            ),
-        ])),
-      ]),
-    ),
-  );
+      );
 
   Future<void> _chooseType() async {
-    final next = await _select<TransactionType>(
-      'Tipo movimento',
-      [for (final t in TransactionType.values) _Choice(t, t.label)],
-      _type,
-    );
+    final next = await _select<TransactionType>('Tipo movimento', [
+      for (final t in TransactionType.values) _Choice(t, t.label),
+    ], _type);
     if (!mounted || next == null || next == _type) return;
     final state = AppScope.of(context);
     setState(() {
@@ -265,19 +276,20 @@ class _BalynTransactionDetailContentState
 
   Future<void> _chooseAccount({bool destination = false}) async {
     final state = AppScope.of(context);
-    final options = state.accounts.where((account) =>
-      (!account.isSystem && !account.isArchived && !account.isLocked) ||
-      account.id == widget.item.accountId ||
-      account.id == widget.item.toAccountId).toList();
-    final next = await _select<int>(
-      destination ? 'Conto destinazione' : 'Conto',
-      [
-        for (final a in options)
-          if (!destination || a.id != _accountId)
-            _Choice(a.id, a.name, accountIcon(a.iconKey)),
-      ],
-      destination ? _toAccountId : _accountId,
-    );
+    final options = state.accounts
+        .where(
+          (account) =>
+              (!account.isSystem && !account.isArchived && !account.isLocked) ||
+              account.id == widget.item.accountId ||
+              account.id == widget.item.toAccountId,
+        )
+        .toList();
+    final next =
+        await _select<int>(destination ? 'Conto destinazione' : 'Conto', [
+          for (final a in options)
+            if (!destination || a.id != _accountId)
+              _Choice(a.id, a.name, accountIcon(a.iconKey)),
+        ], destination ? _toAccountId : _accountId);
     if (!mounted || next == null) return;
     setState(() {
       if (destination) {
@@ -292,15 +304,11 @@ class _BalynTransactionDetailContentState
 
   Future<void> _chooseCategory() async {
     final state = AppScope.of(context);
-    final next = await _select<int>(
-      'Categoria',
-      [
-        const _Choice(-1, 'Senza categoria', Icons.remove_circle_outline),
-        for (final c in state.categoriesFor(_type))
-          _Choice(c.id, c.name, categoryIcon(c.iconKey)),
-      ],
-      _categoryId ?? -1,
-    );
+    final next = await _select<int>('Categoria', [
+      const _Choice(-1, 'Senza categoria', Icons.remove_circle_outline),
+      for (final c in state.categoriesFor(_type))
+        _Choice(c.id, c.name, categoryIcon(c.iconKey)),
+    ], _categoryId ?? -1);
     if (!mounted || next == null) return;
     setState(() {
       _categoryId = next == -1 ? null : next;
@@ -313,25 +321,35 @@ class _BalynTransactionDetailContentState
     return DecoratedBox(
       decoration: BoxDecoration(
         color: theme.brightness == Brightness.dark
-            ? const Color(0xFF24242E) : Colors.white,
+            ? const Color(0xFF24242E)
+            : Colors.white,
         borderRadius: BorderRadius.circular(18),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
-        child: Column(children: [
-          for (var i = 0; i < children.length; i++) ...[
-            if (i > 0) Divider(height: 1, thickness: .7,
-              color: theme.colorScheme.onSurface.withValues(alpha: .075)),
-            children[i],
+        child: Column(
+          children: [
+            for (var i = 0; i < children.length; i++) ...[
+              if (i > 0)
+                Divider(
+                  height: 1,
+                  thickness: .7,
+                  color: theme.colorScheme.onSurface.withValues(alpha: .075),
+                ),
+              children[i],
+            ],
           ],
-        ]),
+        ),
       ),
     );
   }
 
   Widget _detailRow({
-    required String label, required String value,
-    VoidCallback? onTap, IconData? icon, Key? key,
+    required String label,
+    required String value,
+    VoidCallback? onTap,
+    IconData? icon,
+    Key? key,
   }) {
     final scheme = Theme.of(context).colorScheme;
     final editable = onTap != null;
@@ -341,74 +359,140 @@ class _BalynTransactionDetailContentState
       borderRadius: BorderRadius.circular(8),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 13),
-        child: Row(children: [
-          SizedBox(width: 112, child: Text(label,
-            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600,
-              color: scheme.onSurfaceVariant))),
-          Expanded(
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Container(
-                padding: const EdgeInsets.only(bottom: 4),
-                decoration: editable ? BoxDecoration(
-                  border: Border(bottom: BorderSide(width: .85,
-                    color: scheme.primary.withValues(alpha: .30)))) : null,
-                child: Row(mainAxisSize: MainAxisSize.min, children: [
-                  if (icon != null) ...[
-                    Icon(icon, color: editable ? scheme.primary
-                      : scheme.onSurfaceVariant, size: 15),
-                    const SizedBox(width: 5),
-                  ],
-                  Flexible(child: Text(value,
-                    maxLines: 2, textAlign: TextAlign.right,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 13, fontWeight: FontWeight.w600,
-                      color: editable ? scheme.primary : scheme.onSurface))),
-                  if (editable) ...[
-                    const SizedBox(width: 6),
-                    Icon(Icons.edit_outlined, size: 14, color: scheme.primary),
-                  ],
-                ]),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 112,
+              child: Text(
+                label,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: scheme.onSurfaceVariant,
+                ),
               ),
             ),
-          ),
-        ]),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  padding: const EdgeInsets.only(bottom: 4),
+                  decoration: editable
+                      ? BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              width: .85,
+                              color: scheme.primary.withValues(alpha: .30),
+                            ),
+                          ),
+                        )
+                      : null,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (icon != null) ...[
+                        Icon(
+                          icon,
+                          color: editable
+                              ? scheme.primary
+                              : scheme.onSurfaceVariant,
+                          size: 15,
+                        ),
+                        const SizedBox(width: 5),
+                      ],
+                      Flexible(
+                        child: Text(
+                          value,
+                          maxLines: 2,
+                          textAlign: TextAlign.right,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                            color: editable ? scheme.primary : scheme.onSurface,
+                          ),
+                        ),
+                      ),
+                      if (editable) ...[
+                        const SizedBox(width: 6),
+                        Icon(
+                          Icons.edit_outlined,
+                          size: 14,
+                          color: scheme.primary,
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _textRow({
-    required String label, required String hint,
-    required TextEditingController controller, required Key key,
+    required String label,
+    required String hint,
+    required TextEditingController controller,
+    required Key key,
     required bool readOnly,
   }) {
     final scheme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(children: [
-        SizedBox(width: 112, child: Text(label,
-          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600,
-            color: scheme.onSurfaceVariant))),
-        Expanded(child: TextField(
-          key: key, controller: controller, readOnly: readOnly,
-          maxLines: 1, textAlign: TextAlign.end,
-          style: TextStyle(fontSize: 13, color: scheme.primary,
-            fontWeight: FontWeight.w600),
-          decoration: InputDecoration(
-            hintText: hint, isDense: true,
-            contentPadding: const EdgeInsets.symmetric(vertical: 9),
-            enabledBorder: UnderlineInputBorder(borderSide:
-              BorderSide(color: scheme.primary.withValues(alpha: .30))),
-            focusedBorder: UnderlineInputBorder(borderSide:
-              BorderSide(color: scheme.primary)),
-            suffixIcon: Icon(Icons.edit_outlined, size: 14,
-              color: readOnly ? scheme.onSurfaceVariant : scheme.primary),
-            suffixIconConstraints: const BoxConstraints(
-              minWidth: 26, minHeight: 26),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 112,
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: scheme.onSurfaceVariant,
+              ),
+            ),
           ),
-        )),
-      ]),
+          Expanded(
+            child: TextField(
+              key: key,
+              controller: controller,
+              readOnly: readOnly,
+              maxLines: 1,
+              textAlign: TextAlign.end,
+              style: TextStyle(
+                fontSize: 13,
+                color: scheme.primary,
+                fontWeight: FontWeight.w600,
+              ),
+              decoration: InputDecoration(
+                hintText: hint,
+                isDense: true,
+                contentPadding: const EdgeInsets.symmetric(vertical: 9),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: scheme.primary.withValues(alpha: .30),
+                  ),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: scheme.primary),
+                ),
+                suffixIcon: Icon(
+                  Icons.edit_outlined,
+                  size: 14,
+                  color: readOnly ? scheme.onSurfaceVariant : scheme.primary,
+                ),
+                suffixIconConstraints: const BoxConstraints(
+                  minWidth: 26,
+                  minHeight: 26,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -426,239 +510,386 @@ class _BalynTransactionDetailContentState
     final refunded = state.refundsFor(widget.item.id);
     final splits = state.splitsFor(widget.item.id);
     final receipt = _removeReceipt ? null : widget.item.receiptPath;
-    final dateLabel = DateFormat('d MMM yyyy, HH:mm', AppI18n.intlLocale)
-        .format(_date);
+    final dateLabel = DateFormat(
+      'd MMM yyyy, HH:mm',
+      AppI18n.intlLocale,
+    ).format(_date);
 
     return ColoredBox(
       color: theme.brightness == Brightness.dark
-          ? const Color(0xFF111116) : const Color(0xFFF6F6F7),
-      child: Column(children: [
-        Expanded(child: ListView(
-          key: const PageStorageKey('detail-revolut-layout'),
-          padding: const EdgeInsets.fromLTRB(15, 8, 15, 30),
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  DecoratedBox(
-                    decoration: BoxDecoration(border: Border(bottom:
-                      BorderSide(color: scheme.primary.withValues(alpha: .28),
-                        width: .9))),
-                    child: Row(children: [
-                      Text(
-                        (_type == TransactionType.expense ? '−'
-                          : _type == TransactionType.income ? '+' : '') +
-                          (state.currency == 'EUR' ? '€' : state.currency),
-                        style: theme.textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.w800)),
-                      const SizedBox(width: 2),
-                      Expanded(child: TextField(
-                        key: const ValueKey('detail-amount'),
-                        focusNode: _amountFocus, controller: _amount,
-                        readOnly: protected, obscureText: hidden && !_revealAmount,
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true),
-                        style: theme.textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.w800),
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(vertical: 7),
-                          isDense: true),
-                      )),
-                      if (hidden)
-                        IconButton(
-                          tooltip: _revealAmount
-                              ? 'Nascondi importo' : 'Mostra importo',
-                          icon: Icon(_revealAmount
-                              ? Icons.visibility_off_outlined
-                              : Icons.visibility_outlined, size: 17),
-                          onPressed: () => setState(
-                            () => _revealAmount = !_revealAmount)),
-                      IconButton(
-                        key: const ValueKey('detail-amount-pencil'),
-                        tooltip: 'Modifica importo',
-                        icon: Icon(Icons.edit_outlined, size: 16,
-                          color: scheme.primary),
-                        onPressed: protected ? null
-                            : () => _amountFocus.requestFocus(),
-                        constraints: const BoxConstraints(
-                          minWidth: 32, minHeight: 32),
-                        padding: EdgeInsets.zero),
-                    ]),
-                  ),
-                  const SizedBox(height: 8),
-                  ValueListenableBuilder<TextEditingValue>(
-                    valueListenable: _note,
-                    builder: (context, value, _) => Text(
-                      value.text.trim().isEmpty
-                          ? category?.name ?? _type.label
-                          : value.text.trim(),
-                      style: TextStyle(color: scheme.primary, fontSize: 13,
-                        fontWeight: FontWeight.w700)),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(dateLabel, style: TextStyle(
-                    fontSize: 12, color: scheme.onSurfaceVariant)),
-                ]),
-            ),
-            const SizedBox(height: 17),
-            Wrap(spacing: 8, children: [
-              ActionChip(
-                avatar: Icon(Icons.copy_outlined, color: scheme.primary, size: 17),
-                backgroundColor: scheme.primary.withValues(alpha: .10),
-                side: BorderSide.none,
-                label: Text('Duplica', style: TextStyle(color: scheme.primary)),
-                onPressed: widget.onDuplicate),
-              ActionChip(
-                avatar: Icon(Icons.delete_outline_rounded,
-                  color: scheme.error, size: 17),
-                backgroundColor: scheme.error.withValues(alpha: .09),
-                side: BorderSide.none,
-                label: Text('Elimina', style: TextStyle(color: scheme.error)),
-                onPressed: widget.onDelete),
-            ]),
-            const SizedBox(height: 15),
-            _card([
-              _detailRow(label: 'Stato', value: 'Registrato'),
-              _detailRow(key: const ValueKey('detail-type'),
-                label: 'Tipo', value: _type.label,
-                icon: Icons.swap_horiz_rounded,
-                onTap: protected ? null : _chooseType),
-              _detailRow(key: const ValueKey('detail-source'),
-                label: _type == TransactionType.transfer ? 'Da' : 'Conto',
-                value: account?.name ?? 'Conto non disponibile',
-                icon: Icons.account_balance_wallet_outlined,
-                onTap: protected ? null : _chooseAccount),
-              if (_type == TransactionType.transfer)
-                _detailRow(key: const ValueKey('detail-target'),
-                  label: 'A', value: target?.name ?? 'Seleziona conto',
-                  icon: Icons.east_rounded, onTap: protected
-                      ? null : () => _chooseAccount(destination: true))
-              else
-                _detailRow(key: const ValueKey('detail-category'),
-                  label: 'Categoria',
-                  value: category?.name ?? 'Senza categoria',
-                  icon: category == null ? Icons.category_outlined
-                    : categoryIcon(category.iconKey),
-                  onTap: protected ? null : _chooseCategory),
-              _detailRow(key: const ValueKey('detail-date'),
-                label: 'Data e ora', value: dateLabel,
-                icon: Icons.event_outlined,
-                onTap: protected ? null : _pickDate),
-            ]),
-            const SizedBox(height: 13),
-            _card([
-              SwitchListTile.adaptive(
-                contentPadding: EdgeInsets.zero,
-                dense: true,
-                title: const Text('Escludi dalle analisi',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
-                value: !_includeInAnalytics,
-                onChanged: protected ? null : (excluded) => setState(() {
-                  _includeInAnalytics = !excluded;
-                  _changed = true;
-                })),
-              if (_type != TransactionType.transfer)
-                _detailRow(label: 'Importo analisi',
-                  icon: Icons.analytics_outlined,
-                  value: hidden ? '••••'
-                    : moneyFor(state, widget.item.amount)),
-              if (splits.isNotEmpty)
-                _detailRow(label: 'Suddivisioni',
-                  value: splits.length.toString() + ' categorie'),
-            ]),
-            const SizedBox(height: 13),
-            _card([
-              _textRow(label: 'Nota', hint: 'Aggiungi nota',
-                controller: _note,
-                key: const ValueKey('detail-note'), readOnly: protected),
-              _textRow(label: 'Tag', hint: 'Aggiungi tag',
-                controller: _tags,
-                key: const ValueKey('detail-tags'), readOnly: protected),
-            ]),
-            const SizedBox(height: 13),
-            _card([
-              _detailRow(label: 'Ricevuta', icon: Icons.camera_alt_outlined,
-                value: _newReceipt != null || receipt != null
-                    ? 'Sostituisci' : 'Aggiungi',
-                onTap: protected ? null : _pickReceipt),
-              if (receipt != null || _newReceipt != null)
+          ? const Color(0xFF111116)
+          : const Color(0xFFF6F6F7),
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              key: const PageStorageKey('detail-revolut-layout'),
+              padding: const EdgeInsets.fromLTRB(15, 8, 15, 30),
+              children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Row(children: [
-                    Expanded(child: _newReceipt != null
-                      ? _ReceiptPreview(file: File(_newReceipt!.path))
-                      : FutureBuilder<File?>(
-                          future: _attachmentService.resolve(receipt!),
-                          builder: (context, snapshot) => snapshot.data == null
-                            ? const Text('Ricevuta non disponibile')
-                            : _ReceiptPreview(file: snapshot.data!))),
-                    IconButton(
-                      tooltip: 'Rimuovi ricevuta',
-                      onPressed: protected ? null : () => setState(() {
-                        _newReceipt = null;
-                        _removeReceipt = true;
-                        _changed = true;
-                      }),
-                      icon: Icon(Icons.close_rounded, size: 18,
-                        color: scheme.error)),
-                  ]),
-                ),
-            ]),
-            if (original != null || refunded > 0 ||
-                widget.item.recurringId != null || splits.isNotEmpty) ...[
-              const SizedBox(height: 13),
-              _card([
-                if (original != null)
-                  _detailRow(label: 'Rimborso di',
-                    value: '#' + original.id.toString()),
-                if (refunded > 0)
-                  _detailRow(label: 'Rimborsato',
-                    value: hidden ? '••••' : moneyFor(state, refunded)),
-                if (widget.item.recurringId != null)
-                  _detailRow(label: 'Ricorrenza',
-                    value: 'Collegata a Pianifica'),
-                for (final split in splits)
-                  _detailRow(
-                    label: state.categoryById(split.categoryId)?.name
-                      ?? 'Categoria',
-                    value: hidden ? '••••' : moneyFor(state, split.amount)),
-              ]),
-            ],
-            if (protected) ...[
-              const SizedBox(height: 10),
-              const Text(
-                'Questo movimento è collegato ad Anticipi. '
-                'Gestiscilo dalla sezione Anticipi.',
-                style: TextStyle(fontSize: 12)),
-            ],
-          ],
-        )),
-        AnimatedSize(
-          duration: const Duration(milliseconds: 210),
-          child: _changed && !protected
-            ? SafeArea(
-                top: false,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 8, 15, 12),
-                  child: FilledButton.icon(
-                    key: const ValueKey('detail-save'),
-                    onPressed: _saving ? null : _save,
-                    icon: _saving
-                      ? const SizedBox(width: 18, height: 18,
-                          child: CircularProgressIndicator(strokeWidth: 2))
-                      : const Icon(Icons.check_rounded),
-                    label: const Text('Salva modifiche'),
-                    style: FilledButton.styleFrom(
-                      minimumSize: const Size.fromHeight(48),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14))),
+                  padding: const EdgeInsets.symmetric(horizontal: 2),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: scheme.primary.withValues(alpha: .28),
+                              width: .9,
+                            ),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              (_type == TransactionType.expense
+                                      ? '−'
+                                      : _type == TransactionType.income
+                                      ? '+'
+                                      : '') +
+                                  (state.currency == 'EUR'
+                                      ? '€'
+                                      : state.currency),
+                              style: theme.textTheme.headlineMedium?.copyWith(
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                            const SizedBox(width: 2),
+                            Expanded(
+                              child: TextField(
+                                key: const ValueKey('detail-amount'),
+                                focusNode: _amountFocus,
+                                controller: _amount,
+                                readOnly: protected,
+                                obscureText: hidden && !_revealAmount,
+                                keyboardType:
+                                    const TextInputType.numberWithOptions(
+                                      decimal: true,
+                                    ),
+                                style: theme.textTheme.headlineMedium?.copyWith(
+                                  fontWeight: FontWeight.w800,
+                                ),
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.symmetric(
+                                    vertical: 7,
+                                  ),
+                                  isDense: true,
+                                ),
+                              ),
+                            ),
+                            if (hidden)
+                              IconButton(
+                                tooltip: _revealAmount
+                                    ? 'Nascondi importo'
+                                    : 'Mostra importo',
+                                icon: Icon(
+                                  _revealAmount
+                                      ? Icons.visibility_off_outlined
+                                      : Icons.visibility_outlined,
+                                  size: 17,
+                                ),
+                                onPressed: () => setState(
+                                  () => _revealAmount = !_revealAmount,
+                                ),
+                              ),
+                            IconButton(
+                              key: const ValueKey('detail-amount-pencil'),
+                              tooltip: 'Modifica importo',
+                              icon: Icon(
+                                Icons.edit_outlined,
+                                size: 16,
+                                color: scheme.primary,
+                              ),
+                              onPressed: protected
+                                  ? null
+                                  : () => _amountFocus.requestFocus(),
+                              constraints: const BoxConstraints(
+                                minWidth: 32,
+                                minHeight: 32,
+                              ),
+                              padding: EdgeInsets.zero,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      ValueListenableBuilder<TextEditingValue>(
+                        valueListenable: _note,
+                        builder: (context, value, _) => Text(
+                          value.text.trim().isEmpty
+                              ? category?.name ?? _type.label
+                              : value.text.trim(),
+                          style: TextStyle(
+                            color: scheme.primary,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        dateLabel,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: scheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
                   ),
-                ))
-            : const SizedBox.shrink(),
-        ),
-      ]),
+                ),
+                const SizedBox(height: 17),
+                Wrap(
+                  spacing: 8,
+                  children: [
+                    ActionChip(
+                      avatar: Icon(
+                        Icons.copy_outlined,
+                        color: scheme.primary,
+                        size: 17,
+                      ),
+                      backgroundColor: scheme.primary.withValues(alpha: .10),
+                      side: BorderSide.none,
+                      label: Text(
+                        'Duplica',
+                        style: TextStyle(color: scheme.primary),
+                      ),
+                      onPressed: widget.onDuplicate,
+                    ),
+                    ActionChip(
+                      avatar: Icon(
+                        Icons.delete_outline_rounded,
+                        color: scheme.error,
+                        size: 17,
+                      ),
+                      backgroundColor: scheme.error.withValues(alpha: .09),
+                      side: BorderSide.none,
+                      label: Text(
+                        'Elimina',
+                        style: TextStyle(color: scheme.error),
+                      ),
+                      onPressed: widget.onDelete,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 15),
+                _card([
+                  _detailRow(label: 'Stato', value: 'Registrato'),
+                  _detailRow(
+                    key: const ValueKey('detail-type'),
+                    label: 'Tipo',
+                    value: _type.label,
+                    icon: Icons.swap_horiz_rounded,
+                    onTap: protected ? null : _chooseType,
+                  ),
+                  _detailRow(
+                    key: const ValueKey('detail-source'),
+                    label: _type == TransactionType.transfer ? 'Da' : 'Conto',
+                    value: account?.name ?? 'Conto non disponibile',
+                    icon: Icons.account_balance_wallet_outlined,
+                    onTap: protected ? null : _chooseAccount,
+                  ),
+                  if (_type == TransactionType.transfer)
+                    _detailRow(
+                      key: const ValueKey('detail-target'),
+                      label: 'A',
+                      value: target?.name ?? 'Seleziona conto',
+                      icon: Icons.east_rounded,
+                      onTap: protected
+                          ? null
+                          : () => _chooseAccount(destination: true),
+                    )
+                  else
+                    _detailRow(
+                      key: const ValueKey('detail-category'),
+                      label: 'Categoria',
+                      value: category?.name ?? 'Senza categoria',
+                      icon: category == null
+                          ? Icons.category_outlined
+                          : categoryIcon(category.iconKey),
+                      onTap: protected ? null : _chooseCategory,
+                    ),
+                  _detailRow(
+                    key: const ValueKey('detail-date'),
+                    label: 'Data e ora',
+                    value: dateLabel,
+                    icon: Icons.event_outlined,
+                    onTap: protected ? null : _pickDate,
+                  ),
+                ]),
+                const SizedBox(height: 13),
+                _card([
+                  SwitchListTile.adaptive(
+                    contentPadding: EdgeInsets.zero,
+                    dense: true,
+                    title: const Text(
+                      'Escludi dalle analisi',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    value: !_includeInAnalytics,
+                    onChanged: protected
+                        ? null
+                        : (excluded) => setState(() {
+                            _includeInAnalytics = !excluded;
+                            _changed = true;
+                          }),
+                  ),
+                  if (_type != TransactionType.transfer)
+                    _detailRow(
+                      label: 'Importo analisi',
+                      icon: Icons.analytics_outlined,
+                      value: hidden
+                          ? '••••'
+                          : moneyFor(state, widget.item.amount),
+                    ),
+                  if (splits.isNotEmpty)
+                    _detailRow(
+                      label: 'Suddivisioni',
+                      value: splits.length.toString() + ' categorie',
+                    ),
+                ]),
+                const SizedBox(height: 13),
+                _card([
+                  _textRow(
+                    label: 'Nota',
+                    hint: 'Aggiungi nota',
+                    controller: _note,
+                    key: const ValueKey('detail-note'),
+                    readOnly: protected,
+                  ),
+                  _textRow(
+                    label: 'Tag',
+                    hint: 'Aggiungi tag',
+                    controller: _tags,
+                    key: const ValueKey('detail-tags'),
+                    readOnly: protected,
+                  ),
+                ]),
+                const SizedBox(height: 13),
+                _card([
+                  _detailRow(
+                    label: 'Ricevuta',
+                    icon: Icons.camera_alt_outlined,
+                    value: _newReceipt != null || receipt != null
+                        ? 'Sostituisci'
+                        : 'Aggiungi',
+                    onTap: protected ? null : _pickReceipt,
+                  ),
+                  if (receipt != null || _newReceipt != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: _newReceipt != null
+                                ? _ReceiptPreview(file: File(_newReceipt!.path))
+                                : FutureBuilder<File?>(
+                                    future: _attachmentService.resolve(
+                                      receipt!,
+                                    ),
+                                    builder: (context, snapshot) =>
+                                        snapshot.data == null
+                                        ? const Text('Ricevuta non disponibile')
+                                        : _ReceiptPreview(file: snapshot.data!),
+                                  ),
+                          ),
+                          IconButton(
+                            tooltip: 'Rimuovi ricevuta',
+                            onPressed: protected
+                                ? null
+                                : () => setState(() {
+                                    _newReceipt = null;
+                                    _removeReceipt = true;
+                                    _changed = true;
+                                  }),
+                            icon: Icon(
+                              Icons.close_rounded,
+                              size: 18,
+                              color: scheme.error,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                ]),
+                if (original != null ||
+                    refunded > 0 ||
+                    widget.item.recurringId != null ||
+                    splits.isNotEmpty) ...[
+                  const SizedBox(height: 13),
+                  _card([
+                    if (original != null)
+                      _detailRow(
+                        label: 'Rimborso di',
+                        value: '#' + original.id.toString(),
+                      ),
+                    if (refunded > 0)
+                      _detailRow(
+                        label: 'Rimborsato',
+                        value: hidden ? '••••' : moneyFor(state, refunded),
+                      ),
+                    if (widget.item.recurringId != null)
+                      _detailRow(
+                        label: 'Ricorrenza',
+                        value: 'Collegata a Pianifica',
+                      ),
+                    for (final split in splits)
+                      _detailRow(
+                        label:
+                            state.categoryById(split.categoryId)?.name ??
+                            'Categoria',
+                        value: hidden ? '••••' : moneyFor(state, split.amount),
+                      ),
+                  ]),
+                ],
+                if (protected) ...[
+                  const SizedBox(height: 10),
+                  const Text(
+                    'Questo movimento è collegato ad Anticipi. '
+                    'Gestiscilo dalla sezione Anticipi.',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          AnimatedSize(
+            duration: const Duration(milliseconds: 210),
+            child: _changed && !protected
+                ? SafeArea(
+                    top: false,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 8, 15, 12),
+                      child: FilledButton.icon(
+                        key: const ValueKey('detail-save'),
+                        onPressed: _saving ? null : _save,
+                        icon: _saving
+                            ? const SizedBox(
+                                width: 18,
+                                height: 18,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : const Icon(Icons.check_rounded),
+                        label: const Text('Salva modifiche'),
+                        style: FilledButton.styleFrom(
+                          minimumSize: const Size.fromHeight(48),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -676,9 +907,13 @@ class _ReceiptPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ClipRRect(
     borderRadius: BorderRadius.circular(14),
-    child: Image.file(file, height: 150, width: double.infinity,
+    child: Image.file(
+      file,
+      height: 150,
+      width: double.infinity,
       fit: BoxFit.cover,
       errorBuilder: (_, __, ___) =>
-        const ListTile(title: Text('Ricevuta non disponibile'))),
+          const ListTile(title: Text('Ricevuta non disponibile')),
+    ),
   );
 }

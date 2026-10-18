@@ -80,7 +80,10 @@ void main() {
     expect(design, contains('showModalBottomSheet<T>('));
     expect(design, contains("key: const ValueKey('detail-amount')"));
     expect(design, contains("BorderSide(color: scheme.primary"));
-    expect(design, contains('await state.updateTransaction(widget.item, updated)'));
+    expect(
+      design,
+      contains('await state.updateTransaction(widget.item, updated)'),
+    );
     expect(design, isNot(contains('QuickAddPage(')));
     expect(design, contains('Escludi dalle analisi'));
     expect(design, contains('widget.item.receiptPath'));
