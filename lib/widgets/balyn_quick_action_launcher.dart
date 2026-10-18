@@ -9,6 +9,7 @@ import 'package:pie_menu/pie_menu.dart';
 import '../services/quick_preset_service.dart';
 
 import '../theme/balyn_palette.dart';
+import 'balyn_preset_visual.dart';
 
 /// Regular taps open the transfer editor; a 700ms hold charges the
 /// button clockwise and reveals the preset radial menu from pie_menu.
@@ -91,22 +92,40 @@ class _BalynQuickActionLauncherState extends State<BalynQuickActionLauncher>
 
   @override
   Widget build(BuildContext context) {
+    // A fixed upper-left quadrant fits every action on narrow Android screens.
+    // Four preset slots never disappear even when the database is empty.
+    final availableRadius = MediaQuery.sizeOf(context).width - 105;
+    final radius = math.min(152.0, math.max(100.0, availableRadius));
     return PieMenu(
       key: const ValueKey('quick-radial-pie-menu'),
       theme: PieTheme(
-        overlayColor: Colors.black54,
-        radius: 115,
-        buttonSize: 54,
-        spacing: 8,
+        overlayColor: Colors.black.withValues(alpha: .54),
+        overlayStyle: PieOverlayStyle.behind,
+        brightness: Brightness.dark,
+        // The library's default pointer paints a second circle on the FAB.
+        // Keep the original animated FAB as the only central button.
+        pointerSize: 0,
+        pointerColor: Colors.transparent,
+        childBounceEnabled: false,
+        childTiltEnabled: false,
+        radius: radius,
+        buttonSize: 38,
+        iconSize: 19,
+        spacing: 3,
+        customAngle: 135,
+        customAngleAnchor: PieAnchor.center,
+        customAngleDiff: 15.5,
+        menuAlignment: Alignment.center,
+        tooltipTextStyle: const TextStyle(fontSize: 15),
         regularPressShowsMenu: false,
         longPressShowsMenu: true,
         longPressDuration: holdDuration,
         buttonTheme: const PieButtonTheme(
-          backgroundColor: BalynPalette.darkSurface,
-          iconColor: BalynPalette.darkText,
+          backgroundColor: Colors.transparent,
+          iconColor: Colors.white,
         ),
         buttonThemeHovered: const PieButtonTheme(
-          backgroundColor: BalynPalette.accent,
+          backgroundColor: Colors.transparent,
           iconColor: Colors.white,
         ),
       ),
@@ -121,29 +140,61 @@ class _BalynQuickActionLauncherState extends State<BalynQuickActionLauncher>
       },
       onPressed: _openTransferOnce,
       actions: [
-        for (final preset in _presets)
-          PieAction(
-            tooltip: Text(preset.name),
-            onSelect: () => widget.onPresetSelected(preset),
-            child: const Icon(Icons.bookmark_rounded),
-          ),
-        PieAction(
+        for (var slot = 0; slot < 4; slot++)
+          if (slot < _presets.length)
+            PieAction.builder(
+              tooltip: Text(_presets[slot].name),
+              onSelect: () => widget.onPresetSelected(_presets[slot]),
+              builder: (hovered) => BalynPresetGlyph(
+                key: ValueKey('radial-preset-$slot'),
+                name: _presets[slot].name,
+                iconKey: _presets[slot].iconKey,
+                colorValue: _presets[slot].colorValue,
+                highlighted: hovered,
+              ),
+            )
+          else
+            PieAction.builder(
+              tooltip: Text('Crea preset ${slot + 1}'),
+              onSelect: () async {
+                await widget.onAddPreset();
+                if (mounted) await _refreshPresets();
+              },
+              builder: (hovered) => BalynPresetGlyph(
+                key: ValueKey('radial-empty-preset-$slot'),
+                name: '',
+                iconKey: null,
+                colorValue: 0xFFFFFFFF,
+                empty: true,
+                highlighted: hovered,
+              ),
+            ),
+        PieAction.builder(
           tooltip: const Text('Nuovo preset'),
           onSelect: () async {
             await widget.onAddPreset();
             if (mounted) await _refreshPresets();
           },
-          child: const Icon(Icons.add_circle_outline_rounded),
+          builder: (hovered) => _RadialSystemAction(
+            icon: Icons.add_rounded,
+            highlighted: hovered,
+          ),
         ),
-        PieAction(
+        PieAction.builder(
           tooltip: const Text('Anticipi'),
           onSelect: widget.onAdvances,
-          child: const Icon(Icons.handshake_outlined),
+          builder: (hovered) => _RadialSystemAction(
+            icon: Icons.handshake_outlined,
+            highlighted: hovered,
+          ),
         ),
-        PieAction(
+        PieAction.builder(
           tooltip: const Text('Pianifica'),
           onSelect: widget.onPlanning,
-          child: const Icon(Icons.event_note_outlined),
+          builder: (hovered) => _RadialSystemAction(
+            icon: Icons.event_note_outlined,
+            highlighted: hovered,
+          ),
         ),
       ],
       child: Listener(
@@ -159,6 +210,30 @@ class _BalynQuickActionLauncherState extends State<BalynQuickActionLauncher>
       ),
     );
   }
+}
+
+class _RadialSystemAction extends StatelessWidget {
+  const _RadialSystemAction({
+    required this.icon,
+    required this.highlighted,
+  });
+
+  final IconData icon;
+  final bool highlighted;
+
+  @override
+  Widget build(BuildContext context) => DecoratedBox(
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      color: highlighted
+          ? BalynPalette.accent
+          : BalynPalette.darkSurface,
+    ),
+    child: SizedBox.square(
+      dimension: 38,
+      child: Icon(icon, color: Colors.white, size: 20),
+    ),
+  );
 }
 
 class _WhiteChargePainter extends CustomPainter {
