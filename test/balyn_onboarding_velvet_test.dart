@@ -84,10 +84,8 @@ void main() {
       final velvet = File(
         'lib/widgets/balyn_onboarding_velvet.dart',
       ).readAsStringSync();
-      expect(
-        source,
-        contains('const Positioned.fill(child: BalynOnboardingVelvet())'),
-      );
+      expect(source, isNot(contains('BalynOnboardingVelvet()')));
+      expect(source, contains('ColoredBox(color: BalynPalette.darkCanvas)'));
       expect(source, contains('globalBackgroundColor: Colors.transparent'));
       expect(source, contains('IntroductionScreen('));
       expect(source, contains("setSetting('onboarding_completed', '1')"));
