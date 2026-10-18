@@ -615,51 +615,6 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
     );
   }
 
-                               ? '••••'
-                                            : moneyFor(state, item.amount),
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                          ],
-                        ],
-                      )
-                    : selectedSection == 1
-                    ? BalynRevolutHomeContent(
-                        income: income,
-                        expense: expense,
-                        available: isTotal ? state.safeToSpend : balance,
-                        hideValues: hidden,
-                        showAccounts: false,
-                        onSelectAccount: onAccountChanged,
-                        onManageAccounts: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const AccountManagementScreen(),
-                          ),
-                        ),
-                      )
-                    : SizedBox(
-                        height: (MediaQuery.sizeOf(context).height * .78).clamp(
-                          490.0,
-                          820.0,
-                        ),
-                        child: BalynActivityScreen(
-                          accountId: effectiveAccountId,
-                          onAccountChanged: onAccountChanged,
-                          initialTab: activityInitialTab,
-                        ),
-                      ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   List<DashboardWidgetConfig> _visibleDashboardWidgets(AppState state) {
     if (state.dashboardWidgets.isEmpty) {
       return [
