@@ -212,74 +212,27 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                   TransactionType.transfer,
                   effectiveAccountId,
                 ),
-                onMore: () => showModalBottomSheet<void>(
-                  context: context,
-                  useSafeArea: true,
-                  showDragHandle: true,
-                  builder: (sheetContext) => SafeArea(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ListTile(
-                          leading: const Icon(
-                            Icons.account_balance_wallet_outlined,
-                          ),
-                          title: const Text('Gestisci conti'),
-                          onTap: () {
-                            Navigator.pop(sheetContext);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const AccountManagementScreen(),
-                              ),
-                            );
-                          },
-                        ),
-                        ListTile(
-                          leading: const Icon(Icons.handshake_outlined),
-                          title: const Text('Anticipi'),
-                          onTap: () {
-                            Navigator.pop(sheetContext);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const AdvancesScreen(),
-                              ),
-                            );
-                          },
-                        ),
-                        ListTile(
-                          leading: const Icon(
-                            Icons.dashboard_customize_outlined,
-                          ),
-                          title: const Text('Dashboard avanzata'),
-                          onTap: () {
-                            Navigator.pop(sheetContext);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) =>
-                                    const Scaffold(body: advanced.HomeScreen()),
-                              ),
-                            );
-                          },
-                        ),
-                        ListTile(
-                          leading: const Icon(Icons.tune_rounded),
-                          title: const Text('Personalizza Home'),
-                          onTap: () {
-                            Navigator.pop(sheetContext);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) =>
-                                    const DashboardCustomizerScreen(),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
+                onManageAccounts: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const AccountManagementScreen(),
+                  ),
+                ),
+                onAdvances: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AdvancesScreen()),
+                ),
+                onAdvancedDashboard: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) =>
+                        const Scaffold(body: advanced.HomeScreen()),
+                  ),
+                ),
+                onCustomizeHome: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const DashboardCustomizerScreen(),
                   ),
                 ),
               ),
