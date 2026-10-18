@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:balyn/l10n/localized_material.dart';
+import '../theme/balyn_palette.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -132,7 +133,7 @@ class _PlanningLink extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     return Material(
       color: Theme.of(context).brightness == Brightness.dark
-          ? const Color(0xFF252532)
+          ? BalynPalette.darkSurface
           : Colors.white,
       borderRadius: BorderRadius.circular(20),
       clipBehavior: Clip.antiAlias,
@@ -184,7 +185,7 @@ class _ForecastSummary extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 18),
       decoration: BoxDecoration(
         color: theme.brightness == Brightness.dark
-            ? const Color(0xFF252532)
+            ? BalynPalette.darkSurface
             : Colors.white,
         borderRadius: BorderRadius.circular(21),
       ),
