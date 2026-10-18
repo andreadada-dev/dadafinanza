@@ -108,7 +108,7 @@ void main() {
     final source = File(
       'lib/widgets/balyn_swipe_delete_tile.dart',
     ).readAsStringSync();
-    expect(source, contains('_reveal < .5'));
+    expect(source, contains('_reveal >= .5'));
     expect(source, contains('Icons.edit_rounded'));
     expect(source, contains('Icons.delete_outline_rounded'));
     expect(source, contains('await confirmDestructiveAction('));
