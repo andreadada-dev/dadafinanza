@@ -382,11 +382,19 @@ class AccountCategoryCarousel extends StatelessWidget {
   const AccountCategoryCarousel({
     required this.accountId,
     this.size = DashboardWidgetSize.medium,
+    this.from,
+    this.to,
+    this.periodLabel,
     super.key,
   });
 
-  final int accountId;
+  final int? accountId;
   final DashboardWidgetSize size;
+  /// When specified, use the shared Analytics period instead of a separate
+  /// selector in the donut. Home keeps its independent carousel unchanged.
+  final DateTime? from;
+  final DateTime? to;
+  final String? periodLabel;
 
   @override
   Widget build(BuildContext context) => _TopCategoriesDonut(
@@ -398,14 +406,27 @@ class AccountCategoryCarousel extends StatelessWidget {
       size: size,
     ),
     accountId: accountId,
+    from: from,
+    to: to,
+    externalPeriodLabel: periodLabel,
   );
 }
 
 class _TopCategoriesDonut extends StatefulWidget {
-  const _TopCategoriesDonut({required this.config, this.accountId, super.key});
+  const _TopCategoriesDonut({
+    required this.config,
+    this.accountId,
+    this.from,
+    this.to,
+    this.externalPeriodLabel,
+    super.key,
+  });
 
   final DashboardWidgetConfig config;
   final int? accountId;
+  final DateTime? from;
+  final DateTime? to;
+  final String? externalPeriodLabel;
 
   @override
   State<_TopCategoriesDonut> createState() => _TopCategoriesDonutState();
@@ -457,6 +478,9 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
   ];
 
   (DateTime, DateTime) _bounds() {
+    if (widget.from != null && widget.to != null) {
+      return (widget.from!, widget.to!);
+    }
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final weekStart = today.subtract(Duration(days: now.weekday - 1));
@@ -844,10 +868,11 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                         key: ValueKey('${type.name}-${_range.name}-period'),
                         icon: data.icon,
                         accent: data.accent,
-                        rangeLabel: _rangeLabel,
+                        rangeLabel: widget.externalPeriodLabel ?? _rangeLabel,
                         totalLabel: state.hideBalance
                             ? '••••'
                             : moneyFor(state, data.total),
+                        showPeriodControls: widget.from == null,
                         onRangeTap: _cycleRange,
                         onRangeLongPress: _selectCustomRange,
                         onPreviousRange: () => _stepPeriod(-1),
@@ -1037,6 +1062,7 @@ class _DonutPeriodCenter extends StatelessWidget {
     required this.accent,
     required this.rangeLabel,
     required this.totalLabel,
+    this.showPeriodControls = true,
     required this.onRangeTap,
     required this.onRangeLongPress,
     required this.onPreviousRange,
@@ -1048,6 +1074,7 @@ class _DonutPeriodCenter extends StatelessWidget {
   final Color accent;
   final String rangeLabel;
   final String totalLabel;
+  final bool showPeriodControls;
   final VoidCallback onRangeTap;
   final VoidCallback onRangeLongPress;
   final VoidCallback onPreviousRange;
@@ -1063,10 +1090,11 @@ class _DonutPeriodCenter extends StatelessWidget {
         children: [
           BalynShaderIcon(icon, seed: accent, size: 26),
           const SizedBox(height: 6),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _DonutRangeArrow(
+          if (showPeriodControls)
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _DonutRangeArrow(
                 icon: Icons.chevron_left_rounded,
                 tooltip: AppI18n.tr('Periodo precedente'),
                 onPressed: onPreviousRange,
@@ -1101,12 +1129,25 @@ class _DonutPeriodCenter extends StatelessWidget {
                 ),
               ),
               _DonutRangeArrow(
-                icon: Icons.chevron_right_rounded,
-                tooltip: AppI18n.tr('Periodo successivo'),
-                onPressed: onNextRange,
+                  icon: Icons.chevron_right_rounded,
+                  tooltip: AppI18n.tr('Periodo successivo'),
+                  onPressed: onNextRange,
+                ),
+              ],
+            )
+          else
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6),
+              child: Text(
+                rangeLabel,
+                maxLines: 1,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ],
-          ),
+            ),
           const SizedBox(height: 2),
           FittedBox(
             fit: BoxFit.scaleDown,
