@@ -13,6 +13,7 @@ import '../widgets/balyn_motion.dart';
 import '../widgets/balyn_editorial_components.dart';
 import '../widgets/balyn_shader_system.dart';
 import '../widgets/finance_charts.dart';
+import '../widgets/balyn_balance_analytics_charts.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_management_screen.dart';
 import 'transaction_screens.dart';
@@ -403,16 +404,8 @@ class _AccountContextAnalyticsScreenState
             const SectionTitle('Entrate e spese'),
             const SizedBox(height: 10),
             BalynReveal(
-              child: FinanceTrendChart(
-                points: cashFlowPoints,
-                primaryLabel: AppI18n.tr('Spese'),
-                secondaryLabel: AppI18n.tr('Entrate'),
-                primaryColor: context.financeColors.negative,
-                secondaryColor: context.financeColors.positive,
-                valueFormatter: state.hideBalance
-                    ? (_) => '••••'
-                    : (value) => moneyFor(state, value),
-                height: 205,
+              child: BalynEditorialSurface(
+                child: BalynStatisticBars(points: cashFlowPoints),
               ),
             ),
           ],
@@ -448,15 +441,12 @@ class _AccountContextAnalyticsScreenState
             const Text('Nessun dato nel periodo')
           else ...[
             BalynReveal(
-              child: FinanceDonutChart(
-                segments: categorySegments,
-                centerLabel: AppI18n.tr('Spese'),
-                centerValue: state.hideBalance
-                    ? '••••'
-                    : moneyFor(state, expense),
-                valueFormatter: state.hideBalance
-                    ? (_) => '••••'
-                    : (value) => moneyFor(state, value),
+              child: BalynEditorialSurface(
+                child: BalynBalanceDonut(
+                  segments: categorySegments,
+                  hidden: state.hideBalance || selected?.hideBalance == true,
+                  valueFormatter: (amount) => moneyFor(state, amount),
+                ),
               ),
             ),
             const SizedBox(height: 16),
