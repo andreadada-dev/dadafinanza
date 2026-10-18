@@ -111,6 +111,7 @@ class BalynRevolutHomeContent extends StatelessWidget {
                     ],
                   ],
                 ),
+        ),
         ],
       ],
     );
