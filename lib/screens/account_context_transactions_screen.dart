@@ -1080,6 +1080,12 @@ class _MovementTile extends StatelessWidget {
 
     return BalynSwipeDeleteTile(
       item: item,
+      onEdit: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => TransactionDetailPage(transactionId: item.id),
+        ),
+      ),
       child: Semantics(
         button: true,
         label: '$title, $amount',

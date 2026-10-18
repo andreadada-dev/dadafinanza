@@ -121,6 +121,12 @@ class _RecentMovementRow extends StatelessWidget {
 
     return BalynSwipeDeleteTile(
       item: movement,
+      onEdit: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => TransactionDetailPage(transactionId: movement.id),
+        ),
+      ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(

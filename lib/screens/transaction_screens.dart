@@ -38,6 +38,12 @@ class TransactionListTile extends StatelessWidget {
         : transactionColor(context, item.type);
     return BalynSwipeDeleteTile(
       item: item,
+      onEdit: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => TransactionDetailPage(transactionId: item.id),
+        ),
+      ),
       child: ListTile(
         contentPadding: EdgeInsets.zero,
         minVerticalPadding: 10,
