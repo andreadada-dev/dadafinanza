@@ -1,10 +1,10 @@
-import 'dart:math' as math;
 import 'package:balyn/l10n/localized_material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../l10n/app_i18n.dart';
 import '../main.dart';
 import '../models/models.dart';
+import '../widgets/ui_helpers.dart';
 
 /// Three-page, first-install-only flow. Uses Balyn's real account and settings APIs.
 class BalynOnboardingFlow extends StatefulWidget {
@@ -15,16 +15,12 @@ class BalynOnboardingFlow extends StatefulWidget {
 }
 
 class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
-    with SingleTickerProviderStateMixin {
+ {
   final GlobalKey<IntroductionScreenState> _introKey =
       GlobalKey<IntroductionScreenState>();
   final TextEditingController _name = TextEditingController(
     text: 'Conto principale',
   );
-  late final AnimationController _float = AnimationController(
-    vsync: this,
-    duration: const Duration(seconds: 3),
-  )..repeat(reverse: true);
   int _step = 0;
   bool _saving = false;
   bool _skipping = false;
@@ -32,6 +28,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
   String _currency = 'EUR';
   AccountType _type = AccountType.checking;
   int _color = 0xFF6539E8;
+  String _iconKey = 'wallet';
   static const colors = <int>[
     0xFF6539E8,
     0xFF3573ED,
@@ -45,7 +42,6 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
   @override
   void dispose() {
     _name.dispose();
-    _float.dispose();
     super.dispose();
   }
 
@@ -73,7 +69,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
             name: _name.text.trim(),
             type: _type,
             colorValue: _color,
-            iconKey: _type == AccountType.cash ? 'cash' : 'wallet',
+            iconKey: _iconKey,
           );
         }
       }
@@ -149,29 +145,33 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
     required String subtitle,
     required Widget content,
   }) => SingleChildScrollView(
-    padding: const EdgeInsets.fromLTRB(23, 12, 23, 12),
-    child: Column(
-      children: [
-        SizedBox(height: 174, child: Center(child: illustration)),
-        const SizedBox(height: 10),
-        Text(
-          title,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 27,
-            fontWeight: FontWeight.w900,
-            color: Colors.white,
-          ),
+    padding: const EdgeInsets.fromLTRB(24, 8, 24, 18),
+    child: Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 440),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(height: 132, child: Center(child: illustration)),
+            const SizedBox(height: 16),
+            Text(
+              title, textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 26, height: 1.18,
+                fontWeight: FontWeight.w800, color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 9),
+            Text(
+              subtitle, textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Color(0xFFCEC9D8), height: 1.45, fontSize: 14),
+            ),
+            const SizedBox(height: 28),
+            content,
+          ],
         ),
-        const SizedBox(height: 9),
-        Text(
-          subtitle,
-          textAlign: TextAlign.center,
-          style: const TextStyle(color: Color(0xFFE2D5FA), height: 1.45),
-        ),
-        const SizedBox(height: 24),
-        content,
-      ],
+      ),
     ),
   );
 
@@ -257,11 +257,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                 key: _introKey,
                 rawPages: [
                   _page(
-                    illustration: AnimatedBuilder(
-                      animation: _float,
-                      builder: (context, _) =>
-                          _FloatingFinance(value: reduced ? 0 : _float.value),
-                    ),
+                    illustration: const _CircleArt(icon: Icons.auto_graph_rounded),
                     title: _t(
                       'Le tue finanze, più semplici',
                       'Your finances, simplified',
@@ -314,8 +310,9 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                     ),
                   ),
                   _page(
-                    illustration: const _CircleArt(
-                      icon: Icons.account_balance_wallet_rounded,
+                    illustration: _CircleArt(
+                      icon: accountIcon(_iconKey),
+                      color: Color(_color),
                     ),
                     title: _t(
                       'Crea il tuo primo conto',
@@ -364,12 +361,56 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                                   child: Text(v.label),
                                 ),
                             ],
-                            onChanged: (v) => setState(
-                              () => _type = v ?? AccountType.checking,
-                            ),
+                            onChanged: (v) => setState(() {
+                              _type = v ?? AccountType.checking;
+                              _iconKey = switch (_type) {
+                                AccountType.cash => 'cash',
+                                AccountType.checking => 'bank',
+                                AccountType.savings => 'savings',
+                                AccountType.card || AccountType.prepaid => 'card',
+                                AccountType.investment => 'investment',
+                                AccountType.other => 'wallet',
+                              };
+                            }),
                           ),
                         ),
                         const SizedBox(height: 18),
+                        Text(_t('Icona del conto', 'Account icon'),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(color: Colors.white70)),
+                        const SizedBox(height: 9),
+                        Wrap(
+                          alignment: WrapAlignment.center,
+                          spacing: 9,
+                          runSpacing: 9,
+                          children: [
+                            for (final key in const [
+                              'wallet', 'bank', 'card', 'cash',
+                              'savings', 'investment',
+                            ])
+                              InkWell(
+                                key: ValueKey('intro-icon-$key'),
+                                borderRadius: BorderRadius.circular(15),
+                                onTap: () => setState(() => _iconKey = key),
+                                child: Container(
+                                  width: 47, height: 45,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: _iconKey == key
+                                        ? Color(_color).withValues(alpha: .26)
+                                        : Colors.white.withValues(alpha: .07),
+                                    borderRadius: BorderRadius.circular(15),
+                                    border: Border.all(
+                                      color: _iconKey == key
+                                        ? Color(_color) : Colors.white12),
+                                  ),
+                                  child: Icon(accountIcon(key),
+                                    color: Colors.white, size: 23),
+                                ),
+                              ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
                         Text(
                           _t('Colore del conto', 'Account color'),
                           style: const TextStyle(color: Colors.white),
@@ -529,84 +570,26 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
 }
 
 class _CircleArt extends StatelessWidget {
-  const _CircleArt({required this.icon});
-  final IconData icon;
-  @override
-  Widget build(BuildContext context) => Container(
-    height: 150,
-    width: 150,
-    decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      gradient: const RadialGradient(
-        colors: [Color(0xFFD5A1FF), Color(0xFF6731B8), Color(0xFF24104D)],
-      ),
-      boxShadow: [
-        BoxShadow(
-          color: const Color(0xFFAD76DB).withValues(alpha: .36),
-          blurRadius: 28,
-          spreadRadius: 8,
-        ),
-      ],
-    ),
-    child: Icon(icon, size: 74, color: Colors.white),
-  );
-}
-
-class _FloatingFinance extends StatelessWidget {
-  const _FloatingFinance({required this.value});
-  final double value;
-  @override
-  Widget build(BuildContext context) => Transform.translate(
-    offset: Offset(0, -10 * math.sin(value * math.pi)),
-    child: SizedBox(
-      width: 260,
-      height: 165,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          const _CircleArt(icon: Icons.auto_graph_rounded),
-          const Positioned(
-            left: 12,
-            top: 12,
-            child: _Bubble(icon: Icons.euro_rounded, color: Color(0xFF42D8AA)),
-          ),
-          const Positioned(
-            right: 15,
-            top: 5,
-            child: _Bubble(
-              icon: Icons.show_chart_rounded,
-              color: Color(0xFFEBA3DF),
-            ),
-          ),
-          const Positioned(
-            right: 15,
-            bottom: 4,
-            child: _Bubble(
-              icon: Icons.account_balance_wallet_rounded,
-              color: Color(0xFFFFCA75),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
-class _Bubble extends StatelessWidget {
-  const _Bubble({required this.icon, required this.color});
+  const _CircleArt({
+    required this.icon, this.color = const Color(0xFF9D8ABF),
+  });
   final IconData icon;
   final Color color;
+
   @override
-  Widget build(BuildContext context) => Container(
-    width: 46,
-    height: 46,
+  Widget build(BuildContext context) => AnimatedContainer(
+    key: const ValueKey('introduction-account-preview'),
+    duration: const Duration(milliseconds: 220),
+    curve: Curves.easeInOut,
+    alignment: Alignment.center,
+    width: 116, height: 116,
     decoration: BoxDecoration(
-      color: color,
-      shape: BoxShape.circle,
-      boxShadow: [
-        BoxShadow(color: color.withValues(alpha: .45), blurRadius: 14),
-      ],
+      color: color.withValues(alpha: .14),
+      borderRadius: BorderRadius.circular(31),
     ),
-    child: Icon(icon, color: const Color(0xFF27134A)),
+    child: AnimatedSwitcher(
+      duration: const Duration(milliseconds: 200),
+      child: Icon(icon, key: ValueKey(icon), size: 65, color: color),
+    ),
   );
 }
