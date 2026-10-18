@@ -14,6 +14,7 @@ class BalynRevolutHomeContent extends StatelessWidget {
     required this.hideValues,
     required this.showAccounts,
     this.maxAccounts,
+    this.embedded = false,
     required this.onSelectAccount,
     required this.onManageAccounts,
     super.key,
@@ -25,6 +26,8 @@ class BalynRevolutHomeContent extends StatelessWidget {
   final bool hideValues;
   final bool showAccounts;
   final int? maxAccounts;
+  /// When inside a Revolut section surface, avoid extra nested card layers.
+  final bool embedded;
   final ValueChanged<int?> onSelectAccount;
   final VoidCallback onManageAccounts;
 
@@ -45,6 +48,7 @@ class BalynRevolutHomeContent extends StatelessWidget {
                 value: hideValues ? '••••' : moneyFor(state, income),
                 icon: Icons.south_west_rounded,
                 color: context.financeColors.positive,
+                embedded: embedded,
               ),
             ),
             const SizedBox(width: 10),
@@ -54,6 +58,7 @@ class BalynRevolutHomeContent extends StatelessWidget {
                 value: hideValues ? '••••' : moneyFor(state, expense),
                 icon: Icons.north_east_rounded,
                 color: context.financeColors.negative,
+                embedded: embedded,
               ),
             ),
           ],
@@ -61,6 +66,7 @@ class BalynRevolutHomeContent extends StatelessWidget {
         const SizedBox(height: 10),
         _AvailableSummary(
           value: hideValues ? '••••' : moneyFor(state, available),
+          embedded: embedded,
         ),
         const SizedBox(height: 23),
         if (showAccounts) ...[
@@ -82,12 +88,14 @@ class BalynRevolutHomeContent extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(19),
-              color: Theme.of(context).brightness == Brightness.dark
-                  ? const Color(0xFF242431)
-                  : Colors.white,
-            ),
+            decoration: embedded
+                ? null
+                : BoxDecoration(
+                    borderRadius: BorderRadius.circular(19),
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? const Color(0xFF242431)
+                        : Colors.white,
+                  ),
             child: accountList.isEmpty
                 ? ListTile(
                     leading: const Icon(Icons.account_balance_wallet_outlined),
@@ -108,7 +116,7 @@ class BalynRevolutHomeContent extends StatelessWidget {
                                 : accountList.length.clamp(0, maxAccounts!));
                         i++
                       ) ...[
-                        if (i > 0)
+                        if (i > 0 && !embedded)
                           Divider(
                             height: 1,
                             indent: 70,
@@ -135,12 +143,14 @@ class _BalanceMetric extends StatelessWidget {
     required this.value,
     required this.icon,
     required this.color,
+    required this.embedded,
   });
 
   final String title;
   final String value;
   final IconData icon;
   final Color color;
+  final bool embedded;
 
   @override
   Widget build(BuildContext context) {
@@ -148,12 +158,14 @@ class _BalanceMetric extends StatelessWidget {
     return Container(
       height: 112,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-      decoration: BoxDecoration(
-        color: theme.brightness == Brightness.dark
-            ? const Color(0xFF242431)
-            : Colors.white,
-        borderRadius: BorderRadius.circular(17),
-      ),
+      decoration: embedded
+          ? null
+          : BoxDecoration(
+              color: theme.brightness == Brightness.dark
+                  ? const Color(0xFF242431)
+                  : Colors.white,
+              borderRadius: BorderRadius.circular(17),
+            ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -184,8 +196,9 @@ class _BalanceMetric extends StatelessWidget {
 }
 
 class _AvailableSummary extends StatelessWidget {
-  const _AvailableSummary({required this.value});
+  const _AvailableSummary({required this.value, required this.embedded});
   final String value;
+  final bool embedded;
 
   @override
   Widget build(BuildContext context) {
@@ -194,10 +207,12 @@ class _AvailableSummary extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
-      decoration: BoxDecoration(
-        color: dark ? const Color(0xFF242431) : Colors.white,
-        borderRadius: BorderRadius.circular(17),
-      ),
+      decoration: embedded
+          ? null
+          : BoxDecoration(
+              color: dark ? const Color(0xFF242431) : Colors.white,
+              borderRadius: BorderRadius.circular(17),
+            ),
       child: Row(
         children: [
           Icon(
