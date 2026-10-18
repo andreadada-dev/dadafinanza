@@ -1,4 +1,5 @@
 name: Temporary Analytics formatting
+# Run after the final palette and chart axis changes.
 on:
   push:
     branches:
