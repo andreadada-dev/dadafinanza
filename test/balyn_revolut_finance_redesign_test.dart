@@ -7,8 +7,9 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test('first launch is gated and never overwrites an existing user', () {
     final main = File('lib/main.dart').readAsStringSync();
-    final flow = File('lib/screens/balyn_onboarding_flow.dart')
-        .readAsStringSync();
+    final flow = File(
+      'lib/screens/balyn_onboarding_flow.dart',
+    ).readAsStringSync();
     expect(main, contains("getSetting('onboarding_completed')"));
     expect(main, contains('state.userAccounts.isEmpty'));
     expect(main, contains('state.transactions.isEmpty'));
@@ -20,10 +21,12 @@ void main() {
   });
 
   test('transaction details use real edit and analytics persistence', () {
-    final screen = File('lib/screens/transaction_screens.dart')
-        .readAsStringSync();
-    final design = File('lib/widgets/balyn_transaction_detail_content.dart')
-        .readAsStringSync();
+    final screen = File(
+      'lib/screens/transaction_screens.dart',
+    ).readAsStringSync();
+    final design = File(
+      'lib/widgets/balyn_transaction_detail_content.dart',
+    ).readAsStringSync();
     expect(screen, contains('BalynTransactionDetailContent('));
     expect(screen, contains('QuickAddPage(editing: item)'));
     expect(screen, contains('await _delete(context, item, state)'));
@@ -32,17 +35,24 @@ void main() {
     expect(design, contains('item.receiptPath'));
   });
 
-  testWidgets('donut shows actual category share, not a hardcoded percentage',
-      (tester) async {
+  testWidgets('donut shows actual category share, not a hardcoded percentage', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
           body: BalynBalanceDonut(
             segments: [
               FinanceDonutSegment(
-                label: 'Casa', value: 75, color: Color(0xFFFF6B5B)),
+                label: 'Casa',
+                value: 75,
+                color: Color(0xFFFF6B5B),
+              ),
               FinanceDonutSegment(
-                label: 'Cibo', value: 25, color: Color(0xFFB9AEFF)),
+                label: 'Cibo',
+                value: 25,
+                color: Color(0xFFB9AEFF),
+              ),
             ],
             valueFormatter: _formatValue,
             hidden: false,

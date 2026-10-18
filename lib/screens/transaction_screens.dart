@@ -314,7 +314,9 @@ class TransactionDetailPage extends StatelessWidget {
         onDelete: () async {
           if (state.isAdvanceProtectedTransaction(item)) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Gestisci il movimento da Anticipi.')),
+              const SnackBar(
+                content: Text('Gestisci il movimento da Anticipi.'),
+              ),
             );
             return;
           }
@@ -330,14 +332,14 @@ class TransactionDetailPage extends StatelessWidget {
             }
           } catch (error) {
             if (context.mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(error.toString())),
-              );
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(error.toString())));
             }
           }
         },
-        onAnalyticsChanged: (included) => _editSimple(
-          context, item, state, includeInAnalytics: included),
+        onAnalyticsChanged: (included) =>
+            _editSimple(context, item, state, includeInAnalytics: included),
       ),
     );
   }

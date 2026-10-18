@@ -41,8 +41,10 @@ Future<void> main() async {
   }
   final onboardingDone = await database.getSetting('onboarding_completed');
   // Existing user data always takes priority over first-run onboarding.
-  final firstLaunch = onboardingDone != '1' &&
-      state.userAccounts.isEmpty && state.transactions.isEmpty;
+  final firstLaunch =
+      onboardingDone != '1' &&
+      state.userAccounts.isEmpty &&
+      state.transactions.isEmpty;
   runApp(BalynApp(state: state, showOnboarding: firstLaunch));
 }
 
