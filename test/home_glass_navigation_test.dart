@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:balyn/l10n/localized_material.dart';
-import 'package:balyn/widgets/balyn_glass_navigation.dart';
+import 'package:balyn/widgets/balyn_cue_section_bar.dart';
+import 'package:balyn/widgets/balyn_quick_action_launcher.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -12,6 +13,8 @@ void main() {
     final hero = File(
       'lib/widgets/balyn_revolut_home_hero.dart',
     ).readAsStringSync();
+    final selector = File('lib/widgets/balyn_cue_section_bar.dart')
+        .readAsStringSync();
     final shell = File('lib/screens/app_shell.dart').readAsStringSync();
 
     expect(home, contains('NestedScrollView('));
@@ -21,59 +24,96 @@ void main() {
     expect(home, contains('onTabChanged: _selectHomePage'));
     expect(home, contains('BalynActivityScreen('));
     expect(home, contains('sectionPage: _pageController.hasClients'));
-    expect(hero, contains("label: 'Panoramica'"));
-    expect(hero, contains("label: 'Conti'"));
-    expect(hero, contains("label: 'Attività'"));
-    expect(hero, contains('left: segmentWidth * sectionPage.clamp(0.0, 2.0)'));
+    expect(hero, contains('BalynCueSectionBar('));
+    expect(selector, contains("'Panoramica'"));
+    expect(selector, contains("'Conti'"));
+    expect(selector, contains("'Attività'"));
+    expect(selector, contains('Cue.onToggle('));
+    expect(selector, contains('left: unit * progress'));
+    expect(selector, contains('width: unit * (1 + weight[i])'));
     expect(shell, contains('_homeDirection = next > _homeSection ? 1 : -1'));
     expect(shell, contains('onShowActivity: _showHomeActivity'));
     expect(shell, contains('onSectionChanged: _selectHomeSection'));
   });
 
-  test(
-    'Glass navigation overlays page content instead of reserving bottom bar',
-    () {
-      final shell = File('lib/screens/app_shell.dart').readAsStringSync();
-      final nav = File(
-        'lib/widgets/balyn_glass_navigation.dart',
-      ).readAsStringSync();
-      expect(shell, contains('extendBody: true'));
-      expect(shell, contains('body: Stack('));
-      expect(shell, contains('BalynGlassNavigation('));
-      expect(shell, isNot(contains('bottomNavigationBar: NavigationBar(')));
-      expect(nav, contains('BackdropFilter('));
-      expect(nav, contains('ImageFilter.blur('));
-      expect(nav, contains('_LiquidRimPainter'));
-      expect(nav, contains('Color(0xFFAA4559)'));
-      expect(nav, contains('Colors.white.withValues(alpha: dark ? .72 : .9)'));
-    },
-  );
+  test('Corner launcher replaces the old bottom bar', () {
+    final shell = File('lib/screens/app_shell.dart').readAsStringSync();
+    final launcher = File('lib/widgets/balyn_quick_action_launcher.dart')
+        .readAsStringSync();
+    expect(shell, contains('extendBody: true'));
+    expect(shell, contains('body: Stack('));
+    expect(shell, contains('BalynQuickActionLauncher('));
+    expect(shell, isNot(contains('BalynGlassNavigation(')));
+    expect(launcher, contains('Cue.onToggle('));
+    expect(launcher, contains('onLongPress: onLongPress'));
+    expect(launcher, contains("id: 'create'"));
+    expect(launcher, contains("id: 'advances'"));
+    expect(launcher, contains("id: 'planning'"));
+    expect(launcher, contains("id: 'home'"));
+  });
 
-  testWidgets('Floating glass destinations dispatch all four taps', (
-    tester,
-  ) async {
-    final selections = <int>[];
+  testWidgets('Cue selector dispatches three tabs', (tester) async {
+    final changed = <int>[];
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: Center(
+          body: Align(
+            alignment: Alignment.topCenter,
             child: SizedBox(
-              width: 360,
-              child: BalynGlassNavigation(
-                index: 0,
-                onDestinationSelected: selections.add,
+              width: 350,
+              child: BalynCueSectionBar(
+                selectedTab: 0,
+                page: 0,
+                onSelected: changed.add,
               ),
             ),
           ),
         ),
       ),
     );
-
-    for (var i = 0; i < 4; i++) {
-      await tester.tap(find.byKey(ValueKey('glass-destination-$i')));
+    expect(find.byKey(const ValueKey('cue-home-sections')), findsOneWidget);
+    for (var i = 0; i < 3; i++) {
+      await tester.tap(find.byKey(ValueKey('home-segment-$i')));
       await tester.pump();
     }
-    expect(selections, [0, 1, 2, 3]);
+    expect(changed, [0, 1, 2]);
+  });
+
+  testWidgets('Launcher reveals working actions and closes', (tester) async {
+    var expanded = false;
+    final actions = <String>[];
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: StatefulBuilder(
+            builder: (context, setState) => Align(
+              alignment: Alignment.bottomRight,
+              child: BalynQuickActionLauncher(
+                expanded: expanded,
+                showHome: true,
+                onToggle: () => setState(() => expanded = !expanded),
+                onCreate: () => actions.add('create'),
+                onAdvances: () => actions.add('advances'),
+                onPlanning: () => actions.add('planning'),
+                onHome: () => actions.add('home'),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.byKey(const ValueKey('quick-launcher')));
+    await tester.pumpAndSettle();
+    expect(expanded, isTrue);
+    for (final item in ['create', 'advances', 'planning', 'home']) {
+      await tester.tap(find.byKey(ValueKey('quick-nav-$item')));
+      await tester.pump();
+    }
+    expect(actions, ['create', 'advances', 'planning', 'home']);
+    await tester.tap(find.byKey(const ValueKey('quick-launcher')));
+    await tester.pumpAndSettle();
+    expect(expanded, isFalse);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('PageView follows the finger and snaps between three sections', (
