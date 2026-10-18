@@ -385,6 +385,7 @@ class AccountCategoryCarousel extends StatelessWidget {
     this.from,
     this.to,
     this.periodLabel,
+    this.hideAmounts = false,
     super.key,
   });
 
@@ -395,6 +396,7 @@ class AccountCategoryCarousel extends StatelessWidget {
   final DateTime? from;
   final DateTime? to;
   final String? periodLabel;
+  final bool hideAmounts;
 
   @override
   Widget build(BuildContext context) => _TopCategoriesDonut(
@@ -409,6 +411,7 @@ class AccountCategoryCarousel extends StatelessWidget {
     from: from,
     to: to,
     externalPeriodLabel: periodLabel,
+    hideAmounts: hideAmounts,
   );
 }
 
@@ -419,6 +422,7 @@ class _TopCategoriesDonut extends StatefulWidget {
     this.from,
     this.to,
     this.externalPeriodLabel,
+    this.hideAmounts = false,
     super.key,
   });
 
@@ -427,6 +431,7 @@ class _TopCategoriesDonut extends StatefulWidget {
   final DateTime? from;
   final DateTime? to;
   final String? externalPeriodLabel;
+  final bool hideAmounts;
 
   @override
   State<_TopCategoriesDonut> createState() => _TopCategoriesDonutState();
@@ -733,6 +738,8 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
     );
   }
 
+  bool get _hideAmounts => widget.hideAmounts;
+
   Widget _buildCarouselPage({
     required BuildContext context,
     required AppState state,
@@ -869,7 +876,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                         icon: data.icon,
                         accent: data.accent,
                         rangeLabel: widget.externalPeriodLabel ?? _rangeLabel,
-                        totalLabel: state.hideBalance
+                        totalLabel: state.hideBalance || _hideAmounts
                             ? '••••'
                             : moneyFor(state, data.total),
                         showPeriodControls: widget.from == null,
@@ -886,7 +893,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                         percentage: data.total <= 0
                             ? 0
                             : selected.amount / data.total,
-                        amountLabel: state.hideBalance
+                        amountLabel: state.hideBalance || _hideAmounts
                             ? '••••'
                             : moneyFor(state, selected.amount),
                         onTap: () => setState(() => _selectedIndex = -1),
@@ -998,6 +1005,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                         amount: entry.value.abs(),
                         total: activeData.total,
                         state: state,
+                        hideAmounts: _hideAmounts,
                       ),
                   ],
                 ),
@@ -1265,12 +1273,14 @@ class _CategoryDonutRow extends StatelessWidget {
     required this.amount,
     required this.total,
     required this.state,
+    this.hideAmounts = false,
   });
 
   final Category category;
   final double amount;
   final double total;
   final AppState state;
+  final bool hideAmounts;
 
   @override
   Widget build(BuildContext context) {
@@ -1334,7 +1344,7 @@ class _CategoryDonutRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  state.hideBalance ? '••••' : moneyFor(state, amount),
+                  state.hideBalance || hideAmounts ? '••••' : moneyFor(state, amount),
                   style: const TextStyle(fontWeight: FontWeight.w800),
                 ),
                 Text(
