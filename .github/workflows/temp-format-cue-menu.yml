@@ -1,4 +1,5 @@
 name: Temporary Cue menu formatting
+# Final pinned formatter after adding Cue/FAB regression tests.
 on:
   push:
     branches:
