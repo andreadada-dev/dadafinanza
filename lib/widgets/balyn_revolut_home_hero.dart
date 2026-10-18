@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:balyn/l10n/localized_material.dart';
 import 'balyn_cue_section_bar.dart';
+import 'balyn_cue_three_dots_action.dart';
 
 import '../main.dart';
 import '../models/models.dart';
@@ -28,7 +29,10 @@ class BalynRevolutHomeHero extends StatelessWidget {
     required this.onExpense,
     required this.onIncome,
     required this.onTransfer,
-    required this.onMore,
+    required this.onManageAccounts,
+    required this.onAdvances,
+    required this.onAdvancedDashboard,
+    required this.onCustomizeHome,
     super.key,
   });
 
@@ -49,7 +53,10 @@ class BalynRevolutHomeHero extends StatelessWidget {
   final VoidCallback onExpense;
   final VoidCallback onIncome;
   final VoidCallback onTransfer;
-  final VoidCallback onMore;
+  final VoidCallback onManageAccounts;
+  final VoidCallback onAdvances;
+  final VoidCallback onAdvancedDashboard;
+  final VoidCallback onCustomizeHome;
 
   static const _balynAccent = Color(0xFF6221E9);
 
@@ -456,10 +463,11 @@ class BalynRevolutHomeHero extends StatelessWidget {
                         label: 'Trasferisci',
                         onTap: onTransfer,
                       ),
-                      _HeroAction(
-                        icon: Icons.more_horiz_rounded,
-                        label: 'Altro',
-                        onTap: onMore,
+                      BalynCueThreeDotsAction(
+                        onManageAccounts: onManageAccounts,
+                        onAdvances: onAdvances,
+                        onAdvancedDashboard: onAdvancedDashboard,
+                        onCustomizeHome: onCustomizeHome,
                       ),
                     ],
                   ),
