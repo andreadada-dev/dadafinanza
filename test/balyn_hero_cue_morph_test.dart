@@ -52,7 +52,8 @@ void main() {
     ).readAsStringSync();
     expect(header, contains('BalynCueAnchoredMenu('));
     expect(fab, contains('return PieMenu('));
-    expect(fab, contains('overlayColor: Colors.black54'));
+    expect(fab, contains('overlayColor: Colors.black.withValues(alpha: .54)'));
+    expect(fab, contains('pointerSize: 0'));
     expect(fab, contains('longPressShowsMenu: true'));
     expect(fab, contains('longPressDuration: holdDuration'));
     expect(fab, contains('onPressed: _openTransferOnce'));
