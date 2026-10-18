@@ -2,7 +2,6 @@ import 'package:balyn/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
-import '../core/money.dart';
 import '../main.dart';
 import '../models/models.dart';
 import '../services/account_context_service.dart';
@@ -50,20 +49,6 @@ class AccountContextHomeScreen extends StatefulWidget {
 }
 
 class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
-  static const _fallbackTypes = <DashboardWidgetType>[
-    DashboardWidgetType.totalBalance,
-    DashboardWidgetType.monthlyCashFlow,
-    DashboardWidgetType.safeToSpend,
-    DashboardWidgetType.accounts,
-    DashboardWidgetType.monthlyBudget,
-    DashboardWidgetType.recentTransactions,
-    DashboardWidgetType.upcomingRecurring,
-    DashboardWidgetType.goals,
-    DashboardWidgetType.topCategories,
-    DashboardWidgetType.endMonthForecast,
-    DashboardWidgetType.unassignedTransactions,
-  ];
-
   static const _fixedSummaryTypes = <DashboardWidgetType>{
     DashboardWidgetType.totalBalance,
     DashboardWidgetType.monthlyIncome,
