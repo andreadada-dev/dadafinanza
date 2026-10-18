@@ -21,9 +21,9 @@ data, but move old visuals to the redesigned design system.
 | Home Hero, account selector, swipe gesture, buttons and title dropdown | `lib/widgets/balyn_revolut_home_hero.dart` |
 | O'Mesh gradient geometry, subtle shared-clock movement, per-account adjacent-color hues | `lib/widgets/balyn_omesh_hero_background.dart` |
 | Section strip: Panoramica / Movimenti / Analisi | `lib/widgets/balyn_cue_section_bar.dart` |
-| One canonical **Cue expanding action menu**, shared by Hero “Altro” and corner “+” | `lib/widgets/balyn_cue_anchored_menu.dart` |
+| Anchored Cue expanding action menu for Hero “Altro” ONLY | `lib/widgets/balyn_cue_anchored_menu.dart` |
 | “Altro” trigger in the Hero, managing accounts / advances / dashboard / customizer | `lib/widgets/balyn_cue_three_dots_action.dart` |
-| Bottom-right action trigger, spring/stretch dynamics, actions | `lib/widgets/balyn_quick_action_launcher.dart` |
+| Bottom-right FAB: tap-to-transfer, 700ms clockwise white hold, pie_menu radial presets and motion | `lib/widgets/balyn_quick_action_launcher.dart` |
 | Shell, navigation, scroll-delta signal for the morphing FAB | `lib/screens/app_shell.dart` |
 | Unified rounded content card / headings / icons | `lib/widgets/balyn_editorial_components.dart` |
 | Configurable Home sections: real data, consistent cards | `lib/widgets/home_dashboard_widget.dart` |
@@ -75,10 +75,12 @@ font scales.
    `colorValue`. No animated left/right diamond arrow widgets. Account
    switching remains possible by horizontal swipe and the account
    selector (title + plain down chevron).
-2. **Cue menus**: both Hero “Altro” and corner “+” use
-   `BalynCueAnchoredMenu`, which owns the dark barrier, shared motion,
-   pill shape, action order and dismiss/close control. Never create a
-   different action overlay for the + menu.
+2. **Hero “Altro”** uses `BalynCueAnchoredMenu`: original position is
+   preserved using the Cue `triggerRect.width` horizontal offset so the
+   close circle stays centered on the existing button. Do not move it
+   right when opening. **Corner “+” now intentionally uses `pie_menu`,
+   not Cue**: long press opens a radial menu; its dimmed overlay matches
+   the Hero's 54%-black backdrop.
 3. **FAB morph**: `BalynMorphingFab` reacts to the horizontal/vertical
    scroll delta delivered as `ValueListenable<Offset>` from
    `BalynAppShell`; the trigger briefly stretches/squashes and
@@ -94,6 +96,15 @@ font scales.
 6. **Onboarding** has a separate velvet-like shader and soft beams,
    not the O'Mesh Hero everywhere.
 
+## Hero centering and visibility
+
+In `balyn_revolut_home_hero.dart` keep the account title and chevron in
+one centered `Row(mainAxisSize: MainAxisSize.min)`. Show/hide eye belongs
+**immediately after the large balance value**, in the same centered Row,
+not absolutely pinned at the far-right edge. The `Cue` menu close button
+is anchored to the center of the existing circular “Altro” trigger with
+`Offset((56 - triggerRect.width) / 2, 0)`.
+
 ## Behavior that must not regress
 
 - All existing accounts, balances, currencies, categories, tags, receipts,
@@ -104,8 +115,12 @@ font scales.
 - The account selector and Hero horizontal swipe still change the
   selected account even though visible side diamonds were removed.
 - Hero "Altro": manage accounts, advances, advanced dashboard, customize
-  Home. Corner "+": movement, advances, plan, optional Home. Long press
-  continues to open the legacy presets/voice menu.
+  Home. Corner "+" **short tap** opens `QuickAddPage` in **transfer** mode.
+  **700ms long press** fills its circle white clockwise from 0° to 360°
+  and then opens a darkened `pie_menu` radial menu. This displays up to
+  **four enabled user presets**, plus **New preset** (opens the preset
+  creation editor), **Anticipi** and **Pianifica**. Do not restore the
+  older bottom sheet or a vertical Cue menu for the corner +.
 - The corner FAB dimming and closure should behave just like "Altro".
 - No overly saturated/gratuitous gradients or background reinitialization
   when navigating.
@@ -173,6 +188,7 @@ and English for new explanatory copy.
 - Removed Hero side navigation diamonds; account swiping stays.
 - Changed balance title diamond into a simple down chevron.
 - Adjusted mesh from opposing purple/cyan toward analogous account hues.
-- Refactored the header and bottom FAB action menus to the same Cue menu.
+- Kept Hero 'Altro' as Cue but moved the corner + to `pie_menu` with
+  long-press charge and dynamic preset actions.
 - Added a bounded elastic scroll-direction response on the FAB circle.
 - Verify these edits with CI and an actual Android device before merging.
