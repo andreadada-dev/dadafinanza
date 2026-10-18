@@ -30,8 +30,9 @@ void main() {
   });
 
   test('Hero retains swipe and dropdown without visible side diamonds', () {
-    final hero = File('lib/widgets/balyn_revolut_home_hero.dart')
-        .readAsStringSync();
+    final hero = File(
+      'lib/widgets/balyn_revolut_home_hero.dart',
+    ).readAsStringSync();
     expect(hero, contains('onHorizontalDragEnd:'));
     expect(hero, contains('_showAccountSelector(context)'));
     expect(hero, contains('Icons.keyboard_arrow_down_rounded'));
@@ -39,12 +40,15 @@ void main() {
   });
 
   test('Header More and corner + share the identical Cue menu', () {
-    final header = File('lib/widgets/balyn_cue_three_dots_action.dart')
-        .readAsStringSync();
-    final fab = File('lib/widgets/balyn_quick_action_launcher.dart')
-        .readAsStringSync();
-    final menu = File('lib/widgets/balyn_cue_anchored_menu.dart')
-        .readAsStringSync();
+    final header = File(
+      'lib/widgets/balyn_cue_three_dots_action.dart',
+    ).readAsStringSync();
+    final fab = File(
+      'lib/widgets/balyn_quick_action_launcher.dart',
+    ).readAsStringSync();
+    final menu = File(
+      'lib/widgets/balyn_cue_anchored_menu.dart',
+    ).readAsStringSync();
     expect(header, contains('BalynCueAnchoredMenu('));
     expect(fab, contains('BalynCueAnchoredMenu('));
     expect(menu, contains('barrierColor: Colors.black54'));
@@ -63,10 +67,7 @@ void main() {
       MaterialApp(
         home: Scaffold(
           body: Center(
-            child: BalynMorphingFab(
-              motion: signal,
-              onPressed: () {},
-            ),
+            child: BalynMorphingFab(motion: signal, onPressed: () {}),
           ),
         ),
       ),

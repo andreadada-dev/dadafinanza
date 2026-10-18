@@ -28,7 +28,7 @@ class BalynCueAnchoredMenu extends StatelessWidget {
 
   final List<BalynCueMenuAction> actions;
   final Widget Function(BuildContext context, VoidCallback showModal)
-      triggerBuilder;
+  triggerBuilder;
   final Key? closeKey;
   final String closeTooltip;
 
@@ -80,8 +80,11 @@ class BalynCueAnchoredMenu extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(action.icon,
-                                color: scheme.onSurface, size: 20),
+                            Icon(
+                              action.icon,
+                              color: scheme.onSurface,
+                              size: 20,
+                            ),
                             const SizedBox(width: 11),
                             Flexible(
                               child: Text(

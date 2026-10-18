@@ -94,8 +94,9 @@ void main() {
     expect(changed, [0, 1, 2]);
   });
 
-  testWidgets('Cue quick launcher opens pills and returns to its trigger',
-      (tester) async {
+  testWidgets('Cue quick launcher opens pills and returns to its trigger', (
+    tester,
+  ) async {
     final actions = <String>[];
     await tester.pumpWidget(
       MaterialApp(

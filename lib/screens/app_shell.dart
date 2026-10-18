@@ -151,7 +151,8 @@ class _BalynAppShellState extends State<BalynAppShell> {
                     // Bound the deformation, but preserve direction and
                     // proportional speed. Horizontal page swipes count too.
                     final impulse = (delta / 22.0).clamp(-1.0, 1.0);
-                    _fabMotion.value = notification.metrics.axis == Axis.horizontal
+                    _fabMotion.value =
+                        notification.metrics.axis == Axis.horizontal
                         ? Offset(impulse, 0)
                         : Offset(0, impulse);
                   }

@@ -322,7 +322,9 @@ class BalynRevolutHomeHero extends StatelessWidget {
                                         Icon(
                                           Icons.keyboard_arrow_down_rounded,
                                           size: 21,
-                                          color: Colors.white.withValues(alpha: .92),
+                                          color: Colors.white.withValues(
+                                            alpha: .92,
+                                          ),
                                         ),
                                       ],
                                     ),

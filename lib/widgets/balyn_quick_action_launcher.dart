@@ -134,15 +134,16 @@ class _BalynMorphingFabState extends State<BalynMorphingFab>
       animation: _rebound,
       builder: (context, child) {
         final elapsed = Curves.easeOutCubic.transform(_rebound.value);
-        final spring = reduced ? 0.0 : (1 - elapsed) *
-            (1 + .09 * math.sin(_rebound.value * 3 * math.pi));
+        final spring = reduced
+            ? 0.0
+            : (1 - elapsed) *
+                  (1 + .09 * math.sin(_rebound.value * 3 * math.pi));
         final dx = _impulse.dx * .10 * spring;
         final dy = _impulse.dy * .10 * spring;
         final matrix = Matrix4.identity()
           ..translate(dx * 14, dy * 14)
           ..rotateZ(dx * .12)
-          ..scale(1 + dx.abs() - dy.abs() * .45,
-                  1 + dy.abs() - dx.abs() * .45);
+          ..scale(1 + dx.abs() - dy.abs() * .45, 1 + dy.abs() - dx.abs() * .45);
         return Transform(
           alignment: Alignment.center,
           transform: matrix,
