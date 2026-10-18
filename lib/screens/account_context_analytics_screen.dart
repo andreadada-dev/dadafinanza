@@ -405,7 +405,10 @@ class _AccountContextAnalyticsScreenState
             const SizedBox(height: 10),
             BalynReveal(
               child: BalynEditorialSurface(
-                child: BalynStatisticBars(points: cashFlowPoints),
+                child: BalynStatisticBars(
+                  points: cashFlowPoints,
+                  hidden: state.hideBalance || selected?.hideBalance == true,
+                ),
               ),
             ),
           ],

@@ -6,8 +6,13 @@ import 'finance_charts.dart';
 
 /// Balanced paired bars with the clean Statistic screen geometry.
 class BalynStatisticBars extends StatelessWidget {
-  const BalynStatisticBars({required this.points, super.key});
+  const BalynStatisticBars({
+    required this.points,
+    required this.hidden,
+    super.key,
+  });
   final List<FinanceTrendPoint> points;
+  final bool hidden;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +58,8 @@ class BalynStatisticBars extends StatelessWidget {
                     getTitlesWidget: (value, meta) => SideTitleWidget(
                       meta: meta,
                       child: Text(
-                        value >= 1000
+                        hidden ? '••'
+                            : value >= 1000
                             ? '${(value / 1000).toStringAsFixed(0)}k'
                             : value.toStringAsFixed(0),
                         style: TextStyle(
@@ -92,7 +98,16 @@ class BalynStatisticBars extends StatelessWidget {
                   ),
                 ),
               ),
-              barGroups: [
+              barTouchData: BarTouchData(
+              touchTooltipData: BarTouchTooltipData(
+                getTooltipItem: (group, groupIndex, rod, rodIndex) =>
+                  BarTooltipItem(
+                    hidden ? '••••' : rod.toY.toStringAsFixed(2),
+                    TextStyle(color: scheme.onSurface, fontWeight: FontWeight.w700),
+                  ),
+              ),
+            ),
+            barGroups: [
                 for (var i = 0; i < points.length; i++)
                   BarChartGroupData(
                     x: i,
