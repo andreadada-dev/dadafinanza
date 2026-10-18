@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:async';
 
 import 'package:balyn/l10n/localized_material.dart';
 import 'package:flutter/foundation.dart';
@@ -47,6 +48,7 @@ class _BalynQuickActionLauncherState extends State<BalynQuickActionLauncher>
   );
   List<QuickPreset> _presets = const [];
   bool _menuOpen = false;
+  bool _tapInProgress = false;
 
   @override
   void initState() {
@@ -68,6 +70,15 @@ class _BalynQuickActionLauncherState extends State<BalynQuickActionLauncher>
   void dispose() {
     _charge.dispose();
     super.dispose();
+  }
+
+  void _openTransferOnce() {
+    if (_menuOpen || _tapInProgress || _charge.isCompleted) return;
+    _tapInProgress = true;
+    widget.onCreate();
+    // Flutter's PieMenu and the nested FAB may both report the same tap.
+    // Unlock in the next microtask, not in the same gesture dispatch.
+    scheduleMicrotask(() => _tapInProgress = false);
   }
 
   void _startCharge(PointerDownEvent event) {
@@ -108,7 +119,7 @@ class _BalynQuickActionLauncherState extends State<BalynQuickActionLauncher>
           _refreshPresets();
         }
       },
-      onPressed: widget.onCreate,
+      onPressed: _openTransferOnce,
       actions: [
         for (final preset in _presets)
           PieAction(
@@ -143,7 +154,7 @@ class _BalynQuickActionLauncherState extends State<BalynQuickActionLauncher>
         child: BalynMorphingFab(
           motion: widget.motion,
           progress: _charge,
-          onPressed: () {},
+          onPressed: _openTransferOnce,
         ),
       ),
     );
