@@ -8,7 +8,7 @@ import '../models/models.dart';
 import '../models/quick_capture_models.dart';
 import '../services/haptic_service.dart';
 import '../services/quick_preset_service.dart';
-import '../widgets/balyn_glass_navigation.dart';
+import '../widgets/balyn_quick_action_launcher.dart';
 import '../widgets/smooth_indexed_pages.dart';
 import '../widgets/ui_helpers.dart';
 import 'balyn_activity_screen.dart';
@@ -35,6 +35,7 @@ class _BalynAppShellState extends State<BalynAppShell> {
   int _homeDirection = 1;
   int _homeActivityTab = 0;
   bool _allowExit = false;
+  bool _launcherOpen = false;
   Timer? _exitTimer;
 
   @override
@@ -73,12 +74,17 @@ class _BalynAppShellState extends State<BalynAppShell> {
     _exitTimer?.cancel();
     setState(() {
       index = value;
+      _launcherOpen = false;
       _allowExit = false;
     });
   }
 
   void _handleBack(bool didPop) {
     if (didPop) return;
+    if (_launcherOpen) {
+      setState(() => _launcherOpen = false);
+      return;
+    }
     if (index != 0) {
       _selectTab(0);
       return;
@@ -130,11 +136,6 @@ class _BalynAppShellState extends State<BalynAppShell> {
       const PlanningScreen(),
     ];
 
-    final fabLabel = index == 2 ? 'Nuovo anticipo' : 'Nuovo movimento';
-    final fabHint = index == 2
-        ? 'Tocca per creare un anticipo. Tieni premuto per le scorciatoie.'
-        : 'Tocca per una nuova spesa. Tieni premuto per preset e scorciatoie.';
-
     return PopScope(
       canPop: _allowExit,
       onPopInvoked: _handleBack,
@@ -147,35 +148,39 @@ class _BalynAppShellState extends State<BalynAppShell> {
               bottom: false,
               child: SmoothIndexedPages(index: index, children: pages),
             ),
-            Positioned(
-              left: 16,
-              right: 16,
-              bottom: MediaQuery.viewPaddingOf(context).bottom + 10,
-              child: BalynGlassNavigation(
-                index: index,
-                onDestinationSelected: _selectTab,
-              ),
-            ),
-            if (index == 1 || index == 2)
-              Positioned(
-                right: 22,
-                bottom: MediaQuery.viewPaddingOf(context).bottom + 93,
-                child: Semantics(
-                  button: true,
-                  label: fabLabel,
-                  hint: fabHint,
-                  excludeSemantics: true,
-                  child: GestureDetector(
-                    onLongPress: _showQuickMenu,
-                    child: FloatingActionButton(
-                      onPressed: index == 2
-                          ? () => _openAdvance()
-                          : () => _open(TransactionType.expense),
-                      child: const Icon(Icons.add_rounded),
-                    ),
+            if (_launcherOpen)
+              Positioned.fill(
+                child: GestureDetector(
+                  key: const ValueKey('quick-nav-dismiss'),
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => setState(() => _launcherOpen = false),
+                  child: ColoredBox(
+                    color: Colors.black.withValues(alpha: .12),
                   ),
                 ),
               ),
+            Positioned(
+              right: 19,
+              bottom: MediaQuery.viewPaddingOf(context).bottom + 15,
+              child: BalynQuickActionLauncher(
+                expanded: _launcherOpen,
+                showHome: index != 0,
+                onToggle: () => setState(
+                  () => _launcherOpen = !_launcherOpen,
+                ),
+                onCreate: () {
+                  setState(() => _launcherOpen = false);
+                  _open(TransactionType.expense);
+                },
+                onAdvances: () => _selectTab(2),
+                onPlanning: () => _selectTab(3),
+                onHome: () => _selectTab(0),
+                onLongPress: () {
+                  setState(() => _launcherOpen = false);
+                  _showQuickMenu();
+                },
+              ),
+            ),
           ],
         ),
       ),
