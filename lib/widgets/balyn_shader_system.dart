@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:balyn/l10n/localized_material.dart';
+import '../theme/balyn_palette.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -246,7 +247,7 @@ class BalynShaderBackdrop extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        ColoredBox(color: dark ? Colors.black : Colors.white),
+        ColoredBox(color: BalynPalette.canvas(Theme.of(context).brightness)),
         if (enabled && data?.backgroundProgram != null)
           Positioned.fill(
             child: IgnorePointer(
