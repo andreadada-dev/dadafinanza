@@ -42,7 +42,7 @@ void main() {
 
   test('transfer type is available in the compact movement picker', () async {
     final source = await File('lib/screens/quick_add_page.dart').readAsString();
-    expect(source, contains("'Trasferimento'"));
+    expect(source, contains('TransactionType.transfer'));
     expect(source, contains('_pickMovementType()'));
     expect(source, contains('TransactionType.values'));
   });
