@@ -1,204 +1,171 @@
+import 'dart:math' as math;
+
 import 'package:balyn/l10n/localized_material.dart';
 
-/// A single contrasting action button with a staggered, size-aware expansion.
-class BalynQuickActionLauncher extends StatefulWidget {
+import '../theme/balyn_palette.dart';
+import 'balyn_cue_anchored_menu.dart';
+
+/// One Cue menu implementation shared by the hero's "Altro" and the FAB.
+/// The FAB alone reacts to scroll velocity with a small elastic deformation.
+class BalynQuickActionLauncher extends StatelessWidget {
   const BalynQuickActionLauncher({
-    required this.expanded,
     required this.showHome,
-    required this.onToggle,
     required this.onCreate,
     required this.onAdvances,
     required this.onPlanning,
     required this.onHome,
+    this.motion,
     this.onLongPress,
     super.key,
   });
 
-  final bool expanded;
   final bool showHome;
-  final VoidCallback onToggle;
   final VoidCallback onCreate;
   final VoidCallback onAdvances;
   final VoidCallback onPlanning;
   final VoidCallback onHome;
+  final ValueListenable<Offset>? motion;
   final VoidCallback? onLongPress;
 
   @override
-  State<BalynQuickActionLauncher> createState() =>
-      _BalynQuickActionLauncherState();
+  Widget build(BuildContext context) => BalynCueAnchoredMenu(
+    closeKey: const ValueKey('quick-launcher-close'),
+    closeTooltip: 'Chiudi azioni',
+    actions: [
+      if (showHome)
+        BalynCueMenuAction(
+          id: 'quick-nav-home',
+          label: 'Home',
+          icon: Icons.home_rounded,
+          onTap: onHome,
+        ),
+      BalynCueMenuAction(
+        id: 'quick-nav-create',
+        label: 'Movimento',
+        icon: Icons.add_rounded,
+        onTap: onCreate,
+      ),
+      BalynCueMenuAction(
+        id: 'quick-nav-advances',
+        label: 'Anticipi',
+        icon: Icons.handshake_outlined,
+        onTap: onAdvances,
+      ),
+      BalynCueMenuAction(
+        id: 'quick-nav-planning',
+        label: 'Pianifica',
+        icon: Icons.event_note_outlined,
+        onTap: onPlanning,
+      ),
+    ],
+    triggerBuilder: (context, open) => BalynMorphingFab(
+      motion: motion,
+      onPressed: open,
+      onLongPress: onLongPress,
+    ),
+  );
 }
 
-class _BalynQuickActionLauncherState extends State<BalynQuickActionLauncher>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 380),
-    reverseDuration: const Duration(milliseconds: 270),
-    value: widget.expanded ? 1 : 0,
-  );
+/// The circle subtly compresses or stretches in the direction of travel,
+/// then springs to rest. This only transforms the 56dp trigger; hit targets
+/// and actual action pills remain stable. Reduced motion disables it.
+class BalynMorphingFab extends StatefulWidget {
+  const BalynMorphingFab({
+    required this.onPressed,
+    this.onLongPress,
+    this.motion,
+    super.key,
+  });
+
+  final VoidCallback onPressed;
+  final VoidCallback? onLongPress;
+  final ValueListenable<Offset>? motion;
 
   @override
-  void didUpdateWidget(covariant BalynQuickActionLauncher oldWidget) {
+  State<BalynMorphingFab> createState() => _BalynMorphingFabState();
+}
+
+class _BalynMorphingFabState extends State<BalynMorphingFab>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _rebound = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 520),
+    value: 1,
+  );
+  Offset _impulse = Offset.zero;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.motion?.addListener(_onMotion);
+  }
+
+  @override
+  void didUpdateWidget(covariant BalynMorphingFab oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.expanded == widget.expanded) return;
-    if (widget.expanded) {
-      _controller.forward();
-    } else {
-      _controller.reverse();
+    if (oldWidget.motion != widget.motion) {
+      oldWidget.motion?.removeListener(_onMotion);
+      widget.motion?.addListener(_onMotion);
     }
+  }
+
+  void _onMotion() {
+    if (!mounted || MediaQuery.disableAnimationsOf(context)) return;
+    final value = widget.motion?.value ?? Offset.zero;
+    if (value.distanceSquared < .001) return;
+    _impulse = Offset(
+      value.dx.clamp(-1.0, 1.0).toDouble(),
+      value.dy.clamp(-1.0, 1.0).toDouble(),
+    );
+    _rebound.forward(from: 0);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    widget.motion?.removeListener(_onMotion);
+    _rebound.dispose();
     super.dispose();
-  }
-
-  Widget _entry({
-    required int position,
-    required String id,
-    required String label,
-    required IconData icon,
-    required VoidCallback onTap,
-  }) {
-    final delay = position * .11;
-    final curved = CurvedAnimation(
-      parent: _controller,
-      curve: Interval(
-        delay,
-        (delay + .65).clamp(0.0, 1.0),
-        curve: Curves.easeOutCubic,
-      ),
-      reverseCurve: Curves.easeInCubic,
-    );
-    return ClipRect(
-      child: SizeTransition(
-        sizeFactor: curved,
-        axisAlignment: 1,
-        child: FadeTransition(
-          opacity: curved,
-          child: SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(.18, .20),
-              end: Offset.zero,
-            ).animate(curved),
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: SizedBox(
-                width: 172,
-                height: 49,
-                child: Material(
-                  elevation: 7,
-                  color: const Color(0xFF262331),
-                  borderRadius: BorderRadius.circular(25),
-                  clipBehavior: Clip.antiAlias,
-                  child: InkWell(
-                    key: ValueKey('quick-nav-$id'),
-                    onTap: onTap,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              label,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 14,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 6),
-                          Icon(icon, size: 22, color: Colors.white),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     final reduced = MediaQuery.disableAnimationsOf(context);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        IgnorePointer(
-          ignoring: !widget.expanded,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              if (widget.showHome)
-                _entry(
-                  position: 0,
-                  id: 'home',
-                  label: 'Home',
-                  icon: Icons.home_rounded,
-                  onTap: widget.onHome,
-                ),
-              _entry(
-                position: 0,
-                id: 'create',
-                label: 'Movimento',
-                icon: Icons.add_rounded,
-                onTap: widget.onCreate,
-              ),
-              _entry(
-                position: 1,
-                id: 'advances',
-                label: 'Anticipi',
-                icon: Icons.handshake_outlined,
-                onTap: widget.onAdvances,
-              ),
-              _entry(
-                position: 2,
-                id: 'planning',
-                label: 'Pianifica',
-                icon: Icons.event_note_outlined,
-                onTap: widget.onPlanning,
-              ),
-              const SizedBox(height: 7),
-            ],
+    return AnimatedBuilder(
+      animation: _rebound,
+      builder: (context, child) {
+        final elapsed = Curves.easeOutCubic.transform(_rebound.value);
+        final spring = reduced ? 0.0 : (1 - elapsed) *
+            (1 + .09 * math.sin(_rebound.value * 3 * math.pi));
+        final dx = _impulse.dx * .10 * spring;
+        final dy = _impulse.dy * .10 * spring;
+        final matrix = Matrix4.identity()
+          ..translate(dx * 14, dy * 14)
+          ..rotateZ(dx * .12)
+          ..scale(1 + dx.abs() - dy.abs() * .45,
+                  1 + dy.abs() - dx.abs() * .45);
+        return Transform(
+          alignment: Alignment.center,
+          transform: matrix,
+          child: child,
+        );
+      },
+      child: Semantics(
+        button: true,
+        label: 'Apri azioni rapide',
+        child: GestureDetector(
+          onLongPress: widget.onLongPress,
+          child: FloatingActionButton(
+            key: const ValueKey('quick-launcher'),
+            heroTag: 'balyn-quick-launcher',
+            elevation: 9,
+            backgroundColor: BalynPalette.accent,
+            foregroundColor: Colors.white,
+            shape: const CircleBorder(),
+            onPressed: widget.onPressed,
+            child: const Icon(Icons.add_rounded, size: 30),
           ),
         ),
-        Semantics(
-          button: true,
-          label: widget.expanded ? 'Chiudi azioni' : 'Apri azioni',
-          expanded: widget.expanded,
-          child: GestureDetector(
-            onLongPress: widget.onLongPress,
-            child: FloatingActionButton(
-              key: const ValueKey('quick-launcher'),
-              heroTag: 'balyn-quick-launcher',
-              elevation: 9,
-              backgroundColor: const Color(0xFF8157F7),
-              foregroundColor: Colors.white,
-              shape: const CircleBorder(),
-              onPressed: widget.onToggle,
-              child: AnimatedRotation(
-                turns: widget.expanded ? .125 : 0,
-                duration: reduced
-                    ? Duration.zero
-                    : const Duration(milliseconds: 310),
-                curve: Curves.easeOutCubic,
-                child: const Icon(Icons.add_rounded, size: 30),
-              ),
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
