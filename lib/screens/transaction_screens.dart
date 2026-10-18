@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:balyn/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
 
@@ -7,6 +5,7 @@ import '../app_state.dart';
 import '../main.dart';
 import '../models/models.dart';
 import '../widgets/balyn_shader_system.dart';
+import '../widgets/balyn_transaction_detail_content.dart';
 import '../widgets/ui_helpers.dart';
 import 'quick_add_page.dart';
 
@@ -143,7 +142,12 @@ class TransactionDetailPage extends StatelessWidget {
     final refunded = state.refundsFor(item.id);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Movimento'),
+        leading: IconButton(
+          tooltip: 'Chiudi',
+          icon: const Icon(Icons.close_rounded),
+          onPressed: () => Navigator.maybePop(context),
+        ),
+        title: const SizedBox.shrink(),
         actions: [
           PopupMenuButton<String>(
             tooltip: AppI18n.tr('Azioni movimento'),
@@ -301,148 +305,39 @@ class TransactionDetailPage extends StatelessWidget {
           ),
         ],
       ),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 80),
-        children: [
-          Text(
-            item.type.label.toUpperCase(),
-            style: Theme.of(
-              context,
-            ).textTheme.labelMedium?.copyWith(letterSpacing: 1.1),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            item.type == TransactionType.expense
-                ? '-${moneyFor(state, item.amount)}'
-                : item.type == TransactionType.income
-                ? '+${moneyFor(state, item.amount)}'
-                : moneyFor(state, item.amount),
-            style: Theme.of(context).textTheme.displaySmall?.copyWith(
-              color: transactionColor(context, item.type),
-            ),
-          ),
-          const SizedBox(height: 22),
-          FlatMetric(
-            label: 'Categoria',
-            value:
-                category?.name ??
-                (item.type == TransactionType.transfer
-                    ? 'Trasferimento'
-                    : 'Senza categoria'),
-            icon: category == null
-                ? Icons.category_outlined
-                : categoryIcon(category.iconKey),
-          ),
-          const Divider(height: 1),
-          FlatMetric(
-            label: item.type == TransactionType.transfer ? 'Da' : 'Conto',
-            value: account?.isSystem == true
-                ? 'Non assegnato'
-                : account?.name ?? '—',
-            icon: account == null
-                ? Icons.account_balance_wallet_outlined
-                : accountIcon(account.iconKey),
-          ),
-          if (destination != null) ...[
-            const Divider(height: 1),
-            FlatMetric(
-              label: 'A',
-              value: destination.name,
-              icon: accountIcon(destination.iconKey),
-            ),
-          ],
-          const Divider(height: 1),
-          FlatMetric(
-            label: 'Data',
-            value: DateFormat(
-              'dd MMMM yyyy, HH:mm',
-              AppI18n.intlLocale,
-            ).format(item.date),
-            icon: Icons.calendar_today_outlined,
-          ),
-          if (!item.includeInAnalytics) ...[
-            const Divider(height: 1),
-            const FlatMetric(
-              label: 'Statistiche',
-              value: 'Escluso',
-              icon: Icons.visibility_off_outlined,
-            ),
-          ],
-          if (item.note?.isNotEmpty == true) ...[
-            const SizedBox(height: 24),
-            const SectionTitle('Nota'),
-            Text(item.note!),
-          ],
-          if (item.tags.isNotEmpty) ...[
-            const SizedBox(height: 24),
-            const SectionTitle('Tag'),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: item.tags
-                  .map((tag) => Chip(label: Text('#$tag')))
-                  .toList(),
-            ),
-          ],
-          if (item.receiptPath?.isNotEmpty == true) ...[
-            const SizedBox(height: 24),
-            const SectionTitle('Ricevuta'),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(18),
-              child: Image.file(
-                File(item.receiptPath!),
-                height: 220,
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => const ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: Icon(Icons.broken_image_outlined),
-                  title: Text('Ricevuta non disponibile'),
-                ),
-              ),
-            ),
-          ],
-          if (splits.isNotEmpty) ...[
-            const SizedBox(height: 24),
-            const SectionTitle('Divisione'),
-            ...splits.map(
-              (split) => FlatMetric(
-                label:
-                    state.categoryById(split.categoryId)?.name ?? 'Categoria',
-                value: moneyFor(state, split.amount),
-                icon: categoryIcon(
-                  state.categoryById(split.categoryId)?.iconKey ?? 'category',
-                ),
-              ),
-            ),
-          ],
-          if (refundOf != null) ...[
-            const SizedBox(height: 24),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.replay_rounded),
-              title: const Text('Rimborso collegato'),
-              subtitle: Text('Rimborso del movimento #${refundOf.id}'),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) =>
-                      TransactionDetailPage(transactionId: refundOf.id),
-                ),
-              ),
-            ),
-          ],
-          if (refunded > 0) ...[
-            const SizedBox(height: 18),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.replay_circle_filled_rounded),
-              title: Text('Rimborsato ${moneyFor(state, refunded)}'),
-              subtitle: Text(
-                'Spesa effettiva ${moneyFor(state, state.effectiveExpense(item))}',
-              ),
-            ),
-          ],
-        ],
+      body: BalynTransactionDetailContent(
+        item: item,
+        onEdit: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => QuickAddPage(editing: item)),
+        ),
+        onDelete: () async {
+          if (state.isAdvanceProtectedTransaction(item)) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Gestisci il movimento da Anticipi.')),
+            );
+            return;
+          }
+          await _delete(context, item, state);
+        },
+        onDuplicate: () async {
+          try {
+            await state.duplicateTransaction(item);
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Movimento duplicato.')),
+              );
+            }
+          } catch (error) {
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(error.toString())),
+              );
+            }
+          }
+        },
+        onAnalyticsChanged: (included) => _editSimple(
+          context, item, state, includeInAnalytics: included),
       ),
     );
   }
