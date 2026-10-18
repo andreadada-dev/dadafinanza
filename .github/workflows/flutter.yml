@@ -38,5 +38,10 @@ jobs:
         run: flutter test
       - name: Analyze
         run: |
-          set -o pipefail
-          flutter analyze --no-fatal-infos 2>&1 | tail -n 100
+          # Preserve the exit code, but surface actual diagnostics rather
+          # than losing them behind thousands of pre-existing info lints.
+          status=0
+          flutter analyze --no-fatal-infos > analyzer.log 2>&1 || status=$?
+          grep -E '[[:space:]](error|warning)[[:space:]]+•' analyzer.log | head -n 80 || true
+          tail -n 4 analyzer.log
+          exit "$status"
