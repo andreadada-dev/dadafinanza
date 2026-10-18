@@ -411,10 +411,19 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                             ),
                         ] else ...[
                           const SizedBox(height: 28),
-                          AccountCategoryCarousel(
-                            accountId: selectedAccount!.id,
+                          BalynEditorialSurface(
+                            radius: 22,
+                            padding: const EdgeInsets.fromLTRB(14, 18, 14, 18),
+                            child: AccountCategoryCarousel(
+                              accountId: selectedAccount!.id,
+                            ),
                           ),
                           const SizedBox(height: 28),
+                          BalynEditorialSurface(
+                            radius: 22,
+                            padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 7),
+                            child: Column(
+                              children: [
                           ListTile(
                             contentPadding: EdgeInsets.zero,
                             leading: Icon(
@@ -462,7 +471,16 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                               ),
                             ),
                           ),
+                              ],
+                            ),
+                          ),
                           const SizedBox(height: 24),
+                          BalynEditorialSurface(
+                            radius: 22,
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
                           SectionTitle(
                             'Prossime scadenze',
                             trailing: TextButton(
@@ -509,6 +527,9 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                                     ),
                                   ),
                                 ),
+                              ],
+                            ),
+                          ),
                         ],
                       ],
                     ),
@@ -644,9 +665,12 @@ class _SetupBlock extends StatelessWidget {
   final VoidCallback onMovement;
 
   @override
-  Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
+  Widget build(BuildContext context) => BalynEditorialSurface(
+    radius: 22,
+    padding: const EdgeInsets.all(18),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
       Text('Configura Balyn', style: Theme.of(context).textTheme.headlineSmall),
       const SizedBox(height: 8),
       const Text('Parti dal primo conto oppure registra subito un movimento.'),
@@ -666,7 +690,8 @@ class _SetupBlock extends StatelessWidget {
           ),
         ],
       ),
-    ],
+      ],
+    ),
   );
 }
 
