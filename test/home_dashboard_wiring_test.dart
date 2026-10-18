@@ -9,7 +9,8 @@ void main() {
     ).readAsStringSync();
 
     expect(source, contains("import '../widgets/home_dashboard_widget.dart';"));
-    expect(source, contains('HomeDashboardWidget(config: config)'));
+    expect(source, contains('child: HomeDashboardWidget('));
+    expect(source, contains('config: config,'));
     expect(source, contains('state.dashboardWidgets'));
     expect(source, contains('item.enabled'));
     expect(source, contains('a.orderIndex.compareTo(b.orderIndex)'));
