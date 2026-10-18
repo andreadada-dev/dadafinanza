@@ -11,8 +11,8 @@ void main() {
   ) async {
     await tester.pumpWidget(const BalynBootstrapLoadingApp());
     expect(find.byKey(const ValueKey('balyn-data-skeleton')), findsOneWidget);
-    expect(find.byType(Skeletonizer), findsWidgets);
-    expect(find.byType(Bone), findsWidgets);
+    expect(find.byWidgetPredicate((widget) => widget is Skeletonizer), findsWidgets);
+    expect(find.byWidgetPredicate((widget) => widget is Bone), findsWidgets);
     expect(tester.takeException(), isNull);
   });
 
