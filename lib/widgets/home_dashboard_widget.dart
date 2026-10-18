@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:balyn/l10n/localized_material.dart';
 import 'package:intl/intl.dart';
+import '../l10n/app_i18n.dart';
 
 import '../app_state.dart';
 import '../main.dart';
