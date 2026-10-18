@@ -23,6 +23,7 @@ class BalynCueAnchoredMenu extends StatelessWidget {
     required this.triggerBuilder,
     this.closeKey,
     this.closeTooltip = 'Chiudi',
+    this.closeSlotHeight = 56,
     super.key,
   });
 
@@ -31,6 +32,9 @@ class BalynCueAnchoredMenu extends StatelessWidget {
   triggerBuilder;
   final Key? closeKey;
   final String closeTooltip;
+  /// Reserve the vertical slot occupied by the original trigger. The Home
+  /// trigger has a text label beneath its circle, the floating FAB doesn't.
+  final double closeSlotHeight;
 
   @override
   Widget build(BuildContext context) => CueModalTransition(
@@ -108,13 +112,20 @@ class BalynCueAnchoredMenu extends StatelessWidget {
             Actor(
               acts: [.fadeIn(), .focus(from: 8), .slideY(from: .6)],
               child: SizedBox(
-                height: 56,
+                height: closeSlotHeight,
                 width: 56,
-                child: IconButton.filledTonal(
-                  key: closeKey,
-                  tooltip: closeTooltip,
-                  onPressed: () => Navigator.of(modalContext).pop(),
-                  icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: SizedBox(
+                    height: 56,
+                    width: 56,
+                    child: IconButton.filledTonal(
+                      key: closeKey,
+                      tooltip: closeTooltip,
+                      onPressed: () => Navigator.of(modalContext).pop(),
+                      icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                    ),
+                  ),
                 ),
               ),
             ),
