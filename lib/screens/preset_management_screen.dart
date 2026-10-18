@@ -8,7 +8,8 @@ import '../widgets/full_page_empty_state.dart';
 import '../widgets/ui_helpers.dart';
 
 class PresetManagementScreen extends StatefulWidget {
-  const PresetManagementScreen({super.key});
+  const PresetManagementScreen({this.startCreating = false, super.key});
+  final bool startCreating;
 
   @override
   State<PresetManagementScreen> createState() => _PresetManagementScreenState();
@@ -30,6 +31,13 @@ class _PresetManagementScreenState extends State<PresetManagementScreen> {
     if (_requestedInitialLoad) return;
     _requestedInitialLoad = true;
     _load();
+    if (widget.startCreating) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (!mounted) return;
+        await _edit(context, AppScope.of(context));
+        if (mounted) await _load();
+      });
+    }
   }
 
   @override
