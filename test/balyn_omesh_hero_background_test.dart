@@ -15,21 +15,24 @@ void main() {
     expect(vertices[4].y, closeTo(0.657, 0.0001));
   });
 
-  test('Mesh makes only gentle periodic movements without moving its corners', () {
-    final first = balynHeroMeshVertices(0);
-    final later = balynHeroMeshVertices(0.125);
-    final cycle = balynHeroMeshVertices(0.5);
-    for (final i in [0, 2, 6, 8]) {
-      expect(later[i].x, first[i].x);
-      expect(later[i].y, first[i].y);
-    }
-    expect(later[4].x, isNot(first[4].x));
-    expect((later[4].x - first[4].x).abs(), lessThan(0.05));
-    for (var i = 0; i < 9; i++) {
-      expect(cycle[i].x, closeTo(first[i].x, 0.00001));
-      expect(cycle[i].y, closeTo(first[i].y, 0.00001));
-    }
-  });
+  test(
+    'Mesh makes only gentle periodic movements without moving its corners',
+    () {
+      final first = balynHeroMeshVertices(0);
+      final later = balynHeroMeshVertices(0.125);
+      final cycle = balynHeroMeshVertices(0.5);
+      for (final i in [0, 2, 6, 8]) {
+        expect(later[i].x, first[i].x);
+        expect(later[i].y, first[i].y);
+      }
+      expect(later[4].x, isNot(first[4].x));
+      expect((later[4].x - first[4].x).abs(), lessThan(0.05));
+      for (var i = 0; i < 9; i++) {
+        expect(cycle[i].x, closeTo(first[i].x, 0.00001));
+        expect(cycle[i].y, closeTo(first[i].y, 0.00001));
+      }
+    },
+  );
 
   test('Basic palette retains its pink cyan and cream while accounts vary', () {
     const violet = Color(0xFF6221E9);
@@ -48,27 +51,31 @@ void main() {
   testWidgets('Hero background is composed of a mesh and contrast scrim', (
     tester,
   ) async {
-    await tester.pumpWidget(const MaterialApp(
-      home: Scaffold(
-        body: SizedBox(
-          height: 340,
-          child: BalynOMeshHeroBackground(
-            accent: Color(0xFF6221E9),
-            useBasicPalette: true,
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: SizedBox(
+            height: 340,
+            child: BalynOMeshHeroBackground(
+              accent: Color(0xFF6221E9),
+              useBasicPalette: true,
+            ),
           ),
         ),
       ),
-    ));
+    );
     expect(find.byType(OMeshGradient), findsOneWidget);
     expect(find.byKey(const ValueKey('hero-omesh-gradient')), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
   test('The original static wave ribbon is removed from Home', () {
-    final hero = File('lib/widgets/balyn_revolut_home_hero.dart')
-        .readAsStringSync();
-    final mesh = File('lib/widgets/balyn_omesh_hero_background.dart')
-        .readAsStringSync();
+    final hero = File(
+      'lib/widgets/balyn_revolut_home_hero.dart',
+    ).readAsStringSync();
+    final mesh = File(
+      'lib/widgets/balyn_omesh_hero_background.dart',
+    ).readAsStringSync();
     expect(hero, contains('BalynOMeshHeroBackground('));
     expect(hero, isNot(contains('_AccountWavesPainter')));
     expect(hero, contains('Color(matching.first.colorValue)'));

@@ -25,7 +25,8 @@ class BalynOMeshHeroBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final data = BalynShaderScope.maybeOf(context);
-    final animate = data?.motionEnabled == true &&
+    final animate =
+        data?.motionEnabled == true &&
         !MediaQuery.disableAnimationsOf(context) &&
         TickerMode.of(context);
     final clock = animate
@@ -44,7 +45,10 @@ class BalynOMeshHeroBackground extends StatelessWidget {
                 backgroundColor: accent,
                 colorSpace: OMeshColorSpace.lab,
                 vertices: balynHeroMeshVertices(clock.value),
-                colors: balynHeroMeshColors(accent, useBasicPalette: useBasicPalette),
+                colors: balynHeroMeshColors(
+                  accent,
+                  useBasicPalette: useBasicPalette,
+                ),
               );
               return Stack(
                 fit: StackFit.expand,

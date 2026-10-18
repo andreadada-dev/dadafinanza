@@ -736,4 +736,3 @@ class _HeroAction extends StatelessWidget {
     );
   }
 }
-
