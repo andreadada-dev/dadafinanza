@@ -106,32 +106,37 @@ List<OVertex> balynHeroMeshVertices(double phase) {
 /// Preserve the original Basic Usage pink / cyan / cream composition when the
 /// total balance is selected; recolor the same composition for specific
 /// accounts using each account's stored accent color.
+/// Four close shades of the selected account hue. The Basic Usage geometry
+/// stays intact while total purple blends toward pink, green toward lime,
+/// blue toward light blue. Never introduce a contrasting teal/opposite hue.
 @visibleForTesting
 List<Color> balynHeroMeshColors(Color accent, {required bool useBasicPalette}) {
-  if (useBasicPalette) {
-    return const [
-      Color(0xFFA52B68), Color(0xFF4693A9), Color(0xFF4693A9), //
-      Color(0xFFA52BA0), Color(0xFFE8DAD4), Color(0xFF4693A9), //
-      Color(0xFF9715A9), Color(0xFF4693A9), Color(0xFF4693A9), //
-    ];
-  }
-  final hsl = HSLColor.fromColor(accent);
-  Color tone(double hueShift, double saturation, double lightness) {
-    return HSLColor.fromAHSL(
-      1,
-      (hsl.hue + hueShift + 360) % 360,
-      saturation,
-      lightness,
-    ).toColor();
-  }
+  final source = HSLColor.fromColor(
+    useBasicPalette ? const Color(0xFF7955EB) : accent,
+  );
+  final hue = source.hue;
+  final shift = switch (hue) {
+    >= 230 && <= 330 => 26.0, // violet -> soft pink
+    >= 65 && <= 175 => -30.0, // green -> lime
+    >= 175 && < 230 => 18.0, // blue -> cyan-blue
+    _ => 15.0, // adjacent warm shade
+  };
+  Color tone(double hueOffset, double saturation, double lightness) =>
+      HSLColor.fromAHSL(
+        1,
+        (hue + hueOffset + 360) % 360,
+        saturation,
+        lightness,
+      ).toColor();
 
-  final vibrant = tone(0, .69, .46);
-  final dark = tone(-12, .73, .35);
-  final cool = tone(-136, .40, .50);
-  final pale = tone(-28, .21, .80);
+  final base = tone(0, .74, .43);
+  final dark = tone(-8, .72, .24);
+  final deep = tone(3, .67, .33);
+  final highlight = tone(shift, .66, .65);
+  final glow = tone(shift * .65, .61, .53);
   return [
-    vibrant, cool, cool, //
-    vibrant, pale, cool, //
-    dark, cool, cool, //
+    deep, base, dark, //
+    dark, highlight, deep, //
+    base, glow, dark, //
   ];
 }
