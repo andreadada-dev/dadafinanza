@@ -102,34 +102,16 @@ class TransactionDetailPage extends StatelessWidget {
           message: 'Il saldo del conto verrà ricalcolato automaticamente.',
         );
     if (!confirmed) return;
+    if (state.isAdvanceProtectedTransaction(item)) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Gestisci questo movimento da Anticipi.')),
+        );
+      }
+      return;
+    }
     await state.deleteTransaction(item);
     if (context.mounted) Navigator.pop(context);
-  }
-
-  Future<void> _editSimple(
-    BuildContext context,
-    FinanceTransaction item,
-    AppState state, {
-    TransactionType? type,
-    int? categoryId,
-    int? accountId,
-    bool? includeInAnalytics,
-  }) async {
-    final next = item.copyWith(
-      type: type ?? item.type,
-      categoryId: categoryId ?? item.categoryId,
-      accountId: accountId ?? item.accountId,
-      includeInAnalytics: includeInAnalytics ?? item.includeInAnalytics,
-      updatedAt: DateTime.now(),
-    );
-    try {
-      await state.updateTransaction(item, next);
-    } catch (e) {
-      if (context.mounted)
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString().replaceFirst('Bad state: ', ''))),
-        );
-    }
   }
 
   @override
@@ -151,13 +133,6 @@ class TransactionDetailPage extends StatelessWidget {
           PopupMenuButton<String>(
             tooltip: AppI18n.tr('Azioni movimento'),
             onSelected: (value) async {
-              if (value == 'edit')
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => QuickAddPage(editing: item),
-                  ),
-                );
               if (value == 'duplicate') {
                 await state.duplicateTransaction(item);
                 if (context.mounted)
@@ -165,27 +140,6 @@ class TransactionDetailPage extends StatelessWidget {
                     const SnackBar(content: Text('Movimento duplicato.')),
                   );
               }
-              if (value == 'toggle_analytics')
-                await _editSimple(
-                  context,
-                  item,
-                  state,
-                  includeInAnalytics: !item.includeInAnalytics,
-                );
-              if (value == 'expense')
-                await _editSimple(
-                  context,
-                  item,
-                  state,
-                  type: TransactionType.expense,
-                );
-              if (value == 'income')
-                await _editSimple(
-                  context,
-                  item,
-                  state,
-                  type: TransactionType.income,
-                );
               if (value == 'split' && context.mounted)
                 await showSplitEditor(context, item);
               if (value == 'refund' && context.mounted)
@@ -258,18 +212,7 @@ class TransactionDetailPage extends StatelessWidget {
                 await _delete(context, item, state);
             },
             itemBuilder: (context) => [
-              const PopupMenuItem(value: 'edit', child: Text('Modifica')),
               const PopupMenuItem(value: 'duplicate', child: Text('Duplica')),
-              if (item.type != TransactionType.expense)
-                const PopupMenuItem(
-                  value: 'expense',
-                  child: Text('Trasforma in spesa'),
-                ),
-              if (item.type != TransactionType.income)
-                const PopupMenuItem(
-                  value: 'income',
-                  child: Text('Trasforma in entrata'),
-                ),
               if (item.type != TransactionType.transfer)
                 const PopupMenuItem(
                   value: 'split',
@@ -286,14 +229,6 @@ class TransactionDetailPage extends StatelessWidget {
                   child: Text('Rendi ricorrente'),
                 ),
               PopupMenuItem(
-                value: 'toggle_analytics',
-                child: Text(
-                  item.includeInAnalytics
-                      ? 'Escludi dalle statistiche'
-                      : 'Includi nelle statistiche',
-                ),
-              ),
-              PopupMenuItem(
                 value: 'delete',
                 child: Text(
                   'Elimina',
@@ -306,10 +241,6 @@ class TransactionDetailPage extends StatelessWidget {
       ),
       body: BalynTransactionDetailContent(
         item: item,
-        onEdit: () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => QuickAddPage(editing: item)),
-        ),
         onDelete: () async {
           if (state.isAdvanceProtectedTransaction(item)) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -337,8 +268,6 @@ class TransactionDetailPage extends StatelessWidget {
             }
           }
         },
-        onAnalyticsChanged: (included) =>
-            _editSimple(context, item, state, includeInAnalytics: included),
       ),
     );
   }
