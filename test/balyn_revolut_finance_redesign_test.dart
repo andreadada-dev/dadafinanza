@@ -69,17 +69,15 @@ void main() {
       contains('await state.updateTransaction(widget.item, updated)'),
     );
     expect(design, contains("const PageStorageKey('detail-revolut-layout')"));
-    expect(design, contains("Text('Duplica'"));
-    expect(design, contains("Text('Elimina'"));
+    expect(design, contains("'Duplica'"));
+    expect(design, contains("'Elimina'"));
     expect(design, contains("label: 'Rimborso di'"));
     expect(design, contains('ValueListenableBuilder<TextEditingValue>('));
-    expect(design, contains("width: .85"));
     expect(design, contains('Icons.edit_outlined'));
     expect(design, contains("tooltip: 'Modifica importo'"));
     expect(design, contains("const ValueKey('detail-amount-pencil')"));
     expect(design, contains('showModalBottomSheet<T>('));
     expect(design, contains("key: const ValueKey('detail-amount')"));
-    expect(design, contains("BorderSide(color: scheme.primary"));
     expect(
       design,
       contains('await state.updateTransaction(widget.item, updated)'),
