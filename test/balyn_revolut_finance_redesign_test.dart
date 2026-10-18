@@ -24,6 +24,12 @@ void main() {
     expect(flow, contains('onDone: () => _complete()'));
     expect(flow, contains('customProgress: AnimatedSmoothIndicator('));
     expect(flow, contains('type: WormType.thin'));
+    expect(flow, contains("ValueKey('intro-icon-$key')"));
+    expect(flow, contains('color: Color(_color)'));
+    expect(flow, contains('icon: accountIcon(_iconKey)'));
+    expect(flow, isNot(contains('_FloatingFinance(')));
+    expect(flow, isNot(contains('RadialGradient(')));
+    expect(flow, isNot(contains('boxShadow:')));
     expect(flow, contains("onTap: () => setState(() => _skipping = true)"));
   });
 
@@ -56,11 +62,18 @@ void main() {
       'lib/widgets/balyn_transaction_detail_content.dart',
     ).readAsStringSync();
     expect(screen, contains('BalynTransactionDetailContent('));
-    expect(screen, contains('QuickAddPage(editing: item)'));
+    expect(screen, isNot(contains('QuickAddPage(editing: item)')));
     expect(screen, contains('await _delete(context, item, state)'));
-    expect(screen, contains('includeInAnalytics: included'));
+    expect(design, contains('await state.updateTransaction(widget.item, updated)'));
     expect(design, contains('Escludi dalle analisi'));
-    expect(design, contains('item.receiptPath'));
+    expect(design, contains('widget.item.receiptPath'));
+    for (final key in [
+      'detail-amount', 'detail-type-', 'detail-source-',
+      'detail-target-', 'detail-category-', 'detail-note', 'detail-tags',
+      'detail-date', 'detail-save',
+    ]) {
+      expect(design, contains(key));
+    }
   });
 
   testWidgets('donut shows actual category share, not a hardcoded percentage', (
