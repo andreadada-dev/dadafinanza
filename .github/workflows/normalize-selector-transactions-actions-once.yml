@@ -1,4 +1,4 @@
-name: Normalize Revolut UI fixes once
+name: Normalize Revolut UI fixes (retry)
 
 on:
   push:
