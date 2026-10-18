@@ -59,9 +59,9 @@ void main() {
     expect(launcher, contains('return PieMenu('));
     expect(launcher, contains('BalynMorphingFab('));
     expect(launcher, contains('longPressDuration: holdDuration'));
-    expect(launcher, contains('radius: 115'));
+    expect(launcher, contains('customAngle: 135'));
     expect(launcher, contains('latest.take(4).toList()'));
-    expect(launcher, contains('PieAction('));
+    expect(launcher, contains('PieAction.builder('));
     expect(launcher, contains('Nuovo preset'));
     expect(launcher, contains('_WhiteChargePainter'));
     expect(shell, contains('return PieCanvas('));
@@ -123,7 +123,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(PieMenu), findsOneWidget);
     final pie = tester.widget<PieMenu>(find.byType(PieMenu));
-    expect(pie.actions, hasLength(3));
+    expect(pie.actions, hasLength(7));
     expect(
       find.byKey(const ValueKey('quick-fab-white-charge')),
       findsOneWidget,
