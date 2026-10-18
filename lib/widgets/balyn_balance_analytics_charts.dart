@@ -6,21 +6,46 @@ import 'package:intl/intl.dart';
 
 import 'finance_charts.dart';
 
+/// A two-tone variant of the current account accent, preserving the same
+/// income/expense legend as the total view without fixed purple bars.
+Color balynAnalyticsIncomeColor(Color? accountColor) {
+  if (accountColor == null) return const Color(0xFFD0A7F7);
+  final hsl = HSLColor.fromColor(accountColor);
+  return hsl
+      .withHue((hsl.hue + 20) % 360)
+      .withSaturation((hsl.saturation * .72).clamp(.25, .75))
+      .withLightness(.74)
+      .toColor();
+}
+
+Color balynAnalyticsExpenseColor(Color? accountColor) {
+  if (accountColor == null) return const Color(0xFF7522ED);
+  final hsl = HSLColor.fromColor(accountColor);
+  return hsl
+      .withSaturation(hsl.saturation.clamp(.40, .90))
+      .withLightness(.48)
+      .toColor();
+}
+
 /// Balanced paired bars with the clean Statistic screen geometry.
 class BalynStatisticBars extends StatelessWidget {
   const BalynStatisticBars({
     required this.points,
     required this.hidden,
+    this.accountColor,
     super.key,
   });
   final List<FinanceTrendPoint> points;
   final bool hidden;
+  /// Null means the total portfolio; otherwise both series inherit
+  /// complementary shades from the selected account's saved color.
+  final Color? accountColor;
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    const purple = Color(0xFF7522ED);
-    final dark = Theme.of(context).brightness == Brightness.dark;
+    final incomeColor = balynAnalyticsIncomeColor(accountColor);
+    final expenseColor = balynAnalyticsExpenseColor(accountColor);
     final maxValue = points.fold<double>(
       0,
       (m, p) => math.max(m, math.max(p.primary, p.secondary)),
@@ -121,9 +146,7 @@ class BalynStatisticBars extends StatelessWidget {
                     barRods: [
                       BarChartRodData(
                         toY: math.max(0, points[i].secondary),
-                        color: dark
-                            ? const Color(0xFFBCA4F8)
-                            : const Color(0xFF25103C),
+                        color: incomeColor,
                         width: points.length > 10 ? 7 : 11,
                         borderRadius: const BorderRadius.vertical(
                           top: Radius.circular(8),
@@ -131,7 +154,7 @@ class BalynStatisticBars extends StatelessWidget {
                       ),
                       BarChartRodData(
                         toY: math.max(0, points[i].primary),
-                        color: purple,
+                        color: expenseColor,
                         width: points.length > 10 ? 7 : 11,
                         borderRadius: const BorderRadius.vertical(
                           top: Radius.circular(8),
@@ -146,12 +169,12 @@ class BalynStatisticBars extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 13),
-        const Wrap(
+        Wrap(
           spacing: 18,
           runSpacing: 8,
           children: [
-            _Legend(color: Color(0xFF25103C), label: 'Entrate'),
-            _Legend(color: purple, label: 'Spese'),
+            _Legend(color: incomeColor, label: 'Entrate'),
+            _Legend(color: expenseColor, label: 'Spese'),
           ],
         ),
       ],
