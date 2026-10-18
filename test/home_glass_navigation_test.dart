@@ -5,6 +5,7 @@ import 'package:balyn/widgets/balyn_cue_section_bar.dart';
 import 'package:balyn/widgets/balyn_quick_action_launcher.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:material_ui/material_ui.dart' as mui;
 
 void main() {
   test('Home segments are in-place, directional, and account-aware', () {
@@ -104,6 +105,7 @@ void main() {
         locale: const Locale('it'),
         supportedLocales: const [Locale('it'), Locale('en')],
         localizationsDelegates: const [
+          mui.GlobalMaterialLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
