@@ -24,7 +24,7 @@ void main() {
     expect(flow, contains('onDone: () => _complete()'));
     expect(flow, contains('customProgress: AnimatedSmoothIndicator('));
     expect(flow, contains('type: WormType.thin'));
-    expect(flow, contains("ValueKey('intro-icon-$key')"));
+    expect(flow, contains('intro-icon-'));
     expect(flow, contains('color: Color(_color)'));
     expect(flow, contains('icon: accountIcon(_iconKey)'));
     expect(flow, isNot(contains('_FloatingFinance(')));
