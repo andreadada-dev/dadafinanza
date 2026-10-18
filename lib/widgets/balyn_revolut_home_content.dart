@@ -35,8 +35,7 @@ class BalynRevolutHomeContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (showAccounts) ...[
-          Row(
+        Row(
             children: [
               Expanded(
                 child: _BalanceMetric(
@@ -62,7 +61,7 @@ class BalynRevolutHomeContent extends StatelessWidget {
             value: hideValues ? '••••' : moneyFor(state, available),
           ),
           const SizedBox(height: 23),
-        ],
+        if (showAccounts) ...[
         Row(
           children: [
             Expanded(
@@ -112,7 +111,7 @@ class BalynRevolutHomeContent extends StatelessWidget {
                     ],
                   ],
                 ),
-        ),
+        ],
       ],
     );
   }
