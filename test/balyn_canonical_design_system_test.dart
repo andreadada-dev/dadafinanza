@@ -14,7 +14,10 @@ void main() {
     expect(theme.colorScheme.primary, BalynPalette.accentTextDark);
     expect(theme.colorScheme.primaryContainer, BalynPalette.accent);
     expect(theme.cardTheme.color, BalynPalette.darkSurface);
-    expect(theme.floatingActionButtonTheme.backgroundColor, BalynPalette.accent);
+    expect(
+      theme.floatingActionButtonTheme.backgroundColor,
+      BalynPalette.accent,
+    );
     expect(theme.dialogTheme.backgroundColor, BalynPalette.darkSurface);
     expect(theme.bottomSheetTheme.backgroundColor, BalynPalette.darkSurface);
     expect(theme.inputDecorationTheme.fillColor, BalynPalette.darkSurface);
@@ -28,7 +31,10 @@ void main() {
     expect(theme.colorScheme.surfaceContainer, BalynPalette.lightSurface);
     expect(theme.colorScheme.primary, BalynPalette.accentLight);
     expect(theme.cardTheme.color, BalynPalette.lightSurface);
-    expect(theme.floatingActionButtonTheme.backgroundColor, BalynPalette.accent);
+    expect(
+      theme.floatingActionButtonTheme.backgroundColor,
+      BalynPalette.accent,
+    );
     expect(theme.inputDecorationTheme.fillColor, BalynPalette.lightSurface);
   });
 
@@ -43,33 +49,41 @@ void main() {
     expect(dark.positive, isNot(BalynPalette.accent));
   });
 
-  test('All navigation destinations inherit theme; no separate legacy blue', () {
-    final theme = File('lib/theme/app_theme.dart').readAsStringSync();
-    final settings =
-        File('lib/screens/personal_settings_screen.dart').readAsStringSync();
-    final backdrop =
-        File('lib/widgets/balyn_shader_system.dart').readAsStringSync();
-    final surface =
-        File('lib/widgets/balyn_editorial_components.dart').readAsStringSync();
-    expect(theme, contains('BalynPalette.surface(brightness)'));
-    expect(theme, isNot(contains('0xFF0666EB')));
-    expect(settings, isNot(contains('0xFF4365F5')));
-    expect(settings, isNot(contains('0xFF298B83')));
-    expect(settings, contains('accent: BalynPalette.accent'));
-    expect(backdrop, contains('BalynPalette.canvas('));
-    expect(surface, contains('BalynPalette.surface('));
-  });
+  test(
+    'All navigation destinations inherit theme; no separate legacy blue',
+    () {
+      final theme = File('lib/theme/app_theme.dart').readAsStringSync();
+      final settings = File(
+        'lib/screens/personal_settings_screen.dart',
+      ).readAsStringSync();
+      final backdrop = File(
+        'lib/widgets/balyn_shader_system.dart',
+      ).readAsStringSync();
+      final surface = File(
+        'lib/widgets/balyn_editorial_components.dart',
+      ).readAsStringSync();
+      expect(theme, contains('BalynPalette.surface(brightness)'));
+      expect(theme, isNot(contains('0xFF0666EB')));
+      expect(settings, isNot(contains('0xFF4365F5')));
+      expect(settings, isNot(contains('0xFF298B83')));
+      expect(settings, contains('accent: BalynPalette.accent'));
+      expect(backdrop, contains('BalynPalette.canvas('));
+      expect(surface, contains('BalynPalette.surface('));
+    },
+  );
 
   testWidgets('The canonical Home surface works in both themes', (
     tester,
   ) async {
     for (final theme in [AppTheme.dark(), AppTheme.light()]) {
-      await tester.pumpWidget(MaterialApp(
-        theme: theme,
-        home: const Scaffold(
-          body: BalynEditorialSurface(child: Text('Riepilogo')),
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: theme,
+          home: const Scaffold(
+            body: BalynEditorialSurface(child: Text('Riepilogo')),
+          ),
         ),
-      ));
+      );
       expect(find.byType(BalynEditorialSurface), findsOneWidget);
       expect(find.text('Riepilogo'), findsOneWidget);
       expect(tester.takeException(), isNull);

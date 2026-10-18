@@ -106,7 +106,9 @@ class PersonalSettingsScreen extends StatelessWidget {
     final state = AppScope.of(context);
     final dark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: dark ? BalynPalette.darkCanvas : BalynPalette.lightCanvas,
+      backgroundColor: dark
+          ? BalynPalette.darkCanvas
+          : BalynPalette.lightCanvas,
       appBar: AppBar(
         title: const Text('Impostazioni'),
         backgroundColor: Colors.transparent,

@@ -212,7 +212,9 @@ class _AvailableSummary extends StatelessWidget {
       decoration: embedded
           ? null
           : BoxDecoration(
-              color: dark ? BalynPalette.darkSurface : BalynPalette.lightSurface,
+              color: dark
+                  ? BalynPalette.darkSurface
+                  : BalynPalette.lightSurface,
               borderRadius: BorderRadius.circular(17),
             ),
       child: Row(

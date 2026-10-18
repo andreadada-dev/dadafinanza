@@ -212,7 +212,10 @@ class AppTheme {
         hintStyle: TextStyle(color: secondaryText.withValues(alpha: .8)),
         labelStyle: TextStyle(color: secondaryText),
         floatingLabelStyle: TextStyle(color: primary),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(BalynPalette.fieldRadius),
           borderSide: BorderSide.none,
@@ -303,24 +306,20 @@ class AppTheme {
               : secondaryText,
         ),
         trackColor: WidgetStateProperty.resolveWith(
-          (states) => states.contains(WidgetState.selected)
-              ? accent
-              : raisedStrong,
+          (states) =>
+              states.contains(WidgetState.selected) ? accent : raisedStrong,
         ),
         trackOutlineColor: const WidgetStatePropertyAll(Colors.transparent),
       ),
       checkboxTheme: CheckboxThemeData(
         fillColor: WidgetStateProperty.resolveWith(
-          (states) => states.contains(WidgetState.selected)
-              ? accent
-              : raisedStrong,
+          (states) =>
+              states.contains(WidgetState.selected) ? accent : raisedStrong,
         ),
         checkColor: const WidgetStatePropertyAll(Colors.white),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       ),
-      radioTheme: RadioThemeData(
-        fillColor: WidgetStatePropertyAll(primary),
-      ),
+      radioTheme: RadioThemeData(fillColor: WidgetStatePropertyAll(primary)),
       sliderTheme: SliderThemeData(
         activeTrackColor: accent,
         thumbColor: accent,
