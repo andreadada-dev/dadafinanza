@@ -274,31 +274,6 @@ class _AccountContextAnalyticsScreenState
         ? null
         : (expense - previousExpense) / previousExpense * 100;
 
-    final analytic = AccountContextService.analyticTransactionsFor(
-      state,
-      effectiveAccountId,
-      from: from,
-      to: to,
-    );
-    final categoryTotals = <int, double>{};
-    for (final item in analytic.where(
-      (t) => t.type == TransactionType.expense,
-    )) {
-      final splits = state.splitsFor(item.id);
-      if (splits.isNotEmpty) {
-        for (final split in splits) {
-          categoryTotals[split.categoryId] =
-              (categoryTotals[split.categoryId] ?? 0) +
-              state.analyticsAmountForSplit(item.id, split);
-        }
-      } else if (item.categoryId != null) {
-        categoryTotals[item.categoryId!] =
-            (categoryTotals[item.categoryId!] ?? 0) +
-            state.effectiveExpense(item);
-      }
-    }
-    final categories = categoryTotals.entries.toList()
-      ..sort((a, b) => b.value.compareTo(a.value));
     final cashFlowPoints = _cashFlowPoints(state, effectiveAccountId, from, to);
 
     final recurringMonthly =
@@ -465,6 +440,7 @@ class _AccountContextAnalyticsScreenState
                 from: from,
                 to: to,
                 periodLabel: _visibleRangeLabel(from, to),
+                hideAmounts: state.hideBalance || selected?.hideBalance == true,
               ),
             ),
           ),
