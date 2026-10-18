@@ -38,7 +38,7 @@ data, but move old visuals to the redesigned design system.
 | All three Revolut-style onboarding pages and flow/persistence | `lib/screens/balyn_onboarding_flow.dart` |
 | Final onboarding section list (exact Cue ExpandingCards spring style) | `lib/widgets/balyn_onboarding_feature_accordion.dart` |
 | Full onboarding copy for IT, EN, ES, FR, DE, PT, RU, ZH, JA, KO, AR, HI | `lib/l10n/balyn_onboarding_l10n.dart` |
-| Onboarding velvet shader (distinct from the Home mesh) | `lib/widgets/balyn_onboarding_velvet.dart`, `shaders/balyn_onboarding_velvet.frag` |
+| Onboarding flat Home charcoal background (no shader or vignette) | `lib/screens/balyn_onboarding_flow.dart` (`BalynPalette.darkCanvas`) |
 | Shared global shader clock and non-restarting screen background | `lib/widgets/balyn_shader_system.dart` |
 
 Also read `docs/BALYN_VISUAL_SYSTEM.md` before touching another screen.
@@ -93,8 +93,9 @@ font scales.
 5. **Analytics**: one global date-range selector above all charts;
    account-color-aware bars, clipped line chart and the SAME category
    donut component from Home.
-6. **Onboarding** has a separate velvet-like shader and soft beams,
-   not the O'Mesh Hero everywhere.
+6. **Onboarding** uses a uniform flat charcoal background, exactly
+   `BalynPalette.darkCanvas` (`#101018`) like the Home content area.
+   Do not show velvet, vignettes or animated color meshes behind onboarding.
 
 ## Hero centering and visibility
 
@@ -151,7 +152,7 @@ sections explain Panoramica, Movimenti e Analisi, Anticipi and Pianifica.
 Do not restore separate bordered widgets or static tour cards.
 
 **All onboarding screens are now Revolut/Balyn charcoal style**. Preserve
-subtle shared-clock velvet in the background but darken it behind content,
+the flat `BalynPalette.darkCanvas` background throughout,
 using `BalynPalette` for surface and purple CTA. The app settings and
 first-account setup must still save exactly as before.
 
