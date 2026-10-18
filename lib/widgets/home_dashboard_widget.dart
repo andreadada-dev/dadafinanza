@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:balyn/l10n/localized_material.dart';
+import 'package:intl/intl.dart';
 
 import '../app_state.dart';
 import '../main.dart';
@@ -10,6 +11,9 @@ import '../screens/account_screens.dart' show showAccountEditor;
 import '../screens/canonical_shell.dart' show CanonicalDashboardWidget;
 import '../screens/category_management_screen.dart' show CategoryDetailScreen;
 import 'balyn_shader_system.dart';
+import 'balyn_editorial_components.dart';
+import 'balyn_revolut_home_content.dart';
+import 'balyn_recent_transactions_card.dart';
 import 'ui_helpers.dart';
 
 /// Renders a dashboard configuration on the canonical Home.
@@ -17,9 +21,26 @@ import 'ui_helpers.dart';
 /// Core metrics are rendered by the Ivy-style overview in BalynHomeScreen.
 /// Remaining widgets preserve "Personalizza Home" visibility, ordering and size.
 class HomeDashboardWidget extends StatelessWidget {
-  const HomeDashboardWidget({required this.config, super.key});
+  const HomeDashboardWidget({
+    required this.config,
+    this.onAnalytics,
+    this.onSeeAll,
+    this.onAccountChanged,
+    this.onManageAccounts,
+    this.onAdvances,
+    this.highlight,
+    this.showAccountsInsideSummary = true,
+    super.key,
+  });
 
   final DashboardWidgetConfig config;
+  final VoidCallback? onAnalytics;
+  final VoidCallback? onSeeAll;
+  final ValueChanged<int?>? onAccountChanged;
+  final VoidCallback? onManageAccounts;
+  final VoidCallback? onAdvances;
+  final Widget? highlight;
+  final bool showAccountsInsideSummary;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +48,112 @@ class HomeDashboardWidget extends StatelessWidget {
     final type = config.type;
 
     switch (type) {
+      case DashboardWidgetType.monthlyOverview:
+        final now = DateTime.now();
+        final income = state.monthTotal(TransactionType.income);
+        final expense = state.monthTotal(TransactionType.expense);
+        final hidden = state.hideBalance;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              DateFormat('MMMM yyyy', AppI18n.intlLocale).format(now),
+              style: Theme.of(context).textTheme.titleLarge
+                  ?.copyWith(fontWeight: FontWeight.w800),
+            ),
+            const SizedBox(height: 12),
+            BalynEditorialSurface(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+              child: ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const BalynEditorialIcon(
+                  icon: Icons.calendar_month_outlined,
+                  size: 42,
+                ),
+                title: const Text(
+                  'Riepilogo del mese',
+                  style: TextStyle(fontWeight: FontWeight.w800),
+                ),
+                subtitle: Text(
+                  hidden
+                      ? 'Entrate ••••  ·  Spese ••••'
+                      : 'Entrate ${moneyFor(state, income)}  ·  Spese ${moneyFor(state, expense)}',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                trailing: const Icon(Icons.chevron_right_rounded),
+                onTap: onAnalytics,
+              ),
+            ),
+          ],
+        );
+      case DashboardWidgetType.recentTransactions:
+        final recent = [...state.transactions]
+          ..sort((a, b) => b.date.compareTo(a.date));
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const BalynEditorialHeading(
+              title: 'Ultimi movimenti',
+              subtitle: 'Le operazioni più recenti',
+            ),
+            const SizedBox(height: 10),
+            BalynRecentTransactionsCard(
+              items: recent,
+              hideAmounts: state.hideBalance,
+              onSeeAll: onSeeAll ?? () {},
+            ),
+          ],
+        );
+      case DashboardWidgetType.financialSnapshot:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const BalynEditorialHeading(
+              title: 'In sintesi',
+              subtitle: 'Entrate, spese e disponibilità',
+            ),
+            const SizedBox(height: 10),
+            BalynRevolutHomeContent(
+              income: state.monthTotal(TransactionType.income),
+              expense: state.monthTotal(TransactionType.expense),
+              available: state.safeToSpend,
+              hideValues: state.hideBalance,
+              showAccounts: showAccountsInsideSummary,
+              onSelectAccount: onAccountChanged ?? (_) {},
+              onManageAccounts: onManageAccounts ?? () {},
+            ),
+          ],
+        );
+      case DashboardWidgetType.smartHighlights:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SectionTitle('Per te'),
+            if (state.advanceReceivableCents > 0 ||
+                state.advancePayableCents > 0)
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.handshake_outlined),
+                title: const Text(
+                  'Anticipi',
+                  style: TextStyle(fontWeight: FontWeight.w700),
+                ),
+                subtitle: Text(
+                  state.hideBalance
+                      ? '•••• da ricevere · •••• da restituire'
+                      : '${moneyFor(state, state.advanceReceivableCents / 100)} da ricevere · ${moneyFor(state, state.advancePayableCents / 100)} da restituire',
+                ),
+                trailing: const Icon(Icons.chevron_right_rounded),
+                onTap: onAdvances,
+              ),
+            if (highlight != null) highlight!,
+            if (highlight == null &&
+                state.advanceReceivableCents == 0 &&
+                state.advancePayableCents == 0)
+              const Text('Nessun suggerimento al momento'),
+          ],
+        );
       case DashboardWidgetType.totalBalance:
         return _MetricBlock(
           config: config,
