@@ -118,13 +118,11 @@ class _PresetManagementScreenState extends State<PresetManagementScreen> {
                         final confirmed = await confirmDestructiveAction(
                           context,
                           title: 'Eliminare “${preset.name}”?',
-                          message:
-                              'Il preset verrà rimosso. I movimenti già registrati non cambieranno.',
+                          message: 'Il preset verrà rimosso. I movimenti già registrati non cambieranno.',
                         );
                         if (confirmed) {
-                          await QuickPresetService(
-                            state.database,
-                          ).delete(preset.id);
+                          await QuickPresetService(state.database)
+                              .delete(preset.id);
                         }
                       }
                       if (mounted) await _load();
@@ -224,7 +222,9 @@ class _PresetManagementScreenState extends State<PresetManagementScreen> {
                   ),
                   title: const Text('Icona del preset'),
                   subtitle: Text(
-                    iconKey == null ? 'Iniziale del nome (predefinita)' : 'Icona personalizzata',
+                    iconKey == null
+                        ? 'Iniziale del nome (predefinita)'
+                        : 'Icona personalizzata',
                   ),
                   trailing: const Icon(Icons.edit_outlined, size: 18),
                   onTap: () async {
@@ -246,50 +246,54 @@ class _PresetManagementScreenState extends State<PresetManagementScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Text('Colore icona',
-                    style: Theme.of(sheetContext).textTheme.titleSmall),
+                Text(
+                  'Colore icona',
+                  style: Theme.of(sheetContext).textTheme.titleSmall,
+                ),
                 const SizedBox(height: 8),
                 Wrap(
                   spacing: 7,
                   runSpacing: 7,
                   children: <Color>[Colors.white, ...categoryPalette]
-                      .map((candidate) => Semantics(
-                            button: true,
-                            selected: candidate == iconColor,
-                            label: 'Colore preset',
-                            child: InkWell(
-                              customBorder: const CircleBorder(),
-                              onTap: () => setSheetState(
-                                () => iconColor = candidate,
-                              ),
-                              child: SizedBox.square(
-                                dimension: 42,
-                                child: Center(
-                                  child: Container(
-                                    height: 28,
-                                    width: 28,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: candidate,
-                                      border: Border.all(
-                                        color: Theme.of(sheetContext)
-                                            .colorScheme.outlineVariant,
-                                      ),
+                      .map(
+                        (candidate) => Semantics(
+                          button: true,
+                          selected: candidate == iconColor,
+                          label: 'Colore preset',
+                          child: InkWell(
+                            customBorder: const CircleBorder(),
+                            onTap: () =>
+                                setSheetState(() => iconColor = candidate),
+                            child: SizedBox.square(
+                              dimension: 42,
+                              child: Center(
+                                child: Container(
+                                  height: 28,
+                                  width: 28,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: candidate,
+                                    border: Border.all(
+                                      color: Theme.of(sheetContext)
+                                          .colorScheme
+                                          .outlineVariant,
                                     ),
-                                    child: candidate == iconColor
-                                        ? Icon(
-                                            Icons.check_rounded,
-                                            size: 17,
-                                            color: candidate == Colors.white
-                                                ? Colors.black
-                                                : Colors.white,
-                                          )
-                                        : null,
                                   ),
+                                  child: candidate == iconColor
+                                      ? Icon(
+                                          Icons.check_rounded,
+                                          size: 17,
+                                          color: candidate == Colors.white
+                                              ? Colors.black
+                                              : Colors.white,
+                                        )
+                                      : null,
                                 ),
                               ),
                             ),
-                          ))
+                          ),
+                        ),
+                      )
                       .toList(),
                 ),
                 const SizedBox(height: 12),

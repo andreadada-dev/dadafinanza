@@ -106,13 +106,7 @@ class _DashedCirclePainter extends CustomPainter {
       ..color = color;
     final rect = Rect.fromCircle(center: center, radius: radius);
     for (var i = 0; i < 12; i++) {
-      canvas.drawArc(
-        rect,
-        i * math.pi / 6,
-        math.pi / 11,
-        false,
-        paint,
-      );
+      canvas.drawArc(rect, i * math.pi / 6, math.pi / 11, false, paint);
     }
   }
 

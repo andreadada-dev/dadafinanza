@@ -2,7 +2,9 @@ import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:balyn/l10n/localized_material.dart';
+
 import '../theme/balyn_palette.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -100,9 +102,8 @@ class _BalynTransactionDetailContentState
   }
 
   void _error(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   Future<void> _pickDate() async {
@@ -229,9 +230,8 @@ class _BalynTransactionDetailContentState
                   alignment: Alignment.centerLeft,
                   child: Text(
                     title,
-                    style: Theme.of(sheet).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w800,
-                    ),
+                    style: Theme.of(sheet).textTheme.titleLarge
+                        ?.copyWith(fontWeight: FontWeight.w800),
                   ),
                 ),
               ),
@@ -287,12 +287,15 @@ class _BalynTransactionDetailContentState
               account.id == widget.item.toAccountId,
         )
         .toList();
-    final next =
-        await _select<int>(destination ? 'Conto destinazione' : 'Conto', [
-          for (final a in options)
-            if (!destination || a.id != _accountId)
-              _Choice(a.id, a.name, accountIcon(a.iconKey)),
-        ], destination ? _toAccountId : _accountId);
+    final next = await _select<int>(
+      destination ? 'Conto destinazione' : 'Conto',
+      [
+        for (final a in options)
+          if (!destination || a.id != _accountId)
+            _Choice(a.id, a.name, accountIcon(a.iconKey)),
+      ],
+      destination ? _toAccountId : _accountId,
+    );
     if (!mounted || next == null) return;
     setState(() {
       if (destination) {
@@ -587,7 +590,9 @@ class _BalynTransactionDetailContentState
                                         const TextInputType.numberWithOptions(
                                           decimal: true,
                                         ),
-                                    style: amountStyle.copyWith(color: typeColor),
+                                    style: amountStyle.copyWith(
+                                      color: typeColor,
+                                    ),
                                     decoration: const InputDecoration(
                                       filled: false,
                                       border: InputBorder.none,

@@ -478,9 +478,8 @@ class _QuickAddPageState extends State<QuickAddPage> {
             draft.advanceAmountCents ??
             (draft.advanceWholeAmount ? draft.amountCents : null);
         if (voiceAdvanceCents != null && voiceAdvanceCents > 0) {
-          advanceShare.text = Money.fromCents(
-            voiceAdvanceCents,
-          ).toStringAsFixed(2);
+          advanceShare.text = Money.fromCents(voiceAdvanceCents)
+              .toStringAsFixed(2);
         }
       }
       _mergeCanonicalTags(draft.tags, state);
@@ -984,9 +983,9 @@ class _QuickAddPageState extends State<QuickAddPage> {
     }
   }
 
-  void _error(String message) => ScaffoldMessenger.of(
-    context,
-  ).showSnackBar(SnackBar(content: Text(message)));
+  void _error(String message) =>
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
 
   Future<void> _chooseCategory() async {
     final state = AppScope.of(context);
@@ -1117,7 +1116,6 @@ class _QuickAddPageState extends State<QuickAddPage> {
     }
   }
 
-
   // Same flat, rounded card treatment used by BalynTransactionDetailContent.
   Widget _movementCard(List<Widget> children) {
     return DecoratedBox(
@@ -1146,8 +1144,10 @@ class _QuickAddPageState extends State<QuickAddPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Tipo movimento',
-                  style: Theme.of(sheetContext).textTheme.titleLarge),
+              Text(
+                'Tipo movimento',
+                style: Theme.of(sheetContext).textTheme.titleLarge,
+              ),
               const SizedBox(height: 12),
               for (final choice in TransactionType.values)
                 ListTile(
@@ -1156,8 +1156,8 @@ class _QuickAddPageState extends State<QuickAddPage> {
                     choice == TransactionType.expense
                         ? Icons.arrow_upward_rounded
                         : choice == TransactionType.income
-                            ? Icons.arrow_downward_rounded
-                            : Icons.swap_horiz_rounded,
+                        ? Icons.arrow_downward_rounded
+                        : Icons.swap_horiz_rounded,
                     color: transactionColor(sheetContext, choice),
                   ),
                   trailing: type == choice
@@ -1202,19 +1202,20 @@ class _QuickAddPageState extends State<QuickAddPage> {
   // reserving a giant colored/shader-filled TextField rectangle.
   Widget _movementAmount(AppState state, bool hasInitialAmount) {
     final color = transactionColor(context, type);
-    final style = (Theme.of(context).textTheme.headlineMedium ??
-            const TextStyle())
-        .copyWith(
-      color: color,
-      fontSize: 35,
-      fontWeight: FontWeight.w800,
-      height: 1.12,
-    );
-    final prefix = (type == TransactionType.expense
+    final style =
+        (Theme.of(context).textTheme.headlineMedium ?? const TextStyle())
+            .copyWith(
+              color: color,
+              fontSize: 35,
+              fontWeight: FontWeight.w800,
+              height: 1.12,
+            );
+    final prefix =
+        (type == TransactionType.expense
             ? '−'
             : type == TransactionType.income
-                ? '+'
-                : '') +
+            ? '+'
+            : '') +
         (state.currency == 'EUR' ? '€' : state.currency);
 
     return ValueListenableBuilder<TextEditingValue>(
@@ -1249,7 +1250,8 @@ class _QuickAddPageState extends State<QuickAddPage> {
                   key: const ValueKey('quick-add-inline-amount'),
                   controller: amount,
                   focusNode: amountFocus,
-                  autofocus: widget.editing == null &&
+                  autofocus:
+                      widget.editing == null &&
                       !hasInitialAmount &&
                       !widget.startVoice,
                   keyboardType: const TextInputType.numberWithOptions(
@@ -1272,10 +1274,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
                 tooltip: 'Modifica importo',
                 icon: Icon(Icons.edit_outlined, size: 17, color: color),
                 onPressed: () => amountFocus.requestFocus(),
-                constraints: const BoxConstraints(
-                  minWidth: 32,
-                  minHeight: 32,
-                ),
+                constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                 padding: EdgeInsets.zero,
               ),
             ],
@@ -1426,8 +1425,10 @@ class _QuickAddPageState extends State<QuickAddPage> {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    DateFormat('d MMM yyyy, HH:mm', AppI18n.intlLocale)
-                        .format(date),
+                    DateFormat(
+                      'd MMM yyyy, HH:mm',
+                      AppI18n.intlLocale,
+                    ).format(date),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
@@ -1529,109 +1530,112 @@ class _QuickAddPageState extends State<QuickAddPage> {
               _PickerRow(
                 icon: Icons.event_outlined,
                 label: 'Data e ora',
-                value: DateFormat('d MMM yyyy, HH:mm', AppI18n.intlLocale)
-                    .format(date),
+                value: DateFormat(
+                  'd MMM yyyy, HH:mm',
+                  AppI18n.intlLocale,
+                ).format(date),
                 onTap: _pickMovementDateTime,
               ),
             ]),
-            if (type == TransactionType.expense &&
-                widget.editing == null) ...[
+            if (type == TransactionType.expense && widget.editing == null) ...[
               const SizedBox(height: 13),
               _movementCard([
-                  SwitchListTile(
-                    contentPadding: EdgeInsets.zero,
-                    secondary: const Icon(Icons.group_outlined),
-                    title: const Text('Questa spesa include un anticipo'),
-                    subtitle: const Text(
-                      'Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.',
-                    ),
-                    value: advanceShareEnabled,
-                    onChanged: linkedAdvanceId != null
-                        ? null
-                        : (value) => setState(() {
-                            advanceShareEnabled = value;
-                            advanceMatch = null;
-                            if (!value) {
-                              advanceShare.clear();
-                              advancePersonId = null;
-                            }
-                          }),
+                SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  secondary: const Icon(Icons.group_outlined),
+                  title: const Text('Questa spesa include un anticipo'),
+                  subtitle: const Text(
+                    'Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.',
                   ),
-                  if (advanceShareEnabled) ...[
-                    ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.person_outline_rounded),
-                      title: const Text('Anticipato a'),
-                      subtitle: Text(
-                        state.personById(advancePersonId)?.name ??
-                            'Scegli o crea una persona',
-                      ),
-                      trailing: const Icon(Icons.chevron_right_rounded),
-                      onTap: () async {
-                        final picked = await showFinancePersonPicker(
-                          context,
-                          allowCreate: true,
-                        );
-                        if (picked != null && mounted) {
-                          setState(() => advancePersonId = picked);
-                        }
-                      },
-                    ),
-                    TextField(
-                      controller: advanceShare,
-                      keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true,
-                      ),
-                      decoration: InputDecoration(
-                        labelText: AppI18n.tr('Quota anticipata'),
-                        suffixText: state.currency,
-                        helperText: AppI18n.tr(
-                          'Inserisci una parte oppure usa tutto l’importo.',
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton.icon(
-                        onPressed: () {
-                          final total = Money.parseExpression(amount.text);
-                          if (total == null || total <= 0) {
-                            _error('Inserisci prima l’importo totale.');
-                            amountFocus.requestFocus();
-                            return;
+                  value: advanceShareEnabled,
+                  onChanged: linkedAdvanceId != null
+                      ? null
+                      : (value) => setState(() {
+                          advanceShareEnabled = value;
+                          advanceMatch = null;
+                          if (!value) {
+                            advanceShare.clear();
+                            advancePersonId = null;
                           }
-                          advanceShare.text = total.toStringAsFixed(2);
-                        },
-                        icon: const Icon(Icons.all_inclusive_rounded, size: 18),
-                        label: const Text('Tutto l’importo'),
+                        }),
+                ),
+                if (advanceShareEnabled) ...[
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.person_outline_rounded),
+                    title: const Text('Anticipato a'),
+                    subtitle: Text(
+                      state.personById(advancePersonId)?.name ??
+                          'Scegli o crea una persona',
+                    ),
+                    trailing: const Icon(Icons.chevron_right_rounded),
+                    onTap: () async {
+                      final picked = await showFinancePersonPicker(
+                        context,
+                        allowCreate: true,
+                      );
+                      if (picked != null && mounted) {
+                        setState(() => advancePersonId = picked);
+                      }
+                    },
+                  ),
+                  TextField(
+                    controller: advanceShare,
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
+                    decoration: InputDecoration(
+                      labelText: AppI18n.tr('Quota anticipata'),
+                      suffixText: state.currency,
+                      helperText: AppI18n.tr(
+                        'Inserisci una parte oppure usa tutto l’importo.',
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Builder(
-                      builder: (context) {
-                        final total = Money.parseExpression(amount.text) ?? 0;
-                        final advanced =
-                            Money.parseExpression(advanceShare.text) ?? 0;
-                        final personal = (total - advanced)
-                            .clamp(0, double.infinity)
-                            .toDouble();
-                        return FlatMetric(
-                          label: 'La mia parte',
-                          value: moneyFor(state, personal),
-                          icon: Icons.person_rounded,
-                        );
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton.icon(
+                      onPressed: () {
+                        final total = Money.parseExpression(amount.text);
+                        if (total == null || total <= 0) {
+                          _error('Inserisci prima l’importo totale.');
+                          amountFocus.requestFocus();
+                          return;
+                        }
+                        advanceShare.text = total.toStringAsFixed(2);
                       },
+                      icon: const Icon(Icons.all_inclusive_rounded, size: 18),
+                      label: const Text('Tutto l’importo'),
                     ),
-                  ],
-                ]),
+                  ),
+                  const SizedBox(height: 4),
+                  Builder(
+                    builder: (context) {
+                      final total = Money.parseExpression(amount.text) ?? 0;
+                      final advanced =
+                          Money.parseExpression(advanceShare.text) ?? 0;
+                      final personal = (total - advanced)
+                          .clamp(0, double.infinity)
+                          .toDouble();
+                      return FlatMetric(
+                        label: 'La mia parte',
+                        value: moneyFor(state, personal),
+                        icon: Icons.person_rounded,
+                      );
+                    },
+                  ),
+                ],
+              ]),
             ],
             const SizedBox(height: 13),
             _movementCard([
               SwitchListTile.adaptive(
                 contentPadding: EdgeInsets.zero,
                 dense: true,
-                title: const Text('Escludi dalle analisi',
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+                title: const Text(
+                  'Escludi dalle analisi',
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                ),
                 value: !includeInAnalytics,
                 onChanged: (excluded) =>
                     setState(() => includeInAnalytics = !excluded),
@@ -1639,7 +1643,8 @@ class _QuickAddPageState extends State<QuickAddPage> {
               _PickerRow(
                 icon: Icons.camera_alt_outlined,
                 label: 'Ricevuta',
-                value: !receiptRemoved &&
+                value:
+                    !receiptRemoved &&
                         (receipt != null || existingReceiptPath != null)
                     ? 'Sostituisci'
                     : 'Aggiungi',

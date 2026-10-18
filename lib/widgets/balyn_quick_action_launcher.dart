@@ -213,10 +213,7 @@ class _BalynQuickActionLauncherState extends State<BalynQuickActionLauncher>
 }
 
 class _RadialSystemAction extends StatelessWidget {
-  const _RadialSystemAction({
-    required this.icon,
-    required this.highlighted,
-  });
+  const _RadialSystemAction({required this.icon, required this.highlighted});
 
   final IconData icon;
   final bool highlighted;
@@ -225,9 +222,7 @@ class _RadialSystemAction extends StatelessWidget {
   Widget build(BuildContext context) => DecoratedBox(
     decoration: BoxDecoration(
       shape: BoxShape.circle,
-      color: highlighted
-          ? BalynPalette.accent
-          : BalynPalette.darkSurface,
+      color: highlighted ? BalynPalette.accent : BalynPalette.darkSurface,
     ),
     child: SizedBox.square(
       dimension: 38,

@@ -29,8 +29,10 @@ class QuickPreset {
   final double? amount;
   final String? note;
   final List<String> tags;
+
   /// Null means show the first letter of the preset name.
   final String? iconKey;
+
   /// White is the default, regardless of expense/income type.
   final int colorValue;
   final int position;
