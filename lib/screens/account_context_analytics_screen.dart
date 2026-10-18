@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:balyn/l10n/localized_material.dart';
+import '../theme/balyn_palette.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -822,7 +823,7 @@ class _BalanceTrendState extends State<_BalanceTrend> {
     final xInterval = isToday ? 1.0 : _labelInterval(chartMaxX);
     final (chartMin, chartMax, yInterval) = _yScale(spots);
     final lineColor = account == null
-        ? const Color(0xFFAD8CF5)
+        ? BalynPalette.accentTextDark
         : Color(account.colorValue);
     final hideValues = state.hideBalance || (account?.hideBalance ?? false);
 
@@ -1270,7 +1271,7 @@ class _Metric extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 12),
       decoration: BoxDecoration(
         color: theme.brightness == Brightness.dark
-            ? const Color(0xFF252532)
+            ? BalynPalette.darkSurface
             : Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
