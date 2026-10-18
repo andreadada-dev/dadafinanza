@@ -570,37 +570,33 @@ class _BalynTransactionDetailContentState
                             );
                             return Row(
                               children: [
-                                BalynShaderText(
+                                Text(
                                   prefix,
-                                  seed: typeColor,
-                                  style: amountStyle,
+                                  style: amountStyle.copyWith(color: typeColor),
                                 ),
                                 const SizedBox(width: 2),
                                 SizedBox(
                                   width: fieldWidth,
-                                  child: BalynShaderInk(
-                                    seed: typeColor,
-                                    feature: BalynShaderFeature.text,
-                                    child: TextField(
-                                      key: const ValueKey('detail-amount'),
-                                      focusNode: _amountFocus,
-                                      controller: _amount,
-                                      readOnly: protected,
-                                      obscureText: hidden && !_revealAmount,
-                                      keyboardType:
-                                          const TextInputType.numberWithOptions(
-                                            decimal: true,
-                                          ),
-                                      style: amountStyle,
-                                      decoration: const InputDecoration(
-                                        border: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                        contentPadding: EdgeInsets.symmetric(
-                                          vertical: 7,
+                                  child: TextField(
+                                    key: const ValueKey('detail-amount'),
+                                    focusNode: _amountFocus,
+                                    controller: _amount,
+                                    readOnly: protected,
+                                    obscureText: hidden && !_revealAmount,
+                                    keyboardType:
+                                        const TextInputType.numberWithOptions(
+                                          decimal: true,
                                         ),
-                                        isDense: true,
+                                    style: amountStyle.copyWith(color: typeColor),
+                                    decoration: const InputDecoration(
+                                      filled: false,
+                                      border: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      contentPadding: EdgeInsets.symmetric(
+                                        vertical: 7,
                                       ),
+                                      isDense: true,
                                     ),
                                   ),
                                 ),
