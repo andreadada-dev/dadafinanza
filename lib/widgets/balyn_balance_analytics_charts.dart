@@ -13,7 +13,7 @@ Color balynAnalyticsIncomeColor(Color? accountColor) {
   final hsl = HSLColor.fromColor(accountColor);
   return hsl
       .withHue((hsl.hue + 20) % 360)
-      .withSaturation((hsl.saturation * .72).clamp(.25, .75))
+      .withSaturation((hsl.saturation * .72).clamp(.25, .75).toDouble())
       .withLightness(.74)
       .toColor();
 }
@@ -22,7 +22,7 @@ Color balynAnalyticsExpenseColor(Color? accountColor) {
   if (accountColor == null) return const Color(0xFF7522ED);
   final hsl = HSLColor.fromColor(accountColor);
   return hsl
-      .withSaturation(hsl.saturation.clamp(.40, .90))
+      .withSaturation(hsl.saturation.clamp(.40, .90).toDouble())
       .withLightness(.48)
       .toColor();
 }
