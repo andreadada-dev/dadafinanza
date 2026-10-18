@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:balyn/l10n/localized_material.dart';
 import 'package:balyn/widgets/balyn_glass_navigation.dart';
-import 'package:balyn/widgets/balyn_home_section_transition.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -15,15 +14,17 @@ void main() {
     ).readAsStringSync();
     final shell = File('lib/screens/app_shell.dart').readAsStringSync();
 
-    expect(home, contains('BalynHomeSectionTransition('));
-    expect(home, contains('selectedSection == 0'));
-    expect(home, contains('selectedSection == 1'));
+    expect(home, contains('NestedScrollView('));
+    expect(home, contains('body: PageView('));
+    expect(home, contains('controller: _pageController'));
+    expect(home, contains('onPageChanged: _onHomePageChanged'));
+    expect(home, contains('onTabChanged: _selectHomePage'));
     expect(home, contains('BalynActivityScreen('));
-    expect(home, contains('onTabChanged: onSectionChanged'));
+    expect(home, contains('sectionPage: _pageController.hasClients'));
     expect(hero, contains("label: 'Panoramica'"));
     expect(hero, contains("label: 'Conti'"));
     expect(hero, contains("label: 'Attività'"));
-    expect(hero, contains('AnimatedPositioned('));
+    expect(hero, contains('left: segmentWidth * sectionPage.clamp(0.0, 2.0)'));
     expect(shell, contains('_homeDirection = next > _homeSection ? 1 : -1'));
     expect(shell, contains('onShowActivity: _showHomeActivity'));
     expect(shell, contains('onSectionChanged: _selectHomeSection'));
@@ -42,6 +43,9 @@ void main() {
       expect(shell, isNot(contains('bottomNavigationBar: NavigationBar(')));
       expect(nav, contains('BackdropFilter('));
       expect(nav, contains('ImageFilter.blur('));
+      expect(nav, contains('_LiquidRimPainter'));
+      expect(nav, contains('const Color(0xFFAA4559)'));
+      expect(nav, contains('Colors.white.withValues(alpha: dark ? .72 : .9)'));
     },
   );
 
@@ -72,49 +76,50 @@ void main() {
     expect(selections, [0, 1, 2, 3]);
   });
 
-  testWidgets('Home content slides in either direction without routes', (
+  testWidgets('PageView follows the finger and snaps between three sections', (
     tester,
   ) async {
+    final controller = PageController();
     var selected = 0;
-    var direction = 1;
-    late StateSetter update;
-
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: StatefulBuilder(
-            builder: (context, setState) {
-              update = setState;
-              return SizedBox(
-                width: 340,
-                child: BalynHomeSectionTransition(
-                  index: selected,
-                  direction: direction,
-                  child: Text('Sezione $selected'),
-                ),
-              );
-            },
+          body: SizedBox(
+            height: 360,
+            width: 320,
+            child: PageView(
+              key: const ValueKey('home-swipe-pages'),
+              controller: controller,
+              onPageChanged: (value) => selected = value,
+              children: const [
+                Center(child: Text('Panoramica')),
+                Center(child: Text('Conti')),
+                Center(child: Text('Attività')),
+              ],
+            ),
           ),
         ),
       ),
     );
 
-    expect(find.text('Sezione 0'), findsOneWidget);
-    update(() {
-      direction = 1;
-      selected = 2;
-    });
+    final gesture = await tester.startGesture(
+      tester.getCenter(find.byKey(const ValueKey('home-swipe-pages'))),
+    );
+    await gesture.moveBy(const Offset(-110, 0));
     await tester.pump();
-    expect(find.text('Sezione 2'), findsOneWidget);
+    expect(controller.page!, greaterThan(0));
+    expect(controller.page!, lessThan(1));
+    await gesture.moveBy(const Offset(-230, 0));
+    await gesture.up();
     await tester.pumpAndSettle();
+    expect(selected, 1);
 
-    update(() {
-      direction = -1;
-      selected = 1;
-    });
-    await tester.pump();
+    await tester.drag(
+      find.byKey(const ValueKey('home-swipe-pages')),
+      const Offset(380, 0),
+    );
     await tester.pumpAndSettle();
-    expect(find.text('Sezione 1'), findsOneWidget);
-    expect(find.text('Sezione 2'), findsNothing);
+    expect(selected, 0);
+    controller.dispose();
   });
 }
