@@ -38,7 +38,11 @@ void main() {
     expect(find.byKey(const ValueKey('onboarding-next')), findsOneWidget);
     // The package handles the navigation, rather than a custom PageView.
     await tester.tap(find.byKey(const ValueKey('onboarding-next')));
-    await tester.pump(const Duration(milliseconds: 700));
+    // The first pump starts the package's PageController animation.
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 520));
+    await tester.pump();
+    expect(find.text('2/3'), findsOneWidget);
     expect(find.text('Crea il tuo primo conto'), findsOneWidget);
     await tester.pumpWidget(const SizedBox.shrink());
   });
