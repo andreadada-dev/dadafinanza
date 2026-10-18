@@ -125,18 +125,28 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
   }
 
   Widget _tile(IconData icon, String label, Widget child) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
     decoration: BoxDecoration(
       color: BalynPalette.darkSurface,
-      borderRadius: BorderRadius.circular(18),
+      borderRadius: BorderRadius.circular(BalynPalette.radius),
     ),
     child: Row(
       children: [
-        Icon(icon, color: Colors.white),
+        Icon(icon, color: BalynPalette.accentTextDark, size: 22),
         const SizedBox(width: 11),
-        Text(label, style: const TextStyle(color: Colors.white)),
-        const Spacer(),
-        Flexible(child: child),
+        Flexible(
+          flex: 3,
+          child: Text(
+            label,
+            style: const TextStyle(
+              color: BalynPalette.darkText,
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Flexible(flex: 4, child: child),
       ],
     ),
   );
