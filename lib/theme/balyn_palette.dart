@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:balyn/l10n/localized_material.dart';
 
 /// Balyn visual baseline: the redesigned Home is the reference for every
 /// screen. Do not introduce screen-specific blue, teal, orange, or gray chrome.
