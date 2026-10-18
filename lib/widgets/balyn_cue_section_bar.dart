@@ -74,7 +74,9 @@ class BalynCueSectionBar extends StatelessWidget {
                             borderRadius: BorderRadius.circular(26),
                             onTap: () => onSelected(i),
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                              ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -103,7 +105,9 @@ class BalynCueSectionBar extends StatelessWidget {
                                               ? (selectedTab == i ? 1 : 0)
                                               : weight[i],
                                           child: Padding(
-                                            padding: const EdgeInsets.only(left: 6),
+                                            padding: const EdgeInsets.only(
+                                              left: 6,
+                                            ),
                                             child: Text(
                                               tabs[i].$1,
                                               maxLines: 1,

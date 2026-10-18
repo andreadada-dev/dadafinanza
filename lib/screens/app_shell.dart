@@ -154,9 +154,7 @@ class _BalynAppShellState extends State<BalynAppShell> {
                   key: const ValueKey('quick-nav-dismiss'),
                   behavior: HitTestBehavior.opaque,
                   onTap: () => setState(() => _launcherOpen = false),
-                  child: ColoredBox(
-                    color: Colors.black.withValues(alpha: .12),
-                  ),
+                  child: ColoredBox(color: Colors.black.withValues(alpha: .12)),
                 ),
               ),
             Positioned(
@@ -165,9 +163,7 @@ class _BalynAppShellState extends State<BalynAppShell> {
               child: BalynQuickActionLauncher(
                 expanded: _launcherOpen,
                 showHome: index != 0,
-                onToggle: () => setState(
-                  () => _launcherOpen = !_launcherOpen,
-                ),
+                onToggle: () => setState(() => _launcherOpen = !_launcherOpen),
                 onCreate: () {
                   setState(() => _launcherOpen = false);
                   _open(TransactionType.expense);

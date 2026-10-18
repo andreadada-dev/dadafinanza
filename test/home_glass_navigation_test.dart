@@ -13,8 +13,9 @@ void main() {
     final hero = File(
       'lib/widgets/balyn_revolut_home_hero.dart',
     ).readAsStringSync();
-    final selector = File('lib/widgets/balyn_cue_section_bar.dart')
-        .readAsStringSync();
+    final selector = File(
+      'lib/widgets/balyn_cue_section_bar.dart',
+    ).readAsStringSync();
     final shell = File('lib/screens/app_shell.dart').readAsStringSync();
 
     expect(home, contains('NestedScrollView('));
@@ -38,8 +39,9 @@ void main() {
 
   test('Corner launcher replaces the old bottom bar', () {
     final shell = File('lib/screens/app_shell.dart').readAsStringSync();
-    final launcher = File('lib/widgets/balyn_quick_action_launcher.dart')
-        .readAsStringSync();
+    final launcher = File(
+      'lib/widgets/balyn_quick_action_launcher.dart',
+    ).readAsStringSync();
     expect(shell, contains('extendBody: true'));
     expect(shell, contains('body: Stack('));
     expect(shell, contains('BalynQuickActionLauncher('));
