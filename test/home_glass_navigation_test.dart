@@ -5,6 +5,7 @@ import 'package:balyn/widgets/balyn_cue_section_bar.dart';
 import 'package:balyn/widgets/balyn_quick_action_launcher.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:pie_menu/pie_menu.dart';
 import 'package:material_ui/material_ui.dart' as mui;
 
 void main() {
@@ -57,14 +58,16 @@ void main() {
     expect(shell, contains('body: Stack('));
     expect(shell, contains('BalynQuickActionLauncher('));
     expect(shell, isNot(contains('BalynGlassNavigation(')));
-    expect(launcher, contains('BalynCueAnchoredMenu('));
+    expect(launcher, contains('return PieMenu('));
     expect(launcher, contains('BalynMorphingFab('));
-    expect(launcher, contains('BalynPalette.accent'));
-    expect(launcher, contains('onLongPress: widget.onLongPress'));
-    expect(launcher, contains("id: 'quick-nav-create'"));
-    expect(launcher, contains("id: 'quick-nav-advances'"));
-    expect(launcher, contains("id: 'quick-nav-planning'"));
-    expect(launcher, contains("id: 'quick-nav-home'"));
+    expect(launcher, contains('longPressDuration: holdDuration'));
+    expect(launcher, contains('radius: 115'));
+    expect(launcher, contains('latest.take(4).toList()'));
+    expect(launcher, contains('PieAction('));
+    expect(launcher, contains('Nuovo preset'));
+    expect(launcher, contains('_WhiteChargePainter'));
+    expect(shell, contains('return PieCanvas('));
+    expect(shell, contains('onCreate: () => _open(TransactionType.transfer)'));
     expect(shell, contains('NotificationListener<ScrollNotification>'));
     expect(shell, contains('motion: _fabMotion'));
   });
@@ -96,47 +99,42 @@ void main() {
     expect(changed, [0, 1, 2]);
   });
 
-  testWidgets('Cue quick launcher opens pills and returns to its trigger', (
-    tester,
-  ) async {
-    final actions = <String>[];
+  testWidgets('FAB uses PieCanvas and a clockwise white charge',
+      (tester) async {
+    var transferCount = 0;
     await tester.pumpWidget(
       MaterialApp(
-        locale: const Locale('it'),
-        supportedLocales: const [Locale('it'), Locale('en')],
-        localizationsDelegates: const [
-          mui.GlobalMaterialLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        home: Scaffold(
-          body: Align(
-            alignment: Alignment.bottomRight,
-            child: BalynQuickActionLauncher(
-              showHome: true,
-              onCreate: () => actions.add('create'),
-              onAdvances: () => actions.add('advances'),
-              onPlanning: () => actions.add('planning'),
-              onHome: () => actions.add('home'),
+        home: PieCanvas(
+          child: Scaffold(
+            body: Align(
+              alignment: Alignment.bottomRight,
+              child: BalynQuickActionLauncher(
+                onCreate: () => transferCount++,
+                onAdvances: () {},
+                onPlanning: () {},
+                onPresetSelected: (_) {},
+                onAddPreset: () async {},
+                loadPresets: () async => [],
+              ),
             ),
           ),
         ),
       ),
     );
-    for (final item in ['create', 'advances', 'planning', 'home']) {
-      await tester.tap(find.byKey(const ValueKey('quick-launcher')));
-      await tester.pumpAndSettle();
-      expect(find.byKey(ValueKey('quick-nav-$item')), findsOneWidget);
-      await tester.tap(find.byKey(ValueKey('quick-nav-$item')));
-      await tester.pumpAndSettle();
-    }
-    expect(actions, ['create', 'advances', 'planning', 'home']);
+    await tester.pumpAndSettle();
+    expect(find.byType(PieMenu), findsOneWidget);
+    final pie = tester.widget<PieMenu>(find.byType(PieMenu));
+    expect(pie.actions, hasLength(3));
+    expect(find.byKey(const ValueKey('quick-fab-white-charge')), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('quick-launcher')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('quick-launcher-close')));
-    await tester.pumpAndSettle();
+    expect(transferCount, 1);
+    final touch = await tester.startGesture(
+        tester.getCenter(find.byKey(const ValueKey('quick-launcher'))));
+    await tester.pump(const Duration(milliseconds: 350));
     expect(tester.takeException(), isNull);
+    await touch.up();
+    await tester.pumpAndSettle();
   });
 
   testWidgets('PageView follows the finger and snaps between three sections', (
