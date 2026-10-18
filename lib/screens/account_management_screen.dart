@@ -12,6 +12,7 @@ import '../services/csv_service.dart';
 import '../services/data_integrity_service.dart';
 import '../widgets/balyn_shader_system.dart';
 import '../widgets/ui_helpers.dart';
+import '../widgets/balyn_account_live_preview.dart';
 import 'account_screens.dart' show showAccountEditor;
 
 class AccountManagementScreen extends StatelessWidget {
@@ -479,6 +480,9 @@ class SafeAccountDetailScreen extends StatelessWidget {
                 Text(
                   'Modifica conto',
                   style: Theme.of(sheetContext).textTheme.titleLarge,
+                ),
+                BalynAccountLivePreview(
+                  iconKey: iconKey, color: color,
                 ),
                 TextField(
                   controller: name,
