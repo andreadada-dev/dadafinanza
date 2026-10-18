@@ -121,7 +121,11 @@ class HomeDashboardWidget extends StatelessWidget {
               subtitle: 'Entrate, spese e disponibilità',
             ),
             const SizedBox(height: 10),
-            BalynRevolutHomeContent(
+            BalynEditorialSurface(
+              radius: 22,
+              padding: const EdgeInsets.fromLTRB(14, 15, 14, 10),
+              child: BalynRevolutHomeContent(
+              embedded: true,
               income: state.monthTotal(TransactionType.income),
               expense: state.monthTotal(TransactionType.expense),
               available: state.safeToSpend,
@@ -134,6 +138,7 @@ class HomeDashboardWidget extends StatelessWidget {
               },
               onSelectAccount: onAccountChanged ?? (_) {},
               onManageAccounts: onManageAccounts ?? () {},
+              ),
             ),
           ],
         );
