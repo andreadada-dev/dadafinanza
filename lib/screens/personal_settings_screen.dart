@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:balyn/l10n/localized_material.dart';
+import '../theme/balyn_palette.dart';
 
 import '../app_state.dart';
 import '../l10n/app_i18n.dart';
@@ -33,7 +34,7 @@ class _BrandHeader extends StatelessWidget {
     final theme = Theme.of(context);
     final dark = theme.brightness == Brightness.dark;
     return Material(
-      color: dark ? const Color(0xFF252633) : Colors.white,
+      color: dark ? BalynPalette.darkSurface : Colors.white,
       borderRadius: BorderRadius.circular(24),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 19),
@@ -105,7 +106,7 @@ class PersonalSettingsScreen extends StatelessWidget {
     final state = AppScope.of(context);
     final dark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: dark ? const Color(0xFF111218) : const Color(0xFFF5F6F9),
+      backgroundColor: dark ? BalynPalette.darkCanvas : BalynPalette.lightCanvas,
       appBar: AppBar(
         title: const Text('Impostazioni'),
         backgroundColor: Colors.transparent,
@@ -123,7 +124,7 @@ class PersonalSettingsScreen extends StatelessWidget {
           const SizedBox(height: 26),
           BalynSettingsGroup(
             title: 'Aspetto',
-            accent: const Color(0xFF4365F5),
+            accent: BalynPalette.accent,
             children: [
               BalynSettingsTile(
                 icon: Icons.contrast_rounded,
@@ -161,7 +162,7 @@ class PersonalSettingsScreen extends StatelessWidget {
           ),
           BalynSettingsGroup(
             title: 'Generali',
-            accent: const Color(0xFF684BEC),
+            accent: BalynPalette.accent,
             children: [
               BalynSettingsTile(
                 icon: Icons.account_balance_wallet_outlined,
@@ -210,7 +211,7 @@ class PersonalSettingsScreen extends StatelessWidget {
           ),
           BalynSettingsGroup(
             title: 'Privacy locale',
-            accent: const Color(0xFF298B83),
+            accent: BalynPalette.accent,
             children: [
               BalynSettingsTile(
                 icon: Icons.fingerprint_rounded,
@@ -234,7 +235,7 @@ class PersonalSettingsScreen extends StatelessWidget {
           ),
           BalynSettingsGroup(
             title: 'Inserimento',
-            accent: const Color(0xFF8651B2),
+            accent: BalynPalette.accent,
             children: [
               BalynSettingsTile(
                 icon: Icons.mic_none_rounded,
@@ -261,7 +262,7 @@ class PersonalSettingsScreen extends StatelessWidget {
           ),
           BalynSettingsGroup(
             title: 'Organizzazione',
-            accent: const Color(0xFFCB7737),
+            accent: BalynPalette.accent,
             children: [
               BalynSettingsTile(
                 icon: Icons.handshake_outlined,
@@ -300,7 +301,7 @@ class PersonalSettingsScreen extends StatelessWidget {
           ),
           BalynSettingsGroup(
             title: 'Dati',
-            accent: const Color(0xFF4C749C),
+            accent: BalynPalette.accent,
             children: [
               BalynSettingsTile(
                 icon: Icons.folder_zip_outlined,
@@ -312,7 +313,7 @@ class PersonalSettingsScreen extends StatelessWidget {
           ),
           BalynSettingsGroup(
             title: 'Comportamento',
-            accent: const Color(0xFF7664BE),
+            accent: BalynPalette.accent,
             children: [
               BalynSettingsSwitch(
                 icon: Icons.help_outline_rounded,
@@ -604,7 +605,7 @@ class ShaderAppearanceSettingsScreen extends StatelessWidget {
           ),
           BalynSettingsGroup(
             title: 'Elementi animati',
-            accent: const Color(0xFF8651B2),
+            accent: BalynPalette.accent,
             children: [
               BalynSettingsSwitch(
                 icon: Icons.interests_outlined,
