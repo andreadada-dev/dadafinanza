@@ -1,4 +1,5 @@
 import 'package:balyn/l10n/localized_material.dart';
+import '../theme/balyn_palette.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -149,14 +150,14 @@ class _AdvancesOverview extends StatelessWidget {
     final theme = Theme.of(context);
     final accent = theme.colorScheme.tertiary;
     final financeColors = theme.extension<FinanceColors>();
-    final positive = financeColors?.positive ?? const Color(0xFF12B880);
-    final negative = financeColors?.negative ?? const Color(0xFFF53D3D);
+    final positive = financeColors?.positive ?? BalynPalette.incomeLight;
+    final negative = financeColors?.negative ?? BalynPalette.expenseLight;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 6),
       padding: const EdgeInsets.fromLTRB(17, 15, 17, 19),
       decoration: BoxDecoration(
         color: theme.brightness == Brightness.dark
-            ? const Color(0xFF252532)
+            ? BalynPalette.darkSurface
             : Colors.white,
         borderRadius: BorderRadius.circular(21),
       ),
@@ -361,7 +362,7 @@ class _AdvancePersonSummaryCard extends StatelessWidget {
           '${person.name}. $subtitle. $movementCount ${movementCount == 1 ? 'movimento' : 'movimenti'}.',
       child: Material(
         color: theme.brightness == Brightness.dark
-            ? const Color(0xFF252532)
+            ? BalynPalette.darkSurface
             : Colors.white,
         borderRadius: BorderRadius.circular(19),
         clipBehavior: Clip.antiAlias,
