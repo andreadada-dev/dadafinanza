@@ -1,4 +1,5 @@
 name: Temporary Dart formatting
+# Final normalization for the loading regression tests
 on:
   push:
     branches:
