@@ -44,6 +44,7 @@ class _BalynTransactionDetailContentState
   XFile? _newReceipt;
   bool _saving = false;
   bool _changed = false;
+  bool _revealAmount = false;
 
   @override
   void initState() {
@@ -244,6 +245,9 @@ class _BalynTransactionDetailContentState
           TextField(
             key: const ValueKey('detail-amount'),
             controller: _amount,
+            obscureText: (state.hideBalance ||
+                    state.accountById(_accountId)?.hideBalance == true) &&
+                !_revealAmount,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             textAlign: TextAlign.center,
             style: theme.textTheme.displaySmall?.copyWith(
@@ -253,6 +257,17 @@ class _BalynTransactionDetailContentState
             decoration: InputDecoration(
               prefixText: '${state.currency} ',
               labelText: 'Importo',
+              suffixIcon: (state.hideBalance ||
+                      state.accountById(_accountId)?.hideBalance == true)
+                  ? IconButton(
+                      tooltip: _revealAmount ? 'Nascondi importo' : 'Mostra importo',
+                      onPressed: () => setState(() =>
+                          _revealAmount = !_revealAmount),
+                      icon: Icon(_revealAmount
+                          ? Icons.visibility_off_outlined
+                          : Icons.visibility_outlined),
+                    )
+                  : null,
               floatingLabelAlignment: FloatingLabelAlignment.center,
               border: InputBorder.none,
             ),
