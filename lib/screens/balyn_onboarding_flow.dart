@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'package:balyn/l10n/localized_material.dart';
+import 'package:introduction_screen/introduction_screen.dart';
 import '../l10n/app_i18n.dart';
 import '../main.dart';
 import '../models/models.dart';
@@ -14,7 +15,7 @@ class BalynOnboardingFlow extends StatefulWidget {
 
 class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
     with SingleTickerProviderStateMixin {
-  final PageController _pages = PageController();
+  final GlobalKey<IntroductionScreenState> _introKey = GlobalKey<IntroductionScreenState>();
   final TextEditingController _name = TextEditingController(
     text: 'Conto principale',
   );
@@ -41,7 +42,6 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
 
   @override
   void dispose() {
-    _pages.dispose();
     _name.dispose();
     _float.dispose();
     super.dispose();
@@ -50,7 +50,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
   Future<void> _complete({bool skip = false}) async {
     if (_saving) return;
     if (!skip && _name.text.trim().isEmpty) {
-      _go(1);
+      _introKey.currentState?.animateScroll(1);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -87,17 +87,6 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
         context,
       ).showSnackBar(SnackBar(content: Text(error.toString())));
     }
-  }
-
-  void _go(int step) {
-    if (_saving) return;
-    FocusScope.of(context).unfocus();
-    setState(() => _step = step);
-    _pages.animateToPage(
-      step,
-      duration: const Duration(milliseconds: 440),
-      curve: Curves.easeOutCubic,
-    );
   }
 
   Widget _tile(IconData icon, String label, Widget child) => Container(
@@ -261,32 +250,10 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 28),
-              child: Row(
-                children: [
-                  for (var i = 0; i < 3; i++)
-                    Expanded(
-                      child: AnimatedContainer(
-                        height: 4,
-                        duration: const Duration(milliseconds: 280),
-                        margin: const EdgeInsets.symmetric(horizontal: 3),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: i <= _step
-                              ? const Color(0xFFF0A8E5)
-                              : Colors.white24,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
             Expanded(
-              child: PageView(
-                controller: _pages,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
+              child: IntroductionScreen(
+                key: _introKey,
+                rawPages: [
                   _page(
                     illustration: AnimatedBuilder(
                       animation: _float,
@@ -480,53 +447,68 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                     ),
                   ),
                 ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(22, 9, 22, 20),
-              child: Row(
-                children: [
-                  if (_step > 0)
-                    TextButton(
-                      onPressed: _saving ? null : () => _go(_step - 1),
-                      child: Text(
-                        _t('Indietro', 'Back'),
-                        style: const TextStyle(color: Colors.white70),
+                animationDuration: 460,
+                curve: Curves.easeOutCubic,
+                globalBackgroundColor: const Color(0xFF211248),
+                freeze: _saving || _skipping,
+                scrollPhysics: const BouncingScrollPhysics(),
+                showNextButton: true,
+                showBackButton: true,
+                showDoneButton: true,
+                showSkipButton: false,
+                isProgressTap: false,
+                onChange: (page) {
+                  if (_step != page && mounted) setState(() => _step = page);
+                },
+                onDone: () => _complete(),
+                next: Text(
+                  _t('Avanti', 'Continue'),
+                  key: const ValueKey('onboarding-next'),
+                  style: const TextStyle(fontWeight: FontWeight.w800),
+                ),
+                done: _saving
+                    ? const SizedBox(
+                        width: 22, height: 22,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : Text(
+                        _t('Inizia', 'Get started'),
+                        key: const ValueKey('onboarding-done'),
+                        style: const TextStyle(fontWeight: FontWeight.w800),
                       ),
-                    ),
-                  const Spacer(),
-                  Expanded(
-                    flex: 3,
-                    child: FilledButton(
-                      key: const ValueKey('onboarding-next'),
-                      style: FilledButton.styleFrom(
-                        minimumSize: const Size.fromHeight(54),
-                        backgroundColor: const Color(0xFFEBA2DA),
-                        foregroundColor: const Color(0xFF28144C),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(29),
-                        ),
-                      ),
-                      onPressed: _saving
-                          ? null
-                          : () => _step == 2 ? _complete() : _go(_step + 1),
-                      child: _saving
-                          ? const SizedBox(
-                              width: 22,
-                              height: 22,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            )
-                          : Text(
-                              _step == 2
-                                  ? _t('Inizia', 'Get started')
-                                  : _t('Avanti', 'Continue'),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                    ),
-                  ),
-                ],
+                back: Text(
+                  _t('Indietro', 'Back'),
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+                backStyle: TextButton.styleFrom(
+                  foregroundColor: Colors.white70,
+                  minimumSize: const Size(65, 48),
+                ),
+                nextStyle: TextButton.styleFrom(
+                  backgroundColor: const Color(0xFFEBA2DA),
+                  foregroundColor: const Color(0xFF28144C),
+                  minimumSize: const Size(106, 51),
+                  shape: const StadiumBorder(),
+                ),
+                doneStyle: TextButton.styleFrom(
+                  backgroundColor: const Color(0xFFEBA2DA),
+                  foregroundColor: const Color(0xFF28144C),
+                  minimumSize: const Size(116, 51),
+                  shape: const StadiumBorder(),
+                ),
+                dotsDecorator: const DotsDecorator(
+                  color: Color(0x66FFFFFF),
+                  activeColor: Color(0xFFF0A8E5),
+                  size: Size(8, 8),
+                  activeSize: Size(24, 8),
+                  spacing: EdgeInsets.symmetric(horizontal: 4),
+                  activeShape: StadiumBorder(),
+                ),
+                controlsPadding: const EdgeInsets.symmetric(
+                  horizontal: 21, vertical: 11,
+                ),
+                controlsMargin: const EdgeInsets.only(bottom: 12),
+                hideBottomOnKeyboard: true,
               ),
             ),
           ],
