@@ -4,27 +4,38 @@ import '../main.dart';
 import '../models/models.dart';
 import 'ui_helpers.dart';
 
-/// Left swipe reveals a delete action, inspired by animated_selection_slide.
-/// No destructive action is performed merely by swiping.
+/// Compact edit/delete actions revealed only by a horizontal swipe.
+/// The row and action rail share the available width: neither the amount nor
+/// the icons can be painted on top of the other.
 class BalynSwipeDeleteTile extends StatefulWidget {
   const BalynSwipeDeleteTile({
     required this.item,
     required this.child,
+    required this.onEdit,
     super.key,
   });
 
   final FinanceTransaction item;
   final Widget child;
+  final VoidCallback onEdit;
 
   @override
   State<BalynSwipeDeleteTile> createState() => _BalynSwipeDeleteTileState();
 }
 
 class _BalynSwipeDeleteTileState extends State<BalynSwipeDeleteTile> {
-  static const double _actionWidth = 88;
-  double _offset = 0;
+  static const double _actionWidth = 94;
+  double _reveal = 0;
   bool _dragging = false;
   bool _deleting = false;
+
+  void _close() {
+    if (!mounted) return;
+    setState(() {
+      _dragging = false;
+      _reveal = 0;
+    });
+  }
 
   Future<void> _delete() async {
     if (_deleting) return;
@@ -35,9 +46,10 @@ class _BalynSwipeDeleteTileState extends State<BalynSwipeDeleteTile> {
           content: Text('Gestisci questo movimento dalla sezione Anticipi.'),
         ),
       );
-      setState(() => _offset = 0);
+      _close();
       return;
     }
+
     final approved = await confirmDestructiveAction(
       context,
       title: 'Eliminare il movimento?',
@@ -45,102 +57,120 @@ class _BalynSwipeDeleteTileState extends State<BalynSwipeDeleteTile> {
     );
     if (!mounted) return;
     if (!approved) {
-      setState(() => _offset = 0);
+      _close();
       return;
     }
+
     setState(() => _deleting = true);
     try {
       final current = state.transactionById(widget.item.id);
       if (current != null) await state.deleteTransaction(current);
-      if (mounted) setState(() => _offset = 0);
+      _close();
     } catch (error) {
       if (!mounted) return;
-      setState(() {
-        _deleting = false;
-        _offset = 0;
-      });
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(error.toString())));
+      _close();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error.toString())),
+      );
+    } finally {
+      if (mounted) setState(() => _deleting = false);
     }
+  }
+
+  void _edit() {
+    _close();
+    widget.onEdit();
+  }
+
+  Widget _action({
+    required String keySuffix,
+    required String tooltip,
+    required IconData icon,
+    required Color background,
+    required VoidCallback? onPressed,
+  }) {
+    return Tooltip(
+      message: tooltip,
+      child: Material(
+        color: background,
+        shape: const CircleBorder(),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          key: ValueKey('swipe-$keySuffix-${widget.item.id}'),
+          onTap: onPressed,
+          customBorder: const CircleBorder(),
+          child: SizedBox(
+            width: 39,
+            height: 39,
+            child: Center(
+              child: Icon(icon, color: Colors.white, size: 19),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final reducedMotion = MediaQuery.disableAnimationsOf(context);
-    final color = Theme.of(context).colorScheme.error;
-    return ClipRect(
-      child: Stack(
-        alignment: Alignment.centerRight,
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onHorizontalDragStart: (_) => setState(() => _dragging = true),
+      onHorizontalDragUpdate: (details) => setState(() {
+        _reveal = (_reveal - details.delta.dx).clamp(0.0, _actionWidth);
+      }),
+      onHorizontalDragEnd: (details) => setState(() {
+        _dragging = false;
+        _reveal = _reveal >= _actionWidth * .42 ? _actionWidth : 0;
+      }),
+      onHorizontalDragCancel: _close,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: SizedBox(
-                width: _actionWidth,
-                child: Material(
-                  color: color,
-                  borderRadius: BorderRadius.circular(15),
-                  clipBehavior: Clip.antiAlias,
-                  child: InkWell(
-                    key: ValueKey('swipe-delete-${widget.item.id}'),
-                    onTap: _deleting ? null : _delete,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (_deleting)
-                          const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Colors.white,
+          Expanded(child: widget.child),
+          AnimatedContainer(
+            duration: _dragging || reducedMotion
+                ? Duration.zero
+                : const Duration(milliseconds: 225),
+            curve: Curves.easeOutCubic,
+            width: _reveal,
+            // The rail isn't built while closed, including in a transparent
+            // parent card; no red controls can bleed through at rest.
+            child: _reveal < .5
+                ? const SizedBox.shrink()
+                : ClipRect(
+                    child: OverflowBox(
+                      alignment: Alignment.centerRight,
+                      minWidth: _actionWidth,
+                      maxWidth: _actionWidth,
+                      child: SizedBox(
+                        width: _actionWidth,
+                        height: 46,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            _action(
+                              keySuffix: 'edit',
+                              tooltip: 'Modifica movimento',
+                              icon: Icons.edit_rounded,
+                              background: const Color(0xFF597DD8),
+                              onPressed: _deleting ? null : _edit,
                             ),
-                          )
-                        else
-                          const Icon(
-                            Icons.delete_outline_rounded,
-                            color: Colors.white,
-                            size: 23,
-                          ),
-                        const SizedBox(height: 3),
-                        const Text(
-                          'Elimina',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w800,
-                          ),
+                            const SizedBox(width: 7),
+                            _action(
+                              keySuffix: 'delete',
+                              tooltip: 'Elimina movimento',
+                              icon: Icons.delete_outline_rounded,
+                              background: Theme.of(context).colorScheme.error,
+                              onPressed: _deleting ? null : _delete,
+                            ),
+                            const SizedBox(width: 3),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ),
-          ),
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onHorizontalDragStart: (_) => setState(() => _dragging = true),
-            onHorizontalDragUpdate: (details) => setState(() {
-              _offset = (_offset + details.delta.dx).clamp(-_actionWidth, 0.0);
-            }),
-            onHorizontalDragEnd: (details) => setState(() {
-              _dragging = false;
-              _offset = _offset < -_actionWidth * .46 ? -_actionWidth : 0;
-            }),
-            onHorizontalDragCancel: () => setState(() {
-              _dragging = false;
-              _offset = 0;
-            }),
-            child: AnimatedContainer(
-              duration: _dragging || reducedMotion
-                  ? Duration.zero
-                  : const Duration(milliseconds: 220),
-              curve: Curves.easeOutCubic,
-              transform: Matrix4.translationValues(_offset, 0, 0),
-              child: Material(color: Colors.transparent, child: widget.child),
-            ),
           ),
         ],
       ),
