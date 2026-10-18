@@ -6,6 +6,7 @@ import '../l10n/app_i18n.dart';
 import '../main.dart';
 import '../models/models.dart';
 import '../widgets/ui_helpers.dart';
+import '../widgets/balyn_onboarding_velvet.dart';
 
 /// Three-page, first-install-only flow. Uses Balyn's real account and settings APIs.
 class BalynOnboardingFlow extends StatefulWidget {
@@ -246,8 +247,12 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
     return Scaffold(
       backgroundColor: const Color(0xFF211248),
       resizeToAvoidBottomInset: true,
-      body: SafeArea(
-        child: Column(
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          const Positioned.fill(child: BalynOnboardingVelvet()),
+          SafeArea(
+            child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(24, 10, 24, 13),
@@ -581,7 +586,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                 ],
                 animationDuration: 460,
                 curve: Curves.easeOutCubic,
-                globalBackgroundColor: const Color(0xFF211248),
+                globalBackgroundColor: Colors.transparent,
                 freeze: _saving || _skipping,
                 scrollPhysics: const BouncingScrollPhysics(),
                 showNextButton: true,
@@ -664,6 +669,8 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
             ),
           ],
         ),
+      ),
+        ],
       ),
     );
   }
