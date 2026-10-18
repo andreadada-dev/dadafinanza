@@ -12,6 +12,7 @@ import '../widgets/balyn_recent_transactions_card.dart';
 import '../widgets/balyn_motion.dart';
 import '../widgets/balyn_editorial_components.dart';
 import '../widgets/home_dashboard_widget.dart';
+import '../widgets/balyn_home_widget_catalog.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_context_analytics_screen.dart';
 import 'account_context_transactions_screen.dart';
@@ -252,6 +253,8 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                     padding: const EdgeInsets.fromLTRB(16, 9, 16, 130),
                     sliver: SliverList.list(
                       children: [
+                        // Account-specific overview remains unchanged.
+                        if (!isTotal) ...[
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -332,6 +335,7 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                           ),
                         ),
                         const SizedBox(height: 20),
+                        ],
                         if (state.userAccounts.isEmpty) ...[
                           _SetupBlock(
                             onAccount: () => showAccountEditor(context),
@@ -344,51 +348,16 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                           const SizedBox(height: 20),
                         ],
                         if (isTotal) ...[
-                          if (state.advanceReceivableCents > 0 ||
-                              state.advancePayableCents > 0 ||
-                              smartInsight != null) ...[
-                            const SizedBox(height: 28),
-                            const SectionTitle('Per te'),
-                            if (state.advanceReceivableCents > 0 ||
-                                state.advancePayableCents > 0)
-                              ListTile(
-                                contentPadding: EdgeInsets.zero,
-                                leading: const Icon(Icons.handshake_outlined),
-                                title: const Text(
-                                  'Anticipi',
-                                  style: TextStyle(fontWeight: FontWeight.w700),
-                                ),
-                                subtitle: Text(
-                                  state.hideBalance
-                                      ? '•••• da ricevere · •••• da restituire'
-                                      : '${moneyFor(state, Money.fromCents(state.advanceReceivableCents))} da ricevere · ${moneyFor(state, Money.fromCents(state.advancePayableCents))} da restituire',
-                                ),
-                                trailing: const Icon(
-                                  Icons.chevron_right_rounded,
-                                ),
-                                onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => const AdvancesScreen(),
-                                  ),
-                                ),
-                              ),
-                            if (smartInsight case final insight?)
-                              _InsightRow(insight: insight),
-                          ],
-                          const SizedBox(height: 30),
                           if (secondaryDashboardWidgets.isEmpty)
                             EmptyState(
                               icon: Icons.dashboard_customize_outlined,
                               title: 'Nessuna sezione aggiuntiva',
-                              subtitle:
-                                  'Il riepilogo principale resta fisso in alto. Riattiva qui le sezioni che vuoi vedere.',
+                              subtitle: 'Scegli le sezioni da mostrare nella Home.',
                               action: TextButton.icon(
                                 onPressed: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) =>
-                                        const DashboardCustomizerScreen(),
+                                    builder: (_) => const DashboardCustomizerScreen(),
                                   ),
                                 ),
                                 icon: const Icon(Icons.tune_rounded),
@@ -398,9 +367,7 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                           else
                             ...secondaryDashboardWidgets.map(
                               (config) => Padding(
-                                key: ValueKey(
-                                  'context-home-${config.type.name}',
-                                ),
+                                key: ValueKey('context-home-${config.type.name}'),
                                 padding: EdgeInsets.only(
                                   bottom: switch (config.size) {
                                     DashboardWidgetSize.small => 20,
@@ -411,10 +378,41 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                                 child: BalynReveal(
                                   delay: Duration(
                                     milliseconds:
-                                        90 +
-                                        (config.orderIndex.clamp(0, 6) * 30),
+                                        90 + (config.orderIndex.clamp(0, 6) * 30),
                                   ),
-                                  child: HomeDashboardWidget(config: config),
+                                  child: HomeDashboardWidget(
+                                    config: config,
+                                    onAnalytics: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => AccountContextAnalyticsScreen(
+                                          accountId: effectiveAccountId,
+                                          onAccountChanged: onAccountChanged,
+                                        ),
+                                      ),
+                                    ),
+                                    onSeeAll: () => onShowActivity(0),
+                                    onAccountChanged: onAccountChanged,
+                                    onManageAccounts: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => const AccountManagementScreen(),
+                                      ),
+                                    ),
+                                    onAdvances: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => const AdvancesScreen(),
+                                      ),
+                                    ),
+                                    highlight: smartInsight == null
+                                        ? null
+                                        : _InsightRow(insight: smartInsight),
+                                    showAccountsInsideSummary:
+                                        BalynHomeWidgetCatalog.showAccountsInsideSnapshot(
+                                      dashboardWidgets,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -546,21 +544,10 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
   }
 
   List<DashboardWidgetConfig> _visibleDashboardWidgets(AppState state) {
-    if (state.dashboardWidgets.isEmpty) {
-      return [
-        for (var i = 0; i < _fallbackTypes.length; i++)
-          DashboardWidgetConfig(
-            type: _fallbackTypes[i],
-            enabled: true,
-            orderIndex: i,
-            size: DashboardWidgetSize.medium,
-          ),
-      ];
-    }
-    final items = state.dashboardWidgets
+    final items = BalynHomeWidgetCatalog.normalize(state.dashboardWidgets)
         .where((item) => item.enabled)
         .toList(growable: false);
-    return [...items]..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
+    return items..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
   }
 
   _HomeInsight? _smartInsight(AppState state) {
