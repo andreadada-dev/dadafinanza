@@ -421,112 +421,127 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                           const SizedBox(height: 28),
                           BalynEditorialSurface(
                             radius: 22,
-                            padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 7),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 13,
+                              vertical: 7,
+                            ),
                             child: Column(
                               children: [
-                          ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            leading: Icon(
-                              accountIcon(selectedAccount.iconKey),
-                              color: Color(selectedAccount.colorValue),
-                            ),
-                            title: const Text(
-                              'Apri conto',
-                              style: TextStyle(fontWeight: FontWeight.w700),
-                            ),
-                            subtitle: Text(
-                              'Modifica e gestisci ${selectedAccount.name}',
-                            ),
-                            trailing: const Icon(Icons.chevron_right_rounded),
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => SafeAccountDetailScreen(
-                                  accountId: selectedAccount.id,
+                                ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  leading: Icon(
+                                    accountIcon(selectedAccount.iconKey),
+                                    color: Color(selectedAccount.colorValue),
+                                  ),
+                                  title: const Text(
+                                    'Apri conto',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    'Modifica e gestisci ${selectedAccount.name}',
+                                  ),
+                                  trailing: const Icon(
+                                    Icons.chevron_right_rounded,
+                                  ),
+                                  onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => SafeAccountDetailScreen(
+                                        accountId: selectedAccount.id,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                          ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            leading: Icon(
-                              Icons.insights_rounded,
-                              color: Color(selectedAccount.colorValue),
-                            ),
-                            title: const Text(
-                              'Analytics del conto',
-                              style: TextStyle(fontWeight: FontWeight.w700),
-                            ),
-                            subtitle: const Text(
-                              'Entrate, spese e andamento del conto',
-                            ),
-                            trailing: const Icon(Icons.chevron_right_rounded),
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => AccountContextAnalyticsScreen(
-                                  accountId: selectedAccount.id,
-                                  onAccountChanged: onAccountChanged,
+                                ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  leading: Icon(
+                                    Icons.insights_rounded,
+                                    color: Color(selectedAccount.colorValue),
+                                  ),
+                                  title: const Text(
+                                    'Analytics del conto',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  subtitle: const Text(
+                                    'Entrate, spese e andamento del conto',
+                                  ),
+                                  trailing: const Icon(
+                                    Icons.chevron_right_rounded,
+                                  ),
+                                  onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          AccountContextAnalyticsScreen(
+                                            accountId: selectedAccount.id,
+                                            onAccountChanged: onAccountChanged,
+                                          ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
                               ],
                             ),
                           ),
                           const SizedBox(height: 24),
                           BalynEditorialSurface(
                             radius: 22,
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 15,
+                            ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                          SectionTitle(
-                            'Prossime scadenze',
-                            trailing: TextButton(
-                              onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => const RecurringScreen(),
-                                ),
-                              ),
-                              child: const Text('Apri'),
-                            ),
-                          ),
-                          if (upcoming.isEmpty)
-                            const Text(
-                              'Nessuna scadenza prevista per questo conto',
-                            )
-                          else
-                            ...upcoming
-                                .take(3)
-                                .map(
-                                  (item) => ListTile(
-                                    contentPadding: EdgeInsets.zero,
-                                    leading: Icon(
-                                      Icons.repeat_rounded,
-                                      color: transactionColor(
-                                        context,
-                                        item.type,
+                                SectionTitle(
+                                  'Prossime scadenze',
+                                  trailing: TextButton(
+                                    onPressed: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => const RecurringScreen(),
                                       ),
                                     ),
-                                    title: Text(item.name),
-                                    subtitle: Text(
-                                      DateFormat(
-                                        'EEE d MMM',
-                                        AppI18n.intlLocale,
-                                      ).format(item.nextDate),
-                                    ),
-                                    trailing: Text(
-                                      state.hideBalance
-                                          ? '••••'
-                                          : moneyFor(state, item.amount),
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
+                                    child: const Text('Apri'),
                                   ),
                                 ),
+                                if (upcoming.isEmpty)
+                                  const Text(
+                                    'Nessuna scadenza prevista per questo conto',
+                                  )
+                                else
+                                  ...upcoming
+                                      .take(3)
+                                      .map(
+                                        (item) => ListTile(
+                                          contentPadding: EdgeInsets.zero,
+                                          leading: Icon(
+                                            Icons.repeat_rounded,
+                                            color: transactionColor(
+                                              context,
+                                              item.type,
+                                            ),
+                                          ),
+                                          title: Text(item.name),
+                                          subtitle: Text(
+                                            DateFormat(
+                                              'EEE d MMM',
+                                              AppI18n.intlLocale,
+                                            ).format(item.nextDate),
+                                          ),
+                                          trailing: Text(
+                                            state.hideBalance
+                                                ? '••••'
+                                                : moneyFor(state, item.amount),
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                               ],
                             ),
                           ),
@@ -671,25 +686,30 @@ class _SetupBlock extends StatelessWidget {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-      Text('Configura Balyn', style: Theme.of(context).textTheme.headlineSmall),
-      const SizedBox(height: 8),
-      const Text('Parti dal primo conto oppure registra subito un movimento.'),
-      const SizedBox(height: 16),
-      Wrap(
-        spacing: 12,
-        children: [
-          FilledButton.icon(
-            onPressed: onAccount,
-            icon: const Icon(Icons.add_rounded),
-            label: const Text('Crea primo conto'),
-          ),
-          TextButton.icon(
-            onPressed: onMovement,
-            icon: const Icon(Icons.receipt_long_outlined),
-            label: const Text('Registra movimento'),
-          ),
-        ],
-      ),
+        Text(
+          'Configura Balyn',
+          style: Theme.of(context).textTheme.headlineSmall,
+        ),
+        const SizedBox(height: 8),
+        const Text(
+          'Parti dal primo conto oppure registra subito un movimento.',
+        ),
+        const SizedBox(height: 16),
+        Wrap(
+          spacing: 12,
+          children: [
+            FilledButton.icon(
+              onPressed: onAccount,
+              icon: const Icon(Icons.add_rounded),
+              label: const Text('Crea primo conto'),
+            ),
+            TextButton.icon(
+              onPressed: onMovement,
+              icon: const Icon(Icons.receipt_long_outlined),
+              label: const Text('Registra movimento'),
+            ),
+          ],
+        ),
       ],
     ),
   );

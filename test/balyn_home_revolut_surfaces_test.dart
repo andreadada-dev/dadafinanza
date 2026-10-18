@@ -5,12 +5,15 @@ import 'package:balyn/widgets/balyn_editorial_components.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final homeWidgets =
-      File('lib/widgets/home_dashboard_widget.dart').readAsStringSync();
-  final accountHome =
-      File('lib/screens/account_context_home_screen.dart').readAsStringSync();
-  final content =
-      File('lib/widgets/balyn_revolut_home_content.dart').readAsStringSync();
+  final homeWidgets = File(
+    'lib/widgets/home_dashboard_widget.dart',
+  ).readAsStringSync();
+  final accountHome = File(
+    'lib/screens/account_context_home_screen.dart',
+  ).readAsStringSync();
+  final content = File(
+    'lib/widgets/balyn_revolut_home_content.dart',
+  ).readAsStringSync();
 
   test('Every configurable Home widget has a Revolut surface', () {
     // No unstyled fallthrough: legacy, accounts, metrics, categories and
@@ -20,8 +23,14 @@ void main() {
     expect(homeWidgets, contains('return _AccountsBlock(config: config)'));
     expect(homeWidgets, contains('case DashboardWidgetType.topCategories:'));
     expect(homeWidgets, contains('child: _TopCategoriesDonut(config: config)'));
-    expect(homeWidgets, contains('return _SizedCanonicalWidget(config: config)'));
-    expect(homeWidgets, contains('child: CanonicalDashboardWidget(config: config)'));
+    expect(
+      homeWidgets,
+      contains('return _SizedCanonicalWidget(config: config)'),
+    );
+    expect(
+      homeWidgets,
+      contains('child: CanonicalDashboardWidget(config: config)'),
+    );
     expect(homeWidgets, contains('class _MetricBlock'));
     expect(homeWidgets, contains('class _AccountsBlock'));
     expect(homeWidgets, contains('case DashboardWidgetType.smartHighlights:'));
@@ -34,18 +43,22 @@ void main() {
   });
 
   test('Already styled sections are not wrapped twice', () {
-    final recentStart =
-        homeWidgets.indexOf('case DashboardWidgetType.recentTransactions:');
-    final recentEnd =
-        homeWidgets.indexOf('case DashboardWidgetType.financialSnapshot:');
+    final recentStart = homeWidgets.indexOf(
+      'case DashboardWidgetType.recentTransactions:',
+    );
+    final recentEnd = homeWidgets.indexOf(
+      'case DashboardWidgetType.financialSnapshot:',
+    );
     final recent = homeWidgets.substring(recentStart, recentEnd);
     expect(recent, contains('BalynRecentTransactionsCard('));
     expect(recent, isNot(contains('BalynEditorialSurface(')));
 
-    final monthStart =
-        homeWidgets.indexOf('case DashboardWidgetType.monthlyOverview:');
-    final monthEnd =
-        homeWidgets.indexOf('case DashboardWidgetType.recentTransactions:');
+    final monthStart = homeWidgets.indexOf(
+      'case DashboardWidgetType.monthlyOverview:',
+    );
+    final monthEnd = homeWidgets.indexOf(
+      'case DashboardWidgetType.recentTransactions:',
+    );
     final month = homeWidgets.substring(monthStart, monthEnd);
     expect(RegExp(r'BalynEditorialSurface\(').allMatches(month).length, 1);
   });
@@ -57,7 +70,10 @@ void main() {
     expect(accountHome, contains('child: AccountCategoryCarousel('));
     expect(accountHome, contains("'Prossime scadenze'"));
     expect(accountHome, contains('class _SetupBlock'));
-    expect(accountHome, contains('Widget build(BuildContext context) => BalynEditorialSurface('));
+    expect(
+      accountHome,
+      contains('Widget build(BuildContext context) => BalynEditorialSurface('),
+    );
   });
 
   testWidgets('Revolut surface uses matching flat colors in dark and light', (
@@ -76,9 +92,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         theme: ThemeData.dark(),
-        home: const Scaffold(
-          body: BalynEditorialSurface(child: Text('Conti')),
-        ),
+        home: const Scaffold(body: BalynEditorialSurface(child: Text('Conti'))),
       ),
     );
     expect(find.text('Conti'), findsOneWidget);

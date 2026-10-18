@@ -125,19 +125,19 @@ class HomeDashboardWidget extends StatelessWidget {
               radius: 22,
               padding: const EdgeInsets.fromLTRB(14, 15, 14, 10),
               child: BalynRevolutHomeContent(
-              embedded: true,
-              income: state.monthTotal(TransactionType.income),
-              expense: state.monthTotal(TransactionType.expense),
-              available: state.safeToSpend,
-              hideValues: state.hideBalance,
-              showAccounts: showAccountsInsideSummary,
-              maxAccounts: switch (config.size) {
-                DashboardWidgetSize.small => 2,
-                DashboardWidgetSize.medium => 4,
-                DashboardWidgetSize.large => null,
-              },
-              onSelectAccount: onAccountChanged ?? (_) {},
-              onManageAccounts: onManageAccounts ?? () {},
+                embedded: true,
+                income: state.monthTotal(TransactionType.income),
+                expense: state.monthTotal(TransactionType.expense),
+                available: state.safeToSpend,
+                hideValues: state.hideBalance,
+                showAccounts: showAccountsInsideSummary,
+                maxAccounts: switch (config.size) {
+                  DashboardWidgetSize.small => 2,
+                  DashboardWidgetSize.medium => 4,
+                  DashboardWidgetSize.large => null,
+                },
+                onSelectAccount: onAccountChanged ?? (_) {},
+                onManageAccounts: onManageAccounts ?? () {},
               ),
             ),
           ],
@@ -149,29 +149,29 @@ class HomeDashboardWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            const SectionTitle('Per te'),
-            if (state.advanceReceivableCents > 0 ||
-                state.advancePayableCents > 0)
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: const Icon(Icons.handshake_outlined),
-                title: const Text(
-                  'Anticipi',
-                  style: TextStyle(fontWeight: FontWeight.w700),
+              const SectionTitle('Per te'),
+              if (state.advanceReceivableCents > 0 ||
+                  state.advancePayableCents > 0)
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.handshake_outlined),
+                  title: const Text(
+                    'Anticipi',
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  subtitle: Text(
+                    state.hideBalance
+                        ? '•••• da ricevere · •••• da restituire'
+                        : '${moneyFor(state, state.advanceReceivableCents / 100)} da ricevere · ${moneyFor(state, state.advancePayableCents / 100)} da restituire',
+                  ),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: onAdvances,
                 ),
-                subtitle: Text(
-                  state.hideBalance
-                      ? '•••• da ricevere · •••• da restituire'
-                      : '${moneyFor(state, state.advanceReceivableCents / 100)} da ricevere · ${moneyFor(state, state.advancePayableCents / 100)} da restituire',
-                ),
-                trailing: const Icon(Icons.chevron_right_rounded),
-                onTap: onAdvances,
-              ),
-            if (highlight != null) highlight!,
-            if (highlight == null &&
-                state.advanceReceivableCents == 0 &&
-                state.advancePayableCents == 0)
-              const Text('Nessun suggerimento al momento'),
+              if (highlight != null) highlight!,
+              if (highlight == null &&
+                  state.advanceReceivableCents == 0 &&
+                  state.advancePayableCents == 0)
+                const Text('Nessun suggerimento al momento'),
             ],
           ),
         );
@@ -243,10 +243,7 @@ class _SizedCanonicalWidget extends StatelessWidget {
     };
     return BalynEditorialSurface(
       radius: 22,
-      padding: EdgeInsets.symmetric(
-        horizontal: 18,
-        vertical: 19 + padding,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 18, vertical: 19 + padding),
       child: CanonicalDashboardWidget(config: config),
     );
   }
@@ -285,25 +282,28 @@ class _MetricBlock extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title, style: Theme.of(context).textTheme.labelMedium),
-        if (showIcon) ...[const SizedBox(height: 8), Icon(icon, size: 24)],
-        const SizedBox(height: 6),
-        FittedBox(
-          fit: BoxFit.scaleDown,
-          alignment: Alignment.centerLeft,
-          child: valueColor == null
-              ? Text(value, style: style?.copyWith(fontWeight: FontWeight.w800))
-              : BalynShaderText(
-                  value,
-                  seed: valueColor!,
-                  style: style?.copyWith(fontWeight: FontWeight.w800),
-                ),
-        ),
-        if (showDetail && detail != null) ...[
-          const SizedBox(height: 4),
-          Text(detail!, style: Theme.of(context).textTheme.bodySmall),
+          if (showIcon) ...[const SizedBox(height: 8), Icon(icon, size: 24)],
+          const SizedBox(height: 6),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: valueColor == null
+                ? Text(
+                    value,
+                    style: style?.copyWith(fontWeight: FontWeight.w800),
+                  )
+                : BalynShaderText(
+                    value,
+                    seed: valueColor!,
+                    style: style?.copyWith(fontWeight: FontWeight.w800),
+                  ),
+          ),
+          if (showDetail && detail != null) ...[
+            const SizedBox(height: 4),
+            Text(detail!, style: Theme.of(context).textTheme.bodySmall),
+          ],
         ],
-      ],
-    ),
+      ),
     );
   }
 }
@@ -330,73 +330,73 @@ class _AccountsBlock extends StatelessWidget {
         children: [
           SectionTitle(
             'Conti',
-          trailing: TextButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const AccountManagementScreen(),
-              ),
-            ),
-            child: const Text('Tutti'),
-          ),
-        ),
-        if (accounts.isEmpty)
-          EmptyState(
-            icon: Icons.account_balance_wallet_outlined,
-            title: 'Nessun conto',
-            subtitle:
-                'Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.',
-            action: TextButton.icon(
-              onPressed: () => showAccountEditor(context),
-              icon: const Icon(Icons.add_rounded),
-              label: const Text('Crea conto'),
-            ),
-          )
-        else
-          ...accounts.map(
-            (account) => ListTile(
-              contentPadding: EdgeInsets.zero,
-              minVerticalPadding: 10,
-              leading: Container(
-                width: 42,
-                height: 42,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.onSurface.withValues(
-                    alpha: Theme.of(context).brightness == Brightness.dark
-                        ? .07
-                        : .045,
-                  ),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: BalynShaderIcon(
-                  accountIcon(account.iconKey),
-                  seed: Color(account.colorValue),
-                  size: 21,
-                ),
-              ),
-              title: Text(
-                account.name,
-                style: const TextStyle(fontWeight: FontWeight.w700),
-              ),
-              subtitle: config.size == DashboardWidgetSize.small
-                  ? null
-                  : Text(account.accountType.label),
-              trailing: Text(
-                state.hideBalance || account.hideBalance
-                    ? '••••'
-                    : moneyFor(state, account.balance),
-                style: const TextStyle(fontWeight: FontWeight.w800),
-              ),
-              onTap: () => Navigator.push(
+            trailing: TextButton(
+              onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) =>
-                      SafeAccountDetailScreen(accountId: account.id),
+                  builder: (_) => const AccountManagementScreen(),
+                ),
+              ),
+              child: const Text('Tutti'),
+            ),
+          ),
+          if (accounts.isEmpty)
+            EmptyState(
+              icon: Icons.account_balance_wallet_outlined,
+              title: 'Nessun conto',
+              subtitle:
+                  'Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.',
+              action: TextButton.icon(
+                onPressed: () => showAccountEditor(context),
+                icon: const Icon(Icons.add_rounded),
+                label: const Text('Crea conto'),
+              ),
+            )
+          else
+            ...accounts.map(
+              (account) => ListTile(
+                contentPadding: EdgeInsets.zero,
+                minVerticalPadding: 10,
+                leading: Container(
+                  width: 42,
+                  height: 42,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.onSurface.withValues(
+                      alpha: Theme.of(context).brightness == Brightness.dark
+                          ? .07
+                          : .045,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: BalynShaderIcon(
+                    accountIcon(account.iconKey),
+                    seed: Color(account.colorValue),
+                    size: 21,
+                  ),
+                ),
+                title: Text(
+                  account.name,
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
+                subtitle: config.size == DashboardWidgetSize.small
+                    ? null
+                    : Text(account.accountType.label),
+                trailing: Text(
+                  state.hideBalance || account.hideBalance
+                      ? '••••'
+                      : moneyFor(state, account.balance),
+                  style: const TextStyle(fontWeight: FontWeight.w800),
+                ),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) =>
+                        SafeAccountDetailScreen(accountId: account.id),
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );

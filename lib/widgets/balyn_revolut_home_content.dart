@@ -26,6 +26,7 @@ class BalynRevolutHomeContent extends StatelessWidget {
   final bool hideValues;
   final bool showAccounts;
   final int? maxAccounts;
+
   /// When inside a Revolut section surface, avoid extra nested card layers.
   final bool embedded;
   final ValueChanged<int?> onSelectAccount;
