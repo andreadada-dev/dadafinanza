@@ -112,66 +112,80 @@ class _BalynSwipeDeleteTileState extends State<BalynSwipeDeleteTile> {
   @override
   Widget build(BuildContext context) {
     final reducedMotion = MediaQuery.disableAnimationsOf(context);
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onHorizontalDragStart: (_) => setState(() => _dragging = true),
-      onHorizontalDragUpdate: (details) => setState(() {
-        _reveal = (_reveal - details.delta.dx).clamp(0.0, _actionWidth);
-      }),
-      onHorizontalDragEnd: (details) => setState(() {
-        _dragging = false;
-        _reveal = _reveal >= _actionWidth * .42 ? _actionWidth : 0;
-      }),
-      onHorizontalDragCancel: _close,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(child: widget.child),
-          AnimatedContainer(
-            duration: _dragging || reducedMotion
-                ? Duration.zero
-                : const Duration(milliseconds: 225),
-            curve: Curves.easeOutCubic,
-            width: _reveal,
-            // The rail isn't built while closed, including in a transparent
-            // parent card; no red controls can bleed through at rest.
-            child: _reveal < .5
-                ? const SizedBox.shrink()
-                : ClipRect(
-                    child: OverflowBox(
-                      alignment: Alignment.centerRight,
-                      minWidth: _actionWidth,
-                      maxWidth: _actionWidth,
-                      child: SizedBox(
-                        width: _actionWidth,
-                        height: 46,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            _action(
-                              keySuffix: 'edit',
-                              tooltip: 'Modifica movimento',
-                              icon: Icons.edit_rounded,
-                              background: const Color(0xFF597DD8),
-                              onPressed: _deleting ? null : _edit,
-                            ),
-                            const SizedBox(width: 7),
-                            _action(
-                              keySuffix: 'delete',
-                              tooltip: 'Elimina movimento',
-                              icon: Icons.delete_outline_rounded,
-                              background: Theme.of(context).colorScheme.error,
-                              onPressed: _deleting ? null : _delete,
-                            ),
-                            const SizedBox(width: 3),
-                          ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Keep the content's layout width constant. Resizing it during a
+        // horizontal drag causes the Home page to reflow (and conflicts
+        // visually with the parent three-page horizontal PageView).
+        final rowWidth = constraints.maxWidth;
+        return GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onHorizontalDragStart: (_) => setState(() => _dragging = true),
+          onHorizontalDragUpdate: (details) => setState(() {
+            _reveal = (_reveal - details.delta.dx).clamp(0.0, _actionWidth);
+          }),
+          onHorizontalDragEnd: (details) => setState(() {
+            _dragging = false;
+            _reveal = _reveal >= _actionWidth * .42 ? _actionWidth : 0;
+          }),
+          onHorizontalDragCancel: _close,
+          child: ClipRect(
+            child: Stack(
+              alignment: Alignment.centerRight,
+              children: [
+                if (_reveal >= .5)
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: ClipRect(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        widthFactor: _reveal / _actionWidth,
+                        child: SizedBox(
+                          width: _actionWidth,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              _action(
+                                keySuffix: 'edit',
+                                tooltip: 'Modifica movimento',
+                                icon: Icons.edit_rounded,
+                                background: const Color(0xFF597DD8),
+                                onPressed: _deleting ? null : _edit,
+                              ),
+                              const SizedBox(width: 7),
+                              _action(
+                                keySuffix: 'delete',
+                                tooltip: 'Elimina movimento',
+                                icon: Icons.delete_outline_rounded,
+                                background: Theme.of(context).colorScheme.error,
+                                onPressed: _deleting ? null : _delete,
+                              ),
+                              const SizedBox(width: 3),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
+                AnimatedContainer(
+                  key: const ValueKey('swipe-full-width-content'),
+                  duration: _dragging || reducedMotion
+                      ? Duration.zero
+                      : const Duration(milliseconds: 225),
+                  curve: Curves.easeOutCubic,
+                  transform: Matrix4.translationValues(-_reveal, 0, 0),
+                  child: SizedBox(
+                    width: rowWidth,
+                    child: widget.child,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
