@@ -55,7 +55,8 @@ void main() {
       expect(hero, contains('_showAccountSelector(context)'));
       expect(hero, contains('onHorizontalDragEnd:'));
       expect(hero, contains('_switchAccount('));
-      expect(hero, contains('_AnimatedAccountDiamond'));
+      expect(hero, isNot(contains('_AnimatedAccountDiamond')));
+      expect(hero, contains('Icons.keyboard_arrow_down_rounded'));
       expect(hero, contains('Color(matching.first.colorValue)'));
       expect(hero, contains('ColorTween(end: _accent)'));
       expect(hero, contains('useBasicPalette: currentAccountId == null'));
