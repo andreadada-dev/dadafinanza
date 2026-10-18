@@ -1,0 +1,38 @@
+name: Normalize compact movement swipe once
+
+on:
+  push:
+    branches:
+      - fix/balyn-visible-liquid-background
+    paths:
+      - .github/workflows/normalize-compact-swipe-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  normalize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: true
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.2'
+          channel: stable
+          cache: true
+      - name: Format compact swipe and test
+        shell: bash
+        run: |
+          set -euo pipefail
+          flutter pub get
+          dart format lib/widgets/balyn_swipe_delete_tile.dart lib/screens/transaction_screens.dart lib/screens/account_context_transactions_screen.dart lib/widgets/balyn_recent_transactions_card.dart test/balyn_swipe_delete_test.dart
+          dart format --output=none --set-exit-if-changed lib test
+          git diff --check
+          git add lib/widgets/balyn_swipe_delete_tile.dart lib/screens/transaction_screens.dart lib/screens/account_context_transactions_screen.dart lib/widgets/balyn_recent_transactions_card.dart test/balyn_swipe_delete_test.dart
+          if ! git diff --cached --quiet; then
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "style: normalize compact movement swipe rail"
+            git push origin "HEAD:fix/balyn-visible-liquid-background"
+          fi
