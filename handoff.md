@@ -35,6 +35,9 @@ data, but move old visuals to the redesigned design system.
 | “Personalizza Home”: drag-reorder, add/hide, expandable real preview | `lib/screens/settings_screen.dart` (DashboardCustomizerScreen) |
 | Persisted Home widget catalog, migration and deduplication | `lib/widgets/balyn_home_widget_catalog.dart` |
 | Skeleton loading when real data is pending | `lib/widgets/balyn_data_skeleton.dart` |
+| All three Revolut-style onboarding pages and flow/persistence | `lib/screens/balyn_onboarding_flow.dart` |
+| Final onboarding section list (exact Cue ExpandingCards spring style) | `lib/widgets/balyn_onboarding_feature_accordion.dart` |
+| Full onboarding copy for IT, EN, ES, FR, DE, PT, RU, ZH, JA, KO, AR, HI | `lib/l10n/balyn_onboarding_l10n.dart` |
 | Onboarding velvet shader (distinct from the Home mesh) | `lib/widgets/balyn_onboarding_velvet.dart`, `shaders/balyn_onboarding_velvet.frag` |
 | Shared global shader clock and non-restarting screen background | `lib/widgets/balyn_shader_system.dart` |
 
@@ -118,6 +121,31 @@ localizations, while most of Balyn still imports
 libraries coexist; without the material_ui delegate Cue will assert
 "No MaterialLocalizations found" when a menu opens in debug builds.
 Use both delegates in widget integration tests of the action menu too.
+
+### Onboarding accordion (new)
+
+On the third onboarding page, use the real Cue example as reference:
+`Milad-Akarie/cue/example/lib/examples/expanding_cards.dart`.
+The in-project implementation is
+`lib/widgets/balyn_onboarding_feature_accordion.dart`, where
+`Cue.onToggle` + `Spring.smooth()` + `Actor` animate one open section at
+a time. Match the screenshots: dark charcoal rows in one group, rounded
+endcaps, one lighter raised panel when selected, compact leading icon,
+chevron rotates, and body copy expands with clip/fade/slide/blur. Four
+sections explain Panoramica, Movimenti e Analisi, Anticipi and Pianifica.
+Do not restore separate bordered widgets or static tour cards.
+
+**All onboarding screens are now Revolut/Balyn charcoal style**. Preserve
+subtle shared-clock velvet in the background but darken it behind content,
+using `BalynPalette` for surface and purple CTA. The app settings and
+first-account setup must still save exactly as before.
+
+The onboarding uses a dedicated complete dictionary for **all 12 languages**.
+Language selection must immediately redraw the current page and accordion
+before the user taps Done. For additions, extend the dictionary in every
+language, then update
+`test/balyn_onboarding_accordion_test.dart`; never revert to only Italian
+and English for new explanatory copy.
 
 ## Verification and future workflow
 
