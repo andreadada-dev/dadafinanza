@@ -13,18 +13,20 @@ class BalynRecentTransactionsCard extends StatelessWidget {
     required this.items,
     required this.hideAmounts,
     required this.onSeeAll,
+    this.maxItems = 3,
     super.key,
   });
 
   final List<FinanceTransaction> items;
   final bool hideAmounts;
   final VoidCallback onSeeAll;
+  final int maxItems;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final light = theme.brightness == Brightness.light;
-    final visible = items.take(3).toList(growable: false);
+    final visible = items.take(maxItems).toList(growable: false);
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
