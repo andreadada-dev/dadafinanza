@@ -4,6 +4,7 @@ import 'package:balyn/l10n/localized_material.dart';
 
 import 'balyn_cue_section_bar.dart';
 import 'balyn_cue_three_dots_action.dart';
+import 'balyn_omesh_hero_background.dart';
 
 import '../main.dart';
 import '../models/models.dart';
@@ -181,8 +182,10 @@ class BalynRevolutHomeHero extends StatelessWidget {
               tween: ColorTween(end: _accent),
               duration: const Duration(milliseconds: 550),
               curve: Curves.easeInOutCubic,
-              builder: (context, color, _) =>
-                  CustomPaint(painter: _AccountWavesPainter(color ?? _accent)),
+              builder: (context, color, _) => BalynOMeshHeroBackground(
+                accent: color ?? _accent,
+                useBasicPalette: currentAccountId == null,
+              ),
             ),
           ),
           Positioned.fill(
@@ -734,77 +737,3 @@ class _HeroAction extends StatelessWidget {
   }
 }
 
-class _AccountWavesPainter extends CustomPainter {
-  const _AccountWavesPainter(this.base);
-  final Color base;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final rect = Offset.zero & size;
-    final bright = Color.lerp(base, Colors.white, .18)!;
-    final deep = Color.lerp(base, Colors.black, .18)!;
-    canvas.drawRect(
-      rect,
-      Paint()
-        ..shader = LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [bright, base, deep],
-          stops: const [0, .56, 1],
-        ).createShader(rect),
-    );
-    final glow = Rect.fromCenter(
-      center: Offset(size.width * .81, size.height * .38),
-      width: size.width * 1.1,
-      height: size.height * .86,
-    );
-    canvas.drawOval(
-      glow,
-      Paint()
-        ..shader = RadialGradient(
-          colors: [
-            Colors.white.withValues(alpha: .24),
-            Colors.white.withValues(alpha: .06),
-            Colors.white.withValues(alpha: 0),
-          ],
-        ).createShader(glow),
-    );
-    final ribbon = Path()
-      ..moveTo(-size.width * .22, size.height * .99)
-      ..cubicTo(
-        size.width * .35,
-        size.height * .92,
-        size.width * .80,
-        size.height * .63,
-        size.width * 1.06,
-        size.height * .27,
-      );
-    canvas.drawPath(
-      ribbon,
-      Paint()
-        ..color = Colors.white.withValues(alpha: .37)
-        ..strokeWidth = 26
-        ..style = PaintingStyle.stroke
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 25),
-    );
-    canvas.drawPath(
-      ribbon,
-      Paint()
-        ..shader = LinearGradient(
-          colors: [
-            Colors.white.withValues(alpha: 0),
-            Colors.white.withValues(alpha: .23),
-            Colors.white.withValues(alpha: .42),
-            Colors.white.withValues(alpha: 0),
-          ],
-        ).createShader(rect)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 8
-        ..strokeCap = StrokeCap.round,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant _AccountWavesPainter oldDelegate) =>
-      oldDelegate.base != base;
-}
