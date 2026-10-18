@@ -13,6 +13,7 @@ flutter:
   shaders:
     - shaders/balyn_background.frag
     - shaders/balyn_ink.frag
+    - shaders/balyn_onboarding_velvet.frag
 
 dependencies:
   flutter:
