@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math' as math;
 
 import 'package:balyn/l10n/localized_material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,6 +10,7 @@ import '../main.dart';
 import '../models/models.dart';
 import '../services/attachment_service.dart';
 import 'ui_helpers.dart';
+import 'balyn_shader_system.dart';
 
 /// The transaction is edited in place: no QuickAddPage or nested form route.
 /// Changes are committed atomically through AppState.updateTransaction.
@@ -327,19 +329,8 @@ class _BalynTransactionDetailContentState
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
-        child: Column(
-          children: [
-            for (var i = 0; i < children.length; i++) ...[
-              if (i > 0)
-                Divider(
-                  height: 1,
-                  thickness: .7,
-                  color: theme.colorScheme.onSurface.withValues(alpha: .075),
-                ),
-              children[i],
-            ],
-          ],
-        ),
+        // No horizontal separators: whitespace defines each field.
+        child: Column(children: children),
       ),
     );
   }
@@ -349,10 +340,49 @@ class _BalynTransactionDetailContentState
     required String value,
     VoidCallback? onTap,
     IconData? icon,
+    Color? valueColor,
     Key? key,
   }) {
     final scheme = Theme.of(context).colorScheme;
     final editable = onTap != null;
+    final ink = valueColor == null
+        ? (editable ? scheme.primary : scheme.onSurface)
+        : Colors.white;
+
+    Widget trailing = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (icon != null) ...[
+          Icon(icon, color: ink, size: 15),
+          const SizedBox(width: 5),
+        ],
+        Flexible(
+          child: Text(
+            value,
+            maxLines: 2,
+            textAlign: TextAlign.right,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: ink,
+            ),
+          ),
+        ),
+        if (editable) ...[
+          const SizedBox(width: 6),
+          Icon(Icons.edit_outlined, size: 14, color: ink),
+        ],
+      ],
+    );
+    if (valueColor != null) {
+      trailing = BalynShaderInk(
+        seed: valueColor,
+        feature: BalynShaderFeature.text,
+        motionMultiplier: 5,
+        child: trailing,
+      );
+    }
     return InkWell(
       key: key,
       onTap: onTap,
@@ -375,55 +405,8 @@ class _BalynTransactionDetailContentState
             Expanded(
               child: Align(
                 alignment: Alignment.centerRight,
-                child: Container(
-                  padding: const EdgeInsets.only(bottom: 4),
-                  decoration: editable
-                      ? BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              width: .85,
-                              color: scheme.primary.withValues(alpha: .30),
-                            ),
-                          ),
-                        )
-                      : null,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (icon != null) ...[
-                        Icon(
-                          icon,
-                          color: editable
-                              ? scheme.primary
-                              : scheme.onSurfaceVariant,
-                          size: 15,
-                        ),
-                        const SizedBox(width: 5),
-                      ],
-                      Flexible(
-                        child: Text(
-                          value,
-                          maxLines: 2,
-                          textAlign: TextAlign.right,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                            color: editable ? scheme.primary : scheme.onSurface,
-                          ),
-                        ),
-                      ),
-                      if (editable) ...[
-                        const SizedBox(width: 6),
-                        Icon(
-                          Icons.edit_outlined,
-                          size: 14,
-                          color: scheme.primary,
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
+                // Keep the pencil adjacent to its value, with no underline.
+                child: trailing,
               ),
             ),
           ],
@@ -471,14 +454,9 @@ class _BalynTransactionDetailContentState
                 hintText: hint,
                 isDense: true,
                 contentPadding: const EdgeInsets.symmetric(vertical: 9),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: scheme.primary.withValues(alpha: .30),
-                  ),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: scheme.primary),
-                ),
+                border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
                 suffixIcon: Icon(
                   Icons.edit_outlined,
                   size: 14,
@@ -531,87 +509,140 @@ class _BalynTransactionDetailContentState
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      DecoratedBox(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: scheme.primary.withValues(alpha: .28),
-                              width: .9,
-                            ),
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            Text(
-                              (_type == TransactionType.expense
-                                      ? '−'
-                                      : _type == TransactionType.income
-                                      ? '+'
-                                      : '') +
-                                  (state.currency == 'EUR'
-                                      ? '€'
-                                      : state.currency),
-                              style: theme.textTheme.headlineMedium?.copyWith(
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                            const SizedBox(width: 2),
-                            Expanded(
-                              child: TextField(
-                                key: const ValueKey('detail-amount'),
-                                focusNode: _amountFocus,
-                                controller: _amount,
-                                readOnly: protected,
-                                obscureText: hidden && !_revealAmount,
-                                keyboardType:
-                                    const TextInputType.numberWithOptions(
-                                      decimal: true,
-                                    ),
-                                style: theme.textTheme.headlineMedium?.copyWith(
+                      // Dynamic width: the edit icon follows the amount text
+                      // instead of being pushed to the far right of the row.
+                      ValueListenableBuilder<TextEditingValue>(
+                        valueListenable: _amount,
+                        builder: (context, amountValue, _) => LayoutBuilder(
+                          builder: (context, constraints) {
+                            final typeColor = transactionColor(context, _type);
+                            final amountStyle =
+                                theme.textTheme.headlineMedium?.copyWith(
+                                  fontSize: 35,
                                   fontWeight: FontWeight.w800,
+                                  height: 1.05,
+                                  color: Colors.white,
+                                ) ??
+                                const TextStyle(
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.white,
+                                );
+                            final prefix = (_type == TransactionType.expense
+                                    ? '−'
+                                    : _type == TransactionType.income
+                                    ? '+'
+                                    : '') +
+                                (state.currency == 'EUR'
+                                    ? '€'
+                                    : state.currency);
+                            final prefixPainter = TextPainter(
+                              text: TextSpan(text: prefix, style: amountStyle),
+                              textDirection: Directionality.of(context),
+                              maxLines: 1,
+                            )..layout();
+                            final numberPainter = TextPainter(
+                              text: TextSpan(
+                                text: amountValue.text.isEmpty
+                                    ? '0'
+                                    : amountValue.text,
+                                style: amountStyle,
+                              ),
+                              textDirection: Directionality.of(context),
+                              maxLines: 1,
+                            )..layout();
+                            final prefixWidth = prefixPainter.width;
+                            final numberWidth = numberPainter.width;
+                            prefixPainter.dispose();
+                            numberPainter.dispose();
+                            final maxNumberWidth = math.max(
+                              52.0,
+                              constraints.maxWidth -
+                                  prefixWidth -
+                                  (hidden ? 34.0 : 0.0) -
+                                  40.0,
+                            );
+                            final fieldWidth = math.min(
+                              math.max(52.0, numberWidth + 14),
+                              maxNumberWidth,
+                            );
+                            return Row(
+                              children: [
+                                BalynShaderText(
+                                  prefix,
+                                  seed: typeColor,
+                                  style: amountStyle,
                                 ),
-                                decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  contentPadding: EdgeInsets.symmetric(
-                                    vertical: 7,
+                                const SizedBox(width: 2),
+                                SizedBox(
+                                  width: fieldWidth,
+                                  child: BalynShaderInk(
+                                    seed: typeColor,
+                                    feature: BalynShaderFeature.text,
+                                    child: TextField(
+                                      key: const ValueKey('detail-amount'),
+                                      focusNode: _amountFocus,
+                                      controller: _amount,
+                                      readOnly: protected,
+                                      obscureText: hidden && !_revealAmount,
+                                      keyboardType:
+                                          const TextInputType.numberWithOptions(
+                                            decimal: true,
+                                          ),
+                                      style: amountStyle,
+                                      decoration: const InputDecoration(
+                                        border: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                        contentPadding: EdgeInsets.symmetric(
+                                          vertical: 7,
+                                        ),
+                                        isDense: true,
+                                      ),
+                                    ),
                                   ),
-                                  isDense: true,
                                 ),
-                              ),
-                            ),
-                            if (hidden)
-                              IconButton(
-                                tooltip: _revealAmount
-                                    ? 'Nascondi importo'
-                                    : 'Mostra importo',
-                                icon: Icon(
-                                  _revealAmount
-                                      ? Icons.visibility_off_outlined
-                                      : Icons.visibility_outlined,
-                                  size: 17,
+                                if (hidden)
+                                  IconButton(
+                                    tooltip: _revealAmount
+                                        ? 'Nascondi importo'
+                                        : 'Mostra importo',
+                                    icon: Icon(
+                                      _revealAmount
+                                          ? Icons.visibility_off_outlined
+                                          : Icons.visibility_outlined,
+                                      size: 17,
+                                      color: typeColor,
+                                    ),
+                                    onPressed: () => setState(
+                                      () => _revealAmount = !_revealAmount,
+                                    ),
+                                    constraints: const BoxConstraints(
+                                      minWidth: 32,
+                                      minHeight: 32,
+                                    ),
+                                    padding: EdgeInsets.zero,
+                                  ),
+                                IconButton(
+                                  key: const ValueKey('detail-amount-pencil'),
+                                  tooltip: 'Modifica importo',
+                                  icon: Icon(
+                                    Icons.edit_outlined,
+                                    size: 17,
+                                    color: typeColor,
+                                  ),
+                                  onPressed: protected
+                                      ? null
+                                      : () => _amountFocus.requestFocus(),
+                                  constraints: const BoxConstraints(
+                                    minWidth: 32,
+                                    minHeight: 32,
+                                  ),
+                                  padding: EdgeInsets.zero,
                                 ),
-                                onPressed: () => setState(
-                                  () => _revealAmount = !_revealAmount,
-                                ),
-                              ),
-                            IconButton(
-                              key: const ValueKey('detail-amount-pencil'),
-                              tooltip: 'Modifica importo',
-                              icon: Icon(
-                                Icons.edit_outlined,
-                                size: 16,
-                                color: scheme.primary,
-                              ),
-                              onPressed: protected
-                                  ? null
-                                  : () => _amountFocus.requestFocus(),
-                              constraints: const BoxConstraints(
-                                minWidth: 32,
-                                minHeight: 32,
-                              ),
-                              padding: EdgeInsets.zero,
-                            ),
-                          ],
+                              ],
+                            );
+                          },
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -622,7 +653,7 @@ class _BalynTransactionDetailContentState
                               ? category?.name ?? _type.label
                               : value.text.trim(),
                           style: TextStyle(
-                            color: scheme.primary,
+                            color: transactionColor(context, _type),
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
                           ),
@@ -680,6 +711,7 @@ class _BalynTransactionDetailContentState
                     key: const ValueKey('detail-type'),
                     label: 'Tipo',
                     value: _type.label,
+                    valueColor: transactionColor(context, _type),
                     icon: Icons.swap_horiz_rounded,
                     onTap: protected ? null : _chooseType,
                   ),
@@ -687,7 +719,10 @@ class _BalynTransactionDetailContentState
                     key: const ValueKey('detail-source'),
                     label: _type == TransactionType.transfer ? 'Da' : 'Conto',
                     value: account?.name ?? 'Conto non disponibile',
-                    icon: Icons.account_balance_wallet_outlined,
+                    valueColor: account == null ? null : Color(account.colorValue),
+                    icon: account == null
+                        ? Icons.account_balance_wallet_outlined
+                        : accountIcon(account.iconKey),
                     onTap: protected ? null : _chooseAccount,
                   ),
                   if (_type == TransactionType.transfer)
@@ -695,6 +730,7 @@ class _BalynTransactionDetailContentState
                       key: const ValueKey('detail-target'),
                       label: 'A',
                       value: target?.name ?? 'Seleziona conto',
+                      valueColor: target == null ? null : Color(target.colorValue),
                       icon: Icons.east_rounded,
                       onTap: protected
                           ? null
@@ -705,6 +741,9 @@ class _BalynTransactionDetailContentState
                       key: const ValueKey('detail-category'),
                       label: 'Categoria',
                       value: category?.name ?? 'Senza categoria',
+                      valueColor: category == null
+                          ? null
+                          : Color(category.colorValue),
                       icon: category == null
                           ? Icons.category_outlined
                           : categoryIcon(category.iconKey),
