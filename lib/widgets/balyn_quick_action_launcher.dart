@@ -1,9 +1,7 @@
 import 'package:balyn/l10n/localized_material.dart';
-import 'package:cue/cue.dart';
 
-/// A single corner action that reveals the app's destinations. Inspired by
-/// the separated circular action in Cue's bottom_bar.dart example.
-class BalynQuickActionLauncher extends StatelessWidget {
+/// A single contrasting action button with a staggered, size-aware expansion.
+class BalynQuickActionLauncher extends StatefulWidget {
   const BalynQuickActionLauncher({
     required this.expanded,
     required this.showHome,
@@ -26,6 +24,102 @@ class BalynQuickActionLauncher extends StatelessWidget {
   final VoidCallback? onLongPress;
 
   @override
+  State<BalynQuickActionLauncher> createState() =>
+      _BalynQuickActionLauncherState();
+}
+
+class _BalynQuickActionLauncherState extends State<BalynQuickActionLauncher>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 380),
+    reverseDuration: const Duration(milliseconds: 270),
+    value: widget.expanded ? 1 : 0,
+  );
+
+  @override
+  void didUpdateWidget(covariant BalynQuickActionLauncher oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.expanded == widget.expanded) return;
+    if (widget.expanded) {
+      _controller.forward();
+    } else {
+      _controller.reverse();
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Widget _entry({
+    required int position,
+    required String id,
+    required String label,
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
+    final delay = position * .11;
+    final curved = CurvedAnimation(
+      parent: _controller,
+      curve: Interval(delay, (delay + .65).clamp(0.0, 1.0),
+        curve: Curves.easeOutCubic),
+      reverseCurve: Curves.easeInCubic,
+    );
+    return ClipRect(
+      child: SizeTransition(
+        sizeFactor: curved,
+        axisAlignment: 1,
+        child: FadeTransition(
+          opacity: curved,
+          child: SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(.18, .20),
+              end: Offset.zero,
+            ).animate(curved),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: SizedBox(
+                width: 172,
+                height: 49,
+                child: Material(
+                  elevation: 7,
+                  color: const Color(0xFF262331),
+                  borderRadius: BorderRadius.circular(25),
+                  clipBehavior: Clip.antiAlias,
+                  child: InkWell(
+                    key: ValueKey('quick-nav-$id'),
+                    onTap: onTap,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            label,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Icon(icon, size: 22, color: Colors.white),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     final reduced = MediaQuery.disableAnimationsOf(context);
     return Column(
@@ -33,123 +127,50 @@ class BalynQuickActionLauncher extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         IgnorePointer(
-          ignoring: !expanded,
-          child: Cue.onToggle(
-            toggled: expanded,
-            motion: .smooth(),
-            acts: [.fadeIn(), .scale(from: .88), .slideY(from: .12)],
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 13),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  if (showHome)
-                    _QuickDestination(
-                      id: 'home',
-                      label: 'Home',
-                      icon: Icons.home_rounded,
-                      onTap: onHome,
-                    ),
-                  _QuickDestination(
-                    id: 'create',
-                    label: 'Nuovo movimento',
-                    icon: Icons.add_rounded,
-                    onTap: onCreate,
-                  ),
-                  _QuickDestination(
-                    id: 'advances',
-                    label: 'Anticipi',
-                    icon: Icons.handshake_outlined,
-                    onTap: onAdvances,
-                  ),
-                  _QuickDestination(
-                    id: 'planning',
-                    label: 'Pianifica',
-                    icon: Icons.event_note_outlined,
-                    onTap: onPlanning,
-                  ),
-                ],
-              ),
-            ),
+          ignoring: !widget.expanded,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              if (widget.showHome)
+                _entry(position: 0, id: 'home', label: 'Home',
+                  icon: Icons.home_rounded, onTap: widget.onHome),
+              _entry(position: 0, id: 'create', label: 'Movimento',
+                icon: Icons.add_rounded, onTap: widget.onCreate),
+              _entry(position: 1, id: 'advances', label: 'Anticipi',
+                icon: Icons.handshake_outlined, onTap: widget.onAdvances),
+              _entry(position: 2, id: 'planning', label: 'Pianifica',
+                icon: Icons.event_note_outlined, onTap: widget.onPlanning),
+              const SizedBox(height: 7),
+            ],
           ),
         ),
         Semantics(
           button: true,
-          label: expanded ? 'Chiudi azioni' : 'Apri azioni',
-          expanded: expanded,
+          label: widget.expanded ? 'Chiudi azioni' : 'Apri azioni',
+          expanded: widget.expanded,
           child: GestureDetector(
-            onLongPress: onLongPress,
+            onLongPress: widget.onLongPress,
             child: FloatingActionButton(
               key: const ValueKey('quick-launcher'),
               heroTag: 'balyn-quick-launcher',
-              elevation: 7,
-              backgroundColor: const Color(0xFF19181F),
+              elevation: 9,
+              backgroundColor: const Color(0xFF8157F7),
               foregroundColor: Colors.white,
               shape: const CircleBorder(),
-              onPressed: onToggle,
+              onPressed: widget.onToggle,
               child: AnimatedRotation(
-                turns: expanded ? .125 : 0,
+                turns: widget.expanded ? .125 : 0,
                 duration: reduced
                     ? Duration.zero
                     : const Duration(milliseconds: 310),
                 curve: Curves.easeOutCubic,
-                child: const Icon(Icons.add_rounded, size: 29),
+                child: const Icon(Icons.add_rounded, size: 30),
               ),
             ),
           ),
         ),
       ],
-    );
-  }
-}
-
-class _QuickDestination extends StatelessWidget {
-  const _QuickDestination({
-    required this.id,
-    required this.label,
-    required this.icon,
-    required this.onTap,
-  });
-
-  final String id;
-  final String label;
-  final IconData icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Material(
-        color: const Color(0xFF19181F),
-        elevation: 5,
-        shadowColor: Colors.black26,
-        borderRadius: BorderRadius.circular(28),
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          key: ValueKey('quick-nav-$id'),
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  label,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Icon(icon, size: 22, color: Colors.white),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

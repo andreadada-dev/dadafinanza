@@ -23,7 +23,6 @@ class BalynCueSectionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final reduced = MediaQuery.disableAnimationsOf(context);
     final progress = page.clamp(0.0, 2.0);
     return Container(
       key: const ValueKey('cue-home-sections'),
@@ -73,62 +72,51 @@ class BalynCueSectionBar extends StatelessWidget {
                             key: ValueKey('home-segment-$i'),
                             borderRadius: BorderRadius.circular(26),
                             onTap: () => onSelected(i),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                            child: Center(
+                              child: Stack(
+                                alignment: Alignment.center,
                                 children: [
-                                  Cue.onToggle(
-                                    toggled: selectedTab == i,
-                                    motion: .smooth(),
-                                    acts: [.scale(from: .88)],
+                                  Opacity(
+                                    opacity: 1 - weight[i],
                                     child: Icon(
                                       tabs[i].$2,
-                                      size: 19,
-                                      color: Color.lerp(
-                                        Colors.white70,
-                                        const Color(0xFF17151F),
-                                        weight[i],
-                                      ),
+                                      size: 20,
+                                      color: Colors.white70,
                                     ),
                                   ),
-                                  // The text opens with the sliding pill, rather
-                                  // than popping in after the drag is released.
-                                  Flexible(
-                                    child: ClipRect(
-                                      child: SizedBox(
-                                        width: weight[i] * 88,
-                                        child: Opacity(
-                                          opacity: reduced
-                                              ? (selectedTab == i ? 1 : 0)
-                                              : weight[i],
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                              left: 6,
-                                            ),
-                                            child: Text(
-                                              tabs[i].$1,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.fade,
-                                              softWrap: false,
-                                              style: const TextStyle(
-                                                color: Color(0xFF17151F),
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 12,
-                                              ),
-                                            ),
+                                  Opacity(
+                                    opacity: weight[i],
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Cue.onToggle(
+                                          toggled: selectedTab == i,
+                                          motion: .smooth(),
+                                          acts: [.scale(from: .93)],
+                                          child: Icon(
+                                            tabs[i].$2,
+                                            size: 20,
+                                            color: const Color(0xFF17151F),
                                           ),
                                         ),
-                                      ),
+                                        const SizedBox(width: 7),
+                                        Text(
+                                          tabs[i].$1,
+                                          maxLines: 1,
+                                          softWrap: false,
+                                          style: const TextStyle(
+                                            color: Color(0xFF17151F),
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
-                          ),
-                        ),
+                            ),                        ),
                       ),
                     ),
                 ],
