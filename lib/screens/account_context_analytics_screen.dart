@@ -17,7 +17,6 @@ import '../widgets/balyn_balance_analytics_charts.dart';
 import '../widgets/home_dashboard_widget.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_management_screen.dart';
-import 'transaction_screens.dart';
 
 enum _AnalyticsPeriod { today, week, month, year, custom }
 
@@ -1253,48 +1252,6 @@ class _AnalyticsSwipeChevron extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class _CategoryPeriodPage extends StatelessWidget {
-  const _CategoryPeriodPage({
-    required this.title,
-    required this.accountId,
-    required this.categoryId,
-    required this.from,
-    required this.to,
-  });
-
-  final String title;
-  final int? accountId;
-  final int categoryId;
-  final DateTime from;
-  final DateTime to;
-
-  @override
-  Widget build(BuildContext context) {
-    final state = AppScope.of(context);
-    final items = AccountContextService.transactionsFor(state, accountId).where(
-      (item) {
-        if (item.date.isBefore(from) || !item.date.isBefore(to)) return false;
-        if (item.categoryId == categoryId) return true;
-        return state
-            .splitsFor(item.id)
-            .any((split) => split.categoryId == categoryId);
-      },
-    ).toList()..sort((a, b) => b.date.compareTo(a.date));
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: items.isEmpty
-          ? const Center(child: Text('Nessun movimento'))
-          : ListView.separated(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-              itemCount: items.length,
-              separatorBuilder: (_, __) => const Divider(height: 1),
-              itemBuilder: (context, index) =>
-                  TransactionListTile(item: items[index]),
-            ),
     );
   }
 }
