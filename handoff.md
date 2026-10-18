@@ -107,6 +107,18 @@ font scales.
 - No overly saturated/gratuitous gradients or background reinitialization
   when navigating.
 
+## Cue + Flutter 3.47 compatibility
+
+The `cue` package uses the new standalone `package:material_ui` material
+localizations, while most of Balyn still imports
+`package:flutter/material.dart`. These are **different runtime types**.
+`lib/main.dart` explicitly installs both
+`mui.GlobalMaterialLocalizations.delegate` and Flutter's
+`GlobalMaterialLocalizations.delegate`. Do not remove either while the two
+libraries coexist; without the material_ui delegate Cue will assert
+"No MaterialLocalizations found" when a menu opens in debug builds.
+Use both delegates in widget integration tests of the action menu too.
+
 ## Verification and future workflow
 
 - Use branch `fix/balyn-visible-liquid-background`.
