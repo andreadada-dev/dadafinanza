@@ -556,6 +556,9 @@ class CanonicalDashboardWidget extends StatelessWidget {
       case DashboardWidgetType.monthlyExpense:
       case DashboardWidgetType.safeToSpend:
       case DashboardWidgetType.accounts:
+      case DashboardWidgetType.monthlyOverview:
+      case DashboardWidgetType.financialSnapshot:
+      case DashboardWidgetType.smartHighlights:
         return const SizedBox.shrink();
       case DashboardWidgetType.monthlyCashFlow:
         return metric(
