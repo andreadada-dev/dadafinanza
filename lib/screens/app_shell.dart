@@ -102,7 +102,6 @@ class _BalynAppShellState extends State<BalynAppShell> {
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
-    final accent = Theme.of(context).colorScheme.tertiary;
     final effectiveAccountId =
         state.activeAccounts.any((a) => a.id == accountId) ? accountId : null;
     if (effectiveAccountId != accountId) {
