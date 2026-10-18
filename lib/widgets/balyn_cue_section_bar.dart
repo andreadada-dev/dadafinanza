@@ -18,7 +18,7 @@ class BalynCueSectionBar extends StatelessWidget {
   static const tabs = <(String, IconData)>[
     ('Panoramica', Icons.space_dashboard_rounded),
     ('Movimenti', Icons.receipt_long_outlined),
-    ('Attività', Icons.insights_outlined),
+    ('Analisi', Icons.insights_outlined),
   ];
 
   @override
