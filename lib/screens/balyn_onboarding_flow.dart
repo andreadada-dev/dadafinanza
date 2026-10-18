@@ -282,6 +282,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
                           Icons.language_rounded,
                           _t('Lingua', 'Language'),
                           DropdownButton<String>(
+                            isExpanded: true,
                             value: _language,
                             dropdownColor: const Color(0xFF392566),
                             style: const TextStyle(color: Colors.white),
@@ -302,6 +303,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
                           Icons.currency_exchange_rounded,
                           _t('Valuta', 'Currency'),
                           DropdownButton<String>(
+                            isExpanded: true,
                             value: _currency,
                             dropdownColor: const Color(0xFF392566),
                             style: const TextStyle(color: Colors.white),
@@ -351,6 +353,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
                           Icons.account_balance_outlined,
                           _t('Tipo', 'Type'),
                           DropdownButton<AccountType>(
+                            isExpanded: true,
                             value: _type,
                             dropdownColor: const Color(0xFF392566),
                             style: const TextStyle(color: Colors.white),
