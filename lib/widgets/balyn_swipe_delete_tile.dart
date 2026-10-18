@@ -31,8 +31,9 @@ class _BalynSwipeDeleteTileState extends State<BalynSwipeDeleteTile> {
     final state = AppScope.of(context);
     if (state.isAdvanceProtectedTransaction(widget.item)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text(
-          'Gestisci questo movimento dalla sezione Anticipi.')),
+        const SnackBar(
+          content: Text('Gestisci questo movimento dalla sezione Anticipi.'),
+        ),
       );
       setState(() => _offset = 0);
       return;
@@ -58,9 +59,9 @@ class _BalynSwipeDeleteTileState extends State<BalynSwipeDeleteTile> {
         _deleting = false;
         _offset = 0;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.toString())),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(error.toString())));
     }
   }
 
@@ -89,17 +90,28 @@ class _BalynSwipeDeleteTileState extends State<BalynSwipeDeleteTile> {
                       children: [
                         if (_deleting)
                           const SizedBox(
-                            height: 20, width: 20,
-                            child: CircularProgressIndicator(strokeWidth: 2,
-                              color: Colors.white),
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
                           )
                         else
-                          const Icon(Icons.delete_outline_rounded,
-                            color: Colors.white, size: 23),
+                          const Icon(
+                            Icons.delete_outline_rounded,
+                            color: Colors.white,
+                            size: 23,
+                          ),
                         const SizedBox(height: 3),
-                        const Text('Elimina',
-                          style: TextStyle(color: Colors.white,
-                            fontSize: 11, fontWeight: FontWeight.w800)),
+                        const Text(
+                          'Elimina',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 11,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -111,13 +123,11 @@ class _BalynSwipeDeleteTileState extends State<BalynSwipeDeleteTile> {
             behavior: HitTestBehavior.opaque,
             onHorizontalDragStart: (_) => setState(() => _dragging = true),
             onHorizontalDragUpdate: (details) => setState(() {
-              _offset = (_offset + details.delta.dx)
-                  .clamp(-_actionWidth, 0.0);
+              _offset = (_offset + details.delta.dx).clamp(-_actionWidth, 0.0);
             }),
             onHorizontalDragEnd: (details) => setState(() {
               _dragging = false;
-              _offset = _offset < -_actionWidth * .46
-                  ? -_actionWidth : 0;
+              _offset = _offset < -_actionWidth * .46 ? -_actionWidth : 0;
             }),
             onHorizontalDragCancel: () => setState(() {
               _dragging = false;
@@ -125,7 +135,8 @@ class _BalynSwipeDeleteTileState extends State<BalynSwipeDeleteTile> {
             }),
             child: AnimatedContainer(
               duration: _dragging || reducedMotion
-                  ? Duration.zero : const Duration(milliseconds: 220),
+                  ? Duration.zero
+                  : const Duration(milliseconds: 220),
               curve: Curves.easeOutCubic,
               transform: Matrix4.translationValues(_offset, 0, 0),
               child: Material(

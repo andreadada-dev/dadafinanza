@@ -94,9 +94,9 @@ class _BalynTransactionDetailContentState
   }
 
   void _error(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   Future<void> _pickDate() async {
@@ -113,8 +113,13 @@ class _BalynTransactionDetailContentState
     );
     if (!mounted) return;
     setState(() {
-      _date = DateTime(picked.year, picked.month, picked.day,
-        time?.hour ?? _date.hour, time?.minute ?? _date.minute);
+      _date = DateTime(
+        picked.year,
+        picked.month,
+        picked.day,
+        time?.hour ?? _date.hour,
+        time?.minute ?? _date.minute,
+      );
       _changed = true;
     });
   }
@@ -158,7 +163,8 @@ class _BalynTransactionDetailContentState
       _error('Un trasferimento richiede due conti diversi.');
       return;
     }
-    if (_type != TransactionType.transfer && _categoryId == null &&
+    if (_type != TransactionType.transfer &&
+        _categoryId == null &&
         widget.item.categoryId != null) {
       _error('Seleziona una categoria.');
       return;
@@ -179,8 +185,12 @@ class _BalynTransactionDetailContentState
         categoryId: _type == TransactionType.transfer ? null : _categoryId,
         date: _date,
         note: _note.text.trim().isEmpty ? null : _note.text.trim(),
-        tags: _tags.text.split(',').map((s) => s.trim())
-            .where((s) => s.isNotEmpty).toSet().toList(),
+        tags: _tags.text
+            .split(',')
+            .map((s) => s.trim())
+            .where((s) => s.isNotEmpty)
+            .toSet()
+            .toList(),
         receiptPath: receipt,
         includeInAnalytics: _includeInAnalytics,
         updatedAt: DateTime.now(),
@@ -204,10 +214,14 @@ class _BalynTransactionDetailContentState
     final state = AppScope.of(context);
     final theme = Theme.of(context);
     final dark = theme.brightness == Brightness.dark;
-    final accounts = state.accounts.where((a) =>
-      (!a.isSystem && !a.isArchived && !a.isLocked) ||
-      a.id == widget.item.accountId ||
-      a.id == widget.item.toAccountId).toList();
+    final accounts = state.accounts
+        .where(
+          (a) =>
+              (!a.isSystem && !a.isArchived && !a.isLocked) ||
+              a.id == widget.item.accountId ||
+              a.id == widget.item.toAccountId,
+        )
+        .toList();
     final categories = state.categoriesFor(_type);
     final categoryIds = categories.map((e) => e.id).toSet();
     final accountIds = accounts.map((e) => e.id).toSet();
@@ -219,9 +233,12 @@ class _BalynTransactionDetailContentState
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 56),
         children: [
           Center(
-            child: Text('Dettaglio movimento',
+            child: Text(
+              'Dettaglio movimento',
               style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w700)),
+                fontWeight: FontWeight.w700,
+              ),
+            ),
           ),
           const SizedBox(height: 8),
           TextField(
@@ -230,7 +247,9 @@ class _BalynTransactionDetailContentState
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             textAlign: TextAlign.center,
             style: theme.textTheme.displaySmall?.copyWith(
-              fontWeight: FontWeight.w900, letterSpacing: -1),
+              fontWeight: FontWeight.w900,
+              letterSpacing: -1,
+            ),
             decoration: InputDecoration(
               prefixText: '${state.currency} ',
               labelText: 'Importo',
@@ -251,190 +270,255 @@ class _BalynTransactionDetailContentState
               ),
               OutlinedButton.icon(
                 onPressed: widget.onDelete,
-                icon: Icon(Icons.delete_outline_rounded,
-                    size: 18, color: actionColor),
+                icon: Icon(
+                  Icons.delete_outline_rounded,
+                  size: 18,
+                  color: actionColor,
+                ),
                 label: Text('Elimina', style: TextStyle(color: actionColor)),
               ),
             ],
           ),
           const SizedBox(height: 20),
-          _Section(title: 'Informazioni', children: [
-            DropdownButtonFormField<TransactionType>(
-              key: ValueKey('detail-type-${_type.name}'),
-              initialValue: _type,
-              decoration: const InputDecoration(
-                labelText: 'Tipo movimento', prefixIcon: Icon(Icons.swap_horiz)),
-              items: [
-                for (final kind in TransactionType.values)
-                  DropdownMenuItem(value: kind, child: Text(kind.label)),
-              ],
-              onChanged: (v) {
-                if (v == null) return;
-                setState(() {
-                  _type = v;
-                  if (v != TransactionType.transfer) _toAccountId = null;
-                  if (v == TransactionType.transfer ||
-                      !state.categoriesFor(v).any((c) => c.id == _categoryId)) {
-                    _categoryId = null;
-                  }
-                  _changed = true;
-                });
-              },
-            ),
-            DropdownButtonFormField<int>(
-              key: ValueKey('detail-source-${_accountId ?? -1}'),
-              initialValue: accountIds.contains(_accountId)
-                  ? _accountId : null,
-              decoration: const InputDecoration(
-                labelText: 'Conto', prefixIcon: Icon(Icons.account_balance_wallet_outlined)),
-              isExpanded: true,
-              items: [
-                for (final account in accounts)
-                  DropdownMenuItem(value: account.id, child: Text(
-                    account.name, overflow: TextOverflow.ellipsis)),
-              ],
-              onChanged: (value) => setState(() {
-                _accountId = value;
-                if (_toAccountId == value) _toAccountId = null;
-                _changed = true;
-              }),
-            ),
-            if (_type == TransactionType.transfer)
-              DropdownButtonFormField<int>(
-                key: ValueKey('detail-target-${_toAccountId ?? -1}'),
-                initialValue: accountIds.contains(_toAccountId) &&
-                    _toAccountId != _accountId ? _toAccountId : null,
+          _Section(
+            title: 'Informazioni',
+            children: [
+              DropdownButtonFormField<TransactionType>(
+                key: ValueKey('detail-type-${_type.name}'),
+                initialValue: _type,
                 decoration: const InputDecoration(
-                  labelText: 'Conto destinazione',
-                  prefixIcon: Icon(Icons.east_rounded)),
+                  labelText: 'Tipo movimento',
+                  prefixIcon: Icon(Icons.swap_horiz),
+                ),
+                items: [
+                  for (final kind in TransactionType.values)
+                    DropdownMenuItem(value: kind, child: Text(kind.label)),
+                ],
+                onChanged: (v) {
+                  if (v == null) return;
+                  setState(() {
+                    _type = v;
+                    if (v != TransactionType.transfer) _toAccountId = null;
+                    if (v == TransactionType.transfer ||
+                        !state
+                            .categoriesFor(v)
+                            .any((c) => c.id == _categoryId)) {
+                      _categoryId = null;
+                    }
+                    _changed = true;
+                  });
+                },
+              ),
+              DropdownButtonFormField<int>(
+                key: ValueKey('detail-source-${_accountId ?? -1}'),
+                initialValue: accountIds.contains(_accountId)
+                    ? _accountId
+                    : null,
+                decoration: const InputDecoration(
+                  labelText: 'Conto',
+                  prefixIcon: Icon(Icons.account_balance_wallet_outlined),
+                ),
                 isExpanded: true,
                 items: [
                   for (final account in accounts)
-                    if (account.id != _accountId && !account.isSystem &&
-                        !account.isLocked && !account.isArchived)
-                      DropdownMenuItem(value: account.id,
-                        child: Text(account.name, overflow: TextOverflow.ellipsis)),
+                    DropdownMenuItem(
+                      value: account.id,
+                      child: Text(
+                        account.name,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                 ],
                 onChanged: (value) => setState(() {
-                  _toAccountId = value;
-                  _changed = true;
-                }),
-              )
-            else
-              DropdownButtonFormField<int?>(
-                key: ValueKey('detail-category-${_categoryId ?? -1}'),
-                initialValue: categoryIds.contains(_categoryId)
-                    ? _categoryId : null,
-                decoration: const InputDecoration(
-                  labelText: 'Categoria', prefixIcon: Icon(Icons.category_outlined)),
-                isExpanded: true,
-                items: [
-                  const DropdownMenuItem<int?>(
-                    value: null, child: Text('Senza categoria')),
-                  for (final category in categories)
-                    DropdownMenuItem<int?>(
-                      value: category.id,
-                      child: Text(category.name, overflow: TextOverflow.ellipsis)),
-                ],
-                onChanged: (value) => setState(() {
-                  _categoryId = value;
+                  _accountId = value;
+                  if (_toAccountId == value) _toAccountId = null;
                   _changed = true;
                 }),
               ),
-            ListTile(
-              key: const ValueKey('detail-date'),
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.calendar_today_outlined),
-              title: const Text('Data e ora'),
-              subtitle: Text(DateFormat(
-                'd MMM yyyy, HH:mm', AppI18n.intlLocale).format(_date)),
-              trailing: const Icon(Icons.chevron_right_rounded),
-              onTap: _pickDate,
-            ),
-          ]),
-          const SizedBox(height: 14),
-          _Section(title: 'Dettagli', children: [
-            TextField(
-              key: const ValueKey('detail-note'),
-              controller: _note,
-              maxLines: 2,
-              minLines: 1,
-              decoration: const InputDecoration(
-                labelText: 'Nota', prefixIcon: Icon(Icons.edit_note_outlined)),
-            ),
-            TextField(
-              key: const ValueKey('detail-tags'),
-              controller: _tags,
-              decoration: const InputDecoration(
-                labelText: 'Tag (separati da virgola)',
-                prefixIcon: Icon(Icons.sell_outlined)),
-            ),
-            SwitchListTile.adaptive(
-              contentPadding: EdgeInsets.zero,
-              title: const Text('Escludi dalle analisi'),
-              subtitle: const Text('Ignora il movimento nei grafici'),
-              value: !_includeInAnalytics,
-              onChanged: (excluded) => setState(() {
-                _includeInAnalytics = !excluded;
-                _changed = true;
-              }),
-            ),
-          ]),
-          const SizedBox(height: 14),
-          _Section(title: 'Ricevuta', children: [
-            Row(children: [
-              Expanded(child: TextButton.icon(
-                onPressed: _pickReceipt,
-                icon: const Icon(Icons.photo_camera_outlined),
-                label: Text(receipt == null && _newReceipt == null
-                    ? 'Aggiungi ricevuta' : 'Cambia ricevuta'),
-              )),
-              if (receipt != null || _newReceipt != null)
-                IconButton(
-                  tooltip: 'Rimuovi ricevuta',
-                  onPressed: () => setState(() {
-                    _newReceipt = null;
-                    _removeReceipt = true;
+              if (_type == TransactionType.transfer)
+                DropdownButtonFormField<int>(
+                  key: ValueKey('detail-target-${_toAccountId ?? -1}'),
+                  initialValue:
+                      accountIds.contains(_toAccountId) &&
+                          _toAccountId != _accountId
+                      ? _toAccountId
+                      : null,
+                  decoration: const InputDecoration(
+                    labelText: 'Conto destinazione',
+                    prefixIcon: Icon(Icons.east_rounded),
+                  ),
+                  isExpanded: true,
+                  items: [
+                    for (final account in accounts)
+                      if (account.id != _accountId &&
+                          !account.isSystem &&
+                          !account.isLocked &&
+                          !account.isArchived)
+                        DropdownMenuItem(
+                          value: account.id,
+                          child: Text(
+                            account.name,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                  ],
+                  onChanged: (value) => setState(() {
+                    _toAccountId = value;
                     _changed = true;
                   }),
-                  icon: Icon(Icons.delete_outline, color: actionColor),
+                )
+              else
+                DropdownButtonFormField<int?>(
+                  key: ValueKey('detail-category-${_categoryId ?? -1}'),
+                  initialValue: categoryIds.contains(_categoryId)
+                      ? _categoryId
+                      : null,
+                  decoration: const InputDecoration(
+                    labelText: 'Categoria',
+                    prefixIcon: Icon(Icons.category_outlined),
+                  ),
+                  isExpanded: true,
+                  items: [
+                    const DropdownMenuItem<int?>(
+                      value: null,
+                      child: Text('Senza categoria'),
+                    ),
+                    for (final category in categories)
+                      DropdownMenuItem<int?>(
+                        value: category.id,
+                        child: Text(
+                          category.name,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                  ],
+                  onChanged: (value) => setState(() {
+                    _categoryId = value;
+                    _changed = true;
+                  }),
                 ),
-            ]),
-            if (_newReceipt != null)
-              _ReceiptPreview(file: File(_newReceipt!.path))
-            else if (receipt != null)
-              FutureBuilder<File?>(
-                future: _attachmentService.resolve(receipt),
-                builder: (context, snapshot) => snapshot.data == null
-                    ? const SizedBox.shrink()
-                    : _ReceiptPreview(file: snapshot.data!),
+              ListTile(
+                key: const ValueKey('detail-date'),
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.calendar_today_outlined),
+                title: const Text('Data e ora'),
+                subtitle: Text(
+                  DateFormat(
+                    'd MMM yyyy, HH:mm',
+                    AppI18n.intlLocale,
+                  ).format(_date),
+                ),
+                trailing: const Icon(Icons.chevron_right_rounded),
+                onTap: _pickDate,
               ),
-          ]),
+            ],
+          ),
+          const SizedBox(height: 14),
+          _Section(
+            title: 'Dettagli',
+            children: [
+              TextField(
+                key: const ValueKey('detail-note'),
+                controller: _note,
+                maxLines: 2,
+                minLines: 1,
+                decoration: const InputDecoration(
+                  labelText: 'Nota',
+                  prefixIcon: Icon(Icons.edit_note_outlined),
+                ),
+              ),
+              TextField(
+                key: const ValueKey('detail-tags'),
+                controller: _tags,
+                decoration: const InputDecoration(
+                  labelText: 'Tag (separati da virgola)',
+                  prefixIcon: Icon(Icons.sell_outlined),
+                ),
+              ),
+              SwitchListTile.adaptive(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('Escludi dalle analisi'),
+                subtitle: const Text('Ignora il movimento nei grafici'),
+                value: !_includeInAnalytics,
+                onChanged: (excluded) => setState(() {
+                  _includeInAnalytics = !excluded;
+                  _changed = true;
+                }),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          _Section(
+            title: 'Ricevuta',
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: TextButton.icon(
+                      onPressed: _pickReceipt,
+                      icon: const Icon(Icons.photo_camera_outlined),
+                      label: Text(
+                        receipt == null && _newReceipt == null
+                            ? 'Aggiungi ricevuta'
+                            : 'Cambia ricevuta',
+                      ),
+                    ),
+                  ),
+                  if (receipt != null || _newReceipt != null)
+                    IconButton(
+                      tooltip: 'Rimuovi ricevuta',
+                      onPressed: () => setState(() {
+                        _newReceipt = null;
+                        _removeReceipt = true;
+                        _changed = true;
+                      }),
+                      icon: Icon(Icons.delete_outline, color: actionColor),
+                    ),
+                ],
+              ),
+              if (_newReceipt != null)
+                _ReceiptPreview(file: File(_newReceipt!.path))
+              else if (receipt != null)
+                FutureBuilder<File?>(
+                  future: _attachmentService.resolve(receipt),
+                  builder: (context, snapshot) => snapshot.data == null
+                      ? const SizedBox.shrink()
+                      : _ReceiptPreview(file: snapshot.data!),
+                ),
+            ],
+          ),
           if (state.splitsFor(widget.item.id).isNotEmpty) ...[
             const SizedBox(height: 14),
-            _Section(title: 'Suddivisioni', children: [
-              const Text('Modifica le suddivisioni dal menu azioni in alto.'),
-              for (final split in state.splitsFor(widget.item.id))
-                ListTile(
-                  title: Text(state.categoryById(split.categoryId)?.name
-                    ?? 'Categoria'),
-                  trailing: Text(moneyFor(state, split.amount)),
-                ),
-            ]),
+            _Section(
+              title: 'Suddivisioni',
+              children: [
+                const Text('Modifica le suddivisioni dal menu azioni in alto.'),
+                for (final split in state.splitsFor(widget.item.id))
+                  ListTile(
+                    title: Text(
+                      state.categoryById(split.categoryId)?.name ?? 'Categoria',
+                    ),
+                    trailing: Text(moneyFor(state, split.amount)),
+                  ),
+              ],
+            ),
           ],
           const SizedBox(height: 23),
           FilledButton.icon(
             key: const ValueKey('detail-save'),
             onPressed: _saving || !_changed ? null : _save,
             icon: _saving
-                ? const SizedBox.square(dimension: 17,
-                    child: CircularProgressIndicator(strokeWidth: 2))
+                ? const SizedBox.square(
+                    dimension: 17,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
                 : const Icon(Icons.check_rounded),
             label: const Text('Salva modifiche'),
             style: FilledButton.styleFrom(
               minimumSize: const Size.fromHeight(53),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(17)),
+                borderRadius: BorderRadius.circular(17),
+              ),
             ),
           ),
         ],
@@ -453,15 +537,23 @@ class _Section extends StatelessWidget {
     padding: const EdgeInsets.fromLTRB(16, 14, 16, 12),
     decoration: BoxDecoration(
       color: Theme.of(context).brightness == Brightness.dark
-          ? const Color(0xFF24242E) : Colors.white,
+          ? const Color(0xFF24242E)
+          : Colors.white,
       borderRadius: BorderRadius.circular(19),
     ),
-    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(title, style: Theme.of(context).textTheme.titleSmall
-        ?.copyWith(fontWeight: FontWeight.w800)),
-      const SizedBox(height: 9),
-      ...children,
-    ]),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: Theme.of(
+            context,
+          ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w800),
+        ),
+        const SizedBox(height: 9),
+        ...children,
+      ],
+    ),
   );
 }
 
@@ -472,9 +564,13 @@ class _ReceiptPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ClipRRect(
     borderRadius: BorderRadius.circular(14),
-    child: Image.file(file, height: 160, width: double.infinity,
+    child: Image.file(
+      file,
+      height: 160,
+      width: double.infinity,
       fit: BoxFit.cover,
       errorBuilder: (_, __, ___) =>
-          const ListTile(title: Text('Ricevuta non disponibile'))),
+          const ListTile(title: Text('Ricevuta non disponibile')),
+    ),
   );
 }

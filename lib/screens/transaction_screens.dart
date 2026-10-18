@@ -39,48 +39,48 @@ class TransactionListTile extends StatelessWidget {
     return BalynSwipeDeleteTile(
       item: item,
       child: ListTile(
-      contentPadding: EdgeInsets.zero,
-      minVerticalPadding: 10,
-      selected: selected,
-      leading: CircleAvatar(
-        backgroundColor: theme.colorScheme.onSurface.withValues(
-          alpha: theme.brightness == Brightness.dark ? .07 : .045,
+        contentPadding: EdgeInsets.zero,
+        minVerticalPadding: 10,
+        selected: selected,
+        leading: CircleAvatar(
+          backgroundColor: theme.colorScheme.onSurface.withValues(
+            alpha: theme.brightness == Brightness.dark ? .07 : .045,
+          ),
+          child: BalynShaderIcon(
+            category == null
+                ? (item.type == TransactionType.transfer
+                      ? Icons.swap_horiz_rounded
+                      : Icons.receipt_long_rounded)
+                : categoryIcon(category.iconKey),
+            seed: iconSeed,
+          ),
         ),
-        child: BalynShaderIcon(
-          category == null
-              ? (item.type == TransactionType.transfer
-                    ? Icons.swap_horiz_rounded
-                    : Icons.receipt_long_rounded)
-              : categoryIcon(category.iconKey),
-          seed: iconSeed,
+        title: Text(
+          item.type == TransactionType.transfer
+              ? 'Trasferimento'
+              : (category?.name ?? 'Senza categoria'),
+          style: const TextStyle(fontWeight: FontWeight.w700),
+        ),
+        subtitle: Text(
+          '${unassigned ? 'Non assegnato' : account?.name ?? 'Conto'} · ${DateFormat('dd MMM, HH:mm', AppI18n.intlLocale).format(item.date)}${item.note?.isNotEmpty == true ? ' · ${item.note}' : ''}',
+        ),
+        trailing: BalynShaderText(
+          item.type == TransactionType.expense
+              ? '-${moneyFor(state, item.amount)}'
+              : item.type == TransactionType.income
+              ? '+${moneyFor(state, item.amount)}'
+              : moneyFor(state, item.amount),
+          seed: amountSeed,
+          style: const TextStyle(fontWeight: FontWeight.w800),
+        ),
+        onLongPress: onLongPress,
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => TransactionDetailPage(transactionId: item.id),
+          ),
         ),
       ),
-      title: Text(
-        item.type == TransactionType.transfer
-            ? 'Trasferimento'
-            : (category?.name ?? 'Senza categoria'),
-        style: const TextStyle(fontWeight: FontWeight.w700),
-      ),
-      subtitle: Text(
-        '${unassigned ? 'Non assegnato' : account?.name ?? 'Conto'} · ${DateFormat('dd MMM, HH:mm', AppI18n.intlLocale).format(item.date)}${item.note?.isNotEmpty == true ? ' · ${item.note}' : ''}',
-      ),
-      trailing: BalynShaderText(
-        item.type == TransactionType.expense
-            ? '-${moneyFor(state, item.amount)}'
-            : item.type == TransactionType.income
-            ? '+${moneyFor(state, item.amount)}'
-            : moneyFor(state, item.amount),
-        seed: amountSeed,
-        style: const TextStyle(fontWeight: FontWeight.w800),
-      ),
-      onLongPress: onLongPress,
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => TransactionDetailPage(transactionId: item.id),
-        ),
-      ),
-    ),
     );
   }
 }
@@ -105,7 +105,9 @@ class TransactionDetailPage extends StatelessWidget {
     if (state.isAdvanceProtectedTransaction(item)) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Gestisci questo movimento da Anticipi.')),
+          const SnackBar(
+            content: Text('Gestisci questo movimento da Anticipi.'),
+          ),
         );
       }
       return;

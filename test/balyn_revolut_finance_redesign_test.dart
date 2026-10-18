@@ -64,13 +64,22 @@ void main() {
     expect(screen, contains('BalynTransactionDetailContent('));
     expect(screen, isNot(contains('QuickAddPage(editing: item)')));
     expect(screen, contains('await _delete(context, item, state)'));
-    expect(design, contains('await state.updateTransaction(widget.item, updated)'));
+    expect(
+      design,
+      contains('await state.updateTransaction(widget.item, updated)'),
+    );
     expect(design, contains('Escludi dalle analisi'));
     expect(design, contains('widget.item.receiptPath'));
     for (final key in [
-      'detail-amount', 'detail-type-', 'detail-source-',
-      'detail-target-', 'detail-category-', 'detail-note', 'detail-tags',
-      'detail-date', 'detail-save',
+      'detail-amount',
+      'detail-type-',
+      'detail-source-',
+      'detail-target-',
+      'detail-category-',
+      'detail-note',
+      'detail-tags',
+      'detail-date',
+      'detail-save',
     ]) {
       expect(design, contains(key));
     }

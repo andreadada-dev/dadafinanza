@@ -122,120 +122,120 @@ class _RecentMovementRow extends StatelessWidget {
     return BalynSwipeDeleteTile(
       item: movement,
       child: Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => TransactionDetailPage(transactionId: movement.id),
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => TransactionDetailPage(transactionId: movement.id),
+            ),
           ),
-        ),
-        borderRadius: BorderRadius.circular(16),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 46,
-                width: 46,
-                child: Stack(
-                  children: [
-                    Container(
-                      height: 42,
-                      width: 42,
-                      decoration: BoxDecoration(
-                        color: accent.withValues(alpha: .16),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        movement.type == TransactionType.transfer
-                            ? Icons.swap_horiz_rounded
-                            : category == null
-                            ? Icons.receipt_long_outlined
-                            : categoryIcon(category.iconKey),
-                        color: accent,
-                        size: 23,
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 1,
-                      right: 1,
-                      child: Container(
-                        height: 17,
-                        width: 17,
+          borderRadius: BorderRadius.circular(16),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 46,
+                  width: 46,
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: 42,
+                        width: 42,
                         decoration: BoxDecoration(
-                          color: accent,
+                          color: accent.withValues(alpha: .16),
                           shape: BoxShape.circle,
-                          border: Border.all(
-                            color: theme.colorScheme.surface,
-                            width: 1.5,
-                          ),
                         ),
                         child: Icon(
-                          movement.type == TransactionType.income
-                              ? Icons.south_west_rounded
-                              : movement.type == TransactionType.expense
-                              ? Icons.north_east_rounded
-                              : Icons.swap_horiz_rounded,
-                          size: 10,
-                          color: Colors.white,
+                          movement.type == TransactionType.transfer
+                              ? Icons.swap_horiz_rounded
+                              : category == null
+                              ? Icons.receipt_long_outlined
+                              : categoryIcon(category.iconKey),
+                          color: accent,
+                          size: 23,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w800,
+                      Positioned(
+                        bottom: 1,
+                        right: 1,
+                        child: Container(
+                          height: 17,
+                          width: 17,
+                          decoration: BoxDecoration(
+                            color: accent,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: theme.colorScheme.surface,
+                              width: 1.5,
+                            ),
+                          ),
+                          child: Icon(
+                            movement.type == TransactionType.income
+                                ? Icons.south_west_rounded
+                                : movement.type == TransactionType.expense
+                                ? Icons.north_east_rounded
+                                : Icons.swap_horiz_rounded,
+                            size: 10,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '${DateFormat('d MMM, HH:mm', AppI18n.intlLocale).format(movement.date)} · $subtitle',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      movement.type.label,
-                      style: theme.textTheme.labelSmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 8),
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 112),
-                child: Text(
-                  hideAmounts ? '••••' : amount,
-                  textAlign: TextAlign.end,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w800,
+                    ],
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '${DateFormat('d MMM, HH:mm', AppI18n.intlLocale).format(movement.date)} · $subtitle',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        movement.type.label,
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 112),
+                  child: Text(
+                    hideAmounts ? '••••' : amount,
+                    textAlign: TextAlign.end,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
-    ),
     );
   }
 }

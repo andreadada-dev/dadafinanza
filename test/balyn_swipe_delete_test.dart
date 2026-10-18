@@ -16,15 +16,17 @@ void main() {
       final source = File(file).readAsStringSync();
       expect(source, contains('BalynSwipeDeleteTile('), reason: file);
     }
-    final gesture = File('lib/widgets/balyn_swipe_delete_tile.dart')
-        .readAsStringSync();
+    final gesture = File(
+      'lib/widgets/balyn_swipe_delete_tile.dart',
+    ).readAsStringSync();
     expect(gesture, contains('confirmDestructiveAction('));
     expect(gesture, contains('isAdvanceProtectedTransaction('));
     expect(gesture, contains('await state.deleteTransaction(current)'));
   });
 
-  testWidgets('swiping left reveals but does not automatically delete',
-      (tester) async {
+  testWidgets('swiping left reveals but does not automatically delete', (
+    tester,
+  ) async {
     final now = DateTime(2026, 10, 18);
     final transaction = FinanceTransaction(
       id: 40,

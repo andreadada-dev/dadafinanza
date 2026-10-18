@@ -1081,89 +1081,89 @@ class _MovementTile extends StatelessWidget {
     return BalynSwipeDeleteTile(
       item: item,
       child: Semantics(
-      button: true,
-      label: '$title, $amount',
-      child: InkWell(
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => TransactionDetailPage(transactionId: item.id),
+        button: true,
+        label: '$title, $amount',
+        child: InkWell(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => TransactionDetailPage(transactionId: item.id),
+            ),
           ),
-        ),
-        borderRadius: BorderRadius.circular(18),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 9),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: 46,
-                height: 46,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.onSurface.withValues(
-                    alpha: theme.brightness == Brightness.dark ? .07 : .045,
+          borderRadius: BorderRadius.circular(18),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 9),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 46,
+                  height: 46,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.onSurface.withValues(
+                      alpha: theme.brightness == Brightness.dark ? .07 : .045,
+                    ),
+                    shape: BoxShape.circle,
                   ),
-                  shape: BoxShape.circle,
+                  child: BalynShaderIcon(
+                    item.type == TransactionType.transfer
+                        ? Icons.swap_horiz_rounded
+                        : category == null
+                        ? Icons.receipt_long_rounded
+                        : categoryIcon(category.iconKey),
+                    seed: color,
+                    size: 22,
+                  ),
                 ),
-                child: BalynShaderIcon(
-                  item.type == TransactionType.transfer
-                      ? Icons.swap_horiz_rounded
-                      : category == null
-                      ? Icons.receipt_long_rounded
-                      : categoryIcon(category.iconKey),
-                  seed: color,
-                  size: 22,
-                ),
-              ),
-              const SizedBox(width: 13),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    const SizedBox(height: 3),
-                    Text(
-                      detailParts.join(' · '),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.bodySmall,
-                    ),
-                    if (item.tags.isNotEmpty) ...[
-                      const SizedBox(height: 3),
-                      BalynShaderText(
-                        item.tags.take(2).map((tag) => '#$tag').join('  '),
-                        seed: theme.colorScheme.tertiary,
+                const SizedBox(width: 13),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.labelSmall?.copyWith(
-                          fontWeight: FontWeight.w700,
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w800,
                         ),
                       ),
+                      const SizedBox(height: 3),
+                      Text(
+                        detailParts.join(' · '),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.bodySmall,
+                      ),
+                      if (item.tags.isNotEmpty) ...[
+                        const SizedBox(height: 3),
+                        BalynShaderText(
+                          item.tags.take(2).map((tag) => '#$tag').join('  '),
+                          seed: theme.colorScheme.tertiary,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
-              ),
-              const SizedBox(width: 10),
-              BalynShaderText(
-                state.hideBalance ? '••••' : amount,
-                seed: transactionColor(context, item.type),
-                style: theme.textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w900,
+                const SizedBox(width: 10),
+                BalynShaderText(
+                  state.hideBalance ? '••••' : amount,
+                  seed: transactionColor(context, item.type),
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
-    ),
     );
   }
 }

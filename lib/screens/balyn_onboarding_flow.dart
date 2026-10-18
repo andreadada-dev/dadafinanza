@@ -14,8 +14,7 @@ class BalynOnboardingFlow extends StatefulWidget {
   State<BalynOnboardingFlow> createState() => _BalynOnboardingFlowState();
 }
 
-class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
- {
+class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
   final GlobalKey<IntroductionScreenState> _introKey =
       GlobalKey<IntroductionScreenState>();
   final TextEditingController _name = TextEditingController(
@@ -155,17 +154,24 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
             SizedBox(height: 132, child: Center(child: illustration)),
             const SizedBox(height: 16),
             Text(
-              title, textAlign: TextAlign.center,
+              title,
+              textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 26, height: 1.18,
-                fontWeight: FontWeight.w800, color: Colors.white,
+                fontSize: 26,
+                height: 1.18,
+                fontWeight: FontWeight.w800,
+                color: Colors.white,
               ),
             ),
             const SizedBox(height: 9),
             Text(
-              subtitle, textAlign: TextAlign.center,
+              subtitle,
+              textAlign: TextAlign.center,
               style: const TextStyle(
-                color: Color(0xFFCEC9D8), height: 1.45, fontSize: 14),
+                color: Color(0xFFCEC9D8),
+                height: 1.45,
+                fontSize: 14,
+              ),
             ),
             const SizedBox(height: 28),
             content,
@@ -257,7 +263,9 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                 key: _introKey,
                 rawPages: [
                   _page(
-                    illustration: const _CircleArt(icon: Icons.auto_graph_rounded),
+                    illustration: const _CircleArt(
+                      icon: Icons.auto_graph_rounded,
+                    ),
                     title: _t(
                       'Le tue finanze, più semplici',
                       'Your finances, simplified',
@@ -367,7 +375,8 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                                 AccountType.cash => 'cash',
                                 AccountType.checking => 'bank',
                                 AccountType.savings => 'savings',
-                                AccountType.card || AccountType.prepaid => 'card',
+                                AccountType.card ||
+                                AccountType.prepaid => 'card',
                                 AccountType.investment => 'investment',
                                 AccountType.other => 'wallet',
                               };
@@ -375,9 +384,11 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                           ),
                         ),
                         const SizedBox(height: 18),
-                        Text(_t('Icona del conto', 'Account icon'),
+                        Text(
+                          _t('Icona del conto', 'Account icon'),
                           textAlign: TextAlign.center,
-                          style: const TextStyle(color: Colors.white70)),
+                          style: const TextStyle(color: Colors.white70),
+                        ),
                         const SizedBox(height: 9),
                         Wrap(
                           alignment: WrapAlignment.center,
@@ -385,15 +396,20 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                           runSpacing: 9,
                           children: [
                             for (final key in const [
-                              'wallet', 'bank', 'card', 'cash',
-                              'savings', 'investment',
+                              'wallet',
+                              'bank',
+                              'card',
+                              'cash',
+                              'savings',
+                              'investment',
                             ])
                               InkWell(
                                 key: ValueKey('intro-icon-$key'),
                                 borderRadius: BorderRadius.circular(15),
                                 onTap: () => setState(() => _iconKey = key),
                                 child: Container(
-                                  width: 47, height: 45,
+                                  width: 47,
+                                  height: 45,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     color: _iconKey == key
@@ -402,10 +418,15 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
                                     borderRadius: BorderRadius.circular(15),
                                     border: Border.all(
                                       color: _iconKey == key
-                                        ? Color(_color) : Colors.white12),
+                                          ? Color(_color)
+                                          : Colors.white12,
+                                    ),
                                   ),
-                                  child: Icon(accountIcon(key),
-                                    color: Colors.white, size: 23),
+                                  child: Icon(
+                                    accountIcon(key),
+                                    color: Colors.white,
+                                    size: 23,
+                                  ),
                                 ),
                               ),
                           ],
@@ -570,9 +591,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow>
 }
 
 class _CircleArt extends StatelessWidget {
-  const _CircleArt({
-    required this.icon, this.color = const Color(0xFF9D8ABF),
-  });
+  const _CircleArt({required this.icon, this.color = const Color(0xFF9D8ABF)});
   final IconData icon;
   final Color color;
 
@@ -582,7 +601,8 @@ class _CircleArt extends StatelessWidget {
     duration: const Duration(milliseconds: 220),
     curve: Curves.easeInOut,
     alignment: Alignment.center,
-    width: 116, height: 116,
+    width: 116,
+    height: 116,
     decoration: BoxDecoration(
       color: color.withValues(alpha: .14),
       borderRadius: BorderRadius.circular(31),
