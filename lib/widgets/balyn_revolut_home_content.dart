@@ -1,4 +1,5 @@
 import 'package:balyn/l10n/localized_material.dart';
+import '../theme/balyn_palette.dart';
 
 import '../main.dart';
 import '../models/models.dart';
@@ -94,8 +95,8 @@ class BalynRevolutHomeContent extends StatelessWidget {
                 : BoxDecoration(
                     borderRadius: BorderRadius.circular(19),
                     color: Theme.of(context).brightness == Brightness.dark
-                        ? const Color(0xFF242431)
-                        : Colors.white,
+                        ? BalynPalette.darkSurface
+                        : BalynPalette.lightSurface,
                   ),
             child: accountList.isEmpty
                 ? ListTile(
@@ -163,8 +164,8 @@ class _BalanceMetric extends StatelessWidget {
           ? null
           : BoxDecoration(
               color: theme.brightness == Brightness.dark
-                  ? const Color(0xFF242431)
-                  : Colors.white,
+                  ? BalynPalette.darkSurface
+                  : BalynPalette.lightSurface,
               borderRadius: BorderRadius.circular(17),
             ),
       child: Column(
@@ -211,7 +212,7 @@ class _AvailableSummary extends StatelessWidget {
       decoration: embedded
           ? null
           : BoxDecoration(
-              color: dark ? const Color(0xFF242431) : Colors.white,
+              color: dark ? BalynPalette.darkSurface : BalynPalette.lightSurface,
               borderRadius: BorderRadius.circular(17),
             ),
       child: Row(
