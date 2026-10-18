@@ -117,8 +117,9 @@ void main() {
     expect(source, contains("key: const ValueKey('swipe-full-width-content')"));
     expect(source, isNot(contains('Expanded(child: widget.child)')));
   });
-  testWidgets('swiping a movement never scrolls the parent Home PageView',
-      (tester) async {
+  testWidgets('swiping a movement never scrolls the parent Home PageView', (
+    tester,
+  ) async {
     final now = DateTime(2026, 10, 18);
     final controller = PageController();
     addTearDown(controller.dispose);
@@ -167,9 +168,10 @@ void main() {
     expect(controller.page, closeTo(0, .01));
     expect(find.byKey(const ValueKey('swipe-edit-90')), findsOneWidget);
     expect(find.byKey(const ValueKey('swipe-delete-90')), findsOneWidget);
-    expect(tester.getSize(find.byKey(const ValueKey('home-movement'))).width,
-        closeTo(320, 1));
+    expect(
+      tester.getSize(find.byKey(const ValueKey('home-movement'))).width,
+      closeTo(320, 1),
+    );
     expect(tester.takeException(), isNull);
   });
-
 }
