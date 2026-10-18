@@ -103,6 +103,11 @@ class HomeDashboardWidget extends StatelessWidget {
               items: recent,
               hideAmounts: state.hideBalance,
               onSeeAll: onSeeAll ?? () {},
+              maxItems: switch (config.size) {
+                DashboardWidgetSize.small => 1,
+                DashboardWidgetSize.medium => 3,
+                DashboardWidgetSize.large => 5,
+              },
             ),
           ],
         );
@@ -121,6 +126,11 @@ class HomeDashboardWidget extends StatelessWidget {
               available: state.safeToSpend,
               hideValues: state.hideBalance,
               showAccounts: showAccountsInsideSummary,
+              maxAccounts: switch (config.size) {
+                DashboardWidgetSize.small => 2,
+                DashboardWidgetSize.medium => 4,
+                DashboardWidgetSize.large => null,
+              },
               onSelectAccount: onAccountChanged ?? (_) {},
               onManageAccounts: onManageAccounts ?? () {},
             ),
