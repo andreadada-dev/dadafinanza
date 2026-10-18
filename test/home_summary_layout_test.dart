@@ -266,8 +266,8 @@ void main() {
       analytics,
       contains('maxWidth: MediaQuery.sizeOf(context).width - 4'),
     );
-    expect(analytics, contains('minHeight: 224'));
-    expect(analytics, contains('maxHeight: 224'));
+    expect(analytics, contains('height: 224'));
+    expect(analytics, isNot(contains('child: OverflowBox(')));
     expect(analytics, contains('horizontalNudge'));
     expect(analytics, contains('0 => -3.0'));
     expect(analytics, contains('1 => 3.0'));
@@ -297,11 +297,11 @@ void main() {
     expect(analytics, contains('widget.onShiftPeriod(deltaX < 0 ? 1 : -1)'));
     expect(analytics, contains('class _AnalyticsPeriodNavigator'));
     expect(analytics, contains('class _AnalyticsSwipeChevron'));
-    expect(analytics, contains('rangeLabel: _visibleRangeLabel(from, to)'));
-    expect(analytics, contains('label: widget.rangeLabel'));
+    expect(analytics, contains('label: _visibleRangeLabel(from, to)'));
+    expect(analytics, contains('periodLabel: _visibleRangeLabel(from, to)'));
     expect(analytics, contains('duration: const Duration(milliseconds: 850)'));
-    expect(analytics, contains('onPrevious: () => widget.onShiftPeriod(-1)'));
-    expect(analytics, contains('onNext: () => widget.onShiftPeriod(1)'));
+    expect(analytics, contains('onPrevious: () => _shiftPeriod(-1)'));
+    expect(analytics, contains('onNext: () => _shiftPeriod(1)'));
     expect(analytics, contains('periodOffset += delta'));
   });
 
