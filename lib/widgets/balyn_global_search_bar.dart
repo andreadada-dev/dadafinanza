@@ -9,7 +9,7 @@ import 'ui_helpers.dart';
 
 /// An actual editable Home search. SearchAnchor takes the text typed in the
 /// original header bar into a full-height live results view.
-class BalynGlobalSearchBar extends StatelessWidget {
+class BalynGlobalSearchBar extends StatefulWidget {
   const BalynGlobalSearchBar({
     required this.onMovements,
     required this.onAnalytics,
@@ -28,14 +28,29 @@ class BalynGlobalSearchBar extends StatelessWidget {
   final VoidCallback onSettings;
 
   @override
+  State<BalynGlobalSearchBar> createState() => _BalynGlobalSearchBarState();
+}
+
+class _BalynGlobalSearchBarState extends State<BalynGlobalSearchBar> {
+  final SearchController _controller = SearchController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
     final scheme = Theme.of(context).colorScheme;
-    final controller = SearchController();
+    final controller = _controller;
 
     void leaveSearch(VoidCallback action) {
       controller.closeView('');
-      WidgetsBinding.instance.addPostFrameCallback((_) => action());
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) action();
+      });
     }
 
     final destinations = <_SearchDestination>[
@@ -43,42 +58,42 @@ class BalynGlobalSearchBar extends StatelessWidget {
         'Movimenti',
         'Tutte le operazioni',
         Icons.receipt_long_outlined,
-        onMovements,
+        widget.onMovements,
         ['movimenti', 'spese', 'entrate', 'trasferimenti', 'transazioni'],
       ),
       _SearchDestination(
         'Conti',
         'Gestisci i tuoi conti',
         Icons.account_balance_wallet_outlined,
-        onAccounts,
+        widget.onAccounts,
         ['conti', 'conto', 'portafoglio', 'saldo'],
       ),
       _SearchDestination(
         'Pianifica',
         'Budget, obiettivi e ricorrenze',
         Icons.event_note_outlined,
-        onPlanning,
+        widget.onPlanning,
         ['pianifica', 'pianificazione', 'budget', 'obiettivi', 'ricorrenze'],
       ),
       _SearchDestination(
         'Anticipi',
         'Persone e rimborsi',
         Icons.handshake_outlined,
-        onAdvances,
+        widget.onAdvances,
         ['anticipi', 'anticipo', 'rimborsi', 'debiti', 'crediti'],
       ),
       _SearchDestination(
         'Analisi',
         'Statistiche di entrate e spese',
         Icons.insights_outlined,
-        onAnalytics,
+        widget.onAnalytics,
         ['analisi', 'statistiche', 'grafici'],
       ),
       _SearchDestination(
         'Impostazioni',
         'Personalizza Balyn',
         Icons.tune_rounded,
-        onSettings,
+        widget.onSettings,
         ['impostazioni', 'settings', 'preferenze'],
       ),
     ];
