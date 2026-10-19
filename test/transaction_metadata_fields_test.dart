@@ -108,6 +108,40 @@ void main() {
     expect(selected, ['Roma2026']);
   });
 
+  testWidgets('Recent note and tag suggestions use outlined chips without tabs', (
+    tester,
+  ) async {
+    final note = TextEditingController();
+    addTearDown(note.dispose);
+    await _pumpFields(
+      tester,
+      note: note,
+      transactions: [
+        _transaction(
+          1,
+          note: 'Monster',
+          date: now,
+          tags: const ['Università'],
+        ),
+      ],
+    );
+
+    expect(find.byType(SegmentedButton), findsNothing);
+    expect(find.text('Es. #Università o #Vacanza'), findsNothing);
+    expect(find.text('Monster'), findsOneWidget);
+    expect(find.text('#Università'), findsOneWidget);
+    final suggestions = tester.widgetList<FilterChip>(find.byType(FilterChip));
+    expect(suggestions.length, 2);
+    for (final chip in suggestions) {
+      expect(chip.shape, isA<StadiumBorder>());
+      expect(chip.side, isNotNull);
+      expect(chip.backgroundColor, Colors.transparent);
+    }
+    await tester.tap(find.text('Monster'));
+    await tester.pump();
+    expect(note.text, 'Monster');
+  });
+
   testWidgets('favorite note is persisted through local settings', (
     tester,
   ) async {
