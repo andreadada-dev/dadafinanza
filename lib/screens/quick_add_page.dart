@@ -1659,6 +1659,22 @@ class _QuickAddPageState extends State<QuickAddPage> {
             const SizedBox(height: 13),
             _movementCard([
               TransactionMetadataFields(
+                section: TransactionMetadataSection.description,
+                noteController: note,
+                transactions: state.transactions,
+                tags: List<String>.unmodifiable(tags),
+                database: state.database,
+                onTagsChanged: (values) => setState(() {
+                  tags
+                    ..clear()
+                    ..addAll(values);
+                }),
+              ),
+            ]),
+            const SizedBox(height: 13),
+            _movementCard([
+              TransactionMetadataFields(
+                section: TransactionMetadataSection.tags,
                 noteController: note,
                 transactions: state.transactions,
                 tags: List<String>.unmodifiable(tags),
