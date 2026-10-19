@@ -121,6 +121,7 @@ class _BalynAppShellState extends State<BalynAppShell> {
         onSectionChanged: _selectHomeSection,
         onShowActivity: _showHomeActivity,
         onOpenPlanning: () => _selectTab(3),
+        onOpenAdvances: () => _selectTab(2),
       ),
       BalynActivityScreen(
         accountId: effectiveAccountId,
