@@ -34,6 +34,7 @@ class AccountContextHomeScreen extends StatefulWidget {
     required this.slideDirection,
     required this.onSectionChanged,
     required this.onShowActivity,
+    required this.onOpenPlanning,
     super.key,
   });
 
@@ -43,6 +44,7 @@ class AccountContextHomeScreen extends StatefulWidget {
   final int slideDirection;
   final ValueChanged<int> onSectionChanged;
   final ValueChanged<int> onShowActivity;
+  final VoidCallback onOpenPlanning;
 
   @override
   State<AccountContextHomeScreen> createState() =>
@@ -178,6 +180,7 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                 onVisibility: () => state.setHideBalance(!state.hideBalance),
                 onSearch: () => onShowActivity(0),
                 onAnalytics: () => onShowActivity(1),
+                onPlanning: widget.onOpenPlanning,
                 onSettings: () => Navigator.push(
                   context,
                   MaterialPageRoute(
