@@ -11,8 +11,6 @@ import 'quick_suggestion_strip.dart';
 
 enum TransactionMetadataSection { all, description, tags }
 
-enum _MetadataFilter { all, recent, favorites }
-
 class TransactionMetadataFields extends StatefulWidget {
   const TransactionMetadataFields({
     required this.noteController,
@@ -45,8 +43,6 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
   );
   Set<String> favoriteNotes = {};
   Set<String> favoriteTags = {};
-  _MetadataFilter _noteFilter = _MetadataFilter.all;
-  _MetadataFilter _tagFilter = _MetadataFilter.all;
 
   @override
   void initState() {
@@ -103,73 +99,13 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
     if (mounted) setState(() {});
   }
 
-  List<TransactionMetadataEntry> _filtered(
-    List<TransactionMetadataEntry> source,
-    String text,
-    _MetadataFilter filter, {
-    bool tags = false,
-  }) {
-    if (filter == _MetadataFilter.all) {
-      return tags
-          ? index.tagSuggestions(text, excluded: widget.tags)
-          : index.noteSuggestions(text);
-    }
-    final query = TransactionMetadataSuggestions.normalizeLookup(text);
-    final excluded = widget.tags
-        .map(TransactionMetadataSuggestions.normalizeLookup)
-        .toSet();
-    final matches =
-        source.where((item) {
-          if (tags && excluded.contains(item.normalized)) return false;
-          if (filter == _MetadataFilter.favorites && !item.favorite)
-            return false;
-          return query.isEmpty || item.normalized.contains(query);
-        }).toList()..sort((a, b) {
-          final recent = b.lastUsed.compareTo(a.lastUsed);
-          return recent != 0 ? recent : b.usageCount.compareTo(a.usageCount);
-        });
-    return matches.take(7).toList(growable: false);
-  }
-
+  // Favorites and recent items stay ranked in the existing suggestion engine;
+  // no extra tabs or modes are needed in the quick editor.
   List<TransactionMetadataEntry> get _noteSuggestions =>
-      _filtered(index.notes, widget.noteController.text, _noteFilter);
+      index.noteSuggestions(widget.noteController.text);
 
   List<TransactionMetadataEntry> get _tagSuggestions =>
-      _filtered(index.tags, tagController.text, _tagFilter, tags: true);
-
-  Widget _suggestionSelector({
-    required _MetadataFilter selected,
-    required ValueChanged<_MetadataFilter> onChanged,
-  }) => Padding(
-    padding: const EdgeInsets.only(top: 8, bottom: 7),
-    child: SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: SegmentedButton<_MetadataFilter>(
-        key: ValueKey(
-          widget.section == TransactionMetadataSection.tags
-              ? 'tag-suggestion-filter'
-              : 'description-suggestion-filter',
-        ),
-        showSelectedIcon: false,
-        style: const ButtonStyle(
-          visualDensity: VisualDensity.compact,
-          padding: WidgetStatePropertyAll(
-            EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-          ),
-        ),
-        segments: const [
-          ButtonSegment(value: _MetadataFilter.all, label: Text('Tutti')),
-          ButtonSegment(value: _MetadataFilter.recent, label: Text('Recenti')),
-          ButtonSegment(
-            value: _MetadataFilter.favorites,
-            label: Text('Preferiti'),
-          ),
-        ],
-        selected: {selected},
-        onSelectionChanged: (next) => onChanged(next.first),
-      ),
-    ),
-  );
+      index.tagSuggestions(tagController.text, excluded: widget.tags);
 
   void _completeNote(String value) {
     widget.noteController.value = TextEditingValue(
@@ -329,10 +265,6 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
           ),
           if (index.notes.isNotEmpty) ...[
-            _suggestionSelector(
-              selected: _noteFilter,
-              onChanged: (filter) => setState(() => _noteFilter = filter),
-            ),
             QuickSuggestionStrip(
               items: noteSuggestions
                   .map(
@@ -373,11 +305,6 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
               context,
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
           ),
-          const SizedBox(height: 3),
-          Text(
-            'Es. #Università o #Vacanza',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
           if (widget.tags.isNotEmpty) ...[
             const SizedBox(height: 9),
             Wrap(
@@ -395,10 +322,6 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
             ),
           ],
           if (index.tags.isNotEmpty) ...[
-            _suggestionSelector(
-              selected: _tagFilter,
-              onChanged: (filter) => setState(() => _tagFilter = filter),
-            ),
             QuickSuggestionStrip(
               items: tagSuggestions
                   .map(
