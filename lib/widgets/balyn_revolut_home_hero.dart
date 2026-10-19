@@ -314,60 +314,60 @@ class BalynRevolutHomeHero extends StatelessWidget {
                                 height: 48,
                                 width: double.infinity,
                                 child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Flexible(
-                                        fit: FlexFit.loose,
-                                        child: AnimatedSwitcher(
+                                  // Center the balance AND its eye as one
+                                  // compact unit. A Flexible child previously
+                                  // kept unused width when the balance was
+                                  // replaced with privacy dots.
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        AnimatedSwitcher(
                                           duration: const Duration(
                                             milliseconds: 250,
                                           ),
-                                          child: FittedBox(
+                                          child: Text(
+                                            balance,
                                             key: ValueKey(
                                               'hero-balance-${currentAccountId ?? "total"}-$balance',
                                             ),
-                                            fit: BoxFit.scaleDown,
-                                            child: Text(
-                                              balance,
-                                              key: const ValueKey(
-                                                'balyn-revolut-balance',
-                                              ),
-                                              maxLines: 1,
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 37,
-                                                height: 1.05,
-                                                fontWeight: FontWeight.w800,
-                                                letterSpacing: -1.6,
-                                              ),
+                                            maxLines: 1,
+                                            softWrap: false,
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 37,
+                                              height: 1.05,
+                                              fontWeight: FontWeight.w800,
+                                              letterSpacing: -1.6,
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      const SizedBox(width: 4),
-                                      IconButton(
-                                        tooltip: hideBalance
-                                            ? 'Mostra saldi'
-                                            : 'Nascondi saldi',
-                                        onPressed: onVisibility,
-                                        iconSize: 19,
-                                        color: Colors.white.withValues(
-                                          alpha: .88,
+                                        const SizedBox(width: 4),
+                                        IconButton(
+                                          tooltip: hideBalance
+                                              ? 'Mostra saldi'
+                                              : 'Nascondi saldi',
+                                          onPressed: onVisibility,
+                                          iconSize: 19,
+                                          color: Colors.white.withValues(
+                                            alpha: .88,
+                                          ),
+                                          padding: EdgeInsets.zero,
+                                          constraints: const BoxConstraints(
+                                            minWidth: 36,
+                                            minHeight: 40,
+                                          ),
+                                          icon: Icon(
+                                            hideBalance
+                                                ? Icons.visibility_off_outlined
+                                                : Icons.visibility_outlined,
+                                          ),
                                         ),
-                                        padding: EdgeInsets.zero,
-                                        constraints: const BoxConstraints(
-                                          minWidth: 36,
-                                          minHeight: 40,
-                                        ),
-                                        icon: Icon(
-                                          hideBalance
-                                              ? Icons.visibility_off_outlined
-                                              : Icons.visibility_outlined,
-                                        ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
