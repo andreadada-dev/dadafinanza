@@ -1,0 +1,36 @@
+name: Balyn onboarding and menu verification
+on:
+  push:
+    branches: [fix/balyn-visible-liquid-background]
+    paths: [.github/workflows/balyn-onboarding-menu-once.yml]
+permissions:
+  contents: write
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.2'
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Format modified Dart files
+        run: |
+          dart format lib/screens/balyn_onboarding_flow.dart lib/widgets/balyn_cue_three_dots_action.dart test/balyn_hero_cue_morph_test.dart test/balyn_home_global_search_test.dart test/balyn_onboarding_brand_and_more_alignment_test.dart
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lib/screens/balyn_onboarding_flow.dart lib/widgets/balyn_cue_three_dots_action.dart test/balyn_hero_cue_morph_test.dart test/balyn_home_global_search_test.dart test/balyn_onboarding_brand_and_more_alignment_test.dart
+          if ! git diff --cached --quiet; then
+            git commit -m "style: format Balyn onboarding and anchored More menu"
+            git push origin HEAD:fix/balyn-visible-liquid-background
+          fi
+      - name: Widget regression test
+        run: flutter test test/balyn_onboarding_brand_and_more_alignment_test.dart test/balyn_hero_cue_morph_test.dart test/balyn_home_global_search_test.dart
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos
+      - name: Full test suite
+        run: flutter test
