@@ -45,7 +45,8 @@ void main() {
     expect(hero, contains('BalynCueThreeDotsAction('));
     expect(hero, isNot(contains('Icons.bar_chart_rounded')));
     expect(more, contains('Icons.more_vert_rounded'));
-    expect(more, contains('PopupMenuPosition.under'));
+    expect(more, contains('showMenu<String>('));
+    expect(more, contains('rightEdge - _menuWidth'));
     expect(more, isNot(contains('BalynCueAnchoredMenu')));
   });
 
