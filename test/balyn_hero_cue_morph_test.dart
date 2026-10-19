@@ -40,7 +40,7 @@ void main() {
     expect(hero, isNot(contains('_AnimatedAccountDiamond')));
   });
 
-  test('Hero More remains Cue while corner + uses a radial PieMenu', () {
+  test('Hero More keeps its three-dots trigger while corner + stays radial', () {
     final header = File(
       'lib/widgets/balyn_cue_three_dots_action.dart',
     ).readAsStringSync();
@@ -50,7 +50,13 @@ void main() {
     final menu = File(
       'lib/widgets/balyn_cue_anchored_menu.dart',
     ).readAsStringSync();
-    expect(header, contains('BalynCueAnchoredMenu('));
+    expect(header, contains('PopupMenuButton<String>('));
+    expect(header, contains('position: PopupMenuPosition.under'));
+    expect(header, contains("'Conti'"));
+    expect(header, contains("'Pianifica'"));
+    expect(header, contains("'Anticipi'"));
+    expect(header, contains('Icons.more_vert_rounded'));
+    expect(header, isNot(contains('hideTriggerOnTransition')));
     expect(fab, contains('return PieMenu('));
     expect(fab, contains('overlayColor: Colors.black.withValues(alpha: .54)'));
     expect(fab, contains('pointerSize: 0'));
@@ -65,7 +71,7 @@ void main() {
     expect(menu, contains('alignment: Alignment.bottomRight'));
     expect(menu, contains('Navigator.of(modalContext).pop()'));
     expect(menu, contains('height: closeSlotHeight'));
-    expect(header, contains('closeSlotHeight: 82'));
+    expect(header, contains("ValueKey('home-more-cue-trigger')"));
     expect(menu, contains('alignment: Alignment.topCenter'));
     expect(menu, contains('offset: Offset((56 - triggerRect.width) / 2, 0)'));
   });
