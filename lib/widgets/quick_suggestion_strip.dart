@@ -70,7 +70,6 @@ class QuickSuggestionStrip extends StatelessWidget {
                 ),
               ),
               selected: item.selected,
-              showCheckmark: item.selected,
               materialTapTargetSize: MaterialTapTargetSize.padded,
               onSelected: (_) => onSelected(item.value),
             ),
