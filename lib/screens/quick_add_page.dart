@@ -1299,8 +1299,18 @@ class _QuickAddPageState extends State<QuickAddPage> {
         widget.editing == null && suggestion?.shouldSurface == true;
     final hasInitialAmount = amount.text.trim().isNotEmpty;
 
-    return Scaffold(
-      backgroundColor: BalynPalette.canvas(Theme.of(context).brightness),
+    // This editor uses neutral actions; purple is reserved for the save button.
+    final baseTheme = Theme.of(context);
+    final neutralScheme = baseTheme.colorScheme.copyWith(
+      primary: baseTheme.colorScheme.onSurface,
+      onPrimary: baseTheme.colorScheme.surface,
+      tertiary: baseTheme.colorScheme.onSurface,
+      onTertiary: baseTheme.colorScheme.surface,
+    );
+    return Theme(
+      data: baseTheme.copyWith(colorScheme: neutralScheme),
+      child: Scaffold(
+      backgroundColor: BalynPalette.canvas(baseTheme.brightness),
       appBar: AppBar(
         title: Text(
           widget.editing == null ? 'Nuovo movimento' : 'Modifica movimento',
@@ -1479,7 +1489,9 @@ class _QuickAddPageState extends State<QuickAddPage> {
                 icon: Icons.swap_horiz_rounded,
                 label: 'Tipo',
                 value: type.label,
-                valueColor: transactionColor(context, type),
+                valueColor: type == TransactionType.transfer
+                    ? baseTheme.colorScheme.onSurface
+                    : transactionColor(context, type),
                 onTap: _pickMovementType,
               ),
               _PickerRow(
@@ -1533,6 +1545,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
                   'd MMM yyyy, HH:mm',
                   AppI18n.intlLocale,
                 ).format(date),
+                valueColor: baseTheme.colorScheme.onSurface,
                 onTap: _pickMovementDateTime,
               ),
             ]),
@@ -1647,6 +1660,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
                         (receipt != null || existingReceiptPath != null)
                     ? 'Sostituisci'
                     : 'Aggiungi',
+                valueColor: baseTheme.colorScheme.onSurface,
                 onTap: _chooseReceipt,
               ),
               if (widget.refundOfTransactionId != null)
@@ -1660,6 +1674,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
             _movementCard([
               TransactionMetadataFields(
                 section: TransactionMetadataSection.description,
+                softSuggestions: true,
                 noteController: note,
                 transactions: state.transactions,
                 tags: List<String>.unmodifiable(tags),
@@ -1675,6 +1690,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
             _movementCard([
               TransactionMetadataFields(
                 section: TransactionMetadataSection.tags,
+                softSuggestions: true,
                 noteController: note,
                 transactions: state.transactions,
                 tags: List<String>.unmodifiable(tags),
@@ -1725,6 +1741,8 @@ class _QuickAddPageState extends State<QuickAddPage> {
                     },
             ),
             style: FilledButton.styleFrom(
+              backgroundColor: BalynPalette.accent,
+              foregroundColor: Colors.white,
               minimumSize: const Size.fromHeight(48),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(14),
@@ -1732,6 +1750,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
             ),
           ),
         ),
+      ),
       ),
     );
   }
