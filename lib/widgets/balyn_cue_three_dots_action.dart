@@ -1,95 +1,78 @@
 import 'package:balyn/l10n/localized_material.dart';
 
-import 'balyn_cue_anchored_menu.dart';
-
-/// Header action backed by the very same Cue menu as the corner FAB.
+/// The original "Altro" three-dots button, now in the Home header.
+/// The PopupMenu is anchored *under* the original button: opening it never
+/// swaps the trigger with a separate animated close button.
 class BalynCueThreeDotsAction extends StatelessWidget {
   const BalynCueThreeDotsAction({
     required this.onManageAccounts,
+    required this.onPlanning,
     required this.onAdvances,
-    required this.onAdvancedDashboard,
-    required this.onCustomizeHome,
     super.key,
   });
 
   final VoidCallback onManageAccounts;
+  final VoidCallback onPlanning;
   final VoidCallback onAdvances;
-  final VoidCallback onAdvancedDashboard;
-  final VoidCallback onCustomizeHome;
 
   @override
-  Widget build(BuildContext context) => Expanded(
-    child: BalynCueAnchoredMenu(
-      closeKey: const ValueKey('home-more-close'),
-      closeSlotHeight: 82,
-      closeTooltip: 'Chiudi altre azioni',
-      actions: [
-        BalynCueMenuAction(
-          id: 'home-more-accounts',
-          label: 'Gestisci conti',
-          icon: Icons.account_balance_wallet_outlined,
-          onTap: onManageAccounts,
+  Widget build(BuildContext context) => PopupMenuButton<String>(
+    key: const ValueKey('home-more-cue-trigger'),
+    tooltip: 'Altro',
+    position: PopupMenuPosition.under,
+    offset: const Offset(0, 8),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    onSelected: (value) {
+      switch (value) {
+        case 'accounts':
+          onManageAccounts();
+        case 'planning':
+          onPlanning();
+        case 'advances':
+          onAdvances();
+      }
+    },
+    itemBuilder: (_) => const [
+      PopupMenuItem(
+        value: 'accounts',
+        child: Row(
+          children: [
+            Icon(Icons.account_balance_wallet_outlined, size: 20),
+            SizedBox(width: 12),
+            Text('Conti'),
+          ],
         ),
-        BalynCueMenuAction(
-          id: 'home-more-advances',
-          label: 'Anticipi',
-          icon: Icons.handshake_outlined,
-          onTap: onAdvances,
+      ),
+      PopupMenuItem(
+        value: 'planning',
+        child: Row(
+          children: [
+            Icon(Icons.event_note_outlined, size: 20),
+            SizedBox(width: 12),
+            Text('Pianifica'),
+          ],
         ),
-        BalynCueMenuAction(
-          id: 'home-more-dashboard',
-          label: 'Dashboard avanzata',
-          icon: Icons.dashboard_customize_outlined,
-          onTap: onAdvancedDashboard,
+      ),
+      PopupMenuItem(
+        value: 'advances',
+        child: Row(
+          children: [
+            Icon(Icons.handshake_outlined, size: 20),
+            SizedBox(width: 12),
+            Text('Anticipi'),
+          ],
         ),
-        BalynCueMenuAction(
-          id: 'home-more-customize',
-          label: 'Personalizza Home',
-          icon: Icons.tune_rounded,
-          onTap: onCustomizeHome,
-        ),
-      ],
-      triggerBuilder: (context, open) => Semantics(
-        button: true,
-        label: 'Altro',
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            key: const ValueKey('home-more-cue-trigger'),
-            onTap: open,
-            borderRadius: BorderRadius.circular(20),
-            child: Padding(
-              // No vertical offset: identical alignment open/closed.
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    height: 52,
-                    width: 52,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white.withValues(alpha: .26),
-                    ),
-                    child: const Icon(
-                      Icons.more_vert_rounded,
-                      color: Colors.white,
-                      size: 29,
-                    ),
-                  ),
-                  const SizedBox(height: 9),
-                  const Text(
-                    'Altro',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+      ),
+    ],
+    child: Material(
+      color: Colors.white.withValues(alpha: .26),
+      shape: const CircleBorder(),
+      child: const SizedBox.square(
+        dimension: 40,
+        child: Icon(
+          Icons.more_vert_rounded,
+          size: 26,
+          color: Colors.white,
         ),
       ),
     ),
