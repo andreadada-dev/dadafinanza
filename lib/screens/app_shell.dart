@@ -120,6 +120,7 @@ class _BalynAppShellState extends State<BalynAppShell> {
         slideDirection: _homeDirection,
         onSectionChanged: _selectHomeSection,
         onShowActivity: _showHomeActivity,
+        onOpenPlanning: () => _selectTab(3),
       ),
       BalynActivityScreen(
         accountId: effectiveAccountId,
