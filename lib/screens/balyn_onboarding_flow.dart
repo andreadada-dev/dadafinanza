@@ -289,9 +289,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
                     key: _introKey,
                     rawPages: [
                       _page(
-                        illustration: const _CircleArt(
-                          icon: Icons.auto_graph_rounded,
-                        ),
+                        illustration: const _BalynBrandArt(),
                         title: _t(
                           'Le tue finanze, più semplici',
                           'Your finances, simplified',
@@ -511,11 +509,7 @@ class _BalynOnboardingFlowState extends State<BalynOnboardingFlow> {
                         ),
                       ),
                       _page(
-                        illustration: const Icon(
-                          Icons.dashboard_customize_outlined,
-                          size: 45,
-                          color: BalynPalette.accentTextDark,
-                        ),
+                        illustration: const _BalynBrandArt(compact: true),
                         title: _t('Ecco come funziona', 'How Balyn works'),
                         subtitle: _t(
                           'Quattro sezioni, tutte collegate tra loro.',
@@ -634,5 +628,40 @@ class _CircleArt extends StatelessWidget {
       duration: const Duration(milliseconds: 200),
       child: Icon(icon, key: ValueKey(icon), size: 53, color: color),
     ),
+  );
+}
+
+/// Reuse Balyn's official in-app brand mark instead of a generic feature icon.
+/// Both the welcome and final steps display the very same logo and wordmark.
+class _BalynBrandArt extends StatelessWidget {
+  const _BalynBrandArt({this.compact = false});
+
+  final bool compact;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    mainAxisSize: MainAxisSize.min,
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Image.asset(
+        'assets/branding/balyn_logo_only.png',
+        key: const ValueKey('onboarding-balyn-logo'),
+        width: compact ? 45 : 72,
+        height: compact ? 45 : 72,
+        fit: BoxFit.contain,
+        filterQuality: FilterQuality.high,
+      ),
+      SizedBox(height: compact ? 3 : 6),
+      Text(
+        'Balyn',
+        key: const ValueKey('onboarding-balyn-wordmark'),
+        style: TextStyle(
+          fontSize: compact ? 16 : 21,
+          fontWeight: FontWeight.w900,
+          color: Colors.white,
+          letterSpacing: -.4,
+        ),
+      ),
+    ],
   );
 }
