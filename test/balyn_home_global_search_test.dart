@@ -50,17 +50,34 @@ void main() {
     expect(more, isNot(contains('BalynCueAnchoredMenu')));
   });
 
-  test('New movement separates Tag and Description cards and filters', () {
+  test('Movement editor shows outlined note and tag suggestions without filters', () {
     final editor = File('lib/screens/quick_add_page.dart').readAsStringSync();
     final metadata = File(
       'lib/widgets/transaction_metadata_fields.dart',
     ).readAsStringSync();
     expect(editor, contains('TransactionMetadataSection.description'));
     expect(editor, contains('TransactionMetadataSection.tags'));
-    expect(metadata, contains("Text('Tutti')"));
-    expect(metadata, contains("Text('Recenti')"));
-    expect(metadata, contains("Text('Preferiti')"));
-    expect(metadata, contains('item.favorite'));
-    expect(metadata, contains('lastUsed.compareTo'));
+    expect(metadata, isNot(contains('SegmentedButton<_MetadataFilter>')));
+    expect(metadata, isNot(contains('Es. #Università o #Vacanza')));
+    expect(metadata, contains('index.noteSuggestions('));
+    expect(metadata, contains('index.tagSuggestions('));
+    final strip = File('lib/widgets/quick_suggestion_strip.dart').readAsStringSync();
+    expect(strip, contains('side: BorderSide('));
+    expect(strip, contains('shape: const StadiumBorder()'));
   });
+  test('Home balance and visibility button remain centered together', () {
+    final hero = File('lib/widgets/balyn_revolut_home_hero.dart')
+        .readAsStringSync();
+    final section = hero.substring(
+      hero.indexOf("height: 48,"),
+      hero.indexOf("'Disponibile  \$available'"),
+    );
+    expect(section, contains('child: Center('));
+    expect(section, contains('child: FittedBox('));
+    expect(section, contains('mainAxisSize: MainAxisSize.min'));
+    expect(section, contains('Icons.visibility_off_outlined'));
+    expect(section, contains('Icons.visibility_outlined'));
+    expect(section, isNot(contains('Flexible(')));
+  });
+
 }
