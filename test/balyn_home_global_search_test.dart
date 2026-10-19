@@ -19,8 +19,10 @@ void main() {
     expect(source, contains('.take(query.isEmpty ? 5 : 30)'));
     expect(source, contains("ValueKey('search-recent-movements')"));
     expect(source, contains("ValueKey('search-six-sections')"));
-    expect(source.indexOf("const _SearchHeading('Sezioni')"),
-      greaterThan(source.indexOf("Movimenti recenti")));
+    expect(
+      source.indexOf("const _SearchHeading('Sezioni')"),
+      greaterThan(source.indexOf("Movimenti recenti")),
+    );
     expect(source, contains('SliverGridDelegateWithFixedCrossAxisCount('));
     expect(source, contains('crossAxisCount: 2'));
     expect(source, contains('transactionColor(context, item.type)'));

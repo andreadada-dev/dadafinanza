@@ -192,7 +192,6 @@ class _BalynGlobalSearchBarState extends State<BalynGlobalSearchBar> {
             .take(query.isEmpty ? 5 : 30)
             .toList();
 
-
         return <Widget>[
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 15, 16, 28),
@@ -235,17 +234,21 @@ class _BalynGlobalSearchBarState extends State<BalynGlobalSearchBar> {
                                   color: scheme.outlineVariant,
                                 ),
                               _SearchMovementRow(
-                                key: ValueKey('search-transaction-${matches[i].id}'),
+                                key: ValueKey(
+                                  'search-transaction-${matches[i].id}',
+                                ),
                                 item: matches[i],
                                 onTap: () {
                                   final item = matches[i];
-                                  leaveSearch(() => Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) => TransactionDetailPage(
-                                        transactionId: item.id,
+                                  leaveSearch(
+                                    () => Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) => TransactionDetailPage(
+                                          transactionId: item.id,
+                                        ),
                                       ),
                                     ),
-                                  ));
+                                  );
                                 },
                               ),
                             ],
@@ -266,12 +269,13 @@ class _BalynGlobalSearchBarState extends State<BalynGlobalSearchBar> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: matchedDestinations.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 1.22,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 1.22,
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
+                        ),
                     itemBuilder: (context, index) {
                       final destination = matchedDestinations[index];
                       return _SearchDestinationTile(
@@ -305,9 +309,12 @@ class _SearchDestination {
   final List<String> aliases;
 }
 
-
 class _SearchMovementRow extends StatelessWidget {
-  const _SearchMovementRow({required this.item, required this.onTap, super.key});
+  const _SearchMovementRow({
+    required this.item,
+    required this.onTap,
+    super.key,
+  });
   final FinanceTransaction item;
   final VoidCallback onTap;
 
@@ -341,10 +348,10 @@ class _SearchMovementRow extends StatelessWidget {
                 item.type == TransactionType.transfer
                     ? Icons.swap_horiz_rounded
                     : category == null
-                        ? item.type == TransactionType.income
-                            ? Icons.south_west_rounded
-                            : Icons.north_east_rounded
-                        : categoryIcon(category.iconKey),
+                    ? item.type == TransactionType.income
+                          ? Icons.south_west_rounded
+                          : Icons.north_east_rounded
+                    : categoryIcon(category.iconKey),
                 color: accent,
                 size: 21,
               ),
@@ -358,14 +365,18 @@ class _SearchMovementRow extends StatelessWidget {
                     title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     [
                       category?.name ?? item.type.label,
                       DateFormat('d MMM').format(item.date),
-                      if (item.tags.isNotEmpty) item.tags.map((t) => '#$t').join(' '),
+                      if (item.tags.isNotEmpty)
+                        item.tags.map((t) => '#$t').join(' '),
                     ].join(' · '),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -380,7 +391,11 @@ class _SearchMovementRow extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               signed,
-              style: TextStyle(color: accent, fontSize: 13, fontWeight: FontWeight.w800),
+              style: TextStyle(
+                color: accent,
+                fontSize: 13,
+                fontWeight: FontWeight.w800,
+              ),
             ),
           ],
         ),
@@ -418,7 +433,11 @@ class _SearchDestinationTile extends StatelessWidget {
                 ),
                 child: SizedBox.square(
                   dimension: 37,
-                  child: Icon(destination.icon, size: 20, color: BalynPalette.accent),
+                  child: Icon(
+                    destination.icon,
+                    size: 20,
+                    color: BalynPalette.accent,
+                  ),
                 ),
               ),
               const Spacer(),
@@ -426,7 +445,10 @@ class _SearchDestinationTile extends StatelessWidget {
                 destination.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
               const SizedBox(height: 4),
               Text(
@@ -458,16 +480,13 @@ class _SearchHeading extends StatelessWidget {
       Expanded(
         child: Text(
           title,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.w800,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
         ),
       ),
       if (onSeeAll != null)
-        TextButton(
-          onPressed: onSeeAll,
-          child: const Text('Vedi tutti'),
-        ),
+        TextButton(onPressed: onSeeAll, child: const Text('Vedi tutti')),
     ],
   );
 }
