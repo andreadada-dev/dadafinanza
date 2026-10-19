@@ -9,9 +9,7 @@ void main() {
     final source = File('lib/screens/balyn_onboarding_flow.dart')
         .readAsStringSync();
     expect(
-      RegExp(r'illustration: const _BalynBrandArt\\(')
-          .allMatches(source)
-          .length,
+      source.split('illustration: const _BalynBrandArt(').length - 1,
       2,
     );
     expect(source, contains('assets/branding/balyn_logo_only.png'));
