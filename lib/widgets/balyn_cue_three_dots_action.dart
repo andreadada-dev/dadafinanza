@@ -50,9 +50,7 @@ class _BalynCueThreeDotsActionState extends State<BalynCueThreeDotsAction> {
       position: position,
       constraints: const BoxConstraints.tightFor(width: _menuWidth),
       elevation: 7,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       items: const [
         PopupMenuItem(
           value: 'accounts',
@@ -112,11 +110,7 @@ class _BalynCueThreeDotsActionState extends State<BalynCueThreeDotsAction> {
         onTap: _showMoreMenu,
         child: const SizedBox.square(
           dimension: 40,
-          child: Icon(
-            Icons.more_vert_rounded,
-            size: 26,
-            color: Colors.white,
-          ),
+          child: Icon(Icons.more_vert_rounded, size: 26, color: Colors.white),
         ),
       ),
     ),

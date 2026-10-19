@@ -6,22 +6,20 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Onboarding steps one and three display the official Balyn mark', () {
-    final source = File('lib/screens/balyn_onboarding_flow.dart')
-        .readAsStringSync();
-    expect(
-      source.split('illustration: const _BalynBrandArt(').length - 1,
-      2,
-    );
+    final source = File(
+      'lib/screens/balyn_onboarding_flow.dart',
+    ).readAsStringSync();
+    expect(source.split('illustration: const _BalynBrandArt(').length - 1, 2);
     expect(source, contains('assets/branding/balyn_logo_only.png'));
     expect(source, contains("key: const ValueKey('onboarding-balyn-logo')"));
-    expect(source, contains("key: const ValueKey('onboarding-balyn-wordmark')"));
+    expect(
+      source,
+      contains("key: const ValueKey('onboarding-balyn-wordmark')"),
+    );
     expect(source, contains("'Balyn'"));
     expect(source, contains('illustration: _CircleArt('));
     expect(source, isNot(contains('icon: Icons.auto_graph_rounded')));
-    expect(
-      source,
-      isNot(contains('Icons.dashboard_customize_outlined')),
-    );
+    expect(source, isNot(contains('Icons.dashboard_customize_outlined')));
   });
 
   testWidgets('Home More opens below its original right-hand trigger', (
