@@ -14,7 +14,19 @@ void main() {
     expect(source, contains('state.transactions'));
     expect(source, contains('...item.tags'));
     expect(source, contains('item.amount.toStringAsFixed(2)'));
-    expect(source, contains('TransactionDetailPage(transactionId: item.id)'));
+    expect(source, contains('TransactionDetailPage('));
+    expect(source, contains('transactionId: item.id'));
+    expect(source, contains('.take(query.isEmpty ? 5 : 30)'));
+    expect(source, contains("ValueKey('search-recent-movements')"));
+    expect(source, contains("ValueKey('search-six-sections')"));
+    expect(source.indexOf("const _SearchHeading('Sezioni')"),
+      greaterThan(source.indexOf("Movimenti recenti")));
+    expect(source, contains('SliverGridDelegateWithFixedCrossAxisCount('));
+    expect(source, contains('crossAxisCount: 2'));
+    expect(source, contains('transactionColor(context, item.type)'));
+    expect(source, contains('TransactionType.income'));
+    expect(source, contains('TransactionType.expense'));
+    expect(source, contains('BalynPalette.surface('));
     for (final section in ['Pianifica', 'Anticipi', 'Conti', 'Movimenti']) {
       expect(source, contains("'$section'"));
     }
