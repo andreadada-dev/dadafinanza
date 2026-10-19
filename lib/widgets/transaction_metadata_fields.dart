@@ -19,6 +19,7 @@ class TransactionMetadataFields extends StatefulWidget {
     required this.database,
     required this.onTagsChanged,
     this.section = TransactionMetadataSection.all,
+    this.softSuggestions = false,
     super.key,
   });
 
@@ -28,6 +29,8 @@ class TransactionMetadataFields extends StatefulWidget {
   final AppDatabase database;
   final ValueChanged<List<String>> onTagsChanged;
   final TransactionMetadataSection section;
+  /// Opt-in neutral chip background for Quick Add; leave other editors unchanged.
+  final bool softSuggestions;
 
   @override
   State<TransactionMetadataFields> createState() =>
@@ -278,6 +281,7 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
                   .toList(growable: false),
               onSelected: _completeNote,
               onShowAll: _showAllNotes,
+              softBackground: widget.softSuggestions,
             ),
             const SizedBox(height: 7),
           ] else
@@ -313,6 +317,14 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
               children: widget.tags
                   .map(
                     (value) => InputChip(
+                      backgroundColor: widget.softSuggestions
+                          ? Theme.of(context).colorScheme.surfaceContainerHigh
+                          : null,
+                      side: widget.softSuggestions
+                          ? BorderSide(
+                              color: Theme.of(context).colorScheme.outlineVariant,
+                            )
+                          : null,
                       label: Text('#$value'),
                       onDeleted: () => _removeTag(value),
                       deleteButtonTooltipMessage: 'Rimuovi tag $value',
@@ -335,6 +347,7 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
                   .toList(growable: false),
               onSelected: _selectTag,
               onShowAll: _showAllTags,
+              softBackground: widget.softSuggestions,
             ),
           ],
           const SizedBox(height: 9),
