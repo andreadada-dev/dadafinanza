@@ -52,8 +52,11 @@ void main() {
       final menu = File(
         'lib/widgets/balyn_cue_anchored_menu.dart',
       ).readAsStringSync();
-      expect(header, contains('PopupMenuButton<String>('));
-      expect(header, contains('position: PopupMenuPosition.under'));
+      expect(header, contains('showMenu<String>('));
+      expect(header, contains('rightEdge - _menuWidth'));
+      expect(header, contains('topEdge'));
+      expect(header, contains('ancestor: overlay'));
+      expect(header, contains('constraints: const BoxConstraints.tightFor(width: _menuWidth)'));
       expect(header, contains("'Conti'"));
       expect(header, contains("'Pianifica'"));
       expect(header, contains("'Anticipi'"));
