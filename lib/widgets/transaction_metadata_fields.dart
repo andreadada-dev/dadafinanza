@@ -9,6 +9,10 @@ import '../services/transaction_metadata_preferences.dart';
 import '../services/transaction_metadata_suggestions.dart';
 import 'quick_suggestion_strip.dart';
 
+enum TransactionMetadataSection { all, description, tags }
+
+enum _MetadataFilter { all, recent, favorites }
+
 class TransactionMetadataFields extends StatefulWidget {
   const TransactionMetadataFields({
     required this.noteController,
@@ -16,6 +20,7 @@ class TransactionMetadataFields extends StatefulWidget {
     required this.tags,
     required this.database,
     required this.onTagsChanged,
+    this.section = TransactionMetadataSection.all,
     super.key,
   });
 
@@ -24,6 +29,7 @@ class TransactionMetadataFields extends StatefulWidget {
   final List<String> tags;
   final AppDatabase database;
   final ValueChanged<List<String>> onTagsChanged;
+  final TransactionMetadataSection section;
 
   @override
   State<TransactionMetadataFields> createState() =>
@@ -39,6 +45,8 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
   );
   Set<String> favoriteNotes = {};
   Set<String> favoriteTags = {};
+  _MetadataFilter _noteFilter = _MetadataFilter.all;
+  _MetadataFilter _tagFilter = _MetadataFilter.all;
 
   @override
   void initState() {
@@ -95,11 +103,67 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
     if (mounted) setState(() {});
   }
 
+  List<TransactionMetadataEntry> _filtered(
+    List<TransactionMetadataEntry> source,
+    String text,
+    _MetadataFilter filter, {
+    bool tags = false,
+  }) {
+    if (filter == _MetadataFilter.all) {
+      return tags
+          ? index.tagSuggestions(text, excluded: widget.tags)
+          : index.noteSuggestions(text);
+    }
+    final query = TransactionMetadataSuggestions.normalizeLookup(text);
+    final excluded = widget.tags
+        .map(TransactionMetadataSuggestions.normalizeLookup)
+        .toSet();
+    final matches = source.where((item) {
+      if (tags && excluded.contains(item.normalized)) return false;
+      if (filter == _MetadataFilter.favorites && !item.favorite) return false;
+      return query.isEmpty || item.normalized.contains(query);
+    }).toList()
+      ..sort((a, b) {
+        final recent = b.lastUsed.compareTo(a.lastUsed);
+        return recent != 0 ? recent : b.usageCount.compareTo(a.usageCount);
+      });
+    return matches.take(7).toList(growable: false);
+  }
+
   List<TransactionMetadataEntry> get _noteSuggestions =>
-      index.noteSuggestions(widget.noteController.text);
+      _filtered(index.notes, widget.noteController.text, _noteFilter);
 
   List<TransactionMetadataEntry> get _tagSuggestions =>
-      index.tagSuggestions(tagController.text, excluded: widget.tags);
+      _filtered(index.tags, tagController.text, _tagFilter, tags: true);
+
+  Widget _suggestionSelector({
+    required _MetadataFilter selected,
+    required ValueChanged<_MetadataFilter> onChanged,
+  }) => Padding(
+    padding: const EdgeInsets.only(top: 8, bottom: 7),
+    child: SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: SegmentedButton<_MetadataFilter>(
+        key: ValueKey(widget.section == TransactionMetadataSection.tags
+            ? 'tag-suggestion-filter'
+            : 'description-suggestion-filter'),
+        showSelectedIcon: false,
+        style: const ButtonStyle(
+          visualDensity: VisualDensity.compact,
+          padding: WidgetStatePropertyAll(
+            EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          ),
+        ),
+        segments: const [
+          ButtonSegment(value: _MetadataFilter.all, label: Text('Tutti')),
+          ButtonSegment(value: _MetadataFilter.recent, label: Text('Recenti')),
+          ButtonSegment(value: _MetadataFilter.favorites, label: Text('Preferiti')),
+        ],
+        selected: {selected},
+        onSelectionChanged: (next) => onChanged(next.first),
+      ),
+    ),
+  );
 
   void _completeNote(String value) {
     widget.noteController.value = TextEditingValue(
@@ -246,106 +310,119 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
     final exactTag = cleanedTag.isEmpty ? null : index.canonicalTag(cleanedTag);
     final canCreateTag = cleanedTag.isNotEmpty && exactTag == null;
 
+    final showDescription = widget.section != TransactionMetadataSection.tags;
+    final showTags = widget.section != TransactionMetadataSection.description;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (index.notes.isNotEmpty) ...[
+        if (showDescription) ...[
           Text(
-            widget.noteController.text.trim().isEmpty
-                ? 'Descrizioni preferite e recenti'
-                : 'Completa descrizione',
-            style: Theme.of(context).textTheme.labelMedium,
+            'Descrizione',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w800,
+            ),
           ),
-          const SizedBox(height: 4),
-          QuickSuggestionStrip(
-            items: noteSuggestions
-                .map(
-                  (item) => QuickSuggestionItem(
-                    value: item.value,
-                    label: item.value,
-                    semanticsLabel:
-                        '${item.value}${item.favorite ? ', preferita' : ''}',
-                  ),
-                )
-                .toList(growable: false),
-            onSelected: _completeNote,
-            onShowAll: _showAllNotes,
+          if (index.notes.isNotEmpty) ...[
+            _suggestionSelector(
+              selected: _noteFilter,
+              onChanged: (filter) => setState(() => _noteFilter = filter),
+            ),
+            QuickSuggestionStrip(
+              items: noteSuggestions
+                  .map((item) => QuickSuggestionItem(
+                        value: item.value,
+                        label: item.value,
+                        semanticsLabel:
+                            '${item.value}${item.favorite ? ', preferita' : ''}',
+                      ))
+                  .toList(growable: false),
+              onSelected: _completeNote,
+              onShowAll: _showAllNotes,
+            ),
+            const SizedBox(height: 7),
+          ] else
+            const SizedBox(height: 10),
+          Focus(
+            onKeyEvent: _onNoteKey,
+            child: TextField(
+              controller: widget.noteController,
+              textCapitalization: TextCapitalization.sentences,
+              textInputAction: TextInputAction.done,
+              decoration: InputDecoration(
+                labelText: AppI18n.tr('Descrizione opzionale'),
+                hintText: AppI18n.tr('Es. LIDL, Spotify, stipendio…'),
+                prefixIcon: const Icon(Icons.notes_rounded),
+              ),
+              onSubmitted: (_) => _completeFirstNoteSuggestion(),
+            ),
           ),
-          const SizedBox(height: 4),
         ],
-        Focus(
-          onKeyEvent: _onNoteKey,
-          child: TextField(
-            controller: widget.noteController,
-            textCapitalization: TextCapitalization.sentences,
+        if (showDescription && showTags) const SizedBox(height: 22),
+        if (showTags) ...[
+          Text(
+            'Tag',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          const SizedBox(height: 3),
+          Text(
+            'Es. #Università o #Vacanza',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          if (widget.tags.isNotEmpty) ...[
+            const SizedBox(height: 9),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: widget.tags
+                  .map((value) => InputChip(
+                        label: Text('#$value'),
+                        onDeleted: () => _removeTag(value),
+                        deleteButtonTooltipMessage: 'Rimuovi tag $value',
+                      ))
+                  .toList(growable: false),
+            ),
+          ],
+          if (index.tags.isNotEmpty) ...[
+            _suggestionSelector(
+              selected: _tagFilter,
+              onChanged: (filter) => setState(() => _tagFilter = filter),
+            ),
+            QuickSuggestionStrip(
+              items: tagSuggestions
+                  .map((item) => QuickSuggestionItem(
+                        value: item.value,
+                        label: '#${item.value}',
+                        semanticsLabel:
+                            'Tag ${item.value}${item.favorite ? ', preferito' : ''}',
+                      ))
+                  .toList(growable: false),
+              onSelected: _selectTag,
+              onShowAll: _showAllTags,
+            ),
+          ],
+          const SizedBox(height: 9),
+          TextField(
+            controller: tagController,
             textInputAction: TextInputAction.done,
             decoration: InputDecoration(
-              labelText: AppI18n.tr('Descrizione opzionale'),
-              hintText: AppI18n.tr('Es. LIDL, Spotify, stipendio…'),
-              prefixIcon: Icon(Icons.notes_rounded),
+              labelText: AppI18n.tr('Cerca o aggiungi tag'),
+              hintText: AppI18n.tr('Es. Università'),
+              prefixIcon: const Icon(Icons.tag_rounded),
             ),
-            onSubmitted: (_) => _completeFirstNoteSuggestion(),
+            onSubmitted: _submitTag,
           ),
-        ),
-        const SizedBox(height: 16),
-        Text('Tag', style: Theme.of(context).textTheme.titleMedium),
-        const SizedBox(height: 4),
-        Text(
-          'Contesto trasversale, es. #Università o #Vacanza',
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
-        if (widget.tags.isNotEmpty) ...[
-          const SizedBox(height: 8),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: widget.tags
-                .map(
-                  (value) => InputChip(
-                    label: Text('#$value'),
-                    onDeleted: () => _removeTag(value),
-                    deleteButtonTooltipMessage: 'Rimuovi tag $value',
-                  ),
-                )
-                .toList(growable: false),
-          ),
-        ],
-        if (index.tags.isNotEmpty) ...[
-          const SizedBox(height: 4),
-          QuickSuggestionStrip(
-            items: tagSuggestions
-                .map(
-                  (item) => QuickSuggestionItem(
-                    value: item.value,
-                    label: '#${item.value}',
-                    semanticsLabel:
-                        'Tag ${item.value}${item.favorite ? ', preferito' : ''}',
-                  ),
-                )
-                .toList(growable: false),
-            onSelected: _selectTag,
-            onShowAll: _showAllTags,
-          ),
-        ],
-        TextField(
-          controller: tagController,
-          textInputAction: TextInputAction.done,
-          decoration: InputDecoration(
-            labelText: AppI18n.tr('Cerca o aggiungi tag'),
-            hintText: AppI18n.tr('Es. Università'),
-            prefixIcon: Icon(Icons.tag_rounded),
-          ),
-          onSubmitted: _submitTag,
-        ),
-        if (canCreateTag)
-          Align(
-            alignment: Alignment.centerLeft,
-            child: TextButton.icon(
-              onPressed: () => _selectTag(cleanedTag),
-              icon: const Icon(Icons.add_rounded, size: 18),
-              label: Text('Crea #$cleanedTag'),
+          if (canCreateTag)
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                onPressed: () => _selectTag(cleanedTag),
+                icon: const Icon(Icons.add_rounded, size: 18),
+                label: Text('Crea #$cleanedTag'),
+              ),
             ),
-          ),
+        ],
       ],
     );
   }
