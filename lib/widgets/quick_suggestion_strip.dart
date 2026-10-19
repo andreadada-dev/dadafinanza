@@ -20,6 +20,7 @@ class QuickSuggestionStrip extends StatelessWidget {
     required this.onSelected,
     this.onShowAll,
     this.showAllLabel = 'Mostra tutte',
+    this.softBackground = false,
     super.key,
   });
 
@@ -27,6 +28,8 @@ class QuickSuggestionStrip extends StatelessWidget {
   final ValueChanged<String> onSelected;
   final VoidCallback? onShowAll;
   final String showAllLabel;
+  /// Use a raised neutral chip only when requested by the movement editor.
+  final bool softBackground;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +62,12 @@ class QuickSuggestionStrip extends StatelessWidget {
                 color: Theme.of(context).colorScheme.outlineVariant,
                 width: 1.2,
               ),
-              backgroundColor: Colors.transparent,
+              backgroundColor: softBackground
+                  ? Theme.of(context).colorScheme.surfaceContainerHigh
+                  : Colors.transparent,
+              selectedColor: softBackground
+                  ? Theme.of(context).colorScheme.surfaceContainerHigh
+                  : null,
               showCheckmark: false,
               label: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 180),
