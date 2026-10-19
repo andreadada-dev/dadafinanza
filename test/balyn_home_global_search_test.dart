@@ -4,8 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Home search is editable and indexes sections, money and tags', () {
-    final source = File('lib/widgets/balyn_global_search_bar.dart')
-        .readAsStringSync();
+    final source = File(
+      'lib/widgets/balyn_global_search_bar.dart',
+    ).readAsStringSync();
     expect(source, contains('SearchAnchor('));
     expect(source, contains('SearchBar('));
     expect(source, contains("ValueKey('home-global-search')"));
@@ -20,10 +21,12 @@ void main() {
   });
 
   test('Home keeps original More icon, now in statistics slot', () {
-    final hero = File('lib/widgets/balyn_revolut_home_hero.dart')
-        .readAsStringSync();
-    final more = File('lib/widgets/balyn_cue_three_dots_action.dart')
-        .readAsStringSync();
+    final hero = File(
+      'lib/widgets/balyn_revolut_home_hero.dart',
+    ).readAsStringSync();
+    final more = File(
+      'lib/widgets/balyn_cue_three_dots_action.dart',
+    ).readAsStringSync();
     expect(hero, contains('BalynGlobalSearchBar('));
     expect(hero, contains('BalynCueThreeDotsAction('));
     expect(hero, isNot(contains('Icons.bar_chart_rounded')));
@@ -34,8 +37,9 @@ void main() {
 
   test('New movement separates Tag and Description cards and filters', () {
     final editor = File('lib/screens/quick_add_page.dart').readAsStringSync();
-    final metadata = File('lib/widgets/transaction_metadata_fields.dart')
-        .readAsStringSync();
+    final metadata = File(
+      'lib/widgets/transaction_metadata_fields.dart',
+    ).readAsStringSync();
     expect(editor, contains('TransactionMetadataSection.description'));
     expect(editor, contains('TransactionMetadataSection.tags'));
     expect(metadata, contains("Text('Tutti')"));

@@ -40,41 +40,47 @@ void main() {
     expect(hero, isNot(contains('_AnimatedAccountDiamond')));
   });
 
-  test('Hero More keeps its three-dots trigger while corner + stays radial', () {
-    final header = File(
-      'lib/widgets/balyn_cue_three_dots_action.dart',
-    ).readAsStringSync();
-    final fab = File(
-      'lib/widgets/balyn_quick_action_launcher.dart',
-    ).readAsStringSync();
-    final menu = File(
-      'lib/widgets/balyn_cue_anchored_menu.dart',
-    ).readAsStringSync();
-    expect(header, contains('PopupMenuButton<String>('));
-    expect(header, contains('position: PopupMenuPosition.under'));
-    expect(header, contains("'Conti'"));
-    expect(header, contains("'Pianifica'"));
-    expect(header, contains("'Anticipi'"));
-    expect(header, contains('Icons.more_vert_rounded'));
-    expect(header, isNot(contains('hideTriggerOnTransition')));
-    expect(fab, contains('return PieMenu('));
-    expect(fab, contains('overlayColor: Colors.black.withValues(alpha: .54)'));
-    expect(fab, contains('pointerSize: 0'));
-    expect(fab, contains('longPressShowsMenu: true'));
-    expect(fab, contains('longPressDuration: holdDuration'));
-    expect(fab, contains('onPressed: _openTransferOnce'));
-    expect(fab, contains('scheduleMicrotask(() => _tapInProgress = false)'));
-    expect(fab, contains('math.pi * 2 * progress.clamp(0.0, 1.0)'));
-    expect(menu, contains('barrierColor: Colors.black54'));
-    expect(menu, contains('motion: .bouncy()'));
-    expect(menu, contains('reverseMotion: .snappy()'));
-    expect(menu, contains('alignment: Alignment.bottomRight'));
-    expect(menu, contains('Navigator.of(modalContext).pop()'));
-    expect(menu, contains('height: closeSlotHeight'));
-    expect(header, contains("ValueKey('home-more-cue-trigger')"));
-    expect(menu, contains('alignment: Alignment.topCenter'));
-    expect(menu, contains('offset: Offset((56 - triggerRect.width) / 2, 0)'));
-  });
+  test(
+    'Hero More keeps its three-dots trigger while corner + stays radial',
+    () {
+      final header = File(
+        'lib/widgets/balyn_cue_three_dots_action.dart',
+      ).readAsStringSync();
+      final fab = File(
+        'lib/widgets/balyn_quick_action_launcher.dart',
+      ).readAsStringSync();
+      final menu = File(
+        'lib/widgets/balyn_cue_anchored_menu.dart',
+      ).readAsStringSync();
+      expect(header, contains('PopupMenuButton<String>('));
+      expect(header, contains('position: PopupMenuPosition.under'));
+      expect(header, contains("'Conti'"));
+      expect(header, contains("'Pianifica'"));
+      expect(header, contains("'Anticipi'"));
+      expect(header, contains('Icons.more_vert_rounded'));
+      expect(header, isNot(contains('hideTriggerOnTransition')));
+      expect(fab, contains('return PieMenu('));
+      expect(
+        fab,
+        contains('overlayColor: Colors.black.withValues(alpha: .54)'),
+      );
+      expect(fab, contains('pointerSize: 0'));
+      expect(fab, contains('longPressShowsMenu: true'));
+      expect(fab, contains('longPressDuration: holdDuration'));
+      expect(fab, contains('onPressed: _openTransferOnce'));
+      expect(fab, contains('scheduleMicrotask(() => _tapInProgress = false)'));
+      expect(fab, contains('math.pi * 2 * progress.clamp(0.0, 1.0)'));
+      expect(menu, contains('barrierColor: Colors.black54'));
+      expect(menu, contains('motion: .bouncy()'));
+      expect(menu, contains('reverseMotion: .snappy()'));
+      expect(menu, contains('alignment: Alignment.bottomRight'));
+      expect(menu, contains('Navigator.of(modalContext).pop()'));
+      expect(menu, contains('height: closeSlotHeight'));
+      expect(header, contains("ValueKey('home-more-cue-trigger')"));
+      expect(menu, contains('alignment: Alignment.topCenter'));
+      expect(menu, contains('offset: Offset((56 - triggerRect.width) / 2, 0)'));
+    },
+  );
 
   testWidgets('FAB changes shape with scrolling and springs back to circle', (
     tester,

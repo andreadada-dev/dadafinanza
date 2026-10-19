@@ -118,15 +118,16 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
     final excluded = widget.tags
         .map(TransactionMetadataSuggestions.normalizeLookup)
         .toSet();
-    final matches = source.where((item) {
-      if (tags && excluded.contains(item.normalized)) return false;
-      if (filter == _MetadataFilter.favorites && !item.favorite) return false;
-      return query.isEmpty || item.normalized.contains(query);
-    }).toList()
-      ..sort((a, b) {
-        final recent = b.lastUsed.compareTo(a.lastUsed);
-        return recent != 0 ? recent : b.usageCount.compareTo(a.usageCount);
-      });
+    final matches =
+        source.where((item) {
+          if (tags && excluded.contains(item.normalized)) return false;
+          if (filter == _MetadataFilter.favorites && !item.favorite)
+            return false;
+          return query.isEmpty || item.normalized.contains(query);
+        }).toList()..sort((a, b) {
+          final recent = b.lastUsed.compareTo(a.lastUsed);
+          return recent != 0 ? recent : b.usageCount.compareTo(a.usageCount);
+        });
     return matches.take(7).toList(growable: false);
   }
 
@@ -144,9 +145,11 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
     child: SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: SegmentedButton<_MetadataFilter>(
-        key: ValueKey(widget.section == TransactionMetadataSection.tags
-            ? 'tag-suggestion-filter'
-            : 'description-suggestion-filter'),
+        key: ValueKey(
+          widget.section == TransactionMetadataSection.tags
+              ? 'tag-suggestion-filter'
+              : 'description-suggestion-filter',
+        ),
         showSelectedIcon: false,
         style: const ButtonStyle(
           visualDensity: VisualDensity.compact,
@@ -157,7 +160,10 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
         segments: const [
           ButtonSegment(value: _MetadataFilter.all, label: Text('Tutti')),
           ButtonSegment(value: _MetadataFilter.recent, label: Text('Recenti')),
-          ButtonSegment(value: _MetadataFilter.favorites, label: Text('Preferiti')),
+          ButtonSegment(
+            value: _MetadataFilter.favorites,
+            label: Text('Preferiti'),
+          ),
         ],
         selected: {selected},
         onSelectionChanged: (next) => onChanged(next.first),
@@ -318,9 +324,9 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
         if (showDescription) ...[
           Text(
             'Descrizione',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w800,
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
           ),
           if (index.notes.isNotEmpty) ...[
             _suggestionSelector(
@@ -329,12 +335,14 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
             ),
             QuickSuggestionStrip(
               items: noteSuggestions
-                  .map((item) => QuickSuggestionItem(
-                        value: item.value,
-                        label: item.value,
-                        semanticsLabel:
-                            '${item.value}${item.favorite ? ', preferita' : ''}',
-                      ))
+                  .map(
+                    (item) => QuickSuggestionItem(
+                      value: item.value,
+                      label: item.value,
+                      semanticsLabel:
+                          '${item.value}${item.favorite ? ', preferita' : ''}',
+                    ),
+                  )
                   .toList(growable: false),
               onSelected: _completeNote,
               onShowAll: _showAllNotes,
@@ -361,9 +369,9 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
         if (showTags) ...[
           Text(
             'Tag',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w800,
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
           ),
           const SizedBox(height: 3),
           Text(
@@ -376,11 +384,13 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
               spacing: 8,
               runSpacing: 8,
               children: widget.tags
-                  .map((value) => InputChip(
-                        label: Text('#$value'),
-                        onDeleted: () => _removeTag(value),
-                        deleteButtonTooltipMessage: 'Rimuovi tag $value',
-                      ))
+                  .map(
+                    (value) => InputChip(
+                      label: Text('#$value'),
+                      onDeleted: () => _removeTag(value),
+                      deleteButtonTooltipMessage: 'Rimuovi tag $value',
+                    ),
+                  )
                   .toList(growable: false),
             ),
           ],
@@ -391,12 +401,14 @@ class _TransactionMetadataFieldsState extends State<TransactionMetadataFields> {
             ),
             QuickSuggestionStrip(
               items: tagSuggestions
-                  .map((item) => QuickSuggestionItem(
-                        value: item.value,
-                        label: '#${item.value}',
-                        semanticsLabel:
-                            'Tag ${item.value}${item.favorite ? ', preferito' : ''}',
-                      ))
+                  .map(
+                    (item) => QuickSuggestionItem(
+                      value: item.value,
+                      label: '#${item.value}',
+                      semanticsLabel:
+                          'Tag ${item.value}${item.favorite ? ', preferito' : ''}',
+                    ),
+                  )
                   .toList(growable: false),
               onSelected: _selectTag,
               onShowAll: _showAllTags,

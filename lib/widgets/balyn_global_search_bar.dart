@@ -106,7 +106,11 @@ class _BalynGlobalSearchBarState extends State<BalynGlobalSearchBar> {
         key: const ValueKey('home-global-search'),
         controller: searchController,
         hintText: 'Cerca movimenti',
-        leading: const Icon(Icons.search_rounded, color: Colors.white, size: 18),
+        leading: const Icon(
+          Icons.search_rounded,
+          color: Colors.white,
+          size: 18,
+        ),
         onTap: searchController.openView,
         onChanged: (_) => searchController.openView(),
         elevation: const WidgetStatePropertyAll(0),
@@ -114,56 +118,72 @@ class _BalynGlobalSearchBarState extends State<BalynGlobalSearchBar> {
           Colors.white.withValues(alpha: .28),
         ),
         textStyle: const WidgetStatePropertyAll(
-          TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600),
+          TextStyle(
+            color: Colors.white,
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         hintStyle: const WidgetStatePropertyAll(
-          TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600),
+          TextStyle(
+            color: Colors.white,
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         padding: const WidgetStatePropertyAll(
           EdgeInsets.symmetric(horizontal: 14),
         ),
         constraints: const BoxConstraints(minHeight: 40, maxHeight: 40),
-        shape: const WidgetStatePropertyAll(
-          StadiumBorder(),
-        ),
+        shape: const WidgetStatePropertyAll(StadiumBorder()),
       ),
       suggestionsBuilder: (context, searchController) {
         final query = searchController.text.trim();
         final key = TransactionMetadataSuggestions.normalizeLookup(query);
-        final matchedDestinations = destinations.where(
-          (destination) =>
-              query.isEmpty ||
-              destination.aliases.any(
-                (alias) => TransactionMetadataSuggestions.normalizeLookup(alias).contains(key),
-              ) ||
-              TransactionMetadataSuggestions.normalizeLookup(destination.title).contains(key),
-        ).toList();
+        final matchedDestinations = destinations
+            .where(
+              (destination) =>
+                  query.isEmpty ||
+                  destination.aliases.any(
+                    (alias) => TransactionMetadataSuggestions.normalizeLookup(
+                      alias,
+                    ).contains(key),
+                  ) ||
+                  TransactionMetadataSuggestions.normalizeLookup(
+                    destination.title,
+                  ).contains(key),
+            )
+            .toList();
 
         final numeric = query
             .replaceAll(',', '.')
             .replaceAll(RegExp(r'[^0-9.]'), '');
         final transactions = [...state.transactions]
           ..sort((a, b) => b.date.compareTo(a.date));
-        final matches = transactions.where((item) {
-          if (query.isEmpty) return true;
-          final category = state.categoryById(item.categoryId)?.name ?? '';
-          final account = state.accountById(item.accountId)?.name ?? '';
-          final destination = state.accountById(item.toAccountId)?.name ?? '';
-          final searchable = [
-            item.note ?? '',
-            ...item.tags,
-            category,
-            account,
-            destination,
-            item.type.label,
-          ].map(TransactionMetadataSuggestions.normalizeLookup).join(' ');
-          if (searchable.contains(key)) return true;
-          final formatted = moneyFor(state, item.amount).toLowerCase();
-          if (formatted.contains(query.toLowerCase())) return true;
-          return numeric.isNotEmpty &&
-              (item.amount.toStringAsFixed(2).contains(numeric) ||
-                  item.amount.toString().contains(numeric));
-        }).take(query.isEmpty ? 6 : 30).toList();
+        final matches = transactions
+            .where((item) {
+              if (query.isEmpty) return true;
+              final category = state.categoryById(item.categoryId)?.name ?? '';
+              final account = state.accountById(item.accountId)?.name ?? '';
+              final destination =
+                  state.accountById(item.toAccountId)?.name ?? '';
+              final searchable = [
+                item.note ?? '',
+                ...item.tags,
+                category,
+                account,
+                destination,
+                item.type.label,
+              ].map(TransactionMetadataSuggestions.normalizeLookup).join(' ');
+              if (searchable.contains(key)) return true;
+              final formatted = moneyFor(state, item.amount).toLowerCase();
+              if (formatted.contains(query.toLowerCase())) return true;
+              return numeric.isNotEmpty &&
+                  (item.amount.toStringAsFixed(2).contains(numeric) ||
+                      item.amount.toString().contains(numeric));
+            })
+            .take(query.isEmpty ? 6 : 30)
+            .toList();
 
         return <Widget>[
           if (matchedDestinations.isNotEmpty) ...[
@@ -194,15 +214,16 @@ class _BalynGlobalSearchBarState extends State<BalynGlobalSearchBar> {
                   item.type == TransactionType.income
                       ? Icons.arrow_downward_rounded
                       : item.type == TransactionType.expense
-                          ? Icons.arrow_upward_rounded
-                          : Icons.swap_horiz_rounded,
+                      ? Icons.arrow_upward_rounded
+                      : Icons.swap_horiz_rounded,
                   color: scheme.primary,
                 ),
               ),
               title: Text(
                 (item.note?.trim().isNotEmpty ?? false)
                     ? item.note!.trim()
-                    : state.categoryById(item.categoryId)?.name ?? item.type.label,
+                    : state.categoryById(item.categoryId)?.name ??
+                          item.type.label,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -210,7 +231,8 @@ class _BalynGlobalSearchBarState extends State<BalynGlobalSearchBar> {
                 [
                   DateFormat('dd MMM yyyy').format(item.date),
                   state.accountById(item.accountId)?.name ?? '',
-                  if (item.tags.isNotEmpty) item.tags.map((tag) => '#$tag').join(' '),
+                  if (item.tags.isNotEmpty)
+                    item.tags.map((tag) => '#$tag').join(' '),
                 ].where((value) => value.isNotEmpty).join(' · '),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
@@ -222,7 +244,8 @@ class _BalynGlobalSearchBarState extends State<BalynGlobalSearchBar> {
               onTap: () => leaveSearch(
                 () => Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (_) => TransactionDetailPage(transactionId: item.id),
+                    builder: (_) =>
+                        TransactionDetailPage(transactionId: item.id),
                   ),
                 ),
               ),
@@ -257,9 +280,9 @@ class _SearchHeading extends StatelessWidget {
     padding: const EdgeInsets.fromLTRB(16, 20, 16, 4),
     child: Text(
       title,
-      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-        fontWeight: FontWeight.w800,
-      ),
+      style: Theme.of(
+        context,
+      ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w800),
     ),
   );
 }

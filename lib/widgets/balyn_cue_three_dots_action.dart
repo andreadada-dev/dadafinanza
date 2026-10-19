@@ -69,11 +69,7 @@ class BalynCueThreeDotsAction extends StatelessWidget {
       shape: const CircleBorder(),
       child: const SizedBox.square(
         dimension: 40,
-        child: Icon(
-          Icons.more_vert_rounded,
-          size: 26,
-          color: Colors.white,
-        ),
+        child: Icon(Icons.more_vert_rounded, size: 26, color: Colors.white),
       ),
     ),
   );
