@@ -1,0 +1,35 @@
+name: Balyn search layout formatter
+on:
+  push:
+    branches: [fix/balyn-visible-liquid-background]
+    paths: [.github/workflows/balyn-search-layout-format-once.yml]
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.2'
+          channel: stable
+          cache: true
+      - name: Resolve packages
+        run: flutter pub get
+      - name: Format search source and tests
+        run: |
+          dart format lib/widgets/balyn_global_search_bar.dart test/balyn_home_global_search_test.dart
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lib/widgets/balyn_global_search_bar.dart test/balyn_home_global_search_test.dart
+          if ! git diff --cached --quiet; then
+            git commit -m "style: format Revolut search layout"
+            git push origin HEAD:fix/balyn-visible-liquid-background
+          fi
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos
+      - name: Test
+        run: flutter test
