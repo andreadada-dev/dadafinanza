@@ -2,6 +2,7 @@ import 'package:balyn/l10n/localized_material.dart';
 
 import 'balyn_cue_section_bar.dart';
 import 'balyn_cue_three_dots_action.dart';
+import 'balyn_global_search_bar.dart';
 import 'balyn_omesh_hero_background.dart';
 
 import '../main.dart';
@@ -31,6 +32,7 @@ class BalynRevolutHomeHero extends StatelessWidget {
     required this.onTransfer,
     required this.onManageAccounts,
     required this.onAdvances,
+    required this.onPlanning,
     required this.onAdvancedDashboard,
     required this.onCustomizeHome,
     super.key,
@@ -55,6 +57,7 @@ class BalynRevolutHomeHero extends StatelessWidget {
   final VoidCallback onTransfer;
   final VoidCallback onManageAccounts;
   final VoidCallback onAdvances;
+  final VoidCallback onPlanning;
   final VoidCallback onAdvancedDashboard;
   final VoidCallback onCustomizeHome;
 
@@ -219,48 +222,20 @@ class BalynRevolutHomeHero extends StatelessWidget {
                       ),
                       const SizedBox(width: 9),
                       Expanded(
-                        child: Material(
-                          color: Colors.white.withValues(alpha: .28),
-                          borderRadius: BorderRadius.circular(24),
-                          child: InkWell(
-                            onTap: onSearch,
-                            borderRadius: BorderRadius.circular(24),
-                            child: const SizedBox(
-                              height: 40,
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 14),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.search_rounded,
-                                      color: Colors.white,
-                                      size: 18,
-                                    ),
-                                    SizedBox(width: 8),
-                                    Expanded(
-                                      child: Text(
-                                        'Cerca movimenti',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                        child: BalynGlobalSearchBar(
+                          onMovements: onSearch,
+                          onAnalytics: onAnalytics,
+                          onAccounts: onManageAccounts,
+                          onPlanning: onPlanning,
+                          onAdvances: onAdvances,
+                          onSettings: onSettings,
                         ),
                       ),
                       const SizedBox(width: 8),
-                      _RoundHeaderAction(
-                        icon: Icons.bar_chart_rounded,
-                        tooltip: 'Analisi',
-                        onTap: onAnalytics,
+                      BalynCueThreeDotsAction(
+                        onManageAccounts: onManageAccounts,
+                        onPlanning: onPlanning,
+                        onAdvances: onAdvances,
                       ),
                       const SizedBox(width: 6),
                       _RoundHeaderAction(
@@ -432,12 +407,6 @@ class BalynRevolutHomeHero extends StatelessWidget {
                         icon: Icons.swap_horiz_rounded,
                         label: 'Trasferisci',
                         onTap: onTransfer,
-                      ),
-                      BalynCueThreeDotsAction(
-                        onManageAccounts: onManageAccounts,
-                        onAdvances: onAdvances,
-                        onAdvancedDashboard: onAdvancedDashboard,
-                        onCustomizeHome: onCustomizeHome,
                       ),
                     ],
                   ),
