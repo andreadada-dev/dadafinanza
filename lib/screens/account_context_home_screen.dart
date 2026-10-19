@@ -35,6 +35,7 @@ class AccountContextHomeScreen extends StatefulWidget {
     required this.onSectionChanged,
     required this.onShowActivity,
     required this.onOpenPlanning,
+    required this.onOpenAdvances,
     super.key,
   });
 
@@ -45,6 +46,7 @@ class AccountContextHomeScreen extends StatefulWidget {
   final ValueChanged<int> onSectionChanged;
   final ValueChanged<int> onShowActivity;
   final VoidCallback onOpenPlanning;
+  final VoidCallback onOpenAdvances;
 
   @override
   State<AccountContextHomeScreen> createState() =>
@@ -208,10 +210,7 @@ class _AccountContextHomeScreenState extends State<AccountContextHomeScreen> {
                     builder: (_) => const AccountManagementScreen(),
                   ),
                 ),
-                onAdvances: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const AdvancesScreen()),
-                ),
+                onAdvances: widget.onOpenAdvances,
                 onAdvancedDashboard: () => Navigator.push(
                   context,
                   MaterialPageRoute(
