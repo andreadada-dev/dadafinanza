@@ -52,6 +52,15 @@ class QuickSuggestionStrip extends StatelessWidget {
             selected: item.selected,
             label: item.semanticsLabel ?? item.label,
             child: FilterChip(
+              // The border must remain visible even when a suggestion is
+              // unselected, for both description and tag suggestions.
+              shape: const StadiumBorder(),
+              side: BorderSide(
+                color: Theme.of(context).colorScheme.outlineVariant,
+                width: 1.2,
+              ),
+              backgroundColor: Colors.transparent,
+              showCheckmark: false,
               label: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 180),
                 child: Text(
