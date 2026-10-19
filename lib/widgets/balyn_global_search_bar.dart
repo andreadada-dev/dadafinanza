@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../main.dart';
 import '../models/models.dart';
 import '../screens/transaction_screens.dart';
+import '../theme/balyn_palette.dart';
 import '../services/transaction_metadata_suggestions.dart';
 import 'ui_helpers.dart';
 
@@ -100,7 +101,13 @@ class _BalynGlobalSearchBarState extends State<BalynGlobalSearchBar> {
 
     return SearchAnchor(
       searchController: controller,
-      viewBackgroundColor: scheme.surface,
+      viewBackgroundColor: BalynPalette.canvas(Theme.of(context).brightness),
+      viewElevation: 0,
+      viewLeading: IconButton(
+        tooltip: 'Chiudi ricerca',
+        icon: const Icon(Icons.close_rounded),
+        onPressed: () => controller.closeView(''),
+      ),
       viewHintText: 'Cerca movimenti, importi, tag o sezioni',
       builder: (context, searchController) => SearchBar(
         key: const ValueKey('home-global-search'),
@@ -182,75 +189,101 @@ class _BalynGlobalSearchBarState extends State<BalynGlobalSearchBar> {
                   (item.amount.toStringAsFixed(2).contains(numeric) ||
                       item.amount.toString().contains(numeric));
             })
-            .take(query.isEmpty ? 6 : 30)
+            .take(query.isEmpty ? 5 : 30)
             .toList();
 
+
         return <Widget>[
-          if (matchedDestinations.isNotEmpty) ...[
-            const _SearchHeading('Sezioni'),
-            for (final destination in matchedDestinations)
-              ListTile(
-                key: ValueKey('search-section-${destination.title}'),
-                leading: Icon(destination.icon, color: scheme.primary),
-                title: Text(destination.title),
-                subtitle: Text(destination.subtitle),
-                trailing: const Icon(Icons.arrow_outward_rounded, size: 19),
-                onTap: () => leaveSearch(destination.open),
-              ),
-          ],
-          _SearchHeading(query.isEmpty ? 'Movimenti recenti' : 'Movimenti'),
-          if (matches.isEmpty)
-            const ListTile(
-              leading: Icon(Icons.search_off_rounded),
-              title: Text('Nessun movimento trovato'),
-              subtitle: Text('Prova con un tag, una descrizione o un importo.'),
-            ),
-          for (final item in matches)
-            ListTile(
-              key: ValueKey('search-transaction-${item.id}'),
-              leading: CircleAvatar(
-                backgroundColor: scheme.primary.withValues(alpha: .10),
-                child: Icon(
-                  item.type == TransactionType.income
-                      ? Icons.arrow_downward_rounded
-                      : item.type == TransactionType.expense
-                      ? Icons.arrow_upward_rounded
-                      : Icons.swap_horiz_rounded,
-                  color: scheme.primary,
-                ),
-              ),
-              title: Text(
-                (item.note?.trim().isNotEmpty ?? false)
-                    ? item.note!.trim()
-                    : state.categoryById(item.categoryId)?.name ??
-                          item.type.label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              subtitle: Text(
-                [
-                  DateFormat('dd MMM yyyy').format(item.date),
-                  state.accountById(item.accountId)?.name ?? '',
-                  if (item.tags.isNotEmpty)
-                    item.tags.map((tag) => '#$tag').join(' '),
-                ].where((value) => value.isNotEmpty).join(' · '),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              trailing: Text(
-                moneyFor(state, item.amount, signed: true),
-                style: const TextStyle(fontWeight: FontWeight.w700),
-              ),
-              onTap: () => leaveSearch(
-                () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) =>
-                        TransactionDetailPage(transactionId: item.id),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 15, 16, 28),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  query.isEmpty ? 'Esplora' : 'Risultati della ricerca',
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
-              ),
+                const SizedBox(height: 20),
+                _SearchHeading(
+                  query.isEmpty ? 'Movimenti recenti' : 'Movimenti',
+                  onSeeAll: query.isEmpty
+                      ? () => leaveSearch(widget.onMovements)
+                      : null,
+                ),
+                const SizedBox(height: 10),
+                Material(
+                  key: const ValueKey('search-recent-movements'),
+                  color: BalynPalette.surface(Theme.of(context).brightness),
+                  borderRadius: BorderRadius.circular(20),
+                  clipBehavior: Clip.antiAlias,
+                  child: matches.isEmpty
+                      ? const Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Text('Nessun movimento trovato'),
+                        )
+                      : Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            for (var i = 0; i < matches.length; i++) ...[
+                              if (i > 0)
+                                Divider(
+                                  height: 1,
+                                  indent: 64,
+                                  endIndent: 14,
+                                  color: scheme.outlineVariant,
+                                ),
+                              _SearchMovementRow(
+                                key: ValueKey('search-transaction-${matches[i].id}'),
+                                item: matches[i],
+                                onTap: () {
+                                  final item = matches[i];
+                                  leaveSearch(() => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => TransactionDetailPage(
+                                        transactionId: item.id,
+                                      ),
+                                    ),
+                                  ));
+                                },
+                              ),
+                            ],
+                          ],
+                        ),
+                ),
+                const SizedBox(height: 25),
+                const _SearchHeading('Sezioni'),
+                const SizedBox(height: 12),
+                if (matchedDestinations.isEmpty)
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    child: Text('Nessuna sezione corrispondente.'),
+                  )
+                else
+                  GridView.builder(
+                    key: const ValueKey('search-six-sections'),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: matchedDestinations.length,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 1.22,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                    ),
+                    itemBuilder: (context, index) {
+                      final destination = matchedDestinations[index];
+                      return _SearchDestinationTile(
+                        key: ValueKey('search-section-${destination.title}'),
+                        destination: destination,
+                        onTap: () => leaveSearch(destination.open),
+                      );
+                    },
+                  ),
+              ],
             ),
-          const SizedBox(height: 24),
+          ),
         ];
       },
     );
@@ -272,17 +305,169 @@ class _SearchDestination {
   final List<String> aliases;
 }
 
-class _SearchHeading extends StatelessWidget {
-  const _SearchHeading(this.title);
-  final String title;
+
+class _SearchMovementRow extends StatelessWidget {
+  const _SearchMovementRow({required this.item, required this.onTap, super.key});
+  final FinanceTransaction item;
+  final VoidCallback onTap;
+
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.fromLTRB(16, 20, 16, 4),
-    child: Text(
-      title,
-      style: Theme.of(
-        context,
-      ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w800),
-    ),
+  Widget build(BuildContext context) {
+    final state = AppScope.of(context);
+    final accent = transactionColor(context, item.type);
+    final category = state.categoryById(item.categoryId);
+    final note = item.note?.trim() ?? '';
+    final title = note.isNotEmpty ? note : category?.name ?? item.type.label;
+    final value = moneyFor(state, item.amount);
+    final signed = switch (item.type) {
+      TransactionType.expense => '−$value',
+      TransactionType.income => '+$value',
+      TransactionType.transfer => value,
+    };
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 12),
+        child: Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: accent.withValues(alpha: .13),
+                borderRadius: BorderRadius.circular(13),
+              ),
+              child: Icon(
+                item.type == TransactionType.transfer
+                    ? Icons.swap_horiz_rounded
+                    : category == null
+                        ? item.type == TransactionType.income
+                            ? Icons.south_west_rounded
+                            : Icons.north_east_rounded
+                        : categoryIcon(category.iconKey),
+                color: accent,
+                size: 21,
+              ),
+            ),
+            const SizedBox(width: 11),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    [
+                      category?.name ?? item.type.label,
+                      DateFormat('d MMM').format(item.date),
+                      if (item.tags.isNotEmpty) item.tags.map((t) => '#$t').join(' '),
+                    ].join(' · '),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      fontSize: 11,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              signed,
+              style: TextStyle(color: accent, fontSize: 13, fontWeight: FontWeight.w800),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SearchDestinationTile extends StatelessWidget {
+  const _SearchDestinationTile({
+    required this.destination,
+    required this.onTap,
+    super.key,
+  });
+  final _SearchDestination destination;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: BalynPalette.surface(Theme.of(context).brightness),
+      borderRadius: BorderRadius.circular(18),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(13),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: BalynPalette.accent.withValues(alpha: .12),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: SizedBox.square(
+                  dimension: 37,
+                  child: Icon(destination.icon, size: 20, color: BalynPalette.accent),
+                ),
+              ),
+              const Spacer(),
+              Text(
+                destination.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                destination.subtitle,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  fontSize: 10,
+                  height: 1.2,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SearchHeading extends StatelessWidget {
+  const _SearchHeading(this.title, {this.onSeeAll});
+  final String title;
+  final VoidCallback? onSeeAll;
+
+  @override
+  Widget build(BuildContext context) => Row(
+    children: [
+      Expanded(
+        child: Text(
+          title,
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+      ),
+      if (onSeeAll != null)
+        TextButton(
+          onPressed: onSeeAll,
+          child: const Text('Vedi tutti'),
+        ),
+    ],
   );
 }
