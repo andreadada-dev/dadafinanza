@@ -1,0 +1,195 @@
+# BALYN / DadaFinanza — HANDOFF (2026-10-18)
+
+## Read this first in the next chat
+
+Repository: `andreadada-dev/dadafinanza`.
+Current UI work branch: `fix/balyn-visible-liquid-background`.
+**Do not merge into `main` unless the user explicitly asks.**
+Local checkout mentioned previously: `E:\dev\dadafinanza`.
+
+**The redesigned Home is the canonical design reference, including its
+placement, spacing, controls, motion, and palette.** Do not restart from old
+screens (or blindly replicate the old Home). Keep old features and finance
+data, but move old visuals to the redesigned design system.
+
+## Design source of truth — real code, not screenshots
+
+| What to implement / replicate | Dart reference |
+| --- | --- |
+| App-wide theme, colors, dark/light, forms, dialogs, buttons and selected states | `lib/theme/balyn_palette.dart` and `lib/theme/app_theme.dart` |
+| Layout of the **new Home** and widget spacing/order | `lib/screens/account_context_home_screen.dart` |
+| Home Hero, account selector, swipe gesture, buttons and title dropdown | `lib/widgets/balyn_revolut_home_hero.dart` |
+| O'Mesh gradient geometry, subtle shared-clock movement, per-account adjacent-color hues | `lib/widgets/balyn_omesh_hero_background.dart` |
+| Section strip: Panoramica / Movimenti / Analisi | `lib/widgets/balyn_cue_section_bar.dart` |
+| Anchored Cue expanding action menu for Hero “Altro” ONLY | `lib/widgets/balyn_cue_anchored_menu.dart` |
+| “Altro” trigger in the Hero, managing accounts / advances / dashboard / customizer | `lib/widgets/balyn_cue_three_dots_action.dart` |
+| Bottom-right FAB: tap-to-transfer, 700ms clockwise white hold, pie_menu radial presets and motion | `lib/widgets/balyn_quick_action_launcher.dart` |
+| Shell, navigation, scroll-delta signal for the morphing FAB | `lib/screens/app_shell.dart` |
+| Unified rounded content card / headings / icons | `lib/widgets/balyn_editorial_components.dart` |
+| Configurable Home sections: real data, consistent cards | `lib/widgets/home_dashboard_widget.dart` |
+| Financial summary / accounts / monthly card | `lib/widgets/balyn_revolut_home_content.dart` |
+| Recent activity card and action navigation | `lib/widgets/balyn_recent_transactions_card.dart` |
+| Movement history, filters and category pages | `lib/screens/account_context_transactions_screen.dart` |
+| Trends, cash-flow bars, global period selector and same category donut as Home | `lib/screens/account_context_analytics_screen.dart` |
+| Transaction editor/detail page | `lib/widgets/balyn_transaction_detail_content.dart` |
+| “Personalizza Home”: drag-reorder, add/hide, expandable real preview | `lib/screens/settings_screen.dart` (DashboardCustomizerScreen) |
+| Persisted Home widget catalog, migration and deduplication | `lib/widgets/balyn_home_widget_catalog.dart` |
+| Skeleton loading when real data is pending | `lib/widgets/balyn_data_skeleton.dart` |
+| All three Revolut-style onboarding pages and flow/persistence | `lib/screens/balyn_onboarding_flow.dart` |
+| Final onboarding section list (exact Cue ExpandingCards spring style) | `lib/widgets/balyn_onboarding_feature_accordion.dart` |
+| Full onboarding copy for IT, EN, ES, FR, DE, PT, RU, ZH, JA, KO, AR, HI | `lib/l10n/balyn_onboarding_l10n.dart` |
+| Onboarding flat Home charcoal background (no shader or vignette) | `lib/screens/balyn_onboarding_flow.dart` (`BalynPalette.darkCanvas`) |
+| Shared global shader clock and non-restarting screen background | `lib/widgets/balyn_shader_system.dart` |
+
+Also read `docs/BALYN_VISUAL_SYSTEM.md` before touching another screen.
+
+## Canonical palette
+
+Use the actual tokens from `lib/theme/balyn_palette.dart` rather than
+hardcoded colors:
+
+- Primary brand purple: `#7955EB`; primary text violet in dark mode:
+  `#AE94FF`.
+- Dark page background: `#101018`; card surface: `#252532`;
+  raised surface: `#30303D`.
+- Main dark text `#F5F4F9`, secondary text `#A3A5B6`.
+- Light mode: page `#F7F8FA`, card white.
+- Finance income green `#38E0A8` dark / `#12B880` light;
+  expense red `#FF7373` dark / `#F53D3D` light.
+- Radius for cards 22dp and form fields 16dp.
+- Account/category-specific colors are intentionally dynamic; do not
+  replace them with one universal purple.
+
+Style: **flat, clear Revolut-style cards**. Avoid random cyan/teal as a
+complementary Hero color, redundant outlines, deep nested containers, or
+gray legacy rectangles. Keep text clear and accessible at larger system
+font scales.
+
+## Motion and interactions
+
+1. **Hero**: 3×3 O'Mesh “Basic Usage” inspired arrangement. Only interior
+   points move slightly, driven by the global shared clock. For total
+   portfolio purple, blend toward **pink/lilac**, not teal. For green
+   accounts, blend dark green into **lime**, not purple/red. For blue
+   accounts use nearby cool-blue shades. The Hero draws from account
+   `colorValue`. No animated left/right diamond arrow widgets. Account
+   switching remains possible by horizontal swipe and the account
+   selector (title + plain down chevron).
+2. **Hero “Altro”** uses `BalynCueAnchoredMenu`: original position is
+   preserved using the Cue `triggerRect.width` horizontal offset so the
+   close circle stays centered on the existing button. Do not move it
+   right when opening. **Corner “+” now intentionally uses `pie_menu`,
+   not Cue**: long press opens a radial menu; its dimmed overlay matches
+   the Hero's 54%-black backdrop.
+3. **FAB morph**: `BalynMorphingFab` reacts to the horizontal/vertical
+   scroll delta delivered as `ValueListenable<Offset>` from
+   `BalynAppShell`; the trigger briefly stretches/squashes and
+   returns to a circle. Avoid morphing the modal action pills or
+   relocating actual hit targets. Respect reduce-motion settings.
+4. **Home settings**: allow the user to add/hide each section without
+   duplicates, drag its handle to reorder, expand the downward chevron
+   to preview the real widget and change its size. Never reset the
+   chosen order every time the app launches.
+5. **Analytics**: one global date-range selector above all charts;
+   account-color-aware bars, clipped line chart and the SAME category
+   donut component from Home.
+6. **Onboarding** uses a uniform flat charcoal background, exactly
+   `BalynPalette.darkCanvas` (`#101018`) like the Home content area.
+   Do not show velvet, vignettes or animated color meshes behind onboarding.
+
+## Hero centering and visibility
+
+In `balyn_revolut_home_hero.dart` keep the account title and chevron in
+one centered `Row(mainAxisSize: MainAxisSize.min)`. Show/hide eye belongs
+**immediately after the large balance value**, in the same centered Row,
+not absolutely pinned at the far-right edge. The `Cue` menu close button
+is anchored to the center of the existing circular “Altro” trigger with
+`Offset((56 - triggerRect.width) / 2, 0)`.
+
+## Behavior that must not regress
+
+- All existing accounts, balances, currencies, categories, tags, receipts,
+  transaction history, advances, planning, import/export, settings and
+  localization still work.
+- Privacy toggle hides amounts, including inside graph/preview content.
+- App boot uses Skeletonizer only while real async data is loading.
+- The account selector and Hero horizontal swipe still change the
+  selected account even though visible side diamonds were removed.
+- Hero "Altro": manage accounts, advances, advanced dashboard, customize
+  Home. Corner "+" **short tap** opens `QuickAddPage` in **transfer** mode.
+  **700ms long press** fills its circle white clockwise from 0° to 360°
+  and then opens a darkened `pie_menu` radial menu. This displays up to
+  **four enabled user presets**, plus **New preset** (opens the preset
+  creation editor), **Anticipi** and **Pianifica**. Do not restore the
+  older bottom sheet or a vertical Cue menu for the corner +.
+- The corner FAB dimming and closure should behave just like "Altro".
+- No overly saturated/gratuitous gradients or background reinitialization
+  when navigating.
+
+## Cue + Flutter 3.47 compatibility
+
+The `cue` package uses the new standalone `package:material_ui` material
+localizations, while most of Balyn still imports
+`package:flutter/material.dart`. These are **different runtime types**.
+`lib/main.dart` explicitly installs both
+`mui.GlobalMaterialLocalizations.delegate` and Flutter's
+`GlobalMaterialLocalizations.delegate`. Do not remove either while the two
+libraries coexist; without the material_ui delegate Cue will assert
+"No MaterialLocalizations found" when a menu opens in debug builds.
+Use both delegates in widget integration tests of the action menu too.
+
+### Onboarding accordion (new)
+
+On the third onboarding page, use the real Cue example as reference:
+`Milad-Akarie/cue/example/lib/examples/expanding_cards.dart`.
+The in-project implementation is
+`lib/widgets/balyn_onboarding_feature_accordion.dart`, where
+`Cue.onToggle` + `Spring.smooth()` + `Actor` animate one open section at
+a time. Match the screenshots: dark charcoal rows in one group, rounded
+endcaps, one lighter raised panel when selected, compact leading icon,
+chevron rotates, and body copy expands with clip/fade/slide/blur. Four
+sections explain Panoramica, Movimenti e Analisi, Anticipi and Pianifica.
+Do not restore separate bordered widgets or static tour cards.
+
+**All onboarding screens are now Revolut/Balyn charcoal style**. Preserve
+the flat `BalynPalette.darkCanvas` background throughout,
+using `BalynPalette` for surface and purple CTA. The app settings and
+first-account setup must still save exactly as before.
+
+The onboarding uses a dedicated complete dictionary for **all 12 languages**.
+Language selection must immediately redraw the current page and accordion
+before the user taps Done. For additions, extend the dictionary in every
+language, then update
+`test/balyn_onboarding_accordion_test.dart`; never revert to only Italian
+and English for new explanatory copy.
+
+## Verification and future workflow
+
+- Use branch `fix/balyn-visible-liquid-background`.
+- Run `flutter pub get`, `dart format lib test`,
+  `flutter analyze`, `flutter test`, and an Android build.
+- Project CI has used Flutter **3.47.2**. Check actual pinned SDK in
+  `.github/workflows` and `pubspec.yaml` before changing it.
+- Tests to review first:
+  `test/home_glass_navigation_test.dart`,
+  `test/home_summary_layout_test.dart`,
+  `test/balyn_omesh_hero_background_test.dart`,
+  `test/balyn_canonical_design_system_test.dart` and tests in
+  `test/balyn_*`.
+- Check narrow Android screen widths, long Italian labels, reduced-motion,
+  system text scaling, modal overlay alignment, light/dark themes,
+  account color changes, and swipe direction by hand.
+- Do not claim a CI build or screenshot review succeeded before reading
+  the actual run status.
+- Any temporary workflow used only to format Dart should be removed once
+  it has finished. Preserve existing release/publish workflows.
+
+## Current task implemented on this branch
+
+- Removed Hero side navigation diamonds; account swiping stays.
+- Changed balance title diamond into a simple down chevron.
+- Adjusted mesh from opposing purple/cyan toward analogous account hues.
+- Kept Hero 'Altro' as Cue but moved the corner + to `pie_menu` with
+  long-press charge and dynamic preset actions.
+- Added a bounded elastic scroll-direction response on the FAB circle.
+- Verify these edits with CI and an actual Android device before merging.

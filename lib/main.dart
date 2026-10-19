@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:balyn/l10n/localized_material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:material_ui/material_ui.dart' as mui;
 import 'package:home_widget/home_widget.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -10,6 +11,7 @@ import 'data/app_database.dart';
 import 'l10n/app_i18n.dart';
 import 'models/models.dart';
 import 'screens/app_shell.dart';
+import 'screens/balyn_onboarding_flow.dart';
 import 'screens/quick_add_page.dart';
 import 'services/finance_schema_service.dart';
 import 'services/notification_service.dart';
@@ -18,12 +20,16 @@ import 'services/recurring_execution_service.dart';
 import 'services/security_service.dart';
 import 'theme/app_theme.dart';
 import 'widgets/app_lock_gate.dart';
+import 'widgets/balyn_data_skeleton.dart';
 import 'widgets/balyn_shader_system.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Render a real skeleton immediately while the local database is loaded.
+  // This bootstrap contains no sample balances or persisted user data.
+  runApp(const BalynBootstrapLoadingApp());
   await initializeDateFormatting();
   final shaderWarmup = BalynShaderPrograms.preload();
   final database = AppDatabase();
@@ -38,12 +44,19 @@ Future<void> main() async {
     // A failed warmup must never prevent the finance app from starting.
     // BalynShaderScope will retry lazily and keep flat-color fallbacks meanwhile.
   }
-  runApp(BalynApp(state: state));
+  final onboardingDone = await database.getSetting('onboarding_completed');
+  // Existing user data always takes priority over first-run onboarding.
+  final firstLaunch =
+      onboardingDone != '1' &&
+      state.userAccounts.isEmpty &&
+      state.transactions.isEmpty;
+  runApp(BalynApp(state: state, showOnboarding: firstLaunch));
 }
 
 class BalynApp extends StatefulWidget {
-  const BalynApp({required this.state, super.key});
+  const BalynApp({required this.state, this.showOnboarding = false, super.key});
   final AppState state;
+  final bool showOnboarding;
 
   @override
   State<BalynApp> createState() => _BalynAppState();
@@ -56,10 +69,12 @@ class _BalynAppState extends State<BalynApp> with WidgetsBindingObserver {
   StreamSubscription<Uri?>? _widgetSubscription;
   Timer? _notificationDebounce;
   bool? _lastWidgetPrivacy;
+  late bool _showOnboarding;
 
   @override
   void initState() {
     super.initState();
+    _showOnboarding = widget.showOnboarding;
     WidgetsBinding.instance.addObserver(this);
     _widgetSubscription = HomeWidget.widgetClicked.listen(
       (uri) => unawaited(_handleWidgetUri(uri)),
@@ -162,6 +177,9 @@ class _BalynAppState extends State<BalynApp> with WidgetsBindingObserver {
             locale: AppI18n.locale,
             supportedLocales: AppI18n.supportedLocales,
             localizationsDelegates: const [
+              // Cue uses the decoupled material_ui MaterialLocalizations.
+              // Legacy Flutter Material widgets still need their own delegate.
+              mui.GlobalMaterialLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
@@ -176,7 +194,14 @@ class _BalynAppState extends State<BalynApp> with WidgetsBindingObserver {
                 child: child ?? const SizedBox.shrink(),
               ),
             ),
-            home: AppLockGate(security: security, child: const BalynAppShell()),
+            home: AppLockGate(
+              security: security,
+              child: _showOnboarding
+                  ? BalynOnboardingFlow(
+                      onFinished: () => setState(() => _showOnboarding = false),
+                    )
+                  : const BalynAppShell(),
+            ),
           );
         },
       ),

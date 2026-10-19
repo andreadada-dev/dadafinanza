@@ -65,6 +65,10 @@ enum DashboardWidgetType {
   noSpendDays,
   endMonthForecast,
   unassignedTransactions,
+  // Append only: persisted widget identifiers are stable across upgrades.
+  monthlyOverview,
+  financialSnapshot,
+  smartHighlights,
 }
 
 extension DashboardWidgetTypeX on DashboardWidgetType {
@@ -91,6 +95,9 @@ extension DashboardWidgetTypeX on DashboardWidgetType {
     DashboardWidgetType.noSpendDays => 'Giorni senza spese',
     DashboardWidgetType.endMonthForecast => 'Previsione fine mese',
     DashboardWidgetType.unassignedTransactions => 'Movimenti da assegnare',
+    DashboardWidgetType.monthlyOverview => 'Riepilogo del mese',
+    DashboardWidgetType.financialSnapshot => 'In sintesi',
+    DashboardWidgetType.smartHighlights => 'Per te',
   };
 }
 

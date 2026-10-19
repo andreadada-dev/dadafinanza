@@ -32,8 +32,8 @@ class _FinanceQuickActionState extends State<FinanceQuickAction> {
     final base = widget.color ?? theme.colorScheme.onSurface;
     final resolvedColor = enabled ? base : base.withValues(alpha: .38);
     final shaderEnabled = enabled && widget.color != null;
-    final circleSurface = theme.colorScheme.onSurface.withValues(
-      alpha: theme.brightness == Brightness.dark ? .07 : .045,
+    final circleSurface = theme.colorScheme.surfaceContainer.withValues(
+      alpha: theme.brightness == Brightness.dark ? .93 : .88,
     );
 
     return Semantics(
@@ -71,7 +71,7 @@ class _FinanceQuickActionState extends State<FinanceQuickAction> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           color: circleSurface,
-                          shape: BoxShape.circle,
+                          borderRadius: BorderRadius.circular(18),
                         ),
                         child: shaderEnabled
                             ? BalynShaderIcon(widget.icon, seed: base, size: 29)

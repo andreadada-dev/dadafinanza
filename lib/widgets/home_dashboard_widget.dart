@@ -1,5 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:balyn/l10n/localized_material.dart';
+import 'package:intl/intl.dart';
+import '../l10n/app_i18n.dart';
 
 import '../app_state.dart';
 import '../main.dart';
@@ -10,6 +12,9 @@ import '../screens/account_screens.dart' show showAccountEditor;
 import '../screens/canonical_shell.dart' show CanonicalDashboardWidget;
 import '../screens/category_management_screen.dart' show CategoryDetailScreen;
 import 'balyn_shader_system.dart';
+import 'balyn_editorial_components.dart';
+import 'balyn_revolut_home_content.dart';
+import 'balyn_recent_transactions_card.dart';
 import 'ui_helpers.dart';
 
 /// Renders a dashboard configuration on the canonical Home.
@@ -17,9 +22,26 @@ import 'ui_helpers.dart';
 /// Core metrics are rendered by the Ivy-style overview in BalynHomeScreen.
 /// Remaining widgets preserve "Personalizza Home" visibility, ordering and size.
 class HomeDashboardWidget extends StatelessWidget {
-  const HomeDashboardWidget({required this.config, super.key});
+  const HomeDashboardWidget({
+    required this.config,
+    this.onAnalytics,
+    this.onSeeAll,
+    this.onAccountChanged,
+    this.onManageAccounts,
+    this.onAdvances,
+    this.highlight,
+    this.showAccountsInsideSummary = true,
+    super.key,
+  });
 
   final DashboardWidgetConfig config;
+  final VoidCallback? onAnalytics;
+  final VoidCallback? onSeeAll;
+  final ValueChanged<int?>? onAccountChanged;
+  final VoidCallback? onManageAccounts;
+  final VoidCallback? onAdvances;
+  final Widget? highlight;
+  final bool showAccountsInsideSummary;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +49,132 @@ class HomeDashboardWidget extends StatelessWidget {
     final type = config.type;
 
     switch (type) {
+      case DashboardWidgetType.monthlyOverview:
+        final now = DateTime.now();
+        final income = state.monthTotal(TransactionType.income);
+        final expense = state.monthTotal(TransactionType.expense);
+        final hidden = state.hideBalance;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              DateFormat('MMMM yyyy', AppI18n.intlLocale).format(now),
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
+            ),
+            const SizedBox(height: 12),
+            BalynEditorialSurface(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+              child: ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const BalynEditorialIcon(
+                  icon: Icons.calendar_month_outlined,
+                  size: 42,
+                ),
+                title: const Text(
+                  'Riepilogo del mese',
+                  style: TextStyle(fontWeight: FontWeight.w800),
+                ),
+                subtitle: Text(
+                  hidden
+                      ? 'Entrate ••••  ·  Spese ••••'
+                      : 'Entrate ${moneyFor(state, income)}  ·  Spese ${moneyFor(state, expense)}',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                trailing: const Icon(Icons.chevron_right_rounded),
+                onTap: onAnalytics,
+              ),
+            ),
+          ],
+        );
+      case DashboardWidgetType.recentTransactions:
+        final recent = [...state.transactions]
+          ..sort((a, b) => b.date.compareTo(a.date));
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const BalynEditorialHeading(
+              title: 'Ultimi movimenti',
+              subtitle: 'Le operazioni più recenti',
+            ),
+            const SizedBox(height: 10),
+            BalynRecentTransactionsCard(
+              items: recent,
+              hideAmounts: state.hideBalance,
+              onSeeAll: onSeeAll ?? () {},
+              maxItems: switch (config.size) {
+                DashboardWidgetSize.small => 1,
+                DashboardWidgetSize.medium => 3,
+                DashboardWidgetSize.large => 5,
+              },
+            ),
+          ],
+        );
+      case DashboardWidgetType.financialSnapshot:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const BalynEditorialHeading(
+              title: 'In sintesi',
+              subtitle: 'Entrate, spese e disponibilità',
+            ),
+            const SizedBox(height: 10),
+            BalynEditorialSurface(
+              radius: 22,
+              padding: const EdgeInsets.fromLTRB(14, 15, 14, 10),
+              child: BalynRevolutHomeContent(
+                embedded: true,
+                income: state.monthTotal(TransactionType.income),
+                expense: state.monthTotal(TransactionType.expense),
+                available: state.safeToSpend,
+                hideValues: state.hideBalance,
+                showAccounts: showAccountsInsideSummary,
+                maxAccounts: switch (config.size) {
+                  DashboardWidgetSize.small => 2,
+                  DashboardWidgetSize.medium => 4,
+                  DashboardWidgetSize.large => null,
+                },
+                onSelectAccount: onAccountChanged ?? (_) {},
+                onManageAccounts: onManageAccounts ?? () {},
+              ),
+            ),
+          ],
+        );
+      case DashboardWidgetType.smartHighlights:
+        return BalynEditorialSurface(
+          radius: 22,
+          padding: const EdgeInsets.all(18),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SectionTitle('Per te'),
+              if (state.advanceReceivableCents > 0 ||
+                  state.advancePayableCents > 0)
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.handshake_outlined),
+                  title: const Text(
+                    'Anticipi',
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  subtitle: Text(
+                    state.hideBalance
+                        ? '•••• da ricevere · •••• da restituire'
+                        : '${moneyFor(state, state.advanceReceivableCents / 100)} da ricevere · ${moneyFor(state, state.advancePayableCents / 100)} da restituire',
+                  ),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: onAdvances,
+                ),
+              if (highlight != null) highlight!,
+              if (highlight == null &&
+                  state.advanceReceivableCents == 0 &&
+                  state.advancePayableCents == 0)
+                const Text('Nessun suggerimento al momento'),
+            ],
+          ),
+        );
       case DashboardWidgetType.totalBalance:
         return _MetricBlock(
           config: config,
@@ -70,7 +218,11 @@ class HomeDashboardWidget extends StatelessWidget {
       case DashboardWidgetType.accounts:
         return _AccountsBlock(config: config);
       case DashboardWidgetType.topCategories:
-        return _TopCategoriesDonut(config: config);
+        return BalynEditorialSurface(
+          radius: 22,
+          padding: const EdgeInsets.fromLTRB(14, 18, 14, 18),
+          child: _TopCategoriesDonut(config: config),
+        );
       default:
         return _SizedCanonicalWidget(config: config);
     }
@@ -89,8 +241,9 @@ class _SizedCanonicalWidget extends StatelessWidget {
       DashboardWidgetSize.medium => 4.0,
       DashboardWidgetSize.large => 10.0,
     };
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: padding),
+    return BalynEditorialSurface(
+      radius: 22,
+      padding: EdgeInsets.symmetric(horizontal: 18, vertical: 19 + padding),
       child: CanonicalDashboardWidget(config: config),
     );
   }
@@ -122,28 +275,35 @@ class _MetricBlock extends StatelessWidget {
     };
     final showDetail = config.size != DashboardWidgetSize.small;
     final showIcon = icon != null && config.size == DashboardWidgetSize.large;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title, style: Theme.of(context).textTheme.labelMedium),
-        if (showIcon) ...[const SizedBox(height: 8), Icon(icon, size: 24)],
-        const SizedBox(height: 6),
-        FittedBox(
-          fit: BoxFit.scaleDown,
-          alignment: Alignment.centerLeft,
-          child: valueColor == null
-              ? Text(value, style: style?.copyWith(fontWeight: FontWeight.w800))
-              : BalynShaderText(
-                  value,
-                  seed: valueColor!,
-                  style: style?.copyWith(fontWeight: FontWeight.w800),
-                ),
-        ),
-        if (showDetail && detail != null) ...[
-          const SizedBox(height: 4),
-          Text(detail!, style: Theme.of(context).textTheme.bodySmall),
+    return BalynEditorialSurface(
+      radius: 22,
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 19),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: Theme.of(context).textTheme.labelMedium),
+          if (showIcon) ...[const SizedBox(height: 8), Icon(icon, size: 24)],
+          const SizedBox(height: 6),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: valueColor == null
+                ? Text(
+                    value,
+                    style: style?.copyWith(fontWeight: FontWeight.w800),
+                  )
+                : BalynShaderText(
+                    value,
+                    seed: valueColor!,
+                    style: style?.copyWith(fontWeight: FontWeight.w800),
+                  ),
+          ),
+          if (showDetail && detail != null) ...[
+            const SizedBox(height: 4),
+            Text(detail!, style: Theme.of(context).textTheme.bodySmall),
+          ],
         ],
-      ],
+      ),
     );
   }
 }
@@ -162,79 +322,83 @@ class _AccountsBlock extends StatelessWidget {
       DashboardWidgetSize.large => 6,
     };
     final accounts = state.activeAccounts.take(limit).toList();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SectionTitle(
-          'Conti',
-          trailing: TextButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const AccountManagementScreen(),
-              ),
-            ),
-            child: const Text('Tutti'),
-          ),
-        ),
-        if (accounts.isEmpty)
-          EmptyState(
-            icon: Icons.account_balance_wallet_outlined,
-            title: 'Nessun conto',
-            subtitle:
-                'Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.',
-            action: TextButton.icon(
-              onPressed: () => showAccountEditor(context),
-              icon: const Icon(Icons.add_rounded),
-              label: const Text('Crea conto'),
-            ),
-          )
-        else
-          ...accounts.map(
-            (account) => ListTile(
-              contentPadding: EdgeInsets.zero,
-              minVerticalPadding: 10,
-              leading: Container(
-                width: 42,
-                height: 42,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.onSurface.withValues(
-                    alpha: Theme.of(context).brightness == Brightness.dark
-                        ? .07
-                        : .045,
-                  ),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: BalynShaderIcon(
-                  accountIcon(account.iconKey),
-                  seed: Color(account.colorValue),
-                  size: 21,
-                ),
-              ),
-              title: Text(
-                account.name,
-                style: const TextStyle(fontWeight: FontWeight.w700),
-              ),
-              subtitle: config.size == DashboardWidgetSize.small
-                  ? null
-                  : Text(account.accountType.label),
-              trailing: Text(
-                state.hideBalance || account.hideBalance
-                    ? '••••'
-                    : moneyFor(state, account.balance),
-                style: const TextStyle(fontWeight: FontWeight.w800),
-              ),
-              onTap: () => Navigator.push(
+    return BalynEditorialSurface(
+      radius: 22,
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SectionTitle(
+            'Conti',
+            trailing: TextButton(
+              onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) =>
-                      SafeAccountDetailScreen(accountId: account.id),
+                  builder: (_) => const AccountManagementScreen(),
+                ),
+              ),
+              child: const Text('Tutti'),
+            ),
+          ),
+          if (accounts.isEmpty)
+            EmptyState(
+              icon: Icons.account_balance_wallet_outlined,
+              title: 'Nessun conto',
+              subtitle:
+                  'Aggiungi il conto che usi davvero oppure continua con movimenti Non assegnati.',
+              action: TextButton.icon(
+                onPressed: () => showAccountEditor(context),
+                icon: const Icon(Icons.add_rounded),
+                label: const Text('Crea conto'),
+              ),
+            )
+          else
+            ...accounts.map(
+              (account) => ListTile(
+                contentPadding: EdgeInsets.zero,
+                minVerticalPadding: 10,
+                leading: Container(
+                  width: 42,
+                  height: 42,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.onSurface.withValues(
+                      alpha: Theme.of(context).brightness == Brightness.dark
+                          ? .07
+                          : .045,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: BalynShaderIcon(
+                    accountIcon(account.iconKey),
+                    seed: Color(account.colorValue),
+                    size: 21,
+                  ),
+                ),
+                title: Text(
+                  account.name,
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
+                subtitle: config.size == DashboardWidgetSize.small
+                    ? null
+                    : Text(account.accountType.label),
+                trailing: Text(
+                  state.hideBalance || account.hideBalance
+                      ? '••••'
+                      : moneyFor(state, account.balance),
+                  style: const TextStyle(fontWeight: FontWeight.w800),
+                ),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) =>
+                        SafeAccountDetailScreen(accountId: account.id),
+                  ),
                 ),
               ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -243,11 +407,22 @@ class AccountCategoryCarousel extends StatelessWidget {
   const AccountCategoryCarousel({
     required this.accountId,
     this.size = DashboardWidgetSize.medium,
+    this.from,
+    this.to,
+    this.periodLabel,
+    this.hideAmounts = false,
     super.key,
   });
 
-  final int accountId;
+  final int? accountId;
   final DashboardWidgetSize size;
+
+  /// When specified, use the shared Analytics period instead of a separate
+  /// selector in the donut. Home keeps its independent carousel unchanged.
+  final DateTime? from;
+  final DateTime? to;
+  final String? periodLabel;
+  final bool hideAmounts;
 
   @override
   Widget build(BuildContext context) => _TopCategoriesDonut(
@@ -259,14 +434,30 @@ class AccountCategoryCarousel extends StatelessWidget {
       size: size,
     ),
     accountId: accountId,
+    from: from,
+    to: to,
+    externalPeriodLabel: periodLabel,
+    hideAmounts: hideAmounts,
   );
 }
 
 class _TopCategoriesDonut extends StatefulWidget {
-  const _TopCategoriesDonut({required this.config, this.accountId, super.key});
+  const _TopCategoriesDonut({
+    required this.config,
+    this.accountId,
+    this.from,
+    this.to,
+    this.externalPeriodLabel,
+    this.hideAmounts = false,
+    super.key,
+  });
 
   final DashboardWidgetConfig config;
   final int? accountId;
+  final DateTime? from;
+  final DateTime? to;
+  final String? externalPeriodLabel;
+  final bool hideAmounts;
 
   @override
   State<_TopCategoriesDonut> createState() => _TopCategoriesDonutState();
@@ -318,6 +509,9 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
   ];
 
   (DateTime, DateTime) _bounds() {
+    if (widget.from != null && widget.to != null) {
+      return (widget.from!, widget.to!);
+    }
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final weekStart = today.subtract(Duration(days: now.weekday - 1));
@@ -570,6 +764,8 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
     );
   }
 
+  bool get _hideAmounts => widget.hideAmounts;
+
   Widget _buildCarouselPage({
     required BuildContext context,
     required AppState state,
@@ -705,10 +901,11 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                         key: ValueKey('${type.name}-${_range.name}-period'),
                         icon: data.icon,
                         accent: data.accent,
-                        rangeLabel: _rangeLabel,
-                        totalLabel: state.hideBalance
+                        rangeLabel: widget.externalPeriodLabel ?? _rangeLabel,
+                        totalLabel: state.hideBalance || _hideAmounts
                             ? '••••'
                             : moneyFor(state, data.total),
+                        showPeriodControls: widget.from == null,
                         onRangeTap: _cycleRange,
                         onRangeLongPress: _selectCustomRange,
                         onPreviousRange: () => _stepPeriod(-1),
@@ -722,7 +919,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                         percentage: data.total <= 0
                             ? 0
                             : selected.amount / data.total,
-                        amountLabel: state.hideBalance
+                        amountLabel: state.hideBalance || _hideAmounts
                             ? '••••'
                             : moneyFor(state, selected.amount),
                         onTap: () => setState(() => _selectedIndex = -1),
@@ -834,6 +1031,7 @@ class _TopCategoriesDonutState extends State<_TopCategoriesDonut>
                         amount: entry.value.abs(),
                         total: activeData.total,
                         state: state,
+                        hideAmounts: _hideAmounts,
                       ),
                   ],
                 ),
@@ -898,6 +1096,7 @@ class _DonutPeriodCenter extends StatelessWidget {
     required this.accent,
     required this.rangeLabel,
     required this.totalLabel,
+    this.showPeriodControls = true,
     required this.onRangeTap,
     required this.onRangeLongPress,
     required this.onPreviousRange,
@@ -909,6 +1108,7 @@ class _DonutPeriodCenter extends StatelessWidget {
   final Color accent;
   final String rangeLabel;
   final String totalLabel;
+  final bool showPeriodControls;
   final VoidCallback onRangeTap;
   final VoidCallback onRangeLongPress;
   final VoidCallback onPreviousRange;
@@ -924,50 +1124,64 @@ class _DonutPeriodCenter extends StatelessWidget {
         children: [
           BalynShaderIcon(icon, seed: accent, size: 26),
           const SizedBox(height: 6),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _DonutRangeArrow(
-                icon: Icons.chevron_left_rounded,
-                tooltip: AppI18n.tr('Periodo precedente'),
-                onPressed: onPreviousRange,
-              ),
-              Semantics(
-                button: true,
-                label:
-                    'Periodo $rangeLabel. Tocca per cambiare periodo, pressione lunga per intervallo personalizzato.',
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(14),
-                  onTap: onRangeTap,
-                  onLongPress: onRangeLongPress,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 4,
-                      vertical: 6,
-                    ),
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 112),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          rangeLabel,
-                          maxLines: 1,
-                          style: theme.textTheme.labelLarge?.copyWith(
-                            fontWeight: FontWeight.w800,
+          if (showPeriodControls)
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _DonutRangeArrow(
+                  icon: Icons.chevron_left_rounded,
+                  tooltip: AppI18n.tr('Periodo precedente'),
+                  onPressed: onPreviousRange,
+                ),
+                Semantics(
+                  button: true,
+                  label:
+                      'Periodo $rangeLabel. Tocca per cambiare periodo, pressione lunga per intervallo personalizzato.',
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(14),
+                    onTap: onRangeTap,
+                    onLongPress: onRangeLongPress,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 4,
+                        vertical: 6,
+                      ),
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 112),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            rangeLabel,
+                            maxLines: 1,
+                            style: theme.textTheme.labelLarge?.copyWith(
+                              fontWeight: FontWeight.w800,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
                 ),
+                _DonutRangeArrow(
+                  icon: Icons.chevron_right_rounded,
+                  tooltip: AppI18n.tr('Periodo successivo'),
+                  onPressed: onNextRange,
+                ),
+              ],
+            )
+          else
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6),
+              child: Text(
+                rangeLabel,
+                maxLines: 1,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-              _DonutRangeArrow(
-                icon: Icons.chevron_right_rounded,
-                tooltip: AppI18n.tr('Periodo successivo'),
-                onPressed: onNextRange,
-              ),
-            ],
-          ),
+            ),
           const SizedBox(height: 2),
           FittedBox(
             fit: BoxFit.scaleDown,
@@ -1085,12 +1299,14 @@ class _CategoryDonutRow extends StatelessWidget {
     required this.amount,
     required this.total,
     required this.state,
+    this.hideAmounts = false,
   });
 
   final Category category;
   final double amount;
   final double total;
   final AppState state;
+  final bool hideAmounts;
 
   @override
   Widget build(BuildContext context) {
@@ -1154,7 +1370,9 @@ class _CategoryDonutRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  state.hideBalance ? '••••' : moneyFor(state, amount),
+                  state.hideBalance || hideAmounts
+                      ? '••••'
+                      : moneyFor(state, amount),
                   style: const TextStyle(fontWeight: FontWeight.w800),
                 ),
                 Text(

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:balyn/l10n/localized_material.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +19,7 @@ import '../services/transaction_metadata_suggestions.dart';
 import '../services/voice_input_service.dart';
 import '../services/voice_transaction_parser.dart';
 import '../widgets/transaction_metadata_fields.dart';
+import '../theme/balyn_palette.dart';
 import '../widgets/balyn_shader_system.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_screens.dart';
@@ -77,7 +79,6 @@ class _QuickAddPageState extends State<QuickAddPage> {
   String? existingReceiptPath;
   bool receiptRemoved = false;
   bool includeInAnalytics = true;
-  bool expanded = false;
   bool saving = false;
   bool _defaultsSet = false;
   bool _voiceAutoStarted = false;
@@ -114,7 +115,6 @@ class _QuickAddPageState extends State<QuickAddPage> {
       date = editing.date;
       includeInAnalytics = editing.includeInAnalytics;
       existingReceiptPath = editing.receiptPath;
-      expanded = editing.receiptPath != null || !editing.includeInAnalytics;
     } else {
       if (draft?.amountCents != null) {
         amount.text = Money.fromCents(draft!.amountCents!).toStringAsFixed(2);
@@ -1117,6 +1117,172 @@ class _QuickAddPageState extends State<QuickAddPage> {
     }
   }
 
+  // Same flat, rounded card treatment used by BalynTransactionDetailContent.
+  Widget _movementCard(List<Widget> children) {
+    return Material(
+      color: BalynPalette.surface(Theme.of(context).brightness),
+      borderRadius: BorderRadius.circular(BalynPalette.radius),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: children,
+        ),
+      ),
+    );
+  }
+
+  Future<void> _pickMovementType() async {
+    final next = await showModalBottomSheet<TransactionType>(
+      context: context,
+      showDragHandle: true,
+      useSafeArea: true,
+      builder: (sheetContext) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(18, 6, 18, 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Tipo movimento',
+                style: Theme.of(sheetContext).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 12),
+              for (final choice in TransactionType.values)
+                ListTile(
+                  title: Text(choice.label),
+                  leading: Icon(
+                    choice == TransactionType.expense
+                        ? Icons.arrow_upward_rounded
+                        : choice == TransactionType.income
+                        ? Icons.arrow_downward_rounded
+                        : Icons.swap_horiz_rounded,
+                    color: transactionColor(sheetContext, choice),
+                  ),
+                  trailing: type == choice
+                      ? const Icon(Icons.check_rounded)
+                      : null,
+                  onTap: () => Navigator.pop(sheetContext, choice),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+    if (next != null && mounted && next != type) _changeType(next);
+  }
+
+  Future<void> _pickMovementDateTime() async {
+    final picked = await showDatePicker(
+      context: context,
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now().add(const Duration(days: 3650)),
+      initialDate: date,
+    );
+    if (picked == null || !mounted) return;
+    final time = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(date),
+    );
+    if (!mounted) return;
+    setState(() {
+      date = DateTime(
+        picked.year,
+        picked.month,
+        picked.day,
+        time?.hour ?? date.hour,
+        time?.minute ?? date.minute,
+      );
+    });
+    _scheduleSuggestion();
+  }
+
+  // A real inline amount editor: the pencil follows its text instead of
+  // reserving a giant colored/shader-filled TextField rectangle.
+  Widget _movementAmount(AppState state, bool hasInitialAmount) {
+    final color = transactionColor(context, type);
+    final style =
+        (Theme.of(context).textTheme.headlineMedium ?? const TextStyle())
+            .copyWith(
+              color: color,
+              fontSize: 35,
+              fontWeight: FontWeight.w800,
+              height: 1.12,
+            );
+    final prefix =
+        (type == TransactionType.expense
+            ? '−'
+            : type == TransactionType.income
+            ? '+'
+            : '') +
+        (state.currency == 'EUR' ? '€' : state.currency);
+
+    return ValueListenableBuilder<TextEditingValue>(
+      valueListenable: amount,
+      builder: (context, value, _) => LayoutBuilder(
+        builder: (context, constraints) {
+          final prefixPainter = TextPainter(
+            text: TextSpan(text: prefix, style: style),
+            textDirection: Directionality.of(context),
+            maxLines: 1,
+          )..layout();
+          final valuePainter = TextPainter(
+            text: TextSpan(
+              text: value.text.isEmpty ? '0,00' : value.text,
+              style: style,
+            ),
+            textDirection: Directionality.of(context),
+            maxLines: 1,
+          )..layout();
+          final width = math.min(
+            math.max(66.0, valuePainter.width + 16),
+            math.max(66.0, constraints.maxWidth - prefixPainter.width - 43),
+          );
+          prefixPainter.dispose();
+          valuePainter.dispose();
+          return Row(
+            children: [
+              Text(prefix, style: style),
+              SizedBox(
+                width: width,
+                child: TextField(
+                  key: const ValueKey('quick-add-inline-amount'),
+                  controller: amount,
+                  focusNode: amountFocus,
+                  autofocus:
+                      widget.editing == null &&
+                      !hasInitialAmount &&
+                      !widget.startVoice,
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                  style: style,
+                  decoration: const InputDecoration(
+                    hintText: '0,00',
+                    isDense: true,
+                    filled: false,
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(vertical: 6),
+                  ),
+                ),
+              ),
+              IconButton(
+                key: const ValueKey('quick-add-amount-pencil'),
+                tooltip: 'Modifica importo',
+                icon: Icon(Icons.edit_outlined, size: 17, color: color),
+                onPressed: () => amountFocus.requestFocus(),
+                constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                padding: EdgeInsets.zero,
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = AppScope.of(context);
@@ -1134,6 +1300,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
     final hasInitialAmount = amount.text.trim().isNotEmpty;
 
     return Scaffold(
+      backgroundColor: BalynPalette.canvas(Theme.of(context).brightness),
       appBar: AppBar(
         title: Text(
           widget.editing == null ? 'Nuovo movimento' : 'Modifica movimento',
@@ -1165,7 +1332,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(20, 4, 20, 120),
+          padding: const EdgeInsets.fromLTRB(15, 8, 15, 30),
           children: [
             if (voiceApplied) ...[
               Row(
@@ -1240,81 +1407,45 @@ class _QuickAddPageState extends State<QuickAddPage> {
               ),
               const SizedBox(height: 8),
             ],
-            Text(
-              'IMPORTO',
-              style: Theme.of(
-                context,
-              ).textTheme.labelMedium?.copyWith(letterSpacing: 1.2),
-            ),
-            TextField(
-              controller: amount,
-              focusNode: amountFocus,
-              autofocus:
-                  widget.editing == null &&
-                  !hasInitialAmount &&
-                  !widget.startVoice,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _movementAmount(state, hasInitialAmount),
+                  const SizedBox(height: 7),
+                  Text(
+                    category?.name ?? type.label,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      color: transactionColor(context, type),
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    DateFormat(
+                      'd MMM yyyy, HH:mm',
+                      AppI18n.intlLocale,
+                    ).format(date),
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
               ),
-              textAlign: TextAlign.center,
-              style: Theme.of(
-                context,
-              ).textTheme.displaySmall?.copyWith(fontSize: 48),
-              decoration: InputDecoration(
-                hintText: AppI18n.tr('0,00'),
-                suffixText: state.currency,
-                helperText: AppI18n.tr('Calcoli rapidi: usa +  −  ×  ÷'),
-              ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 10),
             Wrap(
-              alignment: WrapAlignment.center,
               spacing: 4,
               children: ['+', '−', '×', '÷']
                   .map(
-                    (operator) => TextButton(
+                    (operator) => ActionChip(
+                      label: Text(operator),
                       onPressed: () => _insertAmountOperator(operator),
-                      child: Text(
-                        operator,
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
                     ),
                   )
                   .toList(),
             ),
-            const SizedBox(height: 10),
-            SizedBox(
-              width: double.infinity,
-              child: SegmentedButton<TransactionType>(
-                showSelectedIcon: false,
-                segments: const [
-                  ButtonSegment(
-                    value: TransactionType.expense,
-                    label: Text('Spesa'),
-                  ),
-                  ButtonSegment(
-                    value: TransactionType.income,
-                    label: Text('Entrata'),
-                  ),
-                  ButtonSegment(
-                    value: TransactionType.transfer,
-                    label: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        'Trasferimento',
-                        maxLines: 1,
-                        softWrap: false,
-                      ),
-                    ),
-                  ),
-                ],
-                selected: {type},
-                onSelectionChanged: (value) => _changeType(value.first),
-              ),
-            ),
+            const SizedBox(height: 16),
             if (type != TransactionType.transfer &&
                 recentCategories.isNotEmpty) ...[
               const SizedBox(height: 16),
@@ -1343,25 +1474,19 @@ class _QuickAddPageState extends State<QuickAddPage> {
                 ),
               ),
             ],
-            const SizedBox(height: 24),
-            if (type != TransactionType.transfer) ...[
+            _movementCard([
               _PickerRow(
-                icon: category == null
-                    ? Icons.category_outlined
-                    : categoryIcon(category.iconKey),
-                label: 'Categoria',
-                value: category?.name ?? 'Scegli categoria',
-                valueColor: category == null
-                    ? null
-                    : Color(category.colorValue),
-                onTap: _chooseCategory,
+                icon: Icons.swap_horiz_rounded,
+                label: 'Tipo',
+                value: type.label,
+                valueColor: transactionColor(context, type),
+                onTap: _pickMovementType,
               ),
-              const Divider(height: 1),
               _PickerRow(
                 icon: account?.isSystem == true
                     ? Icons.help_outline_rounded
                     : accountIcon(account?.iconKey ?? 'wallet'),
-                label: 'Conto',
+                label: type == TransactionType.transfer ? 'Da' : 'Conto',
                 value: account?.isSystem == true
                     ? 'Non assegnato'
                     : account?.name ?? 'Scegli conto',
@@ -1370,9 +1495,50 @@ class _QuickAddPageState extends State<QuickAddPage> {
                     : Color(account.colorValue),
                 onTap: _chooseAccount,
               ),
-              if (type == TransactionType.expense &&
-                  widget.editing == null) ...[
-                const Divider(height: 1),
+              if (type == TransactionType.transfer) ...[
+                _PickerRow(
+                  icon: accountIcon(destination?.iconKey ?? 'wallet'),
+                  label: 'A',
+                  value: destination?.name ?? 'Scegli destinazione',
+                  valueColor: destination == null
+                      ? null
+                      : Color(destination.colorValue),
+                  onTap: () => _chooseAccount(destination: true),
+                ),
+                if (linkedGoal != null)
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Icon(categoryIcon(linkedGoal.iconKey)),
+                    title: Text('Obiettivo: ${linkedGoal.name}'),
+                    subtitle: const Text(
+                      'Il trasferimento aggiornerà automaticamente il progresso.',
+                    ),
+                  ),
+              ] else
+                _PickerRow(
+                  icon: category == null
+                      ? Icons.category_outlined
+                      : categoryIcon(category.iconKey),
+                  label: 'Categoria',
+                  value: category?.name ?? 'Scegli categoria',
+                  valueColor: category == null
+                      ? null
+                      : Color(category.colorValue),
+                  onTap: _chooseCategory,
+                ),
+              _PickerRow(
+                icon: Icons.event_outlined,
+                label: 'Data e ora',
+                value: DateFormat(
+                  'd MMM yyyy, HH:mm',
+                  AppI18n.intlLocale,
+                ).format(date),
+                onTap: _pickMovementDateTime,
+              ),
+            ]),
+            if (type == TransactionType.expense && widget.editing == null) ...[
+              const SizedBox(height: 13),
+              _movementCard([
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
                   secondary: const Icon(Icons.group_outlined),
@@ -1458,49 +1624,68 @@ class _QuickAddPageState extends State<QuickAddPage> {
                     },
                   ),
                 ],
-              ],
-            ] else ...[
-              _PickerRow(
-                icon: accountIcon(account?.iconKey ?? 'wallet'),
-                label: 'Da',
-                value: account?.name ?? 'Scegli conto',
-                valueColor: account == null ? null : Color(account.colorValue),
-                onTap: _chooseAccount,
-              ),
-              const Divider(height: 1),
-              _PickerRow(
-                icon: accountIcon(destination?.iconKey ?? 'wallet'),
-                label: 'A',
-                value: destination?.name ?? 'Scegli destinazione',
-                valueColor: destination == null
-                    ? null
-                    : Color(destination.colorValue),
-                onTap: () => _chooseAccount(destination: true),
-              ),
-              if (linkedGoal != null) ...[
-                const Divider(height: 1),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: Icon(categoryIcon(linkedGoal.iconKey)),
-                  title: Text('Obiettivo: ${linkedGoal.name}'),
-                  subtitle: const Text(
-                    'Questo trasferimento aggiornerà automaticamente il progresso.',
-                  ),
-                ),
-              ],
+              ]),
             ],
-            const SizedBox(height: 20),
-            TransactionMetadataFields(
-              noteController: note,
-              transactions: state.transactions,
-              tags: List<String>.unmodifiable(tags),
-              database: state.database,
-              onTagsChanged: (values) => setState(() {
-                tags
-                  ..clear()
-                  ..addAll(values);
-              }),
-            ),
+            const SizedBox(height: 13),
+            _movementCard([
+              SwitchListTile.adaptive(
+                contentPadding: EdgeInsets.zero,
+                dense: true,
+                title: const Text(
+                  'Escludi dalle analisi',
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                ),
+                value: !includeInAnalytics,
+                onChanged: (excluded) =>
+                    setState(() => includeInAnalytics = !excluded),
+              ),
+              _PickerRow(
+                icon: Icons.camera_alt_outlined,
+                label: 'Ricevuta',
+                value:
+                    !receiptRemoved &&
+                        (receipt != null || existingReceiptPath != null)
+                    ? 'Sostituisci'
+                    : 'Aggiungi',
+                onTap: _chooseReceipt,
+              ),
+              if (widget.refundOfTransactionId != null)
+                const ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Icon(Icons.replay_rounded),
+                  title: Text('Questo movimento è un rimborso collegato'),
+                ),
+            ]),
+            const SizedBox(height: 13),
+            _movementCard([
+              TransactionMetadataFields(
+                section: TransactionMetadataSection.description,
+                noteController: note,
+                transactions: state.transactions,
+                tags: List<String>.unmodifiable(tags),
+                database: state.database,
+                onTagsChanged: (values) => setState(() {
+                  tags
+                    ..clear()
+                    ..addAll(values);
+                }),
+              ),
+            ]),
+            const SizedBox(height: 13),
+            _movementCard([
+              TransactionMetadataFields(
+                section: TransactionMetadataSection.tags,
+                noteController: note,
+                transactions: state.transactions,
+                tags: List<String>.unmodifiable(tags),
+                database: state.database,
+                onTagsChanged: (values) => setState(() {
+                  tags
+                    ..clear()
+                    ..addAll(values);
+                }),
+              ),
+            ]),
             if (lastVoiceTranscript != null) ...[
               const SizedBox(height: 4),
               Text(
@@ -1510,141 +1695,42 @@ class _QuickAddPageState extends State<QuickAddPage> {
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
-            const SizedBox(height: 16),
-            const Divider(height: 1),
-            _PickerRow(
-              icon: Icons.calendar_today_outlined,
-              label: 'Data',
-              value: DateFormat('dd MMM yyyy', AppI18n.intlLocale).format(date),
-              onTap: () async {
-                final picked = await showDatePicker(
-                  context: context,
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime.now().add(const Duration(days: 3650)),
-                  initialDate: date,
-                );
-                if (picked != null && mounted) {
-                  setState(
-                    () => date = DateTime(
-                      picked.year,
-                      picked.month,
-                      picked.day,
-                      date.hour,
-                      date.minute,
-                    ),
-                  );
-                  _scheduleSuggestion();
-                }
-              },
-            ),
-            const Divider(height: 1),
-            _PickerRow(
-              icon: Icons.schedule_rounded,
-              label: 'Ora',
-              value: DateFormat('HH:mm', AppI18n.intlLocale).format(date),
-              onTap: () async {
-                final picked = await showTimePicker(
-                  context: context,
-                  initialTime: TimeOfDay.fromDateTime(date),
-                  helpText: AppI18n.tr('Seleziona ora'),
-                  hourLabelText: AppI18n.tr('Ora'),
-                  minuteLabelText: AppI18n.tr('Minuti'),
-                );
-                if (picked != null && mounted) {
-                  setState(
-                    () => date = DateTime(
-                      date.year,
-                      date.month,
-                      date.day,
-                      picked.hour,
-                      picked.minute,
-                    ),
-                  );
-                  _scheduleSuggestion();
-                }
-              },
-            ),
-            const SizedBox(height: 16),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: TextButton.icon(
-                onPressed: () => setState(() => expanded = !expanded),
-                icon: Icon(
-                  expanded ? Icons.expand_less_rounded : Icons.add_rounded,
-                ),
-                label: Text(
-                  expanded ? 'Nascondi dettagli' : 'Aggiungi dettagli',
-                ),
-              ),
-            ),
-            AnimatedSize(
-              duration: const Duration(milliseconds: 180),
-              child: expanded
-                  ? Column(
-                      children: [
-                        SwitchListTile(
-                          contentPadding: EdgeInsets.zero,
-                          title: const Text('Includi nelle statistiche'),
-                          subtitle: const Text(
-                            'Disattiva per movimenti eccezionali che non vuoi nelle analisi.',
-                          ),
-                          value: includeInAnalytics,
-                          onChanged: (value) =>
-                              setState(() => includeInAnalytics = value),
-                        ),
-                        ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          leading: const Icon(Icons.receipt_long_outlined),
-                          title: Text(
-                            !receiptRemoved &&
-                                    (receipt != null ||
-                                        existingReceiptPath != null)
-                                ? 'Ricevuta allegata'
-                                : 'Aggiungi ricevuta',
-                          ),
-                          subtitle: const Text('Fotocamera o galleria'),
-                          trailing: const Icon(Icons.chevron_right_rounded),
-                          onTap: _chooseReceipt,
-                        ),
-                        if (widget.refundOfTransactionId != null)
-                          const ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            leading: Icon(Icons.replay_rounded),
-                            title: Text(
-                              'Questo movimento è un rimborso collegato',
-                            ),
-                          ),
-                      ],
-                    )
-                  : const SizedBox.shrink(),
-            ),
-            const SizedBox(height: 32),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton.icon(
-                onPressed: saving ? null : _save,
-                icon: saving
-                    ? const SizedBox.square(
-                        dimension: 18,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : Icon(
-                        widget.editing == null
-                            ? Icons.add_rounded
-                            : Icons.check_rounded,
-                      ),
-                label: Text(
-                  widget.editing != null
-                      ? 'Salva modifiche'
-                      : switch (type) {
-                          TransactionType.expense => 'Aggiungi spesa',
-                          TransactionType.income => 'Aggiungi entrata',
-                          TransactionType.transfer => 'Aggiungi trasferimento',
-                        },
-                ),
-              ),
-            ),
+            const SizedBox(height: 14),
           ],
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(15, 8, 15, 12),
+          child: FilledButton.icon(
+            onPressed: saving ? null : _save,
+            icon: saving
+                ? const SizedBox.square(
+                    dimension: 18,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : Icon(
+                    widget.editing == null
+                        ? Icons.add_rounded
+                        : Icons.check_rounded,
+                  ),
+            label: Text(
+              widget.editing != null
+                  ? 'Salva modifiche'
+                  : switch (type) {
+                      TransactionType.expense => 'Aggiungi spesa',
+                      TransactionType.income => 'Aggiungi entrata',
+                      TransactionType.transfer => 'Aggiungi trasferimento',
+                    },
+            ),
+            style: FilledButton.styleFrom(
+              minimumSize: const Size.fromHeight(48),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -1988,30 +2074,65 @@ class _PickerRow extends StatelessWidget {
   final Color? valueColor;
 
   @override
-  Widget build(BuildContext context) => ListTile(
-    contentPadding: EdgeInsets.zero,
-    minVerticalPadding: 10,
-    leading: valueColor == null
-        ? Icon(icon)
-        : BalynShaderIcon(icon, seed: valueColor!),
-    title: Text(label),
-    trailing: Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 180),
-          child: valueColor == null
-              ? Text(value, overflow: TextOverflow.ellipsis)
-              : BalynShaderText(
-                  value,
-                  seed: valueColor!,
-                  overflow: TextOverflow.ellipsis,
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final ink = valueColor ?? scheme.primary;
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 13),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 112,
+              child: Text(
+                label,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: scheme.onSurfaceVariant,
                 ),
+              ),
+            ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(icon, color: ink, size: 15),
+                  const SizedBox(width: 5),
+                  Flexible(
+                    child: valueColor == null
+                        ? Text(
+                            value,
+                            textAlign: TextAlign.end,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: ink,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          )
+                        : BalynShaderText(
+                            value,
+                            seed: valueColor!,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                  ),
+                  const SizedBox(width: 6),
+                  Icon(Icons.edit_outlined, color: ink, size: 14),
+                ],
+              ),
+            ),
+          ],
         ),
-        const SizedBox(width: 8),
-        const Icon(Icons.chevron_right_rounded),
-      ],
-    ),
-    onTap: onTap,
-  );
+      ),
+    );
+  }
 }

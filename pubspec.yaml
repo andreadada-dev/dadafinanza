@@ -13,6 +13,7 @@ flutter:
   shaders:
     - shaders/balyn_background.frag
     - shaders/balyn_ink.frag
+    - shaders/balyn_onboarding_velvet.frag
 
 dependencies:
   flutter:
@@ -26,6 +27,13 @@ dependencies:
   flutter_secure_storage: ^11.2.0
   home_widget: ^0.9.3
   image_picker: ^1.2.3
+  introduction_screen: 4.0.0
+  smooth_page_indicator: ^3.0.0
+  cue: ^0.4.0
+  pie_menu: ^3.8.3
+  material_ui: ^1.0.0
+  skeletonizer: ^3.0.0
+  mesh: ^0.5.0
   intl: ^0.20.3
   local_auth: ^3.0.2
   path: ^1.9.1

@@ -1,0 +1,498 @@
+/// Complete onboarding copy for every Balyn-supported language.
+/// Separate from the runtime translation dictionary so selecting a language
+/// previews ALL onboarding pages before any preference is saved.
+abstract final class BalynOnboardingL10n {
+  static const supportedCodes = <String>[
+    "it",
+    "en",
+    "es",
+    "fr",
+    "de",
+    "pt",
+    "ru",
+    "zh",
+    "ja",
+    "ko",
+    "ar",
+    "hi",
+  ];
+  static const Map<String, Map<String, String>> _translations = {
+    "it": {
+      "defaultName": "Conto principale",
+      "welcomeTitle": "Le tue finanze, più semplici",
+      "welcomeSubtitle":
+          "Conti, movimenti e obiettivi in un solo posto. I dati restano sul dispositivo.",
+      "language": "Lingua",
+      "currency": "Valuta",
+      "accountTitle": "Crea il tuo primo conto",
+      "accountSubtitle":
+          "Parti da zero: potrai modificare saldo e dettagli in qualsiasi momento.",
+      "nameLabel": "Nome conto",
+      "typeLabel": "Tipo",
+      "accountIcon": "Icona del conto",
+      "accountColor": "Colore del conto",
+      "howTitle": "Scopri Balyn",
+      "howSubtitle":
+          "Tocca una sezione per vedere come organizzare le tue finanze.",
+      "homeTitle": "Panoramica",
+      "homeDescription":
+          "Consulta il patrimonio complessivo e il saldo disponibile. Passa da un conto all'altro, personalizza i widget e registra velocemente entrate, spese e trasferimenti.",
+      "movementTitle": "Movimenti e Analisi",
+      "movementDescription":
+          "Registra entrate, spese e trasferimenti, organizza tutto con categorie, tag, note e ricevute. Cerca nello storico, confronta periodi e visualizza grafici e statistiche.",
+      "advancesTitle": "Anticipi",
+      "advancesDescription":
+          "Tieni traccia dei soldi prestati o anticipati e delle persone coinvolte. Registra rimborsi parziali o completi e scopri immediatamente chi deve ancora restituire denaro.",
+      "planTitle": "Pianifica",
+      "planDescription":
+          "Imposta budget, obiettivi di risparmio e movimenti ricorrenti. Controlla le scadenze e pianifica le spese future per capire come cambierà il tuo saldo.",
+      "back": "Indietro",
+      "next": "Avanti",
+      "done": "Inizia",
+      "skip": "Salta",
+      "requiredName": "Inserisci il nome del conto",
+    },
+    "en": {
+      "defaultName": "Main account",
+      "welcomeTitle": "Your money, made simple",
+      "welcomeSubtitle":
+          "Accounts, transactions and goals in one place. Your data stays on your device.",
+      "language": "Language",
+      "currency": "Currency",
+      "accountTitle": "Create your first account",
+      "accountSubtitle":
+          "Start at zero. You can edit your balance and details at any time.",
+      "nameLabel": "Account name",
+      "typeLabel": "Type",
+      "accountIcon": "Account icon",
+      "accountColor": "Account color",
+      "howTitle": "Discover Balyn",
+      "howSubtitle": "Tap a section to see how to manage your money.",
+      "homeTitle": "Overview",
+      "homeDescription":
+          "See your total balance and available funds. Switch accounts, customize widgets and quickly add income, expenses or transfers.",
+      "movementTitle": "Transactions & Analytics",
+      "movementDescription":
+          "Track income, expenses and transfers with categories, tags, notes and receipts. Search your history, compare periods and explore charts and insights.",
+      "advancesTitle": "Advances",
+      "advancesDescription":
+          "Keep track of money you lent or paid on someone's behalf. Record partial or full repayments and see who still owes you money.",
+      "planTitle": "Plan",
+      "planDescription":
+          "Set budgets, savings goals and recurring transactions. Check upcoming payments and plan ahead to understand your future balance.",
+      "back": "Back",
+      "next": "Continue",
+      "done": "Get started",
+      "skip": "Skip",
+      "requiredName": "Enter an account name",
+    },
+    "es": {
+      "defaultName": "Cuenta principal",
+      "welcomeTitle": "Tus finanzas, más fáciles",
+      "welcomeSubtitle":
+          "Cuentas, movimientos y metas en un solo lugar. Tus datos permanecen en tu dispositivo.",
+      "language": "Idioma",
+      "currency": "Moneda",
+      "accountTitle": "Crea tu primera cuenta",
+      "accountSubtitle":
+          "Empieza desde cero. Puedes cambiar el saldo y los detalles cuando quieras.",
+      "nameLabel": "Nombre de la cuenta",
+      "typeLabel": "Tipo",
+      "accountIcon": "Icono de la cuenta",
+      "accountColor": "Color de la cuenta",
+      "howTitle": "Descubre Balyn",
+      "howSubtitle":
+          "Toca una sección para descubrir cómo gestionar tu dinero.",
+      "homeTitle": "Resumen",
+      "homeDescription":
+          "Consulta tu patrimonio y saldo disponible. Cambia de cuenta, personaliza los widgets y añade ingresos, gastos o transferencias.",
+      "movementTitle": "Movimientos y análisis",
+      "movementDescription":
+          "Registra ingresos, gastos y transferencias con categorías, etiquetas, notas y recibos. Busca en el historial, compara períodos y explora gráficos.",
+      "advancesTitle": "Anticipos",
+      "advancesDescription":
+          "Controla el dinero prestado o adelantado y a quién se lo diste. Anota pagos parciales o totales y descubre quién te debe dinero.",
+      "planTitle": "Planificación",
+      "planDescription":
+          "Crea presupuestos, metas de ahorro y movimientos periódicos. Consulta vencimientos y planifica gastos para prever tu saldo.",
+      "back": "Atrás",
+      "next": "Continuar",
+      "done": "Empezar",
+      "skip": "Omitir",
+      "requiredName": "Introduce un nombre de cuenta",
+    },
+    "fr": {
+      "defaultName": "Compte principal",
+      "welcomeTitle": "Vos finances, simplifiées",
+      "welcomeSubtitle":
+          "Comptes, opérations et objectifs au même endroit. Vos données restent sur votre appareil.",
+      "language": "Langue",
+      "currency": "Devise",
+      "accountTitle": "Créez votre premier compte",
+      "accountSubtitle":
+          "Commencez à zéro. Vous pourrez modifier le solde et les détails à tout moment.",
+      "nameLabel": "Nom du compte",
+      "typeLabel": "Type",
+      "accountIcon": "Icône du compte",
+      "accountColor": "Couleur du compte",
+      "howTitle": "Découvrez Balyn",
+      "howSubtitle": "Touchez une section pour apprendre à gérer vos finances.",
+      "homeTitle": "Vue d’ensemble",
+      "homeDescription":
+          "Consultez votre patrimoine et le solde disponible. Changez de compte, personnalisez les widgets et ajoutez rapidement revenus, dépenses ou virements.",
+      "movementTitle": "Opérations et analyses",
+      "movementDescription":
+          "Enregistrez revenus, dépenses et virements avec catégories, étiquettes, notes et reçus. Recherchez dans l’historique et explorez graphiques et statistiques.",
+      "advancesTitle": "Avances",
+      "advancesDescription":
+          "Suivez les sommes prêtées ou avancées et les personnes concernées. Enregistrez les remboursements partiels ou complets et voyez ce qu’on vous doit encore.",
+      "planTitle": "Planification",
+      "planDescription":
+          "Fixez des budgets, objectifs d’épargne et opérations récurrentes. Suivez les échéances et prévoyez vos dépenses pour estimer votre solde futur.",
+      "back": "Retour",
+      "next": "Continuer",
+      "done": "Commencer",
+      "skip": "Passer",
+      "requiredName": "Saisissez le nom du compte",
+    },
+    "de": {
+      "defaultName": "Hauptkonto",
+      "welcomeTitle": "Deine Finanzen, ganz einfach",
+      "welcomeSubtitle":
+          "Konten, Buchungen und Ziele an einem Ort. Deine Daten bleiben auf deinem Gerät.",
+      "language": "Sprache",
+      "currency": "Währung",
+      "accountTitle": "Erstelle dein erstes Konto",
+      "accountSubtitle":
+          "Starte bei null. Kontostand und Details kannst du jederzeit ändern.",
+      "nameLabel": "Kontoname",
+      "typeLabel": "Typ",
+      "accountIcon": "Kontosymbol",
+      "accountColor": "Kontofarbe",
+      "howTitle": "Entdecke Balyn",
+      "howSubtitle":
+          "Tippe auf einen Bereich und erfahre, wie du dein Geld verwaltest.",
+      "homeTitle": "Übersicht",
+      "homeDescription":
+          "Sieh dein Gesamtvermögen und verfügbares Guthaben. Wechsle Konten, passe Widgets an und erfasse Einnahmen, Ausgaben und Überweisungen.",
+      "movementTitle": "Buchungen und Analysen",
+      "movementDescription":
+          "Erfasse Einnahmen, Ausgaben und Transfers mit Kategorien, Tags, Notizen und Belegen. Suche im Verlauf, vergleiche Zeiträume und entdecke Diagramme.",
+      "advancesTitle": "Vorschüsse",
+      "advancesDescription":
+          "Behalte verliehenes oder vorgestrecktes Geld im Blick. Erfasse Teil- oder Gesamtrückzahlungen und sieh, wer dir noch Geld schuldet.",
+      "planTitle": "Planung",
+      "planDescription":
+          "Erstelle Budgets, Sparziele und wiederkehrende Buchungen. Prüfe Fälligkeiten und plane Ausgaben, um deinen künftigen Kontostand abzuschätzen.",
+      "back": "Zurück",
+      "next": "Weiter",
+      "done": "Loslegen",
+      "skip": "Überspringen",
+      "requiredName": "Gib einen Kontonamen ein",
+    },
+    "pt": {
+      "defaultName": "Conta principal",
+      "welcomeTitle": "Suas finanças, mais simples",
+      "welcomeSubtitle":
+          "Contas, transações e metas em um só lugar. Seus dados ficam no dispositivo.",
+      "language": "Idioma",
+      "currency": "Moeda",
+      "accountTitle": "Crie sua primeira conta",
+      "accountSubtitle":
+          "Comece do zero. Você poderá alterar o saldo e os detalhes quando quiser.",
+      "nameLabel": "Nome da conta",
+      "typeLabel": "Tipo",
+      "accountIcon": "Ícone da conta",
+      "accountColor": "Cor da conta",
+      "howTitle": "Conheça o Balyn",
+      "howSubtitle":
+          "Toque em uma seção para descobrir como organizar seu dinheiro.",
+      "homeTitle": "Visão geral",
+      "homeDescription":
+          "Veja seu patrimônio e saldo disponível. Alterne contas, personalize widgets e registre receitas, despesas e transferências rapidamente.",
+      "movementTitle": "Transações e análises",
+      "movementDescription":
+          "Registre receitas, despesas e transferências com categorias, etiquetas, notas e comprovantes. Pesquise o histórico, compare períodos e veja gráficos.",
+      "advancesTitle": "Adiantamentos",
+      "advancesDescription":
+          "Acompanhe dinheiro emprestado ou adiantado e as pessoas envolvidas. Registre pagamentos parciais ou integrais e veja quem ainda deve.",
+      "planTitle": "Planejamento",
+      "planDescription":
+          "Crie orçamentos, metas de economia e transações recorrentes. Acompanhe vencimentos e planeje gastos para prever seu saldo futuro.",
+      "back": "Voltar",
+      "next": "Continuar",
+      "done": "Começar",
+      "skip": "Pular",
+      "requiredName": "Informe o nome da conta",
+    },
+    "ru": {
+      "defaultName": "Основной счёт",
+      "welcomeTitle": "Ваши финансы — проще",
+      "welcomeSubtitle":
+          "Счета, операции и цели в одном месте. Данные остаются на устройстве.",
+      "language": "Язык",
+      "currency": "Валюта",
+      "accountTitle": "Создайте первый счёт",
+      "accountSubtitle":
+          "Начните с нуля. Баланс и данные можно изменить в любое время.",
+      "nameLabel": "Название счёта",
+      "typeLabel": "Тип",
+      "accountIcon": "Значок счёта",
+      "accountColor": "Цвет счёта",
+      "howTitle": "Знакомьтесь с Balyn",
+      "howSubtitle": "Нажмите на раздел, чтобы узнать о его возможностях.",
+      "homeTitle": "Обзор",
+      "homeDescription":
+          "Смотрите общее состояние средств и доступный баланс. Переключайте счета, настраивайте виджеты, добавляйте доходы, расходы и переводы.",
+      "movementTitle": "Операции и аналитика",
+      "movementDescription":
+          "Записывайте доходы, расходы и переводы с категориями, тегами, заметками и чеками. Ищите записи, сравнивайте периоды и изучайте графики.",
+      "advancesTitle": "Долги и авансы",
+      "advancesDescription":
+          "Следите за выданными в долг и авансом суммами. Записывайте частичные и полные возвраты и узнавайте, кто ещё должен вам деньги.",
+      "planTitle": "Планирование",
+      "planDescription":
+          "Создавайте бюджеты, цели накоплений и повторяющиеся операции. Следите за платежами и планируйте расходы, чтобы прогнозировать баланс.",
+      "back": "Назад",
+      "next": "Далее",
+      "done": "Начать",
+      "skip": "Пропустить",
+      "requiredName": "Введите название счёта",
+    },
+    "zh": {
+      "defaultName": "主账户",
+      "welcomeTitle": "轻松管理财务",
+      "welcomeSubtitle": "账户、交易和目标集中管理。数据保存在你的设备上。",
+      "language": "语言",
+      "currency": "货币",
+      "accountTitle": "创建第一个账户",
+      "accountSubtitle": "从零开始，之后可随时修改余额和账户详情。",
+      "nameLabel": "账户名称",
+      "typeLabel": "类型",
+      "accountIcon": "账户图标",
+      "accountColor": "账户颜色",
+      "howTitle": "了解 Balyn",
+      "howSubtitle": "点击下方栏目，了解各项功能。",
+      "homeTitle": "总览",
+      "homeDescription": "查看总资产和可用余额，切换账户、自定义小组件，并快速记录收入、支出和转账。",
+      "movementTitle": "交易与分析",
+      "movementDescription":
+          "记录收入、支出和转账，添加分类、标签、备注和收据。搜索历史记录、比较时间段，并查看图表和统计数据。",
+      "advancesTitle": "借款与垫付",
+      "advancesDescription": "追踪借出或垫付的款项及相关人员。记录部分或全额还款，了解还有谁欠你钱。",
+      "planTitle": "规划",
+      "planDescription": "设置预算、储蓄目标和定期交易。关注到期付款并规划未来支出，预测账户余额。",
+      "back": "返回",
+      "next": "继续",
+      "done": "开始使用",
+      "skip": "跳过",
+      "requiredName": "请输入账户名称",
+    },
+    "ja": {
+      "defaultName": "メイン口座",
+      "welcomeTitle": "お金の管理をもっと簡単に",
+      "welcomeSubtitle": "口座・取引・目標をひとつに。データは端末内に保存されます。",
+      "language": "言語",
+      "currency": "通貨",
+      "accountTitle": "最初の口座を作成",
+      "accountSubtitle": "残高はゼロから開始。あとでいつでも変更できます。",
+      "nameLabel": "口座名",
+      "typeLabel": "種類",
+      "accountIcon": "口座アイコン",
+      "accountColor": "口座の色",
+      "howTitle": "Balynを知る",
+      "howSubtitle": "各項目をタップして機能を確認しましょう。",
+      "homeTitle": "概要",
+      "homeDescription":
+          "総資産と利用可能残高を確認。口座の切り替えやウィジェットのカスタマイズ、収入・支出・振替の記録ができます。",
+      "movementTitle": "取引と分析",
+      "movementDescription":
+          "収入・支出・振替をカテゴリ、タグ、メモ、領収書とともに記録。履歴の検索、期間比較、グラフや統計を確認できます。",
+      "advancesTitle": "立替・貸付",
+      "advancesDescription": "貸したお金や立て替えた金額、相手を管理。一部・全額の返済を記録し、未返済額を確認できます。",
+      "planTitle": "計画",
+      "planDescription": "予算、貯蓄目標、定期取引を設定。支払期日を確認し、将来の支出と残高を予測できます。",
+      "back": "戻る",
+      "next": "続ける",
+      "done": "始める",
+      "skip": "スキップ",
+      "requiredName": "口座名を入力してください",
+    },
+    "ko": {
+      "defaultName": "기본 계좌",
+      "welcomeTitle": "더 간편한 자산 관리",
+      "welcomeSubtitle": "계좌, 거래, 목표를 한곳에. 데이터는 기기에 저장됩니다.",
+      "language": "언어",
+      "currency": "통화",
+      "accountTitle": "첫 계좌 만들기",
+      "accountSubtitle": "잔액 0에서 시작하며 언제든 수정할 수 있습니다.",
+      "nameLabel": "계좌 이름",
+      "typeLabel": "유형",
+      "accountIcon": "계좌 아이콘",
+      "accountColor": "계좌 색상",
+      "howTitle": "Balyn 알아보기",
+      "howSubtitle": "항목을 눌러 기능을 자세히 알아보세요.",
+      "homeTitle": "개요",
+      "homeDescription":
+          "총자산과 사용 가능한 잔액을 확인하세요. 계좌를 전환하고 위젯을 맞춤 설정하며 수입, 지출, 이체를 빠르게 기록하세요.",
+      "movementTitle": "거래 및 분석",
+      "movementDescription":
+          "수입, 지출, 이체를 카테고리, 태그, 메모, 영수증과 함께 기록하세요. 내역 검색, 기간 비교, 차트와 통계를 이용할 수 있습니다.",
+      "advancesTitle": "선지급 및 대여",
+      "advancesDescription":
+          "빌려주거나 대신 지불한 돈과 상대방을 관리하세요. 일부 또는 전체 상환을 기록하고 미상환 금액을 확인하세요.",
+      "planTitle": "계획",
+      "planDescription":
+          "예산, 저축 목표, 반복 거래를 설정하세요. 결제 예정일을 확인하고 미래 지출과 잔액을 예측하세요.",
+      "back": "뒤로",
+      "next": "계속",
+      "done": "시작하기",
+      "skip": "건너뛰기",
+      "requiredName": "계좌 이름을 입력하세요",
+    },
+    "ar": {
+      "defaultName": "الحساب الرئيسي",
+      "welcomeTitle": "أموالك بكل بساطة",
+      "welcomeSubtitle":
+          "الحسابات والمعاملات والأهداف في مكان واحد. تبقى بياناتك على جهازك.",
+      "language": "اللغة",
+      "currency": "العملة",
+      "accountTitle": "أنشئ حسابك الأول",
+      "accountSubtitle":
+          "ابدأ من الصفر. يمكنك تعديل الرصيد والتفاصيل في أي وقت.",
+      "nameLabel": "اسم الحساب",
+      "typeLabel": "النوع",
+      "accountIcon": "رمز الحساب",
+      "accountColor": "لون الحساب",
+      "howTitle": "اكتشف Balyn",
+      "howSubtitle": "اضغط على قسم لمعرفة كيفية تنظيم أموالك.",
+      "homeTitle": "نظرة عامة",
+      "homeDescription":
+          "اطّلع على إجمالي أموالك ورصيدك المتاح. تنقّل بين الحسابات وخصّص الأدوات وسجّل الدخل والمصروفات والتحويلات بسهولة.",
+      "movementTitle": "المعاملات والتحليلات",
+      "movementDescription":
+          "سجّل الدخل والمصروفات والتحويلات مع الفئات والوسوم والملاحظات والإيصالات. ابحث في السجل وقارن الفترات واستكشف الرسوم البيانية.",
+      "advancesTitle": "السلف والديون",
+      "advancesDescription":
+          "تابع المبالغ التي أقرضتها أو دفعتها للآخرين. سجّل السداد الجزئي أو الكامل واعرف من لا يزال مدينًا لك.",
+      "planTitle": "التخطيط",
+      "planDescription":
+          "حدّد الميزانيات وأهداف الادخار والمعاملات المتكررة. تابع المواعيد وخطّط للمصروفات المستقبلية لمعرفة رصيدك المتوقع.",
+      "back": "رجوع",
+      "next": "متابعة",
+      "done": "ابدأ",
+      "skip": "تخطّ",
+      "requiredName": "أدخل اسم الحساب",
+    },
+    "hi": {
+      "defaultName": "मुख्य खाता",
+      "welcomeTitle": "आपके पैसे, आसान प्रबंधन",
+      "welcomeSubtitle":
+          "खाते, लेन-देन और लक्ष्य एक जगह। डेटा आपके डिवाइस पर रहता है।",
+      "language": "भाषा",
+      "currency": "मुद्रा",
+      "accountTitle": "अपना पहला खाता बनाएँ",
+      "accountSubtitle":
+          "शून्य से शुरू करें। बैलेंस और विवरण कभी भी बदल सकते हैं।",
+      "nameLabel": "खाते का नाम",
+      "typeLabel": "प्रकार",
+      "accountIcon": "खाते का आइकन",
+      "accountColor": "खाते का रंग",
+      "howTitle": "Balyn को जानें",
+      "howSubtitle": "किसी अनुभाग को छूकर उसकी सुविधाएँ देखें।",
+      "homeTitle": "सारांश",
+      "homeDescription":
+          "कुल संपत्ति और उपलब्ध राशि देखें। खाते बदलें, विजेट अनुकूलित करें और आय, खर्च व ट्रांसफ़र जल्दी दर्ज करें।",
+      "movementTitle": "लेन-देन और विश्लेषण",
+      "movementDescription":
+          "श्रेणियों, टैग, नोट और रसीदों के साथ आय, खर्च और ट्रांसफ़र दर्ज करें। इतिहास खोजें, अवधियों की तुलना करें और चार्ट व आँकड़े देखें।",
+      "advancesTitle": "अग्रिम और उधार",
+      "advancesDescription":
+          "उधार दिए या किसी के लिए चुकाए गए पैसों का हिसाब रखें। आंशिक या पूर्ण वापसी दर्ज करें और देखें किस पर कितना बाकी है।",
+      "planTitle": "योजना",
+      "planDescription":
+          "बजट, बचत लक्ष्य और दोहराए जाने वाले लेन-देन तय करें। नियत तिथियाँ देखें और भविष्य के खर्च व बैलेंस की योजना बनाएँ।",
+      "back": "पीछे",
+      "next": "जारी रखें",
+      "done": "शुरू करें",
+      "skip": "छोड़ें",
+      "requiredName": "खाते का नाम दर्ज करें",
+    },
+  };
+
+  static String tr(String languageCode, String key) =>
+      _translations[languageCode]?[key] ?? _translations['it']![key]!;
+
+  static const _accountTypes = <String, List<String>>{
+    "it": [
+      "Conto corrente",
+      "Contanti",
+      "Carta",
+      "Risparmi",
+      "Prepagata",
+      "Investimenti",
+    ],
+    "en": [
+      "Checking account",
+      "Cash",
+      "Card",
+      "Savings",
+      "Prepaid",
+      "Investments",
+    ],
+    "es": [
+      "Cuenta corriente",
+      "Efectivo",
+      "Tarjeta",
+      "Ahorros",
+      "Prepago",
+      "Inversiones",
+    ],
+    "fr": [
+      "Compte courant",
+      "Espèces",
+      "Carte",
+      "Épargne",
+      "Prépayée",
+      "Investissements",
+    ],
+    "de": ["Girokonto", "Bargeld", "Karte", "Sparen", "Prepaid", "Anlagen"],
+    "pt": [
+      "Conta corrente",
+      "Dinheiro",
+      "Cartão",
+      "Poupança",
+      "Pré-pago",
+      "Investimentos",
+    ],
+    "ru": [
+      "Текущий счёт",
+      "Наличные",
+      "Карта",
+      "Сбережения",
+      "Предоплата",
+      "Инвестиции",
+    ],
+    "zh": ["活期账户", "现金", "银行卡", "储蓄", "预付卡", "投资"],
+    "ja": ["普通預金", "現金", "カード", "貯蓄", "プリペイド", "投資"],
+    "ko": ["입출금 계좌", "현금", "카드", "저축", "선불", "투자"],
+    "ar": ["حساب جاري", "نقد", "بطاقة", "مدخرات", "مسبق الدفع", "استثمارات"],
+    "hi": ["चालू खाता", "नकद", "कार्ड", "बचत", "प्रीपेड", "निवेश"],
+  };
+  static String accountType(String languageCode, String typeName) {
+    const typeKeys = [
+      'checking',
+      'cash',
+      'card',
+      'savings',
+      'prepaid',
+      'investment',
+    ];
+    final index = typeKeys.indexOf(typeName);
+    if (index == -1) return typeName;
+    return (_accountTypes[languageCode] ?? _accountTypes['it']!)[index];
+  }
+
+  static bool isComplete(String languageCode) =>
+      _translations[languageCode]?.length == _translations['it']!.length;
+}

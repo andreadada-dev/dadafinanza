@@ -7,6 +7,7 @@ on:
       - 'build/**'
       - 'ui/**'
       - 'feature/**'
+      - 'fix/**'
 
 permissions:
   contents: read
@@ -31,7 +32,20 @@ jobs:
         run: flutter pub get
       - name: Format check
         run: dart format --output=none --set-exit-if-changed lib test
+      - name: Focused shader and navigation tests
+        run: flutter test test/smooth_indexed_pages_test.dart test/balyn_background_shader_test.dart
       - name: Analyze
-        run: flutter analyze --no-fatal-infos
+        run: |
+          # Preserve the exit code, but surface actual diagnostics rather
+          # than losing them behind thousands of pre-existing info lints.
+          status=0
+          flutter analyze --no-fatal-infos > analyzer.log 2>&1 || status=$?
+          echo "== First diagnostics =="
+          head -n 20 analyzer.log
+          echo "== Errors and warnings =="
+          grep -Ei '^[[:space:]]*(error|warning)' analyzer.log | head -n 100 || true
+          echo "== Analyzer summary =="
+          tail -n 4 analyzer.log
+          exit "$status"
       - name: Test
         run: flutter test

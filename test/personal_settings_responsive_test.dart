@@ -52,11 +52,10 @@ void main() {
     tester,
   ) async {
     await pumpSettings(tester, width: 320);
-    await tester.scrollUntilVisible(
-      find.text('Inizio mese finanziario'),
-      260,
-      scrollable: find.byType(Scrollable).first,
-    );
+    // Grouped settings can be taller than the viewport. Scroll to the
+    // actual tap target rather than relying on whether it was built eagerly.
+    await tester.ensureVisible(find.text('Inizio mese finanziario'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Inizio mese finanziario'));
     await tester.pumpAndSettle();
 

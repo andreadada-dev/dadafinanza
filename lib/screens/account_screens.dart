@@ -5,6 +5,7 @@ import '../app_state.dart';
 import '../main.dart';
 import '../models/models.dart';
 import '../widgets/ui_helpers.dart';
+import '../widgets/balyn_account_live_preview.dart';
 import 'quick_add_page.dart';
 import 'transaction_screens.dart';
 
@@ -554,6 +555,7 @@ Future<Account?> showAccountEditor(
                 existing == null ? 'Nuovo conto' : 'Modifica conto',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
+              BalynAccountLivePreview(iconKey: iconKey, color: color),
               TextField(
                 controller: name,
                 autofocus: existing == null,

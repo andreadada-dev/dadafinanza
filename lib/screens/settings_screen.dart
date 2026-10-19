@@ -5,6 +5,9 @@ import '../main.dart';
 import '../models/models.dart';
 import '../models/smart_models.dart';
 import '../widgets/ui_helpers.dart';
+import '../widgets/home_dashboard_widget.dart';
+import '../widgets/balyn_home_widget_catalog.dart';
+import '../widgets/balyn_omesh_hero_background.dart';
 
 class _SettingsLink extends StatelessWidget {
   const _SettingsLink({
@@ -335,105 +338,312 @@ class DashboardCustomizerScreen extends StatefulWidget {
 }
 
 class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
-  static const _fixedSummaryTypes = <DashboardWidgetType>{
-    DashboardWidgetType.totalBalance,
-    DashboardWidgetType.monthlyIncome,
-    DashboardWidgetType.monthlyExpense,
-    DashboardWidgetType.safeToSpend,
-  };
-
   List<DashboardWidgetConfig>? items;
+  final Set<DashboardWidgetType> _expanded = {};
+  Future<void> _pendingSave = Future<void>.value();
 
   void _load(AppState state) {
-    items ??=
-        state.dashboardWidgets
-            .where((item) => !_fixedSummaryTypes.contains(item.type))
-            .toList()
-          ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
+    items ??= BalynHomeWidgetCatalog.normalize(state.dashboardWidgets)
+        .where((item) => !BalynHomeWidgetCatalog.fixed.contains(item.type))
+        .toList(growable: true);
   }
 
   Future<void> _save(AppState state) async {
-    final fixed =
-        state.dashboardWidgets
-            .where((item) => _fixedSummaryTypes.contains(item.type))
-            .toList()
-          ..sort((a, b) => a.orderIndex.compareTo(b.orderIndex));
-    final normalizedItems = <DashboardWidgetConfig>[];
-    for (var index = 0; index < items!.length; index++) {
-      final item = items![index];
-      normalizedItems.add(
+    final fixed = BalynHomeWidgetCatalog.normalize(state.dashboardWidgets)
+        .where((item) => BalynHomeWidgetCatalog.fixed.contains(item.type))
+        .toList();
+    final snapshot = <DashboardWidgetConfig>[...fixed, ...items!];
+    final normalized = [
+      for (var index = 0; index < snapshot.length; index++)
         DashboardWidgetConfig(
-          type: item.type,
-          enabled: item.enabled,
-          orderIndex: fixed.length + index,
-          size: item.size,
-        ),
-      );
-    }
-    items = normalizedItems;
-    final normalized = <DashboardWidgetConfig>[
-      for (var index = 0; index < fixed.length; index++)
-        DashboardWidgetConfig(
-          type: fixed[index].type,
-          enabled: true,
+          type: snapshot[index].type,
+          enabled:
+              BalynHomeWidgetCatalog.fixed.contains(snapshot[index].type) ||
+              snapshot[index].enabled,
           orderIndex: index,
-          size: fixed[index].size,
+          size: snapshot[index].size,
         ),
-      ...normalizedItems,
     ];
-    await state.saveDashboard(normalized);
+    // A quick drag followed by a switch cannot let an older async database
+    // write overwrite the user's latest layout.
+    _pendingSave = _pendingSave.then((_) => state.saveDashboard(normalized));
+    await _pendingSave;
   }
 
-  @override
-  Widget build(BuildContext context) {
+  void _update(
+    AppState state,
+    DashboardWidgetType type, {
+    bool? enabled,
+    DashboardWidgetSize? size,
+  }) {
+    final index = items!.indexWhere((item) => item.type == type);
+    if (index < 0) return;
+    final old = items![index];
+    setState(() {
+      items![index] = DashboardWidgetConfig(
+        type: type,
+        enabled: enabled ?? old.enabled,
+        orderIndex: old.orderIndex,
+        size: size ?? old.size,
+      );
+    });
+    _save(state);
+  }
+
+  void _reorder(AppState state, int oldIndex, int newIndex) {
+    setState(() {
+      if (oldIndex < newIndex) newIndex -= 1;
+      final item = items!.removeAt(oldIndex);
+      items!.insert(newIndex, item);
+    });
+    _save(state);
+  }
+
+  Future<void> _addElement(AppState state) async {
+    final choices = items!.where((item) => !item.enabled).toList();
+    if (choices.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Tutti i widget sono già attivi')),
+      );
+      return;
+    }
+    final type = await showModalBottomSheet<DashboardWidgetType>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (sheetContext) => SafeArea(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.sizeOf(sheetContext).height * .68,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Padding(
+                padding: EdgeInsets.fromLTRB(20, 4, 20, 16),
+                child: Text(
+                  'Aggiungi alla Home',
+                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 19),
+                ),
+              ),
+              Flexible(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    for (final item in choices)
+                      ListTile(
+                        leading: Icon(_homeWidgetIcon(item.type)),
+                        title: Text(item.type.label),
+                        trailing: const Icon(Icons.add_rounded),
+                        onTap: () => Navigator.pop(sheetContext, item.type),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    if (!mounted || type == null) return;
+    // An existing disabled entry is re-enabled; never insert the same type
+    // twice into the persisted list.
+    _update(state, type, enabled: true);
+  }
+
+  Widget _preview(
+    BuildContext context,
+    DashboardWidgetConfig config, {
+    bool hero = false,
+  }) {
     final state = AppScope.of(context);
-    _load(state);
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Personalizza Home'),
-        actions: [
-          TextButton(
-            onPressed: () async {
-              await state.resetDashboard();
-              if (mounted) setState(() => items = null);
-            },
-            child: const Text('Ripristina'),
+    final realWidget = hero
+        ? SizedBox(
+            height: 145,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                const BalynOMeshHeroBackground(
+                  accent: Color(0xFF6221E9),
+                  useBasicPalette: true,
+                ),
+                Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        'PATRIMONIO TOTALE',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        state.hideBalance
+                            ? '••••••'
+                            : moneyFor(state, state.totalBalance),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 28,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
+        : HomeDashboardWidget(
+            key: ValueKey('home-widget-preview-${config.type.name}'),
+            config: config,
+            showAccountsInsideSummary:
+                BalynHomeWidgetCatalog.showAccountsInsideSnapshot(
+                  BalynHomeWidgetCatalog.normalize(state.dashboardWidgets),
+                ),
+          );
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12, 0, 12, 13),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(18),
+        child: ColoredBox(
+          color: Theme.of(context).colorScheme.surfaceContainer,
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            // Real data and actual Home components, but never allow edits,
+            // navigation, or accidental swipe-to-delete in preview mode.
+            child: IgnorePointer(
+              child: TickerMode(
+                enabled: false,
+                child: MediaQuery(
+                  data: MediaQuery.of(
+                    context,
+                  ).copyWith(disableAnimations: true),
+                  child: realWidget,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _fixedTile(DashboardWidgetConfig config) {
+    final expanded = _expanded.contains(config.type);
+    return Card(
+      key: ValueKey('fixed-${config.type.name}'),
+      child: Column(
+        children: [
+          ListTile(
+            title: Text(
+              config.type == DashboardWidgetType.totalBalance
+                  ? 'Hero · Patrimonio totale'
+                  : config.type.label,
+            ),
+            subtitle: const Text('Sempre visibile nella Hero'),
+            leading: const Icon(Icons.lock_outline_rounded),
+            trailing: IconButton(
+              key: ValueKey('expand-fixed-${config.type.name}'),
+              tooltip: expanded ? 'Chiudi anteprima' : 'Apri anteprima',
+              icon: Icon(
+                expanded
+                    ? Icons.keyboard_arrow_up_rounded
+                    : Icons.keyboard_arrow_down_rounded,
+              ),
+              onPressed: () => setState(() {
+                if (expanded) {
+                  _expanded.remove(config.type);
+                } else {
+                  _expanded.add(config.type);
+                }
+              }),
+            ),
+          ),
+          AnimatedSize(
+            duration: const Duration(milliseconds: 220),
+            alignment: Alignment.topCenter,
+            child: expanded
+                ? _preview(
+                    context,
+                    config,
+                    hero: config.type == DashboardWidgetType.totalBalance,
+                  )
+                : const SizedBox.shrink(),
           ),
         ],
       ),
-      body: ReorderableListView.builder(
-        header: const Padding(
-          padding: EdgeInsets.fromLTRB(8, 8, 8, 20),
-          child: Text(
-            'Patrimonio, Entrate, Spese e Disponibile restano fissi in alto, sopra le azioni rapide. Qui puoi mostrare, nascondere, ridimensionare e riordinare le sezioni successive.',
-          ),
-        ),
-        padding: const EdgeInsets.fromLTRB(12, 8, 12, 80),
-        itemCount: items!.length,
-        onReorderItem: (oldIndex, newIndex) async {
-          setState(() {
-            final item = items!.removeAt(oldIndex);
-            items!.insert(newIndex, item);
-          });
-          await _save(state);
-        },
-        itemBuilder: (context, index) {
-          final item = items![index];
-          return ListTile(
-            key: ValueKey(item.type),
-            leading: const Icon(Icons.drag_handle_rounded),
-            title: Text(item.type.label),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (item.type == DashboardWidgetType.topCategories) ...[
-                  const SizedBox(height: 3),
-                  const Text(
-                    'Torta Spese/Entrate con periodo scorrevole e intervallo personalizzato.',
+    );
+  }
+
+  Widget _reorderableTile(
+    AppState state,
+    DashboardWidgetConfig item,
+    int index,
+  ) {
+    final expanded = _expanded.contains(item.type);
+    return Card(
+      key: ValueKey('config-${item.type.name}'),
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              ReorderableDragStartListener(
+                index: index,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(13, 15, 8, 15),
+                  child: Icon(
+                    Icons.drag_indicator_rounded,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
-                  const SizedBox(height: 6),
-                ],
+                ),
+              ),
+              Icon(_homeWidgetIcon(item.type), size: 19),
+              const SizedBox(width: 9),
+              Expanded(
+                child: Text(
+                  item.type.label,
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
+              ),
+              IconButton(
+                key: ValueKey('expand-${item.type.name}'),
+                tooltip: expanded ? 'Chiudi anteprima' : 'Apri anteprima',
+                onPressed: () => setState(() {
+                  if (expanded) {
+                    _expanded.remove(item.type);
+                  } else {
+                    _expanded.add(item.type);
+                  }
+                }),
+                icon: Icon(
+                  expanded
+                      ? Icons.keyboard_arrow_up_rounded
+                      : Icons.keyboard_arrow_down_rounded,
+                ),
+              ),
+              Switch(
+                key: ValueKey('enabled-${item.type.name}'),
+                value: item.enabled,
+                onChanged: (enabled) =>
+                    _update(state, item.type, enabled: enabled),
+              ),
+              const SizedBox(width: 8),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(48, 0, 14, 7),
+            child: Row(
+              children: [
+                Text(
+                  'Dimensione',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                const SizedBox(width: 8),
                 DropdownButton<DashboardWidgetSize>(
+                  key: ValueKey('size-${item.type.name}'),
                   value: item.size,
                   isDense: true,
                   underline: const SizedBox.shrink(),
@@ -445,41 +655,154 @@ class _DashboardCustomizerScreenState extends State<DashboardCustomizerScreen> {
                         ),
                       )
                       .toList(),
-                  onChanged: (size) async {
-                    if (size == null) return;
-                    setState(
-                      () => items![index] = DashboardWidgetConfig(
-                        type: item.type,
-                        enabled: item.enabled,
-                        orderIndex: item.orderIndex,
-                        size: size,
-                      ),
-                    );
-                    await _save(state);
+                  onChanged: (size) {
+                    if (size != null) _update(state, item.type, size: size);
                   },
                 ),
+                const Spacer(),
+                if (!item.enabled)
+                  Text(
+                    'Nascosto',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
               ],
             ),
-            trailing: Switch(
-              value: item.enabled,
-              onChanged: (enabled) async {
-                setState(
-                  () => items![index] = DashboardWidgetConfig(
-                    type: item.type,
-                    enabled: enabled,
-                    orderIndex: item.orderIndex,
-                    size: item.size,
-                  ),
-                );
-                await _save(state);
-              },
+          ),
+          if (item.type == DashboardWidgetType.topCategories)
+            const Padding(
+              padding: EdgeInsets.fromLTRB(15, 0, 15, 7),
+              child: Text(
+                'Torta Spese/Entrate con periodo scorrevole e intervallo personalizzato.',
+                style: TextStyle(fontSize: 11),
+              ),
             ),
-          );
-        },
+          if (item.type == DashboardWidgetType.accounts &&
+              items!.any(
+                (entry) =>
+                    entry.type == DashboardWidgetType.financialSnapshot &&
+                    entry.enabled,
+              ))
+            const Padding(
+              padding: EdgeInsets.fromLTRB(15, 0, 15, 7),
+              child: Text(
+                'La lista conti di In sintesi viene nascosta per evitare doppioni.',
+                style: TextStyle(fontSize: 11),
+              ),
+            ),
+          AnimatedSize(
+            duration: const Duration(milliseconds: 220),
+            alignment: Alignment.topCenter,
+            child: expanded ? _preview(context, item) : const SizedBox.shrink(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = AppScope.of(context);
+    _load(state);
+    final configs = BalynHomeWidgetCatalog.normalize(state.dashboardWidgets);
+    final fixed = configs.where(
+      (item) => BalynHomeWidgetCatalog.fixed.contains(item.type),
+    );
+    final duplicates =
+        state.dashboardWidgets.length -
+        state.dashboardWidgets.map((item) => item.type).toSet().length;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Personalizza Home'),
+        actions: [
+          TextButton(
+            onPressed: () async {
+              await _pendingSave;
+              await state.resetDashboard();
+              if (mounted) {
+                setState(() {
+                  items = null;
+                  _expanded.clear();
+                });
+              }
+            },
+            child: const Text('Ripristina'),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        key: const ValueKey('add-home-widget'),
+        onPressed: () => _addElement(state),
+        icon: const Icon(Icons.add_rounded),
+        label: const Text('Aggiungi'),
+      ),
+      body: ReorderableListView.builder(
+        buildDefaultDragHandles: false,
+        padding: const EdgeInsets.fromLTRB(12, 8, 12, 90),
+        header: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.fromLTRB(4, 2, 4, 10),
+              child: Text(
+                'Trascina gli elementi dalla maniglia a sinistra per '
+                'cambiare il loro ordine. Tocca la freccia V per '
+                'vedere il widget reale con i tuoi dati.',
+              ),
+            ),
+            if (duplicates > 0)
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: Text(
+                  '${duplicates} duplicati nei dati salvati: '
+                  'verranno unificati al prossimo salvataggio.',
+                ),
+              ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: Text(
+                'Elementi fissi',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+            const SizedBox(height: 6),
+            for (final item in fixed) _fixedTile(item),
+            const SizedBox(height: 19),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: Text(
+                'Sezioni riordinabili',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+            const SizedBox(height: 5),
+          ],
+        ),
+        itemCount: items!.length,
+        onReorder: (oldIndex, newIndex) => _reorder(state, oldIndex, newIndex),
+        itemBuilder: (context, index) =>
+            _reorderableTile(state, items![index], index),
       ),
     );
   }
 }
+
+IconData _homeWidgetIcon(DashboardWidgetType type) => switch (type) {
+  DashboardWidgetType.monthlyOverview => Icons.calendar_month_outlined,
+  DashboardWidgetType.recentTransactions => Icons.receipt_long_outlined,
+  DashboardWidgetType.financialSnapshot =>
+    Icons.account_balance_wallet_outlined,
+  DashboardWidgetType.smartHighlights => Icons.auto_awesome_outlined,
+  DashboardWidgetType.topCategories => Icons.donut_large_outlined,
+  DashboardWidgetType.accounts => Icons.account_balance_outlined,
+  DashboardWidgetType.goals => Icons.flag_outlined,
+  DashboardWidgetType.netWorthTrend => Icons.show_chart_rounded,
+  DashboardWidgetType.monthlyBudget ||
+  DashboardWidgetType.closestBudget => Icons.pie_chart_outline_rounded,
+  DashboardWidgetType.financeCalendar ||
+  DashboardWidgetType.upcomingRecurring => Icons.event_note_outlined,
+  _ => Icons.widgets_outlined,
+};
 
 String _sizeLabel(DashboardWidgetSize size) => switch (size) {
   DashboardWidgetSize.small => 'Compatto',

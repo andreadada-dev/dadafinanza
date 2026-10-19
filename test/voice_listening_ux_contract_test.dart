@@ -40,10 +40,10 @@ void main() {
     },
   );
 
-  test('transfer segment uses a single-line compact action label', () async {
+  test('transfer type is available in the compact movement picker', () async {
     final source = await File('lib/screens/quick_add_page.dart').readAsString();
-    expect(source, contains("'Trasferimento'"));
-    expect(source, contains('fit: BoxFit.scaleDown'));
-    expect(source, contains('softWrap: false'));
+    expect(source, contains('TransactionType.transfer'));
+    expect(source, contains('_pickMovementType()'));
+    expect(source, contains('TransactionType.values'));
   });
 }

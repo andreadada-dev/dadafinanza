@@ -3,33 +3,86 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('total Home keeps the original summary above quick actions', () {
-    final source = File(
+  test('Home uses a full-bleed Revolut-style header above live content', () {
+    final home = File(
       'lib/screens/account_context_home_screen.dart',
     ).readAsStringSync();
+    final hero = File(
+      'lib/widgets/balyn_revolut_home_hero.dart',
+    ).readAsStringSync();
+    final content = File(
+      'lib/widgets/balyn_revolut_home_content.dart',
+    ).readAsStringSync();
 
-    final summary = source.indexOf('_TotalOverviewSummary(');
-    final quickActions = source.indexOf('_QuickActions(', summary + 1);
-    expect(summary, greaterThanOrEqualTo(0));
-    expect(quickActions, greaterThan(summary));
-    expect(source, contains("Text('PATRIMONIO'"));
-    expect(source, contains("label: 'Entrate'"));
-    expect(source, contains("label: 'Spese'"));
-    expect(source, contains("label: 'Disponibile'"));
+    expect(home, contains('SliverToBoxAdapter('));
+    expect(home, contains('BalynRevolutHomeHero('));
+    expect(home, contains('BalynRevolutHomeContent('));
+    expect(home, contains('state.safeToSpend'));
+    expect(hero, contains('BalynOMeshHeroBackground('));
+    expect(hero, isNot(contains('_AccountWavesPainter')));
+    expect(hero, contains("label: 'Spesa'"));
+    expect(hero, contains("label: 'Entrata'"));
+    expect(hero, contains("label: 'Trasferisci'"));
+    expect(hero, contains('BalynCueThreeDotsAction('));
+    expect(content, contains("'I tuoi conti'"));
+  });
+
+  test('Home keeps real account selection, privacy and quick actions', () {
+    final home = File(
+      'lib/screens/account_context_home_screen.dart',
+    ).readAsStringSync();
+    expect(home, contains('accounts: state.activeAccounts'));
+    expect(home, contains('currentAccountId: effectiveAccountId'));
+    expect(home, contains('BalynRecentTransactionsCard('));
+    expect(home, contains('onAccountChanged'));
+    expect(home, contains('hideBalance'));
+    expect(home, contains('onVisibility:'));
+    expect(home, contains('onSearch:'));
+    expect(home, contains('onExpense:'));
+    expect(home, contains('onIncome:'));
+    expect(home, contains('onTransfer:'));
+    expect(home, contains('onManageAccounts:'));
+    expect(home, isNot(contains('FinanceSparkline(')));
   });
 
   test(
-    'Home overview centers summary values and has no patrimonio sparkline',
+    'Home hero supports account dropdown, swipe and account-specific waves',
     () {
-      final source = File(
+      final hero = File(
+        'lib/widgets/balyn_revolut_home_hero.dart',
+      ).readAsStringSync();
+      expect(hero, contains('hero-account-dropdown'));
+      expect(hero, contains('_showAccountSelector(context)'));
+      expect(hero, contains('onHorizontalDragEnd:'));
+      expect(hero, contains('_switchAccount('));
+      expect(hero, isNot(contains('_AnimatedAccountDiamond')));
+      expect(hero, contains('Icons.keyboard_arrow_down_rounded'));
+      expect(hero, contains('Color(matching.first.colorValue)'));
+      expect(hero, contains('ColorTween(end: _accent)'));
+      expect(hero, contains('useBasicPalette: currentAccountId == null'));
+      expect(hero, contains('textAlign: TextAlign.center'));
+    },
+  );
+
+  test(
+    'Recent movements use live data and respect hidden account balances',
+    () {
+      final home = File(
         'lib/screens/account_context_home_screen.dart',
       ).readAsStringSync();
-
-      expect(source, isNot(contains('FinanceSparkline(')));
-      expect(source, isNot(contains('trendValues:')));
-      expect(source, contains('crossAxisAlignment: CrossAxisAlignment.center'));
-      expect(source, contains('textAlign: TextAlign.center'));
-      expect(source, contains('alignment: Alignment.center'));
+      final card = File(
+        'lib/widgets/balyn_recent_transactions_card.dart',
+      ).readAsStringSync();
+      expect(home, contains('items: recent'));
+      expect(home, contains('hideAmounts: hidden'));
+      expect(card, contains('items.take(maxItems)'));
+      expect(card, contains('AppScope.of(context)'));
+      expect(
+        card,
+        contains('TransactionDetailPage(transactionId: movement.id)'),
+      );
+      expect(card, contains('hideAmounts ?'));
+      expect(card, contains("'Vedi tutti'"));
     },
   );
 
@@ -49,8 +102,11 @@ void main() {
 
     expect(source, contains("title: const Text('Personalizza Home')"));
     expect(source, contains('ReorderableListView.builder'));
-    expect(source, contains('_fixedSummaryTypes.contains(item.type)'));
-    expect(source, contains('await state.saveDashboard(normalized)'));
+    expect(
+      source,
+      contains('BalynHomeWidgetCatalog.fixed.contains(item.type)'),
+    );
+    expect(source, contains('state.saveDashboard(normalized)'));
   });
 
   test('category chart is clearly exposed in Personalizza Home', () {
@@ -95,7 +151,7 @@ void main() {
     expect(database, contains('isFreshDashboard && defaultOrder >= 0'));
   });
 
-  test('selected account Home mirrors the main summary hierarchy', () {
+  test('selected account uses the same hero and preserves account details', () {
     final home = File(
       'lib/screens/account_context_home_screen.dart',
     ).readAsStringSync();
@@ -103,18 +159,13 @@ void main() {
       'lib/widgets/home_dashboard_widget.dart',
     ).readAsStringSync();
 
-    final summary = home.indexOf('_SelectedAccountSummary(');
-    final quickActions = home.indexOf('_QuickActions(', summary + 1);
-    final accountCarousel = home.indexOf(
-      'AccountCategoryCarousel(accountId: selectedAccount!.id)',
-      quickActions + 1,
-    );
+    final hero = home.indexOf('BalynRevolutHomeHero(');
+    final accountCarousel = home.indexOf('AccountCategoryCarousel(', hero + 1);
     final openAccount = home.indexOf("'Apri conto'", accountCarousel + 1);
     final analytics = home.indexOf("'Analytics del conto'", openAccount + 1);
 
-    expect(summary, greaterThanOrEqualTo(0));
-    expect(quickActions, greaterThan(summary));
-    expect(accountCarousel, greaterThan(quickActions));
+    expect(hero, greaterThanOrEqualTo(0));
+    expect(accountCarousel, greaterThan(hero));
     expect(openAccount, greaterThan(accountCarousel));
     expect(analytics, greaterThan(openAccount));
     expect(widget, contains('class AccountCategoryCarousel'));
@@ -208,16 +259,10 @@ void main() {
     expect(analytics, contains("import 'dart:math' as math;"));
     expect(analytics, contains('movementHours'));
     expect(analytics, contains('minutes / 60'));
-    expect(
-      analytics,
-      contains('minWidth: MediaQuery.sizeOf(context).width - 4'),
-    );
-    expect(
-      analytics,
-      contains('maxWidth: MediaQuery.sizeOf(context).width - 4'),
-    );
-    expect(analytics, contains('minHeight: 224'));
-    expect(analytics, contains('maxHeight: 224'));
+    // The chart is now constrained inside its card (no more OverflowBox).
+    expect(analytics, contains('width: double.infinity'));
+    expect(analytics, contains('height: 224'));
+    expect(analytics, isNot(contains('child: OverflowBox(')));
     expect(analytics, contains('horizontalNudge'));
     expect(analytics, contains('0 => -3.0'));
     expect(analytics, contains('1 => 3.0'));
@@ -247,11 +292,11 @@ void main() {
     expect(analytics, contains('widget.onShiftPeriod(deltaX < 0 ? 1 : -1)'));
     expect(analytics, contains('class _AnalyticsPeriodNavigator'));
     expect(analytics, contains('class _AnalyticsSwipeChevron'));
-    expect(analytics, contains('rangeLabel: _visibleRangeLabel(from, to)'));
-    expect(analytics, contains('label: widget.rangeLabel'));
+    expect(analytics, contains('label: _visibleRangeLabel(from, to)'));
+    expect(analytics, contains('periodLabel: _visibleRangeLabel(from, to)'));
     expect(analytics, contains('duration: const Duration(milliseconds: 850)'));
-    expect(analytics, contains('onPrevious: () => widget.onShiftPeriod(-1)'));
-    expect(analytics, contains('onNext: () => widget.onShiftPeriod(1)'));
+    expect(analytics, contains('onPrevious: () => _shiftPeriod(-1)'));
+    expect(analytics, contains('onNext: () => _shiftPeriod(1)'));
     expect(analytics, contains('periodOffset += delta'));
   });
 

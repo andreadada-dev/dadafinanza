@@ -151,11 +151,21 @@ class FinanceSchemaService {
       amount_cents INTEGER,
       note TEXT,
       tags TEXT,
+      icon_key TEXT,
+      color_value INTEGER NOT NULL DEFAULT 4294967295,
       position INTEGER NOT NULL DEFAULT 0,
       enabled INTEGER NOT NULL DEFAULT 1,
       created_at INTEGER NOT NULL,
       updated_at INTEGER NOT NULL
     )''');
+    // Idempotent additions: existing finance databases keep their presets.
+    await _addColumn(txn, 'quick_presets', 'icon_key', 'TEXT');
+    await _addColumn(
+      txn,
+      'quick_presets',
+      'color_value',
+      'INTEGER NOT NULL DEFAULT 4294967295',
+    );
   }
 
   Future<void> _ensureAdvances(Transaction txn) async {

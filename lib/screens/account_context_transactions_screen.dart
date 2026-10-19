@@ -1,4 +1,5 @@
 import 'package:balyn/l10n/localized_material.dart';
+import '../theme/balyn_palette.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -7,7 +8,9 @@ import '../models/models.dart';
 import '../services/account_context_service.dart';
 import '../widgets/account_context_selector.dart';
 import '../widgets/balyn_motion.dart';
+import '../widgets/balyn_editorial_components.dart';
 import '../widgets/balyn_shader_system.dart';
+import '../widgets/balyn_swipe_delete_tile.dart';
 import '../widgets/ui_helpers.dart';
 import 'quick_add_page.dart';
 import 'transaction_screens.dart';
@@ -20,11 +23,13 @@ class AccountContextTransactionsScreen extends StatefulWidget {
   const AccountContextTransactionsScreen({
     required this.accountId,
     required this.onAccountChanged,
+    this.embedded = false,
     super.key,
   });
 
   final int? accountId;
   final ValueChanged<int?> onAccountChanged;
+  final bool embedded;
 
   @override
   State<AccountContextTransactionsScreen> createState() =>
@@ -148,17 +153,19 @@ class _AccountContextTransactionsScreenState
     final totals = _MovementTotals.from(state, items);
 
     return Scaffold(
-      appBar: AppBar(
-        title: AccountContextSelector(
-          accountId: widget.accountId,
-          onChanged: widget.onAccountChanged,
-        ),
-      ),
+      appBar: widget.embedded
+          ? null
+          : AppBar(
+              title: AccountContextSelector(
+                accountId: widget.accountId,
+                onChanged: widget.onAccountChanged,
+              ),
+            ),
       body: CustomScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         slivers: [
           SliverPadding(
-            padding: const EdgeInsets.fromLTRB(20, 4, 20, 0),
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
             sliver: SliverList.list(
               children: [
                 BalynReveal(
@@ -168,7 +175,7 @@ class _AccountContextTransactionsScreenState
                     hideValues: state.hideBalance,
                   ),
                 ),
-                const SizedBox(height: 22),
+                const SizedBox(height: 15),
                 _MovementSearch(
                   controller: search,
                   query: query,
@@ -240,7 +247,7 @@ class _AccountContextTransactionsScreenState
   Widget _buildTimelineSliver(AppState state, List<FinanceTransaction> items) {
     if (sort == _MovementSort.amountDesc || sort == _MovementSort.amountAsc) {
       return SliverPadding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         sliver: SliverList.builder(
           itemCount: items.length,
           itemBuilder: (context, index) => _MovementTile(item: items[index]),
@@ -250,7 +257,7 @@ class _AccountContextTransactionsScreenState
 
     final days = _groupByDay(items);
     return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       sliver: SliverList.builder(
         itemCount: days.length,
         itemBuilder: (context, index) {
@@ -290,7 +297,7 @@ class _AccountContextTransactionsScreenState
     ].where((section) => section.groups.isNotEmpty).toList(growable: false);
 
     return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       sliver: SliverList.builder(
         itemCount: sections.length,
         itemBuilder: (context, index) {
@@ -592,19 +599,12 @@ class _MovementHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Movimenti',
-          style: theme.textTheme.headlineLarge?.copyWith(
-            fontWeight: FontWeight.w900,
-            letterSpacing: -1,
-          ),
+        BalynEditorialHeading(
+          title: 'Movimenti',
+          subtitle:
+              '$count ${count == 1 ? 'movimento' : 'movimenti'} nel risultato',
         ),
-        const SizedBox(height: 3),
-        Text(
-          '$count ${count == 1 ? 'movimento' : 'movimenti'} nel risultato',
-          style: theme.textTheme.bodyMedium,
-        ),
-        const SizedBox(height: 22),
+        const SizedBox(height: 14),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -615,7 +615,7 @@ class _MovementHeader extends StatelessWidget {
                 color: context.financeColors.positive,
               ),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 8),
             Expanded(
               child: _MovementMetric(
                 label: 'Spese',
@@ -623,7 +623,7 @@ class _MovementHeader extends StatelessWidget {
                 color: context.financeColors.negative,
               ),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 8),
             Expanded(
               child: _MovementMetric(
                 label: 'Netto',
@@ -644,7 +644,6 @@ class _MovementMetric extends StatelessWidget {
     required this.value,
     required this.color,
   });
-
   final String label;
   final String value;
   final Color color;
@@ -652,29 +651,49 @@ class _MovementMetric extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: theme.textTheme.labelMedium?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        const SizedBox(height: 3),
-        FittedBox(
-          fit: BoxFit.scaleDown,
-          alignment: Alignment.centerLeft,
-          child: BalynShaderText(
-            value,
-            seed: color,
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w900,
+    return Container(
+      constraints: const BoxConstraints(minHeight: 88),
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 11),
+      decoration: BoxDecoration(
+        color: theme.brightness == Brightness.dark
+            ? BalynPalette.darkSurface
+            : Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.w600,
             ),
           ),
-        ),
-      ],
+          const SizedBox(height: 9),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: BalynShaderText(
+              value,
+              seed: color,
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ),
+          const SizedBox(height: 7),
+          Container(
+            width: 20,
+            height: 3,
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(3),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -1060,86 +1079,95 @@ class _MovementTile extends StatelessWidget {
         ? '+${moneyFor(state, item.amount)}'
         : moneyFor(state, item.amount);
 
-    return Semantics(
-      button: true,
-      label: '$title, $amount',
-      child: InkWell(
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => TransactionDetailPage(transactionId: item.id),
-          ),
+    return BalynSwipeDeleteTile(
+      item: item,
+      onEdit: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => TransactionDetailPage(transactionId: item.id),
         ),
-        borderRadius: BorderRadius.circular(18),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 9),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: 46,
-                height: 46,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.onSurface.withValues(
-                    alpha: theme.brightness == Brightness.dark ? .07 : .045,
+      ),
+      child: Semantics(
+        button: true,
+        label: '$title, $amount',
+        child: InkWell(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => TransactionDetailPage(transactionId: item.id),
+            ),
+          ),
+          borderRadius: BorderRadius.circular(18),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 9),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 46,
+                  height: 46,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.onSurface.withValues(
+                      alpha: theme.brightness == Brightness.dark ? .07 : .045,
+                    ),
+                    shape: BoxShape.circle,
                   ),
-                  shape: BoxShape.circle,
+                  child: BalynShaderIcon(
+                    item.type == TransactionType.transfer
+                        ? Icons.swap_horiz_rounded
+                        : category == null
+                        ? Icons.receipt_long_rounded
+                        : categoryIcon(category.iconKey),
+                    seed: color,
+                    size: 22,
+                  ),
                 ),
-                child: BalynShaderIcon(
-                  item.type == TransactionType.transfer
-                      ? Icons.swap_horiz_rounded
-                      : category == null
-                      ? Icons.receipt_long_rounded
-                      : categoryIcon(category.iconKey),
-                  seed: color,
-                  size: 22,
-                ),
-              ),
-              const SizedBox(width: 13),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    const SizedBox(height: 3),
-                    Text(
-                      detailParts.join(' · '),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.bodySmall,
-                    ),
-                    if (item.tags.isNotEmpty) ...[
-                      const SizedBox(height: 3),
-                      BalynShaderText(
-                        item.tags.take(2).map((tag) => '#$tag').join('  '),
-                        seed: theme.colorScheme.tertiary,
+                const SizedBox(width: 13),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.labelSmall?.copyWith(
-                          fontWeight: FontWeight.w700,
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w800,
                         ),
                       ),
+                      const SizedBox(height: 3),
+                      Text(
+                        detailParts.join(' · '),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.bodySmall,
+                      ),
+                      if (item.tags.isNotEmpty) ...[
+                        const SizedBox(height: 3),
+                        BalynShaderText(
+                          item.tags.take(2).map((tag) => '#$tag').join('  '),
+                          seed: theme.colorScheme.tertiary,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
-              ),
-              const SizedBox(width: 10),
-              BalynShaderText(
-                state.hideBalance ? '••••' : amount,
-                seed: transactionColor(context, item.type),
-                style: theme.textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w900,
+                const SizedBox(width: 10),
+                BalynShaderText(
+                  state.hideBalance ? '••••' : amount,
+                  seed: transactionColor(context, item.type),
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:balyn/l10n/localized_material.dart';
+import '../theme/balyn_palette.dart';
 import 'package:intl/intl.dart';
 
 import '../app_state.dart';
@@ -10,11 +11,13 @@ import '../models/models.dart';
 import '../services/account_context_service.dart';
 import '../widgets/account_context_selector.dart';
 import '../widgets/balyn_motion.dart';
+import '../widgets/balyn_editorial_components.dart';
 import '../widgets/balyn_shader_system.dart';
 import '../widgets/finance_charts.dart';
+import '../widgets/balyn_balance_analytics_charts.dart';
+import '../widgets/home_dashboard_widget.dart';
 import '../widgets/ui_helpers.dart';
 import 'account_management_screen.dart';
-import 'transaction_screens.dart';
 
 enum _AnalyticsPeriod { today, week, month, year, custom }
 
@@ -22,11 +25,13 @@ class AccountContextAnalyticsScreen extends StatefulWidget {
   const AccountContextAnalyticsScreen({
     required this.accountId,
     required this.onAccountChanged,
+    this.embedded = false,
     super.key,
   });
 
   final int? accountId;
   final ValueChanged<int?> onAccountChanged;
+  final bool embedded;
 
   @override
   State<AccountContextAnalyticsScreen> createState() =>
@@ -34,7 +39,30 @@ class AccountContextAnalyticsScreen extends StatefulWidget {
 }
 
 class _AccountContextAnalyticsScreenState
-    extends State<AccountContextAnalyticsScreen> {
+    extends State<AccountContextAnalyticsScreen>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _periodSwipeController;
+  late final Animation<double> _periodSwipeAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _periodSwipeController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 850),
+    )..repeat(reverse: true);
+    _periodSwipeAnimation = CurvedAnimation(
+      parent: _periodSwipeController,
+      curve: Curves.easeInOutSine,
+    );
+  }
+
+  @override
+  void dispose() {
+    _periodSwipeController.dispose();
+    super.dispose();
+  }
+
   _AnalyticsPeriod period = _AnalyticsPeriod.month;
   int periodOffset = 0;
   DateTimeRange? custom;
@@ -166,7 +194,6 @@ class _AccountContextAnalyticsScreenState
       _AnalyticsPeriod.year => 12,
       _AnalyticsPeriod.custom => totalDays <= 31 ? math.min(12, totalDays) : 12,
     };
-    if (targetBuckets < 2) return const [];
 
     final bucketDays = math.max(1, (totalDays / targetBuckets).ceil());
     final result = <FinanceTrendPoint>[];
@@ -246,56 +273,7 @@ class _AccountContextAnalyticsScreenState
         ? null
         : (expense - previousExpense) / previousExpense * 100;
 
-    final analytic = AccountContextService.analyticTransactionsFor(
-      state,
-      effectiveAccountId,
-      from: from,
-      to: to,
-    );
-    final categoryTotals = <int, double>{};
-    for (final item in analytic.where(
-      (t) => t.type == TransactionType.expense,
-    )) {
-      final splits = state.splitsFor(item.id);
-      if (splits.isNotEmpty) {
-        for (final split in splits) {
-          categoryTotals[split.categoryId] =
-              (categoryTotals[split.categoryId] ?? 0) +
-              state.analyticsAmountForSplit(item.id, split);
-        }
-      } else if (item.categoryId != null) {
-        categoryTotals[item.categoryId!] =
-            (categoryTotals[item.categoryId!] ?? 0) +
-            state.effectiveExpense(item);
-      }
-    }
-    final categories = categoryTotals.entries.toList()
-      ..sort((a, b) => b.value.compareTo(a.value));
     final cashFlowPoints = _cashFlowPoints(state, effectiveAccountId, from, to);
-    final donutEntries = categories.take(6).toList(growable: false);
-    final donutShown = donutEntries.fold<double>(
-      0,
-      (sum, entry) => sum + entry.value,
-    );
-    final categorySegments = <FinanceDonutSegment>[
-      for (final entry in donutEntries)
-        if (state.categoryById(entry.key) case final category?)
-          FinanceDonutSegment(
-            label: category.name,
-            value: entry.value,
-            color: Color(category.colorValue),
-            icon: categoryIcon(category.iconKey),
-          ),
-      if (expense - donutShown > .01)
-        FinanceDonutSegment(
-          label: 'Altro',
-          value: expense - donutShown,
-          color: Theme.of(
-            context,
-          ).colorScheme.onSurfaceVariant.withValues(alpha: .36),
-          icon: Icons.more_horiz_rounded,
-        ),
-    ];
 
     final recurringMonthly =
         AccountContextService.recurringFor(state, effectiveAccountId)
@@ -312,15 +290,28 @@ class _AccountContextAnalyticsScreenState
             });
 
     return Scaffold(
-      appBar: AppBar(
-        title: AccountContextSelector(
-          accountId: effectiveAccountId,
-          onChanged: widget.onAccountChanged,
-        ),
-      ),
+      appBar: widget.embedded
+          ? null
+          : AppBar(
+              title: AccountContextSelector(
+                accountId: effectiveAccountId,
+                onChanged: widget.onAccountChanged,
+              ),
+            ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 120),
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 120),
         children: [
+          // One global period navigator controls trend, bar series, donut,
+          // category totals, and every metric below (not only the first chart).
+          Center(
+            child: _AnalyticsPeriodNavigator(
+              label: _visibleRangeLabel(from, to),
+              animation: _periodSwipeAnimation,
+              onPrevious: () => _shiftPeriod(-1),
+              onNext: () => _shiftPeriod(1),
+            ),
+          ),
+          const SizedBox(height: 12),
           Row(
             children: [
               for (final item in _AnalyticsPeriod.values) ...[
@@ -346,7 +337,7 @@ class _AccountContextAnalyticsScreenState
                   color: context.financeColors.positive,
                 ),
               ),
-              const SizedBox(width: 20),
+              const SizedBox(width: 8),
               Expanded(
                 child: _Metric(
                   label: 'Spese',
@@ -354,7 +345,7 @@ class _AccountContextAnalyticsScreenState
                   color: context.financeColors.negative,
                 ),
               ),
-              const SizedBox(width: 20),
+              const SizedBox(width: 8),
               Expanded(
                 child: _Metric(
                   label: effectiveAccountId == null
@@ -381,30 +372,30 @@ class _AccountContextAnalyticsScreenState
                 : 'Andamento saldo',
           ),
           const SizedBox(height: 12),
-          _BalanceTrend(
-            state: state,
-            account: effectiveAccountId == null ? null : selected,
-            from: from,
-            to: to,
-            period: period,
-            rangeLabel: _visibleRangeLabel(from, to),
-            onShiftPeriod: _shiftPeriod,
+          BalynEditorialSurface(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 14),
+            child: _BalanceTrend(
+              state: state,
+              account: effectiveAccountId == null ? null : selected,
+              from: from,
+              to: to,
+              period: period,
+              onShiftPeriod: _shiftPeriod,
+            ),
           ),
-          if (cashFlowPoints.length >= 2) ...[
+          if (cashFlowPoints.isNotEmpty) ...[
             const SizedBox(height: 32),
             const SectionTitle('Entrate e spese'),
             const SizedBox(height: 10),
             BalynReveal(
-              child: FinanceTrendChart(
-                points: cashFlowPoints,
-                primaryLabel: AppI18n.tr('Spese'),
-                secondaryLabel: AppI18n.tr('Entrate'),
-                primaryColor: context.financeColors.negative,
-                secondaryColor: context.financeColors.positive,
-                valueFormatter: state.hideBalance
-                    ? (_) => '••••'
-                    : (value) => moneyFor(state, value),
-                height: 205,
+              child: BalynEditorialSurface(
+                child: BalynStatisticBars(
+                  points: cashFlowPoints,
+                  hidden: state.hideBalance || selected?.hideBalance == true,
+                  accountColor: effectiveAccountId == null
+                      ? null
+                      : Color(selected!.colorValue),
+                ),
               ),
             ),
           ],
@@ -436,56 +427,24 @@ class _AccountContextAnalyticsScreenState
           ),
           const SizedBox(height: 32),
           const SectionTitle('Dove stai spendendo'),
-          if (categories.isEmpty)
-            const Text('Nessun dato nel periodo')
-          else ...[
-            BalynReveal(
-              child: FinanceDonutChart(
-                segments: categorySegments,
-                centerLabel: AppI18n.tr('Spese'),
-                centerValue: state.hideBalance
-                    ? '••••'
-                    : moneyFor(state, expense),
-                valueFormatter: state.hideBalance
-                    ? (_) => '••••'
-                    : (value) => moneyFor(state, value),
+          const SizedBox(height: 12),
+          // The exact same interactive category donut as Home, including
+          // the income/expense swipe and category list. Analytics supplies
+          // its one global date range, avoiding a second period selector.
+          BalynReveal(
+            child: BalynEditorialSurface(
+              child: AccountCategoryCarousel(
+                key: ValueKey(
+                  'analytics-category-carousel-${effectiveAccountId ?? 'total'}',
+                ),
+                accountId: effectiveAccountId,
+                from: from,
+                to: to,
+                periodLabel: _visibleRangeLabel(from, to),
+                hideAmounts: state.hideBalance || selected?.hideBalance == true,
               ),
             ),
-            const SizedBox(height: 16),
-            ...categories.take(8).map((entry) {
-              final category = state.categoryById(entry.key);
-              if (category == null) return const SizedBox.shrink();
-              return ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: Icon(
-                  categoryIcon(category.iconKey),
-                  color: Color(category.colorValue),
-                ),
-                title: Text(category.name),
-                subtitle: Text(
-                  expense <= 0
-                      ? ''
-                      : '${(entry.value / expense * 100).toStringAsFixed(0)}% delle spese',
-                ),
-                trailing: Text(
-                  moneyFor(state, entry.value),
-                  style: const TextStyle(fontWeight: FontWeight.w800),
-                ),
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => _CategoryPeriodPage(
-                      title: category.name,
-                      accountId: effectiveAccountId,
-                      categoryId: category.id,
-                      from: from,
-                      to: to,
-                    ),
-                  ),
-                ),
-              );
-            }),
-          ],
+          ),
           const SizedBox(height: 28),
           if (effectiveAccountId == null) ...[
             const SectionTitle('Per conto'),
@@ -605,7 +564,6 @@ class _BalanceTrend extends StatefulWidget {
     required this.from,
     required this.to,
     required this.period,
-    required this.rangeLabel,
     required this.onShiftPeriod,
   });
 
@@ -614,38 +572,15 @@ class _BalanceTrend extends StatefulWidget {
   final DateTime from;
   final DateTime to;
   final _AnalyticsPeriod period;
-  final String rangeLabel;
   final ValueChanged<int> onShiftPeriod;
 
   @override
   State<_BalanceTrend> createState() => _BalanceTrendState();
 }
 
-class _BalanceTrendState extends State<_BalanceTrend>
-    with SingleTickerProviderStateMixin {
+class _BalanceTrendState extends State<_BalanceTrend> {
   int? _selectedSpotIndex;
   double? _swipeStartX;
-  late final AnimationController _swipeHintController;
-  late final Animation<double> _swipeHintAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _swipeHintController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 850),
-    )..repeat(reverse: true);
-    _swipeHintAnimation = CurvedAnimation(
-      parent: _swipeHintController,
-      curve: Curves.easeInOutSine,
-    );
-  }
-
-  @override
-  void dispose() {
-    _swipeHintController.dispose();
-    super.dispose();
-  }
 
   @override
   void didUpdateWidget(covariant _BalanceTrend oldWidget) {
@@ -888,7 +823,7 @@ class _BalanceTrendState extends State<_BalanceTrend>
     final xInterval = isToday ? 1.0 : _labelInterval(chartMaxX);
     final (chartMin, chartMax, yInterval) = _yScale(spots);
     final lineColor = account == null
-        ? theme.colorScheme.tertiary
+        ? BalynPalette.accentTextDark
         : Color(account.colorValue);
     final hideValues = state.hideBalance || (account?.hideBalance ?? false);
 
@@ -922,23 +857,11 @@ class _BalanceTrendState extends State<_BalanceTrend>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Center(
-          child: _AnalyticsPeriodNavigator(
-            label: widget.rangeLabel,
-            animation: _swipeHintAnimation,
-            onPrevious: () => widget.onShiftPeriod(-1),
-            onNext: () => widget.onShiftPeriod(1),
-          ),
-        ),
-        const SizedBox(height: 14),
         SizedBox(
           height: 224,
-          child: OverflowBox(
-            alignment: Alignment.center,
-            minWidth: MediaQuery.sizeOf(context).width - 4,
-            maxWidth: MediaQuery.sizeOf(context).width - 4,
-            minHeight: 224,
-            maxHeight: 224,
+          child: SizedBox(
+            width: double.infinity,
+            height: 224,
             child: Semantics(
               label: account == null
                   ? 'Andamento del patrimonio nel periodo selezionato'
@@ -1174,7 +1097,14 @@ class _BalanceTrendState extends State<_BalanceTrend>
                         color: lineColor,
                         belowBarData: BarAreaData(
                           show: true,
-                          color: lineColor.withValues(alpha: .09),
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              lineColor.withValues(alpha: .22),
+                              lineColor.withValues(alpha: .015),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -1327,48 +1257,6 @@ class _AnalyticsSwipeChevron extends StatelessWidget {
   }
 }
 
-class _CategoryPeriodPage extends StatelessWidget {
-  const _CategoryPeriodPage({
-    required this.title,
-    required this.accountId,
-    required this.categoryId,
-    required this.from,
-    required this.to,
-  });
-
-  final String title;
-  final int? accountId;
-  final int categoryId;
-  final DateTime from;
-  final DateTime to;
-
-  @override
-  Widget build(BuildContext context) {
-    final state = AppScope.of(context);
-    final items = AccountContextService.transactionsFor(state, accountId).where(
-      (item) {
-        if (item.date.isBefore(from) || !item.date.isBefore(to)) return false;
-        if (item.categoryId == categoryId) return true;
-        return state
-            .splitsFor(item.id)
-            .any((split) => split.categoryId == categoryId);
-      },
-    ).toList()..sort((a, b) => b.date.compareTo(a.date));
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: items.isEmpty
-          ? const Center(child: Text('Nessun movimento'))
-          : ListView.separated(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-              itemCount: items.length,
-              separatorBuilder: (_, __) => const Divider(height: 1),
-              itemBuilder: (context, index) =>
-                  TransactionListTile(item: items[index]),
-            ),
-    );
-  }
-}
-
 class _Metric extends StatelessWidget {
   const _Metric({required this.label, required this.value, this.color});
   final String label;
@@ -1376,24 +1264,51 @@ class _Metric extends StatelessWidget {
   final Color? color;
 
   @override
-  Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(label, style: Theme.of(context).textTheme.bodySmall),
-      const SizedBox(height: 3),
-      FittedBox(
-        fit: BoxFit.scaleDown,
-        alignment: Alignment.centerLeft,
-        child: color == null
-            ? Text(value, style: Theme.of(context).textTheme.titleMedium)
-            : BalynShaderText(
-                value,
-                seed: color!,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      constraints: const BoxConstraints(minHeight: 88),
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 12),
+      decoration: BoxDecoration(
+        color: theme.brightness == Brightness.dark
+            ? BalynPalette.darkSurface
+            : Colors.white,
+        borderRadius: BorderRadius.circular(20),
       ),
-    ],
-  );
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 8),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: color == null
+                ? Text(
+                    value,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
+                  )
+                : BalynShaderText(
+                    value,
+                    seed: color!,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class _AnalyticsLine extends StatelessWidget {
