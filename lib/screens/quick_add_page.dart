@@ -836,6 +836,7 @@ class _QuickAddPageState extends State<QuickAddPage> {
   }
 
   Future<void> _save() async {
+    if (saving) return;
     final state = AppScope.of(context);
     final parsed = Money.parseExpression(amount.text);
     if (parsed == null || parsed <= 0) {
@@ -1310,447 +1311,447 @@ class _QuickAddPageState extends State<QuickAddPage> {
     return Theme(
       data: baseTheme.copyWith(colorScheme: neutralScheme),
       child: Scaffold(
-      backgroundColor: BalynPalette.canvas(baseTheme.brightness),
-      appBar: AppBar(
-        title: Text(
-          widget.editing == null ? 'Nuovo movimento' : 'Modifica movimento',
-        ),
-        actions: [
-          if (widget.editing == null)
-            Semantics(
-              button: true,
-              label: 'Compila con la voce',
-              child: IconButton(
-                tooltip: AppI18n.tr('Compila con la voce'),
-                onPressed: _startVoice,
-                icon: const Icon(Icons.mic_none_rounded),
-              ),
-            ),
-        ],
-      ),
-      floatingActionButton: visibleSuggestion
-          ? FloatingActionButton.extended(
-              heroTag: 'smart-complete',
-              tooltip: AppI18n.tr('Completa con il suggerimento'),
-              onPressed: _previewSuggestion,
-              backgroundColor: Theme.of(context).colorScheme.onSurface,
-              foregroundColor: Theme.of(context).colorScheme.surface,
-              icon: const Icon(Icons.bolt_rounded),
-              label: const Text('Completa'),
-            )
-          : null,
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(15, 8, 15, 30),
-          children: [
-            if (voiceApplied) ...[
-              Row(
-                children: [
-                  const Icon(Icons.mic_rounded, size: 18),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'Compilato dalla voce · controlla e salva',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: _startVoice,
-                    child: const Text('Ripeti'),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-            ],
-            if (linkedAdvanceId != null) ...[
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: const Icon(Icons.handshake_outlined),
-                title: const Text('Collegato a un anticipo'),
-                subtitle: const Text(
-                  'Verrà registrato come rimborso/restituzione, non come entrata o spesa.',
-                ),
-                trailing: TextButton(
-                  onPressed: () => setState(() => linkedAdvanceId = null),
-                  child: const Text('Annulla'),
+        backgroundColor: BalynPalette.canvas(baseTheme.brightness),
+        appBar: AppBar(
+          title: Text(
+            widget.editing == null ? 'Nuovo movimento' : 'Modifica movimento',
+          ),
+          actions: [
+            if (widget.editing == null)
+              Semantics(
+                button: true,
+                label: 'Compila con la voce',
+                child: IconButton(
+                  tooltip: AppI18n.tr('Compila con la voce'),
+                  onPressed: _startVoice,
+                  icon: const Icon(Icons.mic_none_rounded),
                 ),
               ),
-              const SizedBox(height: 8),
-            ] else if (advanceMatch case final match?) ...[
-              Builder(
-                builder: (context) {
-                  final person = state.personById(match.personId);
-                  return ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.link_rounded),
-                    title: Text(
-                      'Potrebbe essere il rimborso dell’anticipo di ${person?.name ?? 'questa persona'}',
-                    ),
-                    subtitle: Text(match.reason),
-                    trailing: Wrap(
-                      spacing: 4,
-                      children: [
-                        TextButton(
-                          onPressed: () => setState(() {
-                            advanceMatch = null;
-                            advanceMatchDismissed = true;
-                          }),
-                          child: const Text('Non è questo'),
-                        ),
-                        TextButton(
-                          onPressed: _chooseAdvanceToLink,
-                          child: const Text('Altro'),
-                        ),
-                        FilledButton.tonal(
-                          onPressed: () => setState(() {
-                            linkedAdvanceId = match.advanceId;
-                            advanceMatch = null;
-                            advanceMatchDismissed = true;
-                          }),
-                          child: const Text('Collega'),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(height: 8),
-            ],
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _movementAmount(state, hasInitialAmount),
-                  const SizedBox(height: 7),
-                  Text(
-                    category?.name ?? type.label,
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                      color: transactionColor(context, type),
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    DateFormat(
-                      'd MMM yyyy, HH:mm',
-                      AppI18n.intlLocale,
-                    ).format(date),
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 10),
-            Wrap(
-              spacing: 4,
-              children: ['+', '−', '×', '÷']
-                  .map(
-                    (operator) => ActionChip(
-                      label: Text(operator),
-                      onPressed: () => _insertAmountOperator(operator),
-                    ),
-                  )
-                  .toList(),
-            ),
-            const SizedBox(height: 16),
-            if (type != TransactionType.transfer &&
-                recentCategories.isNotEmpty) ...[
-              const SizedBox(height: 16),
-              Text(
-                'Preferite e recenti',
-                style: Theme.of(context).textTheme.labelMedium,
-              ),
-              const SizedBox(height: 8),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: recentCategories
-                      .map(
-                        (item) => Padding(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: FilterChip(
-                            avatar: Icon(categoryIcon(item.iconKey), size: 17),
-                            label: Text(item.name),
-                            selected: categoryId == item.id,
-                            onSelected: (_) =>
-                                setState(() => categoryId = item.id),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-            ],
-            _movementCard([
-              _PickerRow(
-                icon: Icons.swap_horiz_rounded,
-                label: 'Tipo',
-                value: type.label,
-                valueColor: type == TransactionType.transfer
-                    ? baseTheme.colorScheme.onSurface
-                    : transactionColor(context, type),
-                onTap: _pickMovementType,
-              ),
-              _PickerRow(
-                icon: account?.isSystem == true
-                    ? Icons.help_outline_rounded
-                    : accountIcon(account?.iconKey ?? 'wallet'),
-                label: type == TransactionType.transfer ? 'Da' : 'Conto',
-                value: account?.isSystem == true
-                    ? 'Non assegnato'
-                    : account?.name ?? 'Scegli conto',
-                valueColor: account == null || account.isSystem
-                    ? null
-                    : Color(account.colorValue),
-                onTap: _chooseAccount,
-              ),
-              if (type == TransactionType.transfer) ...[
-                _PickerRow(
-                  icon: accountIcon(destination?.iconKey ?? 'wallet'),
-                  label: 'A',
-                  value: destination?.name ?? 'Scegli destinazione',
-                  valueColor: destination == null
-                      ? null
-                      : Color(destination.colorValue),
-                  onTap: () => _chooseAccount(destination: true),
-                ),
-                if (linkedGoal != null)
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: Icon(categoryIcon(linkedGoal.iconKey)),
-                    title: Text('Obiettivo: ${linkedGoal.name}'),
-                    subtitle: const Text(
-                      'Il trasferimento aggiornerà automaticamente il progresso.',
-                    ),
-                  ),
-              ] else
-                _PickerRow(
-                  icon: category == null
-                      ? Icons.category_outlined
-                      : categoryIcon(category.iconKey),
-                  label: 'Categoria',
-                  value: category?.name ?? 'Scegli categoria',
-                  valueColor: category == null
-                      ? null
-                      : Color(category.colorValue),
-                  onTap: _chooseCategory,
-                ),
-              _PickerRow(
-                icon: Icons.event_outlined,
-                label: 'Data e ora',
-                value: DateFormat(
-                  'd MMM yyyy, HH:mm',
-                  AppI18n.intlLocale,
-                ).format(date),
-                valueColor: baseTheme.colorScheme.onSurface,
-                onTap: _pickMovementDateTime,
-              ),
-            ]),
-            if (type == TransactionType.expense && widget.editing == null) ...[
-              const SizedBox(height: 13),
-              _movementCard([
-                SwitchListTile(
-                  contentPadding: EdgeInsets.zero,
-                  secondary: const Icon(Icons.group_outlined),
-                  title: const Text('Questa spesa include un anticipo'),
-                  subtitle: const Text(
-                    'Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.',
-                  ),
-                  value: advanceShareEnabled,
-                  onChanged: linkedAdvanceId != null
-                      ? null
-                      : (value) => setState(() {
-                          advanceShareEnabled = value;
-                          advanceMatch = null;
-                          if (!value) {
-                            advanceShare.clear();
-                            advancePersonId = null;
-                          }
-                        }),
-                ),
-                if (advanceShareEnabled) ...[
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.person_outline_rounded),
-                    title: const Text('Anticipato a'),
-                    subtitle: Text(
-                      state.personById(advancePersonId)?.name ??
-                          'Scegli o crea una persona',
-                    ),
-                    trailing: const Icon(Icons.chevron_right_rounded),
-                    onTap: () async {
-                      final picked = await showFinancePersonPicker(
-                        context,
-                        allowCreate: true,
-                      );
-                      if (picked != null && mounted) {
-                        setState(() => advancePersonId = picked);
-                      }
-                    },
-                  ),
-                  TextField(
-                    controller: advanceShare,
-                    keyboardType: const TextInputType.numberWithOptions(
-                      decimal: true,
-                    ),
-                    decoration: InputDecoration(
-                      labelText: AppI18n.tr('Quota anticipata'),
-                      suffixText: state.currency,
-                      helperText: AppI18n.tr(
-                        'Inserisci una parte oppure usa tutto l’importo.',
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton.icon(
-                      onPressed: () {
-                        final total = Money.parseExpression(amount.text);
-                        if (total == null || total <= 0) {
-                          _error('Inserisci prima l’importo totale.');
-                          amountFocus.requestFocus();
-                          return;
-                        }
-                        advanceShare.text = total.toStringAsFixed(2);
-                      },
-                      icon: const Icon(Icons.all_inclusive_rounded, size: 18),
-                      label: const Text('Tutto l’importo'),
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Builder(
-                    builder: (context) {
-                      final total = Money.parseExpression(amount.text) ?? 0;
-                      final advanced =
-                          Money.parseExpression(advanceShare.text) ?? 0;
-                      final personal = (total - advanced)
-                          .clamp(0, double.infinity)
-                          .toDouble();
-                      return FlatMetric(
-                        label: 'La mia parte',
-                        value: moneyFor(state, personal),
-                        icon: Icons.person_rounded,
-                      );
-                    },
-                  ),
-                ],
-              ]),
-            ],
-            const SizedBox(height: 13),
-            _movementCard([
-              SwitchListTile.adaptive(
-                contentPadding: EdgeInsets.zero,
-                dense: true,
-                title: const Text(
-                  'Escludi dalle analisi',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-                ),
-                value: !includeInAnalytics,
-                onChanged: (excluded) =>
-                    setState(() => includeInAnalytics = !excluded),
-              ),
-              _PickerRow(
-                icon: Icons.camera_alt_outlined,
-                label: 'Ricevuta',
-                value:
-                    !receiptRemoved &&
-                        (receipt != null || existingReceiptPath != null)
-                    ? 'Sostituisci'
-                    : 'Aggiungi',
-                valueColor: baseTheme.colorScheme.onSurface,
-                onTap: _chooseReceipt,
-              ),
-              if (widget.refundOfTransactionId != null)
-                const ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: Icon(Icons.replay_rounded),
-                  title: Text('Questo movimento è un rimborso collegato'),
-                ),
-            ]),
-            const SizedBox(height: 13),
-            _movementCard([
-              TransactionMetadataFields(
-                section: TransactionMetadataSection.description,
-                softSuggestions: true,
-                noteController: note,
-                transactions: state.transactions,
-                tags: List<String>.unmodifiable(tags),
-                database: state.database,
-                onTagsChanged: (values) => setState(() {
-                  tags
-                    ..clear()
-                    ..addAll(values);
-                }),
-              ),
-            ]),
-            const SizedBox(height: 13),
-            _movementCard([
-              TransactionMetadataFields(
-                section: TransactionMetadataSection.tags,
-                softSuggestions: true,
-                noteController: note,
-                transactions: state.transactions,
-                tags: List<String>.unmodifiable(tags),
-                database: state.database,
-                onTagsChanged: (values) => setState(() {
-                  tags
-                    ..clear()
-                    ..addAll(values);
-                }),
-              ),
-            ]),
-            if (lastVoiceTranscript != null) ...[
-              const SizedBox(height: 4),
-              Text(
-                'Hai detto: “$lastVoiceTranscript”',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
-            const SizedBox(height: 14),
           ],
         ),
-      ),
-      bottomNavigationBar: SafeArea(
-        top: false,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 8, 15, 12),
-          child: FilledButton.icon(
-            onPressed: saving ? null : _save,
-            icon: saving
-                ? const SizedBox.square(
-                    dimension: 18,
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  )
-                : Icon(
-                    widget.editing == null
-                        ? Icons.add_rounded
-                        : Icons.check_rounded,
+        floatingActionButton: visibleSuggestion
+            ? FloatingActionButton.extended(
+                heroTag: 'smart-complete',
+                tooltip: AppI18n.tr('Completa con il suggerimento'),
+                onPressed: _previewSuggestion,
+                backgroundColor: Theme.of(context).colorScheme.onSurface,
+                foregroundColor: Theme.of(context).colorScheme.surface,
+                icon: const Icon(Icons.bolt_rounded),
+                label: const Text('Completa'),
+              )
+            : null,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        body: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(15, 8, 15, 30),
+            children: [
+              if (voiceApplied) ...[
+                Row(
+                  children: [
+                    const Icon(Icons.mic_rounded, size: 18),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Compilato dalla voce · controlla e salva',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: _startVoice,
+                      child: const Text('Ripeti'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+              ],
+              if (linkedAdvanceId != null) ...[
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.handshake_outlined),
+                  title: const Text('Collegato a un anticipo'),
+                  subtitle: const Text(
+                    'Verrà registrato come rimborso/restituzione, non come entrata o spesa.',
                   ),
-            label: Text(
-              widget.editing != null
-                  ? 'Salva modifiche'
-                  : switch (type) {
-                      TransactionType.expense => 'Aggiungi spesa',
-                      TransactionType.income => 'Aggiungi entrata',
-                      TransactionType.transfer => 'Aggiungi trasferimento',
-                    },
-            ),
-            style: FilledButton.styleFrom(
-              backgroundColor: BalynPalette.accent,
-              foregroundColor: Colors.white,
-              minimumSize: const Size.fromHeight(48),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
+                  trailing: TextButton(
+                    onPressed: () => setState(() => linkedAdvanceId = null),
+                    child: const Text('Annulla'),
+                  ),
+                ),
+                const SizedBox(height: 8),
+              ] else if (advanceMatch case final match?) ...[
+                Builder(
+                  builder: (context) {
+                    final person = state.personById(match.personId);
+                    return ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.link_rounded),
+                      title: Text(
+                        'Potrebbe essere il rimborso dell’anticipo di ${person?.name ?? 'questa persona'}',
+                      ),
+                      subtitle: Text(match.reason),
+                      trailing: Wrap(
+                        spacing: 4,
+                        children: [
+                          TextButton(
+                            onPressed: () => setState(() {
+                              advanceMatch = null;
+                              advanceMatchDismissed = true;
+                            }),
+                            child: const Text('Non è questo'),
+                          ),
+                          TextButton(
+                            onPressed: _chooseAdvanceToLink,
+                            child: const Text('Altro'),
+                          ),
+                          FilledButton.tonal(
+                            onPressed: () => setState(() {
+                              linkedAdvanceId = match.advanceId;
+                              advanceMatch = null;
+                              advanceMatchDismissed = true;
+                            }),
+                            child: const Text('Collega'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(height: 8),
+              ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _movementAmount(state, hasInitialAmount),
+                    const SizedBox(height: 7),
+                    Text(
+                      category?.name ?? type.label,
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        color: transactionColor(context, type),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      DateFormat(
+                        'd MMM yyyy, HH:mm',
+                        AppI18n.intlLocale,
+                      ).format(date),
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Wrap(
+                spacing: 4,
+                children: ['+', '−', '×', '÷']
+                    .map(
+                      (operator) => ActionChip(
+                        label: Text(operator),
+                        onPressed: () => _insertAmountOperator(operator),
+                      ),
+                    )
+                    .toList(),
+              ),
+              const SizedBox(height: 16),
+              if (type != TransactionType.transfer &&
+                  recentCategories.isNotEmpty) ...[
+                const SizedBox(height: 16),
+                Text(
+                  'Preferite e recenti',
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+                const SizedBox(height: 8),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: recentCategories
+                        .map(
+                          (item) => Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: FilterChip(
+                              avatar: Icon(categoryIcon(item.iconKey), size: 17),
+                              label: Text(item.name),
+                              selected: categoryId == item.id,
+                              onSelected: (_) =>
+                                  setState(() => categoryId = item.id),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              ],
+              _movementCard([
+                _PickerRow(
+                  icon: Icons.swap_horiz_rounded,
+                  label: 'Tipo',
+                  value: type.label,
+                  valueColor: type == TransactionType.transfer
+                      ? baseTheme.colorScheme.onSurface
+                      : transactionColor(context, type),
+                  onTap: _pickMovementType,
+                ),
+                _PickerRow(
+                  icon: account?.isSystem == true
+                      ? Icons.help_outline_rounded
+                      : accountIcon(account?.iconKey ?? 'wallet'),
+                  label: type == TransactionType.transfer ? 'Da' : 'Conto',
+                  value: account?.isSystem == true
+                      ? 'Non assegnato'
+                      : account?.name ?? 'Scegli conto',
+                  valueColor: account == null || account.isSystem
+                      ? null
+                      : Color(account.colorValue),
+                  onTap: _chooseAccount,
+                ),
+                if (type == TransactionType.transfer) ...[
+                  _PickerRow(
+                    icon: accountIcon(destination?.iconKey ?? 'wallet'),
+                    label: 'A',
+                    value: destination?.name ?? 'Scegli destinazione',
+                    valueColor: destination == null
+                        ? null
+                        : Color(destination.colorValue),
+                    onTap: () => _chooseAccount(destination: true),
+                  ),
+                  if (linkedGoal != null)
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: Icon(categoryIcon(linkedGoal.iconKey)),
+                      title: Text('Obiettivo: ${linkedGoal.name}'),
+                      subtitle: const Text(
+                        'Il trasferimento aggiornerà automaticamente il progresso.',
+                      ),
+                    ),
+                ] else
+                  _PickerRow(
+                    icon: category == null
+                        ? Icons.category_outlined
+                        : categoryIcon(category.iconKey),
+                    label: 'Categoria',
+                    value: category?.name ?? 'Scegli categoria',
+                    valueColor: category == null
+                        ? null
+                        : Color(category.colorValue),
+                    onTap: _chooseCategory,
+                  ),
+                _PickerRow(
+                  icon: Icons.event_outlined,
+                  label: 'Data e ora',
+                  value: DateFormat(
+                    'd MMM yyyy, HH:mm',
+                    AppI18n.intlLocale,
+                  ).format(date),
+                  valueColor: baseTheme.colorScheme.onSurface,
+                  onTap: _pickMovementDateTime,
+                ),
+              ]),
+              if (type == TransactionType.expense && widget.editing == null) ...[
+                const SizedBox(height: 13),
+                _movementCard([
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    secondary: const Icon(Icons.group_outlined),
+                    title: const Text('Questa spesa include un anticipo'),
+                    subtitle: const Text(
+                      'Può essere una parte o tutto l’importo. Solo la tua quota verrà conteggiata in spese, categorie e budget.',
+                    ),
+                    value: advanceShareEnabled,
+                    onChanged: linkedAdvanceId != null
+                        ? null
+                        : (value) => setState(() {
+                            advanceShareEnabled = value;
+                            advanceMatch = null;
+                            if (!value) {
+                              advanceShare.clear();
+                              advancePersonId = null;
+                            }
+                          }),
+                  ),
+                  if (advanceShareEnabled) ...[
+                    ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.person_outline_rounded),
+                      title: const Text('Anticipato a'),
+                      subtitle: Text(
+                        state.personById(advancePersonId)?.name ??
+                            'Scegli o crea una persona',
+                      ),
+                      trailing: const Icon(Icons.chevron_right_rounded),
+                      onTap: () async {
+                        final picked = await showFinancePersonPicker(
+                          context,
+                          allowCreate: true,
+                        );
+                        if (picked != null && mounted) {
+                          setState(() => advancePersonId = picked);
+                        }
+                      },
+                    ),
+                    TextField(
+                      controller: advanceShare,
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      decoration: InputDecoration(
+                        labelText: AppI18n.tr('Quota anticipata'),
+                        suffixText: state.currency,
+                        helperText: AppI18n.tr(
+                          'Inserisci una parte oppure usa tutto l’importo.',
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton.icon(
+                        onPressed: () {
+                          final total = Money.parseExpression(amount.text);
+                          if (total == null || total <= 0) {
+                            _error('Inserisci prima l’importo totale.');
+                            amountFocus.requestFocus();
+                            return;
+                          }
+                          advanceShare.text = total.toStringAsFixed(2);
+                        },
+                        icon: const Icon(Icons.all_inclusive_rounded, size: 18),
+                        label: const Text('Tutto l’importo'),
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Builder(
+                      builder: (context) {
+                        final total = Money.parseExpression(amount.text) ?? 0;
+                        final advanced =
+                            Money.parseExpression(advanceShare.text) ?? 0;
+                        final personal = (total - advanced)
+                            .clamp(0, double.infinity)
+                            .toDouble();
+                        return FlatMetric(
+                          label: 'La mia parte',
+                          value: moneyFor(state, personal),
+                          icon: Icons.person_rounded,
+                        );
+                      },
+                    ),
+                  ],
+                ]),
+              ],
+              const SizedBox(height: 13),
+              _movementCard([
+                SwitchListTile.adaptive(
+                  contentPadding: EdgeInsets.zero,
+                  dense: true,
+                  title: const Text(
+                    'Escludi dalle analisi',
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                  ),
+                  value: !includeInAnalytics,
+                  onChanged: (excluded) =>
+                      setState(() => includeInAnalytics = !excluded),
+                ),
+                _PickerRow(
+                  icon: Icons.camera_alt_outlined,
+                  label: 'Ricevuta',
+                  value:
+                      !receiptRemoved &&
+                          (receipt != null || existingReceiptPath != null)
+                      ? 'Sostituisci'
+                      : 'Aggiungi',
+                  valueColor: baseTheme.colorScheme.onSurface,
+                  onTap: _chooseReceipt,
+                ),
+                if (widget.refundOfTransactionId != null)
+                  const ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Icon(Icons.replay_rounded),
+                    title: Text('Questo movimento è un rimborso collegato'),
+                  ),
+              ]),
+              const SizedBox(height: 13),
+              _movementCard([
+                TransactionMetadataFields(
+                  section: TransactionMetadataSection.description,
+                  softSuggestions: true,
+                  noteController: note,
+                  transactions: state.transactions,
+                  tags: List<String>.unmodifiable(tags),
+                  database: state.database,
+                  onTagsChanged: (values) => setState(() {
+                    tags
+                      ..clear()
+                      ..addAll(values);
+                  }),
+                ),
+              ]),
+              const SizedBox(height: 13),
+              _movementCard([
+                TransactionMetadataFields(
+                  section: TransactionMetadataSection.tags,
+                  softSuggestions: true,
+                  noteController: note,
+                  transactions: state.transactions,
+                  tags: List<String>.unmodifiable(tags),
+                  database: state.database,
+                  onTagsChanged: (values) => setState(() {
+                    tags
+                      ..clear()
+                      ..addAll(values);
+                  }),
+                ),
+              ]),
+              if (lastVoiceTranscript != null) ...[
+                const SizedBox(height: 4),
+                Text(
+                  'Hai detto: “$lastVoiceTranscript”',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+              const SizedBox(height: 14),
+            ],
+          ),
+        ),
+        bottomNavigationBar: SafeArea(
+          top: false,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(15, 8, 15, 12),
+            child: FilledButton.icon(
+              onPressed: saving ? null : _save,
+              icon: saving
+                  ? const SizedBox.square(
+                      dimension: 18,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : Icon(
+                      widget.editing == null
+                          ? Icons.add_rounded
+                          : Icons.check_rounded,
+                    ),
+              label: Text(
+                widget.editing != null
+                    ? 'Salva modifiche'
+                    : switch (type) {
+                        TransactionType.expense => 'Aggiungi spesa',
+                        TransactionType.income => 'Aggiungi entrata',
+                        TransactionType.transfer => 'Aggiungi trasferimento',
+                      },
+              ),
+              style: FilledButton.styleFrom(
+                backgroundColor: BalynPalette.accent,
+                foregroundColor: Colors.white,
+                minimumSize: const Size.fromHeight(48),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                ),
               ),
             ),
           ),
         ),
-      ),
       ),
     );
   }

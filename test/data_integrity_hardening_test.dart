@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:balyn/app_state.dart';
+import 'package:balyn/core/money.dart';
 import 'package:balyn/data/app_database.dart';
 import 'package:balyn/models/models.dart';
 import 'package:balyn/services/attachment_service.dart';
@@ -65,6 +66,67 @@ void main() {
     includeInAnalytics: true,
     hideBalance: false,
   );
+
+  test('repeated edits and deletes use the persisted movement', () async {
+    final database = await openReadyDatabase();
+    final source = await addAccount(database, 'Source');
+    final destination = await addAccount(database, 'Destination', balance: 0);
+    final id = await database.addTransaction(
+      type: TransactionType.expense,
+      amount: Money.parseExpression('12,50')!,
+      accountId: source,
+      date: DateTime.utc(2026, 9, 24),
+    );
+    final stale = (await database.transactions()).singleWhere(
+      (item) => item.id == id,
+    );
+    await database.updateTransaction(stale, stale.copyWith(amount: 15.75));
+    await database.updateTransaction(
+      stale,
+      stale.copyWith(
+        amount: 20.10,
+        type: TransactionType.transfer,
+        toAccountId: destination,
+      ),
+    );
+    final accounts = await database.accounts();
+    expect(accounts.firstWhere((a) => a.id == source).balance, 79.90);
+    expect(accounts.firstWhere((a) => a.id == destination).balance, 20.10);
+
+    await database.deleteTransaction(stale);
+    await database.deleteTransaction(stale);
+    final restored = await database.accounts();
+    expect(restored.firstWhere((a) => a.id == source).balance, 100);
+    expect(restored.firstWhere((a) => a.id == destination).balance, 0);
+  });
+
+  test('movement amount and balance use the same rounded cents', () async {
+    final database = await openReadyDatabase();
+    final accountId = await addAccount(database, 'Main');
+    await database.addTransaction(
+      type: TransactionType.expense,
+      amount: 1.005,
+      accountId: accountId,
+      date: DateTime.utc(2026, 9, 24),
+    );
+    expect((await database.transactions()).single.amount, 1.01);
+    expect(
+      (await database.accounts()).firstWhere((a) => a.id == accountId).balance,
+      98.99,
+    );
+    for (final invalid in [0.004, -1.0, double.infinity, double.nan]) {
+      await expectLater(
+        database.addTransaction(
+          type: TransactionType.expense,
+          amount: invalid,
+          accountId: accountId,
+          date: DateTime.utc(2026, 9, 24),
+        ),
+        throwsStateError,
+      );
+    }
+    expect((await database.transactions()).length, 1);
+  });
 
   test('history rule application rolls back atomically', () async {
     final database = await openReadyDatabase();

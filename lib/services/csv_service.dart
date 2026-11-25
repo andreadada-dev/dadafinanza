@@ -153,9 +153,7 @@ class CsvService {
           continue;
         }
         final type = TransactionTypeX.fromDb(typeRaw);
-        final parsedAmount = double.tryParse(
-          value('amount').replaceAll(',', '.'),
-        );
+        final parsedAmount = Money.parseAmount(value('amount'));
         final date = DateTime.tryParse(value('date'));
         final account = value('account');
         if (parsedAmount == null ||

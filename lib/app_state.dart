@@ -1312,7 +1312,7 @@ class AppState extends ChangeNotifier {
       final fields = _parseCsvLine(line);
       if (fields.length < 10) continue;
       final type = TransactionTypeX.fromDb(fields[1]);
-      final amount = double.tryParse(fields[2]);
+      final amount = Money.parseAmount(fields[2]);
       final originalAccountId = int.tryParse(fields[3]);
       final account = accountById(originalAccountId);
       final accountId =

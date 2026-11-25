@@ -1134,11 +1134,12 @@ class AppDatabase {
     int? recurringId,
     int? refundOfTransactionId,
   }) async {
+    final cents = _validatedMovementCents(amount);
     final item = await _applyRules(
       FinanceTransaction(
         id: 0,
         type: type,
-        amount: amount,
+        amount: Money.fromCents(cents),
         accountId: accountId,
         toAccountId: toAccountId,
         categoryId: categoryId,
@@ -1171,7 +1172,24 @@ class AppDatabase {
     FinanceTransaction oldItem,
     FinanceTransaction newItem,
   ) async {
+    final cents = _validatedMovementCents(newItem.amount);
+    final normalized = newItem.copyWith(amount: Money.fromCents(cents));
     await db.transaction((txn) async {
+      final stored = await _storedMovement(txn, oldItem.id);
+      if (stored == null || newItem.id != oldItem.id) {
+        throw StateError('Movimento non trovato.');
+      }
+      if (stored.amount != normalized.amount || stored.type != normalized.type) {
+        final existingSplits = await txn.query(
+          'transaction_splits',
+          where: 'transaction_id = ?',
+          whereArgs: [stored.id],
+          limit: 1,
+        );
+        if (existingSplits.isNotEmpty) {
+          throw StateError('Rimuovi prima le divisioni del movimento.');
+        }
+      }
       await _validateAccount(txn, newItem.accountId);
       if (newItem.type == TransactionType.transfer) {
         if (newItem.toAccountId == null ||
@@ -1179,18 +1197,18 @@ class AppDatabase {
           throw StateError('Il trasferimento richiede due conti diversi.');
         await _validateAccount(txn, newItem.toAccountId!);
       }
-      await _applyBalance(txn, oldItem, -1, validateAccounts: false);
+      await _applyBalance(txn, stored, -1, validateAccounts: false);
       await txn.update(
         'transactions',
         _transactionMap(
-          newItem,
+          normalized,
           DateTime.now().millisecondsSinceEpoch,
           preserveCreatedAt: true,
         ),
         where: 'id = ?',
         whereArgs: [oldItem.id],
       );
-      await _applyBalance(txn, newItem, 1);
+      await _applyBalance(txn, normalized, 1);
     });
   }
 
@@ -1210,7 +1228,9 @@ class AppDatabase {
 
   Future<void> deleteTransaction(FinanceTransaction item) async {
     await db.transaction((txn) async {
-      await _applyBalance(txn, item, -1, validateAccounts: false);
+      final stored = await _storedMovement(txn, item.id);
+      if (stored == null) return;
+      await _applyBalance(txn, stored, -1, validateAccounts: false);
       await txn.delete(
         'transaction_splits',
         where: 'transaction_id = ?',
@@ -1226,13 +1246,36 @@ class AppDatabase {
     });
   }
 
+  Future<FinanceTransaction?> _storedMovement(Transaction txn, int id) async {
+    final rows = await txn.query(
+      'transactions',
+      where: 'id = ?',
+      whereArgs: [id],
+      limit: 1,
+    );
+    return rows.isEmpty ? null : FinanceTransaction.fromMap(rows.single);
+  }
+
+  int _validatedMovementCents(double amount) {
+    if (!amount.isFinite || amount <= 0 ||
+        amount > Money.fromCents(Money.maxCents)) {
+      throw StateError('Inserisci un importo valido maggiore di zero.');
+    }
+    final cents = Money.toCents(amount);
+    if (cents <= 0) {
+      throw StateError('L’importo minimo è 0,01.');
+    }
+    return cents;
+  }
+
   Map<String, Object?> _transactionMap(
     FinanceTransaction item,
     int now, {
     bool preserveCreatedAt = false,
   }) => {
     'type': item.type.dbValue,
-    'amount': item.amount,
+    'amount': Money.fromCents(Money.toCents(item.amount)),
+    'amount_cents': Money.toCents(item.amount),
     'account_id': item.accountId,
     'to_account_id': item.type == TransactionType.transfer
         ? item.toAccountId
@@ -1280,25 +1323,26 @@ class AppDatabase {
       return;
     }
     if (validateAccounts) await _validateAccount(txn, item.accountId);
+    final cents = Money.toCents(item.amount) * direction;
     switch (item.type) {
       case TransactionType.expense:
-        await _increment(txn, item.accountId, -item.amount * direction);
+        await _increment(txn, item.accountId, -cents);
         break;
       case TransactionType.income:
-        await _increment(txn, item.accountId, item.amount * direction);
+        await _increment(txn, item.accountId, cents);
         break;
       case TransactionType.transfer:
-        await _increment(txn, item.accountId, -item.amount * direction);
+        await _increment(txn, item.accountId, -cents);
         if (item.toAccountId != null)
-          await _increment(txn, item.toAccountId!, item.amount * direction);
+          await _increment(txn, item.toAccountId!, cents);
         break;
     }
   }
 
-  Future<void> _increment(Transaction txn, int id, double delta) async {
+  Future<void> _increment(Transaction txn, int id, int cents) async {
     await txn.rawUpdate(
-      'UPDATE accounts SET balance = balance + ?, updated_at = ? WHERE id = ?',
-      [delta, DateTime.now().millisecondsSinceEpoch, id],
+      'UPDATE accounts SET balance_cents = COALESCE(balance_cents, CAST(ROUND(balance * 100) AS INTEGER)) + ?, balance = (COALESCE(balance_cents, CAST(ROUND(balance * 100) AS INTEGER)) + ?) / 100.0, updated_at = ? WHERE id = ?',
+      [cents, cents, DateTime.now().millisecondsSinceEpoch, id],
     );
   }
 
@@ -1350,7 +1394,9 @@ class AppDatabase {
   ) async {
     var changed = 0;
     await db.transaction((txn) async {
-      for (final oldItem in items) {
+      for (final requested in items) {
+        final oldItem = await _storedMovement(txn, requested.id);
+        if (oldItem == null) continue;
         final nextTags =
             rule.addTag == null || oldItem.tags.contains(rule.addTag)
             ? oldItem.tags
@@ -1405,12 +1451,21 @@ class AppDatabase {
     List<TransactionSplit> items,
     double transactionAmount,
   ) async {
-    final total = items.fold<double>(0, (sum, item) => sum + item.amount);
-    if (items.isNotEmpty && (total - transactionAmount).abs() > .005)
-      throw StateError(
-        'La somma delle divisioni deve coincidere con il totale.',
-      );
+    final total = items.fold<int>(
+      0,
+      (sum, item) => sum + _validatedMovementCents(item.amount),
+    );
     await db.transaction((txn) async {
+      final stored = await _storedMovement(txn, transactionId);
+      if (stored == null) throw StateError('Movimento non trovato.');
+      final storedCents = Money.toCents(stored.amount);
+      if (items.isNotEmpty &&
+          (total != storedCents ||
+              Money.toCents(transactionAmount) != storedCents)) {
+        throw StateError(
+          'La somma delle divisioni deve coincidere con il totale.',
+        );
+      }
       await txn.delete(
         'transaction_splits',
         where: 'transaction_id = ?',
@@ -1419,7 +1474,7 @@ class AppDatabase {
       for (final item in items) {
         await txn.insert('transaction_splits', {
           'transaction_id': transactionId,
-          'amount': item.amount,
+          'amount': Money.fromCents(Money.toCents(item.amount)),
           'amount_cents': Money.toCents(item.amount),
           'category_id': item.categoryId,
           'note': item.note,
